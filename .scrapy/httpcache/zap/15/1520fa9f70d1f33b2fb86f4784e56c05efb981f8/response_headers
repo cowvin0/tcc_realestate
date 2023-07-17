@@ -1,0 +1,19 @@
+Date: Mon, 17 Jul 2023 17:53:16 GMT
+Content-Type: text/plain
+Cf-Ray: 7e8457ee4a43941d-UDI
+Cf-Cache-Status: DYNAMIC
+Content-Encoding: gzip
+Etag: W/"e8e8610e91c75e9bbbdcc309e069b3d8"
+Last-Modified: Mon, 17 Jul 2023 15:22:21 GMT
+Set-Cookie: z_user_id=16ef2380-d196-49d9-8ec0-05199f939d4f; Max-Age=7776000; Path=/
+Set-Cookie: z_exp=exp-aa-test_control.ldp-favorite_control.lead-see-phone-login_control; Max-Age=600; Path=/
+Set-Cookie: __cfruid=f163b502a3442f8616a164d13c0087ca0522eccb-1689616396; path=/; domain=.zapimoveis.com.br; HttpOnly; Secure; SameSite=None
+Strict-Transport-Security: max-age=15724800
+Vary: Accept-Encoding
+X-Amz-Id-2: fQhEYg0zY8+l40dKCIbNnjbgKGWlez+AEj6MJPcyf9yMNAdGlzmoA26fDGUz9N/fFtGAcryCqEo864YFW2pg4g==
+X-Amz-Request-Id: 5Y6N3VAKGZQASKRE
+X-Amz-Server-Side-Encryption: AES256
+X-Amz-Version-Id: XAhpGYWyNOLIp0TVz26kgSGmwYYDK_li
+Z-Perf-Abelardo: 70
+Server: cloudflare
+Alt-Svc: h3=":443"; ma=86400
