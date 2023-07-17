@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "scrapy-zap"
+version = "0.1.0"
+description = "raspando dados do zap imoveis"
+authors = ["gabrielpereira12345 <gabrielpereira00PereiraGabriel@outlook.com>"]
+readme = "README.md"
+packages = [{include = "scrapy_zap"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+selenium = ">=4.10.0,<4.11.0"
+scrapy = ">=2.9.0,<2.10.0"
+w3lib = ">=2.1.1,<2.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
