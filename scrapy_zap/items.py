@@ -5,8 +5,24 @@
 
 import scrapy
 
-
-class ScrapyZapItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class ZapItem(scrapy.Item):
+    valor = scrapy.Field()
+    tipo = scrapy.Field()
+    endereco = scrapy.Field()
+    condominio = scrapy.Field()
+    iptu = scrapy.Field()
+    area = scrapy.Field()
+    quarto = scrapy.Field()
+    banheiro = scrapy.Field()
+    andar = scrapy.Field()
+    academia = scrapy.Field()
+    piscina = scrapy.Field()
+    spa = scrapy.Field()
+    sauna = scrapy.Field()
+    varanda_gourmet = scrapy.Field()
+    espaco_gourmet = scrapy.Field()
+    playground = scrapy.Field()
+    portaria_24_horas = scrapy.Field()
+    area_servico = scrapy.Field()
+    url = scrapy.Field()
+    id = scrapy.Field()

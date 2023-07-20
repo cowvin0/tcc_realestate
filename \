@@ -63,8 +63,8 @@ class ZapSpider(scrapy.Spider):
         #           sauna, varanda_gourmet,espaco_gourmet,
         #           playground, portaria_24_horas, area_servico]
         
-        for info, conteudo in lista.items():
-            if len(conteudo) == 0:
+        for info, conteudo in list.items():
+            if len(info) == 0:
                 zap_item[info] = None
             else:
                 zap_item[info] = conteudo[0]
