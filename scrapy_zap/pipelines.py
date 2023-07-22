@@ -12,11 +12,21 @@ class ScrapyZapPipeline:
     def process_item(self, item, spider):
 
         adapter = ItemAdapter(item)
+        
+        # Get the first elements of tuples:
+        tups = ['area', 'banheiro', 'andar', 'condominio',
+               'iptu', 'quarto', 'tipo', 'url', 'valor']
+        for tup in tups:
+            value = adapter.get(tup)[0]
+            adapter[tup] = value
+               
 
-        field_names = adapter.field_names()
-        for field_name in field_names:
-            if field_name != 'endereco':
-                value = adapter.get(field_name)
-                adapter[field_name] = value.strip()
+        #value = adapter.get('endereco')
+        #value_without_newline = value.replace('\n', '').strip()
+        #adapter['endereco'] = value_without_newline
+
+        #dinheiro = adapter.get('valor')
+        #dinheiro = dinheiro[0]
+        #adapter['valor'] = dinheiro
 
         return item

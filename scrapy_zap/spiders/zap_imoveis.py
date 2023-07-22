@@ -18,7 +18,9 @@ class ZapSpider(scrapy.Spider):
 
         yield Request(
             url=self.start_urls[0], 
-            meta = {'dont_redirect': True,'handle_httpstatus_list': [302, 308]},
+            meta = {'dont_redirect': True,
+                    'handle_httpstatus_list': [302, 308]
+                    },
             callback=self.parse
             )
 
@@ -28,7 +30,8 @@ class ZapSpider(scrapy.Spider):
         coletando_hrefs = [href.css('a.result-card ::attr(href)').getall() for href in selecionar_divs]
 
         for url in reduce(lambda x, y: x + y, coletando_hrefs):
-            yield response.follow(url, callback=self.parse_imovel_info)
+            yield response.follow(url, callback=self.parse_imovel_info,
+                                  dont_filter = True)
 
     def parse_imovel_info(self, response):
 
@@ -54,15 +57,12 @@ class ZapSpider(scrapy.Spider):
                 'sauna': list(filter(lambda x: "sauna" in x.lower(), imovel_info)),
                 'varanda_gourmet': list(filter(lambda x: "varanda gourmet" in x.lower(), imovel_info)),
                 'espaco_gourmet': list(filter(lambda x: "espaço gourmet" in x.lower(), imovel_info)),
+                'quadra_de_esporte': list(filter(lambda x: 'quadra poliesportiva' in x.lower(), imovel_info)),
                 'playground': list(filter(lambda x: "playground" in x.lower(), imovel_info)),
                 'portaria_24_horas': list(filter(lambda x: "portaria 24h" in x.lower(), imovel_info)),
                 'area_servico': list(filter(lambda x: "área de serviço" in x.lower(), imovel_info))
                 }
 
-        #is_list = [academia, piscina, spa,
-        #           sauna, varanda_gourmet,espaco_gourmet,
-        #           playground, portaria_24_horas, area_servico]
-        
         for info, conteudo in lista.items():
             if len(conteudo) == 0:
                 zap_item[info] = None
@@ -71,7 +71,7 @@ class ZapSpider(scrapy.Spider):
 
         zap_item['valor'] = preco_imovel,
         zap_item['tipo'] = tipo_imovel,
-        zap_item['endereco'] = endereco_imovel.replace('\n', '').strip(),
+        zap_item['endereco'] = endereco_imovel#.replace('\n', '').strip(),
         zap_item['condominio'] = condominio,
         zap_item['iptu'] = iptu,
         zap_item['area'] = area,
@@ -82,12 +82,3 @@ class ZapSpider(scrapy.Spider):
         zap_item['id'] = id
         
         yield zap_item
-
-    #@staticmethod
-    #def info_isin(carac, info):
-
-    #    if info in carac:
-    #        return info
-    #    else:
-    #        None
-
