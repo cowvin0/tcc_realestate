@@ -96,3 +96,8 @@ SCRAPEOPS_API_KEY = '54ac2fe3-b545-40cd-8810-d26fd8ce5a35'
 SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agents'
 SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
 SCRAPEOPS_NUM_RESULTS = 5
+#ROTATING_PROXY_LIST =[
+#        'proxy1.com:8000',
+#        'proxy2.com:8031',
+#        'proxy3.com:8032',
+#        ]

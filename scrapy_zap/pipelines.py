@@ -1,4 +1,3 @@
-import numpy as np
 import re
 from itemadapter import ItemAdapter
 
@@ -11,18 +10,12 @@ class ScrapyZapPipeline:
         
         # Get the first elements of tuples:
         tups = ['area', 'banheiro', 'andar', 'condominio',
-                'iptu', 'quarto', 'tipo', 'url', 'valor']
+                'iptu', 'quarto', 'tipo', 'url', 'valor',
+                'endereco']
         for tup in tups:
             value = adapter.get(tup)[0]
             adapter[tup] = value
                
-        # Converting None to np.nan
-        #select_all = adapter.field_names()
-        #for spe in select_all:
-        #    value = adapter.get(spe)
-        #    if value == np.nan:
-        #        adapter[spe] = np.nan 
-
         # Converting não informado to np.nan
         nao_info = ['condominio', 'iptu']
         for nao in nao_info:

@@ -12,6 +12,7 @@ selenium = ">=4.10.0,<4.11.0"
 scrapy = ">=2.9.0,<2.10.0"
 w3lib = ">=2.1.1,<2.2.0"
 numpy = ">=1.25.1,<1.26.0"
+scrapy-rotating-proxies = "^0.6.2"
 
 
 [build-system]

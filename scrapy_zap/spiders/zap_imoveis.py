@@ -10,27 +10,22 @@ class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/']
-
-    #user_agent_list = [
-    #'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36',
-    #'Mozilla/5.0 (iPhone; CPU iPhone OS 14_4_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1',
-    #'Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1)',
-    #'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 Edg/87.0.664.75',
-    #'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18363',
-    #]
+    start_urls = [#'https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/',
+                  'https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=1',
+                  #'https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=2'
+                  ]
 
     def __init__(self, cidade=None, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
     def start_requests(self):
 
-        yield Request(
-            url=self.start_urls[0], 
-            meta = {'dont_redirect': True,
-                    'handle_httpstatus_list': [302, 308]
-                    },
-            callback=self.parse
-            )
+        for url in self.start_urls:
+            yield Request(
+                    url=url,#self.start_urls[0], 
+                    meta = {'dont_redirect': True,
+                            'handle_httpstatus_list': [302, 308]}, 
+                    callback=self.parse
+                    )
             
 
     def parse(self, response):
@@ -44,6 +39,9 @@ class ZapSpider(scrapy.Spider):
                                   )
 
     def parse_imovel_info(self, response):
+
+        #def is_in(carac, info):
+        #filtering = lambda values, info: [info if 'piscina' == info.replace('\n', '').lower().strip() else None for info in batata]    
 
         zap_item = ZapItem()
 
@@ -60,10 +58,12 @@ class ZapSpider(scrapy.Spider):
         url = response.url
         id = re.search(r'id-(\d+)/', url).group(1)
 
+        filtering = lambda info: [check if info == check.replace('\n', '').lower().strip() else None for check in imovel_info]
+
         lista = {
                 'academia': list(filter(lambda x: "academia" in x.lower(), imovel_info)),
-                'piscina': list(filter(lambda x: "piscina" in x.lower(), imovel_info)),
-                'spa': list(filter(lambda x: "spa" is x.lower(), imovel_info)),
+                'piscina': list(filter(lambda x: x != None, filtering('piscina'))),
+                'spa': list(filter(lambda x: x != None, filtering('spa'))),
                 'sauna': list(filter(lambda x: "sauna" in x.lower(), imovel_info)),
                 'varanda_gourmet': list(filter(lambda x: "varanda gourmet" in x.lower(), imovel_info)),
                 'espaco_gourmet': list(filter(lambda x: "espaço gourmet" in x.lower(), imovel_info)),
@@ -82,7 +82,7 @@ class ZapSpider(scrapy.Spider):
 
         zap_item['valor'] = preco_imovel,
         zap_item['tipo'] = tipo_imovel,
-        zap_item['endereco'] = endereco_imovel#.replace('\n', '').strip(),
+        zap_item['endereco'] = endereco_imovel.replace('\n', '').strip(),
         zap_item['condominio'] = condominio,
         zap_item['iptu'] = iptu,
         zap_item['area'] = area,
@@ -90,6 +90,6 @@ class ZapSpider(scrapy.Spider):
         zap_item['banheiro'] = num_banheiro,
         zap_item['andar'] = andar,
         zap_item['url'] = response.url,
-        zap_item['id'] = id
+        zap_item['id'] = int(id)
         
         yield zap_item
