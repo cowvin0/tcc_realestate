@@ -13,7 +13,6 @@ class ZapSpider(scrapy.Spider):
 
     def __init__(self, cidade=None, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
-
     def start_requests(self):
 
         yield Request(
@@ -51,16 +50,16 @@ class ZapSpider(scrapy.Spider):
         id = re.search(r'id-(\d+)/', url).group(1)
 
         lista = {
-                'academia': list(filter(lambda x: "academia" in x.lower(), imovel_info)),
-                'piscina': list(filter(lambda x: "piscina" in x.lower(), imovel_info)),
-                'spa': list(filter(lambda x: "spa" in x.lower(), imovel_info)),
-                'sauna': list(filter(lambda x: "sauna" in x.lower(), imovel_info)),
-                'varanda_gourmet': list(filter(lambda x: "varanda gourmet" in x.lower(), imovel_info)),
-                'espaco_gourmet': list(filter(lambda x: "espaço gourmet" in x.lower(), imovel_info)),
-                'quadra_de_esporte': list(filter(lambda x: 'quadra poliesportiva' in x.lower(), imovel_info)),
-                'playground': list(filter(lambda x: "playground" in x.lower(), imovel_info)),
-                'portaria_24_horas': list(filter(lambda x: "portaria 24h" in x.lower(), imovel_info)),
-                'area_servico': list(filter(lambda x: "área de serviço" in x.lower(), imovel_info))
+                'academia': list(filter(lambda x: "academia" == x.lower(), imovel_info)),
+                'piscina': list(filter(lambda x: "piscina" == x.lower(), imovel_info)),
+                'spa': list(filter(lambda x: "spa" == x.lower(), imovel_info)),
+                'sauna': list(filter(lambda x: "sauna" == x.lower(), imovel_info)),
+                'varanda_gourmet': list(filter(lambda x: "varanda gourmet" == x.lower(), imovel_info)),
+                'espaco_gourmet': list(filter(lambda x: "espaço gourmet" == x.lower(), imovel_info)),
+                'quadra_de_esporte': list(filter(lambda x: 'quadra poliesportiva' == x.lower(), imovel_info)),
+                'playground': list(filter(lambda x: "playground" == x.lower(), imovel_info)),
+                'portaria_24_horas': list(filter(lambda x: "portaria 24h" == x.lower(), imovel_info)),
+                'area_servico': list(filter(lambda x: "área de serviço" == x.lower(), imovel_info))
                 }
 
         for info, conteudo in lista.items():
