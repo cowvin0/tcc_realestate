@@ -17,41 +17,53 @@ class ScrapyZapPipeline:
             adapter[tup] = value
                
         # Converting None to np.nan
-        select_all = adapter.field_names()
-        for spe in select_all:
-            value = adapter.get(spe)
-            if value == np.nan:
-                adapter[spe] = np.nan 
+        #select_all = adapter.field_names()
+        #for spe in select_all:
+        #    value = adapter.get(spe)
+        #    if value == np.nan:
+        #        adapter[spe] = np.nan 
 
         # Converting não informado to np.nan
         nao_info = ['condominio', 'iptu']
         for nao in nao_info:
             value = adapter.get(nao)
             if value == 'não informado':
-                adapter[nao] = np.nan
+                adapter[nao] = None
 
         # Removing \n and empty space:
         not_in = ['condominio', 'iptu', 'url', 'id']
         fields = adapter.field_names()
         for field in fields:
             value = adapter.get(field)
-            if value != np.nan:
+            if value != None:
                 if field not in not_in:
                     adapter[field] = value.replace('\n', '').strip()
 
-
-
-        should_int = ['area', 'valor', 'quarto', 'banheiro' 
-                      'condominio', 'iptu', 'andar']
+        # Converting to float
+        should_int = ['banheiro', 'condominio', 'area',
+                      'valor', 'andar', 'iptu', 'quarto']
         for should in should_int:
             int_value = adapter.get(should)
             pattern = r'(?<!\S)(?:\d+(?:\.\d{3})*(?:,\d+)?)|\d+(?=\s*(?:m²|º|\b))'
-            if int_value != np.nan:
+            if int_value != None:
                 value = re.findall(pattern, int_value)[0]
                 adapter[should] = float(
-                        value.replace('.', '').replace(',', '.')
+                        value.replace('.', '').replace(', ', '')
                         )
 
+
+        # Converting boolean features to 1
+        boolean = ['academia', 'area_servico', 'espaco_gourmet',
+                   'piscina', 'playground', 'portaria_24_horas',
+                   'quadra_de_esporte', 'sauna', 'spa',
+                   'varanda_gourmet', 'elevador']
+        for does_exist in boolean:
+            value = adapter.get(does_exist)
+            if value != None:
+                adapter[does_exist] = 1.0
         
+        # Removing 'à venda'
+        tipo_value = adapter.get('tipo')
+        adapter['tipo'] = tipo_value.replace('à Venda', '').strip().lower().replace(' ', '_').replace(',', '') 
 
         return item

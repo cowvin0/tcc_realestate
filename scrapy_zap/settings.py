@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = "scrapy_zap.spiders"
 USER_AGENT = "Mozilla/5.0"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True 
+ROBOTSTXT_OBEY = False 
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -49,9 +49,11 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "scrapy_zap.middlewares.ScrapyZapDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    #"scrapy_zap.middlewares.ScrapyZapDownloaderMiddleware": 543,
+    #"scrapy_zap.middlewares.ScrapeOpsFakeUserAgentMiddleware": 400,
+    "scrapy_zap.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -90,3 +92,7 @@ ITEM_PIPELINES = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+SCRAPEOPS_API_KEY = '54ac2fe3-b545-40cd-8810-d26fd8ce5a35'
+SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agents'
+SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
+SCRAPEOPS_NUM_RESULTS = 5

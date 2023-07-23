@@ -19,6 +19,7 @@ class ZapItem(scrapy.Item):
     piscina = scrapy.Field()
     spa = scrapy.Field()
     quadra_de_esporte = scrapy.Field()
+    elevador = scrapy.Field()
     sauna = scrapy.Field()
     varanda_gourmet = scrapy.Field()
     espaco_gourmet = scrapy.Field()
