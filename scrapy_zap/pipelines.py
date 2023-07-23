@@ -1,4 +1,5 @@
 import re
+from unidecode import unidecode
 from itemadapter import ItemAdapter
 
 
@@ -55,8 +56,23 @@ class ScrapyZapPipeline:
             if value != None:
                 adapter[does_exist] = 1.0
         
-        # Removing 'à venda'
+        # Removing 'à venda' 
         tipo_value = adapter.get('tipo')
-        adapter['tipo'] = tipo_value.replace('à Venda', '').strip().lower().replace(' ', '_').replace(',', '') 
+        adapter['tipo'] = (tipo_value.replace('à Venda', '').
+                           strip().lower().
+                           replace(' ', '_').replace(',', '') )
+
+        # Removing dead keys from 'tipo'
+        tipo_value = adapter.get('tipo')
+        adapter['tipo'] = unidecode(tipo_value)
+
+        # Inputing 0 in those boolean variables that aren't entirely falsy
+        figure_it_out = [adapter.get(this) for this in boolean]
+        dict_val = {k:v for (k, v) in zip(boolean, figure_it_out)}
+        if any(figure_it_out):
+            for name, value in dict_val.items():
+                if value == None:
+                    adapter[name] = 0
+
 
         return item

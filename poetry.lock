@@ -729,6 +729,21 @@ requests = ">=1.0.0"
 six = "*"
 
 [[package]]
+name = "scrapeops-scrapy-proxy-sdk"
+version = "1.0"
+description = "Scrapeops Scrapy Proxy SDK, simple integration to use the Scrapeops Proxy API with your Scrapy Spiders."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "scrapeops_scrapy_proxy_sdk-1.0.tar.gz", hash = "sha256:466e43fa2e6508635c1aa89f21c3ec16223949d97452a776d04ce72b27d8ed14"},
+]
+
+[package.dependencies]
+requests = ">=2.24.0"
+scrapy = ">=2.0"
+urllib3 = ">=1.25.10"
+
+[[package]]
 name = "scrapy"
 version = "2.9.0"
 description = "A high-level Web Crawling and Web Scraping framework"
@@ -1004,6 +1019,17 @@ files = [
 ]
 
 [[package]]
+name = "unidecode"
+version = "1.3.6"
+description = "ASCII transliterations of Unicode text"
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "Unidecode-1.3.6-py3-none-any.whl", hash = "sha256:547d7c479e4f377b430dd91ac1275d593308dce0fc464fb2ab7d41f82ec653be"},
+    {file = "Unidecode-1.3.6.tar.gz", hash = "sha256:fed09cf0be8cf415b391642c2a5addfc72194407caee4f98719e40ec2a72b830"},
+]
+
+[[package]]
 name = "urllib3"
 version = "2.0.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1098,4 +1124,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "6a285369ba28acc5e2cac3f98b92e5698ba103a317f947f54ffff3a7786a6916"
+content-hash = "15f8b0f941809bc7414f2e7585c246a584f392397aee6938a75e45a3a650cd76"

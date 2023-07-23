@@ -1,5 +1,4 @@
 # Scrapy settings for scrapy_zap project
-#
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
 #
@@ -53,6 +52,8 @@ DOWNLOADER_MIDDLEWARES = {
     #"scrapy_zap.middlewares.ScrapyZapDownloaderMiddleware": 543,
     #"scrapy_zap.middlewares.ScrapeOpsFakeUserAgentMiddleware": 400,
     "scrapy_zap.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
+    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 }
 
 # Enable or disable extensions
@@ -96,8 +97,5 @@ SCRAPEOPS_API_KEY = '54ac2fe3-b545-40cd-8810-d26fd8ce5a35'
 SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agents'
 SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
 SCRAPEOPS_NUM_RESULTS = 5
-#ROTATING_PROXY_LIST =[
-#        'proxy1.com:8000',
-#        'proxy2.com:8031',
-#        'proxy3.com:8032',
-#        ]
+
+ROTATING_PROXY_LIST_PATH = 'proxies.txt'
