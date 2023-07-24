@@ -10,8 +10,8 @@ class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=' + str(page) for page in range(1, 31)]
-    #start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=1']
+    #start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=' + str(page) for page in range(1, 31)]
+    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=1']
 
     def __init__(self, cidade=None, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
