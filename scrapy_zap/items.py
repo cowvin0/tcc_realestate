@@ -6,9 +6,11 @@
 import scrapy
 
 class ZapItem(scrapy.Item):
+
     valor = scrapy.Field()
     tipo = scrapy.Field()
     endereco = scrapy.Field()
+    vaga = scrapy.Field()
     condominio = scrapy.Field()
     iptu = scrapy.Field()
     area = scrapy.Field()

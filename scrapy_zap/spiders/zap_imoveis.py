@@ -38,9 +38,6 @@ class ZapSpider(scrapy.Spider):
 
     def parse_imovel_info(self, response):
 
-        #def is_in(carac, info):
-        #filtering = lambda values, info: [info if 'piscina' == info.replace('\n', '').lower().strip() else None for info in batata]    
-
         zap_item = ZapItem()
 
         imovel_info = response.css('ul.amenities__list ::text').getall()
@@ -52,6 +49,7 @@ class ZapSpider(scrapy.Spider):
         area = response.xpath('//ul[@class="feature__container info__base-amenities"]/li').css('span[itemprop="floorSize"]::text').get()
         num_quarto = response.xpath('//ul[@class="feature__container info__base-amenities"]/li').css('span[itemprop="numberOfRooms"]::text').get()
         num_banheiro = response.xpath('//ul[@class="feature__container info__base-amenities"]/li').css('span[itemprop="numberOfBathroomsTotal"]::text').get()
+        num_vaga = response.xpath('//ul[@class="feature__container info__base-amenities"]/li[@class="feature__item text-regular js-parking-spaces"]/span/text()').get()
         andar = response.xpath('//ul[@class="feature__container info__base-amenities"]/li').css('span[itemprop="floorLevel"]::text').get()
         url = response.url
         id = re.search(r'id-(\d+)/', url).group(1)
@@ -85,6 +83,7 @@ class ZapSpider(scrapy.Spider):
         zap_item['iptu'] = iptu,
         zap_item['area'] = area,
         zap_item['quarto'] = num_quarto,
+        zap_item['vaga'] = num_vaga,
         zap_item['banheiro'] = num_banheiro,
         zap_item['andar'] = andar,
         zap_item['url'] = response.url,

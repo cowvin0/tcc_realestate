@@ -12,7 +12,7 @@ class ScrapyZapPipeline:
         # Get the first elements of tuples:
         tups = ['area', 'banheiro', 'andar', 'condominio',
                 'iptu', 'quarto', 'tipo', 'url', 'valor',
-                'endereco']
+                'endereco', 'vaga']
         for tup in tups:
             value = adapter.get(tup)[0]
             adapter[tup] = value
@@ -35,7 +35,8 @@ class ScrapyZapPipeline:
 
         # Converting to float
         should_int = ['banheiro', 'condominio', 'area',
-                      'valor', 'andar', 'iptu', 'quarto']
+                      'valor', 'andar', 'iptu', 'quarto',
+                      'vaga']
         for should in should_int:
             int_value = adapter.get(should)
             pattern = r'(?<!\S)(?:\d+(?:\.\d{3})*(?:,\d+)?)|\d+(?=\s*(?:m²|º|\b))'
@@ -44,7 +45,6 @@ class ScrapyZapPipeline:
                 adapter[should] = float(
                         value.replace('.', '').replace(', ', '')
                         )
-
 
         # Converting boolean features to 1
         boolean = ['academia', 'area_servico', 'espaco_gourmet',
@@ -60,7 +60,8 @@ class ScrapyZapPipeline:
         tipo_value = adapter.get('tipo')
         adapter['tipo'] = (tipo_value.replace('à Venda', '').
                            strip().lower().
-                           replace(' ', '_').replace(',', '') )
+                           replace(' ', '_').replace(',', '')
+                           )
 
         # Removing dead keys from 'tipo'
         tipo_value = adapter.get('tipo')
