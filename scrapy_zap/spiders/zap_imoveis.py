@@ -1,5 +1,4 @@
 import scrapy
-import numpy as np
 import random
 import re
 from scrapy_zap.items import ZapItem
@@ -11,8 +10,8 @@ class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    #start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=' + str(page) for page in range(1, 31)]
-    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/pb+joao-pessoa/?transacao=venda&onde=,Para%C3%ADba,Jo%C3%A3o%20Pessoa,,,,,city,BR%3EParaiba%3ENULL%3EJoao%20Pessoa,-7.118835,-34.881434,&pagina' + str(page) for page in range(1, 101)]
+    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=' + str(page) for page in range(1, 33)]
+    #start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/pb+joao-pessoa/?transacao=venda&onde=,Para%C3%ADba,Jo%C3%A3o%20Pessoa,,,,,city,BR%3EParaiba%3ENULL%3EJoao%20Pessoa,-7.118835,-34.881434,&pagina' + str(page) for page in range(1, 101)]
     #start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=1']
 
     def __init__(self, cidade=None, *args, **kwargs):
@@ -29,11 +28,12 @@ class ZapSpider(scrapy.Spider):
                     )
             
     def parse(self, response):
+        hrefs = response.css('a.result-card ::attr(href)').getall()
 
-        selecionar_divs = response.css('div')
-        coletando_hrefs = [href.css('a.result-card ::attr(href)').getall() for href in selecionar_divs]
+        #selecionar_divs = response.css('div')
+        #coletando_hrefs = [href.css('a.result-card ::attr(href)').getall() for href in selecionar_divs]
 
-        for url in np.unique(reduce(lambda x, y: x + y, coletando_hrefs)):
+        for url in hrefs:
             yield response.follow(url, callback=self.parse_imovel_info,
                                   dont_filter = True
                                   )
