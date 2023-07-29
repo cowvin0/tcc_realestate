@@ -98,4 +98,9 @@ SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agent
 SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
 SCRAPEOPS_NUM_RESULTS = 5
 
+DOWNLOAD_HANDLERS = {
+        'http': 'scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler',
+        'https': 'scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler',
+        }
+
 ROTATING_PROXY_LIST_PATH = 'proxies.txt'
