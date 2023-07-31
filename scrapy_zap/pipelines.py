@@ -14,9 +14,9 @@ class ScrapyZapPipeline:
                 'iptu', 'quarto', 'tipo', 'url', 'valor',
                 'endereco', 'vaga']
         for tup in tups:
-            if adapter.get(tup) != None:
-                value = adapter.get(tup)[0]
-                adapter[tup] = value
+            val = adapter.get(tup)
+            if val != None:
+                adapter[tup] = val[0] 
                
         # Converting não informado to np.nan
         nao_info = ['condominio', 'iptu']
