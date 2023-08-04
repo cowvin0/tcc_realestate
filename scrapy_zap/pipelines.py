@@ -18,7 +18,7 @@ class ScrapyZapPipeline:
             if val != None:
                 adapter[tup] = val[0] 
                
-        # Converting não informado to np.nan
+        # Converting não informado to None 
         nao_info = ['condominio', 'iptu']
         for nao in nao_info:
             value = adapter.get(nao)
@@ -30,7 +30,7 @@ class ScrapyZapPipeline:
         fields = adapter.field_names()
         for field in fields:
             value = adapter.get(field)
-            if value != None:
+            if not isinstance(value, (int, type(None))): #value != None and type(value) != int:
                 if field not in not_in:
                     adapter[field] = value.replace('\n', '').strip()
 
@@ -51,7 +51,7 @@ class ScrapyZapPipeline:
         boolean = ['academia', 'area_servico', 'espaco_gourmet',
                    'piscina', 'playground', 'portaria_24_horas',
                    'quadra_de_esporte', 'sauna', 'spa',
-                   'varanda_gourmet', 'elevador']
+                   'varanda_gourmet', 'elevador', 'salao_de_festa']
         for does_exist in boolean:
             value = adapter.get(does_exist)
             if value != None:

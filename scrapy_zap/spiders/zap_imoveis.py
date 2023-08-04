@@ -2,6 +2,7 @@ import scrapy
 import time
 import random
 import re
+from scrapy.exceptions import CloseSpider
 from scrapy_zap.items import ZapItem
 from scrapy.selector import Selector
 from scrapy_playwright.page import PageMethod
@@ -12,13 +13,13 @@ class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ma+sao-jose-de-ribamar/?transacao=venda&onde=,Maranh%C3%A3o,S%C3%A3o%20Jos%C3%A9%20de%20Ribamar,,,,,city,BR%3EMaranhao%3ENULL%3ESao%20Jose%20de%20Ribamar,-2.552398,-44.069254,&pagina=31']
+    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/rj+marica/?transacao=venda&onde=,Rio%20de%20Janeiro,Maric%C3%A1,,,,,city,BR%3ERio%20de%20Janeiro%3ENULL%3EMarica,-22.880707,-43.101353,&pagina=20']# + str(page) for page in range(15, 18)]
 
     async def errback(self, failure): 
         page = failure.request.meta['playwright_page']
         await page.closed()
 
-    def __init__(self, cidade=None, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
@@ -95,6 +96,9 @@ class ZapSpider(scrapy.Spider):
 
         await page.close()
 
+        if len(hrefs) == 0:
+            raise CloseSpider('No hrefs in response')
+
         yield {'href': len(hrefs)}
 
         for url in hrefs:
@@ -123,6 +127,7 @@ class ZapSpider(scrapy.Spider):
         filtering = lambda info: [check if info == check.replace('\n', '').lower().strip() else None for check in imovel_info]
 
         lista = {
+                'salao_de_festa': list(filter(lambda x: "salão de festas" in x.lower(), imovel_info)),
                 'academia': list(filter(lambda x: "academia" in x.lower(), imovel_info)),
                 'piscina': list(filter(lambda x: x != None, filtering('piscina'))),
                 'spa': list(filter(lambda x: x != None, filtering('spa'))),
@@ -142,9 +147,14 @@ class ZapSpider(scrapy.Spider):
             else:
                 zap_item[info] = conteudo[0]
 
+        try:
+            zap_item['endereco'] = endereco_imovel.replace('\n', '').strip(),
+        except:
+            raise AttributeError('endereco is NoneType so it does not have replace method')
+
+
         zap_item['valor'] = preco_imovel,
         zap_item['tipo'] = tipo_imovel,
-        zap_item['endereco'] = endereco_imovel.replace('\n', '').strip(),
         zap_item['condominio'] = condominio,
         zap_item['iptu'] = iptu,
         zap_item['area'] = area,
