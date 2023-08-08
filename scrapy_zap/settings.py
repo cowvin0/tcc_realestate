@@ -52,6 +52,7 @@ DOWNLOADER_MIDDLEWARES = {
     #"scrapy_zap.middlewares.ScrapyZapDownloaderMiddleware": 543,
     #"scrapy_zap.middlewares.ScrapeOpsFakeUserAgentMiddleware": 400,
     "scrapy_zap.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
+    "scrapy_zap.middlewares.RetryMiddleware": 550,
     #'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     #'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 }
@@ -104,3 +105,5 @@ DOWNLOAD_HANDLERS = {
         }
 
 ROTATING_PROXY_LIST_PATH = 'proxies.txt'
+RETRY_ENABLED = True
+RETRY_TIMES = 10

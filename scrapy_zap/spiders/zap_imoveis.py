@@ -13,7 +13,7 @@ class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/rj+marica/?transacao=venda&onde=,Rio%20de%20Janeiro,Maric%C3%A1,,,,,city,BR%3ERio%20de%20Janeiro%3ENULL%3EMarica,-22.880707,-43.101353,&pagina=20']# + str(page) for page in range(15, 18)]
+    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/rj+marica/?transacao=venda&onde=,Rio%20de%20Janeiro,Maric%C3%A1,,,,,city,BR%3ERio%20de%20Janeiro%3ENULL%3EMarica,-22.880707,-43.101353,&pagina=' + str(page) for page in range(1, 101)]
 
     async def errback(self, failure): 
         page = failure.request.meta['playwright_page']
@@ -98,8 +98,6 @@ class ZapSpider(scrapy.Spider):
 
         if len(hrefs) == 0:
             raise CloseSpider('No hrefs in response')
-
-        yield {'href': len(hrefs)}
 
         for url in hrefs:
             yield response.follow(url, callback=self.parse_imovel_info,

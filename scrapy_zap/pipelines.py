@@ -59,14 +59,17 @@ class ScrapyZapPipeline:
         
         # Removing 'à venda' 
         tipo_value = adapter.get('tipo')
-        adapter['tipo'] = (tipo_value.replace('à Venda', '').
-                           strip().lower().
-                           replace(' ', '_').replace(',', '')
-                           )
+        if tipo_value != None:
+            adapter['tipo'] = unidecode(
+                    (tipo_value.replace('à Venda', '').
+                     strip().lower().
+                     replace(' ', '_').replace(',', '')
+                     )
+                    )
 
         # Removing dead keys from 'tipo'
-        tipo_value = adapter.get('tipo')
-        adapter['tipo'] = unidecode(tipo_value)
+        #tipo_value = adapter.get('tipo')
+        #adapter['tipo'] = unidecode(tipo_value)
 
         # Inputing 0 in those boolean variables that aren't entirely falsy
         figure_it_out = [adapter.get(this) for this in boolean]
