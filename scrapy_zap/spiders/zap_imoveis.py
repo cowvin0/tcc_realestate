@@ -13,7 +13,7 @@ class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/rj+marica/?transacao=venda&onde=,Rio%20de%20Janeiro,Maric%C3%A1,,,,,city,BR%3ERio%20de%20Janeiro%3ENULL%3EMarica,-22.880707,-43.101353,&pagina=']
+    start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/pe+garanhuns/?transacao=venda&onde=,Pernambuco,Garanhuns,,,,,city,BR%3EPernambuco%3ENULL%3EGaranhuns,-8.89088,-36.496478,&pagina=']
 
     async def errback(self, failure): 
         page = failure.request.meta['playwright_page']
@@ -156,7 +156,7 @@ class ZapSpider(scrapy.Spider):
         try:
             zap_item['endereco'] = endereco_imovel.replace('\n', '').strip(),
         except:
-            zap_item['endereco'] = endereco_imovel
+            zap_item['endereco'] = endereco_imovel,
 
 
         zap_item['valor'] = preco_imovel,

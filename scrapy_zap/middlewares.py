@@ -4,6 +4,7 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 import warnings
+import playwright.sync_api
 import requests
 from twisted.internet import defer
 from twisted.internet.error import (
@@ -220,7 +221,7 @@ class RetryMiddleware:
     EXCEPTIONS_TO_RETRY = (defer.TimeoutError, TimeoutError, DNSLookupError,
                            ConnectionRefusedError, ConnectionDone, ConnectError,
                            ConnectionLost, TCPTimedOutError, ResponseFailed,
-                           IOError, TunnelError)
+                           IOError, TunnelError, playwright.sync_api.TimeoutError)
 
     def __init__(self, settings):
         if not settings.getbool('RETRY_ENABLED'):
