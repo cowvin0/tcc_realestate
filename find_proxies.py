@@ -1,38 +1,27 @@
-#import asyncio
-#from proxybroker import Broker
-#
-#async def show(proxies):
-#    while True:
-#        proxy = await proxies.get()
-#        if proxy is None: break
-#        print('Found proxy %s' % proxy)
-#
-#proxies = asyncio.Queue()
-#broker = Broker(proxies)
-#tasks = asyncio.gater(
-#        broker.find(types=["HTTP", "HTTPS"], limit=10),
-#        show(proxies)
-#        )
-#
-#loop = asyncio.get_event_loop()
-#loop.run_until_complete(tasks)
-
 import asyncio
 from proxybroker import Broker
 
-async def show(proxies):
-    while True:
-        proxy = await proxies.get()
-        if proxy is None: break
-        print('Found proxy %s' % proxy)
 
-proxies = asyncio.Queue(**{"loop": loop})
-broker = Broker(proxies)
-tasks = asyncio.gather(
-        broker.find(types=["HTTP", "HTTPS"], limit=10),
-        show(proxies)
-        )
+async def save(proxies, filename):
+    """Save proxies to a file."""
+    with open(filename, 'w') as f:
+        while True:
+            proxy = await proxies.get()
+            if proxy is None:
+                break
+            proto = 'https' if 'HTTPS' in proxy.types else 'http'
+            row = '%s://%s:%d\n' % (proto, proxy.host, proxy.port)
+            f.write(row)
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(tasks)
 
+def main():
+    proxies = asyncio.Queue()
+    broker = Broker(proxies)
+    tasks = asyncio.gather(broker.find(types=['HTTP', 'HTTPS'], limit=10, countries=["BR"]),
+                           save(proxies, filename='proxies.txt'))
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(tasks)
+
+
+if __name__ == '__main__':
+    main()
