@@ -12,7 +12,7 @@ class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = ['https://www.zapimoveis.com.br/venda/cobertura/pb+joao-pessoa/?transacao=venda&onde=,Para%C3%ADba,Jo%C3%A3o%20Pessoa,,,,,city,BR%3EParaiba%3ENULL%3EJoao%20Pessoa,-7.040294,-34.843021,&tipos=cobertura_residencial&pagina=' + str(page) for page in range(1, 13)]
+    start_urls = ['https://www.zapimoveis.com.br/venda/apartamentos/pe+recife/?transacao=venda&onde=,Pernambuco,Recife,,,,,city,BR%3EPernambuco%3ENULL%3ERecife,-8.05774,-34.882963,&tipos=apartamento_residencial&pagina=' + str(page) for page in range(1, 101)]
 
     async def errback(self, failure): 
         page = failure.request.meta['playwright_page']
