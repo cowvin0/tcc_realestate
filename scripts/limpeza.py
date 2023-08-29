@@ -1,19 +1,28 @@
 import pandas as pd
-import geopy
-
 
 cidade = input()
 place = f"{cidade}.csv"
 dados = pd.read_csv(place)
 
-def limpar(dados):
+def limpar(df):
 
-    objects = dados.loc[dados.academia != "academia", ["endereco", "tipo", "url"]]. \
-            reset_index(drop=True).
-
-    numerics = dados.drop(columns=objects.columns).loc[dados.academia != "academia", :]. \
+    remove_cols = df[df.academia != "academia"].\
+            drop_duplicates(["id"]).\
+            replace({"lancamentos_de_terrenos_lotes_e_condominios": "terrenos_lotes_e_condominios",
+                     "lancamentos_de_casas_de_condominio": "casas_de_condominio",
+                     "lancamentos_de_apartamentos": "apartamentos",
+                     "lancamentos_de_casas_comerciais": "casas_comerciais",
+                     "lancamentos_de_casas": "casas"}).\
             reset_index(drop=True)
+            
 
-    dados = pd.concat([numerics, objects], axis=1)
+    objects = remove_cols[["endereco", "tipo", "url"]]
 
-    dados.to_csv(place)
+    numerics = remove_cols.drop(columns=objects.columns)
+
+    df = pd.concat([numerics.astype(float), objects], axis=1)
+
+    df.to_csv(place, index=False)
+
+if __name__ == "__main__":
+    limpar(dados)
