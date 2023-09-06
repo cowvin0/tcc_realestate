@@ -12,18 +12,15 @@ class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-<<<<<<< HEAD
-    start_urls = ['https://www.zapimoveis.com.br/venda/casas-de-condominio/se+aracaju/?transacao=venda&onde=,Sergipe,Aracaju,,,,,city,BR%3ESergipe%3ENULL%3EAracaju,-10.907876,-37.026708,&tipos=condominio_residencial,cobertura_residencial,flat_residencial,lote-terreno_residencial,imovel-comercial_comercial,lote-terreno_comercial&pagina=' + str(page) for page in range(1, 36)]
-=======
     start_urls = ['https://www.zapimoveis.com.br/venda/apartamentos/rr+boa-vista/?transacao=venda&onde=,Roraima,Boa%20Vista,,,,,city,BR%3ERoraima%3ENULL%3EBoa%20Vista,2.820634,-60.673755,&tipos=apartamento_residencial,casa_residencial,condominio_residencial,cobertura_residencial,flat_residencial,lote-terreno_residencial,imovel-comercial_comercial,lote-terreno_comercial&pagina=' + str(page) for page in range(1, 4)]
->>>>>>> origin/main
 
     async def errback(self, failure): 
         page = failure.request.meta['playwright_page']
         await page.closed()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, page=1, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
+        self.page = page
 
     def start_requests(self):
 
@@ -73,6 +70,7 @@ class ZapSpider(scrapy.Spider):
 
         page = response.meta['playwright_page']
         playwright_page_methods = response.meta['playwright_page_methods']
+
 
         #if response.status == 500:
         #    raise CloseSpider('It reaches to the 101 page, which is the limit')
@@ -128,7 +126,7 @@ class ZapSpider(scrapy.Spider):
         andar = response.xpath('//ul[@class="feature__container info__base-amenities"]/li').css('span[itemprop="floorLevel"]::text').get()
         url = response.url
         id = re.search(r'id-(\d+)/', url).group(1)
-
+        
         filtering = lambda info: [check if info == check.replace('\n', '').lower().strip() else None for check in imovel_info]
 
         lista = {
