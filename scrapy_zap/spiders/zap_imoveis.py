@@ -18,9 +18,10 @@ class ZapSpider(scrapy.Spider):
         page = failure.request.meta['playwright_page']
         await page.closed()
 
-    def __init__(self, page=1, *args, **kwargs):
+    def __init__(self, page=1, count=0, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
         self.page = page
+        self.count = count
 
     def start_requests(self):
 
