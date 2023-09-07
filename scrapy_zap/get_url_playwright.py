@@ -1,4 +1,5 @@
 import asyncio
+import json
 import re
 import os
 from playwright.async_api import async_playwright
@@ -9,7 +10,7 @@ async def main():
     
     async with async_playwright() as p:
         
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
 
         context = await browser.new_context(
                 color_scheme='light',
@@ -54,7 +55,10 @@ async def main():
         url = await page.evaluate('window.location.href;')
         url = url.replace('terrenos-lotes-comerciais', 'apartamentos')[0:-1]
 
-        breakpoint()
+        data_json = json.dumps(data)
+
+        os.environ['URL'] = url
+        os.environ['QUANT'] = data_json
 
 if __name__ == "__main__":
     asyncio.run(main())
