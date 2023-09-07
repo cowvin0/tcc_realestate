@@ -45,44 +45,14 @@ async def main():
         data = {key: float(re.findall(pattern, val)[0].replace('.', ''))  for key, val in data.items()}
 
         await page.evaluate('''
-                            var previousUrl = window.location.href;
-
-                            var scrollFunction = async () => {
-                                const scrollStep = 50;
-                                const delay = 16;
-                                let currentPosition = 0;
-
-                                function animateScroll() {
-                                    const currentUrl = window.location.href;
-
-                                    if (previousUrl !== currentUrl) {
-                                        return currentUrl;
-                                        }
-
-                                    const pageHeight = Math.max(
-                                        document.body.scrollHeight, document.documentElement.scrollHeight,
-                                        document.body.offsetHeight, document.documentElement.offsetHeight,
-                                        document.body.clientHeight, document.documentElement.clientHeight
-                                        );
-
-                                    if (currentPosition < pageHeight) {
-                                        currentPosition += scrollStep;
-                                        if (currentPosition > pageHeight) {
-                                            currentPosition = pageHeight;
-                                            }
-                                        window.scrollTo(0, currentPosition);
-                                        requestAnimationFrame(animateScroll);
-                                        }
-                                    }
-                                animateScroll();
-                                };
-
-                            previousUrl = scrollFunction();
+                            var button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
+                            button[12].click();
                             ''')
+        
+        await page.wait_for_timeout(5000)
 
-        url = await page.evaluate('previousUrl;')
-
-        print(url)
+        url = await page.evaluate('window.location.href;')
+        url = url.replace('terrenos-lotes-comerciais', 'apartamentos')[0:-1]
 
         breakpoint()
 
