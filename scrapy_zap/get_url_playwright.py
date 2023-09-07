@@ -13,6 +13,7 @@ async def main():
 
         context = await browser.new_context(
                 color_scheme='light',
+                user_agent='Mozilla (5.0)',
                 viewport={'width': 1600, 'height': 1000}
                 )
 
@@ -44,14 +45,46 @@ async def main():
         data = {key: float(re.findall(pattern, val)[0].replace('.', ''))  for key, val in data.items()}
 
         await page.evaluate('''
-                            window.scroll({
-                                top: 500,
-                                behavior: 'smooth'
-                                });
+                            var previousUrl = window.location.href;
+
+                            var scrollFunction = async () => {
+                                const scrollStep = 50;
+                                const delay = 16;
+                                let currentPosition = 0;
+
+                                function animateScroll() {
+                                    const currentUrl = window.location.href;
+
+                                    if (previousUrl !== currentUrl) {
+                                        return currentUrl;
+                                        }
+
+                                    const pageHeight = Math.max(
+                                        document.body.scrollHeight, document.documentElement.scrollHeight,
+                                        document.body.offsetHeight, document.documentElement.offsetHeight,
+                                        document.body.clientHeight, document.documentElement.clientHeight
+                                        );
+
+                                    if (currentPosition < pageHeight) {
+                                        currentPosition += scrollStep;
+                                        if (currentPosition > pageHeight) {
+                                            currentPosition = pageHeight;
+                                            }
+                                        window.scrollTo(0, currentPosition);
+                                        requestAnimationFrame(animateScroll);
+                                        }
+                                    }
+                                animateScroll();
+                                };
+
+                            previousUrl = scrollFunction();
                             ''')
 
-        breakpoint()
+        url = await page.evaluate('previousUrl;')
 
+        print(url)
+
+        breakpoint()
 
 if __name__ == "__main__":
     asyncio.run(main())
