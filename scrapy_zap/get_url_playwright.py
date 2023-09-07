@@ -35,11 +35,6 @@ async def main():
 
             await page.wait_for_timeout(5000)
             
-            data[types] = await page.evaluate('''
-                                              var element = document.querySelector('.l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined');
-                                              element.text
-                                              ''')
-
             element = page.locator('.l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined')
 
             data[types] = await element.text_content()
