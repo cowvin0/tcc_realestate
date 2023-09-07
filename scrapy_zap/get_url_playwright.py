@@ -1,4 +1,5 @@
 import asyncio
+import re
 import os
 from playwright.async_api import async_playwright
 
@@ -17,48 +18,45 @@ async def main():
 
         page = await context.new_page()
 
-        await page.goto('https://www.zapimoveis.com.br/venda/imoveis/pb+joao-pessoa')
+        data = {
+                'apartamentos': 0,
+                'casas': 0,
+                'casas-de-condominio': 0,
+                'cobertura': 0,
+                'flat': 0,
+                'terrenos-lotes-condominios': 0,
+                'casa-comercial': 0,
+                'terrenos-lotes-comerciais': 0
+                }
 
-        await page.evaluate('document.querySelector(".l-multiselect__input-label").click()')
+        for types in data.keys():
+
+            await page.goto(f'https://www.zapimoveis.com.br/venda/{types}/pb+joao-pessoa')
+
+            await page.wait_for_timeout(5000)
+            
+            data[types] = await page.evaluate('''
+                                              var element = document.querySelector('.l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined');
+                                              element.text
+                                              ''')
+
+            element = page.locator('.l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined')
+
+            data[types] = await element.text_content()
+
+        pattern = r'\d+\.\d+|\d+'
+
+        data = {key: float(re.findall(pattern, val)[0].replace('.', ''))  for key, val in data.items()}
 
         await page.evaluate('''
-                    (async () => {
-                                
-                        const types = document.querySelectorAll(".l-text.l-u-color-neutral-28.l-text--variant-body-regular.l-text--weight-regular.l-checkbox__label");
-                        const button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
-                        const data = {
-                            "apartamento": types[2],
-                            "casa": types[5],
-                            "casa_condominio": types[7],
-                            "flat": types[10],
-                            "terreno_lote_condomio": types[12],
-                            "casa_comercial": types[17],
-                            "terreno_lote_comercial": types[21],
-                            "cobertura": types[9]
-                                      }
-
-                        let previous_type = null;
-                        for(const type in Object.entries(data)) {
-                                    
-                            var typeElement = type[1];
-                                    
-                            if(previous_type !== null) {
-                                previous_type.click();
-                                    }
-
-                            button[12].click();
-                            previous_type = typeElement;
-
-                            await new Promise(resolve => setTimeout(resolve, 1000));
-                                }
-                            }
-                        )();
-                    ''')
-
+                            window.scroll({
+                                top: 500,
+                                behavior: 'smooth'
+                                });
+                            ''')
 
         breakpoint()
 
 
 if __name__ == "__main__":
     asyncio.run(main())
-    
