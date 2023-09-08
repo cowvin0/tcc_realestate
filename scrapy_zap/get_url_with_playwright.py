@@ -1,7 +1,5 @@
 import asyncio
 import pandas as pd
-import base64
-import json
 import re
 import os
 from playwright.async_api import async_playwright

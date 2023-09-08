@@ -1,11 +1,8 @@
 import scrapy
 import pandas as pd
 import numpy as np
-import json
-import base64
 import time
 import re
-import os
 from scrapy_zap.items import ZapItem
 from scrapy_playwright.page import PageMethod
 from scrapy.http import Request
@@ -15,15 +12,15 @@ class ZapSpider(scrapy.Spider):
     name = 'zap'
     data = pd.read_csv('info.csv')
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = [data['url'][0]]
 
     async def errback(self, failure): 
         page = failure.request.meta['playwright_page']
         await page.closed()
 
-    def __init__(self, data=data, *args, **kwargs):
+    def __init__(self, data=pd.read_csv('info.csv'), *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
         self.infos = data.drop('url', axis=1).to_dict(orient='records')[0]
+        self.start_urls = [data['url'][0]]
 
     def start_requests(self):
 
