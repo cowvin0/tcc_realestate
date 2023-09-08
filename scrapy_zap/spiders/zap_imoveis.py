@@ -1,41 +1,48 @@
 import scrapy
+import numpy as np
+import json
+import base64
 import time
-import random
 import re
-from scrapy.exceptions import CloseSpider
+import os
 from scrapy_zap.items import ZapItem
 from scrapy_playwright.page import PageMethod
-from urllib.parse import urljoin
 from scrapy.http import Request
 
 class ZapSpider(scrapy.Spider):
 
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = ['https://www.zapimoveis.com.br/venda/apartamentos/rr+boa-vista/?transacao=venda&onde=,Roraima,Boa%20Vista,,,,,city,BR%3ERoraima%3ENULL%3EBoa%20Vista,2.820634,-60.673755,&tipos=apartamento_residencial,casa_residencial,condominio_residencial,cobertura_residencial,flat_residencial,lote-terreno_residencial,imovel-comercial_comercial,lote-terreno_comercial&pagina=' + str(page) for page in range(1, 4)]
+    start_urls = [os.environ.get('URL')]
 
     async def errback(self, failure): 
         page = failure.request.meta['playwright_page']
         await page.closed()
 
-    def __init__(self, page=1, count=0, *args, **kwargs):
+    def __init__(self, data=base64.b64decode(os.environ.get('DATA').encode()).decode(), *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
-        self.page = page
-        self.count = count
+        self.data = json.loads(data)         
 
     def start_requests(self):
 
-        for url in self.start_urls:
+        list_data = list(self.data.item())
+        previous_type = list_data[0][0]
 
-            yield Request(
-                    url=url, 
-                    meta = dict(
-                        dont_redirect = True,
-                        handle_httpstatus_list = [302, 308],
-                        playwright = True,
-                        playwright_include_page = True,
-                        playwright_page_methods = {
-                            'scroll_down': PageMethod('evaluate', r'''
+        for which, count in list_data:
+
+            count = np.ceil(count / 100) if count > 100 else count
+
+            for pages in range(1, count + 1):
+
+                yield Request(
+                        url=self.start_urls[0].replace(previous_type, which) + str(pages),
+                        meta = dict(
+                            dont_redirect = True,
+                            handle_httpstatus_list = [302, 308],
+                            playwright = True,
+                            playwright_include_page = True,
+                            playwright_page_methods = {
+                                'scroll_down': PageMethod('evaluate', r'''
                                                       (async () => {
                                                           const scrollStep = 10;
                                                           const delay = 16;
@@ -59,14 +66,16 @@ class ZapSpider(scrapy.Spider):
                                                               }
                                                           animateScroll();
                                                           })();
-                                                      '''),
-                            'get_href': PageMethod('evaluate', 'Array.from(document.querySelectorAll("a.result-card")).map(a => a.href)'),
-                            },
-                        errback = self.errback
-                        ),
-                    callback=self.parse
-                    )
-            
+                                                          '''),
+                                'get_href': PageMethod('evaluate', 'Array.from(document.querySelectorAll("a.result-card)).map(a => a.href)'),
+                                },
+                            errback = self.errback
+                            ),
+                        callback=self.parse
+                        )
+
+            previous_type = which
+
     async def parse(self, response):
 
         page = response.meta['playwright_page']

@@ -1,11 +1,17 @@
-#! usr/bin/python3 
+#!/usr/bin/env python3
 
 import os 
-import sys
 import argparse
 
 parser = argparse.ArgumentParser(
-		    prog="scraping-zap",
-		    description="this is supposed to scrape zap imoveis, a real estate web site",
-		    
+		    prog='scraping-zap',
+		    description='this is supposed to scrape zap imoveis, a real estate web site',
+            usage="%(prog) [options]"
 		)
+
+parser.add_argument('-c', '--city', action='store', help='city to scrape')
+
+args = parser.parse_args()
+
+if args.city:
+    os.environ['CITY'] = args.city

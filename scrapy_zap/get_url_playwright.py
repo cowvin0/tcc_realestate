@@ -1,10 +1,11 @@
 import asyncio
+import base64
 import json
 import re
 import os
 from playwright.async_api import async_playwright
 
-#CITY = os.environ.get('CITY')
+CITY = os.environ.get('CITY')
 
 async def main():
     
@@ -33,7 +34,7 @@ async def main():
 
         for types in data.keys():
 
-            await page.goto(f'https://www.zapimoveis.com.br/venda/{types}/pb+joao-pessoa')
+            await page.goto(f'https://www.zapimoveis.com.br/venda/{types}/{CITY}')
 
             await page.wait_for_timeout(5000)
             
@@ -57,8 +58,11 @@ async def main():
 
         data_json = json.dumps(data)
 
-        os.environ['URL'] = url
-        os.environ['QUANT'] = data_json
+        data_base_64 = base64.b64encode(data_json.encode()).decode()
+
+        os.system(f'export URL={url} && export DATA={data_base_64}')
+        data_json2 = base64.b64decode(data_base_64.encode()).decode() 
+        print(json.loads(data_json2))
 
 if __name__ == "__main__":
     asyncio.run(main())
