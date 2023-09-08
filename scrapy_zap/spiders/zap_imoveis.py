@@ -31,10 +31,10 @@ class ZapSpider(scrapy.Spider):
 
             count = np.ceil(count / 100) if count > 100 else count
 
-            for pages in range(1, count + 1):
+            for pages in range(1, int(count) + 1):
 
                 yield Request(
-                        url=self.start_urls[0].replace(previous_type, which) + str(pages),
+                        url=self.start_urls[0].replace(previous_type, which) + str(int(pages)),
                         meta = dict(
                             dont_redirect = True,
                             handle_httpstatus_list = [302, 308],

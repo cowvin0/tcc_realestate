@@ -1,8 +1,9 @@
 import pandas as pd
+import os
 
-cidade = input()
-place = f"{cidade}.csv"
-dados = pd.read_csv(place)
+CITY = os.environ.get('CITY')
+place = f"{CITY}.csv"
+data = pd.read_csv(place)
 
 def limpar(df):
 
@@ -27,4 +28,4 @@ def limpar(df):
     df.to_csv(place, index=False)
 
 if __name__ == "__main__":
-    limpar(dados)
+    limpar(data)
