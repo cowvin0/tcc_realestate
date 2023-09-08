@@ -61,8 +61,6 @@ async def main():
         data_base_64 = base64.b64encode(data_json.encode()).decode()
 
         os.system(f'export URL={url} && export DATA={data_base_64}')
-        data_json2 = base64.b64decode(data_base_64.encode()).decode() 
-        print(json.loads(data_json2))
 
 if __name__ == "__main__":
     asyncio.run(main())

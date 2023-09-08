@@ -81,10 +81,6 @@ class ZapSpider(scrapy.Spider):
         page = response.meta['playwright_page']
         playwright_page_methods = response.meta['playwright_page_methods']
 
-
-        #if response.status == 500:
-        #    raise CloseSpider('It reaches to the 101 page, which is the limit')
-
         await page.evaluate(
                 '''
                 var intervalID = setInterval(function () {
@@ -110,9 +106,6 @@ class ZapSpider(scrapy.Spider):
         hrefs = await page.evaluate('Array.from(document.querySelectorAll("a.result-card")).map(a => a.href)')
 
         await page.close()
-
-        #if len(hrefs) == 0:
-        #    raise CloseSpider('No hrefs in response')
 
         for url in hrefs:
             yield response.follow(url, callback=self.parse_imovel_info,

@@ -1,2 +1,2 @@
 scrape:
-	export CITY=$(city) && python3 ./scrapy_zap/get_url_playwright.py
+	export CITY=$(city) && ./scrapy_zap/ && scrapy crawl zap -o data/$(city).csv
