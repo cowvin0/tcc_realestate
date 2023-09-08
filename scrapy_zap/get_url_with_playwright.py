@@ -1,4 +1,5 @@
 import asyncio
+import pandas as pd
 import base64
 import json
 import re
@@ -56,11 +57,10 @@ async def main():
         url = await page.evaluate('window.location.href;')
         url = url.replace('terrenos-lotes-comerciais', 'apartamentos')[0:-1]
 
-        data_json = json.dumps(data)
+        data_df = pd.DataFrame(data, index=[0])
+        data_df['url'] = url
 
-        data_base_64 = base64.b64encode(data_json.encode()).decode()
-
-        os.system(f'export URL={url} && export DATA={data_base_64}')
+        data_df.to_csv('info.csv', index=False)
 
 if __name__ == "__main__":
     asyncio.run(main())

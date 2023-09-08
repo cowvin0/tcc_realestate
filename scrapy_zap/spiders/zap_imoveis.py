@@ -1,4 +1,5 @@
 import scrapy
+import pandas as pd
 import numpy as np
 import json
 import base64
@@ -12,20 +13,21 @@ from scrapy.http import Request
 class ZapSpider(scrapy.Spider):
 
     name = 'zap'
+    data = pd.read_csv('info.csv')
     allowed_domains = ['www.zapimoveis.com.br']
-    start_urls = [os.environ.get('URL')]
+    start_urls = [data['url'][0]]
 
     async def errback(self, failure): 
         page = failure.request.meta['playwright_page']
         await page.closed()
 
-    def __init__(self, data=base64.b64decode(os.environ.get('DATA').encode()).decode(), *args, **kwargs):
+    def __init__(self, data=data, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
-        self.data = json.loads(data)         
+        self.infos = data.drop('url', axis=1).to_dict(orient='records')[0]
 
     def start_requests(self):
 
-        list_data = list(self.data.item())
+        list_data = list(self.infos.items())
         previous_type = list_data[0][0]
 
         for which, count in list_data:
