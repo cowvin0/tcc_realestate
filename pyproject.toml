@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "scrapy_zap"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 scrapy = ">=2.9.0,<2.10.0"
 w3lib = ">=2.1.1,<2.2.0"
 scrapy-rotating-proxies = "^0.6.2"

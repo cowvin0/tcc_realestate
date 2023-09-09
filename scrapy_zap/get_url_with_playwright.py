@@ -31,9 +31,10 @@ async def main():
                 'terrenos-lotes-comerciais': 0
                 }
 
+        type_url = {}
         for types in data.keys():
 
-            await page.goto(f'https://www.zapimoveis.com.br/venda/{types}/{CITY}')
+            await page.goto(f'https://www.zapimoveis.com.br/venda/{types}/pe+recife')
 
             await page.wait_for_timeout(5000)
             
@@ -41,22 +42,24 @@ async def main():
 
             data[types] = await element.text_content()
 
+            await page.evaluate('''
+                                var button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
+                                button[12].click();
+                                ''')
+            
+            await page.wait_for_timeout(5000)
+
+            url = await page.evaluate('window.location.href;')
+
+            type_url[types + '_url'] = url[0:-1]
+
         pattern = r'\d+\.\d+|\d+'
 
         data = {key: float(re.findall(pattern, val)[0].replace('.', ''))  for key, val in data.items()}
 
-        await page.evaluate('''
-                            var button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
-                            button[12].click();
-                            ''')
-        
-        await page.wait_for_timeout(5000)
-
-        url = await page.evaluate('window.location.href;')
-        url = url.replace('terrenos-lotes-comerciais', 'apartamentos')[0:-1]
+        data.update(type_url)
 
         data_df = pd.DataFrame(data, index=[0])
-        data_df['url'] = url
 
         data_df.to_csv('info.csv', index=False)
 

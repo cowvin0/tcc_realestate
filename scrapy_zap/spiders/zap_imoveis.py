@@ -19,22 +19,22 @@ class ZapSpider(scrapy.Spider):
 
     def __init__(self, data=pd.read_csv('info.csv'), *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
-        self.infos = data.drop('url', axis=1).to_dict(orient='records')[0]
-        self.start_urls = [data['url'][0]]
+        self.infos = data.filter(regex='^(?!.*url).*$').to_dict(orient='records')[0]
+        self.start_urls = data.filter(like='url').to_dict(orient='records')[0]
 
     def start_requests(self):
 
-        list_data = list(self.infos.items())
-        previous_type = list_data[0][0]
+        list_data = list(self.infos.values())
+        list_urls = list(self.start_urls.values())
 
-        for which, count in list_data:
+        for count, urls in zip(list_data, list_urls):
 
             count = np.ceil(count / 100) if count > 100 else count
 
             for pages in range(1, int(count) + 1):
 
                 yield Request(
-                        url=self.start_urls[0].replace(previous_type, which) + str(int(pages)),
+                        url=urls + str(int(pages)),
                         meta = dict(
                             dont_redirect = True,
                             handle_httpstatus_list = [302, 308],
@@ -72,8 +72,6 @@ class ZapSpider(scrapy.Spider):
                             ),
                         callback=self.parse
                         )
-
-            previous_type = which
 
     async def parse(self, response):
 
