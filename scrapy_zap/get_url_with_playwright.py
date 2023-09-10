@@ -20,42 +20,43 @@ async def main():
 
         page = await context.new_page()
 
-        data = {
-                'apartamentos': 0,
-                'casas': 0,
-                'casas-de-condominio': 0,
-                'cobertura': 0,
-                'flat': 0,
-                'terrenos-lotes-condominios': 0,
-                'casa-comercial': 0,
-                'terrenos-lotes-comerciais': 0
-                }
+        list_type = ['apartamentos', 'casas', 'casas-de-condominio', 'cobertura',
+                     'flat', 'terrenos-lotes-condominios', 'casa-comercial', 'terrenos-lotes-comerciais']
+
+        data_quant = {}
 
         type_url = {}
-        for types in data.keys():
 
-            await page.goto(f'https://www.zapimoveis.com.br/venda/{types}/pe+recife')
+        for types in list_type:
 
-            await page.wait_for_timeout(5000)
+            response = await page.goto(f'https://www.zapimoveis.com.br/venda/{types}/{CITY}')
+
+            if response.status != 404:
+
+                await page.wait_for_timeout(5000)
             
-            element = page.locator('.l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined')
+                element = page.locator('.l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined')
 
-            data[types] = await element.text_content()
+                data_quant[types] = await element.text_content()
 
-            await page.evaluate('''
-                                var button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
-                                button[12].click();
-                                ''')
+                await page.evaluate('''
+                                    var button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
+                                    button[12].click();
+                                    ''')
             
-            await page.wait_for_timeout(5000)
+                await page.wait_for_timeout(5000)
 
-            url = await page.evaluate('window.location.href;')
+                url = await page.evaluate('window.location.href;')
 
-            type_url[types + '_url'] = url[0:-1]
+                type_url[types + '_url'] = url[0:-1]
+
+            else:
+                print(f'Page does not exist: {response.status}')
+                
 
         pattern = r'\d+\.\d+|\d+'
 
-        data = {key: float(re.findall(pattern, val)[0].replace('.', ''))  for key, val in data.items()}
+        data = {key: float(re.findall(pattern, val)[0].replace('.', ''))  for key, val in data_quant.items()}
 
         data.update(type_url)
 

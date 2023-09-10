@@ -29,7 +29,10 @@ class ZapSpider(scrapy.Spider):
 
         for count, urls in zip(list_data, list_urls):
 
-            count = np.ceil(count / 100) if count > 100 else count
+            count = np.ceil(count / 100) if count > 100 else 1
+
+            if count > 100:
+                count = 100
 
             for pages in range(1, int(count) + 1):
 
