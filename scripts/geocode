@@ -1,0 +1,12 @@
+#!/usr/bin/env Rscript
+
+env <- Sys.getenv("CITY") |>
+  stringr::str_sub(start = 4)
+
+df <- glue::glue("data/{env}") |>
+  readr::read_csv()
+
+df_new <- df |> tidygeocoder::geocode(address = endereco, method = "arcgis",
+                                      lat = "latitude", long = "longitude")
+
+df_new |> write.csv(glue::glue("data/{env}"), row.names = FALSE)

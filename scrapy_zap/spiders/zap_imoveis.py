@@ -69,7 +69,7 @@ class ZapSpider(scrapy.Spider):
                                                           animateScroll();
                                                           })();
                                                           '''),
-                                'get_href': PageMethod('evaluate', 'Array.from(document.querySelectorAll("a.result-card)).map(a => a.href)'),
+                                'get_href': PageMethod('evaluate', 'Array.from(document.querySelectorAll("a.result-card")).map(a => a.href)'),
                                 },
                             errback = self.errback
                             ),

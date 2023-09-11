@@ -3,7 +3,7 @@ import os
 
 CITY = os.environ.get('CITY')
 place = f"{CITY}.csv"
-data = pd.read_csv(place)
+data = pd.read_csv(place[3:])
 
 def limpar(df):
 
