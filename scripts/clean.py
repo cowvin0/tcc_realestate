@@ -2,8 +2,7 @@ import pandas as pd
 import os
 
 CITY = os.environ.get('CITY')
-place = f"{CITY}.csv"
-data = pd.read_csv(place[3:])
+data = pd.read_csv(f'data/{CITY[3:]}.csv')
 
 def limpar(df):
 
