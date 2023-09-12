@@ -11,4 +11,4 @@ df <- glue::glue(loc) |>
 df_new <- df |> tidygeocoder::geocode(address = endereco, method = "arcgis",
                                       lat = "latitude", long = "longitude")
 
-df_new |> write.csv(glue::glue("data/{ENV}.csv"), row.names = FALSE)
+df_new |> write.csv(loc, row.names = FALSE)
