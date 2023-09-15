@@ -29,10 +29,7 @@ class ZapSpider(scrapy.Spider):
 
         for count, urls in zip(list_data, list_urls):
 
-            count = np.ceil(count / 100) if count > 100 else 1
-
-            if count > 100:
-                count = 100
+            count = 1 if count <= 100 else np.ceil(count / 100) if count <= 10000 else 100
 
             for pages in range(1, int(count) + 1):
 
@@ -71,7 +68,7 @@ class ZapSpider(scrapy.Spider):
                                                           '''),
                                 'get_href': PageMethod('evaluate', 'Array.from(document.querySelectorAll("a.result-card")).map(a => a.href)'),
                                 },
-                            errback = self.errback
+                            errback=self.errback
                             ),
                         callback=self.parse
                         )

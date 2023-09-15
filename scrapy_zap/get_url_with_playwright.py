@@ -10,7 +10,7 @@ async def main():
     
     async with async_playwright() as p:
         
-        browser = await p.chromium.launch(headless=True)
+        browser = await p.chromium.launch(headless=False)
 
         context = await browser.new_context(
                 color_scheme='light',
