@@ -6,7 +6,7 @@ loc <- glue::glue("data/{ENV}.csv")
 df <- glue::glue(loc) |>
   readr::read_csv()
 
-df_new <- df |> 
+df_new <- df |>
   tidygeocoder::geocode(
     address = endereco, method = "arcgis",
     lat = "latitude", long = "longitude"
@@ -16,7 +16,7 @@ df_new <- df_new |>
   dplyr::mutate(
     lat_norm = (latitude - mean(latitude)) / sd(latitude),
     long_norm = (longitude - mean(longitude)) / sd(longitude)
-  ) |> 
+  ) |>
   dplyr::filter(lat_norm <= 2.5 & lat_norm >= - 2.5 & long_norm <= 2.5 & long_norm >= - 2.5) |>
   dplyr::select(
     -c(lat_norm, long_norm)
