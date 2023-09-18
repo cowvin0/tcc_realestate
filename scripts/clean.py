@@ -15,7 +15,6 @@ def limpar(df):
                      "lancamentos_de_casas_comerciais": "casas_comerciais",
                      "lancamentos_de_casas": "casas"}).\
             reset_index(drop=True)
-            
 
     objects = remove_cols[["endereco", "tipo", "url"]]
 
