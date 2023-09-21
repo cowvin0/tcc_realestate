@@ -56,8 +56,6 @@ class ScrapyZapPipeline:
             value = adapter.get(does_exist)
             if value != None:
                 adapter[does_exist] = 1.0
-            else:
-                adapter[does_exist] = 0
         
         # Removing 'à venda' 
         tipo_value = adapter.get('tipo')
@@ -74,12 +72,12 @@ class ScrapyZapPipeline:
         #adapter['tipo'] = unidecode(tipo_value)
 
         # Inputing 0 in those boolean variables that aren't entirely falsy
-        #figure_it_out = [adapter.get(this) for this in boolean]
-        #dict_val = {k:v for (k, v) in zip(boolean, figure_it_out)}
-        #if any(figure_it_out):
-        #    for name, value in dict_val.items():
-        #        if value == None:
-        #            adapter[name] = 0
+        figure_it_out = [adapter.get(this) for this in boolean]
+        dict_val = {k:v for (k, v) in zip(boolean, figure_it_out)}
+        if any(figure_it_out):
+            for name, value in dict_val.items():
+                if value == None:
+                    adapter[name] = 0
 
 
         return item
