@@ -150,13 +150,10 @@ class ZapSpider(scrapy.Spider):
             else:
                 zap_item[info] = conteudo[0]
 
-        try:
-            zap_item['endereco'] = endereco_imovel.replace('\n', '').strip(),
-        except:
-            zap_item['endereco'] = endereco_imovel,
+        val_ende = response.xpath('//strong/text()').getall()
 
-
-        zap_item['valor'] = preco_imovel,
+        zap_item['valor'] = preco_imovel if preco_imovel != None else val_ende[4].replace('\n', '').strip(),
+        zap_item['endereco'] = endereco_imovel.replace('\n', '').strip() if endereco_imovel != None else val_ende[2].replace('\n', '').strip(),
         zap_item['tipo'] = tipo_imovel,
         zap_item['condominio'] = condominio,
         zap_item['iptu'] = iptu,
