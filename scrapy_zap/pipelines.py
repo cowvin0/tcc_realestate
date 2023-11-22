@@ -38,8 +38,7 @@ class ScrapyZapPipeline:
         should_int = ['banheiro', 'condominio', 'area',
                       'valor', 'andar', 'iptu', 'quarto',
                       'vaga']
-        for should in should_int:
-            int_value = adapter.get(should)
+        for should in should_int: int_value = adapter.get(should)
             pattern = r'(?<!\S)(?:\d+(?:\.\d{3})*(?:,\d+)?)|\d+(?=\s*(?:m²|º|\b))'
             if int_value != None:
                 value = re.findall(pattern, int_value)[0]

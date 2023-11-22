@@ -13,9 +13,9 @@ class ZapSpider(scrapy.Spider):
     data = pd.read_csv('info.csv')
     allowed_domains = ['www.zapimoveis.com.br']
 
-    async def errback(self, failure): 
-        page = failure.request.meta['playwright_page']
-        await page.closed()
+async def errback(self, failure): 
+    page = failure.request.meta['playwright_page']
+    await page.closed()
 
     def __init__(self, data=pd.read_csv('info.csv'), *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
@@ -113,6 +113,7 @@ class ZapSpider(scrapy.Spider):
 
         zap_item = ZapItem()
 
+        foto_imovel = response.xpath('//li[@class="js-carousel-item carousel__item"]//img/@src').get()
         imovel_info = response.css('ul.amenities__list ::text').getall()
         tipo_imovel = response.css('a.breadcrumb__link--router ::text').get()
         endereco_imovel = response.css('span.link ::text').get()
@@ -152,6 +153,7 @@ class ZapSpider(scrapy.Spider):
 
         val_ende = response.xpath('//strong/text()').getall()
 
+        zap_item['foto_imovel'] = foto_imovel,
         zap_item['valor'] = preco_imovel if preco_imovel != None else val_ende[4].replace('\n', '').strip(),
         zap_item['endereco'] = endereco_imovel.replace('\n', '').strip() if endereco_imovel != None else val_ende[2].replace('\n', '').strip(),
         zap_item['tipo'] = tipo_imovel,

@@ -8,6 +8,7 @@ import scrapy
 class ZapItem(scrapy.Item):
 
     valor = scrapy.Field()
+    foto_imovel = scrapy.Field()
     salao_de_festa = scrapy.Field()
     tipo = scrapy.Field()
     endereco = scrapy.Field()
