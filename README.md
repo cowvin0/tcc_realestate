@@ -31,6 +31,9 @@ Padrões de nome de cidades do ZapImóveis:
 **Tarefas organizadas em ordem crescente de importância**
 
 [x] Adicionar imagens e imóveis para aluguel no código da raspagem
+
 [] Modelagem para todas as capitais do nordeste
+
 [] Adicionar dados de raspagem raspagem numa API plumber
+
 [] Shiny App
