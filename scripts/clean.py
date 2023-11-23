@@ -16,7 +16,7 @@ def limpar(df):
                      "lancamentos_de_casas": "casas"}).\
             reset_index(drop=True)
 
-    objects = remove_cols[["endereco", "tipo", "url"]]
+    objects = remove_cols[["endereco", "tipo", "url", "foto_imovel"]]
 
     numerics = remove_cols.drop(columns=objects.columns)
 

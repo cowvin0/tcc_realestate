@@ -8,19 +8,18 @@ from scrapy_playwright.page import PageMethod
 from scrapy.http import Request
 
 class ZapSpider(scrapy.Spider):
-
     name = 'zap'
     data = pd.read_csv('info.csv')
     allowed_domains = ['www.zapimoveis.com.br']
 
-async def errback(self, failure): 
-    page = failure.request.meta['playwright_page']
-    await page.closed()
+    async def errback(self, failure):
+        page = failure.request.meta['playwright_page']
+        await page.closed()
 
-    def __init__(self, data=pd.read_csv('info.csv'), *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
-        self.infos = data.filter(regex='^(?!.*url).*$').to_dict(orient='records')[0]
-        self.start_urls = data.filter(like='url').to_dict(orient='records')[0]
+        self.infos = self.data.filter(regex='^(?!.*url).*$').to_dict(orient='records')[0]
+        self.start_urls = self.data.filter(like='url').to_dict(orient='records')[0]
 
     def start_requests(self):
 
