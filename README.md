@@ -10,7 +10,7 @@ Entrar no ambiente:
 
 Iniciar código de raspagem: 
 
-    make scrape city=nome_cidade 
+    make scrape cond=aluguel_ou_venda city=nome_cidade 
 
 Padrões de nome de cidades do ZapImóveis: 
 

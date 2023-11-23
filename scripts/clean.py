@@ -2,7 +2,8 @@ import pandas as pd
 import os
 
 CITY = os.environ.get('CITY')
-place = f'data/{CITY[3:]}.csv'
+COND = os.environ.get('COND')
+place = f'data/{CITY[3:]}-{COND}.csv'
 data = pd.read_csv(place)
 
 def limpar(df):
@@ -13,7 +14,12 @@ def limpar(df):
                      "lancamentos_de_casas_de_condominio": "casas_de_condominio",
                      "lancamentos_de_apartamentos": "apartamentos",
                      "lancamentos_de_casas_comerciais": "casas_comerciais",
-                     "lancamentos_de_casas": "casas"}).\
+                     "lancamentos_de_casas": "casas",
+                     "casas_para_alugar": "casas",
+                     "apartamentos_para_alugar": "apartamentos",
+                     "casas_comerciais_para_alugar": "casas_comerciais",
+                     "casas_de_condominio_para_alugar": "casas_de_condominio",
+                     "terrenos_lotes_e_condominios_para_alugar": "terrenos_lotes_e_condominios"}).\
             reset_index(drop=True)
 
     objects = remove_cols[["endereco", "tipo", "url", "foto_imovel"]]

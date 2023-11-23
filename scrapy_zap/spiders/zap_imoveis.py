@@ -1,4 +1,5 @@
 import scrapy
+import os
 import pandas as pd
 import numpy as np
 import time
@@ -10,6 +11,7 @@ from scrapy.http import Request
 class ZapSpider(scrapy.Spider):
     name = 'zap'
     data = pd.read_csv('info.csv')
+    COND = os.environ.get("COND")
     allowed_domains = ['www.zapimoveis.com.br']
 
     async def errback(self, failure):
@@ -116,7 +118,7 @@ class ZapSpider(scrapy.Spider):
         imovel_info = response.css('ul.amenities__list ::text').getall()
         tipo_imovel = response.css('a.breadcrumb__link--router ::text').get()
         endereco_imovel = response.css('span.link ::text').get()
-        preco_imovel = response.xpath('//li[@class="price__item--main text-regular text-regular__bolder"]/strong/text()').get()
+        preco_imovel = response.xpath('//li[@class="price__item--main text-regular text-regular__bolder"]/strong/text()').getall()#.get() if self.COND == "venda"
         condominio = response.xpath('//li[@class="price__item condominium color-dark text-regular"]/span/text()').get()
         iptu = response.xpath('//li[@class="price__item iptu color-dark text-regular"]/span/text()').get()
         area = response.xpath('//ul[@class="feature__container info__base-amenities"]/li').css('span[itemprop="floorSize"]::text').get()
@@ -150,10 +152,26 @@ class ZapSpider(scrapy.Spider):
             else:
                 zap_item[info] = conteudo[0]
 
-        val_ende = response.xpath('//strong/text()').getall()
+        #val_ende = response.xpath('//strong/text()').getall()
+
+        # match self.COND:
+        #     case "aluguel":
+        #         if len(preco_imovel) != 1:
+        #             zap_item['valor'] = preco_imovel[1],
+        #         else:
+        #             zap_item['valor'] = preco_imovel[0],
+        #     
+        #     case _:
+        #         zap_item['valor'] = preco_imovel[0],
+
+        try:
+            zap_item['valor'] = preco_imovel[0] if self.COND == "venda" else preco_imovel[1],
+        except:
+            zap_item['valor'] = preco_imovel[0],
 
         zap_item['foto_imovel'] = foto_imovel,
-        zap_item['valor'] = preco_imovel if preco_imovel != None else val_ende[4].replace('\n', '').strip(),
+        #zap_item['valor'] = preco_imovel[0] if self.COND == "venda" else preco_imovel[1],
+        #zap_item['valor'] = preco_imovel if preco_imovel != None else val_ende[4].replace('\n', '').strip(),
         zap_item['endereco'] = endereco_imovel.replace('\n', '').strip() if endereco_imovel != None else val_ende[2].replace('\n', '').strip(),
         zap_item['tipo'] = tipo_imovel,
         zap_item['condominio'] = condominio,

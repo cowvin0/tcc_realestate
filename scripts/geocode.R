@@ -1,7 +1,9 @@
 ENV <- Sys.getenv("CITY") |>
   stringr::str_sub(start = 4)
 
-loc <- glue::glue("data/{ENV}.csv")
+COND <- Sys.getenv("COND")
+
+loc <- glue::glue("data/{ENV}-{COND}.csv")
 
 df <- glue::glue(loc) |>
   readr::read_csv()

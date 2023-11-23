@@ -4,6 +4,7 @@ import re
 import os
 from playwright.async_api import async_playwright
 
+COND = os.environ.get("COND")
 CITY = os.environ.get("CITY")
 
 
@@ -36,7 +37,7 @@ async def main():
 
         for types in list_type:
             response = await page.goto(
-                f"https://www.zapimoveis.com.br/venda/{types}/{CITY}"
+                f"https://www.zapimoveis.com.br/{COND}/{types}/{CITY}"
             )
 
             if response.status != 404:
