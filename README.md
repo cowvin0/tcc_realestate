@@ -28,7 +28,7 @@ Padrões de nome de cidades do ZapImóveis:
 
     Recife: pe+recife 
 
-**Tarefas organizadas em ordem crescente de importância**
+**Tarefas organizadas em ordem decrescente de importância**
 
 [x] Adicionar imagens e imóveis para aluguel no código da raspagem
 
