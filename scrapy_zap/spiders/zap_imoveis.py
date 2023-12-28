@@ -117,14 +117,6 @@ class ZapSpider(scrapy.Spider):
                             playwright=True,
                             playwright_include_page=True,
                             playwright_page_methods={
-                                'wait': PageMethod('evaluate', r'''
-                                                   async function delay(ms) {
-                                                       return new Promise(resolve => {
-                                                           setTimeout(resolve, ms);
-                                                        });
-                                                       }
-                                                   await delay(120 * 1000);
-                                                   '''),
                                 'scroll_down': PageMethod('evaluate', r'''
                                                       (async () => {
                                                           const scrollStep = 10;
