@@ -6,6 +6,7 @@
 import warnings
 import playwright.sync_api
 import requests
+import playwright._impl
 from twisted.internet import defer
 from twisted.internet.error import (
     ConnectError,
@@ -221,7 +222,8 @@ class RetryMiddleware:
     EXCEPTIONS_TO_RETRY = (defer.TimeoutError, TimeoutError, DNSLookupError,
                            ConnectionRefusedError, ConnectionDone, ConnectError,
                            ConnectionLost, TCPTimedOutError, ResponseFailed,
-                           IOError, TunnelError, playwright.sync_api.TimeoutError)
+                           IOError, TunnelError, playwright.sync_api.TimeoutError,
+                           playwright._impl._errors.TargetClosedError)
 
     def __init__(self, settings):
         if not settings.getbool('RETRY_ENABLED'):
