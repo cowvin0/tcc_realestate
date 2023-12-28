@@ -1,5 +1,7 @@
 import scrapy
+import logging
 import os
+import json
 import pandas as pd
 import numpy as np
 import time
@@ -8,10 +10,12 @@ from scrapy_zap.items import ZapItem
 from scrapy_playwright.page import PageMethod
 from scrapy.http import Request
 
+
 class ZapSpider(scrapy.Spider):
     name = 'zap'
     allowed_domains = ['www.zapimoveis.com.br']
-    # COND = os.environ.get('COND')
+    COND = os.environ.get('COND')
+    CITY = os.environ.get('CITY')
 
     async def errback(self, failure):
         page = failure.request.meta['playwright_page']
@@ -19,7 +23,7 @@ class ZapSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
-        self.start_urls = ['https://www.zapimoveis.com.br/venda/imoveis/ac+rio-branco/']
+        self.start_urls = [f'https://www.zapimoveis.com.br/{self.COND}/imoveis/{self.CITY}/']
 
     def start_requests(self):
         yield Request(
@@ -49,90 +53,53 @@ class ZapSpider(scrapy.Spider):
         page = response.meta['playwright_page']
         playwright_page_methods = response.meta['playwright_page_methods']
 
+        configs = await page.evaluate(r'''
+                                      var types_element = document.querySelectorAll(".l-checkbox.l-checkbox--variant--regular");
+                                      Array.from(types_element).map(a => a.textContent);
+                                      '''
+                                      )
+
         await page.wait_for_timeout(5000)
 
-        house_types = {
-            'Apartamento': 2,
-            'Casa': 5,
-            'Casa de Condomínio': 7,
-            'Cobertura': 9,
-            'Flat': 10,
-            'Terreno / Lote / Condomínio': 12,
-            'Casa Comercial': 17,
-            'Terrenos / Lotes Comerciais': 21,
-        }
+        house_types = [
+            'Apartamento',
+            'Casa de Condomínio',
+            'Cobertura',
+            'Flat',
+            'Terreno / Lote / Condomínio',
+            'Casa Comercial',
+            'Casa',
+            'Terrenos / Lotes Comerciais',
+        ]
 
-        house_config = {
-            'Área de serviço': 5,
-            'Varanda gourmet': 21,
-            'Academia': 25,
-            'Espaço gourmet': 28,
-            'Piscina': 31,
-            'Playground': 32,
-            'Sauna': 43,
-            'SPA': 44,
-            'Quadra poliesportiva': 33,
-            'Portaria 24h': 48,
-            'Elevador': 39,
-        }
+        pattern = r'\d+\.\d+|\d+'
 
-        for house_type in house_types.keys():
-            configs_type = await page.evaluate('Array.from(document.querySelectorAll(".l-checkbox.l-checkbox--variant--regular")).map(a => a.textContent)')
+        previous_type = 0
 
-            position_type = [i for i, v in enumerate(configs) if house_type in v]
+        for post_type in range(1, len(house_types)):
 
-            await page.evaluate(r'''
-                                var button_specific_type = document.querySelectorAll(".l-checkbox__input");
-                                button_specific_type[{}].click();
-                                '''.format(position_type)
-                                )
+            previous_position_type = [i for i, v in enumerate(configs) if house_types[previous_type] in v]
 
-            await page.wait_for_timeout(5000)
-
-            await page.evaluate(r'''
-                                var load_button = document.querySelectorAll('.l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left');
-                                load_button[12].click();
-                                '''
-                                )
-
-            await page.wait_for_timeout(6000)
-
-
-            pattern = r'\d+\.\d+|\d+'
-
-            for house_info in house_config.keys():
-
-                configs_info = await page.evaluate('Array.from(document.querySelectorAll(".l-checkbox.l-checkbox--variant--regular")).map(a => a.textContent)')
-
-                position_info = [i for i, v in enumerate(configs) if house_info in v]
-
+            if len(previous_position_type):
                 await page.evaluate(r'''
-                                    var button_all = document.querySelector(".l-button.l-button--fluid.l-button--context-custom.l-button--size-large.l-button--icon-left.l-multiselect__input");
-                                    button_all.click();
-                                    ''')
-
-                await page.wait_for_timeout(5000)
-
-                await page.evaluate(r'''
-                                    var button_specific_type = document.querySelectorAll(".l-checkbox__input");
-                                    button_specific_type[{}].click();
-                                    '''.format(position_info)
+                                    types_element[{}].click();
+                                    '''.format(previous_position_type[0])
                                     )
 
                 await page.wait_for_timeout(5000)
 
                 await page.evaluate(r'''
-                                    var load_button = document.querySelectorAll('.l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left');
+                                    var load_button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
                                     load_button[12].click();
                                     '''
                                     )
 
                 await page.wait_for_timeout(6000)
 
-                element_quant = page.locator(
+                element_quant_specific = page.locator(
                     ".l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined"
                 )
-                quant = await element_quant.text_content()
+                quant = await element_quant_specific.text_content()
                 quant = float(re.findall(pattern, quant)[0].replace('.', ''))
 
                 await page.wait_for_timeout(5000)
@@ -150,19 +117,27 @@ class ZapSpider(scrapy.Spider):
                             playwright=True,
                             playwright_include_page=True,
                             playwright_page_methods={
+                                'wait': PageMethod('evaluate', r'''
+                                                   async function delay(ms) {
+                                                       return new Promise(resolve => {
+                                                           setTimeout(resolve, ms);
+                                                        });
+                                                       }
+                                                   await delay(120 * 1000);
+                                                   '''),
                                 'scroll_down': PageMethod('evaluate', r'''
                                                       (async () => {
                                                           const scrollStep = 10;
                                                           const delay = 16;
                                                           let currentPosition = 0;
-    
+
                                                           function animateScroll() {
                                                               const pageHeight = Math.max(
                                                                   document.body.scrollHeight, document.documentElement.scrollHeight,
                                                                   document.body.offsetHeight, document.documentElement.offsetHeight,
                                                                   document.body.clientHeight, document.documentElement.clientHeight
                                                                   );
-    
+
                                                               if (currentPosition < pageHeight) {
                                                                   currentPosition += scrollStep;
                                                                   if (currentPosition > pageHeight) {
@@ -182,53 +157,16 @@ class ZapSpider(scrapy.Spider):
                         callback=self.parse_desce_href
                     )
 
-                await page.wait_for_timeout(6000)
+                await page.wait_for_timeout(5000)
 
                 await page.evaluate(r'''
-                                    var button_all = document.querySelector(".l-button.l-button--fluid.l-button--context-custom.l-button--size-large.l-button--icon-left.l-multiselect__input");
-                                    button_all.click();
-                                    '''
-                                    )
-
-                await page.evaluate(r'''
-                                    var button_specific_type = document.querySelectorAll(".l-checkbox__input");
-                                    button_specific_type[{}].click();
-                                    '''.format(position_info)
+                                    types_element[{}].click();
+                                    '''.format(previous_position_type)
                                     )
 
                 await page.wait_for_timeout(5000)
 
-                await page.evaluate(r'''
-                                    var load_button = document.querySelectorAll('.l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left');
-                                    load_button[12].click();
-                                    '''
-                                    )
-
-            await page.wait_for_timeout(6000)
-
-            await page.evaluate(r'''
-                                var button_all = document.querySelector(".l-button.l-button--fluid.l-button--context-custom.l-button--size-large.l-button--icon-left.l-multiselect__input");
-                                button_all.click();
-                                '''
-                                )
-
-            await page.wait_for_timeout(5000)
-
-            await page.evaluate(r'''
-                                var button_specific_type = document.querySelectorAll(".l-checkbox__input");
-                                button_specific_type[{}].click();
-                                '''.format(position_type)
-                                )
-
-            await page.wait_for_timeout(5000)
-
-            await page.evaluate(r'''
-                                var load_button = document.querySelectorAll('.l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left');
-                                load_button[12].click();
-                                '''
-                                )
-
-        # await page.close()
+                previous_type = post_type
 
     async def parse_desce_href(self, response):
         page = response.meta['playwright_page']
@@ -328,5 +266,4 @@ class ZapSpider(scrapy.Spider):
         zap_item['andar'] = andar,
         zap_item['url'] = response.url,
         zap_item['id'] = int(id)
-        
         yield zap_item
