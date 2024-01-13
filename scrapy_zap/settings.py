@@ -33,7 +33,6 @@ ROBOTSTXT_OBEY = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
-
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
 #    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -107,3 +106,7 @@ DOWNLOAD_HANDLERS = {
 ROTATING_PROXY_LIST_PATH = 'proxies.txt'
 RETRY_ENABLED = True
 RETRY_TIMES = 100
+
+PLAYWRIGHT_LAUNCH_OPTIONS = {
+    # "headless": False,
+}
