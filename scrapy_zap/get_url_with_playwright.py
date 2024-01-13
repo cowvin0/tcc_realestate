@@ -9,26 +9,29 @@ CITY = os.environ.get("CITY")
 
 
 async def main():
+
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+        browser = await p.chromium.launch(
+            headless=False,
+        )
 
         context = await browser.new_context(
             color_scheme="light",
-            user_agent="Mozilla (5.0)",
+            user_agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0;",
             viewport={"width": 1600, "height": 1000},
         )
 
         page = await context.new_page()
 
         list_type = [
-            "apartamentos",
-            "casas",
             "casas-de-condominio",
             "cobertura",
-            "flat",
+            "apartamentos",
+            "casas",
             "terrenos-lotes-condominios",
-            "casa-comercial",
+            "flat",
             "terrenos-lotes-comerciais",
+            "casa-comercial",
         ]
 
         data_quant = {}
@@ -43,18 +46,18 @@ async def main():
             if response.status != 404:
                 await page.wait_for_timeout(5000)
 
+                await page.evaluate(
+                    """
+                    var button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
+                    button[12].click();
+                    """
+                )
+
                 element = page.locator(
                     ".l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined"
                 )
 
                 data_quant[types] = await element.text_content()
-
-                await page.evaluate(
-                    """
-                                    var button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
-                                    button[12].click();
-                                    """
-                )
 
                 await page.wait_for_timeout(5000)
 
