@@ -1,4 +1,5 @@
 import asyncio
+import random
 import pandas as pd
 import re
 import os
@@ -8,11 +9,32 @@ COND = os.environ.get("COND")
 CITY = os.environ.get("CITY")
 
 
+proxy_pool = [
+    {"server": "200.166.248.217:128"},
+    {"server": "177.69.118.177:8080"},
+    {"server": "191.243.46.2:18283"},
+    {"server": "187.73.102.70:9292"},
+    {"server": "170.83.200.138:3128"},
+    {"server": "138.59.20.42:9999"},
+    {"server": "168.228.36.22:27234"},
+    {"server": "187.19.166.107:20183"},
+    {"server": "187.1.57.206:20183"},
+]
+
+
 async def main():
+<<<<<<< HEAD
+=======
+    # proxy = random.choice(proxy_pool)
+>>>>>>> refs/remotes/origin/note
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(
             headless=False,
+<<<<<<< HEAD
+=======
+            # proxy=proxy
+>>>>>>> refs/remotes/origin/note
         )
 
         context = await browser.new_context(

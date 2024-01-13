@@ -1,5 +1,7 @@
 import scrapy
+import logging
 import os
+import json
 import pandas as pd
 import numpy as np
 import time
@@ -8,11 +10,12 @@ from scrapy_zap.items import ZapItem
 from scrapy_playwright.page import PageMethod
 from scrapy.http import Request
 
+
 class ZapSpider(scrapy.Spider):
     name = 'zap'
-    data = pd.read_csv('info.csv')
-    COND = os.environ.get("COND")
     allowed_domains = ['www.zapimoveis.com.br']
+    COND = os.environ.get('COND')
+    CITY = os.environ.get('CITY')
 
     async def errback(self, failure):
         page = failure.request.meta['playwright_page']
@@ -20,28 +23,100 @@ class ZapSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super(ZapSpider, self).__init__(*args, **kwargs)
-        self.infos = self.data.filter(regex='^(?!.*url).*$').to_dict(orient='records')[0]
-        self.start_urls = self.data.filter(like='url').to_dict(orient='records')[0]
+        self.start_urls = [f'https://www.zapimoveis.com.br/{self.COND}/imoveis/{self.CITY}/']
 
     def start_requests(self):
+        yield Request(
+                url=self.start_urls[0],
+                meta = dict(
+                    dont_redirect=True,
+                    handle_httpstatus_list = [302, 308],
+                    playwright=True,
+                    playwright_include_page = True,
+                    playwright_page_methods = {
+                        'types': PageMethod(
+                            'evaluate',
+                            r'''
+                            var button_all = document.querySelector(".l-button.l-button--fluid.l-button--context-custom.l-button--size-large.l-button--icon-left.l-multiselect__input");
+                            button_all.click();
+                            '''
+                            ),
+                        
+                        },
+                    errback=self.errback
+                    ),
+                callback=self.parse,
+                )
 
-        list_data = list(self.infos.values())
-        list_urls = list(self.start_urls.values())
+    async def parse(self, response):
 
-        for count, urls in zip(list_data, list_urls):
+        page = response.meta['playwright_page']
+        playwright_page_methods = response.meta['playwright_page_methods']
 
-            count = 1 if count <= 100 else np.ceil(count / 100) if count <= 10000 else 100
+        configs = await page.evaluate(r'''
+                                      var types_element = document.querySelectorAll(".l-checkbox.l-checkbox--variant--regular");
+                                      Array.from(types_element).map(a => a.textContent);
+                                      '''
+                                      )
 
-            for pages in range(1, int(count) + 1):
+        await page.wait_for_timeout(5000)
 
-                yield Request(
-                        url=urls + str(int(pages)),
-                        meta = dict(
-                            dont_redirect = True,
-                            handle_httpstatus_list = [302, 308],
-                            playwright = True,
-                            playwright_include_page = True,
-                            playwright_page_methods = {
+        house_types = [
+            'Apartamento',
+            'Casa de Condomínio',
+            'Cobertura',
+            'Flat',
+            'Terreno / Lote / Condomínio',
+            'Casa Comercial',
+            'Casa',
+            'Terrenos / Lotes Comerciais',
+        ]
+
+        pattern = r'\d+\.\d+|\d+'
+
+        previous_type = 0
+
+        for post_type in range(1, len(house_types)):
+
+            previous_position_type = [i for i, v in enumerate(configs) if house_types[previous_type] in v]
+
+            if len(previous_position_type):
+                await page.evaluate(r'''
+                                    types_element[{}].click();
+                                    '''.format(previous_position_type[0])
+                                    )
+
+                await page.wait_for_timeout(5000)
+
+                await page.evaluate(r'''
+                                    var load_button = document.querySelectorAll(".l-button.l-button--context-primary.l-button--size-regular.l-button--icon-left");
+                                    load_button[12].click();
+                                    '''
+                                    )
+
+                await page.wait_for_timeout(6000)
+
+                element_quant_specific = page.locator(
+                    ".l-text.l-u-color-neutral-12.l-text--variant-heading-small.l-text--weight-semibold.undefined"
+                )
+                quant = await element_quant_specific.text_content()
+                quant = float(re.findall(pattern, quant)[0].replace('.', ''))
+
+                await page.wait_for_timeout(5000)
+
+                url = await page.evaluate('window.location.href;')
+
+                real_count = 1 if quant <= 100 else np.ceil(quant / 100) if quant <= 10000 else 100
+
+                for pages in range(1, int(real_count) + 1):
+                    yield Request(
+                        url=url.replace('pagina=1', f'pagina={pages}'),
+                        meta=dict(
+                            dont_redirect=True,
+                            handle_httpstatus_list=[302, 308],
+                            playwright=True,
+                            playwright_include_page=True,
+                            playwright_page_methods={
                                 'scroll_down': PageMethod('evaluate', r'''
                                                       (async () => {
                                                           const scrollStep = 10;
@@ -68,48 +143,62 @@ class ZapSpider(scrapy.Spider):
                                                           })();
                                                           '''),
                                 'get_href': PageMethod('evaluate', 'Array.from(document.querySelectorAll("a.result-card")).map(a => a.href)'),
-                                },
+                            },
                             errback=self.errback
-                            ),
-                        callback=self.parse
-                        )
+                        ),
+                        callback=self.parse_desce_href
+                    )
 
-    async def parse(self, response):
+                await page.wait_for_timeout(5000)
 
+                await page.evaluate(r'''
+                                    types_element[{}].click();
+                                    '''.format(previous_position_type)
+                                    )
+
+                await page.wait_for_timeout(5000)
+
+                previous_type = post_type
+
+    async def parse_desce_href(self, response):
         page = response.meta['playwright_page']
         playwright_page_methods = response.meta['playwright_page_methods']
 
-        await page.evaluate(
-                '''
-                var intervalID = setInterval(function () {
-                    var ScrollingElement = (document.scrollingElement || document.body);
-                    scrollingElement.scrollTop += 20;
-                    }, 100);
-                '''
-                )
+        if response.status != 404:
 
-        prev_height = None
-        while True:
-            curr_height = await page.evaluate('(window.innerHeight + window.scrollY)')
-            if not prev_height:
-                prev_height = curr_height
-                time.sleep(1)
-            elif prev_height == curr_height:
-                await page.evaluate('clearInterval(intervalID)')
-                break
-            else:
-                prev_height = curr_height
-                time.sleep(1)
+            await page.evaluate(
+                    '''
+                    var intervalID = setInterval(function () {
+                        var ScrollingElement = (document.scrollingElement || document.body);
+                        scrollingElement.scrollTop += 20;
+                        }, 100);
+                    '''
+                    )
 
-        hrefs = await page.evaluate('Array.from(document.querySelectorAll("a.result-card")).map(a => a.href)')
+            prev_height = None
+            while True:
+                curr_height = await page.evaluate('(window.innerHeight + window.scrollY)')
+                if not prev_height:
+                    prev_height = curr_height
+                    time.sleep(1)
+                elif prev_height == curr_height:
+                    await page.evaluate('clearInterval(intervalID)')
+                    break
+                else:
+                    prev_height = curr_height
+                    time.sleep(1)
 
-        await page.close()
+            hrefs = await page.evaluate('Array.from(document.querySelectorAll("a.result-card")).map(a => a.href)')
 
-        for url in hrefs:
-            yield response.follow(url, callback=self.parse_imovel_info,
-                                  dont_filter = True
-                                 )
+            await page.close()
 
+            for url in hrefs:
+                yield response.follow(url, callback=self.parse_imovel_info,
+                                      dont_filter = True
+                                     )
+
+
+    
     def parse_imovel_info(self, response):
 
         zap_item = ZapItem()
@@ -152,26 +241,12 @@ class ZapSpider(scrapy.Spider):
             else:
                 zap_item[info] = conteudo[0]
 
-        #val_ende = response.xpath('//strong/text()').getall()
-
-        # match self.COND:
-        #     case "aluguel":
-        #         if len(preco_imovel) != 1:
-        #             zap_item['valor'] = preco_imovel[1],
-        #         else:
-        #             zap_item['valor'] = preco_imovel[0],
-        #     
-        #     case _:
-        #         zap_item['valor'] = preco_imovel[0],
-
         try:
             zap_item['valor'] = preco_imovel[0] if self.COND == "venda" else preco_imovel[1],
         except:
             zap_item['valor'] = preco_imovel[0],
 
         zap_item['foto_imovel'] = foto_imovel,
-        #zap_item['valor'] = preco_imovel[0] if self.COND == "venda" else preco_imovel[1],
-        #zap_item['valor'] = preco_imovel if preco_imovel != None else val_ende[4].replace('\n', '').strip(),
         zap_item['endereco'] = endereco_imovel.replace('\n', '').strip() if endereco_imovel != None else val_ende[2].replace('\n', '').strip(),
         zap_item['tipo'] = tipo_imovel,
         zap_item['condominio'] = condominio,
@@ -183,5 +258,4 @@ class ZapSpider(scrapy.Spider):
         zap_item['andar'] = andar,
         zap_item['url'] = response.url,
         zap_item['id'] = int(id)
-        
         yield zap_item
