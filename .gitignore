@@ -1,2 +1,6 @@
 *.whl
 */__pycache__
+*/.scrapy
+*/.~lock*
+.Rhistory
+.RData
