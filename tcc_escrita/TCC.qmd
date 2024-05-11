@@ -1,5 +1,6 @@
 ---
 format: pdf
+indent: true
 documentclass: scrreprt
 lang: pt-br
 csl: includes/ufpe-abnt.csl
@@ -35,13 +36,14 @@ set.seed(42)
 
 # Resumo
 
--- GABRIEL, NÃO FAÇA ESSA PARTE AGORA! --
 
 # Capítulo 1
 
 -- GABRIEL, NÃO FAÇA ESSA PARTE AGORA! --
 
 ## Introdução
+
+-- Fazer antes da conclusão --
 
 ## Objetivos
 
@@ -55,7 +57,7 @@ set.seed(42)
 
 # Capítulo 2
 
--- GABRIEL, NÃO FAÇA ESSA PARTE AGORA! --
+-- Fazer depois da metodologia --
 
 ## Recursos Computacionais
 
@@ -69,9 +71,16 @@ set.seed(42)
 
 \newpage
 
-# Capítulo 3
+# Metodologia
 
-## Metodologia
+## Os dados e o procedimento adotado para sua obtenção
+
+\
+
+O Web scraping, também conhecido como extração de dados da web, é uma técnica utilizada para o processo de coleta de dados estruturados da web de maneira automatizada. É um processo que vem sendo constantemente utilizado por instituições públicas e privadas que passam cada vez mais a construir produtos que utilizam algoritmos de aprendizagem de máquinas, observa ofertas e discontos, faz análise de mercado ou monitoração de marcas.
+
+Neste projeto, para fins de estudo e análise do mercado imobiliário, os dados foram coletados por meio de extração de dados do site do Zap Imóveis. O Zap Imóveis é um site do Grupo OLX que reúne ofertas do mercado imobiliário e que funciona como uma plataforma dinâmica para facilitar a conexão entre quem deseja alugar, comprar ou vender um imóvel; podendo servir também para corretores ou outros profissionais do setor de imóveis. Este projeto foi possível graças as informações que foram coletadas do site do Zap Imóveis em dois períodos do ano de 2023. O primeiro deles, essas informações foram coletadas utilizando variados pacotes para raspagem de dados e proxies rotativas da linguagem de programação R a fim de evitar ser bloqueado pelos mecanismos de segurança do site. Na segunda etapa, os dados foram coletados empregando a linguagem de programação Python com as bibliotecas Scrapy e Playwrite, que serve para web crawling e web scraping, e o Playwrite que serve testes na em aplicativos da web, mas que neste caso foi utilizado para manejar páginas dinâmicas.
+
 
 \newpage
 
