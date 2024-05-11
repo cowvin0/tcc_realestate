@@ -1,5 +1,6 @@
 ---
 format: pdf
+number-sections: true
 indent: true
 documentclass: scrreprt
 lang: pt-br
@@ -101,9 +102,17 @@ Desta forma, com a ideia de modelar o valor do imóvel e analisar o mercado imob
 
 - Tipo do imóvel: foram obtidos 7 tipos de imóveis, apartamentos, casas, casas comerciais, casas de condomínio, casas de vila, coberturas, lotes comerciais e de condomínio;
 
-- Variáveis dicotômicas que indicam se o imóvel tem ou não aquela característica (representado como 1 ou 0, respectivamente): área de serviço, academia, elevador, espaço gourmet, piscina, playground, portaria 24 horas, quadra de esporte, salão de festa, sauna, spa e varanda gourmet;
+- Endereço: nome do endereço do imóvel;
+
+- Variáveis dicotômicas que indicam se o imóvel tem ou não aquela característica (representado como 1 ou 0, respectivamente): área de serviço, academia, elevador, espaço gourmet, piscina, playground, portaria 24 horas, quadra de esporte, salão de festa, sauna, spa e varanda gourmet.
 
 No entanto, devido a observações feitas durante o estudo, nem todas essas variáveis foram utilizadas para a modelagem do valor dos imóveis, seja por conter muitos valores valores ausentes ou por não ter se mostrado significante para o que se desejava explicar. Ainda, como a coleta destes dados foram feitas em dois momentos distintos, temos dois bancos de dados, um com 29712 observações e o outro com 14956. Por fim, essas duas bases de dados foram unidas e, para não correr o risco de conter imóveis repetidos, aqueles que tinham o mesmo número de identificação foram removidos.
+
+## Descritiva dos dados
+
+\
+
+Entender os dados do problema que se deseja revolver é uma das etapas mais importantes para qualquer estudo que esteja sendo utilizadas técnicas estatísticas.
 
 \newpage
 
