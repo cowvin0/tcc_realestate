@@ -1,17 +1,30 @@
 ---
-format: 
-  pdf:
-    number-sections: false
-    include-in-header: 
-    - text: |
-        \usepackage{lipsum}
-fig-cap-location: top
+format: pdf
 documentclass: scrreprt
 lang: pt-br
-# blbliography: bib.bib
-echo: false
-message: false
+csl: includes/ufpe-abnt.csl
+urlcolor: black
+linkcolor: black
+toc: true
+title: |
+  ![](includes/ufpb.png){width=1in}
+
+  Escrever título (escolher no final)
+subtitle: Universidade Federal da Paraíba - CCEN
+author: Gabriel de Jesus Pereira
+date: today
+date-format: long
+highlight-style: github
+monofont: "Ubuntu Mono"
+monofontoptions: Scale = 1
+fig-cap-location: top
 warning: false
+echo: false
+include-in-header:
+  - text: |
+      \usepackage{pdflscape}
+      \newcommand{\blandscape}{\begin{landscape}}
+      \newcommand{\elandscape}{\end{landscape}}
 ---
 
 ```{r}
@@ -20,75 +33,13 @@ library(tidymodels)
 set.seed(42)
 ```
 
-![](%22includes/ufpb.png%22){height="100" fig-align="center"}
-
-::: {layout-ncol="1"}
-UNIVERSIDADE FEDERAL DA PARAÍBA
-
-CENTRO DE CIÊNCIAS EXATAS E DA NATUREZA
-
-DEPARTAMENTO DE ESTATÍSTICA
-:::
-
-\vfill
-
-\begin{center}
-\Large{\textbf{Título}}
-\end{center}
-
-\vfill
-
-\begin{center}
-\Large{Gabriel de Jesus Pereira}
-\end{center}
-
-\vfill
-
-\begin{center}
-\Large{João Pessoa - PB}
-
-\Large{2023}
-\end{center}
-
-\newpage
-
-\begin{center}
-\large{Gabriel de Jesus Pereira}
-\end{center}
-
-\vfill
-
-\begin{center}
-\Large{\textbf{Título}}
-\end{center}
-
-\vfill
-
-\begin{flushright}
-\hfill\begin{minipage}{0.5\linewidth}
-  \Large{Monografia apresentada ao Curso de Bacharelado em Estatística da Universidade Federal da Paraíba como requisito parcial para obtenção do Grau de Bacharel.}
-\end{minipage}
-\end{flushright}
-
-\vfill
-
-\begin{center}
-\large{Orientador: Professor Dr. Pedro Rafael Diniz Marinho}
-\end{center}
-
-\vfill
-
-\begin{center}
-\large{João Pessoa - PB}
-
-\large{2023}
-\end{center}
-
-\newpage
-
 # Resumo
 
+-- GABRIEL, NÃO FAÇA ESSA PARTE AGORA! --
+
 # Capítulo 1
+
+-- GABRIEL, NÃO FAÇA ESSA PARTE AGORA! --
 
 ## Introdução
 
@@ -104,19 +55,11 @@ DEPARTAMENTO DE ESTATÍSTICA
 
 # Capítulo 2
 
-## Recursos Computacionais 
+-- GABRIEL, NÃO FAÇA ESSA PARTE AGORA! --
 
-### Neovim
-
-O Neovim é um editor de texto que deriva diretamente do Vim, que por sua vez advém do Vi. A proposta do Neovim não é ser uma reescrita do Vim, mas sim uma continuação e extensão deste, permitindo que todas as características do Vim estejam disponíveis no Neovim, com melhorias e facilitações consideráveis para a configurações do editor de texto para diferentes linguagens de programação, sistemas de preparação de documentos como o LaTeX ou diversos tipos de arquivos. Assim como outros sistemas operacionais podem fazer uso do Vim (MARINHO, 2014), que está por padrão disponível em sistemas operacionais Unix e Linux, o Neovim também pode ser utilizado, estando disponível em diferentes versões em <https://neovim.io/>.
-
-O brasileiro Thiago de Arruda foi o criador do Neovim, que tem como premissa manter algumas das maiores vantagems do Vim, rápido, versátil e minimalista. Parte das configurações do Neovim são feitas fazendo uso de arquivos *.lua*, arquivos da linguagem de programação Lua, também criada por dois brasileiros, os professores Roberto Ierusalimschy, Waldemar Celes e Luiz Henrique de Figueiredo. Com o Neovim surgem distribuições que ajudam na pré-configuração deste editor de texto. O LunarVim, por exemplo que foi utilizado em todo esse trabalho, vem com configurações mínimas a partir de um arquivo *config.lua*, mas oferece total liberdade para o usuário abranger a forma de configuração do LunarVim ou manter as configurações que já estavam sendo utilizadas no Neovim. Os ajustes feitos para cada linguagem de programação são feitos a partir de plugins, que permitem adicionar o suporte para algumas linguagem de programação. Os principais plugins utilizados nesse trabalho foram o *pyright* e *Nvim-R*, sendo o primeiro um static type checker para Python e o segundo um incrível plugin para trabalhar com tudo aquilo que o R oferece de melhor, Quarto, Rmarkdown e todas as características que são suportadas por IDE's como o RStudio. 
-
-As maiores vantagens que o Neovim pode oferecer é ter flexibilidade, uma interface minimalista e flexibilidade, embora seja complexo como as suas versões passadas. Neovim é um editor de texto complexo, mas não leva muito tempo para se acostumar com as keybindings pré-configuradas, como criar keybindings e inserir novos plugins nos arquivos de configuração *.lua*. Por fim, apesar de ser um editor de texto intricado, oferece muitos benefícios, especialmente para quem não possui máquinas poderosas.
+## Recursos Computacionais
 
 ### Linguagem de Programação R
-
-R é uma linguagem de programação com tipagem dinâmica, focada em computação gráfica e estatística. É amplamente utilizada no desenvolvimento open-source de soluções para os métodos estatísticos mais recentes e avançados.
 
 ### Quarto
 
