@@ -4,9 +4,10 @@ number-sections: true
 indent: true
 documentclass: scrreprt
 lang: pt-br
+bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
-urlcolor: black
-linkcolor: black
+urlcolor: yellow
+linkcolor: yellow
 toc: true
 title: |
   ![](includes/ufpb.png){width=1in}
@@ -112,7 +113,14 @@ No entanto, devido a observações feitas durante o estudo, nem todas essas vari
 
 \
 
-Entender os dados do problema que se deseja revolver é uma das etapas mais importantes para qualquer estudo que esteja sendo utilizadas técnicas estatísticas.
+A análise exploratória de dados marca uma das primeiras etapas de qualquer estudo que utiliza a estatística como uma de suas principais ferramentas, pois permite encontrar padrões de comportamento no dados, descobrir relações entre as variáveis estudadas. Dessa forma, a primeira etapa desse estudo, após a coleta e organização dos dados obtidos do Zap Imóveis, foi fazer uma descritiva dos dados. Essa etapa permitiu encontrar padrões nos diferentes tipos de imóveis bem como o seu tipo pode influenciar na características do imóvel, o que, por consequência, pode afetar o seu valor. Assim, para identificar esses diferentes comportamentos, foram criados gráficos e tabelas a fim de caracterizar as relações das variáveis independentes com a dependente.
+
+## Aprendizado Supervisionado e não supervisionado
+
+Na aprendizagem de máquinas, nós temos mais de uma forma em que um algoritmo consegue utilizar dados diversos e aprender a partir deles. Frequentemente os problemas de aprendizagem de máquinas cai em dois casos: Aprendizado supervisionado e não supervisionado.
+
+Suponha uma regressão logística. Sabemos que na regressão logistíca temos um modelo com a seguinte forma $Y_i = f\left(X\right) + \epsilon$, em que $Y_i$ assume 0 ou 1 para classificar o que está sendo modelado e representa a variável dependente, $f\left(X\right)$ representa as variáveis independentes que serão utilizadas para a modelagem e $\epsilon$ representa o erro da regressão. Dessa forma, podemos considerar o caso em que a regressão logística tenta classificar pacientes que podem ou não estar com diabetes. Para isso, utilizariamos variáveis significativas para a classificação do estado de cada paciente. Esse exemplo é conhecido como aprendizagem supervisionada. Na aprendizagem supervisionada, busca-se aprender $Y_i$ atráves de um exemplo. Nesse caso, as variáveis dependentes podem ser interpretadas como o exemplo, as informações de relações de pacientes que podem ter ou não diabetes, e o estado do paciente pode ser interpretado como o que se deseja aprender. Este processo é entendido como aprendizado por exemplo @hastie2009elements. O aprendizado supervisionado pode aparecer em casos de regressão linear, regressão logística, ou até mesmo em métodos mais modernos, como GAM, boosting e máquina de vetores de suporte, @james2023introduction.
+
 
 \newpage
 
@@ -125,3 +133,8 @@ Entender os dados do problema que se deseja revolver é uma das etapas mais impo
 # Capítulo 5
 
 ## Conclusão e Discussão
+
+# Referências
+
+::: {#refs}
+:::
