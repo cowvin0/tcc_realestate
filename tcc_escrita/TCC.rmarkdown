@@ -36,6 +36,7 @@ library(tidymodels)
 set.seed(42)
 ```
 
+
 # Resumo
 
 
@@ -155,3 +156,4 @@ Por outro lado, o aprendizado não supervisionado aparece em situações mais de
 
 ::: {#refs}
 :::
+
