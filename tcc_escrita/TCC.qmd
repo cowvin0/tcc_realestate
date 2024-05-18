@@ -133,7 +133,11 @@ Suponha uma regressão logística. Sabemos que na regressão logistíca temos um
 
 Por outro lado, o aprendizado não supervisionado aparece em situações mais desafiadores, pois não há um exemplo para explicar aquilo que se pretende explicar. Este processo é conhecido como *aprendizado sem exemplo*, @hastie2009elements. Dessa forma, no aprendizado não supervisionado, tem-se uma amostra com N observações $\left(x_1, ..., x_N\right)$ de um vetor aleatório $X$ com densidade conjunta $f\left(x\right)$ em que o objetivo é inferir propriedades da densidade sem ajuda de exemplos para cada observação. Assim, como há uma falta de uma variável resposta $y_i$ para supervisionar a análise, pode-se procurar entender a relação entre as variáveis ou as observações, @james2023introduction. Por exemplo, uma das técnicas mais aplicadas em problemas que envolvem o aprendizado supervisionado é a análise de cluster, em que o objetivo é determinar, com base em $x_1, ..., x_n$, se as observações são caracterizadas em grupos distintos. Esse é um dos métodos que poderiam ser aplicados, por exemplo, na análise de crédito de clientes de um cartão de crédito, tornando possível analisar o seu perfil e classificá-lo em diferentes grupos para recomendar produtos especificos adequados ao seu perfil.
 
-## Reamostragem
+## Métodos de reamostragem
+
+\
+
+
 
 ## Modelos baseados em árvores
 
