@@ -137,7 +137,9 @@ Por outro lado, o aprendizado não supervisionado aparece em situações mais de
 
 \
 
+## Otimização Bayesiana
 
+\
 
 ## Modelos baseados em árvores
 
