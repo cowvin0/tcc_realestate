@@ -137,7 +137,9 @@ Por outro lado, o aprendizado não supervisionado aparece em situações mais de
 
 \
 
-## Otimização Bayesiana
+## Tunagem de hiperparâmetros na aprendizagem de máquina
+
+Na aprendizagem de máquina, uma das principais etapas é a tunagem do hiperparâmetros, que se consiste em encontrar a melhor combinação de hiperparâmetros de um modelo. O método de GridSearch é a técnica mais comum para otimização de hiperparâmetros utilizada em aprendizagem de máquina. Essa técnica funciona testando todas as combinações possíveis definidas, utilizando uma métrica de avaliação para selecionar a combinação com os melhores resultados.
 
 \
 
