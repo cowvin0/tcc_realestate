@@ -3,6 +3,7 @@ format: pdf
 number-sections: true
 indent: true
 documentclass: scrreprt
+whitespace: small
 lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
@@ -18,8 +19,8 @@ author: Gabriel de Jesus Pereira
 date: today
 date-format: long
 highlight-style: github
-monofont: "Ubuntu Mono"
-monofontoptions: Scale = 1
+fontsize: 12pt
+interlinespace: 1.5pt
 fig-cap-location: top
 warning: false
 echo: false
@@ -137,11 +138,32 @@ Por outro lado, o aprendizado não supervisionado aparece em situações mais de
 
 \
 
-## Tunagem de hiperparâmetros na aprendizagem de máquina
-
-Na aprendizagem de máquina, uma das principais etapas é a tunagem do hiperparâmetros, que se consiste em encontrar a melhor combinação de hiperparâmetros de um modelo. O método de GridSearch é a técnica mais comum para otimização de hiperparâmetros utilizada em aprendizagem de máquina. Essa técnica funciona testando todas as combinações possíveis definidas, utilizando uma métrica de avaliação para selecionar a combinação com os melhores resultados.
+## Tunagem de hiperparâmetros com otimização bayesiana
 
 \
+
+Na aprendizagem de máquina, uma das principais etapas é a tunagem do hiperparâmetros, que se consiste em encontrar a melhor combinação de hiperparâmetros de um modelo. A tunagem desses hiperparâmetros torna a maioria dos algoritmos de aprendizagem de máquina configuráveis, permitindo encontrar modeloos com resultados que conseguem melhores generalizações. No entanto, essa configuração vem de forma não trivial.
+
+Existem diversas técnicas para otimização de hiperparâmetros utilizadas em aprendizagem de máquina. Uma das técnicas mais comuns é a GridSearch, que se propõe em testar todas as combinações possíveis previamente definidas num espaço de procura e escolher aquela que obteve os melhores resultados. No entanto, a GridSearch e muitas outras técnicas tem performances abaixo do esperado devido ao seu alto custo computacional, possibilitando testar apenas uma pequena de hiperparâmetros e tendo, por efeito, modelos com resultados piores quando comparados com aqueles que foram otimizados com métodos mais eficientes e com melhores estratégias de procura.
+
+### Otimização Bayesiana
+
+
+
+### Tree-Structured Parzen Estimator
+
+\
+
+O Tree-Structured Parzen Estimator (TPE) é uma variante de métodos otimização bayesiana. A otimização bayesiana tem como finalidade minimizar uma função objetivo definida da seguinte forma:
+
+$$
+x_{opt} \in \underset{x \in \chi}{\operatorname{argmin}} f\left(x\right)
+$$
+
+Como foi dito anteriormente, a otimização de hiperparâmetros na aprendizagem de máquinas busca encontrar a combinação de hiperparâmetro $x_{opt}$ que produza os melhores resultados, como, por exemplo, a configuração com o menor erro quadrático médio em problemas de regressão. A procura por $x_{opt}$ é feita a partir de uma função da família de funções de aquisição.
+
+Na prática, a otimização bayesiana tem como objetivo indireto otimizar uma *função de aquisição*. As funções de aquisição tendem a ser computacionalmente mais eficientes para estimação com gradientes analiticamente manejáveis, permitindo o uso de otimizadores prontos para estimar cada observação @garnett2023bayesian.
+
 
 ## Modelos baseados em árvores
 
