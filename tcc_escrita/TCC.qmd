@@ -1,4 +1,6 @@
 ---
+nocite: |
+  @bischl2023hyperparameter
 format: pdf
 number-sections: true
 indent: true
@@ -7,8 +9,8 @@ whitespace: small
 lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
-urlcolor: yellow
-linkcolor: yellow
+urlcolor: Goldenrod
+linkcolor: Goldenrod
 toc: true
 title: |
   ![](includes/ufpb.png){width=1in}
@@ -16,12 +18,14 @@ title: |
   Escrever título (escolher no final)
 subtitle: Universidade Federal da Paraíba - CCEN
 author: Gabriel de Jesus Pereira
+mermaid:
+  theme: forest
 date: today
 date-format: long
 highlight-style: github
 fontsize: 12pt
 interlinespace: 1.5pt
-fig-cap-location: top
+fig-cap-location: bottom
 warning: false
 echo: false
 include-in-header:
@@ -76,9 +80,7 @@ set.seed(42)
 
 ## Os dados e o procedimento adotado para sua obtenção
 
-\
-
-O Web scraping, também conhecido como extração de dados da web, é uma técnica utilizada para o processo de coleta de dados estruturados da web de maneira automatizada. É um processo que vem sendo constantemente utilizado por instituições públicas e privadas para a construção de produtos que utilizam algoritmos de aprendizagem de máquinas, observa ofertas e discontos, faz análise de mercado ou monitoração de marcas.
+\ \ \ O Web scraping, também conhecido como extração de dados da web, é uma técnica utilizada para o processo de coleta de dados estruturados da web de maneira automatizada. É um processo que vem sendo constantemente utilizado por instituições públicas e privadas para a construção de produtos que utilizam algoritmos de aprendizagem de máquinas, observa ofertas e discontos, faz análise de mercado ou monitoração de marcas.
 
 Neste projeto, para fins de estudo e análise do mercado imobiliário, os dados foram coletados por meio de extração de dados do site do Zap Imóveis. O Zap Imóveis é um site do Grupo OLX que reúne ofertas do mercado imobiliário e que funciona como uma plataforma dinâmica para facilitar a conexão entre quem deseja alugar, comprar ou vender um imóvel; podendo servir também para corretores ou outros profissionais do setor de imóveis. Este projeto foi possível graças as informações que foram coletadas do site do Zap Imóveis em dois diferentes períodos do ano de 2023. O primeiro deles, as informações foram coletadas utilizando variados pacotes para raspagem de dados e proxies rotativas da linguagem de programação R, a fim de evitar ser bloqueado pelos mecanismos de segurança do site. Na segunda etapa, os dados foram coletados empregando a linguagem de programação Python com as bibliotecas Scrapy e Playwrite, que serve para web crawling e web scraping, e o Playwrite que serve para testes em aplicativos da web, mas que neste caso foi utilizado para manejar páginas dinâmicas.
 
@@ -112,49 +114,79 @@ No entanto, devido a observações feitas durante o estudo, nem todas essas vari
 
 ## Descritiva dos dados
 
-\
-
-A análise exploratória de dados marca uma das primeiras etapas de qualquer estudo que utiliza a estatística como uma de suas principais ferramentas, pois permite encontrar padrões de comportamento no dados, descobrir relações entre as variáveis estudadas. Dessa forma, a primeira etapa desse estudo, após a coleta e organização dos dados obtidos do Zap Imóveis, foi fazer uma descritiva dos dados. Essa etapa permitiu encontrar padrões nos diferentes tipos de imóveis bem como o seu tipo pode influenciar na características do imóvel, o que, por consequência, pode afetar o seu valor. Assim, para identificar esses diferentes comportamentos, foram criados gráficos e tabelas a fim de caracterizar as relações das variáveis independentes com a dependente.
+\ \ \ A análise exploratória de dados marca uma das primeiras etapas de qualquer estudo que utiliza a estatística como uma de suas principais ferramentas, pois permite encontrar padrões de comportamento no dados, descobrir relações entre as variáveis estudadas. Dessa forma, a primeira etapa desse estudo, após a coleta e organização dos dados obtidos do Zap Imóveis, foi fazer uma descritiva dos dados. Essa etapa permitiu encontrar padrões nos diferentes tipos de imóveis bem como o seu tipo pode influenciar na características do imóvel, o que, por consequência, pode afetar o seu valor. Assim, para identificar esses diferentes comportamentos, foram criados gráficos e tabelas a fim de caracterizar as relações das variáveis independentes com a dependente.
 
 ## Aprendizado Supervisionado e não supervisionado
 
-\
-
-Na aprendizagem de máquinas, uma das estapas mais importantes é saber qual técnica será utilizada para resolver um problema que se enquadra em diferentes formas de aprendizado. Para isso, existem mais de uma forma em que um algoritmo consegue utilizar os dados e explicar o que está sendo modelado a partir deles. No entanto, a maioria dos problemas de aprendizado de máquinas recais em dois casos mais conhecidos: aprendizado supervisionado e não supervisionado.
+\ \ \ Na aprendizagem de máquinas, uma das estapas mais importantes é saber qual técnica será utilizada para resolver um problema que se enquadra em diferentes formas de aprendizado. Para isso, existem mais de uma forma em que um algoritmo consegue utilizar os dados e explicar o que está sendo modelado a partir deles. No entanto, a maioria dos problemas de aprendizado de máquinas recais em dois casos mais conhecidos: aprendizado supervisionado e não supervisionado.
 
 ### Aprendizado supervisionado
 
-\
-
-Suponha uma regressão logística. Sabemos que na regressão logistíca temos um modelo com a seguinte forma $Y_i = f\left(X\right) + \epsilon$, em que $Y_i$ assume 0 ou 1 para classificar o que está sendo modelado e representa a variável dependente, $f\left(X\right)$ representa as variáveis independentes que serão utilizadas para a modelagem e $\epsilon$ representa o erro da regressão. Dessa forma, podemos considerar o caso em que a regressão logística tenta classificar pacientes que podem ou não estar com diabetes. Para isso, utilizariamos variáveis significativas para a classificação do estado de cada paciente. Esse exemplo é conhecido como aprendizagem supervisionada. Na aprendizagem supervisionada, busca-se aprender $Y_i$ atráves de um exemplo. Nesse caso, as variáveis dependentes podem ser interpretadas como o exemplo, as informações de relações de pacientes que podem ter ou não diabetes, e o estado do paciente pode ser interpretado como o que se deseja aprender. Este processo é entendido como *aprendizado por exemplo*, @hastie2009elements. O aprendizado supervisionado pode aparecer em casos de regressão linear, regressão logística, ou até mesmo em métodos mais modernos, como GAM, boosting e máquina de vetores de suporte, @james2023introduction.
+\ \ \ Suponha uma regressão logística. Sabemos que na regressão logistíca temos um modelo com a seguinte forma $Y_i = f\left(X\right) + \epsilon$, em que $Y_i$ assume 0 ou 1 para classificar o que está sendo modelado e representa a variável dependente, $f\left(X\right)$ representa as variáveis independentes que serão utilizadas para a modelagem e $\epsilon$ representa o erro da regressão. Dessa forma, podemos considerar o caso em que a regressão logística tenta classificar pacientes que podem ou não estar com diabetes. Para isso, utilizariamos variáveis significativas para a classificação do estado de cada paciente. Esse exemplo é conhecido como aprendizagem supervisionada. Na aprendizagem supervisionada, busca-se aprender $Y_i$ atráves de um exemplo. Nesse caso, as variáveis dependentes podem ser interpretadas como o exemplo, as informações de relações de pacientes que podem ter ou não diabetes, e o estado do paciente pode ser interpretado como o que se deseja aprender. Este processo é entendido como *aprendizado por exemplo*, @hastie2009elements. O aprendizado supervisionado pode aparecer em casos de regressão linear, regressão logística, ou até mesmo em métodos mais modernos, como GAM, boosting e máquina de vetores de suporte, @james2023introduction.
 
 ### Aprendizado não supervisionado
 
-\
-
-Por outro lado, o aprendizado não supervisionado aparece em situações mais desafiadores, pois não há um exemplo para explicar aquilo que se pretende explicar. Este processo é conhecido como *aprendizado sem exemplo*, @hastie2009elements. Dessa forma, no aprendizado não supervisionado, tem-se uma amostra com N observações $\left(x_1, ..., x_N\right)$ de um vetor aleatório $X$ com densidade conjunta $f\left(x\right)$ em que o objetivo é inferir propriedades da densidade sem ajuda de exemplos para cada observação. Assim, como há uma falta de uma variável resposta $y_i$ para supervisionar a análise, pode-se procurar entender a relação entre as variáveis ou as observações, @james2023introduction. Por exemplo, uma das técnicas mais aplicadas em problemas que envolvem o aprendizado supervisionado é a análise de cluster, em que o objetivo é determinar, com base em $x_1, ..., x_n$, se as observações são caracterizadas em grupos distintos. Esse é um dos métodos que poderiam ser aplicados, por exemplo, na análise de crédito de clientes de um cartão de crédito, tornando possível analisar o seu perfil e classificá-lo em diferentes grupos para recomendar produtos especificos adequados ao seu perfil.
+\ \ \ Por outro lado, o aprendizado não supervisionado aparece em situações mais desafiadores, pois não há um exemplo para explicar aquilo que se pretende explicar. Este processo é conhecido como *aprendizado sem exemplo*, @hastie2009elements. Dessa forma, no aprendizado não supervisionado, tem-se uma amostra com N observações $\left(x_1, ..., x_N\right)$ de um vetor aleatório $X$ com densidade conjunta $f\left(x\right)$ em que o objetivo é inferir propriedades da densidade sem ajuda de exemplos para cada observação. Assim, como há uma falta de uma variável resposta $y_i$ para supervisionar a análise, pode-se procurar entender a relação entre as variáveis ou as observações, @james2023introduction. Por exemplo, uma das técnicas mais aplicadas em problemas que envolvem o aprendizado supervisionado é a análise de cluster, em que o objetivo é determinar, com base em $x_1, ..., x_n$, se as observações são caracterizadas em grupos distintos. Esse é um dos métodos que poderiam ser aplicados, por exemplo, na análise de crédito de clientes de um cartão de crédito, tornando possível analisar o seu perfil e classificá-lo em diferentes grupos para recomendar produtos especificos adequados ao seu perfil.
 
 ## Métodos de reamostragem
 
-\
-
-## Tunagem de hiperparâmetros com otimização bayesiana
+## Métricas de avaliação
 
 \
 
-Na aprendizagem de máquina, uma das principais etapas é a tunagem do hiperparâmetros, que se consiste em encontrar a melhor combinação de hiperparâmetros de um modelo. A tunagem desses hiperparâmetros torna a maioria dos algoritmos de aprendizagem de máquina configuráveis, permitindo encontrar modeloos com resultados que conseguem melhores generalizações. No entanto, essa configuração vem de forma não trivial.
+## Tunagem de hiperparâmetros
 
-Existem diversas técnicas para otimização de hiperparâmetros utilizadas em aprendizagem de máquina. Uma das técnicas mais comuns é a GridSearch, que se propõe em testar todas as combinações possíveis previamente definidas num espaço de procura e escolher aquela que obteve os melhores resultados. No entanto, a GridSearch e muitas outras técnicas tem performances abaixo do esperado devido ao seu alto custo computacional, possibilitando testar apenas uma pequena de hiperparâmetros e tendo, por efeito, modelos com resultados piores quando comparados com aqueles que foram otimizados com métodos mais eficientes e com melhores estratégias de procura.
+
+\ \ \ Na aprendizagem de máquina, uma das etapas fundamentais é a tunagem dos hiperparâmetros dos algoritmos de aprendizagem. Essa etapa consiste em encontrar a melhor combinação de hiperparâmetros e, consequentemente, resultando em uma configuração algoritmo que proporciona melhor performance e capacidade de generalização. No entanto, essa configuração não é trivial.
+
+\vspace{12pt}
+
+\ \ \ Os algoritmos de otimização de hiperparâmetros procuram pelo melhor ajuste de hiperparâmetros $\lambda \in \tilde{\Lambda}$ para um algoritmo de aprendizagem $I_{\lambda}$. O espaço de procura $\tilde{\Lambda} \in \Lambda$ contém todas as possíveis configurações de hiperparâmetros consideradas para otimização. Dessa forma, temos que:
+
+$$
+\tilde{\Lambda} = \tilde \Lambda_1 \cup \tilde \Lambda_2 \cup ... \cup \tilde \Lambda_l
+$${#eq-space}
+em que $l$ são todas as possíveis configurações de hiperparâmetros. Além disso, $\tilde \Lambda_i \ \left(i = 1, 2, ..., l\right)$ representam o subconjunto de limites dos domínios do i-ésimo hiperparâmetro $\Lambda_i$, podendo ser contínuo, discreto ou categórico (BISCHL et al., 2023).
+
+\vspace{12pt}
+
+A busca pela melhor combinação de hiperparâmetros $\lambda$ é feito de forma iterativa, utilizando métodos de reamostragem para dividir o conjunto de dados entre teste e treinamento. Portanto, para validar e encontrar os hiperparâmetos, o algoritmo de aprendizagem é validado através da divisão do conjunto de dados. Assim, tem-se a seguinte estratégia de separação do conjunto de dados:
+
+$$
+\mathcal{J} = \left(\left(J_{treino, 1},\ J_{teste, 1}\right), ..., \left(J_{treino, B},\ J_{test, B}\right)\right)
+$${#eq-teste}
+onde $J_{treino, i}, \ J_{teste, i}$ representam os vetores de índices $\left(i = 1, \, 2, ..., \ B\right)$ para os conjuntos de treino e teste, respectivamente, e $B$ representa o número total de divisões.
+
+\vspace{12pt}
+
+A motivação para fazer a divisão do conjunto de dados entre treino e teste é ajustar o algoritmo em dados reais e avaliar a sua performance em dados ainda não vistos, processo representado pelo banco de treino e teste, respectivamente. Para fazer a avaliação dessa performance é necessário estimar uma métrica de performance em cada divisão. Assim, para um dado algoritmo $I_{\lambda}$ é calculado uma métrica de performance $\rho$ para cada $J_{teste, i}$ após o ajuste do algoritmo no $J_{treino, i}$. Por fim, pode ser calculado uma média amostral da métrica de cada uma das divisões. Dessa forma, o problema de otimizar os hiperparâmetros pode ser definida da seguinte forma:
+
+$$
+\lambda^* \in \underset{\lambda \in \tilde \Lambda}{\operatorname{argmin}} \ c\left(\lambda \right)
+$$
+onde $\lambda^*$ denota a melhor combinação possível de hiperparâmetros, $c\left(\lambda \right)$ representa a generalização do erro, podendo ser representado também por $\widehat{GE}\left(I, \ \mathcal J, \ \rho, \ \lambda\right)$, quando $I, \ \mathcal{J}, \ \rho$ são fixados e $I$ denota um algoritmo de aprendizagem de máquina. O erro de generalização do erro é estimado e otimizado a fim de evitar um ajuste excessivo (overfitting), podendo prejudicar quando o algoritmo fizer estimativas em dados ainda não vistos. Assim, o processo pode ser visualizado pela figura @fig-hpo:
+
+
+```{mermaid}
+%%| label: fig-hpo
+%%| fig-cap: Processo de otimização de hiperparâmetros
+%%| fig-width: 4.5
+flowchart LR
+  A["$$\lambda$$"] --> B(Round edge)
+  B --> C{Decision}
+```
+
+\vspace{12pt}
 
 ### Otimização Bayesiana
+
+\ \ \ Existem diversas técnicas para otimização de hiperparâmetros utilizadas em aprendizagem de máquina. Uma das técnicas mais comuns é a GridSearch, que se propõe em testar todas as combinações possíveis previamente definidas num espaço de procura e escolher aquela que obteve os melhores resultados. No entanto, a GridSearch e muitas outras técnicas tem performances abaixo do esperado devido ao seu alto custo computacional, possibilitando testar apenas uma pequena de hiperparâmetros e tendo, por efeito, modelos com resultados piores quando comparados com aqueles que foram otimizados com métodos mais eficientes e com melhores estratégias de procura.
 
 
 
 ### Tree-Structured Parzen Estimator
 
-\
-
-O Tree-Structured Parzen Estimator (TPE) é uma variante de métodos otimização bayesiana. A otimização bayesiana tem como finalidade minimizar uma função objetivo definida da seguinte forma:
+\ \ \ O Tree-Structured Parzen Estimator (TPE) é uma variante de métodos otimização bayesiana. A otimização bayesiana tem como finalidade minimizar uma função objetivo definida da seguinte forma:
 
 $$
 x_{opt} \in \underset{x \in \chi}{\operatorname{argmin}} f\left(x\right)
