@@ -197,10 +197,17 @@ flowchart LR
 
 \vspace{12pt}
 
-\ \ \ A otimização bayesiana não se refere a um tipo específico de algoritmo de otimização, mas sim a uma filosofia de otimização baseada em inferência bayesiana, a qual contém uma extensa família de algoritmos de otimização [@garnett2023bayesian]. Não obstante, a otimização bayesiana tem obtido benchmarks melhores que outros algoritmos em inúmeros problemas complexos de otimização de funções black-box^[definir o que é black-box] [@snoek2012practical].
+\ \ \ A otimização bayesiana não se refere a um tipo específico de algoritmo de otimização, mas sim a uma filosofia de otimização baseada em inferência bayesiana, a qual contém uma extensa família de algoritmos de otimização [@garnett2023bayesian]. Não obstante, a otimização bayesiana tem obtido benchmarks melhores que outros algoritmos em inúmeros problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
 
+\vspace{12pt}
+
+\ \ \ Diferente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana determina as futuras tentativas de avaliação com base em resultados obtidos previamente [@yang2020hyperparameter]. Para a definição dos pontos futuros, é utilizada uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Assim, após o ajuste da função probabilística, tem-se como resultado para cada $\lambda$ uma estimativa da performance $\hat c \left(\lambda \right)$ e da predição da incerteza $\hat \sigma \left(\lambda \right)$, além de obter também a distribuição preditiva da função probabilística. Com a distribuição obtida, uma função de aquisição determina o trade-off entre exploitation e exploration^[definição de exploration e exploitation]. Dessa forma, os algoritmos de otimização bayesiana são definidos segundo a lei $\lambda \to c\left(\lambda \right)$ e  procuram um equilíbrio entre o processo de exploitation-exploration para detectar as regiões ótimas mais prováveis e não perder melhores configurações em áreas ainda não exploradas.
 
 ### Tree-Structured Parzen Estimator
+
+\ \ \ Existem diversas funções probabilísticas para uso na otimização bayesiana, algumas delas é o Processo Gaussiano, Random Forest ou Tree-Structured Parzen Estimator.
+
+\vspace{12pt}
 
 \ \ \ O Tree-Structured Parzen Estimator (TPE) é uma variante de métodos otimização bayesiana. A otimização bayesiana tem como finalidade minimizar uma função objetivo definida da seguinte forma:
 
