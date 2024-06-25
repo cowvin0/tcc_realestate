@@ -177,7 +177,7 @@ A motivação para fazer a divisão do conjunto de dados entre treino e teste é
 $$
 \lambda^* \in \underset{\lambda \in \tilde \Lambda}{\operatorname{argmin}} \ c\left(\lambda \right)
 $$
-onde $\lambda^*$ denota a melhor combinação possível de hiperparâmetros, $c\left(\lambda \right)$ representa a generalização do erro, podendo ser representado também por $\widehat{GE}\left(I, \ \mathcal J, \ \rho, \ \lambda\right)$, quando $I, \ \mathcal{J}, \ \rho$ são fixados e $I$ denota um algoritmo de aprendizagem de máquina. O erro de generalização do erro é estimado e otimizado a fim de evitar um ajuste excessivo (overfitting), podendo prejudicar quando o algoritmo fizer estimativas em dados ainda não vistos. Assim, o processo pode ser visualizado pela figura @fig-hpo:
+onde $\lambda^*$ denota a melhor combinação possível de hiperparâmetros, $c\left(\lambda \right)$ representa a generalização do erro, podendo ser representado também por $\widehat{GE}\left(I, \ \mathcal J, \ \rho, \ \lambda\right)$, quando $I, \ \mathcal{J}, \ \rho$ são fixados e $I$ denota um algoritmo de aprendizagem de máquina. O erro de generalização é estimado e otimizado a fim de evitar um ajuste excessivo (overfitting), podendo prejudicar quando o algoritmo fizer estimativas em dados ainda não vistos. Assim, o processo pode ser visualizado pela figura @fig-hpo:
 
 
 ```{mermaid}
@@ -201,27 +201,46 @@ flowchart LR
 
 \vspace{12pt}
 
-\ \ \ Diferente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana determina as futuras tentativas de avaliação com base em resultados obtidos previamente [@yang2020hyperparameter]. Para a definição dos pontos futuros, é utilizada uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Assim, após o ajuste da função probabilística, tem-se como resultado para cada $\lambda$ uma estimativa da performance $\hat c \left(\lambda \right)$ e da predição da incerteza $\hat \sigma \left(\lambda \right)$, além de obter também a distribuição preditiva da função probabilística. Com a distribuição obtida, uma função de aquisição determina o trade-off entre exploitation e exploration^[definição de exploration e exploitation]. Dessa forma, os algoritmos de otimização bayesiana são definidos segundo a lei $\lambda \to c\left(\lambda \right)$ e  procuram um equilíbrio entre o processo de exploitation-exploration para detectar as regiões ótimas mais prováveis e não perder melhores configurações em áreas ainda não exploradas.
+\ \ \ Diferente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana determina as futuras tentativas de avaliação com base em resultados obtidos previamente [@yang2020hyperparameter]. Para a definição dos pontos futuros, é utilizada uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Assim, após o ajuste da função probabilística, tem-se como resultado para cada $\lambda$ uma estimativa da performance $\hat c \left(\lambda \right)$ e da predição da incerteza $\hat \sigma \left(\lambda \right)$, além de obter também a distribuição preditiva da função probabilística. Com a distribuição obtida, uma função de aquisição determina o trade-off entre exploitation e exploration^[exploitation pode ser entendido como procurar próximo a boas observações e ]. Dessa forma, os algoritmos de otimização bayesiana são definidos segundo a lei $\lambda \to c\left(\lambda \right)$ e  procuram um equilíbrio entre o processo de exploitation-exploration para detectar as regiões ótimas mais prováveis e não perder melhores configurações em áreas ainda não exploradas.
 
 ### Tree-Structured Parzen Estimator
 
-\ \ \ Existem diversas funções probabilísticas para uso na otimização bayesiana, algumas delas é o Processo Gaussiano, Random Forest ou Tree-Structured Parzen Estimator.
+\ \ \ Existem diversas funções probabilísticas para uso na otimização bayesiana, algumas delas é o Processo Gaussiano, Random Forest ou Tree-Structured Parzen Estimator (TPE). Nesse trabalho, foi utilizado o Tree-Structured Parzen Estimator, utilizando a biblioteca Optuna [@optuna_2019] para sua aplicação.
 
 \vspace{12pt}
 
-\ \ \ O Tree-Structured Parzen Estimator (TPE) é uma variante de métodos otimização bayesiana. A otimização bayesiana tem como finalidade minimizar uma função objetivo definida da seguinte forma:
+\ \ \ O TPE define duas funções, $l\left(x\right) \text{ e } g\left(x\right)$, que são usadas para modelar a distribuição das variáveis do domínio [@yang2020hyperparameter]. Utilizando as duas densidades, o TPE procura modelar a probabilidade de se observar um hiperparâmetro $x$ dado uma métrica de performance $\rho$. Dessa forma, tem-se a seguinte definição:
+
 
 $$
-x_{opt} \in \underset{x \in \chi}{\operatorname{argmin}} f\left(x\right)
+p(x|y) =
+\begin{cases}
+    l(x) & \text{if } y < y^* \\
+    g(x) & \text{if } y \ge y^*
+\end{cases}
+$${#eq-tpe}
+em que $l\left(x\right)$ é definido como a densidade em que a função perda é menor que um limiar $y^*$ e $g\left(x\right)$ representa é a densidade em que a função perda^[definição de função perda] tem valores acima do limiar $y^*$ [@bergstra2011algorithms]. O limite $y^*$ é escolhido através de um hiperparâmetro $\gamma$, onde $\gamma$ representa um percentil dos valores observados de $y$, de modo que $p\left(y < y^*\right) = \gamma$.
+
+\vspace{12pt}
+
+Por padrão, o tree-structured parzen estimator tem como função de aquisição o Expected Improvement $\left(EI\right)$, que pode ser otimizado para o TPE da seguinte forma:
+
+$$
+  EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | x\right) dy
+$${#eq-exp}
+
+Ainda, para encontrar a probabilidade marginal de $x$, temos a seguinte integral $p\left(x\right) = \int_{\mathbb{R}} p\left(x | y\right)p\left(y\right)dy$. Particionando o domínio de $y$, chega-se em:
+
+$$
+p\left(x\right) = \int_{-\infty}^{y^*} p\left(x | y\right)p\left(y\right)dy + \int_{y^*}^{\infty} p\left(x | y\right)p\left(y\right)dy = \gamma l\left(x\right) + \left(1 - \gamma \right) g\left(x\right)
 $$
 
-Como foi dito anteriormente, a otimização de hiperparâmetros na aprendizagem de máquinas busca encontrar a combinação de hiperparâmetro $x_{opt}$ que produza os melhores resultados, como, por exemplo, a configuração com o menor erro quadrático médio em problemas de regressão. A procura por $x_{opt}$ é feita a partir de uma função da família de funções de aquisição.
+Assim, utilizando o Teorema de Bayes e fazendo as substituições na integral de @eq-exp:
 
-Na prática, a otimização bayesiana tem como objetivo indireto otimizar uma *função de aquisição*. As funções de aquisição tendem a ser computacionalmente mais eficientes para estimação com gradientes analiticamente manejáveis, permitindo o uso de otimizadores prontos para estimar cada observação @garnett2023bayesian.
-
-
-## Modelos baseados em árvores
-
+$$
+EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(x | y\right)p\left(y\right)dy = \left(\gamma y^*  - \int_{-\infty}^{y^*} p\left(y\right)dy\right) \left(\gamma + \frac{g\left(x\right)}{l\left(x\right)}\left(1 - \gamma\right)\right) ^{-1}
+$$
+em que a segunda expressão do produto mostra que para maximizar o Expected Improvement é necessário pontos de $x$ com maior probabilidade em $l\left(x\right)$ e com baixa probabilidade em $g\left(x\right)$. Não obstante, no TPE, maximizar o $EI$ é o mesmo que maximizar a razão entre as duas distribuições $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
 
 
 \newpage
