@@ -8,7 +8,8 @@ import numpy as np
 cols_imputer = ['latitude', 'longitude', 'area', 'quarto', 'vaga', 'banheiro',
                 'piscina', 'elevador', 'salao_de_festa', 'academia',
                 'quadra_de_esporte', 'varanda_gourmet', 'playground',
-                'espaco_gourmet', 'area_servico', 'sauna', 'spa'
+                'espaco_gourmet', 'area_servico', 'sauna', 'spa', 'valor_aluguel',
+                'qnt_beneficio', 'area_aluguel'
                ]
 
 transformar_features = ['area', 'vaga', 'banheiro',
