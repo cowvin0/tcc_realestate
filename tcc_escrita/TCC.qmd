@@ -80,16 +80,32 @@ set.seed(42)
 \newpage
 
 # Métodos baseados em árvore
-<<<<<<< HEAD
 
-Tree-based methods é a mesma
-=======
+\ \ \ Neste capítulo, serão descritos os métodos baseados em árvore, que fundamentam os algoritmos de aprendizado de máquina utilizados neste trabalho e que podem ser aplicados tanto para regressão quanto para classificação. Os métodos baseados em árvore envolvem a estratificação ou segmentação do espaço dos preditores^[O espaço dos preditores é o conjunto de todos os valores possíveis para as $p$ variáveis  $X_1, X_2, ..., X_p$.] em várias regiões simples. Além disso, esses métodos são bastante simples, de fácil interpretação e, apesar de sua simplicidade, são poderosos. Alguns dos algoritmos de aprendizagem de máquinas mais conhecidos e que estão contidos nos métodos baseados em árvore e que foram utilizados nesse trabalho, é a Random Forest, Gradient Boosting e Light Gradient Boosting Machine. No entanto, para fundamentar os métodos baseados em árvore, começaremos pela definição da árvore de decisão.
 
-Neste capítulo, serão descritos os métodos baseados em árvore, que fundamentam os algoritmos de aprendizado de máquina utilizados neste trabalho e que podem ser aplicados tanto para regressão quanto para classificação. Os métodos baseados em árvore envolvem a estratificação ou segmentação do espaço dos preditores em várias regiões simples. Além disso, esses métodos são bastante simples, de fácil interpretação e, apesar de sua simplicidade, são poderosos. Alguns dos algoritmos de aprendizagem de máquinas mais conhecidos e que estão contidos nos métodos baseados em árvore e que foram utilizados nesse trabalho, é a Random Forest, Gradient Boosting e Light Gradient Boosting Machine. No entanto, para fundamentar os métodos baseados em árvore, começaremos pela definição da Decision Trees.
+## Árvores de decisão
 
-## Árvore de decisão
+\ \ \ Árvores de decisão são métodos de aprendizado supervisionado não paramétrico utilizados tanto para regressão quanto para classificação. Elas servem de base para muitos dos modelos baseados em árvores empregados neste trabalho, uma vez que esses modelos geram múltiplas árvores de decisão. @izbicki2020aprendizado define o processo de construção de uma árvore como o particionamento recursivo no espaço das covariáveis, em que cada particionamento recebe o nome de nós e o resultado final recebe o nome de folha. Em cada nó é definida uma condição e, caso essa condição seja satisfeita, ter-se-á como resultado uma das folhas desse nó. Não obstante, caso o resultado seja contrário, seguirá para o próximo nó e verificará a próxima condição, podendo gerar uma folha ou a condição de outro nó. Veja um exemplo na @fig-arvore:
 
->>>>>>> origin
+```{mermaid}
+%%| label: fig-arvore
+%%| fig-cap: Exemplo de estrutura de árvore de regressão. Inspirado por IZBICKI; SANTOS (2020).
+%%| fig-width: 5.5
+
+graph TD
+    A[Condição 1] -->|Condição 1: Sim| B[Condição 2]
+    A -->|Condição 1: Não| C[Condição 3]
+    B -->|Condição 2: Sim| D[Folha 1]
+    B -->|Condição 2: Não| E[Folha 2]
+    C -->|Condição 3: Sim| F[Folha 3]
+    C -->|Condição 3: Não| G[Condição 4]
+    G -->|Condição 4: Sim| H[Folha 4]
+    G -->|Condição 4: Não| I[Folha 5]
+```
+
+\vspace{12pt}
+
+\ \ \ Dessa forma, uma árvore de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]
 
 # Metodologia
 
@@ -160,13 +176,6 @@ No entanto, devido a observações feitas durante o estudo, nem todas essas vari
 ## Métricas de avaliação
 
 \ \ \
-<<<<<<< HEAD
-
-## Etapas de pré-processamento
-
-\ \ \
-=======
->>>>>>> origin
 
 ## Tunagem de hiperparâmetros
 
