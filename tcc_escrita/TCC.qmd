@@ -79,13 +79,15 @@ set.seed(42)
 
 \newpage
 
-# Modelos baseados em árvore
+# Métodos baseados em árvore
 
---- Fazer depois da metodologia ---
+Tree-based methods é a mesma
 
 # Metodologia
 
 ## Os dados e o procedimento adotado para sua obtenção
+
+--- AINDA SERÁ MODIFICADO ---
 
 \ \ \ O Web scraping, também conhecido como extração de dados da web, é uma técnica utilizada para o processo de coleta de dados estruturados da web de maneira automatizada. É um processo que vem sendo constantemente utilizado por instituições públicas e privadas para a construção de produtos que utilizam algoritmos de aprendizagem de máquinas, observa ofertas e discontos, faz análise de mercado ou monitoração de marcas.
 
@@ -141,11 +143,17 @@ No entanto, devido a observações feitas durante o estudo, nem todas essas vari
 
 \ \ \ Por outro lado, o aprendizado não supervisionado aparece em situações mais desafiadores, pois não há um exemplo para explicar aquilo que se pretende explicar. Este processo é conhecido como *aprendizado sem exemplo*, @hastie2009elements. Dessa forma, no aprendizado não supervisionado, tem-se uma amostra com N observações $\left(x_1, ..., x_N\right)$ de um vetor aleatório $X$ com densidade conjunta $f\left(x\right)$ em que o objetivo é inferir propriedades da densidade sem ajuda de exemplos para cada observação. Assim, como há uma falta de uma variável resposta $y_i$ para supervisionar a análise, pode-se procurar entender a relação entre as variáveis ou as observações, @james2023introduction. Por exemplo, uma das técnicas mais aplicadas em problemas que envolvem o aprendizado supervisionado é a análise de cluster, em que o objetivo é determinar, com base em $x_1, ..., x_n$, se as observações são caracterizadas em grupos distintos. Esse é um dos métodos que poderiam ser aplicados, por exemplo, na análise de crédito de clientes de um cartão de crédito, tornando possível analisar o seu perfil e classificá-lo em diferentes grupos para recomendar produtos especificos adequados ao seu perfil.
 
-## Métodos de reamostragem
+## Reamostragem para avaliação de performance
+
+\ \ \
 
 ## Métricas de avaliação
 
-\
+\ \ \
+
+## Etapas de pré-processamento
+
+\ \ \
 
 ## Tunagem de hiperparâmetros
 
@@ -219,7 +227,7 @@ p(x|y) =
     g(x) & \text{if } y \ge y^*
 \end{cases}
 $${#eq-tpe}
-em que $l\left(x\right)$ é definido como a densidade em que a função perda é menor que um limiar $y^*$ e $g\left(x\right)$ representa é a densidade em que a função perda^[definição de função perda] tem valores acima do limiar $y^*$ [@bergstra2011algorithms]. O limite $y^*$ é escolhido através de um hiperparâmetro $\gamma$, onde $\gamma$ representa um percentil dos valores observados de $y$, de modo que $p\left(y < y^*\right) = \gamma$.
+em que $l\left(x\right)$ é definido como a densidade em que a função perda é menor que um limiar $y^*$ e $g\left(x\right)$ representa é a densidade em que a função perda^[definição de função perda] tem valores acima do limiar $y^*$ [@bergstra2011algorithms]. O limite $y^*$ é escolhido através de um hiperparâmetro $\gamma$, onde $\gamma$ representa o percentil dos valores observados de $y$, de modo que $p\left(y < y^*\right) = \gamma$.
 
 \vspace{12pt}
 
@@ -238,9 +246,9 @@ $$
 Assim, utilizando o Teorema de Bayes e fazendo as substituições na integral de @eq-exp:
 
 $$
-EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(x | y\right)p\left(y\right)dy = \left(\gamma y^*  - \int_{-\infty}^{y^*} p\left(y\right)dy\right) \left(\gamma + \frac{g\left(x\right)}{l\left(x\right)}\left(1 - \gamma\right)\right) ^{-1}
+EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right) \frac{p\left(x | y\right)p\left(y\right)}{p\left(x\right)}dy = \left(\gamma y^*  - \int_{-\infty}^{y^*} p\left(y\right)dy\right) \left(\gamma + \left(1 - \gamma\right)\frac{g\left(x\right)}{l\left(x\right)}\right) ^{-1}
 $$
-em que a segunda expressão do produto mostra que para maximizar o Expected Improvement é necessário pontos de $x$ com maior probabilidade em $l\left(x\right)$ e com baixa probabilidade em $g\left(x\right)$. Não obstante, no TPE, maximizar o $EI$ é o mesmo que maximizar a razão entre as duas distribuições $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
+em que a segunda expressão do produto mostra que para maximizar o Expected Improvement é necessário pontos de $x$ com maior probabilidade em $l\left(x\right)$ e com baixa probabilidade em $g\left(x\right)$. Não obstante, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
 
 
 \newpage
