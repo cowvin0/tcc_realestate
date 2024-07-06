@@ -105,7 +105,7 @@ graph TD
 
 \vspace{12pt}
 
-\ \ \ Dessa forma, uma árvore de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]
+\ \ \ Descrevendo formalmente o processo de construção de uma árvore de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.], existem dois passos. No primeiro passo, dividimos o espaço dos preditores em $J$ regiões distintas e disjuntas denotadas por $R_1, R2, ..., $R_J$.
 
 # Metodologia
 
