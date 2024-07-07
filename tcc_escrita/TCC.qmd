@@ -126,7 +126,7 @@ I_{R_j}(x_i) =
     0,& \text{se } x_i \notin R_j
 \end{cases}
 $$
-e, como um ponto $x_i$ não pode estar ao mesmo tempo em duas regiões $R_j$, pois as regiões são disjuntas, temos que apenas um dos casos a função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Assim, derivando $\sum_{x_i \in R_j} \left(y_i - c_j\right)^2$
+e, como um ponto $x_i$ não pode estar ao mesmo tempo em duas regiões $R_j$, pois as regiões são disjuntas, temos que apenas um dos casos a função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Assim, derivando $\sum_{x_i \in R_j} \left(y_i - c_j\right)^2$ em relação a $c_j$
 
 $$
 \frac{\partial{\sum_{x_i \in R_j} \left(y_i - c_j\right)^2}}{\partial{c_j}} = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)
@@ -135,12 +135,27 @@ e igualando @eq-partial a 0, temos a seguinte equação
 $$
 \sum_{x_i \in R_j} \left(y_i - \hat{c}_j\right) = 0
 $$
-que se abrirmos, o somatório e dividirmos pelo número total de pontos $N_{R_j}$ na região $R_j$, teremos que o estimador de $c_j$ será somente a média dos $y_i$ na região $R_j$:
+que se abrirmos o somatório e dividirmos pelo número total de pontos $N_{j}$ na região $R_j$, teremos que o estimador de $c_j$ será somente a média dos $y_i$ na região $R_j$:
 
 $$
-\sum_{x_i \in R_j} y_i - c_j \sum_{x_i \in R_j} 1 = 0 \Longrightarrow \hat{c}_j = \frac{1}{N_{R_j}}\sum_{x_i \in R_j} y_i
+\sum_{x_i \in R_j} y_i - c_j \sum_{x_i \in R_j} 1 = 0 \Longrightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i
 $${#eq-estimacj}
 
+\vspace{12pt}
+
+No entanto, @james2013introduction caracteriza como inviável considerar todas as possíveis partições do espaço das variáveis em $J$ caixas devido ao alto custo computacional. Dessa forma, a abordagem a ser adotada é uma divisão binária recursiva. O processo começa no topo da árvore de regressão, o ponto em que contém todas as observações, e continua sucessivamente dividindo o espaço dos preditores. As divisões são indicadas como dois novos ramos na árvore, como pode ser visto na [@fig-arvore].
+
+\vspace{12pt}
+
+Para executar a divisão binária recursiva, deve-se primeiramente selecionar a variável independente $X_j$ e o ponto de corte $s$ tal que a divisão do espaço dos preditores conduza a maior redução possível na soma dos quadrados dos resíduos. Dessa forma, definimos dois semi-planos:
+
+$$
+R_{1}\left(j, s\right) = \{X | X_j \leq s\} \text{ e } R_{2}\left(j, s\right) = \{X | X_j > s\}
+$$
+
+\vspace{12pt}
+
+-- NO FIM ADICIONAR O ALGORITMO DO ISLP, PG 337 --
 
 # Metodologia
 
