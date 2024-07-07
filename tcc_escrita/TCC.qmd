@@ -105,7 +105,41 @@ graph TD
 
 \vspace{12pt}
 
-\ \ \ Descrevendo formalmente o processo de construção de uma árvore de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.], a sua execução é composta por dois passos. No primeiro passo, dividimos o espaço dos preditores em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, ..., R_J$. No segundo passo, para cada observação que pertence a região $R_j$, a previsão será a mesma. Essa previsão será simplesmente a média dos valores da variável dependente das observações de treinamento que estão dentro da região $R_j$ [@james2013introduction]. Dessa forma, dado que se tenha duas regiões $R_1$ e $R_3$, e a média dos valores da variável resposta tenha sido 10 e 20, respectivamente. Então, Para uma observação $X = x, x \in R_1$, o valor previsto será 10 e, caso contrário, se $x \in R_2$, o valor previsto será 20.
+\ \ \ Descrevendo formalmente o processo de construção de uma árvore de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.], a sua execução é composta por dois passos. No primeiro passo, dividimos o espaço dos preditores em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, ..., R_J$. No segundo passo, para cada observação que pertence a região $R_j$, a previsão será a mesma. Essa previsão será simplesmente a média dos valores da variável dependente das observações de treinamento que estão dentro da região $R_j$ [@james2013introduction]. Dessa forma, dado que se tenha duas regiões $R_1$ e $R_2$, e a média dos valores da variável resposta tenha sido 10 e 20, respectivamente. Então, Para uma observação $X = x, x \in R_1$, o valor previsto será 10 e, caso contrário, se $x \in R_2$, o valor previsto será 20.
+
+\vspace{12pt}
+
+\ \ \ As regiões $R_1, R_2, ..., R_J$ são construídas em formato de caixa de forma a minimizar a soma dos quadrados. Dessa forma, podemos modelar a variável resposta como uma constante $c_m$ em cada região $R_j$. Assim, definimos a resposta:
+
+$$
+f\left(x\right) = \sum^J_{j=1}c_j I\left(x \in R_j \right)
+$$
+
+\vspace{12pt}
+
+\ \ \ Agora, utilizando o critério de minimizar a soma dos quadrados, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(xi\right)\right]^2$ para encontrar um estimador para o parâmetro $c_j$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se observarmos a definição da função indicadora $I\left(x \in R_j \right)$:
+
+$$
+I_{R_j}(x_i) =
+\begin{cases}
+    1,& \text{se } x_i \in R_j \\
+    0,& \text{se } x_i \notin R_j
+\end{cases}
+$$
+e, como um ponto $x_i$ não pode estar ao mesmo tempo em duas regiões $R_j$, pois as regiões são disjuntas, temos que apenas um dos casos a função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Assim, derivando $\sum_{x_i \in R_j} \left(y_i - c_j\right)^2$
+
+$$
+\frac{\partial{\sum_{x_i \in R_j} \left(y_i - c_j\right)^2}}{\partial{c_j}} = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)
+$${#eq-partial}
+e igualando @eq-partial a 0, temos a seguinte equação
+$$
+\sum_{x_i \in R_j} \left(y_i - \hat{c}_j\right) = 0
+$$
+que se abrirmos, o somatório e dividirmos pelo número total de pontos $N_{R_j}$ na região $R_j$, teremos que o estimador de $c_j$ será somente a média dos $y_i$ na região $R_j$:
+
+$$
+\sum_{x_i \in R_j} y_i - c_j \sum_{x_i \in R_j} 1 = 0 \Longrightarrow \hat{c}_j = \frac{1}{N_{R_j}}\sum_{x_i \in R_j} y_i
+$${#eq-estimacj}
 
 
 # Metodologia
