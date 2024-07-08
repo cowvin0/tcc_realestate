@@ -147,11 +147,17 @@ No entanto, @james2013introduction caracteriza como inviável considerar todas a
 
 \vspace{12pt}
 
-Para executar a divisão binária recursiva, deve-se primeiramente selecionar a variável independente $X_j$ e o ponto de corte $s$ tal que a divisão do espaço dos preditores conduza a maior redução possível na soma dos quadrados dos resíduos. Dessa forma, definimos dois semi-planos:
+Para executar a divisão binária recursiva, deve-se primeiramente selecionar a variável independente $X_j$ e o ponto de corte $s$ tal que a divisão do espaço dos preditores conduza a maior redução possível na soma dos quadrados dos resíduos. Dessa forma, definimos dois semi-planos
 
 $$
 R_{1}\left(j, s\right) = \{X | X_j \leq s\} \text{ e } R_{2}\left(j, s\right) = \{X | X_j > s\}
 $$
+e procuramos a divisão da variável $j$ e o ponto de corte $s$ que resolve a equação
+
+$$
+\min_{j, s}\left[\min_{c_1} \sum_{x_i \in R_1\left(j, s\right)} \left(y_i - c_{1}\right)^2 + \min_{c_2} \sum_{x_i \in R_2\left(j, s\right)} \left(y_i - c_{2}\right)^2\right]
+$$
+em que $c_1$ e $c_2$ é a média da variável dependente para as observações de treinamento nas regiões $R_1\left(j, s\right)$ e $R_2\left(j, s\right)$, respectivamente.
 
 \vspace{12pt}
 
