@@ -2,7 +2,26 @@
 nocite: |
   @bischl2023hyperparameter
   @garnett2023bayesian
-format: pdf
+format:
+  pdf:
+    include-before-body:
+      text: |
+        \numberwithin{algorithm}{chapter}
+        \algrenewcommand{\algorithmiccomment}[1]{\hskip3em$\rightarrow$ #1}
+crossref:
+  custom:
+    - kind: float
+      key: algo
+      reference-prefix: "Algoritmo"
+      caption-prefix: "Algoritmo"
+      latex-env: algo
+      latex-list-of-description: Algoritmo
+filters:
+  - pseudocode
+pseudocode:
+  caption-prefix: "Algoritmo"
+  reference-prefix: "Algoritmo"
+  caption-number: true
 number-sections: true
 indent: true
 documentclass: scrreprt
@@ -157,11 +176,59 @@ e procuramos a divisão da variável $j$ e o ponto de corte $s$ que resolve a eq
 $$
 \min_{j, s}\left[\min_{c_1} \sum_{x_i \in R_1\left(j, s\right)} \left(y_i - c_{1}\right)^2 + \min_{c_2} \sum_{x_i \in R_2\left(j, s\right)} \left(y_i - c_{2}\right)^2\right]
 $$
-em que $c_1$ e $c_2$ é a média da variável dependente para as observações de treinamento nas regiões $R_1\left(j, s\right)$ e $R_2\left(j, s\right)$, respectivamente.
+em que $c_1$ e $c_2$ é a média da variável dependente para as observações de treinamento nas regiões $R_1\left(j, s\right)$ e $R_2\left(j, s\right)$, respectivamente. Assim, encontrando a melhor divisão, os dados são particionados nas duas regiões resultantes e o processo de divisão é repetido em todas as outras regiões.
 
 \vspace{12pt}
 
--- NO FIM ADICIONAR O ALGORITMO DO ISLP, PG 337 --
+\ \ \ O tamanho da árvore pode ser considerado como um hiperparâmetro para regular a complexidade do modelo pois, uma árvore muito grande pode causar um ajuste excessivo aos dados de treinamento, capturando não apenas os padrões relevantes, mas também os ruído. Dessa forma, o modelo apresenta um bom desempenho nos dados de treinamento, mas não consegue desempenhar bem em dados que não foram observados devido a sua incapacidade de generalizar. Não obstante, uma árvore pequena pode não capturar os padrões, relações e estruturas importantes contidas nos dados. Dessa forma, adotamos como estratégia para selecionar o tamanho da árvore é crescer uma grande árvore $T_0$ e interromper o processo de divisão apenas quando atingir um tamanho mínimo de nós. No fim, a grande árvore $T_0$ é podada usando o critério custo de complexidade, que será definida a seguir.
+
+\vspace{12pt}
+
+\ \ \ Para o processo de poda da árvore, definimos uma árvore qualquer $T$ que pode ser obtida através do processo de poda de $T_0$ e portanto $T \subset T_0$. Dessa forma, sendo $N_j$ a quantidade de pontos na região $R_j$, seja
+
+$$
+\begin{aligned}
+\hat{c}_j &= \frac{1}{N_j}\sum_{xi \in R_j} y_i \\
+Q_j\left(T\right) &= \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)^2
+\end{aligned}
+$$
+$\hat{c}_j$ a média das observações da variável dependente na $R_j$ do nó interno $j$ e $Q_j\left(T\right)$ uma estatística medidas de impureza do nó pelo erro quadrático. Assim, definimos o critério custo de complexidade:
+
+$$
+C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|
+$$
+em que $|T|$ denota a quantidade total de folhas e $\alpha \geq 0$ é o parâmetro de tunagem que equilibra o tamanho da árvore e a adequação aos dados de forma que para cada $\alpha$, a árvore $T_{\alpha} \subseteq T_0$ minimiza $C_{\alpha}\left(T\right)$. Valores grandes para $\alpha$ resulta em árvores menores, valores menores resulta em árvores maiores e $\alpha = 0$ resulta na própria árvore $T_0$. A procura por $T_{\alpha}$ consiste em sucessivamente colapsar o nó interno que produz o menor aumento em $\sum_j N_j Q_j\left(T\right)$ e o processo continua até produzir uma árvore de um único nó. Esse processo gera uma sequência de subárvores que contém uma única menor subárvore que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$. Além disso, a estimação de $\alpha$ é feita por validação cruzada com cinco ou dez folds, e a estimativa $\hat \alpha$ é escolhida para minimizar a soma dos quadrados dos resíduos durante a validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O algoritmo (CITAR O ALGORITMO) exemplifica o processo de crescimento de uma árvore de regressão:
+
+----------------------------------------------------------
+\textbf{Algoritmo 4.1} Construindo uma árvore de regressão
+----------------------------------------------------------
+1. Use a divisão binária recursiva para crescer uma árvore grande nos dados de treinamento, parando apenas quando cada folha tiver menos do que um número mínimo de observações.
+
+\vspace{4pt}
+
+2. Aplique o critério custo de complexidade à árvore grande $T_0$ para obter uma sequência de melhores subárvores $T_{\alpha}$, em função de $\alpha$.
+
+\vspace{4pt}
+
+3. Use validação cruzada K-fold para escolher $\alpha$. Isto é, divida as observações de treinamento em K folds. Para cada $k = 1, ..., K$:
+
+\vspace{2pt}
+
+(a) Repita os Passos 1 e 2 em todos os folds, exceto no k-ésimo fold dos dados de treinamento.
+
+\vspace{2pt}
+
+(b) Avalie o erro quadrático médio de previsão nos dados no k-ésimo fold deixado de fora, em função de $\alpha$.
+Faça a média dos resultados para cada valor de $\alpha$ e escolha $\alpha$ que minimize o erro médio.
+
+\vspace{4pt}
+
+4. Retorne a subárvore $T_{\hat \alpha}$ do Passo 2 que corresponde ao valor estimado de $\alpha$.
+----------------------------------------------------------
+
+## Ensemble
+
+\vspace{12pt}
 
 # Metodologia
 
