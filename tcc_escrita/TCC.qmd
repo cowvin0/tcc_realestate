@@ -61,6 +61,9 @@ library(tidymodels)
 set.seed(42)
 ```
 
+\renewcommand{\listalgorithmname}{Lista de algoritmos}
+\listofalgorithms
+
 # Resumo
 
 
@@ -197,34 +200,42 @@ $\hat{c}_j$ a média das observações da variável dependente na $R_j$ do nó i
 $$
 C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|
 $$
-em que $|T|$ denota a quantidade total de folhas e $\alpha \geq 0$ é o parâmetro de tunagem que equilibra o tamanho da árvore e a adequação aos dados de forma que para cada $\alpha$, a árvore $T_{\alpha} \subseteq T_0$ minimiza $C_{\alpha}\left(T\right)$. Valores grandes para $\alpha$ resulta em árvores menores, valores menores resulta em árvores maiores e $\alpha = 0$ resulta na própria árvore $T_0$. A procura por $T_{\alpha}$ consiste em sucessivamente colapsar o nó interno que produz o menor aumento em $\sum_j N_j Q_j\left(T\right)$ e o processo continua até produzir uma árvore de um único nó. Esse processo gera uma sequência de subárvores que contém uma única menor subárvore que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$. Além disso, a estimação de $\alpha$ é feita por validação cruzada com cinco ou dez folds, e a estimativa $\hat \alpha$ é escolhida para minimizar a soma dos quadrados dos resíduos durante a validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O algoritmo (CITAR O ALGORITMO) exemplifica o processo de crescimento de uma árvore de regressão:
+em que $|T|$ denota a quantidade total de folhas e $\alpha \geq 0$ é o parâmetro de tunagem que equilibra o tamanho da árvore e a adequação aos dados de forma que para cada $\alpha$, a árvore $T_{\alpha} \subseteq T_0$ minimiza $C_{\alpha}\left(T\right)$. Valores grandes para $\alpha$ resulta em árvores menores, valores menores resulta em árvores maiores e $\alpha = 0$ resulta na própria árvore $T_0$. A procura por $T_{\alpha}$ consiste em sucessivamente colapsar o nó interno que produz o menor aumento em $\sum_j N_j Q_j\left(T\right)$ e o processo continua até produzir uma árvore de um único nó. Esse processo gera uma sequência de subárvores que contém uma única menor subárvore que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$. Além disso, a estimação de $\alpha$ é feita por validação cruzada com cinco ou dez folds, e a estimativa $\hat \alpha$ é escolhida para minimizar a soma dos quadrados dos resíduos durante a validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
 
-----------------------------------------------------------
-\textbf{Algoritmo 4.1} Construindo uma árvore de regressão
-----------------------------------------------------------
-1. Use a divisão binária recursiva para crescer uma árvore grande nos dados de treinamento, parando apenas quando cada folha tiver menos do que um número mínimo de observações.
 
-\vspace{4pt}
+::: {#algo-buildtree}
 
-2. Aplique o critério custo de complexidade à árvore grande $T_0$ para obter uma sequência de melhores subárvores $T_{\alpha}$, em função de $\alpha$.
+```pseudocode
+#| pdf-line-number: false
 
-\vspace{4pt}
+\begin{algorithm}
+\caption{Algoritmo para crescer uma árvore de regressão usando divisão binária recursiva}
+\begin{algorithmic}
+\State \textbf{1.} Use a divisão binária recursiva para crescer uma árvore grande nos dados de treinamento, parando apenas quando cada folha tiver menos do que um número mínimo de observações.
 
-3. Use validação cruzada K-fold para escolher $\alpha$. Isto é, divida as observações de treinamento em K folds. Para cada $k = 1, ..., K$:
+\vspace{3.7pt}
 
-\vspace{2pt}
+\State \textbf{2.} Aplique o critério custo de complexidade à árvore grande \( T_0 \) para obter uma sequência de melhores subárvores \( T_\alpha \), em função de \( \alpha \).
 
-(a) Repita os Passos 1 e 2 em todos os folds, exceto no k-ésimo fold dos dados de treinamento.
+\vspace{3.7pt}
 
-\vspace{2pt}
+\State \textbf{3.} Use validação cruzada K-fold para escolher \( \alpha \). Isto é, divida as observações de treinamento em K folds. Para cada \( k = 1, \ldots, K \):
+    \State \hspace{1em} (a) Repita os Passos 1 e 2 em todos os folds, exceto no k-ésimo fold dos dados de
+    \State \hspace{1em} treinamento.
+    \State \hspace{1em} (b) Avalie o erro quadrático médio de previsão nos dados no k-ésimo fold deixado
+    \State \hspace{1em} de fora, em função de \( \alpha \). Faça a média dos resultados para cada valor de \( \alpha \) e
+    \State \hspace{1em} escolha \( \alpha \) que minimize o erro médio.
 
-(b) Avalie o erro quadrático médio de previsão nos dados no k-ésimo fold deixado de fora, em função de $\alpha$.
-Faça a média dos resultados para cada valor de $\alpha$ e escolha $\alpha$ que minimize o erro médio.
+\vspace{3.7pt}
 
-\vspace{4pt}
+\State \textbf{4.} Retorne a subárvore \( T_{\hat{\alpha}} \) do Passo 2 que corresponde ao valor estimado de \( \alpha \).
+\end{algorithmic}
+\end{algorithm}
+```
 
-4. Retorne a subárvore $T_{\hat \alpha}$ do Passo 2 que corresponde ao valor estimado de $\alpha$.
-----------------------------------------------------------
+Fonte do algoritmo: @james2013introduction [p. 337].
+
+:::
 
 ## Ensemble
 
