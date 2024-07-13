@@ -101,7 +101,9 @@ set.seed(42)
 
 \newpage
 
-# Métodos baseados em árvore
+# Algoritmos de Aprendizado de Máquina
+
+---- MUDAR ISSO AQUI, NÃO TEM SÓ ALGORITMOS BASEADOS EM ÁRVORES ----
 
 \ \ \ Neste capítulo, serão descritos os métodos baseados em árvore, que fundamentam os algoritmos de aprendizado de máquina utilizados neste trabalho e que podem ser aplicados tanto para regressão quanto para classificação. Os métodos baseados em árvore envolvem a estratificação ou segmentação do espaço dos preditores^[O espaço dos preditores é o conjunto de todos os valores possíveis para as $p$ variáveis  $X_1, X_2, ..., X_p$.] em várias regiões simples. Além disso, esses métodos são bastante simples, de fácil interpretação e, apesar de sua simplicidade, são poderosos. Alguns dos algoritmos de aprendizagem de máquinas mais conhecidos e que estão contidos nos métodos baseados em árvore e que foram utilizados nesse trabalho, é a Random Forest, Gradient Boosting e Light Gradient Boosting Machine. No entanto, para fundamentar os métodos baseados em árvore, começaremos pela definição da árvore de decisão.
 
@@ -209,9 +211,9 @@ em que $|T|$ denota a quantidade total de folhas e $\alpha \geq 0$ é o parâmet
 #| pdf-line-number: false
 
 \begin{algorithm}
-\caption{Algoritmo para crescer uma árvore de regressão usando divisão binária recursiva}
+\caption{Algoritmo para crescer uma árvore de regressão}
 \begin{algorithmic}
-\State \textbf{1.} Use a divisão binária recursiva para crescer uma árvore grande nos dados de treinamento, parando apenas quando cada folha tiver menos do que um número mínimo de observações.
+\State \textbf{1.} Use a divisão binária recursiva para crescer uma árvore grande $T_0$ nos dados de treinamento, parando apenas quando cada folha tiver menos do que um número mínimo de observações.
 
 \vspace{3.7pt}
 
@@ -233,11 +235,30 @@ em que $|T|$ denota a quantidade total de folhas e $\alpha \geq 0$ é o parâmet
 \end{algorithm}
 ```
 
-Fonte do algoritmo: @james2013introduction [p. 337].
+Fonte: @james2013introduction [p. 337].
 
 :::
 
-## Ensemble
+## Métodos Ensemble
+
+As árvores de decisão são conhecidas por sua alta interpretabilidade, mas geralmente apresentam um desempenho preditivo preditivo inferior em comparação com outros modelos e algoritmos. No entanto, é possível superar essa limitação construindo um modelo preditivo que combina a força de uma coleção de modelos base mais simples, um processo conhecido como aprendizado Ensemble. De acordo com @hastie2009elements, o aprendizado Ensemble pode ser dividido em duas etapas principais: a primeira etapa consiste em desenvolver uma população de algoritmos de aprendizado base a partir dos dados de treinamento, e a segunda etapa envolve a combinação desses algoritmos para formar um estimador composto. Portanto, nesta seção, serão definidos os métodos de aprendizagem Ensemble utilizados neste trabalho. O foco inicial será no Random Forest, seguido pela descrição e explicação teórica do Bagging, Boosting, Stacking e outros algoritmos de aprendizado de máquina.
+
+### Random Forest
+
+### Bagging
+
+### Boosting
+
+### Gradient Boosting
+
+### Stacking
+
+### Categorical Boosting
+
+### Light Gradient-Boosting
+
+### Extreme Gradient Boosting
+
 
 \vspace{12pt}
 
