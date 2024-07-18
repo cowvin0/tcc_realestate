@@ -241,17 +241,41 @@ Fonte: @james2013introduction [p. 337].
 
 ## Métodos Ensemble
 
-As árvores de decisão são conhecidas por sua alta interpretabilidade, mas geralmente apresentam um desempenho preditivo preditivo inferior em comparação com outros modelos e algoritmos. No entanto, é possível superar essa limitação construindo um modelo preditivo que combina a força de uma coleção de modelos base mais simples, um processo conhecido como aprendizado Ensemble. De acordo com @hastie2009elements, o aprendizado Ensemble pode ser dividido em duas etapas principais: a primeira etapa consiste em desenvolver uma população de algoritmos de aprendizado base a partir dos dados de treinamento, e a segunda etapa envolve a combinação desses algoritmos para formar um estimador composto. Portanto, nesta seção, serão definidos os métodos de aprendizagem Ensemble utilizados neste trabalho. O foco inicial será no Random Forest, seguido pela descrição e explicação teórica do Bagging, Boosting, Stacking e outros algoritmos de aprendizado de máquina.
+\ \ \ As árvores de decisão são conhecidas por sua alta interpretabilidade, mas geralmente apresentam um desempenho preditivo preditivo inferior em comparação com outros modelos e algoritmos. No entanto, é possível superar essa limitação construindo um modelo preditivo que combina a força de uma coleção de modelos base mais simples, um processo conhecido como aprendizado Ensemble. De acordo com @hastie2009elements, o aprendizado Ensemble pode ser dividido em duas etapas principais: a primeira etapa consiste em desenvolver uma população de algoritmos de aprendizado base a partir dos dados de treinamento, e a segunda etapa envolve a combinação desses algoritmos para formar um estimador agregado. Portanto, nesta seção, serão definidos os métodos de aprendizagem Ensemble utilizados neste trabalho. O foco inicial será no Random Forest, seguido pela descrição e explicação teórica do Bagging, Boosting, Stacking e outros algoritmos de aprendizado de máquina.
 
-### Random Forest
 
 ### Bagging
 
+\ \ \ O algoritmo de Bootstrap Aggregation, ou Bagging, foi introduzido por @breiman1996bagging. Sua ideia principal é gerar um estimador agregado a partir de múltiplas versões de um preditor, que são formadas fazendo réplicas bootstrap do conjunto de treinamento e utilizando-as como novos conjuntos de treinamento. O Bagging pode ser utilizado como uma forma de melhorar a estabilidade, precisão de modelos ou algoritmos de aprendizado de máquina, além de diminuir a variância e evitar sobreajuste. Por exemplo, o Bagging poderia ser utilizada para melhorar a árvore de regressão que foi descrita anteriormente, mas também poderia ser aplicado a outros métodos.
+
+
+\vspace{12pt}
+
+\ \ \ @breiman1996bagging define formalmente o algoritmo de Bagging, no qual temos um conjunto de treinamento $\mathcal{L}$. Tomamos amostras bootstrap $\mathcal{L}^{\left(B\right)}$ com $B$ réplicas de $\mathcal{L}$ para formar $\{\varphi \left(x, \mathcal{L}^{\left(B\right)}\right)\}$, onde $\varphi$ denota um modelo ou algoritmo treinado nas amostras bootstrap $\{\mathcal{L}^{\left(B\right)}\}$ com variáveis independentes $x$ para previsão ou classificação de uma variável dependente $y$. Caso a variável dependente $y$ seja numérica, a predição é feita tomando a média de $\varphi \left(x, \mathcal{L}^{\left(B\right)}\right)$. Assim, temos que a predição é feita da seguinte forma:
+
+$$
+\varphi_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B \varphi \left(x, \mathcal{L}^{\left(B\right)}\right)
+$$
+onde $\varphi_{B}$ denota a agregação. Não obstante, se $y$ prediz uma classe, utilizamos a votação majoritária. Ou seja, se estivermos classificando classes $j \in {1, \dots, J}$, então podemos tomar $N_j = \#\{B; \varphi\left(x, \mathcal{L}^{\left(B\right)}\right) = j\}$ que representa a quantidade de vezes que a classe $j$ foi predita pelos estimadores. Assim, tomamos
+$$
+\varphi_{B}\left(x\right) = \arg \min_{j} N_j
+$$
+isto é, o $j$ para o qual $N_j$ é máxima.
+
+\vspace{12pt}
+
+\ \ \ Embora a técnica de Bagging tenha o poder de melhorar o desempenho de uma árvore de regressão ou classificação, isso é alcançado ao custo de menor interpretabilidade. No caso da aplicação de Bagging para uma árvore de regressão, construímos $B$ árvores de regressão usando $B$ réplicas de amostra bootstrap e tomamos a média das predições resultantes [@james2013introduction]. Nesse caso, as árvores de regressão crescem ao máximo, sem passar pelo processo de poda, resultando em cada árvore individual com alta variância, mas baixo viés. No entanto, ao agregarmos $\varphi_{B}$ das $B$ árvores, reduzimos a variância. Para mitigar a falta de interpretabilidade do método Bagging aplicado a uma árvore de regressão, podemos utilizar a soma do quadrado dos resíduos como uma estatística da importância das variáveis independentes. Um valor elevado da redução total média da soma do quadrado dos resíduos devido às divisões em um determinado preditor, calculada sobre todas as árvores $B$, indica um preditor importante.
+
+### Random Forest
+
+
+
 ### Boosting
+
+### Stacking
 
 ### Gradient Boosting
 
-### Stacking
 
 ### Categorical Boosting
 
