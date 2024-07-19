@@ -61,6 +61,7 @@ library(tidymodels)
 set.seed(42)
 ```
 
+
 \renewcommand{\listalgorithmname}{Lista de algoritmos}
 \bgroup
 \hypersetup{linkcolor = black}
@@ -120,6 +121,7 @@ set.seed(42)
 
 \ \ \ Árvores de decisão são métodos de aprendizado supervisionado não paramétrico utilizados tanto para regressão quanto para classificação. Elas servem de base para muitos dos modelos baseados em árvores empregados neste trabalho, uma vez que esses modelos geram múltiplas árvores de decisão. @izbicki2020aprendizado define o processo de construção de uma árvore como o particionamento recursivo no espaço das covariáveis, em que cada particionamento recebe o nome de nós e o resultado final recebe o nome de folha. Em cada nó é definida uma condição e, caso essa condição seja satisfeita, ter-se-á como resultado uma das folhas desse nó. Não obstante, caso o resultado seja contrário, seguirá para o próximo nó e verificará a próxima condição, podendo gerar uma folha ou a condição de outro nó. Veja um exemplo na @fig-arvore:
 
+
 ```{mermaid}
 %%| label: fig-arvore
 %%| fig-cap: Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos.
@@ -135,6 +137,7 @@ graph TD
     G -->|Condição 4: Sim| H[Folha 4]
     G -->|Condição 4: Não| I[Folha 5]
 ```
+
 
 \vspace{12pt}
 
@@ -398,6 +401,7 @@ $$
 onde $\lambda^*$ denota a melhor combinação possível de hiperparâmetros, $c\left(\lambda \right)$ representa a generalização do erro, podendo ser representado também por $\widehat{GE}\left(I, \ \mathcal J, \ \rho, \ \lambda\right)$, quando $I, \ \mathcal{J}, \ \rho$ são fixados e $I$ denota um algoritmo de aprendizagem de máquina. O erro de generalização é estimado e otimizado a fim de evitar um ajuste excessivo (overfitting), podendo prejudicar quando o algoritmo fizer estimativas em dados ainda não vistos. Assim, o processo pode ser visualizado pela figura @fig-hpo:
 
 
+
 ```{mermaid}
 %%| label: fig-hpo
 %%| fig-cap: Processo de otimização de hiperparâmetros
@@ -406,6 +410,7 @@ flowchart LR
   A["$$\lambda$$"] --> B(Round edge)
   B --> C{Decision}
 ```
+
 
 \vspace{12pt}
 
@@ -475,3 +480,4 @@ em que a segunda expressão do produto mostra que para maximizar o Expected Impr
 
 ::: {#refs}
 :::
+
