@@ -30,7 +30,7 @@ lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
 urlcolor: Goldenrod
-linkcolor: Goldenrod
+# linkcolor: Goldenrod
 toc: true
 title: |
   ![](includes/ufpb.png){width=1in}
@@ -62,7 +62,16 @@ set.seed(42)
 ```
 
 \renewcommand{\listalgorithmname}{Lista de algoritmos}
+\bgroup
+\hypersetup{linkcolor = black}
 \listofalgorithms
+\egroup
+
+
+\bgroup
+\hypersetup{linkcolor = black}
+\listoffigures
+\egroup
 
 # Resumo
 
