@@ -275,9 +275,26 @@ isto é, o $j$ para o qual $N_j$ é máxima.
 
 \ \ \ Embora a técnica de Bagging tenha o poder de melhorar o desempenho de uma árvore de regressão ou classificação, isso é alcançado ao custo de menor interpretabilidade. No caso da aplicação de Bagging para uma árvore de regressão, construímos $B$ árvores de regressão usando $B$ réplicas de amostra bootstrap e tomamos a média das predições resultantes [@james2013introduction]. Nesse caso, as árvores de regressão crescem ao máximo, sem passar pelo processo de poda, resultando em cada árvore individual com alta variância, mas baixo viés. No entanto, ao agregarmos $\varphi_{B}$ das $B$ árvores, reduzimos a variância. Para mitigar a falta de interpretabilidade do método Bagging aplicado a uma árvore de regressão, podemos utilizar a soma do quadrado dos resíduos como uma estatística da importância das variáveis independentes. Um valor elevado da redução total média da soma do quadrado dos resíduos devido às divisões em um determinado preditor, calculada sobre todas as árvores $B$, indica um preditor importante.
 
+\vspace{12pt}
+
+\ \ \ As árvores construídas pelo algoritmo de árvore de decisão são beneficiadas pela proposta de agregação do Bagging, mas esse benefício é limitado devido à correlação positiva existente entre as árvores. Se as árvores forem variáveis aleatórias independentes e identicamente distribuídas, cada uma com variância $\sigma^2$, a variância da média das variáveis aleatórias das $B$ árvores será $\frac{1}{B} \sigma ^2$. Não obstante, se forem apenas identicamente distribuídas, mas não necessariamente independente, com correlação pareada positiva $\rho$, a esperança da média das $B$ árvores é a mesma que a esperança de uma árvore individual. Portanto, o viés do agregado das árvores é o mesmo das árvores individuais, e a única melhora possível é através da redução de sua variância. Assim, a variância da média será
+
+$$
+\rho \sigma^2 + \frac{1 - \rho}{B}\sigma^2
+$$
+
+Isso significa que, à medida que a quantidade de árvores $B$ aumenta, o segundo termo da soma desaparece. Portanto, os benefícios da agregação ocasionada pelo algoritmo de Bagging são limitados pela correlação das árvores [@hastie2009elements]. Ou seja, mesmo ao aumentar o número de árvores no Bagging, a correlação entre elas faz com que as previsões individuais não sejam completamente independentes, então a variância da média das previsões não diminui tão rapidamente quanto seria esperado se as árvores fossem completamente independentes. Uma forma de melhorar o algoritmo de Bagging foi através da Random Foreste, que será descrita adiante.
+
+
 ### Random Forest
 
-A Random Forest é uma técnica derivada do método de Bagging. No entanto, a Random Forest providencia uma melhora fazendo um ajuste aleatório que diminui a correlação entre as $B$ árvores.
+\ \ \ O algoritmo da Random Forest é uma técnica derivada do método de Bagging, com algumas modificações para a construção das árvores. As árvores são construídas de forma a melhorar a redução da variância diminuindo a correlação entre as árvores, sem aumentar significantemente a variabilidade. Isso é alcançado no processo de crescimento das árvores por meio da seleção aleatória das variáveis independentes.
+
+
+
+\vspace{12pt}
+
+\ \ \ alskdjfalksdjf
 
 ### Boosting
 
