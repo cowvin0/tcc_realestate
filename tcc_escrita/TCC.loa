@@ -3,6 +3,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {algorithm}{\numberline {4.1}{\ignorespaces Algoritmo para crescer uma árvore de regressão}}{13}{algorithm.4.1}%
+\contentsline {algorithm}{\numberline {4.2}{\ignorespaces Algoritmo de uma Random Forest para regressão ou classificação}}{17}{algorithm.4.2}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

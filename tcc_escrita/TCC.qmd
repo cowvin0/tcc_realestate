@@ -267,7 +267,7 @@ $$
 $$
 onde $\varphi_{B}$ denota a agregação. Não obstante, se $y$ prediz uma classe, utilizamos a votação majoritária. Ou seja, se estivermos classificando classes $j \in {1, \dots, J}$, então podemos tomar $N_j = \#\{B; \varphi\left(x, \mathcal{L}^{\left(B\right)}\right) = j\}$ que representa a quantidade de vezes que a classe $j$ foi predita pelos estimadores. Assim, tomamos
 $$
-\varphi_{B}\left(x\right) = \arg \min_{j} N_j
+\varphi_{B}\left(x\right) = \arg \max_{j} N_j
 $$
 isto é, o $j$ para o qual $N_j$ é máxima.
 
@@ -281,7 +281,7 @@ isto é, o $j$ para o qual $N_j$ é máxima.
 
 $$
 \rho \sigma^2 + \frac{1 - \rho}{B}\sigma^2
-$$
+$${#eq-cor}
 
 Isso significa que, à medida que a quantidade de árvores $B$ aumenta, o segundo termo da soma desaparece. Portanto, os benefícios da agregação ocasionada pelo algoritmo de Bagging são limitados pela correlação das árvores [@hastie2009elements]. Ou seja, mesmo ao aumentar o número de árvores no Bagging, a correlação entre elas faz com que as previsões individuais não sejam completamente independentes, então a variância da média das previsões não diminui tão rapidamente quanto seria esperado se as árvores fossem completamente independentes. Uma forma de melhorar o algoritmo de Bagging foi através da Random Foreste, que será descrita adiante.
 
@@ -290,11 +290,69 @@ Isso significa que, à medida que a quantidade de árvores $B$ aumenta, o segund
 
 \ \ \ O algoritmo da Random Forest é uma técnica derivada do método de Bagging, com algumas modificações para a construção das árvores. As árvores são construídas de forma a melhorar a redução da variância diminuindo a correlação entre as árvores, sem aumentar significantemente a variabilidade. Isso é alcançado no processo de crescimento das árvores por meio da seleção aleatória das variáveis independentes.
 
+\vspace{12pt}
 
+\ \ \ Ao construir uma árvore em amostras bootstrap no algoritmo da Random Forest, antes de cada divisão, selecionam-se aleatoriamente $m \leq p$ ($m = p$ é o caso do algoritmo de Bagging) variáveis independentes como candidatas para a divisão. No entanto, apenas um desses $m$ preditores é utilizado para a divisão. Com base em algum critério, como a minimização da impureza, selecionamos o melhor preditor possível para realizar a divisão. Portanto, diferente do Bagging, que criava árvores de decisão muito semelhantes e, portanto, resultava em predições altamente correlacionadas, a Random Forest busca minimizar esse problema dando chances a outros preditores. Dessa forma, em média, $\left(p−m\right)/p$ das divisões nem sequer considerarão o preditor mais forte, permitindo que outros preditores também tenham chance de serem utilizados [@james2013introduction]. Esse processo de diminuir a correlação entre as árvores torna a média das árvores resultantes menos variável e, portanto, mais confiável.
 
 \vspace{12pt}
 
-\ \ \ alskdjfalksdjf
+A quantidade de variáveis independentes mm selecionadas aleatoriamente pode ser considerada um parâmetro a ser ajustado por meio de validação cruzada. No entanto, de acordo com @hastie2009elements, os inventores do algoritmo recomendam os seguintes valores padrão: $m= \sqrt{p}$​ e tamanho mínimo do nó igual a um para classificação, e $m=p/3$ e tamanho mínimo do nó igual a cinco para regressão. Quando o número de variáveis é grande, mas poucas variáveis são relevantes, o algoritmo Random Forest pode não ter um bom desempenho com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis relevantes. No entanto, utilizar um valor pequeno para $m$ pode ser útil quando há muitos preditores correlacionados. Além disso, assim como no algoritmo de Bagging, a Random Forest não sofre de sobreajuste se o valor de $B$ for aumentado. Portanto, basta usar um $B$ suficientemente grande para que a taxa de erro se estabilize [@james2013introduction].
+
+::: {#algo-rf}
+
+```pseudocode
+#| pdf-line-number: false
+
+\begin{algorithm}
+\caption{Algoritmo de uma Random Forest para regressão ou classificação}
+\begin{algorithmic}
+\State \hspace{1em} \textbf{1.} Para b = 1 até B:
+
+\vspace{0.8em}
+
+    \State \hspace{2em} (a) Construa uma amostra bootstrap \( Z^* \) de tamanho \( N \) dos dados de
+    \State \hspace{2em} \vspace{0.1em} treinamento.
+
+    \State \hspace{2em} (b) Faça crescer uma árvore de floresta aleatória \( T_b \) para os dados bootstrap,
+    \State \hspace{2em} repetindo recursivamente os seguintes passos para cada folha da árvore, até que
+    \State \hspace{2em} \vspace{0.5em} o tamanho mínimo do nó \( n_{min} \) seja atingido.
+    \State \hspace{4em} \vspace{0.1em} i. Selecione \( m \) variáveis aleatoriamente entre as \( p \) variáveis.
+    \State \hspace{4em} \vspace{0.1em} ii. Escolha a melhor variável entre as \( m \).
+    \State \hspace{4em} \vspace{0.1em} iii. Divida o nó em dois subnós.
+
+\vspace{0.8em}
+
+\State \hspace{1em} \textbf{2.} Por fim, o conjunto de árvores \( \{T_b\}^{B}_1\) é construído.
+
+\vspace{1em}
+
+\State \hspace{0.7em} No caso da regressão, para fazer uma predição em um novo ponto \( x \), temos a seguinte função:
+
+
+$$
+\hat{f}^{B}_{rf}\left(x\right) = \frac{1}{B}\sum^{B}_{b = 1} T_{b}\left(x\right)
+$$
+
+\vspace{1em}
+
+\State \hspace{0.7em} Para a classificação é utilizado o voto majoritário. Assim, seja $\hat{C}_{b}\left(x\right)$ a previsão da classe da árvore de floresta aleatória $b$. Então,
+
+$$
+\hat{C}^{B}_{rf}\left(x\right) = \arg \max_c \sum^{B}_{b = 1}I\left(\hat{C}_b\left(x\right) = c\right)
+$$
+
+\State onde $c$ representa as classes possíveis.
+
+\end{algorithmic}
+\end{algorithm}
+```
+
+Fonte: @hastie2009elements [p. 588].
+
+:::
+
+\vspace{12pt}
+
 
 ### Boosting
 
