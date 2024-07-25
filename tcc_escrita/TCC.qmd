@@ -351,21 +351,74 @@ Fonte: @hastie2009elements [p. 588].
 
 :::
 
-\vspace{12pt}
-
-
 ### Boosting Trees
 
 \ \ \ O Boosting, assim como o Bagging mostrado anteriormente, é uma metodologia que pode ser aplicada para melhorar a performance de um modelo ou algoritmo. No entanto, neste trabalho, o Boosting foi aplicado apenas utilizando árvores de decisão, portanto, sua descrição será restrita a esse caso, conhecidas como Boosting Trees.
 
 \vspace{12pt}
 
-\ \ \ No algoritmo de Bagging cada árvore era construída e ajustada utilizando uma amostra bootstrap. Por fim, era necessário tomar um agregado $\varphi_B$ de todas as $B$ árvores para criar um único estimador. O Boosting Trees funciona de forma similar, no entanto, cada árvore é construída utilizado a informação prévia de outras árvores, ou seja, são construídas sequenciamente. A informação utilizada
+\ \ \ No algoritmo de Bagging cada árvore era construída e ajustada utilizando amostras bootstrap. Por fim, era necessário tomar um agregado $\varphi_B$ de todas as $B$ árvores para criar um único estimador. O Boosting Trees funciona de forma similar, no entanto, cada árvore é construída utilizando uma versão modificada dos dados de treinamento original, sem a necessidade de amostras bootstrap, e a informação prévia de outras árvores. Ou seja, são construídas sequenciamente.
 
-### Stacking
+\vspace{12pt}
+
+\ \ \ Para o caso da regressão, o Boosting, assim como o Bagging, combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. Assim, a primeira árvore é construída utilizando o conjunto de dados originais e os seus resíduos são calculados. Com a primeira árvore construída, a segunda árvore é ajustada para prever esses resíduos e é adicionada ao estimador ajustado para atualizar os seus resíduos. Portanto, para a regressão, os resíduos funcionam como uma informação para construir novas árvores e corrigir os erros das árvores anteriores. Ainda, como para construir cada árvore depende de árvores que já foram construídas, árvores pequenas são suficientes [@james2013introduction].
+
+\ \ \ O processo de aprendizado na metodologia do Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, permitindo que mais árvores, com formas diferentes, corrijam os erros de árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. Uma versão simplificada do algoritmo pode ser visualizado em @algo-boos.
+
+::: {#algo-boos}
+
+```pseudocode
+#| pdf-line-number: false
+
+\begin{algorithm}
+\caption{Método Boosting aplicado a árvores de regressão}
+\begin{algorithmic}
+\State \hspace{1em} \textbf{1.} Defina $\hat{f}\left(x\right) = 0 \text{ e } r_i = y_i$ para todos os $i$ no conjunto de treinamento
+
+\vspace{0.8em}
+
+\State \hspace{1em} \textbf{2.} Para $b = 1, 2, \dots, B$, repita:
+
+\vspace{0.8em}
+
+  \State \hspace{2em} (a) Ajuste uma árvore $\hat{f}^b$ com $d$ divisões $\left(d + 1 \text{ folhas}\right)$ para os dados de
+  \State \hspace{2em} \vspace{0.1em} treinamento $\left(X, r\right)$.
+
+  \State \hspace{2em} (b) Atualize $\hat{f}$ adicionando uma versão com o hiperparâmetro $\lambda$ de taxa de
+  \State \hspace{2em} aprendizado:
+
+$$
+\hat{f}\left(x\right) \gets \hat{f}\left(x\right) + \lambda \hat{f}^b\left(x\right)
+$$
+
+  \vspace{0.1em}
+
+  \State \hspace{2em} (c) Atualize os resíduos,
+
+$$
+r_i \gets r_i - \lambda \hat{f}^b\left(x_{i}\right)
+$$
+
+\vspace{1em}
+
+\State \hspace{1em} \textbf{3.} Retorne o modelo de boosting,
+
+$$
+\hat{f}\left(x\right) = \sum_{b = 1}^B \lambda \hat{f}^b\left(x\right)
+$$
+
+
+\end{algorithmic}
+\end{algorithm}
+```
+
+Fonte: @james2013introduction [p. 349].
+
+:::
 
 ### Gradient Boosting
 
+### Stacking
 
 ### Categorical Boosting
 
