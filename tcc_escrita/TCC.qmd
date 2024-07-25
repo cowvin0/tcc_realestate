@@ -296,7 +296,7 @@ Isso significa que, à medida que a quantidade de árvores $B$ aumenta, o segund
 
 \vspace{12pt}
 
-A quantidade de variáveis independentes mm selecionadas aleatoriamente pode ser considerada um parâmetro a ser ajustado por meio de validação cruzada. No entanto, de acordo com @hastie2009elements, os inventores do algoritmo recomendam os seguintes valores padrão: $m= \sqrt{p}$​ e tamanho mínimo do nó igual a um para classificação, e $m=p/3$ e tamanho mínimo do nó igual a cinco para regressão. Quando o número de variáveis é grande, mas poucas variáveis são relevantes, o algoritmo Random Forest pode não ter um bom desempenho com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis relevantes. No entanto, utilizar um valor pequeno para $m$ pode ser útil quando há muitos preditores correlacionados. Além disso, assim como no algoritmo de Bagging, a Random Forest não sofre de sobreajuste se o valor de $B$ for aumentado. Portanto, basta usar um $B$ suficientemente grande para que a taxa de erro se estabilize [@james2013introduction].
+A quantidade de variáveis independentes mm selecionadas aleatoriamente pode ser considerada um parâmetro a ser ajustado por meio de validação cruzada. No entanto, de acordo com @hastie2009elements, os inventores do algoritmo recomendam os seguintes valores padrão: $m= \sqrt{p}$​ e tamanho mínimo do nó igual a um para classificação, e $m=p/3$ e tamanho mínimo do nó igual a cinco para regressão. Quando o número de variáveis é grande, mas poucas variáveis são relevantes, o algoritmo Random Forest pode não ter um bom desempenho com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis relevantes. No entanto, utilizar um valor pequeno para $m$ pode ser útil quando há muitos preditores correlacionados. Além disso, assim como no algoritmo de Bagging, a Random Forest não sofre de sobreajuste se o valor de $B$ for aumentado. Portanto, basta usar um $B$ suficientemente grande para que a taxa de erro se estabilize [@james2013introduction]. O processo de construção de uma Random Forest pode ser visualizado no @algo-rf.
 
 ::: {#algo-rf}
 
@@ -354,7 +354,13 @@ Fonte: @hastie2009elements [p. 588].
 \vspace{12pt}
 
 
-### Boosting
+### Boosting Trees
+
+\ \ \ O Boosting, assim como o Bagging mostrado anteriormente, é uma metodologia que pode ser aplicada para melhorar a performance de um modelo ou algoritmo. No entanto, neste trabalho, o Boosting foi aplicado apenas utilizando árvores de decisão, portanto, sua descrição será restrita a esse caso, conhecidas como Boosting Trees.
+
+\ \ \
+
+\ \ \ No algoritmo de Bagging cada árvore era construída e ajustada utilizando uma amostra bootstrap. Por fim, era necessário tomar um agregado $\varphi_B$ de todas as $B$ árvores para criar um único estimador. O Boosting Trees funciona de forma similar, no entanto, cada árvore é construída utilizado a informação prévia de outras árvores, ou seja, são construídas sequenciamente.
 
 ### Stacking
 
