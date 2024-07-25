@@ -377,11 +377,9 @@ Fonte: @hastie2009elements [p. 588].
 
 \vspace{0.8em}
 
-\State \hspace{1em} \textbf{2.} Para $b = 1, 2, \dots, B$, repita:
+\State \hspace{1em} \vspace{0.8em} \textbf{2.} Para $b = 1, 2, \dots, B$, repita:
 
-\vspace{0.8em}
-
-  \State \hspace{2em} (a) Ajuste uma árvore $\hat{f}^b$ com $d$ divisões $\left(d + 1 \text{ folhas}\right)$ para os dados de
+  \State \hspace{2em} (a) Ajuste uma árvore $\hat{f}^b$ com $d$ divisões para os dados de
   \State \hspace{2em} \vspace{0.1em} treinamento $\left(X, r\right)$.
 
   \State \hspace{2em} (b) Atualize $\hat{f}$ adicionando uma versão com o hiperparâmetro $\lambda$ de taxa de
