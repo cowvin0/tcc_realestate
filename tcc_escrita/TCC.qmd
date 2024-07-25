@@ -358,9 +358,9 @@ Fonte: @hastie2009elements [p. 588].
 
 \ \ \ O Boosting, assim como o Bagging mostrado anteriormente, é uma metodologia que pode ser aplicada para melhorar a performance de um modelo ou algoritmo. No entanto, neste trabalho, o Boosting foi aplicado apenas utilizando árvores de decisão, portanto, sua descrição será restrita a esse caso, conhecidas como Boosting Trees.
 
-\ \ \
+\vspace{12pt}
 
-\ \ \ No algoritmo de Bagging cada árvore era construída e ajustada utilizando uma amostra bootstrap. Por fim, era necessário tomar um agregado $\varphi_B$ de todas as $B$ árvores para criar um único estimador. O Boosting Trees funciona de forma similar, no entanto, cada árvore é construída utilizado a informação prévia de outras árvores, ou seja, são construídas sequenciamente.
+\ \ \ No algoritmo de Bagging cada árvore era construída e ajustada utilizando uma amostra bootstrap. Por fim, era necessário tomar um agregado $\varphi_B$ de todas as $B$ árvores para criar um único estimador. O Boosting Trees funciona de forma similar, no entanto, cada árvore é construída utilizado a informação prévia de outras árvores, ou seja, são construídas sequenciamente. A informação utilizada
 
 ### Stacking
 
