@@ -363,7 +363,12 @@ Fonte: @hastie2009elements [p. 588].
 
 \ \ \ Para o caso da regressão, o Boosting, assim como o Bagging, combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. Assim, a primeira árvore é construída utilizando o conjunto de dados originais e os seus resíduos são calculados. Com a primeira árvore construída, a segunda árvore é ajustada para prever esses resíduos e é adicionada ao estimador ajustado para atualizar os seus resíduos. Portanto, para a regressão, os resíduos funcionam como uma informação para construir novas árvores e corrigir os erros das árvores anteriores. Ainda, como para construir cada árvore depende de árvores que já foram construídas, árvores pequenas são suficientes [@james2013introduction].
 
+\vspace{12pt}
+
 \ \ \ O processo de aprendizado na metodologia do Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, permitindo que mais árvores, com formas diferentes, corrijam os erros de árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. Uma versão simplificada do algoritmo pode ser visualizado em @algo-boos.
+
+\vspace{12pt}
+
 
 ::: {#algo-boos}
 
@@ -415,6 +420,56 @@ Fonte: @james2013introduction [p. 349].
 :::
 
 ### Gradient Boosting
+
+\ \ \ O método de Gradient Boosting constrói modelos de regressão aditivos ajustando sequencialmente uma função base aos resíduos, que são os gradientes da função de perda do modelo atual [@friedman2002stochastic]. Estes gradientes representam a direção na qual a função de perda deve ser minimizada. Existem outras implementações de Gradiente Boosting que foram utilizadas nesse trabalho. No entanto, todas elas utilizam o Gradient Boosting com árvores de regressão, que pode ser observado no @algo-gradboos
+
+::: {#algo-gradboos}
+
+```pseudocode
+#| pdf-line-number: false
+
+\begin{algorithm}
+\caption{Gradient Tree Boosting}
+\begin{algorithmic}
+\State \hspace{1em} \textbf{1.} Inicialize $f_0\left(x\right) = \arg \min_{\gamma} \sum_{i = 1}^N L\left(y_i, \gamma \right)$
+
+\vspace{0.8em}
+
+\State \hspace{1em} \vspace{0.8em} \textbf{2.} Para $m = 1$ até $M$:
+
+  \State \hspace{2em} (a) Para $i = 1, 2, \dots, N$, calcule
+
+$$
+r_{im} = -\left[\frac{\partial L\left(y_i, f\left(x_i \right)\right)}{\partial f\left(x_i\right)}\right]_{f = f_{m - 1}}
+$$
+
+  \State \hspace{2em} (b) Ajuste uma árvore de regressão aos alvos $r_{im}$, obtendo regiões terminais
+  \State \hspace{2em} $R_{jm}, \ j = 1, 2, \dots, J_{m}$.
+
+
+  \State \vspace{0.1em}
+
+  \State \hspace{2em} (c) Para $j = 1, 2, \dots, J_m$, calcule
+
+$$
+\gamma_{jm} = \arg \min_{\gamma} \sum_{x_i \in R_{jm}} L\left(y_i, f_{m - 1}\left(x_i\right) + \gamma\right)
+$$
+
+  \vspace{0.1em}
+
+  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \gamma_{jm}$ para $x \in R_{jm}$.
+
+\vspace{1em}
+
+\State \hspace{1em} \textbf{3.} Retorne $\hat{f}\left(x\right) = f_M\left(x\right)$
+
+\end{algorithmic}
+\end{algorithm}
+```
+
+Fonte: @hastie2009elements
+:::
+
 
 ### Stacking
 
