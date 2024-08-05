@@ -419,6 +419,8 @@ Fonte: @james2013introduction [p. 349].
 
 :::
 
+### Stacking
+
 ### Gradient Boosting
 
 \ \ \ O método de Gradient Boosting constrói modelos de regressão aditivos ajustando sequencialmente uma função base aos resíduos, que são os gradientes da função de perda do modelo atual [@friedman2002stochastic]. Estes gradientes representam a direção na qual a função de perda deve ser minimizada. Existem outras implementações de Gradiente Boosting que foram utilizadas nesse trabalho. No entanto, todas elas utilizam o Gradient Boosting com árvores de regressão, mas com algumas modificações para melhorar a eficiência do algoritmo já existente. O algoritmo do gradient boosting aplicado para árvores de regressão, que será explicado, pode ser visualizado no @algo-gradboos.
@@ -440,11 +442,11 @@ Fonte: @james2013introduction [p. 349].
   \State \hspace{2em} (a) Para $i = 1, 2, \dots, N$, calcule
 
 $$
-r_{im} = -\left[\frac{\partial L\left(y_i, f\left(x_i \right)\right)}{\partial f\left(x_i\right)}\right]_{f = f_{m - 1}}
+\tilde{y}_{i} = -\left[\frac{\partial L\left(y_i, f\left(x_i \right)\right)}{\partial f\left(x_i\right)}\right]_{f = f_{m - 1}}
 $$
 
-  \State \hspace{2em} (b) Ajuste uma árvore de regressão aos alvos $r_{im}$, obtendo regiões terminais
-  \State \hspace{2em} $R_{jm}, \ j = 1, 2, \dots, J_{m}$.
+  \State \hspace{2em} (b) Ajuste uma árvore de regressão aos pseudo-resíduos $r_{im}$, obtendo regiões terminais
+  \State \hspace{2em} $R_{jm}, \ j = 1, 2, \dots, J$.
 
 
   \State \vspace{0.1em}
@@ -457,7 +459,7 @@ $$
 
   \vspace{0.1em}
 
-  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \gamma_{jm}$ para $x \in R_{jm}$.
+  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)$
 
 \vspace{1em}
 
@@ -472,36 +474,25 @@ Fonte: @hastie2009elements
 
 \vspace{12pt}
 
-O Gradient Boosting aplicado para árvores de regressão, tem que cada função base é um caso especial de uma árvore de regressão com $J$ folhas. Dessa forma, cada árvore de regressão tem a forma aditiva
+O Gradient Boosting aplicado para árvores de regressão, tem que cada função base é um caso especial de uma árvore de regressão com $J_m$ folhas. A primeira linha do algoritmo @algo-gradboos inicializa com uma constante ótima, que é simplesmente uma árvore de regressão com uma única folha. No caso do gradient boosting aplicado a árvores de regressão, cada árvore de regressão tem a forma aditiva
 
 $$
-f\left(x;\{b_j, R_j\}^J_{1}\right) = \sum^{J}_{j = 1} b_j I\left(x \in R_j\right)
-$$
-
-
-em que $\{R_j\}^{J}_{1}$ são as regiões disjuntas que, coletivamente, cobrem o espaço de todos os valores conjuntos das variáveis preditoras $x$ e também cada região é representada como as folhas de cada árvore correspondente.
-
-\vspace{12pt}
-
-O Gradient Tree Boosting, que é como é chamado o algoritmo de gradient boosting aplicado a árvores de decisões, utiliza como função base  $J_m$ folhas. A cada iteração $m$, a árvore de regressão particiona o espaço das variáveis independentes em $J_m$ regiões disjuntas $\{R_{jm}\}^{J_m}_1$ e estima uma constante separada para cada região. Assim, como foi visto anteriormente, a previsão de uma árvore de regressão pode ser simplesmente expressa por
+h_m\left(x;\{b_j, R_j\}^J_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)
+$${#eq-treebost}
+em que $\{R_{jm}\}^{J_m}_{1}$ são as regiões disjuntas que, coletivamente, cobrem o espaço de todos os valores conjuntos das variáveis preditoras $x$. Essas regiões são representadas pelas folhas de sua correspondente árvore. Como as regiões são disjuntas, @eq-treebost se reduz simplesmente a $h_m\left(x\right) = b_{jm}\text{ para } x \in  R_{jm}$. Por mínimos quadrados, $b_{jm}$ é simplesmente a média dos pseudo-resíduos $\tilde{y}_{i}$,
 
 $$
-f\left(x; \{R_{jm}\}_{1}^{J_m}\right) = \sum^{J_m}_{j=1} \bar{y}_{jm} I\left(x \in R_{jm}\right)
+\hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} \tilde{y}_i
 $$
+que dão a direção de diminuição da função perda $L$ pela expressão do gradiente da linha 2(a). Assim, cada árvore de regressão é ajustada aos $\tilde{y}_{i}$ de forma a minimizar o erro das árvores anteriores. $N_{jm}$ denota a quantidade de pontos na região $R_{jm}$. Por fim, a atualização da árvore de regressão é expressa da seguinte forma
 
-em que $\bar{y}_{jm}$ é a média dos pseudo resíduos $r_{im}$ em cada região $R_{jm}$. Ou seja, cada árvore de regressão é ajustada às componentes negativas dos gradientes, o que indica a direção de diminuição dos resíduos através de uma função perda $L$, diminuindo o erro das árvores passadas a cada nova iteração.
+$$
+f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)
+$$
+em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função de perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O \lambda, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
 
-\vspace{12pt}
+### Diferentes implementações de Gradient Boosting
 
-
-
-### Stacking
-
-### Categorical Boosting
-
-### Light Gradient-Boosting
-
-### Extreme Gradient Boosting
 
 
 \vspace{12pt}
