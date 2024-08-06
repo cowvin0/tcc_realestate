@@ -10,7 +10,7 @@ cols_imputer = ['latitude', 'longitude', 'area', 'quarto', 'vaga', 'banheiro',
                 'quadra_de_esporte', 'varanda_gourmet', 'playground',
                 'espaco_gourmet', 'area_servico', 'sauna', 'spa', 'valor_aluguel',
                 'qnt_beneficio', 'area_aluguel'
-               ]
+                ]
 
 transformar_features = ['area', 'vaga', 'banheiro',
                         'area_quarto_banheiro', 'quarto', 'total_comodo']
