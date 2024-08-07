@@ -422,7 +422,17 @@ Fonte: @james2013introduction [p. 349].
 
 :::
 
-### Stacking
+### Stacked generalization
+
+\ \ \ O Stacked generalization, ou Stacking, é um método ensemble que envolve treinar um modelo que combina as predições de vários outros algoritmos para melhorar a predição. Esse método pode funcionar com qualquer modelo estatístico ou algoritmo de aprendizagem de máquina. A ideia principal é incluir peso nas predições de forma a dar maior importância para aqueles que geraram melhores predições e ao mesmo tempo não dar altos pesos àqueles modelos que tem alta complexidade.
+
+\vspace{12pt}
+
+\ \ \ Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em x, utilizando o modelo estatístico ou algoritmo $m$, aplicado ao conjunto de treinamento com a $i-ésima$ observação removida [@hastie2009elements]. Assim, os peso são estimados da seguinte forma
+
+$$
+\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1}
+$$
 
 ### Gradient Boosting
 
