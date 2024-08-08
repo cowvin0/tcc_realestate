@@ -121,7 +121,7 @@ set.seed(42)
 
 ## Árvores de decisão
 
-\ \ \ Árvores de decisão são métodos de aprendizado supervisionado não paramétrico utilizado tanto para regressão quanto para classificação. Elas servem de base para muitos dos modelos baseados em árvores empregados neste trabalho, uma vez que esses modelos geram múltiplas árvores de decisão. @izbicki2020aprendizado define o processo de construção de uma árvore como o particionamento recursivo no espaço das covariáveis, em que cada particionamento recebe o nome de nós e o resultado final recebe o nome de folha. Em cada nó é definida uma condição e, caso essa condição seja satisfeita, ter-se-á como resultado uma das folhas desse nó. Não obstante, caso o resultado seja contrário, seguirá para o próximo nó e verificará a próxima condição, podendo gerar uma folha ou a condição de outro nó. Veja um exemplo na @fig-arvore:
+\ \ \ Árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação. Elas servem de base para os modelos baseados em árvores empregados neste trabalho, focando particularmente nas árvores de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]. O processo de construção de uma árvore se baseia no particionamento recursivo do espaço dos preditores, onde cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal. Em cada nó, é definida uma condição e, caso essa condição seja satisfeita, o resultado será uma das folhas desse nó. Caso contrário, o processo segue para o próximo nó e verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja um exemplo na @fig-arvore.
 
 ```{mermaid}
 %%| label: fig-arvore
@@ -141,19 +141,13 @@ graph TD
 
 \vspace{12pt}
 
-\ \ \ Descrevendo formalmente o processo de construção de uma árvore de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.], a sua execução é composta por dois passos. No primeiro passo, dividimos o espaço dos preditores em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, ..., R_J$. No segundo passo, para cada observação que pertence a região $R_j$, a previsão será a mesma. Essa previsão será simplesmente a média dos valores da variável dependente das observações de treinamento que estão dentro da região $R_j$ [@james2013introduction]. Dessa forma, dado que se tenha duas regiões $R_1$ e $R_2$, e a média dos valores da variável resposta tenha sido 10 e 20, respectivamente. Então, Para uma observação $X = x, x \in R_1$, o valor previsto será 10 e, caso contrário, se $x \in R_2$, o valor previsto será 20.
-
-\vspace{12pt}
-
-\ \ \ As regiões $R_1, R_2, ..., R_J$ são construídas em formato de caixa de forma a minimizar a soma dos quadrados. Dessa forma, podemos modelar a variável resposta como uma constante $c_m$ em cada região $R_j$. Assim, definimos a resposta:
+\ \ \ O espaço dos preditores predidores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, \dots, R_J$. Essas regiões são construídas em formato de caixa de forma a minimizar a soma dos quadrados dos resíduos. Dessa forma, pode-se modelar a variável resposta como uma constante $c_j$ em cada região $R_j$
 
 $$
 f\left(x\right) = \sum^J_{j=1}c_j I\left(x \in R_j \right)
 $$
 
-\vspace{12pt}
-
-\ \ \ Agora, utilizando o critério de minimizar a soma dos quadrados, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(xi\right)\right]^2$ para encontrar um estimador para o parâmetro $c_j$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se observarmos a definição da função indicadora $I\left(x \in R_j \right)$:
+\ \ \ O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados. Portanto, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(x_i\right)\right]^2$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se for observada a definição da função indicadora $I\left(x \in R_j\right)$
 
 $$
 I_{R_j}(x_i) =
@@ -162,20 +156,21 @@ I_{R_j}(x_i) =
     0,& \text{se } x_i \notin R_j
 \end{cases}
 $$
-e, como um ponto $x_i$ não pode estar ao mesmo tempo em duas regiões $R_j$, pois as regiões são disjuntas, temos que apenas um dos casos a função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Assim, derivando $\sum_{x_i \in R_j} \left(y_i - c_j\right)^2$ em relação a $c_j$
+Como as regiões são disjuntas, $x_i$ não pode estar simultaneamente em duas regiões. Assim, para um ponto específico $x_i$, apenas um dos casos da função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Agora, derivando $\sum_{x_i \in R_j}\left(yi - c_j\right)^2$ em relação a $c_j$
 
 $$
-\frac{\partial{\sum_{x_i \in R_j} \left(y_i - c_j\right)^2}}{\partial{c_j}} = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)
-$${#eq-partial}
-e igualando @eq-partial a 0, temos a seguinte equação
+\frac{\partial}{\partial{c_j}}\sum_{x_i \in R_j} \left(y_i - c_j\right)^2 = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)
+$${#eq-partialdev}
+e igualando @eq-partialdev a 0, tem-se a seguinte igualdade
+
 $$
 \sum_{x_i \in R_j} \left(y_i - \hat{c}_j\right) = 0
 $$
-que se abrirmos o somatório e dividirmos pelo número total de pontos $N_{j}$ na região $R_j$, teremos que o estimador de $c_j$ será somente a média dos $y_i$ na região $R_j$:
+que se abrirmos o somatório e dividirmos pelo número total de pontos $N_j$ na região $R_j$, teremos que o estimador de $c_j$ será simplesmente a média dos $y_i$ na região $R_j$:
 
 $$
-\sum_{x_i \in R_j} y_i - c_j \sum_{x_i \in R_j} 1 = 0 \Longrightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i
-$${#eq-estimacj}
+\sum_{x_i \in R_j} y_i - \hat{c}_j N_j = 0 \Rightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i
+$${#eq-estimacjdev}
 
 \vspace{12pt}
 
@@ -197,26 +192,25 @@ em que $c_1$ e $c_2$ é a média da variável dependente para as observações d
 
 \vspace{12pt}
 
-\ \ \ O tamanho da árvore pode ser considerado como um hiperparâmetro para regular a complexidade do modelo pois, uma árvore muito grande pode causar um ajuste excessivo aos dados de treinamento, capturando não apenas os padrões relevantes, mas também os ruído. Dessa forma, o modelo apresenta um bom desempenho nos dados de treinamento, mas não consegue desempenhar bem em dados que não foram observados devido a sua incapacidade de generalizar. Não obstante, uma árvore pequena pode não capturar os padrões, relações e estruturas importantes contidas nos dados. Dessa forma, adotamos como estratégia para selecionar o tamanho da árvore é crescer uma grande árvore $T_0$ e interromper o processo de divisão apenas quando atingir um tamanho mínimo de nós. No fim, a grande árvore $T_0$ é podada usando o critério custo de complexidade, que será definida a seguir.
+\ \ \ O tamanho da árvore pode ser considerado um hiperparâmetro para regular a complexidade do modelo, pois uma árvore muito grande pode causar sobreajuste aos dados de treinamento, capturando não apenas os padrões relevantes, mas também o ruído. Como resultado, o modelo pode apresentar bom desempenho nos dados de treinamento, mas falhar ao lidar com novos dados devido à sua incapacidade de generalização. Por outro lado, uma árvore muito pequena pode não captar padrões, relações e estruturas importantes presentes nos dados. Dessa forma, a estratégia adotada para selecionar o tamanho da árvore consiste em crescer uma grande árvore $T_0$, interrompendo o processo de divisão apenas ao atingir um tamanho mínimo de nós. Posteriormente, a árvore $T_0$ é podada utilizando o critério de custo complexidade, que será definido a seguir.
 
 \vspace{12pt}
 
-\ \ \ Para o processo de poda da árvore, definimos uma árvore qualquer $T$ que pode ser obtida através do processo de poda de $T_0$ e portanto $T \subset T_0$. Dessa forma, sendo $N_j$ a quantidade de pontos na região $R_j$, seja
+\ \ \ Para o processo de poda da árvore, definimos uma árvore qualquer $T$ que pode ser obtida através do processo da poda de $T_0$, de modo que $T \subset T_0$. Assim, sendo $N_j$ a quantidade de pontos na região $R_j$, seja
 
 $$
-\begin{aligned}
-\hat{c}_j &= \frac{1}{N_j}\sum_{xi \in R_j} y_i \\
-Q_j\left(T\right) &= \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)^2
-\end{aligned}
+Q_j\left(T\right) = \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)^2
 $$
-$\hat{c}_j$ a média das observações da variável dependente na $R_j$ do nó interno $j$ e $Q_j\left(T\right)$ uma estatística medidas de impureza do nó pelo erro quadrático. Assim, definimos o critério custo de complexidade:
+uma medida de impureza do nó pelo erro quadrático médio. Assim, define-se o critério de custo complexidade
 
 $$
 C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|
 $$
-em que $|T|$ denota a quantidade total de folhas e $\alpha \geq 0$ é o parâmetro de tunagem que equilibra o tamanho da árvore e a adequação aos dados de forma que para cada $\alpha$, a árvore $T_{\alpha} \subseteq T_0$ minimiza $C_{\alpha}\left(T\right)$. Valores grandes para $\alpha$ resulta em árvores menores, valores menores resulta em árvores maiores e $\alpha = 0$ resulta na própria árvore $T_0$. A procura por $T_{\alpha}$ consiste em sucessivamente colapsar o nó interno que produz o menor aumento em $\sum_j N_j Q_j\left(T\right)$ e o processo continua até produzir uma árvore de um único nó. Esse processo gera uma sequência de subárvores que contém uma única menor subárvore que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$. Além disso, a estimação de $\alpha$ é feita por validação cruzada com cinco ou dez folds, e a estimativa $\hat \alpha$ é escolhida para minimizar a soma dos quadrados dos resíduos durante a validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
+onde $|T|$ denota a quantidade total de folhas, e $\alpha \geq 0$ é um hiperparâmetro que equilibra o tamanho da árvore e a adequação aos dados. A ideia é encontrar, para cada $\alpha$, a árvore $T_{\alpha} \subset T_0$ que minimiza $C_{\alpha}\left(T\right)$. Valores grandes de $\alpha$ resultam em árvores menores, enquanto valores menores resultam em árvores maiores, e $\alpha = 0$ resulta na própria árvore $T_0$. A busca por $T_{\alpha}$ envolve colapsar sucessivamente o nó interno que provoca o menor aumento em $\sum_j N_j Q_j\left(T\right)$, continuando o processo até produzir uma árvore com um único nó. Esse processo gera uma sequência de subárvores, na qual existe uma única subárvore menor que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$.
 
+\vspace{12pt}
 
+\ \ \ A estimação de $\alpha$ é realizada por validação cruzada com cinco ou dez folds, sendo $\hat \alpha$ escolhido para minimizar a soma dos quadrados dos resíduos durante o processo de validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
 
 ::: {#algo-buildtree}
 
@@ -252,54 +246,62 @@ Fonte: @james2013introduction [p. 337].
 
 :::
 
-\ \ \ No caso de uma árvore de decisão para classificassão, a única coisa que mudaria seria o critério para divisão dos nós e a poda da árvore. Além disso, a previsão em um nó $j$ de uma região $R_j$ com $N_j$ observações será simplesmente a classe majoritária. Assim, tem-se
+\vspace{12pt}
+
+\ \ \ No caso de uma árvore de decisão para classificação, a principal diferença está no critério de divisão dos nós e na poda da árvore. Para a classificação, a previsão em um nó $j$, correspondente a uma região $R_j$ com $N_j$ observações, será simplesmente a classe majoritária. Assim, tem-se
 
 $$
 \hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)
 $$
-a proporção de observações da classe $k$ no nó $j$. Dessa forma, são classificadas as observações no nó $j$ para a classe $k\left(j\right) = \arg \max_{k} \hat{p}_{jk}$, que é a moda no nó $j$. Para se fazer a divisão dos nós no caso da regressão foi utilizado o erro quadrático como medida de impureza. Para a classificação, algumas medidas comuns para $Q_m\left(T\right)$ é o misclassification erro, gini index ou cross-entropy.
+como a proporção de observações da classe $k$ no nó $j$. Dessa forma, as observações no nó $j$ são classificadas na classe $k\left(j\right) = \arg \max_{k} \hat{p}_{jk}$, que é a moda no nó $j$.
+
+\vspace{12pt}
+
+\ \ \ Para a divisão dos nós no caso da regressão, foi utilizado o erro quadrático médio como medida de impureza. Para a classificação, algumas medidas comuns para $Q_j\left(T\right)$ são o erro de classificação, o índice de Gini ou a entropia cruzada.
 
 ## Métodos Ensemble
 
 \ \ \ As árvores de decisão são conhecidas por sua alta interpretabilidade, mas geralmente apresentam um desempenho preditivo inferior em comparação com outros modelos e algoritmos. No entanto, é possível superar essa limitação construindo um modelo preditivo que combina a força de uma coleção de estimadores base, um processo conhecido como aprendizado em conjunto (Ensemble Learning). De acordo com @hastie2009elements, o aprendizado em conjunto pode ser dividido em duas etapas principais: a primeira etapa consiste em desenvolver uma população de algoritmos de aprendizado base a partir dos dados de treinamento, e a segunda etapa envolve a combinação desses algoritmos para formar um estimador agregado. Portanto, nesta seção, serão definidos os métodos de aprendizado em conjunto utilizados neste trabalho.
 
-
 ### Bagging
 
-\ \ \ O algoritmo de Bootstrap Aggregation, ou Bagging, foi introduzido por @breiman1996bagging. Sua ideia principal é gerar um estimador agregado a partir de múltiplas versões de um preditor, que são formadas fazendo réplicas bootstrap do conjunto de treinamento e utilizando-as como novos conjuntos de treinamento. O Bagging pode ser utilizado como uma forma de melhorar a estabilidade, precisão de modelos ou algoritmos de aprendizado de máquina, além de diminuir a variância e evitar sobreajuste. Por exemplo, o Bagging poderia ser utilizada para melhorar a árvore de regressão que foi descrita anteriormente, mas também poderia ser aplicado a outros métodos.
-
+\ \ \ O algoritmo de Bootstrap Aggregation, ou Bagging, foi introduzido por @breiman1996bagging. Sua ideia principal é gerar um estimador agregado a partir de múltiplas versões de um preditor, que são criadas por meio de amostras bootstrap do conjunto de treinamento, utilizadas como novos conjuntos de treinamento. O Bagging pode ser empregado para melhorar a estabilidade e a precisão de modelos ou algoritmos de aprendizado de máquina, além de reduzir a variância e evitar o sobreajuste. Por exemplo, o Bagging pode ser utilizado para melhorar o desempenho da árvore de regressão descrita anteriormente.
 
 \vspace{12pt}
 
-\ \ \ @breiman1996bagging define formalmente o algoritmo de Bagging, no qual temos um conjunto de treinamento $\mathcal{L}$. Tomamos amostras bootstrap $\mathcal{L}^{\left(B\right)}$ com $B$ réplicas de $\mathcal{L}$ para formar $\{\varphi \left(x, \mathcal{L}^{\left(B\right)}\right)\}$, onde $\varphi$ denota um modelo ou algoritmo treinado nas amostras bootstrap $\{\mathcal{L}^{\left(B\right)}\}$ com variáveis independentes $x$ para previsão ou classificação de uma variável dependente $y$. Caso a variável dependente $y$ seja numérica, a predição é feita tomando a média de $\varphi \left(x, \mathcal{L}^{\left(B\right)}\right)$. Assim, temos que a predição é feita da seguinte forma:
+\ \ \ @breiman1996bagging define formalmente o algoritmo de Bagging, que utiliza um conjunto de treinamento $\mathcal{L}$. A partir desse conjunto, são geradas amostras bootstrap $\mathcal{L}^{(B)}$ com $B$ réplicas, formando uma coleção de modelos ${\varphi(x, \mathcal{L}^{(B)})}$, onde $\varphi$ representa um modelo estatístico ou algoritmo treinado nas amostras bootstrap para prever ou classificar uma variável dependente $y$ com base em variáveis independentes $\mathbf{x}$. Se a variável dependente $y$ for numérica, a predição é obtida pela média das previsões dos modelos:
 
 $$
 \varphi_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B \varphi \left(x, \mathcal{L}^{\left(B\right)}\right)
 $$
-onde $\varphi_{B}$ denota a agregação. Não obstante, se $y$ prediz uma classe, utilizamos a votação majoritária. Ou seja, se estivermos classificando classes $j \in {1, \dots, J}$, então podemos tomar $N_j = \#\{B; \varphi\left(x, \mathcal{L}^{\left(B\right)}\right) = j\}$ que representa a quantidade de vezes que a classe $j$ foi predita pelos estimadores. Assim, tomamos
+onde $\varphi_{B}$ representa a predição agregada. No caso em que $y$ prediz uma classe, utiliza-se a votação majoritária. Ou seja, se estivermos classificando em classes $j \in {1, \dots, J}$, então $N_j = \#\{B; \varphi(x, \mathcal{L}^{(b)}) = j\}$ representa o número de vezes que a classe $j$ foi predita pelos estimadores. Assim,
+
 $$
 \varphi_{B}\left(x\right) = \arg \max_{j} N_j
 $$
-isto é, o $j$ para o qual $N_j$ é máxima.
+isto é, o $j$ para o qual $N_j$ é máximo
 
 \vspace{12pt}
 
-\ \ \ Embora a técnica de Bagging tenha o poder de melhorar o desempenho de uma árvore de regressão ou classificação, isso é alcançado ao custo de menor interpretabilidade. No caso da aplicação de Bagging para uma árvore de regressão, construímos $B$ árvores de regressão usando $B$ réplicas de amostra bootstrap e tomamos a média das predições resultantes [@james2013introduction]. Nesse caso, as árvores de regressão crescem ao máximo, sem passar pelo processo de poda, resultando em cada árvore individual com alta variância, mas baixo viés. No entanto, ao agregarmos $\varphi_{B}$ das $B$ árvores, reduzimos a variância. Para mitigar a falta de interpretabilidade do método Bagging aplicado a uma árvore de regressão, podemos utilizar a soma do quadrado dos resíduos como uma estatística da importância das variáveis independentes. Um valor elevado da redução total média da soma do quadrado dos resíduos devido às divisões em um determinado preditor, calculada sobre todas as árvores $B$, indica um preditor importante.
+\ \ \ Embora a técnica de Bagging possa melhorar o desempenho de uma árvore de regressão ou de classificação, isso geralmente vem ao custo de menor interpretabilidade. Quando o Bagging é aplicado a uma árvore de regressão, construímos $B$ árvores de regressão usando $B$ réplicas de amostras bootstrap e tomamos a média das predições resultantes [@james2013introduction]. Nesse processo, as árvores de regressão crescem até seu máximo, sem passar pelo processo de poda, resultando em cada árvore individual com alta variância e baixo viés. No entanto, ao agregar as predições das $B$ árvores, a variância é reduzida.
 
 \vspace{12pt}
 
-\ \ \ As árvores construídas pelo algoritmo de árvore de decisão são beneficiadas pela proposta de agregação do Bagging, mas esse benefício é limitado devido à correlação positiva existente entre as árvores. Se as árvores forem variáveis aleatórias independentes e identicamente distribuídas, cada uma com variância $\sigma^2$, a variância da média das variáveis aleatórias das $B$ árvores será $\frac{1}{B} \sigma ^2$. Não obstante, se forem apenas identicamente distribuídas, mas não necessariamente independente, com correlação pareada positiva $\rho$, a esperança da média das $B$ árvores é a mesma que a esperança de uma árvore individual. Portanto, o viés do agregado das árvores é o mesmo das árvores individuais, e a única melhora possível é através da redução de sua variância. Assim, a variância da média será
+\ \ \ Para mitigar a falta de interpretabilidade do método Bagging aplicado a árvores de regressão, pode-se usar a medida de impureza baseada no erro quadrático médio, definida anteriormente, como uma métrica de importância das variáveis independentes. Um valor elevado na redução total média do erro quadrático médio, calculado com base nas divisões realizadas por um determinado preditor em todas as $B$ árvores, indica que o preditor é importante.
+
+\vspace{12pt}
+
+\ \ \ As árvores construídas pelo algoritmo de árvore de decisão se beneficiam da proposta de agregação do Bagging, mas esse benefício é limitado devido à correlação positiva existente entre as árvores. Se as árvores forem variáveis aleatórias independentes e identicamente distribuídas, cada uma com variância $\sigma^2$, a variância da média das previsões das $B$ árvores será $\frac{1}{B} \sigma^2$. No entanto, se as árvores forem apenas identicamente distribuídas, mas não necessariamente independentes, e apresentarem uma correlação positiva $\rho$ entre pares, a esperança da média das $B$ árvores será a mesma que a esperança de uma árvore individual. Portanto, o viés do agregado das árvores é o mesmo das árvores individuais, e a melhoria é alcançada apenas pela redução da variância. A variância da média das previsões será dada por:
 
 $$
 \rho \sigma^2 + \frac{1 - \rho}{B}\sigma^2
 $${#eq-cor}
 
-Isso significa que, à medida que a quantidade de árvores $B$ aumenta, o segundo termo da soma desaparece. Portanto, os benefícios da agregação ocasionada pelo algoritmo de Bagging são limitados pela correlação das árvores [@hastie2009elements]. Ou seja, mesmo ao aumentar o número de árvores no Bagging, a correlação entre elas faz com que as previsões individuais não sejam completamente independentes, então a variância da média das previsões não diminui tão rapidamente quanto seria esperado se as árvores fossem completamente independentes. Uma forma de melhorar o algoritmo de Bagging foi através da Random Foreste, que será descrita adiante.
-
+\ \ \ Isso significa que, à medida que o número de árvores $B$ aumenta, o segundo termo da soma se torna menos significativo. Portanto, os benefícios da agregação proporcionados pelo algoritmo de Bagging são limitados pela correlação entre as árvores [@hastie2009elements]. Mesmo com o aumento do número de árvores no Bagging, a correlação entre elas impede que as previsões individuais sejam completamente independentes, resultando em menor diminuição da variância da média das previsões do que seria esperado se as árvores fossem totalmente independentes. Uma maneira de melhorar o algoritmo de Bagging é por meio do Random Forest, que será descrito a seguir.
 
 ### Random Forest
 
-\ \ \ O algoritmo da Random Forest é uma técnica derivada do método de Bagging, com algumas modificações para a construção das árvores. As árvores são construídas de forma a melhorar a redução da variância diminuindo a correlação entre as árvores, sem aumentar significantemente a variabilidade. Isso é alcançado no processo de crescimento das árvores por meio da seleção aleatória das variáveis independentes.
+\ \ \ O algoritmo Random Forest é uma técnica derivada do método de Bagging, mas com modificações específicas na construção das árvores. O objetivo é melhorar a redução da variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de variáveis independentes.
 
 ::: {#algo-rf}
 
@@ -354,17 +356,17 @@ Fonte: @hastie2009elements [p. 588].
 
 :::
 
-\ \ \ Ao construir uma árvore em amostras bootstrap no algoritmo da Random Forest, antes de cada divisão, selecionam-se aleatoriamente $m \leq p$ ($m = p$ é o caso do algoritmo de Bagging) variáveis independentes como candidatas para a divisão. No entanto, apenas um desses $m$ preditores é utilizado para a divisão. Com base em algum critério, como a minimização da impureza, selecionamos o melhor preditor possível para realizar a divisão. Portanto, diferente do Bagging, que criava árvores de decisão muito semelhantes e, portanto, resultava em predições altamente correlacionadas, a Random Forest busca minimizar esse problema dando chances a outros preditores. Dessa forma, em média, $\left(p−m\right)/p$ das divisões nem sequer considerarão o preditor mais forte, permitindo que outros preditores também tenham chance de serem utilizados [@james2013introduction]. Esse processo de diminuir a correlação entre as árvores torna a média das árvores resultantes menos variável e, portanto, mais confiável.
+\vspace{12pt}
 
+\ \ \  No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, antes de cada divisão, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão (com $m = p$ no caso do Bagging). Apenas uma dessas $m$ variáveis é usada para realizar a divisão, com base em critérios como a minimização da impureza. Diferentemente do Bagging, que tende a gerar árvores de decisão semelhantes e, portanto, previsões altamente correlacionadas, o Random Forest visa minimizar esse problema ao proporcionar oportunidades para que outros preditores sejam considerados. Assim, em média, $\left(p - m\right)/p$ das divisões nem sequer considerarão o preditor mais forte, permitindo que outros preditores também tenham a chance de serem usados [@james2013introduction]. Esse processo de redução da correlação entre as árvores resulta em uma média das árvores menos variável e, consequentemente, mais confiável.
 
 \vspace{12pt}
 
-A quantidade de variáveis independentes mm selecionadas aleatoriamente pode ser considerada um parâmetro a ser ajustado por meio de validação cruzada. No entanto, de acordo com @hastie2009elements, os inventores do algoritmo recomendam os seguintes valores padrão: $m= \sqrt{p}$​ e tamanho mínimo do nó igual a um para classificação, e $m=p/3$ e tamanho mínimo do nó igual a cinco para regressão. Quando o número de variáveis é grande, mas poucas variáveis são relevantes, o algoritmo Random Forest pode não ter um bom desempenho com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis relevantes. No entanto, utilizar um valor pequeno para $m$ pode ser útil quando há muitos preditores correlacionados. Além disso, assim como no algoritmo de Bagging, a Random Forest não sofre de sobreajuste se o valor de $B$ for aumentado. Portanto, basta usar um $B$ suficientemente grande para que a taxa de erro se estabilize [@james2013introduction]. O processo de construção de uma Random Forest pode ser visualizado no @algo-rf.
-
+\ \ \ A quantidade de variáveis independentes $m$ selecionadas aleatoriamente é um hiperparâmetro que pode ser estimado por meio de validação cruzada. Valores comuns para $m$ são $m=\sqrt{p}$​ com tamanho mínimo do nó igual a um para classificação, e $m=p/3$​ com tamanho mínimo do nó igual a cinco para regressão [@hastie2009elements]. Quando o número de variáveis é grande, mas poucas são realmente relevantes, o algoritmo Random Forest pode ter um desempenho inferior com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis mais importantes. No entanto, usar um valor pequeno de $m$ pode ser vantajoso quando há muitos preditores correlacionados. Além disso, assim como no Bagging, a Random Forest não sofre de sobreajuste com o aumento da quantidade de árvores $B$. Portanto, é suficiente usar um $B$ grande o bastante para que a taxa de erro se estabilize [@james2013introduction].
 
 ### Boosting Trees
 
-\ \ \ O Boosting, assim como o Bagging mostrado anteriormente, é uma metodologia que pode ser aplicada para melhorar a performance de um modelo ou algoritmo. No entanto, neste trabalho, o Boosting foi aplicado apenas utilizando árvores de decisão, portanto, sua descrição será restrita a esse caso, conhecidas como Boosting Trees.
+\ \ \ O Boosting, assim como o Bagging, é um método destinada a melhorar o desempenho de modelos ou algoritmos. No entanto, neste trabalho, o Boosting foi aplicado apenas às árvores de regressão. Portanto, a explicação do Boosting será restrito ao caso de Boosting Trees.
 
 \vspace{12pt}
 
@@ -417,7 +419,7 @@ Fonte: @james2013introduction [p. 349].
 
 :::
 
-\ \ \ No algoritmo de Bagging cada árvore era construída e ajustada utilizando amostras bootstrap. Por fim, era necessário tomar um agregado $\varphi_B$ de todas as $B$ árvores para criar um único estimador. O Boosting Trees funciona de forma similar, no entanto, cada árvore é construída utilizando uma versão modificada dos dados de treinamento original, sem a necessidade de amostras bootstrap, e a informação prévia de outras árvores. Ou seja, são construídas sequenciamente.
+\ \ \ No algoritmo de Bagging, cada árvore era construída e ajustada utilizando amostras bootstrap, e ao final, um estimador agregado $\varphi_B$​ era formado a partir das $B$ árvores. O Boosting Trees funciona de forma similar. No entanto, cada árvore é construída utilizando uma versão modificada dos dados de treinamento original, sem a necessidade de amostras bootstrap, e incorporando a informação das árvores anteriores. Ou seja, as árvores são construídas sequencialmente, com cada nova árvore reduzindo o erro das árvores anteriores.
 
 \vspace{12pt}
 
@@ -529,19 +531,19 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 --- AINDA SERÁ MODIFICADO ---
 
-\ \ \ O Web scraping, também conhecido como extração de dados da web, é uma técnica utilizada para o processo de coleta de dados estruturados da web de maneira automatizada. É um processo que vem sendo constantemente utilizado por instituições públicas e privadas para a construção de produtos que utilizam algoritmos de aprendizagem de máquinas, observa ofertas e discontos, faz análise de mercado ou monitoração de marcas.
+<!-- \ \ \ O Web scraping, também conhecido como extração de dados da web, é uma técnica utilizada para o processo de coleta de dados estruturados da web de maneira automatizada. É um processo que vem sendo constantemente utilizado por instituições públicas e privadas para a construção de produtos que utilizam algoritmos de aprendizagem de máquinas, observa ofertas e discontos, faz análise de mercado ou monitoração de marcas. -->
 
 \vspace{12pt}
 
-Neste projeto, para fins de estudo e análise do mercado imobiliário, os dados foram coletados por meio de extração de dados do site do Zap Imóveis. O Zap Imóveis é um site do Grupo OLX que reúne ofertas do mercado imobiliário e que funciona como uma plataforma dinâmica para facilitar a conexão entre quem deseja alugar, comprar ou vender um imóvel; podendo servir também para corretores ou outros profissionais do setor de imóveis. Este projeto foi possível graças as informações que foram coletadas do site do Zap Imóveis em dois diferentes períodos do ano de 2023. O primeiro deles, as informações foram coletadas utilizando variados pacotes para raspagem de dados e proxies rotativas da linguagem de programação R, a fim de evitar ser bloqueado pelos mecanismos de segurança do site. Na segunda etapa, os dados foram coletados empregando a linguagem de programação Python com as bibliotecas Scrapy e Playwrite, que serve para web crawling e web scraping, e o Playwrite que serve para testes em aplicativos da web, mas que neste caso foi utilizado para manejar páginas dinâmicas.
+<!-- Neste projeto, para fins de estudo e análise do mercado imobiliário, os dados foram coletados por meio de extração de dados do site do Zap Imóveis. O Zap Imóveis é um site do Grupo OLX que reúne ofertas do mercado imobiliário e que funciona como uma plataforma dinâmica para facilitar a conexão entre quem deseja alugar, comprar ou vender um imóvel; podendo servir também para corretores ou outros profissionais do setor de imóveis. Este projeto foi possível graças as informações que foram coletadas do site do Zap Imóveis em dois diferentes períodos do ano de 2023. O primeiro deles, as informações foram coletadas utilizando variados pacotes para raspagem de dados e proxies rotativas da linguagem de programação R, a fim de evitar ser bloqueado pelos mecanismos de segurança do site. Na segunda etapa, os dados foram coletados empregando a linguagem de programação Python com as bibliotecas Scrapy e Playwrite, que serve para web crawling e web scraping, e o Playwrite que serve para testes em aplicativos da web, mas que neste caso foi utilizado para manejar páginas dinâmicas. -->
 
 \vspace{12pt}
 
-Desta forma, com a ideia de modelar o valor do imóvel e analisar o mercado imobiliário, foram coletados aqueles variáveis que estavam disponíveis no site do Zap Imóveis e que poderiam de alguma forma ser significativas ao tentar explicar o valor do imóvel durante a sua modelagem. Assim, no total foram coletatas 23 variáveis, das quais 8 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas essas variáveis foram coletadas diretamente do Zap Imóveis, a latitude e longitude foram obtidas pela geocodificação do endereço utilizando o pacote tidygeocoder da linguagem de programação R. Portanto, temos as seguites variáveis:
+<!-- Desta forma, com a ideia de modelar o valor do imóvel e analisar o mercado imobiliário, foram coletados aqueles variáveis que estavam disponíveis no site do Zap Imóveis e que poderiam de alguma forma ser significativas ao tentar explicar o valor do imóvel durante a sua modelagem. Assim, no total foram coletatas 23 variáveis, das quais 8 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas essas variáveis foram coletadas diretamente do Zap Imóveis, a latitude e longitude foram obtidas pela geocodificação do endereço utilizando o pacote tidygeocoder da linguagem de programação R. Portanto, temos as seguites variáveis: -->
 
-- Valor do imóvel: esta é a variável dependente, aquela que será modelada e será o principal objeto de estudo deste trabalho;
+<!-- - Valor do imóvel: esta é a variável dependente, aquela que será modelada e será o principal objeto de estudo deste trabalho; -->
 
-- Área: área do imóvel em $m^2$;
+<!-- - Área: área do imóvel em $m^2$;
 
 - Condomínio: valor pago pelo condomínio;
 
@@ -565,13 +567,13 @@ Desta forma, com a ideia de modelar o valor do imóvel e analisar o mercado imob
 
 \vspace{12pt}
 
-No entanto, devido a observações feitas durante o estudo, nem todas essas variáveis foram utilizadas para a modelagem do valor dos imóveis, seja por conter muitos valores valores ausentes ou por não ter se mostrado significante para o que se desejava explicar. Ainda, como a coleta destes dados foram feitas em dois momentos distintos, temos dois bancos de dados, um com 29712 observações e o outro com 14956. Por fim, essas duas bases de dados foram unidas e, para não correr o risco de conter imóveis repetidos, aqueles que tinham o mesmo número de identificação foram removidos.
+No entanto, devido a observações feitas durante o estudo, nem todas essas variáveis foram utilizadas para a modelagem do valor dos imóveis, seja por conter muitos valores valores ausentes ou por não ter se mostrado significante para o que se desejava explicar. Ainda, como a coleta destes dados foram feitas em dois momentos distintos, temos dois bancos de dados, um com 29712 observações e o outro com 14956. Por fim, essas duas bases de dados foram unidas e, para não correr o risco de conter imóveis repetidos, aqueles que tinham o mesmo número de identificação foram removidos. -->
 
 ## Descritiva dos dados
 
-\ \ \ A análise exploratória de dados marca uma das primeiras etapas de qualquer estudo que utiliza a estatística como uma de suas principais ferramentas, pois permite encontrar padrões de comportamento no dados, descobrir relações entre as variáveis estudadas. Dessa forma, a primeira etapa desse estudo, após a coleta e organização dos dados obtidos do Zap Imóveis, foi fazer uma descritiva dos dados. Essa etapa permitiu encontrar padrões nos diferentes tipos de imóveis bem como o seu tipo pode influenciar na características do imóvel, o que, por consequência, pode afetar o seu valor. Assim, para identificar esses diferentes comportamentos, foram criados gráficos e tabelas a fim de caracterizar as relações das variáveis independentes com a dependente.
+<!-- \ \ \ A análise exploratória de dados marca uma das primeiras etapas de qualquer estudo que utiliza a estatística como uma de suas principais ferramentas, pois permite encontrar padrões de comportamento no dados, descobrir relações entre as variáveis estudadas. Dessa forma, a primeira etapa desse estudo, após a coleta e organização dos dados obtidos do Zap Imóveis, foi fazer uma descritiva dos dados. Essa etapa permitiu encontrar padrões nos diferentes tipos de imóveis bem como o seu tipo pode influenciar na características do imóvel, o que, por consequência, pode afetar o seu valor. Assim, para identificar esses diferentes comportamentos, foram criados gráficos e tabelas a fim de caracterizar as relações das variáveis independentes com a dependente. -->
 
-## Aprendizado Supervisionado e não supervisionado
+<!-- ## Aprendizado Supervisionado e não supervisionado
 
 \ \ \ Na aprendizagem de máquinas, uma das estapas mais importantes é saber qual técnica será utilizada para resolver um problema que se enquadra em diferentes formas de aprendizado. Para isso, existem mais de uma forma em que um algoritmo consegue utilizar os dados e explicar o que está sendo modelado a partir deles. No entanto, a maioria dos problemas de aprendizado de máquinas recais em dois casos mais conhecidos: aprendizado supervisionado e não supervisionado.
 
@@ -581,7 +583,7 @@ No entanto, devido a observações feitas durante o estudo, nem todas essas vari
 
 ### Aprendizado não supervisionado
 
-\ \ \ Por outro lado, o aprendizado não supervisionado aparece em situações mais desafiadores, pois não há um exemplo para explicar aquilo que se pretende explicar. Este processo é conhecido como *aprendizado sem exemplo*, @hastie2009elements. Dessa forma, no aprendizado não supervisionado, tem-se uma amostra com N observações $\left(x_1, ..., x_N\right)$ de um vetor aleatório $X$ com densidade conjunta $f\left(x\right)$ em que o objetivo é inferir propriedades da densidade sem ajuda de exemplos para cada observação. Assim, como há uma falta de uma variável resposta $y_i$ para supervisionar a análise, pode-se procurar entender a relação entre as variáveis ou as observações, @james2013introduction. Por exemplo, uma das técnicas mais aplicadas em problemas que envolvem o aprendizado supervisionado é a análise de cluster, em que o objetivo é determinar, com base em $x_1, ..., x_n$, se as observações são caracterizadas em grupos distintos. Esse é um dos métodos que poderiam ser aplicados, por exemplo, na análise de crédito de clientes de um cartão de crédito, tornando possível analisar o seu perfil e classificá-lo em diferentes grupos para recomendar produtos especificos adequados ao seu perfil.
+\ \ \ Por outro lado, o aprendizado não supervisionado aparece em situações mais desafiadores, pois não há um exemplo para explicar aquilo que se pretende explicar. Este processo é conhecido como *aprendizado sem exemplo*, @hastie2009elements. Dessa forma, no aprendizado não supervisionado, tem-se uma amostra com N observações $\left(x_1, ..., x_N\right)$ de um vetor aleatório $X$ com densidade conjunta $f\left(x\right)$ em que o objetivo é inferir propriedades da densidade sem ajuda de exemplos para cada observação. Assim, como há uma falta de uma variável resposta $y_i$ para supervisionar a análise, pode-se procurar entender a relação entre as variáveis ou as observações, @james2013introduction. Por exemplo, uma das técnicas mais aplicadas em problemas que envolvem o aprendizado supervisionado é a análise de cluster, em que o objetivo é determinar, com base em $x_1, ..., x_n$, se as observações são caracterizadas em grupos distintos. Esse é um dos métodos que poderiam ser aplicados, por exemplo, na análise de crédito de clientes de um cartão de crédito, tornando possível analisar o seu perfil e classificá-lo em diferentes grupos para recomendar produtos especificos adequados ao seu perfil. -->
 
 ## Reamostragem para avaliação de performance
 
@@ -596,22 +598,22 @@ No entanto, devido a observações feitas durante o estudo, nem todas essas vari
 ## Tunagem de hiperparâmetros
 
 
-\ \ \ Na aprendizagem de máquina, uma das etapas fundamentais é a tunagem dos hiperparâmetros dos algoritmos de aprendizagem. Essa etapa consiste em encontrar a melhor combinação de hiperparâmetros e, consequentemente, resultando em uma configuração algoritmo que proporciona melhor performance e capacidade de generalização. No entanto, essa configuração não é trivial.
+<!-- \ \ \ Na aprendizagem de máquina, uma das etapas fundamentais é a tunagem dos hiperparâmetros dos algoritmos de aprendizagem. Essa etapa consiste em encontrar a melhor combinação de hiperparâmetros e, consequentemente, resultando em uma configuração algoritmo que proporciona melhor performance e capacidade de generalização. No entanto, essa configuração não é trivial. -->
 
 \vspace{12pt}
 
-\ \ \ Os algoritmos de otimização de hiperparâmetros procuram pelo melhor ajuste de hiperparâmetros $\lambda \in \tilde{\Lambda}$ para um algoritmo de aprendizagem $I_{\lambda}$. O espaço de procura $\tilde{\Lambda} \in \Lambda$ contém todas as possíveis configurações de hiperparâmetros consideradas para otimização. Dessa forma, temos que:
+<!-- \ \ \ Os algoritmos de otimização de hiperparâmetros procuram pelo melhor ajuste de hiperparâmetros $\lambda \in \tilde{\Lambda}$ para um algoritmo de aprendizagem $I_{\lambda}$. O espaço de procura $\tilde{\Lambda} \in \Lambda$ contém todas as possíveis configurações de hiperparâmetros consideradas para otimização. Dessa forma, temos que: -->
 
-$$
+<!-- $$
 \tilde{\Lambda} = \tilde \Lambda_1 \cup \tilde \Lambda_2 \cup ... \cup \tilde \Lambda_l
 $${#eq-space}
-em que $l$ são todas as possíveis configurações de hiperparâmetros. Além disso, $\tilde \Lambda_i \ \left(i = 1, 2, ..., l\right)$ representam o subconjunto de limites dos domínios do i-ésimo hiperparâmetro $\Lambda_i$, podendo ser contínuo, discreto ou categórico (BISCHL et al., 2023).
+em que $l$ são todas as possíveis configurações de hiperparâmetros. Além disso, $\tilde \Lambda_i \ \left(i = 1, 2, ..., l\right)$ representam o subconjunto de limites dos domínios do i-ésimo hiperparâmetro $\Lambda_i$, podendo ser contínuo, discreto ou categórico (BISCHL et al., 2023). -->
 
 \vspace{12pt}
 
-A busca pela melhor combinação de hiperparâmetros $\lambda$ é feito de forma iterativa, utilizando métodos de reamostragem para dividir o conjunto de dados entre teste e treinamento. Portanto, para validar e encontrar os hiperparâmetos, o algoritmo de aprendizagem é validado através da divisão do conjunto de dados. Assim, tem-se a seguinte estratégia de separação do conjunto de dados:
+<!-- A busca pela melhor combinação de hiperparâmetros $\lambda$ é feito de forma iterativa, utilizando métodos de reamostragem para dividir o conjunto de dados entre teste e treinamento. Portanto, para validar e encontrar os hiperparâmetos, o algoritmo de aprendizagem é validado através da divisão do conjunto de dados. Assim, tem-se a seguinte estratégia de separação do conjunto de dados: -->
 
-$$
+<!-- $$
 \mathcal{J} = \left(\left(J_{treino, 1},\ J_{teste, 1}\right), ..., \left(J_{treino, B},\ J_{test, B}\right)\right)
 $${#eq-teste}
 onde $J_{treino, i}, \ J_{teste, i}$ representam os vetores de índices $\left(i = 1, \, 2, ..., \ B\right)$ para os conjuntos de treino e teste, respectivamente, e $B$ representa o número total de divisões.
@@ -633,25 +635,25 @@ onde $\lambda^*$ denota a melhor combinação possível de hiperparâmetros, $c\
 flowchart LR
   A["$$\lambda$$"] --> B(Round edge)
   B --> C{Decision}
-```
+``` -->
 
 \vspace{12pt}
 
 ### Otimização Bayesiana
 
-\ \ \ Existem diversas técnicas para otimização de hiperparâmetros utilizadas em aprendizagem de máquina. Uma das técnicas mais comuns é o GridSearch. @bischl2023hyperparameter definem GridSearch como um processo que divide o intervalo contínuo de valores possíveis de cada hiperparâmetro em um conjunto de valores específicos e avalia exaustivamente o algoritmo para todas as combinações possíveis. No entanto, como todas as combinações possíveis aumentam exponencialmente com a quantidade necessária para avaliação do algoritmo, o GridSearh tem um custo computacional bastante elevado. Assim, existem algoritmos de otimização mais sofisticados que entregam melhores performances, como a otimização bayesiana, que foi utilizada neste trabalho.
+<!-- \ \ \ Existem diversas técnicas para otimização de hiperparâmetros utilizadas em aprendizagem de máquina. Uma das técnicas mais comuns é o GridSearch. @bischl2023hyperparameter definem GridSearch como um processo que divide o intervalo contínuo de valores possíveis de cada hiperparâmetro em um conjunto de valores específicos e avalia exaustivamente o algoritmo para todas as combinações possíveis. No entanto, como todas as combinações possíveis aumentam exponencialmente com a quantidade necessária para avaliação do algoritmo, o GridSearh tem um custo computacional bastante elevado. Assim, existem algoritmos de otimização mais sofisticados que entregam melhores performances, como a otimização bayesiana, que foi utilizada neste trabalho. -->
 
 \vspace{12pt}
 
-\ \ \ A otimização bayesiana não se refere a um tipo específico de algoritmo de otimização, mas sim a uma filosofia de otimização baseada em inferência bayesiana, a qual contém uma extensa família de algoritmos de otimização [@garnett2023bayesian]. Não obstante, a otimização bayesiana tem obtido benchmarks melhores que outros algoritmos em inúmeros problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
+<!-- \ \ \ A otimização bayesiana não se refere a um tipo específico de algoritmo de otimização, mas sim a uma filosofia de otimização baseada em inferência bayesiana, a qual contém uma extensa família de algoritmos de otimização [@garnett2023bayesian]. Não obstante, a otimização bayesiana tem obtido benchmarks melhores que outros algoritmos em inúmeros problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
 
 \vspace{12pt}
 
-\ \ \ Diferente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana determina as futuras tentativas de avaliação com base em resultados obtidos previamente [@yang2020hyperparameter]. Para a definição dos pontos futuros, é utilizada uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Assim, após o ajuste da função probabilística, tem-se como resultado para cada $\lambda$ uma estimativa da performance $\hat c \left(\lambda \right)$ e da predição da incerteza $\hat \sigma \left(\lambda \right)$, além de obter também a distribuição preditiva da função probabilística. Com a distribuição obtida, uma função de aquisição determina o trade-off entre exploitation e exploration^[exploitation pode ser entendido como procurar próximo a boas observações e ]. Dessa forma, os algoritmos de otimização bayesiana são definidos segundo a lei $\lambda \to c\left(\lambda \right)$ e  procuram um equilíbrio entre o processo de exploitation-exploration para detectar as regiões ótimas mais prováveis e não perder melhores configurações em áreas ainda não exploradas.
+\ \ \ Diferente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana determina as futuras tentativas de avaliação com base em resultados obtidos previamente [@yang2020hyperparameter]. Para a definição dos pontos futuros, é utilizada uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Assim, após o ajuste da função probabilística, tem-se como resultado para cada $\lambda$ uma estimativa da performance $\hat c \left(\lambda \right)$ e da predição da incerteza $\hat \sigma \left(\lambda \right)$, além de obter também a distribuição preditiva da função probabilística. Com a distribuição obtida, uma função de aquisição determina o trade-off entre exploitation e exploration^[exploitation pode ser entendido como procurar próximo a boas observações e ]. Dessa forma, os algoritmos de otimização bayesiana são definidos segundo a lei $\lambda \to c\left(\lambda \right)$ e  procuram um equilíbrio entre o processo de exploitation-exploration para detectar as regiões ótimas mais prováveis e não perder melhores configurações em áreas ainda não exploradas. -->
 
 ### Tree-Structured Parzen Estimator
 
-\ \ \ Existem diversas funções probabilísticas para uso na otimização bayesiana, algumas delas é o Processo Gaussiano, Random Forest ou Tree-Structured Parzen Estimator (TPE). Nesse trabalho, foi utilizado o Tree-Structured Parzen Estimator, utilizando a biblioteca Optuna [@optuna_2019] para sua aplicação.
+<!-- \ \ \ Existem diversas funções probabilísticas para uso na otimização bayesiana, algumas delas é o Processo Gaussiano, Random Forest ou Tree-Structured Parzen Estimator (TPE). Nesse trabalho, foi utilizado o Tree-Structured Parzen Estimator, utilizando a biblioteca Optuna [@optuna_2019] para sua aplicação.
 
 \vspace{12pt}
 
@@ -686,7 +688,7 @@ Assim, utilizando o Teorema de Bayes e fazendo as substituições na integral da
 $$
 EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right) \frac{p\left(x | y\right)p\left(y\right)}{p\left(x\right)}dy = \left(\gamma y^*  - \int_{-\infty}^{y^*} p\left(y\right)dy\right) \left(\gamma + \left(1 - \gamma\right)\frac{g\left(x\right)}{l\left(x\right)}\right) ^{-1}
 $$
-em que a segunda expressão do produto mostra que para maximizar o Expected Improvement é necessário pontos de $x$ com maior probabilidade em $l\left(x\right)$ e com baixa probabilidade em $g\left(x\right)$. Não obstante, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
+em que a segunda expressão do produto mostra que para maximizar o Expected Improvement é necessário pontos de $x$ com maior probabilidade em $l\left(x\right)$ e com baixa probabilidade em $g\left(x\right)$. Não obstante, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo]. -->
 
 
 \newpage
