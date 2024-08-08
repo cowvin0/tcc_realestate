@@ -513,6 +513,12 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 ### Diferentes implementações de Gradient Boosting
 
+#### Light Gradient Boosting
+
+#### Extreme Gradient Boosting
+
+#### Categorial Gradient Boosting
+
 
 
 \vspace{12pt}
