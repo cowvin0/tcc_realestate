@@ -217,6 +217,7 @@ $$
 em que $|T|$ denota a quantidade total de folhas e $\alpha \geq 0$ é o parâmetro de tunagem que equilibra o tamanho da árvore e a adequação aos dados de forma que para cada $\alpha$, a árvore $T_{\alpha} \subseteq T_0$ minimiza $C_{\alpha}\left(T\right)$. Valores grandes para $\alpha$ resulta em árvores menores, valores menores resulta em árvores maiores e $\alpha = 0$ resulta na própria árvore $T_0$. A procura por $T_{\alpha}$ consiste em sucessivamente colapsar o nó interno que produz o menor aumento em $\sum_j N_j Q_j\left(T\right)$ e o processo continua até produzir uma árvore de um único nó. Esse processo gera uma sequência de subárvores que contém uma única menor subárvore que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$. Além disso, a estimação de $\alpha$ é feita por validação cruzada com cinco ou dez folds, e a estimativa $\hat \alpha$ é escolhida para minimizar a soma dos quadrados dos resíduos durante a validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
 
 
+
 ::: {#algo-buildtree}
 
 ```pseudocode
@@ -251,9 +252,16 @@ Fonte: @james2013introduction [p. 337].
 
 :::
 
+\ \ \ No caso de uma árvore de decisão para classificassão, a única coisa que mudaria seria o critério para divisão dos nós e a poda da árvore. Além disso, a previsão em um nó $j$ de uma região $R_j$ com $N_j$ observações será simplesmente a classe majoritária. Assim, tem-se
+
+$$
+\hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)
+$$
+a proporção de observações da classe $k$ no nó $j$. Dessa forma, são classificadas as observações no nó $j$ para a classe $k\left(j\right) = \arg \max_{k} \hat{p}_{jk}$, que é a moda no nó $j$. Para se fazer a divisão dos nós no caso da regressão foi utilizado o erro quadrático como medida de impureza. Para a classificação, algumas medidas comuns para $Q_m\left(T\right)$ é o misclassification erro, gini index ou cross-entropy.
+
 ## Métodos Ensemble
 
-\ \ \ As árvores de decisão são conhecidas por sua alta interpretabilidade, mas geralmente apresentam um desempenho preditivo preditivo inferior em comparação com outros modelos e algoritmos. No entanto, é possível superar essa limitação construindo um modelo preditivo que combina a força de uma coleção de modelos base mais simples, um processo conhecido como aprendizado Ensemble. De acordo com @hastie2009elements, o aprendizado Ensemble pode ser dividido em duas etapas principais: a primeira etapa consiste em desenvolver uma população de algoritmos de aprendizado base a partir dos dados de treinamento, e a segunda etapa envolve a combinação desses algoritmos para formar um estimador agregado. Portanto, nesta seção, serão definidos os métodos de aprendizagem Ensemble utilizados neste trabalho. O foco inicial será no Random Forest, seguido pela descrição e explicação teórica do Bagging, Boosting, Stacking e outros algoritmos de aprendizado de máquina.
+\ \ \ As árvores de decisão são conhecidas por sua alta interpretabilidade, mas geralmente apresentam um desempenho preditivo inferior em comparação com outros modelos e algoritmos. No entanto, é possível superar essa limitação construindo um modelo preditivo que combina a força de uma coleção de estimadores base, um processo conhecido como aprendizado em conjunto (Ensemble Learning). De acordo com @hastie2009elements, o aprendizado em conjunto pode ser dividido em duas etapas principais: a primeira etapa consiste em desenvolver uma população de algoritmos de aprendizado base a partir dos dados de treinamento, e a segunda etapa envolve a combinação desses algoritmos para formar um estimador agregado. Portanto, nesta seção, serão definidos os métodos de aprendizado em conjunto utilizados neste trabalho.
 
 
 ### Bagging
@@ -292,14 +300,6 @@ Isso significa que, à medida que a quantidade de árvores $B$ aumenta, o segund
 ### Random Forest
 
 \ \ \ O algoritmo da Random Forest é uma técnica derivada do método de Bagging, com algumas modificações para a construção das árvores. As árvores são construídas de forma a melhorar a redução da variância diminuindo a correlação entre as árvores, sem aumentar significantemente a variabilidade. Isso é alcançado no processo de crescimento das árvores por meio da seleção aleatória das variáveis independentes.
-
-\vspace{12pt}
-
-\ \ \ Ao construir uma árvore em amostras bootstrap no algoritmo da Random Forest, antes de cada divisão, selecionam-se aleatoriamente $m \leq p$ ($m = p$ é o caso do algoritmo de Bagging) variáveis independentes como candidatas para a divisão. No entanto, apenas um desses $m$ preditores é utilizado para a divisão. Com base em algum critério, como a minimização da impureza, selecionamos o melhor preditor possível para realizar a divisão. Portanto, diferente do Bagging, que criava árvores de decisão muito semelhantes e, portanto, resultava em predições altamente correlacionadas, a Random Forest busca minimizar esse problema dando chances a outros preditores. Dessa forma, em média, $\left(p−m\right)/p$ das divisões nem sequer considerarão o preditor mais forte, permitindo que outros preditores também tenham chance de serem utilizados [@james2013introduction]. Esse processo de diminuir a correlação entre as árvores torna a média das árvores resultantes menos variável e, portanto, mais confiável.
-
-\vspace{12pt}
-
-A quantidade de variáveis independentes mm selecionadas aleatoriamente pode ser considerada um parâmetro a ser ajustado por meio de validação cruzada. No entanto, de acordo com @hastie2009elements, os inventores do algoritmo recomendam os seguintes valores padrão: $m= \sqrt{p}$​ e tamanho mínimo do nó igual a um para classificação, e $m=p/3$ e tamanho mínimo do nó igual a cinco para regressão. Quando o número de variáveis é grande, mas poucas variáveis são relevantes, o algoritmo Random Forest pode não ter um bom desempenho com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis relevantes. No entanto, utilizar um valor pequeno para $m$ pode ser útil quando há muitos preditores correlacionados. Além disso, assim como no algoritmo de Bagging, a Random Forest não sofre de sobreajuste se o valor de $B$ for aumentado. Portanto, basta usar um $B$ suficientemente grande para que a taxa de erro se estabilize [@james2013introduction]. O processo de construção de uma Random Forest pode ser visualizado no @algo-rf.
 
 ::: {#algo-rf}
 
@@ -354,24 +354,19 @@ Fonte: @hastie2009elements [p. 588].
 
 :::
 
+\ \ \ Ao construir uma árvore em amostras bootstrap no algoritmo da Random Forest, antes de cada divisão, selecionam-se aleatoriamente $m \leq p$ ($m = p$ é o caso do algoritmo de Bagging) variáveis independentes como candidatas para a divisão. No entanto, apenas um desses $m$ preditores é utilizado para a divisão. Com base em algum critério, como a minimização da impureza, selecionamos o melhor preditor possível para realizar a divisão. Portanto, diferente do Bagging, que criava árvores de decisão muito semelhantes e, portanto, resultava em predições altamente correlacionadas, a Random Forest busca minimizar esse problema dando chances a outros preditores. Dessa forma, em média, $\left(p−m\right)/p$ das divisões nem sequer considerarão o preditor mais forte, permitindo que outros preditores também tenham chance de serem utilizados [@james2013introduction]. Esse processo de diminuir a correlação entre as árvores torna a média das árvores resultantes menos variável e, portanto, mais confiável.
+
+
+\vspace{12pt}
+
+A quantidade de variáveis independentes mm selecionadas aleatoriamente pode ser considerada um parâmetro a ser ajustado por meio de validação cruzada. No entanto, de acordo com @hastie2009elements, os inventores do algoritmo recomendam os seguintes valores padrão: $m= \sqrt{p}$​ e tamanho mínimo do nó igual a um para classificação, e $m=p/3$ e tamanho mínimo do nó igual a cinco para regressão. Quando o número de variáveis é grande, mas poucas variáveis são relevantes, o algoritmo Random Forest pode não ter um bom desempenho com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis relevantes. No entanto, utilizar um valor pequeno para $m$ pode ser útil quando há muitos preditores correlacionados. Além disso, assim como no algoritmo de Bagging, a Random Forest não sofre de sobreajuste se o valor de $B$ for aumentado. Portanto, basta usar um $B$ suficientemente grande para que a taxa de erro se estabilize [@james2013introduction]. O processo de construção de uma Random Forest pode ser visualizado no @algo-rf.
+
+
 ### Boosting Trees
 
 \ \ \ O Boosting, assim como o Bagging mostrado anteriormente, é uma metodologia que pode ser aplicada para melhorar a performance de um modelo ou algoritmo. No entanto, neste trabalho, o Boosting foi aplicado apenas utilizando árvores de decisão, portanto, sua descrição será restrita a esse caso, conhecidas como Boosting Trees.
 
 \vspace{12pt}
-
-\ \ \ No algoritmo de Bagging cada árvore era construída e ajustada utilizando amostras bootstrap. Por fim, era necessário tomar um agregado $\varphi_B$ de todas as $B$ árvores para criar um único estimador. O Boosting Trees funciona de forma similar, no entanto, cada árvore é construída utilizando uma versão modificada dos dados de treinamento original, sem a necessidade de amostras bootstrap, e a informação prévia de outras árvores. Ou seja, são construídas sequenciamente.
-
-\vspace{12pt}
-
-\ \ \ Para o caso da regressão, o Boosting, assim como o Bagging, combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. Assim, a primeira árvore é construída utilizando o conjunto de dados originais e os seus resíduos são calculados. Com a primeira árvore construída, a segunda árvore é ajustada para prever esses resíduos e é adicionada ao estimador ajustado para atualizar os seus resíduos. Portanto, para a regressão, os resíduos funcionam como uma informação para construir novas árvores e corrigir os erros das árvores anteriores. Ainda, como para construir cada árvore depende de árvores que já foram construídas, árvores pequenas são suficientes [@james2013introduction].
-
-\vspace{12pt}
-
-\ \ \ O processo de aprendizado na metodologia do Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, permitindo que mais árvores, com formas diferentes, corrijam os erros de árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. Uma versão simplificada do algoritmo pode ser visualizado em @algo-boos.
-
-\vspace{12pt}
-
 
 ::: {#algo-boos}
 
@@ -422,17 +417,29 @@ Fonte: @james2013introduction [p. 349].
 
 :::
 
+\ \ \ No algoritmo de Bagging cada árvore era construída e ajustada utilizando amostras bootstrap. Por fim, era necessário tomar um agregado $\varphi_B$ de todas as $B$ árvores para criar um único estimador. O Boosting Trees funciona de forma similar, no entanto, cada árvore é construída utilizando uma versão modificada dos dados de treinamento original, sem a necessidade de amostras bootstrap, e a informação prévia de outras árvores. Ou seja, são construídas sequenciamente.
+
+\vspace{12pt}
+
+\ \ \ Para o caso da regressão, o Boosting, assim como o Bagging, combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. Assim, a primeira árvore é construída utilizando o conjunto de dados originais e os seus resíduos são calculados. Com a primeira árvore construída, a segunda árvore é ajustada para prever esses resíduos e é adicionada ao estimador ajustado para atualizar os seus resíduos. Portanto, para a regressão, os resíduos funcionam como uma informação para construir novas árvores e corrigir os erros das árvores anteriores. Ainda, como para construir cada árvore depende de árvores que já foram construídas, árvores pequenas são suficientes [@james2013introduction].
+
+\vspace{12pt}
+
+\ \ \ O processo de aprendizado na metodologia do Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, permitindo que mais árvores, com formas diferentes, corrijam os erros de árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. Uma versão simplificada do algoritmo pode ser visualizado em @algo-boos.
+
+
 ### Stacked generalization
 
 \ \ \ O Stacked generalization, ou Stacking, é um método ensemble que envolve treinar um modelo que combina as predições de vários outros algoritmos para melhorar a predição. Esse método pode funcionar com qualquer modelo estatístico ou algoritmo de aprendizagem de máquina. A ideia principal é incluir peso nas predições de forma a dar maior importância para aqueles que geraram melhores predições e ao mesmo tempo não dar altos pesos àqueles modelos que tem alta complexidade.
 
 \vspace{12pt}
 
-\ \ \ Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em x, utilizando o modelo estatístico ou algoritmo $m$, aplicado ao conjunto de treinamento com a $i-ésima$ observação removida [@hastie2009elements]. Assim, os peso são estimados da seguinte forma
+\ \ \ Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em x, utilizando o modelo estatístico ou algoritmo $m$, aplicado ao conjunto de treinamento com a $i-ésima$ observação removida [@hastie2009elements]. Assim, os peso são estimados de maneira a minimizar o erro de previsão combinado, dado pela seguinte expressão
 
 $$
-\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1}
+\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m f^{-i}_m\left(x_i\right)\right]^2
 $$
+A previsão final dos modelos empilhados é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Portanto, ao invés de escolher um único modelo, o método de stacking combina eles com pesos estimados ótimos, o que acaba melhorando a performance preditiva, mas prejudica a interpretabilidade.
 
 ### Gradient Boosting
 

@@ -3,9 +3,9 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {algorithm}{\numberline {4.1}{\ignorespaces Algoritmo para crescer uma árvore de regressão}}{13}{algorithm.4.1}%
-\contentsline {algorithm}{\numberline {4.2}{\ignorespaces Algoritmo de uma Random Forest para regressão ou classificação}}{19}{algorithm.4.2}%
-\contentsline {algorithm}{\numberline {4.3}{\ignorespaces Método Boosting aplicado a árvores de regressão}}{20}{algorithm.4.3}%
-\contentsline {algorithm}{\numberline {4.4}{\ignorespaces Gradient Tree Boosting}}{21}{algorithm.4.4}%
+\contentsline {algorithm}{\numberline {4.2}{\ignorespaces Algoritmo de uma Random Forest para regressão ou classificação}}{16}{algorithm.4.2}%
+\contentsline {algorithm}{\numberline {4.3}{\ignorespaces Método Boosting aplicado a árvores de regressão}}{18}{algorithm.4.3}%
+\contentsline {algorithm}{\numberline {4.4}{\ignorespaces Gradient Tree Boosting}}{20}{algorithm.4.4}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
