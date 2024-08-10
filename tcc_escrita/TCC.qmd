@@ -141,13 +141,13 @@ graph TD
 
 \vspace{12pt}
 
-\ \ \ O espaço dos preditores predidores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, \dots, R_J$. Essas regiões são construídas em formato de caixa de forma a minimizar a soma dos quadrados dos resíduos. Dessa forma, pode-se modelar a variável resposta como uma constante $c_j$ em cada região $R_j$
+\ \ \ O espaço dos preditores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, \dots, R_J$. Essas regiões são construídas em formato de caixa de forma a minimizar a soma dos quadrados dos resíduos. Dessa forma, pode-se modelar a variável resposta como uma constante $c_j$ em cada região $R_j$
 
 $$
 f\left(x\right) = \sum^J_{j=1}c_j I\left(x \in R_j \right)
 $$
 
-\ \ \ O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados. Portanto, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(x_i\right)\right]^2$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se for observada a definição da função indicadora $I\left(x \in R_j\right)$
+\ \ \ O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados. Assim, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(x_i\right)\right]^2$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se for observada a definição da função indicadora $I\left(x \in R_j\right)$
 
 $$
 I_{R_j}(x_i) =
@@ -366,7 +366,7 @@ Fonte: @hastie2009elements [p. 588].
 
 ### Boosting Trees
 
-\ \ \ O Boosting, assim como o Bagging, é um método destinada a melhorar o desempenho de modelos ou algoritmos. No entanto, neste trabalho, o Boosting foi aplicado apenas às árvores de regressão. Portanto, a explicação do Boosting será restrito ao caso de Boosting Trees.
+\ \ \ O Boosting, assim como o Bagging, é um método destinada a melhorar o desempenho de modelos ou algoritmos. No entanto, neste trabalho, o Boosting foi aplicado apenas às árvores de regressão. Portanto, a explicação do Boosting será restrito ao caso de Boosting Trees (@algo-boos).
 
 \vspace{12pt}
 
@@ -419,29 +419,29 @@ Fonte: @james2013introduction [p. 349].
 
 :::
 
-\ \ \ No algoritmo de Bagging, cada árvore era construída e ajustada utilizando amostras bootstrap, e ao final, um estimador agregado $\varphi_B$​ era formado a partir das $B$ árvores. O Boosting Trees funciona de forma similar. No entanto, cada árvore é construída utilizando uma versão modificada dos dados de treinamento original, sem a necessidade de amostras bootstrap, e incorporando a informação das árvores anteriores. Ou seja, as árvores são construídas sequencialmente, com cada nova árvore reduzindo o erro das árvores anteriores.
+\ \ \ No algoritmo de Bagging, cada árvore é construída e ajustada utilizando amostras bootstrap, e ao final, um estimador agregado $\varphi_B$​ é formado a partir das $B$ árvores. O Boosting Trees funciona de maneira semelhante, mas sem o uso de amostras bootstrap. A ideia principal é corrigir os erros das árvores anteriores, ajustando as novas árvores aos resíduos das anteriores, visando melhorar suas previsões. Assim, as árvores são construídas de forma sequencial, incorporando as informações das árvores anteriores.
 
 \vspace{12pt}
 
-\ \ \ Para o caso da regressão, o Boosting, assim como o Bagging, combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. Assim, a primeira árvore é construída utilizando o conjunto de dados originais e os seus resíduos são calculados. Com a primeira árvore construída, a segunda árvore é ajustada para prever esses resíduos e é adicionada ao estimador ajustado para atualizar os seus resíduos. Portanto, para a regressão, os resíduos funcionam como uma informação para construir novas árvores e corrigir os erros das árvores anteriores. Ainda, como para construir cada árvore depende de árvores que já foram construídas, árvores pequenas são suficientes [@james2013introduction].
+\ \ \ No caso da regressão, o Boosting combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. A primeira árvore é construída utilizando o conjunto de dados original, e seus resíduos são calculados. Com a primeira árvore ajustada, a segunda árvore é ajustada aos da árvore anterior resíduos e, em seguida, é adicionada ao estimador para atualizar os resíduos. Dessa forma, os resíduos servem como informação crucial para construir novas árvores e corrigir os erros das árvores anteriores. Como cada nova árvore depende das árvores já construídas, árvores menores são suficientes [@james2013introduction].
 
 \vspace{12pt}
 
-\ \ \ O processo de aprendizado na metodologia do Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, permitindo que mais árvores, com formas diferentes, corrijam os erros de árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. Uma versão simplificada do algoritmo pode ser visualizado em @algo-boos.
+\ \ \ O processo de aprendizado no método de Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis.
 
 
 ### Stacked generalization
 
-\ \ \ O Stacked generalization, ou Stacking, é um método ensemble que envolve treinar um modelo que combina as predições de vários outros algoritmos para melhorar a predição. Esse método pode funcionar com qualquer modelo estatístico ou algoritmo de aprendizagem de máquina. A ideia principal é incluir peso nas predições de forma a dar maior importância para aqueles que geraram melhores predições e ao mesmo tempo não dar altos pesos àqueles modelos que tem alta complexidade.
+\ \ \ A Stacked Generalization, ou Stacking, é um método de ensemble que consiste em treinar um modelo gerado a partir da combinação da predição de vários outros modelos, visando melhorar a precisão das predições. Esse método pode ser aplicado a qualquer modelo estatístico ou algoritmo de aprendizado de máquina. A ideia principal é atribuir pesos às predições, de modo a dar maior importância aos modelos que produzem melhores resultados, ao mesmo tempo em que se evita atribuir altos pesos a modelos com alta complexidade.
 
 \vspace{12pt}
 
-\ \ \ Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em x, utilizando o modelo estatístico ou algoritmo $m$, aplicado ao conjunto de treinamento com a $i-ésima$ observação removida [@hastie2009elements]. Assim, os peso são estimados de maneira a minimizar o erro de previsão combinado, dado pela seguinte expressão
+\ \ \ Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em x, utilizando o modelo $m$, aplicado ao conjunto de treinamento com a $i-ésima$ observação removida [@hastie2009elements]. Assim, os peso são estimados de forma a minimizar o erro de predição combinado, dado pela seguinte expressão:
 
 $$
 \hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m f^{-i}_m\left(x_i\right)\right]^2
 $$
-A previsão final dos modelos empilhados é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Portanto, ao invés de escolher um único modelo, o método de stacking combina eles com pesos estimados ótimos, o que acaba melhorando a performance preditiva, mas prejudica a interpretabilidade.
+A previsão final dos modelos empilhados é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Assim, em vez de escolher um único modelo, o método de Stacking combina os modelos utilizando pesos estimados, o que melhora a performance preditiva, mas pode comprometer a interpretabilidade.
 
 ### Gradient Boosting
 
