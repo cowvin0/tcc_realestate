@@ -512,7 +512,7 @@ que dão a direção de diminuição da função perda $L$ pela expressão do gr
 $$
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)
 $$
-em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $0 \leq \lambda \leq 1$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
+em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $0 < \lambda \leq 1$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
 
 ### Diferentes implementações de Gradient Boosting
 
