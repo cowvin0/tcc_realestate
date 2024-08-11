@@ -445,7 +445,7 @@ A previsão final dos modelos empilhados é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\l
 
 ### Gradient Boosting
 
-\ \ \ O método de Gradient Boosting constrói modelos de regressão aditivos ajustando sequencialmente uma função base aos resíduos, que são os gradientes da função de perda do modelo atual [@friedman2002stochastic]. Estes gradientes representam a direção na qual a função de perda deve ser minimizada. Existem outras implementações de Gradiente Boosting que foram utilizadas nesse trabalho. No entanto, todas elas utilizam o Gradient Boosting com árvores de regressão, mas com algumas modificações para melhorar a eficiência do algoritmo já existente. O algoritmo do gradient boosting aplicado para árvores de regressão, que será explicado, pode ser visualizado no @algo-gradboos.
+\ \ \ O algoritmo de Gradient Boosting é semelhante ao de Boosting, mas com diferenças mínimas. Ele constrói modelos aditivos ajustando sequencialmente funções bases aos pseudos-resíduos, que correspondem aos gradientes da função perda do modelo atual [@friedman2002stochastic]. Esses gradientes indicam a direção na qual a função perda diminui. Neste trabalho, foram utilizadas diferentes implementações de Gradient Boosting. No entanto, todas empregam o Gradient Boosting com árvores de regressão, com algumas modificações para a construção das árvores ou para melhorar a eficiência do algoritmo existente. Assim, o algoritmo a ser explicado será o Gradient Tree Boosting (@algo-gradboos).
 
 ::: {#algo-gradboos}
 
@@ -496,22 +496,35 @@ Fonte: @hastie2009elements
 
 \vspace{12pt}
 
-O Gradient Boosting aplicado para árvores de regressão, tem que cada função base é um caso especial de uma árvore de regressão com $J_m$ folhas. A primeira linha do algoritmo @algo-gradboos inicializa com uma constante ótima, que é simplesmente uma árvore de regressão com uma única folha. No caso do gradient boosting aplicado a árvores de regressão, cada árvore de regressão tem a forma aditiva
+O Gradient Boosting aplicado para árvores de regressão, tem que cada função base é uma árvore de regressão com $J_m$ folhas. Dessa forma, cada árvore de regressão tem a forma aditiva
 
 $$
 h_m\left(x;\{b_j, R_j\}^J_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)
 $${#eq-treebost}
-em que $\{R_{jm}\}^{J_m}_{1}$ são as regiões disjuntas que, coletivamente, cobrem o espaço de todos os valores conjuntos das variáveis preditoras $x$. Essas regiões são representadas pelas folhas de sua correspondente árvore. Como as regiões são disjuntas, @eq-treebost se reduz simplesmente a $h_m\left(x\right) = b_{jm}\text{ para } x \in  R_{jm}$. Por mínimos quadrados, $b_{jm}$ é simplesmente a média dos pseudo-resíduos $\tilde{y}_{i}$,
+em que $\{R_{jm}\}^{J_m}_{1}$ são as regiões disjuntas que, coletivamente, cobrem o espaço de todos os valores conjuntos das variáveis preditoras $\mathbf{x}$. Essas regiões são representadas pelas folhas de sua correspondente árvore. Como as regiões são disjuntas, @eq-treebost se reduz simplesmente a $h_m\left(x\right) = b_{jm}\text{ para } x \in  R_{jm}$. Por mínimos quadrados, $b_{jm}$ é simplesmente a média dos pseudo-resíduos $r_{im}$,
+
+
+$$
+\hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}
+$$
+que dão a direção de diminuição da função perda $L$ pela expressão do gradiente da linha 2(a). Assim, cada árvore de regressão é ajustada aos $r_{im}$ de forma a minimizar o erro das árvores anteriores. $N_{jm}$ denota a quantidade de pontos na região $R_{jm}$. Por fim, a atualização do estimador é expresso da seguinte forma
+
+<!-- A primeira linha do algoritmo @algo-gradboos inicializa com uma constante ótima, que é simplesmente uma árvore de regressão com uma única folha. No caso do gradient boosting aplicado a árvores de regressão, cada árvore de regressão tem a forma aditiva -->
+
+<!-- $$
+h_m\left(x;\{b_j, R_j\}^J_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)
+$${#eq-treebost}
+em que $\{R_{jm}\}^{J_m}_{1}$ são as regiões disjuntas que, coletivamente, cobrem o espaço de todos os valores conjuntos das variáveis preditoras $x$. Essas regiões são representadas pelas folhas de sua correspondente árvore. Como as regiões são disjuntas, @eq-treebost se reduz simplesmente a $h_m\left(x\right) = b_{jm}\text{ para } x \in  R_{jm}$. Por mínimos quadrados, $b_{jm}$ é simplesmente a média dos pseudo-resíduos $\tilde{r}_{im}$,
 
 $$
 \hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} \tilde{y}_i
 $$
-que dão a direção de diminuição da função perda $L$ pela expressão do gradiente da linha 2(a). Assim, cada árvore de regressão é ajustada aos $\tilde{y}_{i}$ de forma a minimizar o erro das árvores anteriores. $N_{jm}$ denota a quantidade de pontos na região $R_{jm}$. Por fim, a atualização da árvore de regressão é expressa da seguinte forma
+que dão a direção de diminuição da função perda $L$ pela expressão do gradiente da linha 2(a). Assim, cada árvore de regressão é ajustada aos $\tilde{y}_{i}$ de forma a minimizar o erro das árvores anteriores. $N_{jm}$ denota a quantidade de pontos na região $R_{jm}$. Por fim, a atualização da árvore de regressão é expressa da seguinte forma -->
 
 $$
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)
 $$
-em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função de perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O \lambda, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
+em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função de perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $\lambda$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
 
 ### Diferentes implementações de Gradient Boosting
 
