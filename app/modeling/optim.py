@@ -19,13 +19,6 @@ for train_index, test_index in split.split(df, df.valor_cut):
 train_df = train_df.drop(columns=['valor_cut', 'endereco', 'bairro', 'qnt_beneficio', 'iptu', 'condominio']).reset_index(drop=True)
 test_df = test_df.drop(columns=['valor_cut', 'endereco', 'bairro', 'qnt_beneficio', 'iptu', 'condominio']).reset_index(drop=True)
 
-
-def save_study_and_model(study, trial, model_name):
-    if (trial.number == study.best_trial.number) and (study._n_trials == study.study_id):
-        study_path = f'optuna_study_{model_name}.pkl'
-        optuna.study.save_study(study, study_path)
-
-
 def objective(trial, model_name):
 
     match model_name:
