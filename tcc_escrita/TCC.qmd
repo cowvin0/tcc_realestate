@@ -718,7 +718,7 @@ em que a segunda expressão do produto mostra que para maximizar o Expected Impr
 
 \vspace{12pt}
 
-\ \ \ A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas, enquanto as demais com valores ausentes foram tratadas por meio de imputação utilizando o algoritmo k-Nearest Neighbors.
+\ \ \ A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas, enquanto as demais com valores ausentes foram tratadas por meio de imputação.
 
 
 ```{python}
@@ -748,7 +748,76 @@ sns.move_legend(obj=g_missing, loc="upper center",
 g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
 ```
 
-\ \ \ lkaj sdlkfjalsjflasjf
+\vspace{12pt}
+
+\ \ \ Foi realizada a análise das distribuições das variáveis numéricas da base de dados.
+
+
+```{python}
+fig, axes = plt.subplots(2, 3, figsize=(20, 8))
+
+dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
+                      'Valor de aluguel', 'Vaga', 'Quarto',
+                      'Banheiro', 'Tipo']]\
+                      .set_index('Tipo')\
+                      .stack()\
+                      .reset_index()\
+                      .rename(
+                        columns={
+                          'level_1': 'Variável',
+                           0: 'Valor'
+                          }
+                      )
+
+sns.violinplot(
+  data=train_df,
+  x='Vaga',
+  hue='Tipo',
+  ax=axes[0][0]
+).legend_.remove()
+
+sns.violinplot(
+  data=train_df,
+  x='Banheiro',
+  hue='Tipo',
+  ax=axes[0][1]
+).legend_.remove()
+
+sns.violinplot(
+  data=train_df,
+  x='Quarto',
+  hue='Tipo',
+  ax=axes[0][2]
+).legend_.remove()
+
+sns.violinplot(
+  data=train_df,
+  x='Área',
+  hue='Tipo',
+  ax=axes[1][0]
+).legend_.remove()
+
+sns.violinplot(
+  data=train_df,
+  x='Valor de aluguel',
+  hue='Tipo',
+  ax=axes[1][1]
+).legend_.remove()
+
+sns.violinplot(
+  data=train_df,
+  x='Área de aluguel',
+  hue='Tipo',
+  ax=axes[1][2]
+).legend_.remove()
+```
+
+
+```{python}
+#| layout-nrow: 1
+
+```
+
 
 # Conclusão
 
