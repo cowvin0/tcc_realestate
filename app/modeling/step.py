@@ -1,6 +1,10 @@
 from sklearn.impute import KNNImputer
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder, FunctionTransformer, SplineTransformer, OrdinalEncoder, PowerTransformer
+from sklearn.preprocessing import (
+    StandardScaler, OneHotEncoder,
+    FunctionTransformer, SplineTransformer,
+    OrdinalEncoder, PowerTransformer
+    )
 from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 import numpy as np
@@ -8,19 +12,16 @@ import numpy as np
 cols_imputer = ['latitude', 'longitude', 'area', 'quarto', 'vaga', 'banheiro',
                 'piscina', 'elevador', 'salao_de_festa', 'academia',
                 'quadra_de_esporte', 'varanda_gourmet', 'playground',
-                'espaco_gourmet', 'area_servico', 'sauna', 'spa', 'valor_aluguel',
-                'qnt_beneficio', 'area_aluguel'
+                'espaco_gourmet', 'area_servico', 'sauna', 'spa',
+                'valor_aluguel', 'area_aluguel'
                 ]
 
-transformar_features = ['area', 'vaga', 'banheiro',
-                        'area_quarto_banheiro', 'quarto', 'total_comodo']
+transformar_features = ['area', 'vaga', 'banheiro',# 'area_quarto_banheiro',
+                        'quarto', 'total_comodo']
 
 numerical = ['area', 'quarto', 'vaga', 'total_comodo',
-             'banheiro', 'area_quarto_banheiro', 'latitude', 'longitude']
-
-#
-
-# KNN Imputer
+             'banheiro', #'area_quarto_banheiro',
+             'latitude', 'longitude']
 
 class Imputer(BaseEstimator, TransformerMixin):
     """Imputer valores ausentes com KNNImputer"""
@@ -36,8 +37,10 @@ class Imputer(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         X_copy = X.copy()
-        X_copy[cols_imputer] = pd.DataFrame(self.imputer.transform(X_copy),
-                                         columns=cols_imputer)
+        X_copy[cols_imputer] = pd.DataFrame(
+            self.imputer.transform(X_copy),
+            columns=cols_imputer
+            )
 
         return X_copy
 
@@ -78,7 +81,7 @@ class BedAreaBedToi(BaseEstimator, TransformerMixin):
         X_copy = X_copy.assign(
             vertical_horizontal = X_copy["tipo"].apply(self.vert_hori),
             total_comodo = X_copy["tipo"].apply(self.detect_type) + X_copy[["quarto", "banheiro"]].sum(axis=1),
-            area_quarto_banheiro = X["quarto"] * X["banheiro"] * X["area"],
+            # area_quarto_banheiro = X["quarto"] * X["banheiro"] * X["area"],
             tamanho_imovel = X_copy["area"].apply(self.house)
                               )
         return X_copy
@@ -107,7 +110,6 @@ class OrdEncoder(BaseEstimator, TransformerMixin):
 # One-Hot Encoding
 
 class OneEncoder(BaseEstimator, TransformerMixin):
-    """Utilizando One-Hot Encoding nas variáveis categóricas"""
     def __init__(self):
         self.encoder = ColumnTransformer(
         transformers=[
@@ -131,7 +133,6 @@ class OneEncoder(BaseEstimator, TransformerMixin):
                 columns=self.encoder.get_feature_names_out()
                 )
         X_copy = pd.concat([X_copy, encoded_features_df], axis=1)
-        #X_copy[self.encoder.get_feature_names_out()] = encoded_features_df
 
         return X_copy.drop(['tipo'], axis=1)
 
@@ -188,13 +189,12 @@ class LogTransform(BaseEstimator, TransformerMixin):
 # Transformação Yeo-Johnson
 
 class YeoTransform(BaseEstimator, TransformerMixin):
-    """Performa transformação Yeo-Johnson"""
     def __init__(self):
         self.yeo_transform = ColumnTransformer(
             transformers=[('yeo-johnson',
                            PowerTransformer(),
                            transformar_features)]
-        )
+            )
 
     def fit(self, X, y=None):
         self.yeo_transform.fit(X)
@@ -211,7 +211,6 @@ class YeoTransform(BaseEstimator, TransformerMixin):
 # Standard Scale
 
 class Scale(BaseEstimator, TransformerMixin):
-    """Normaliza as variáveis numéricas"""
     def __init__(self):
         self.scale = ColumnTransformer(
         transformers=[('scale', StandardScaler(), numerical)])
