@@ -55,10 +55,34 @@ include-in-header:
       \newcommand{\elandscape}{\end{landscape}}
 ---
 
-```{r}
-library(tidyverse)
-library(tidymodels)
-set.seed(42)
+```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+
+rename = {
+  'Area': 'Área',
+  'Area servico': 'Área de serviço',
+  'Condominio': 'Condomínio',
+  'Espaco gourmet': 'Espaço gourmet',
+  'Iptu': 'IPTU',
+  'Salao de festa': 'Salão de festa',
+  'Area aluguel': 'Área de aluguel',
+  'Valor aluguel': 'Valor de aluguel'
+}
+
+train_df = pd.read_csv('../data/cleaned/train.csv').drop(columns=['qnt_beneficio'])
+test_df = pd.read_csv('../data/cleaned/test.csv').drop(columns=['qnt_beneficio'])
+
+train_df.columns = train_df.columns\
+  .str.capitalize().str.replace('_', ' ')
+test_df.columns = test_df.columns\
+  .str.capitalize().str.replace('_', ' ')
+
+train_df = train_df.rename(columns=rename)
+test_df = test_df.rename(columns=rename)
 ```
 
 \renewcommand{\listalgorithmname}{Lista de algoritmos}
@@ -520,8 +544,6 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 #### Extreme Gradient Boosting
 
-#### Categorial Gradient Boosting
-
 
 
 \vspace{12pt}
@@ -572,7 +594,7 @@ No entanto, devido a observações feitas durante o estudo, nem todas essas vari
 
 ## Descritiva dos dados
 
-<!-- \ \ \ A análise exploratória de dados marca uma das primeiras etapas de qualquer estudo que utiliza a estatística como uma de suas principais ferramentas, pois permite encontrar padrões de comportamento no dados, descobrir relações entre as variáveis estudadas. Dessa forma, a primeira etapa desse estudo, após a coleta e organização dos dados obtidos do Zap Imóveis, foi fazer uma descritiva dos dados. Essa etapa permitiu encontrar padrões nos diferentes tipos de imóveis bem como o seu tipo pode influenciar na características do imóvel, o que, por consequência, pode afetar o seu valor. Assim, para identificar esses diferentes comportamentos, foram criados gráficos e tabelas a fim de caracterizar as relações das variáveis independentes com a dependente. -->
+\ \ \ A análise exploratória de dados marca uma das primeiras etapas de qualquer estudo que utiliza a estatística como uma de suas principais ferramentas, pois permite encontrar padrões de comportamento no dados, descobrir relações entre as variáveis estudadas. Dessa forma, a primeira etapa desse estudo, após a coleta e organização dos dados obtidos do Zap Imóveis, foi fazer uma descritiva dos dados. Essa etapa permitiu encontrar padrões nos diferentes tipos de imóveis bem como o seu tipo pode influenciar na características do imóvel, o que, por consequência, pode afetar o seu valor. Assim, para identificar esses diferentes comportamentos, foram criados gráficos e tabelas a fim de caracterizar as relações das variáveis independentes com a dependente.
 
 <!-- ## Aprendizado Supervisionado e não supervisionado
 
@@ -588,13 +610,7 @@ No entanto, devido a observações feitas durante o estudo, nem todas essas vari
 
 ## Reamostragem para avaliação de performance
 
-\ \ \
-
-\ \ \
-
 ## Métricas de avaliação
-
-\ \ \
 
 ## Tunagem de hiperparâmetros
 
@@ -612,9 +628,9 @@ em que $l$ são todas as possíveis configurações de hiperparâmetros. Além d
 
 \vspace{12pt}
 
-<!-- A busca pela melhor combinação de hiperparâmetros $\lambda$ é feito de forma iterativa, utilizando métodos de reamostragem para dividir o conjunto de dados entre teste e treinamento. Portanto, para validar e encontrar os hiperparâmetos, o algoritmo de aprendizagem é validado através da divisão do conjunto de dados. Assim, tem-se a seguinte estratégia de separação do conjunto de dados: -->
+A busca pela melhor combinação de hiperparâmetros $\lambda$ é feito de forma iterativa, utilizando métodos de reamostragem para dividir o conjunto de dados entre teste e treinamento. Portanto, para validar e encontrar os hiperparâmetos, o algoritmo de aprendizagem é validado através da divisão do conjunto de dados. Assim, tem-se a seguinte estratégia de separação do conjunto de dados:
 
-<!-- $$
+$$
 \mathcal{J} = \left(\left(J_{treino, 1},\ J_{teste, 1}\right), ..., \left(J_{treino, B},\ J_{test, B}\right)\right)
 $${#eq-teste}
 onde $J_{treino, i}, \ J_{teste, i}$ representam os vetores de índices $\left(i = 1, \, 2, ..., \ B\right)$ para os conjuntos de treino e teste, respectivamente, e $B$ representa o número total de divisões.
@@ -636,25 +652,25 @@ onde $\lambda^*$ denota a melhor combinação possível de hiperparâmetros, $c\
 flowchart LR
   A["$$\lambda$$"] --> B(Round edge)
   B --> C{Decision}
-``` -->
+```
 
 \vspace{12pt}
 
 ### Otimização Bayesiana
 
-<!-- \ \ \ Existem diversas técnicas para otimização de hiperparâmetros utilizadas em aprendizagem de máquina. Uma das técnicas mais comuns é o GridSearch. @bischl2023hyperparameter definem GridSearch como um processo que divide o intervalo contínuo de valores possíveis de cada hiperparâmetro em um conjunto de valores específicos e avalia exaustivamente o algoritmo para todas as combinações possíveis. No entanto, como todas as combinações possíveis aumentam exponencialmente com a quantidade necessária para avaliação do algoritmo, o GridSearh tem um custo computacional bastante elevado. Assim, existem algoritmos de otimização mais sofisticados que entregam melhores performances, como a otimização bayesiana, que foi utilizada neste trabalho. -->
+\ \ \ Existem diversas técnicas para otimização de hiperparâmetros utilizadas em aprendizagem de máquina. Uma das técnicas mais comuns é o GridSearch. @bischl2023hyperparameter definem GridSearch como um processo que divide o intervalo contínuo de valores possíveis de cada hiperparâmetro em um conjunto de valores específicos e avalia exaustivamente o algoritmo para todas as combinações possíveis. No entanto, como todas as combinações possíveis aumentam exponencialmente com a quantidade necessária para avaliação do algoritmo, o GridSearh tem um custo computacional bastante elevado. Assim, existem algoritmos de otimização mais sofisticados que entregam melhores performances, como a otimização bayesiana, que foi utilizada neste trabalho.
 
 \vspace{12pt}
 
-<!-- \ \ \ A otimização bayesiana não se refere a um tipo específico de algoritmo de otimização, mas sim a uma filosofia de otimização baseada em inferência bayesiana, a qual contém uma extensa família de algoritmos de otimização [@garnett2023bayesian]. Não obstante, a otimização bayesiana tem obtido benchmarks melhores que outros algoritmos em inúmeros problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
+\ \ \ A otimização bayesiana não se refere a um tipo específico de algoritmo de otimização, mas sim a uma filosofia de otimização baseada em inferência bayesiana, a qual contém uma extensa família de algoritmos de otimização [@garnett2023bayesian]. Não obstante, a otimização bayesiana tem obtido benchmarks melhores que outros algoritmos em inúmeros problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
 
 \vspace{12pt}
 
-\ \ \ Diferente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana determina as futuras tentativas de avaliação com base em resultados obtidos previamente [@yang2020hyperparameter]. Para a definição dos pontos futuros, é utilizada uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Assim, após o ajuste da função probabilística, tem-se como resultado para cada $\lambda$ uma estimativa da performance $\hat c \left(\lambda \right)$ e da predição da incerteza $\hat \sigma \left(\lambda \right)$, além de obter também a distribuição preditiva da função probabilística. Com a distribuição obtida, uma função de aquisição determina o trade-off entre exploitation e exploration^[exploitation pode ser entendido como procurar próximo a boas observações e ]. Dessa forma, os algoritmos de otimização bayesiana são definidos segundo a lei $\lambda \to c\left(\lambda \right)$ e  procuram um equilíbrio entre o processo de exploitation-exploration para detectar as regiões ótimas mais prováveis e não perder melhores configurações em áreas ainda não exploradas. -->
+\ \ \ Diferente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana determina as futuras tentativas de avaliação com base em resultados obtidos previamente [@yang2020hyperparameter]. Para a definição dos pontos futuros, é utilizada uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Assim, após o ajuste da função probabilística, tem-se como resultado para cada $\lambda$ uma estimativa da performance $\hat c \left(\lambda \right)$ e da predição da incerteza $\hat \sigma \left(\lambda \right)$, além de obter também a distribuição preditiva da função probabilística. Com a distribuição obtida, uma função de aquisição determina o trade-off entre exploitation e exploration^[exploitation pode ser entendido como procurar próximo a boas observações e ]. Dessa forma, os algoritmos de otimização bayesiana são definidos segundo a lei $\lambda \to c\left(\lambda \right)$ e  procuram um equilíbrio entre o processo de exploitation-exploration para detectar as regiões ótimas mais prováveis e não perder melhores configurações em áreas ainda não exploradas.
 
 ### Tree-Structured Parzen Estimator
 
-<!-- \ \ \ Existem diversas funções probabilísticas para uso na otimização bayesiana, algumas delas é o Processo Gaussiano, Random Forest ou Tree-Structured Parzen Estimator (TPE). Nesse trabalho, foi utilizado o Tree-Structured Parzen Estimator, utilizando a biblioteca Optuna [@optuna_2019] para sua aplicação.
+\ \ \ Existem diversas funções probabilísticas para uso na otimização bayesiana, algumas delas é o Processo Gaussiano, Random Forest ou Tree-Structured Parzen Estimator (TPE). Nesse trabalho, foi utilizado o Tree-Structured Parzen Estimator, utilizando a biblioteca Optuna [@optuna_2019] para sua aplicação.
 
 \vspace{12pt}
 
@@ -689,16 +705,50 @@ Assim, utilizando o Teorema de Bayes e fazendo as substituições na integral da
 $$
 EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right) \frac{p\left(x | y\right)p\left(y\right)}{p\left(x\right)}dy = \left(\gamma y^*  - \int_{-\infty}^{y^*} p\left(y\right)dy\right) \left(\gamma + \left(1 - \gamma\right)\frac{g\left(x\right)}{l\left(x\right)}\right) ^{-1}
 $$
-em que a segunda expressão do produto mostra que para maximizar o Expected Improvement é necessário pontos de $x$ com maior probabilidade em $l\left(x\right)$ e com baixa probabilidade em $g\left(x\right)$. Não obstante, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo]. -->
+em que a segunda expressão do produto mostra que para maximizar o Expected Improvement é necessário pontos de $x$ com maior probabilidade em $l\left(x\right)$ e com baixa probabilidade em $g\left(x\right)$. Não obstante, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
 
 
 \newpage
 
-# Capítulo 4
+# Resultados
 
-## Resultados
+## Análise exploratória de dados
 
-\newpage
+\ \ \ A análise exploratória dos dados foi realizada após a divisão entre os conjuntos de treinamento e teste. Essa abordagem foi adotada para evitar o sobreajuste do modelo e garantir que o algoritmo não aprenda com informações indisponíveis no conjunto de teste. Assim, a descritiva dos dados foi realizada utilizando o conjunto de treinamento.
+
+\vspace{12pt}
+
+\ \ \ A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas, enquanto as demais com valores ausentes foram tratadas por meio de imputação utilizando o algoritmo k-Nearest Neighbors.
+
+
+```{python}
+#| label: fig-miss
+#| fig-cap: "Quantidade de valores ausentes por variáveis"
+
+g_missing = sns.displot(
+    data=train_df.isnull() \
+        .melt(value_name="Valores ausentes") \
+        .replace([False, True], ["Não é ausente", "Ausente"]) \
+        .groupby(["variable", "Valores ausentes"]).size() \
+        .reset_index(name="count") \
+        .assign(
+            proportion=lambda x: x.groupby("variable")["count"].transform(lambda y: y / y.sum())
+        ),
+    y="variable",
+    hue="Valores ausentes",
+    weights="proportion",
+    multiple="fill",
+    height=8,
+    aspect=1.1,
+    palette={"Não é ausente": "#FAD02C", "Ausente": "black"}
+    )
+
+sns.move_legend(obj=g_missing, loc="upper center",
+                bbox_to_anchor=(.5, -.0001), ncol=2, title="")
+g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
+```
+
+\ \ \ lkaj sdlkfjalsjflasjf
 
 # Conclusão
 
