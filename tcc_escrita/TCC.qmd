@@ -740,7 +740,8 @@ g_missing = sns.displot(
     multiple="fill",
     height=8,
     aspect=1.1,
-    palette={"Não é ausente": "#FAD02C", "Ausente": "black"}
+    palette='crest'
+    #palette={"Não é ausente": "#FAD02C", "Ausente": "black"}
     )
 
 sns.move_legend(obj=g_missing, loc="upper center",
@@ -779,42 +780,48 @@ sns.violinplot(
   data=train_df,
   x='Vaga',
   hue='Tipo',
-  ax=axes[0][0]
+  ax=axes[0][0],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Banheiro',
   hue='Tipo',
-  ax=axes[0][1]
+  ax=axes[0][1],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Quarto',
   hue='Tipo',
-  ax=axes[0][2]
+  ax=axes[0][2],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Área',
   hue='Tipo',
-  ax=axes[1][0]
+  ax=axes[1][0],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Valor de aluguel',
   hue='Tipo',
-  ax=axes[1][1]
+  ax=axes[1][1],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Área de aluguel',
   hue='Tipo',
-  ax=axes[1][2]
+  ax=axes[1][2],
+  palette='crest'
 ).legend_.remove()
 
 l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
@@ -827,6 +834,43 @@ l.get_texts()[5].set_text('Terrenos e lotes comerciais')
 l.get_texts()[6].set_text('Casas comerciais')
 plt.show()
 ```
+
+```{python}
+fig, axes = plt.subplots(1, 2, figsize=(20, 10))
+
+sns.kdeplot(
+  data=train_df,
+  x='Valor',
+  ax=axes[0],
+  fill=True,
+  alpha=.5,
+  palette='crest'
+  )
+
+dens_plot = sns.kdeplot(
+  data=train_df.assign(Valor=lambda x: np.log1p(x.Valor)),
+  x='Valor',
+  ax=axes[1],
+  fill=True,
+  alpha=.5,
+  palette='crest'
+  )
+
+axes[0].set_ylabel(ylabel='Densidade')
+axes[1].set_ylabel(ylabel='Densidade')
+plt.show()
+```
+
+
+```{python}
+mat_plot = train_df[['Valor', 'Área', 'Área de aluguel',
+                      'Valor de aluguel', 'Vaga', 'Quarto',
+                      'Banheiro', 'Latitude', 'Longitude']].corr(method='pearson')
+
+sns.heatmap(mat_plot, annot=True, cmap='crest')
+plt.show()
+```
+
 
 # Conclusão
 
