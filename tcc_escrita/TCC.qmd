@@ -750,11 +750,17 @@ g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
 
 \vspace{12pt}
 
-\ \ \ Foi realizada a análise das distribuições das variáveis numéricas da base de dados.
+\ \ \ Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na previsão de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
 
+\vspace{12pt}
+
+\ \ \ A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
 
 ```{python}
-fig, axes = plt.subplots(2, 3, figsize=(20, 8))
+#| label: fig-violin
+#| fig-cap: Distribuição das variáveis numéricas.
+
+fig, axes = plt.subplots(2, 3, figsize=(20, 10))
 
 dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -810,14 +816,17 @@ sns.violinplot(
   hue='Tipo',
   ax=axes[1][2]
 ).legend_.remove()
+
+l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
+l.get_texts()[0].set_text('Apartamentos')
+l.get_texts()[1].set_text('Casas de condomínio')
+l.get_texts()[2].set_text('Casas')
+l.get_texts()[3].set_text('Flats')
+l.get_texts()[4].set_text('Terrenos, lotes e condomínios')
+l.get_texts()[5].set_text('Terrenos e lotes comerciais')
+l.get_texts()[6].set_text('Casas comerciais')
+plt.show()
 ```
-
-
-```{python}
-#| layout-nrow: 1
-
-```
-
 
 # Conclusão
 
