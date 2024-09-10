@@ -3,21 +3,18 @@ import numpy as np
 import optuna
 from lightgbm import LGBMRegressor
 from xgboost import XGBRegressor
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, StackingRegressor
-from sklearn.model_selection import StratifiedShuffleSplit, cross_val_score, KFold
-df = pd.read_csv("data/cleaned/jp_limpo.csv")
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.model_selection import cross_val_score, KFold
 
-df['valor_cut'] = pd.cut(df['valor'],
-    bins=[0.,2e5, 4e5, 6e5, 8e5, np.inf],
-    labels=[1, 2, 3, 4, 5])
+drop_cols = [
+    'endereco', 'bairro',
+    'qnt_beneficio', 'iptu',
+    'condominio'
+    ]
 
-split = StratifiedShuffleSplit(n_splits=20, test_size=0.2, random_state=42)
-for train_index, test_index in split.split(df, df.valor_cut):
-    train_df = df.loc[train_index]
-    test_df = df.loc[test_index]
+train_df = pd.read_csv('data/cleaned/train.csv').drop(columns=drop_cols)
+test_df = pd.read_csv('data/cleaned/test.csv').drop(columns=drop_cols)
 
-train_df = train_df.drop(columns=['valor_cut', 'endereco', 'bairro', 'qnt_beneficio', 'iptu', 'condominio']).reset_index(drop=True)
-test_df = test_df.drop(columns=['valor_cut', 'endereco', 'bairro', 'qnt_beneficio', 'iptu', 'condominio']).reset_index(drop=True)
 
 def objective(trial, model_name):
 
@@ -65,8 +62,15 @@ def objective(trial, model_name):
         case 'lgbm':
             params = dict(
                 learning_rate=trial.suggest_float('learning_rate', low=1e-4, low=0.01),
-                n_estimators=trial.suggest_int('n_estimators', low=200, high=1200),
+                random_state=42,
+                n_estimators=trial.suggest_int('n_estimators', low=200, high=2500),
+                num_leaves=trial.suggest_int('num_leaves', low=100, high=700),
                 max_depth=trial.suggest_int('max_depth', low=10, high=100),
+            )
+
+            model = LGBMRegressor(
+                **params,
+                n_jobs=3
             )
 
     cv_scores = np.exp(np.sqrt(-cross_val_score(

@@ -99,12 +99,7 @@ test_df = test_df.rename(columns=rename)
 
 # Resumo
 
-
-# Capítulo 1
-
--- Fazer antes da conclusão --
-
-## Introdução
+# Introdução
 
 ## Objetivos
 
@@ -116,11 +111,7 @@ test_df = test_df.rename(columns=rename)
 
 \newpage
 
-# Capítulo 2
-
---- Fazer depois dos modelos baseados em árvore ---
-
-## Recursos Computacionais
+# Recursos Computacionais
 
 ### Linguagem de Programação R
 
@@ -896,6 +887,13 @@ plt.xticks([])
 plt.show()
 ```
 
+**ADICIONAR NO FIM UM GRÁFICO DE ESPACIALIZAÇÃO DOS DADOS (INCLUIR VARIAÇÃO DA COR PELO PREÇO DO IMÓVEL)**
+
+## Construção dos modelos
+
+### Random Forest
+
+### Gradient Boosting
 
 # Conclusão
 
