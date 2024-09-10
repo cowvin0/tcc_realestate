@@ -750,10 +750,12 @@ g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
 
 \vspace{12pt}
 
-\ \ \ Foi realizada a análise das distribuições das variáveis numéricas da base de dados.
-
+\ \ \ Foi realizada também a análise das distribuições das variáveis numéricas da base de dados, como pode ser visto na @fig-dists. Nessa figura, a distriuição das variáveis forma analisadas por tipo de imóvel. Foi possível observar que a maioria das distriuições apresentam assimetria positiva. As distribuções apresentam caudas longas à direita, indicando a presenta de outliers, principalmente quando são observados os terrenos.
 
 ```{python}
+#| label: fig-dists
+#| fig-cap: "Distribuição das variáveis numéricas."
+
 fig, axes = plt.subplots(2, 3, figsize=(20, 8))
 
 dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
@@ -810,13 +812,10 @@ sns.violinplot(
   hue='Tipo',
   ax=axes[1][2]
 ).legend_.remove()
+
+plt.legend(loc='upper center', ncol=7, bbox_to_anchor=(.005, -.00001))
 ```
 
-
-```{python}
-#| layout-nrow: 1
-
-```
 
 
 # Conclusão
