@@ -99,12 +99,7 @@ test_df = test_df.rename(columns=rename)
 
 # Resumo
 
-
-# Capítulo 1
-
--- Fazer antes da conclusão --
-
-## Introdução
+# Introdução
 
 ## Objetivos
 
@@ -116,11 +111,7 @@ test_df = test_df.rename(columns=rename)
 
 \newpage
 
-# Capítulo 2
-
---- Fazer depois dos modelos baseados em árvore ---
-
-## Recursos Computacionais
+# Recursos Computacionais
 
 ### Linguagem de Programação R
 
@@ -740,7 +731,8 @@ g_missing = sns.displot(
     multiple="fill",
     height=8,
     aspect=1.1,
-    palette={"Não é ausente": "#FAD02C", "Ausente": "black"}
+    palette='crest'
+    #palette={"Não é ausente": "#FAD02C", "Ausente": "black"}
     )
 
 sns.move_legend(obj=g_missing, loc="upper center",
@@ -750,6 +742,7 @@ g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
 
 \vspace{12pt}
 
+<<<<<<< HEAD
 \ \ \ Foi realizada também a análise das distribuições das variáveis numéricas da base de dados, como pode ser visto na @fig-dists. Nessa figura, a distriuição das variáveis forma analisadas por tipo de imóvel. Foi possível observar que a maioria das distriuições apresentam assimetria positiva. As distribuções apresentam caudas longas à direita, indicando a presenta de outliers, principalmente quando são observados os terrenos.
 
 ```{python}
@@ -757,6 +750,19 @@ g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
 #| fig-cap: "Distribuição das variáveis numéricas."
 
 fig, axes = plt.subplots(2, 3, figsize=(20, 8))
+=======
+\ \ \ Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na previsão de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
+
+\vspace{12pt}
+
+\ \ \ A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
+
+```{python}
+#| label: fig-violin
+#| fig-cap: Distribuição das variáveis numéricas.
+
+fig, axes = plt.subplots(2, 3, figsize=(20, 10))
+>>>>>>> origin
 
 dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -775,48 +781,136 @@ sns.violinplot(
   data=train_df,
   x='Vaga',
   hue='Tipo',
-  ax=axes[0][0]
+  ax=axes[0][0],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Banheiro',
   hue='Tipo',
-  ax=axes[0][1]
+  ax=axes[0][1],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Quarto',
   hue='Tipo',
-  ax=axes[0][2]
+  ax=axes[0][2],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Área',
   hue='Tipo',
-  ax=axes[1][0]
+  ax=axes[1][0],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Valor de aluguel',
   hue='Tipo',
-  ax=axes[1][1]
+  ax=axes[1][1],
+  palette='crest'
 ).legend_.remove()
 
 sns.violinplot(
   data=train_df,
   x='Área de aluguel',
   hue='Tipo',
-  ax=axes[1][2]
+  ax=axes[1][2],
+  palette='crest'
 ).legend_.remove()
 
+<<<<<<< HEAD
 plt.legend(loc='upper center', ncol=7, bbox_to_anchor=(.005, -.00001))
+=======
+l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
+l.get_texts()[0].set_text('Apartamentos')
+l.get_texts()[1].set_text('Casas de condomínio')
+l.get_texts()[2].set_text('Casas')
+l.get_texts()[3].set_text('Flats')
+l.get_texts()[4].set_text('Terrenos, lotes e condomínios')
+l.get_texts()[5].set_text('Terrenos e lotes comerciais')
+l.get_texts()[6].set_text('Casas comerciais')
+plt.show()
+>>>>>>> origin
 ```
 
+\vspace{12pt}
 
+\ \ \ Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
+
+<<<<<<< HEAD
+=======
+```{python}
+#| label: fig-densitarg
+#| fig-cap: Comparação entre distribuição dos valores dos imóveis antes e depois da transformação logarítmica.
+
+fig, axes = plt.subplots(1, 2, figsize=(20, 10))
+
+sns.kdeplot(
+  data=train_df,
+  x='Valor',
+  ax=axes[0],
+  fill=True,
+  alpha=.5,
+  palette='crest'
+  )
+
+dens_plot = sns.kdeplot(
+  data=train_df.assign(Valor=lambda x: np.log1p(x.Valor)),
+  x='Valor',
+  ax=axes[1],
+  fill=True,
+  alpha=.5,
+  palette='crest'
+  )
+
+axes[0].set_ylabel(ylabel='Densidade')
+axes[1].set_ylabel(ylabel='Densidade')
+plt.show()
+```
+
+\vspace{12pt}
+
+\ \ \ A @fig-corplot apresenta a matriz de correlação entre as variáveis numéricas do conjunto de dados. As cores mais escuras indicam uma correlação mais forte entre as variáveis, enquanto as cores mais claras indicam o contrário. O valor do imóvel apresenta maior correlação com as variáveis de área do imóvel e número de vagas de estacionamento. Além disso, o valor do imóvel tem alta correlação com o valor médio do aluguel, número de quartos e banheiros, além de ser fortemente influenciado pela localização das propriedades. Algumas variáveis apresentam multicolinearidade entre si, mas os algoritmos utilizados selecionam aleatoriamente as variáveis para a modelagem, o que reduz o risco de selecionar variáveis redundantes.
+
+```{python}
+#| label: fig-corplot
+#| fig-cap: "Gráfico de correlação de Spearman das variáveis independentes."
+
+fig = plt.figure(figsize=(20, 10))
+
+mat_plot = train_df[['Valor', 'Área', 'Área de aluguel',
+                      'Valor de aluguel', 'Vaga', 'Quarto',
+                      'Banheiro', 'Latitude', 'Longitude']]\
+            .assign(Valor=lambda x: np.log1p(x.Valor))\
+            .corr(method='spearman')
+
+heatmap = sns.heatmap(
+  mat_plot,
+  cmap='crest',
+  annot=True,
+  annot_kws={'size': 17}
+  )
+plt.tick_params(axis='both', which='major', labelsize=17)
+heatmap.figure.axes[-1].tick_params(labelsize=16)
+plt.xticks([])
+plt.show()
+```
+
+**ADICIONAR NO FIM UM GRÁFICO DE ESPACIALIZAÇÃO DOS DADOS (INCLUIR VARIAÇÃO DA COR PELO PREÇO DO IMÓVEL)**
+
+## Construção dos modelos
+
+### Random Forest
+
+### Gradient Boosting
+>>>>>>> origin
 
 # Conclusão
 

@@ -16,12 +16,11 @@ cols_imputer = ['latitude', 'longitude', 'area', 'quarto', 'vaga', 'banheiro',
                 'valor_aluguel', 'area_aluguel'
                 ]
 
-transformar_features = ['area', 'vaga', 'banheiro',# 'area_quarto_banheiro',
-                        'quarto', 'total_comodo']
+transformar_features = ['area', 'vaga', 'total_comodo',
+                        'banheiro', 'quarto']
 
 numerical = ['area', 'quarto', 'vaga', 'total_comodo',
-             'banheiro', #'area_quarto_banheiro',
-             'latitude', 'longitude']
+             'banheiro', 'latitude', 'longitude']
 
 class Imputer(BaseEstimator, TransformerMixin):
     """Imputer valores ausentes com KNNImputer"""
@@ -43,8 +42,6 @@ class Imputer(BaseEstimator, TransformerMixin):
             )
 
         return X_copy
-
-# Feature Engineering
 
 class BedAreaBedToi(BaseEstimator, TransformerMixin):
     """Passo que adiciona as combinações total de quarto e
@@ -85,6 +82,7 @@ class BedAreaBedToi(BaseEstimator, TransformerMixin):
             tamanho_imovel = X_copy["area"].apply(self.house)
                               )
         return X_copy
+
 
 # Ordinal Encoder
 
@@ -134,7 +132,7 @@ class OneEncoder(BaseEstimator, TransformerMixin):
                 )
         X_copy = pd.concat([X_copy, encoded_features_df], axis=1)
 
-        return X_copy.drop(['tipo'], axis=1)
+        return X_copy.drop(['tipo', 'tamanho_imovel'], axis=1)
 
 # Interpolate coordinates
 
