@@ -541,63 +541,49 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 # Metodologia
 
-## Os dados e o procedimento adotado para sua obtenção
+## Obtenção dos dados
 
---- AINDA SERÁ MODIFICADO ---
-
-\ \ \ O Web scraping, também conhecido como extração de dados da web, é uma técnica utilizada para o processo de coleta de dados estruturados da web de maneira automatizada. É um processo que vem sendo constantemente utilizado por instituições públicas e privadas para a construção de produtos que utilizam algoritmos de aprendizagem de máquinas, observa ofertas e discontos, faz análise de mercado ou monitoração de marcas.
+\ \ \ Os dados foram obtidos por meio de web scraping, uma técnica automatizada de extração de informações de páginas web. Para isso, foram utilizadas as linguagens de programação R e Python. No R, os pacotes xml2 [@xml2] e rvest [@rvest] foram utilizados para extrair dados de páginas estáticas de forma estruturada. No Python, as bibliotecas Scrapy [@kouzis2016learning] e Playwright, desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com páginas dinâmicas, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A ferramenta utilizada para a rotação das informações do usuário que acessa o site é a API criada pela empresa ScrapeOps.
 
 \vspace{12pt}
 
-Neste projeto, para fins de estudo e análise do mercado imobiliário, os dados foram coletados por meio de extração de dados do site do Zap Imóveis. O Zap Imóveis é um site do Grupo OLX que reúne ofertas do mercado imobiliário e que funciona como uma plataforma dinâmica para facilitar a conexão entre quem deseja alugar, comprar ou vender um imóvel; podendo servir também para corretores ou outros profissionais do setor de imóveis. Este projeto foi possível graças as informações que foram coletadas do site do Zap Imóveis em dois diferentes períodos do ano de 2023. O primeiro deles, as informações foram coletadas utilizando variados pacotes para raspagem de dados e proxies rotativas da linguagem de programação R, a fim de evitar ser bloqueado pelos mecanismos de segurança do site. Na segunda etapa, os dados foram coletados empregando a linguagem de programação Python com as bibliotecas Scrapy e Playwrite, que serve para web crawling e web scraping, e o Playwrite que serve para testes em aplicativos da web, mas que neste caso foi utilizado para manejar páginas dinâmicas.
+\ \ \ Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que faziam sentido para a modelagem, priorizando aquelas com menor probabilidade de gerar problemas durante o tratamento dos dados. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas de latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços, utilizando o pacote tidygeocoder [@geocoder] da linguagem R. Dessa forma, tem-se as seguintes variáveis:
+
+- Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
+
+- Valor médio do aluguel no bairro: valor médio do aluguel dos imóveis no bairro, em $m^3$;
+
+- Área: área total do imóvel, medida em $m^2$;
+
+- Área média do aluguel no bairro: área média dos imóveis alugados no bairro, em $m^2$;
+
+- Condomínio: valor mensal pago pelo condomínio do imóvel;
+
+- IPTU: imposto cobrado sobre imóveis urbanos;
+
+- Banheiros: quantidade de banheiros disponíveis na propriedade;
+
+- Vagas de estacionamento: número total de vagas de estacionamento disponíveis;
+
+- Quartos: quantidade de quartos no imóvel;
+
+- Latitude: posição horizontal, medida em frações decimais de graus;
+
+- Longitude: posição vertical, também medida em frações decimais de graus, assim como a latitude;
+
+- Tipo do imóvel: sete categorias foram consideradas: apartamentos, casas, casas comerciais, casas de condomínio, casas de vila, coberturas, e lotes comerciais e de condomínio;
+
+- Endereço: nome do endereço onde o imóvel está localizado;
+
+- Variáveis dicotômicas: indicam a presença (1) ou ausência (0) de determinadas características no imóvel, como área de serviço, academia, elevador, espaço gourmet, piscina, playground, portaria 24 horas, quadra de esportes, salão de festas, sauna, spa e varanda gourmet.
 
 \vspace{12pt}
 
-Desta forma, com a ideia de modelar o valor do imóvel e analisar o mercado imobiliário, foram coletados aqueles variáveis que estavam disponíveis no site do Zap Imóveis e que poderiam de alguma forma ser significativas ao tentar explicar o valor do imóvel durante a sua modelagem. Assim, no total foram coletatas 23 variáveis, das quais 8 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas essas variáveis foram coletadas diretamente do Zap Imóveis, a latitude e longitude foram obtidas pela geocodificação do endereço utilizando o pacote tidygeocoder da linguagem de programação R. Portanto, temos as seguites variáveis:
+\ \ \ No entanto, com base nas observações realizadas durante o estudo, nem todas as variáveis coletadas foram utilizadas na modelagem do valor dos imóveis. Algumas foram excluídas devido a uma quantidade excessiva de valores ausentes, enquanto outras se mostraram pouco significativas para explicar o valor do imóvel. Após o processo de coleta e limpeza dos dados, o banco de dados final conta com 31.782 observações.
 
-- Valor do imóvel: esta é a variável dependente, aquela que será modelada e será o principal objeto de estudo deste trabalho;
+## Análise exploratória de dados
 
-- Área: área do imóvel em $m^2$;
-
-- Condomínio: valor pago pelo condomínio;
-
-- IPTU: imposto cobrado de quem tem um imóvel urbano;
-
-- Banheiro: quantidade de banheiros presentes na propriedade;
-
-- Vaga de estacionamento: quantidade total de vagas de estacionamento;
-
-- Quarto: quantidade de quartos no imóvel;
-
-- Latitude: posição horizontal medida em frações decimais de graus;
-
-- Longitude: posição vertical que, assim como a latitude, é medida em frações decimais de graus;
-
-- Tipo do imóvel: foram obtidos 7 tipos de imóveis, apartamentos, casas, casas comerciais, casas de condomínio, casas de vila, coberturas, lotes comerciais e de condomínio;
-
-- Endereço: nome do endereço do imóvel;
-
-- Variáveis dicotômicas que indicam se o imóvel tem ou não aquela característica (representado como 1 ou 0, respectivamente): área de serviço, academia, elevador, espaço gourmet, piscina, playground, portaria 24 horas, quadra de esporte, salão de festa, sauna, spa e varanda gourmet.
-
-\vspace{12pt}
-
-No entanto, devido a observações feitas durante o estudo, nem todas essas variáveis foram utilizadas para a modelagem do valor dos imóveis, seja por conter muitos valores valores ausentes ou por não ter se mostrado significante para o que se desejava explicar. Ainda, como a coleta destes dados foram feitas em dois momentos distintos, temos dois bancos de dados, um com 29712 observações e o outro com 14956. Por fim, essas duas bases de dados foram unidas e, para não correr o risco de conter imóveis repetidos, aqueles que tinham o mesmo número de identificação foram removidos.
-
-## Descritiva dos dados
-
-\ \ \ A análise exploratória de dados marca uma das primeiras etapas de qualquer estudo que utiliza a estatística como uma de suas principais ferramentas, pois permite encontrar padrões de comportamento no dados, descobrir relações entre as variáveis estudadas. Dessa forma, a primeira etapa desse estudo, após a coleta e organização dos dados obtidos do Zap Imóveis, foi fazer uma descritiva dos dados. Essa etapa permitiu encontrar padrões nos diferentes tipos de imóveis bem como o seu tipo pode influenciar na características do imóvel, o que, por consequência, pode afetar o seu valor. Assim, para identificar esses diferentes comportamentos, foram criados gráficos e tabelas a fim de caracterizar as relações das variáveis independentes com a dependente.
-
-<!-- ## Aprendizado Supervisionado e não supervisionado
-
-\ \ \ Na aprendizagem de máquinas, uma das estapas mais importantes é saber qual técnica será utilizada para resolver um problema que se enquadra em diferentes formas de aprendizado. Para isso, existem mais de uma forma em que um algoritmo consegue utilizar os dados e explicar o que está sendo modelado a partir deles. No entanto, a maioria dos problemas de aprendizado de máquinas recais em dois casos mais conhecidos: aprendizado supervisionado e não supervisionado.
-
-### Aprendizado supervisionado
-
-\ \ \ Suponha uma regressão logística. Sabemos que na regressão logistíca temos um modelo com a seguinte forma $Y_i = f\left(X\right) + \epsilon$, em que $Y_i$ assume 0 ou 1 para classificar o que está sendo modelado e representa a variável dependente, $f\left(X\right)$ representa as variáveis independentes que serão utilizadas para a modelagem e $\epsilon$ representa o erro da regressão. Dessa forma, podemos considerar o caso em que a regressão logística tenta classificar pacientes que podem ou não estar com diabetes. Para isso, utilizariamos variáveis significativas para a classificação do estado de cada paciente. Esse exemplo é conhecido como aprendizagem supervisionada. Na aprendizagem supervisionada, busca-se aprender $Y_i$ atráves de um exemplo. Nesse caso, as variáveis dependentes podem ser interpretadas como o exemplo, as informações de relações de pacientes que podem ter ou não diabetes, e o estado do paciente pode ser interpretado como o que se deseja aprender. Este processo é entendido como *aprendizado por exemplo*, @hastie2009elements. O aprendizado supervisionado pode aparecer em casos de regressão linear, regressão logística, ou até mesmo em métodos mais modernos, como GAM, boosting e máquina de vetores de suporte, @james2013introduction.
-
-### Aprendizado não supervisionado
-
-\ \ \ Por outro lado, o aprendizado não supervisionado aparece em situações mais desafiadores, pois não há um exemplo para explicar aquilo que se pretende explicar. Este processo é conhecido como *aprendizado sem exemplo*, @hastie2009elements. Dessa forma, no aprendizado não supervisionado, tem-se uma amostra com N observações $\left(x_1, ..., x_N\right)$ de um vetor aleatório $X$ com densidade conjunta $f\left(x\right)$ em que o objetivo é inferir propriedades da densidade sem ajuda de exemplos para cada observação. Assim, como há uma falta de uma variável resposta $y_i$ para supervisionar a análise, pode-se procurar entender a relação entre as variáveis ou as observações, @james2013introduction. Por exemplo, uma das técnicas mais aplicadas em problemas que envolvem o aprendizado supervisionado é a análise de cluster, em que o objetivo é determinar, com base em $x_1, ..., x_n$, se as observações são caracterizadas em grupos distintos. Esse é um dos métodos que poderiam ser aplicados, por exemplo, na análise de crédito de clientes de um cartão de crédito, tornando possível analisar o seu perfil e classificá-lo em diferentes grupos para recomendar produtos especificos adequados ao seu perfil. -->
+\ \ \ A análise exploratória de dados é uma das primeiras etapas de qualquer estudo que utiliza a estatística como ferramenta principal, pois permite identificar padrões de comportamento nos dados e descobrir relações entre as variáveis estudadas. Assim, após a coleta e organização dos dados, a primeira etapa deste estudo consistiu em uma análise descritiva. Essa análise possibilitou identificar padrões entre os diferentes tipos de imóveis e como essas características podem influenciar o seu valor. Para evidenciar esses comportamentos, foram criados gráficos e tabelas que permitiram caracterizar as relações entre as variáveis independentes e a variável dependente.
 
 ## Reamostragem para avaliação de performance
 
@@ -742,15 +728,6 @@ g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
 
 \vspace{12pt}
 
-<<<<<<< HEAD
-\ \ \ Foi realizada também a análise das distribuições das variáveis numéricas da base de dados, como pode ser visto na @fig-dists. Nessa figura, a distriuição das variáveis forma analisadas por tipo de imóvel. Foi possível observar que a maioria das distriuições apresentam assimetria positiva. As distribuções apresentam caudas longas à direita, indicando a presenta de outliers, principalmente quando são observados os terrenos.
-
-```{python}
-#| label: fig-dists
-#| fig-cap: "Distribuição das variáveis numéricas."
-
-fig, axes = plt.subplots(2, 3, figsize=(20, 8))
-=======
 \ \ \ Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na previsão de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
 
 \vspace{12pt}
@@ -762,7 +739,6 @@ fig, axes = plt.subplots(2, 3, figsize=(20, 8))
 #| fig-cap: Distribuição das variáveis numéricas.
 
 fig, axes = plt.subplots(2, 3, figsize=(20, 10))
->>>>>>> origin
 
 dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -825,9 +801,6 @@ sns.violinplot(
   palette='crest'
 ).legend_.remove()
 
-<<<<<<< HEAD
-plt.legend(loc='upper center', ncol=7, bbox_to_anchor=(.005, -.00001))
-=======
 l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
 l.get_texts()[0].set_text('Apartamentos')
 l.get_texts()[1].set_text('Casas de condomínio')
@@ -835,17 +808,14 @@ l.get_texts()[2].set_text('Casas')
 l.get_texts()[3].set_text('Flats')
 l.get_texts()[4].set_text('Terrenos, lotes e condomínios')
 l.get_texts()[5].set_text('Terrenos e lotes comerciais')
-l.get_texts()[6].set_text('Casas comerciais')
+# l.get_texts()[6].set_text('Casas comerciais')
 plt.show()
->>>>>>> origin
 ```
 
 \vspace{12pt}
 
 \ \ \ Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
 
-<<<<<<< HEAD
-=======
 ```{python}
 #| label: fig-densitarg
 #| fig-cap: Comparação entre distribuição dos valores dos imóveis antes e depois da transformação logarítmica.
@@ -910,7 +880,6 @@ plt.show()
 ### Random Forest
 
 ### Gradient Boosting
->>>>>>> origin
 
 # Conclusão
 
