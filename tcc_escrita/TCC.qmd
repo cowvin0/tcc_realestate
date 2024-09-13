@@ -585,9 +585,21 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 \ \ \ A análise exploratória de dados é uma das primeiras etapas de qualquer estudo que utiliza a estatística como ferramenta principal, pois permite identificar padrões de comportamento nos dados e descobrir relações entre as variáveis estudadas. Assim, após a coleta e organização dos dados, a primeira etapa deste estudo consistiu em uma análise descritiva. Essa análise possibilitou identificar padrões entre os diferentes tipos de imóveis e como essas características podem influenciar o seu valor. Para evidenciar esses comportamentos, foram criados gráficos e tabelas que permitiram caracterizar as relações entre as variáveis independentes e a variável dependente.
 
-## Reamostragem para avaliação de performance
+## Construção do modelo
 
-## Métricas de avaliação
+\ \ \ No conjunto de dados extraído, foram avaliados diferentes modelos para a previsão do valor do imóvel. Inicialmente, o valor do imóvel foi explicado por variáveis consideradas relevantes para o estudo, como: valor médio do aluguel no bairro, área, área média do aluguel no bairro, número de banheiros, vagas de estacionamento, número de quartos, latitude, longitude, tipo de imóvel e variáveis dicotômicas obtidas durante o processo de extração. As variáveis relacionadas ao valor do condomínio e IPTU foram excluídas do modelo devido à alta quantidade de valores ausentes.
+
+\vspace{12pt}
+
+\ \ \ Com as variáveis selecionadas, o conjunto de dados foi dividido em treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe StratifiedShuffleSplit, que garante uma amostragem estratificada e aleatória. A estratificação foi baseada na variável "tipo de imóvel", preservando a proporção de amostras para cada categoria. Definiu-se 20% do conjunto de dados para o teste, enquanto os 80% restantes foram reservados para o treinamento.
+
+\vspace{12pt}
+
+\ \ \ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas **scikit-learn**, **lightgbm** e **xgboost**. As duas últimas foram usadas especificamente para a modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados. Essas pipelines funcionam como etapas sequenciais de pré-processamento necessárias para os dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, Light Gradient Boosting e XGBoost.
+
+### Etapas de pré-processamento
+
+### Validação do modelo
 
 ## Tunagem de hiperparâmetros
 
