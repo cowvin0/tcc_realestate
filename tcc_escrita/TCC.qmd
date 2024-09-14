@@ -61,6 +61,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+from sklearn.model_selection import KFold
 
 rename = {
   'Area': 'Área',
@@ -626,7 +627,95 @@ onde $\mu$ é a média da amostra de treinamento e $\sigma$ é o desvio padrão 
 
 ### Validação cruzada
 
-utilizar o livro como referência (no fim colocar quais métricas foram utilizadas para avaliar a performance do modelo)
+\ \ \ A técnica utilizada para validar o modelo, além das métricas, foi a validação cruzada. A validação cruzada serve para estimar um erro de generalização médio da seguinte forma $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, em que $L$ é uma função perda e $\hat f$ é um estimador. Existem diversar técnicas de validação cruzada, a que foi utilizada nesse trabalho é a validação cruzada K-Fold.
+
+\vspace{12pt}
+
+\ \ \ A validação cruzada por K-Fold utiliza parte dos dados para ajustar o modelo e outra parte para testá-lo. Dessa forma, os dados são divididos em K partes, sendo que uma dalas será apenas para testar o modelo. O modelo é ajustado para os outros $K-1$ partes dos dados e é testado na $K\text{-ésima}$ parte para calcular o erro de predição. Isso é feito $k = 1, 2, \dots, K$ vezes e os $K$ erros de estimação são combinados no final. Assim, o erro de predição estimado pela validação cruzada é dado por:
+
+$$
+CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)
+$$
+
+```{python}
+
+def plot_cv_indices(cv, X, ax, n_splits, lw=10):
+    """Create a sample plot for indices of a cross-validation object."""
+    # Generate the training/testing visualizations for each CV split
+    for ii, (tr, tt) in enumerate(cv.split(X=X)):
+        # Fill in indices with the training/test groups
+        indices = np.array([np.nan] * len(X))
+        indices[tt] = 1
+        indices[tr] = 0
+
+        # Visualize the results
+        ax.scatter(
+            range(len(indices)),
+            [ii + 0.5] * len(indices),
+            c=indices,
+            marker="_",
+            lw=lw,
+            cmap=cmap_cv,
+            vmin=-0.2,
+            vmax=1.2,
+        )
+
+    # Adjust the axis labels and limits
+    yticklabels = list(range(n_splits))
+    ax.set(
+        yticks=np.arange(n_splits) + 0.5,
+        yticklabels=yticklabels,
+        xlabel="Posição da observação",
+        ylabel="CV iteração",
+        ylim=[n_splits + 0.2, -0.2],
+        xlim=[0, 100],
+    )
+    ax.set_title("K-Fold", fontsize=15)
+    return ax
+```
+
+
+```{python}
+#| label: fig-kfold
+#| fig-cap: Visualização de K-Fold com 20 folds.
+
+fig, ax = plt.subplots()
+cmap_data = plt.cm.Paired
+cmap_cv = plt.cm.coolwarm
+rng = np.random.RandomState(1338)
+X = rng.randn(100, 10)
+cv = KFold(20)
+plot_cv_indices(cv, X, ax, 20)
+plt.show()
+```
+
+\vspace{12pt}
+
+\ \ \ A figura acima ilustra exatamente o caso da validação cruzada por K-Fold. As divisões do conjunto de dados para treinamento do modelo são representados pela cor azul, enquanto as laranjas são os conjuntos de validação, onde o modelo ajustado será testado e validado com uma função perda $L$.
+
+\vspace{12pt}
+
+\ \ \ Para aplicar a validação cruzada com K-Fold nos modelos utilizados neste trabalho, foi empregada uma função e uma classe da biblioteca scikit-learn, ambas disponíveis no módulo model_selection. A função utilizada para a validação cruzada é a **cross_val_score**, na qual o modelo a ser validado é passado por meio do argumento estimator. O critério de avaliação é especificado no argumento **scoring**, e a técnica de validação cruzada é definida pelo argumento cv. No caso deste trabalho, foi utilizada a classe **KFold(n_splits=20)**, responsável por realizar a validação cruzada com K-Fold. O argumento **n_splits** define o número de folds utilizados durante a validação, que neste caso foram 20. Por fim, basta calcular a média das métricas retornadas pelo **cross_val_score** para cada um dos folds.
+
+\vspace{12pt}
+
+\ \ \ A métrica utilizada para avaliar o desempenho dos modelos durante a validação cruzada foi a raiz do erro quadrático médio (RMSE). O RMSE mede o quanto os valores estimados pelo modelo se afastam, em média, dos valores observados, sendo que quanto menor o RMSE, melhor é o desempenho do modelo. Além do RMSE, foi também utilizada a métrica MAPE (Erro Percentual Absoluto Médio), que quantifica, em termos percentuais, o desvio médio entre os valores estimados e os observados. Por fim, foi analisado o coeficiente de determinação ($R^2$), uma medida que indica a proporção da variação da variável dependente explicada pelas variáveis independentes; neste caso, o valor do imóvel. As métricas são definidas da seguinte forma:
+
+::: {layout-ncol=3}
+$$
+\text{RMSE} = \sqrt{\dfrac{1}{n} \sum_{i = 0}^n (y_i - \hat y_i)^2}
+$$
+
+$$
+R^2 = 1 - \dfrac{SS_{\text{resíduos}}}{SS_{\text{total}}}
+$$
+
+$$
+\text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|
+$$
+:::
+\
+em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
 
 ## Tunagem de hiperparâmetros
 
