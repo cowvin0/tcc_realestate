@@ -1,32 +1,40 @@
-**Projeto para raspagem do ZapImóveis**
+**Property Value Modeling in João Pessoa, PB**
 
-Instalar dependências: 
+This project is part of my final undergraduate thesis in Statistics, focusing on modeling property values in the city of João Pessoa, PB, using machine learning techniques.
+
+The aim of the study is to predict property values based on various features such as property size, number of rooms, location, and other characteristics. The project explores several machine learning models to improve prediction accuracy, including gradient boosting, and random forests.
+
+**Advisor:** Prof. Pedro Rafael Diniz Marinho
+
+<!-- **Final project of ** -->
+
+<!-- Instalar dependências:
 
     ```
     poetry install
     ```
 
-Entrar no ambiente: 
+Entrar no ambiente:
 
     ```
     poetry shell
-    ``` 
-
-Iniciar código de raspagem: 
-
-    ```
-    make scrape cond=aluguel_ou_venda city=nome_cidade 
     ```
 
-Padrões de nome de cidades do ZapImóveis: 
+Iniciar código de raspagem:
 
-    João Pessoa: pb+joao-pessoa 
+    ```
+    make scrape cond=aluguel_ou_venda city=nome_cidade
+    ```
 
-    Boa Vista: rr+boa-vista 
+Padrões de nome de cidades do ZapImóveis:
 
-    Maricá: rj+marica 
+    João Pessoa: pb+joao-pessoa
 
-    Recife: pe+recife 
+    Boa Vista: rr+boa-vista
+
+    Maricá: rj+marica
+
+    Recife: pe+recife
 
 **Tarefas organizadas em ordem decrescente de importância**
 
@@ -36,4 +44,4 @@ Padrões de nome de cidades do ZapImóveis:
 
 [] Adicionar dados de raspagem raspagem numa API plumber
 
-[] Shiny App
+[] Shiny App -->

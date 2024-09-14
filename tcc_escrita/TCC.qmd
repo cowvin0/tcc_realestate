@@ -585,9 +585,48 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 \ \ \ A análise exploratória de dados é uma das primeiras etapas de qualquer estudo que utiliza a estatística como ferramenta principal, pois permite identificar padrões de comportamento nos dados e descobrir relações entre as variáveis estudadas. Assim, após a coleta e organização dos dados, a primeira etapa deste estudo consistiu em uma análise descritiva. Essa análise possibilitou identificar padrões entre os diferentes tipos de imóveis e como essas características podem influenciar o seu valor. Para evidenciar esses comportamentos, foram criados gráficos e tabelas que permitiram caracterizar as relações entre as variáveis independentes e a variável dependente.
 
-## Reamostragem para avaliação de performance
+## Construção do modelo
 
-## Métricas de avaliação
+\ \ \ No conjunto de dados extraído, foram avaliados diferentes modelos para a previsão do valor do imóvel. Inicialmente, o valor do imóvel foi explicado por variáveis consideradas relevantes para o estudo, como: valor médio do aluguel no bairro, área, área média do aluguel no bairro, número de banheiros, vagas de estacionamento, número de quartos, latitude, longitude, tipo de imóvel e variáveis dicotômicas obtidas durante o processo de extração. As variáveis relacionadas ao valor do condomínio e IPTU foram excluídas do modelo devido à alta quantidade de valores ausentes.
+
+\vspace{12pt}
+
+\ \ \ Com as variáveis selecionadas, o conjunto de dados foi dividido em treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe StratifiedShuffleSplit, que garante uma amostragem estratificada e aleatória. A estratificação foi baseada na variável "tipo de imóvel", preservando a proporção de amostras para cada categoria. Definiu-se 20% do conjunto de dados para o teste, enquanto os 80% restantes foram reservados para o treinamento.
+
+\vspace{12pt}
+
+\ \ \ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas **scikit-learn**, **lightgbm** e **xgboost**. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva.
+
+### Etapas de pré-processamento
+
+\ \ \ Após toda a organização e limpeza dos dados, foram aplicadas algumas transformações com o objetivo de estabelecer uma relação compreensível das variáveis que mais interferem no valor do imóvel. Além disso, foi aplicado também o tratamento de valores ausentes presentes no conjunto de dados.
+
+\vspace{12pt}
+
+\ \ \ O método utilizado para a imputação de valores ausentes foi o algoritmo k-nearest neighbors (KNN). Esse algoritmo estima os valores ausentes de acordo com a fórmula:
+
+$$
+\hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i
+$$
+onde $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe **KNNImputer** da biblioteca scikit-learn para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento **n_neighbors** da classe **KNNImputer**.
+
+\vspace{12pt}
+
+\ \ \ A transformação utilizada para estabilizar a variância e aproximar a distribuição dos regressores de uma distribuição normal foi a transformação logarítmica. Para lidar com variáveis categóricas, foi utilizada a classe OneHotEncoder, que aplica a codificação one hot. Essa técnica transforma as categorias das variáveis em variáveis dicotômicas, criando uma nova coluna para cada categoria. Além disso, o OrdinalEncoder foi utilizado para variáveis ordinais, que possuem uma ordem. Dessa forma, o OneHotEncoder foi aplicado à variável de tipo de imóvel, transformando cada categoria de imóvel em variáveis dummy. Já o OrdinalEncoder foi aplicado à variável de tamanho do imóvel, que foi criada posteriormente para classificar os imóveis em diferentes faixas: pequenos, médios e grandes.
+
+\vspace{12pt}
+
+\ \ \ Por fim, as variáveis numéricas foram normalizadas utilizando a classe StandardScaler, que padroniza os dados aplicando a seguinte transformação:
+
+$$
+z = \frac{x - \mu}{\sigma}
+$$
+onde $\mu$ é a média da amostra de treinamento e $\sigma$ é o desvio padrão da amostra de treinamento.
+
+
+### Validação cruzada
+
+utilizar o livro como referência (no fim colocar quais métricas foram utilizadas para avaliar a performance do modelo)
 
 ## Tunagem de hiperparâmetros
 
