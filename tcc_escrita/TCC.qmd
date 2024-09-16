@@ -29,7 +29,7 @@ whitespace: small
 lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
-urlcolor: Goldenrod
+#urlcolor: Goldenrod
 # linkcolor: Goldenrod
 toc: true
 title: |
@@ -85,13 +85,6 @@ test_df.columns = test_df.columns\
 train_df = train_df.rename(columns=rename)
 test_df = test_df.rename(columns=rename)
 ```
-
-\renewcommand{\listalgorithmname}{Lista de algoritmos}
-\bgroup
-\hypersetup{linkcolor = black}
-\listofalgorithms
-\egroup
-
 
 \bgroup
 \hypersetup{linkcolor = black}
@@ -787,7 +780,7 @@ def objective(trial):
     )
 
     model = ensemble.RandomForestRegressor(
-        `params
+        *params
     )
     model.fit(X=X, y=y)
 
@@ -805,7 +798,7 @@ study = optuna.create_study()
 study.optimize(objective, n_trials=100, n_jobs=-1)
 ```
 
-\ \ \ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão otimizados, especificados no objeto `params` no início da função. Após definir o espaço de busca para cada hiperparâmetro, o modelo escolhido é ajustado aos dados de treinamento. Com o modelo ajustado, realiza-se a validação cruzada em cada trial, utilizando o método K-Fold com 20 divisões (folds), conforme definido previamente. Após definir a função objetivo, inicializa-se um estudo com `optuna.create_study` e, em seguida, inicia-se a otimização com `study.optimize(objective, n_trials=100, n_jobs=-1)`.
+\ \ \ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão otimizados, especificados no objeto `params` no início da função. Após definir o espaço de busca para cada hiperparâmetro, o modelo escolhido é ajustado aos dados de treinamento. Com o modelo ajustado, realiza-se a validação cruzada em cada trial, utilizando o método K-Fold com 20 divisões (folds), conforme definido previamente. Após definir a função objetivo, inicializa-se um estudo com `optuna.create_study` e, em seguida, inicia-se a otimização com `study.optimize(objective, n_trials=100, n_jobs=-1)`. Por fim, para selecionar os melhores hiperparâmetros ao fim do último trial, basta executar `study.best_params`.
 
 \vspace{12pt}
 
