@@ -812,6 +812,17 @@ study.optimize(objective, n_trials=100, n_jobs=-1)
 
 ### Individual Conditional Expectation (ICE)
 
+\ \ \ O método de Individual Conditional Expectation (ICE) é uma ferramenta gráfica utilizada para visualizar as estimativas de um modelo. Esse método traça a relação entre os valores preditos pelo modelo e as variáveis, considerando cada observação individual. Com isso, o ICE permite analisar a variação dos valores ajustados ao longo do intervalo de uma covariável, facilitando a visualização de onde e em que medida pode haver heterogeneidade, além de como cada observação responde individualmente às mudanças em uma variável específica [@goldstein2015peeking].
+
+\vspace{12pt}
+
+\ \ \ Formalmente, o ICE considera as observações $\{x_{S_i}, \mathbf{x}_{C_i}\}_{i=1}^{N}$​ e os valores preditos $\hat f$​. Para cada uma das $N$ observações e valores ajustados $x_C$, uma curva $\hat f_S^{\left(i\right)}$​ é traçada em função dos valores observados de $x_S$. Dessa forma, a variável $x_S$ é representada no eixo das abscissas, enquanto os valores observados de $\mathbf x_C$​ permanecem fixos. Quando há um grande número de linhas no gráfico ICE, a interpretação pode se tornar difícil. Para facilitar a análise, considera-se a centralização das curvas em um ponto específico das variáveis, representando apenas a diferença nas predições em relação a esse ponto. Essa centralização é conhecida como c-ICE. As novas curvas são então definidas da seguinte forma:
+
+$$
+\hat{f}_{cent}^{\left(i\right)} = \hat{f}^{\left(i\right)} - \mathbf{1} \hat{f}\left(x^*, \mathbf x_{C_i}\right)
+$$
+onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ é o modelo ajustado, e $\mathbf 1$ é um vetor de uns. Quando $x^*$ é o valor mínimo de $x^S$​, isso garante que todas as curvas comecem em 0, removendo assim as diferenças de nível causadas pelos distintos $x_C^{\left(i\right)}$. Se $x^*$ for o valor máximo de $x_S$​, o nível de cada curva centralizada reflete o efeito cumulativo de $x_S$​ sobre $\hat f$​ em relação ao ponto de centralização nas variáveis.
+
 ### Local interpretable model-agnostic explanations (LIME)
 
 ### SHapley Additive exPlanations (SHAP)
