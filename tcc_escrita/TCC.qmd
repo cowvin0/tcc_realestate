@@ -29,7 +29,7 @@ whitespace: small
 lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
-urlcolor: Goldenrod
+#urlcolor: Goldenrod
 # linkcolor: Goldenrod
 toc: true
 title: |
@@ -85,13 +85,6 @@ test_df.columns = test_df.columns\
 train_df = train_df.rename(columns=rename)
 test_df = test_df.rename(columns=rename)
 ```
-
-\renewcommand{\listalgorithmname}{Lista de algoritmos}
-\bgroup
-\hypersetup{linkcolor = black}
-\listofalgorithms
-\egroup
-
 
 \bgroup
 \hypersetup{linkcolor = black}
@@ -596,7 +589,7 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 \vspace{12pt}
 
-\ \ \ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas **scikit-learn**, **lightgbm** e **xgboost**. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva.
+\ \ \ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas `scikit-learn`, `lightgbm` e `xgboost`. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva.
 
 ### Etapas de pré-processamento
 
@@ -609,7 +602,7 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 $$
 \hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i
 $$
-onde $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe **KNNImputer** da biblioteca scikit-learn para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento **n_neighbors** da classe **KNNImputer**.
+onde $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe `KNNImputer` da biblioteca scikit-learn para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento `n_neighbors` da classe `KNNImputer`.
 
 \vspace{12pt}
 
@@ -631,24 +624,20 @@ onde $\mu$ é a média da amostra de treinamento e $\sigma$ é o desvio padrão 
 
 \vspace{12pt}
 
-\ \ \ A validação cruzada por K-Fold utiliza parte dos dados para ajustar o modelo e outra parte para testá-lo. Dessa forma, os dados são divididos em K partes, sendo que uma dalas será apenas para testar o modelo. O modelo é ajustado para os outros $K-1$ partes dos dados e é testado na $K\text{-ésima}$ parte para calcular o erro de predição. Isso é feito $k = 1, 2, \dots, K$ vezes e os $K$ erros de estimação são combinados no final. Assim, o erro de predição estimado pela validação cruzada é dado por:
+\ \ \ A validação cruzada K-Fold é uma técnica que utiliza parte dos dados para ajustar o modelo e outra parte para testá-lo. Nessa abordagem, os dados são divididos em $K$ folds. Em cada iteração, um desses folds é reservado para testar o modelo, enquanto os $K−1$ folds restantes são usados para treiná-lo. O modelo é ajustado nos $K−1$ subconjuntos e avaliado no subconjunto de teste, permitindo estimar o erro de predição. Esse processo é repetido $K$ vezes, alternando o subconjunto de teste em cada rodada, e ao final, os $K$ erros de predição são combinados. O erro de predição estimado pela validação cruzada é dado por:
 
 $$
 CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)
 $$
+onde $N$ é o número total de observações, $L$ é a função de perda, $y_i$​ é o valor observado, $x_i$​ é a entrada correspondente, e $\hat{f}^{-k\left(i\right)}$ é o modelo ajustado sem o i-ésimo subconjunto.
 
 ```{python}
-
 def plot_cv_indices(cv, X, ax, n_splits, lw=10):
-    """Create a sample plot for indices of a cross-validation object."""
-    # Generate the training/testing visualizations for each CV split
     for ii, (tr, tt) in enumerate(cv.split(X=X)):
-        # Fill in indices with the training/test groups
         indices = np.array([np.nan] * len(X))
         indices[tt] = 1
         indices[tr] = 0
 
-        # Visualize the results
         ax.scatter(
             range(len(indices)),
             [ii + 0.5] * len(indices),
@@ -660,7 +649,6 @@ def plot_cv_indices(cv, X, ax, n_splits, lw=10):
             vmax=1.2,
         )
 
-    # Adjust the axis labels and limits
     yticklabels = list(range(n_splits))
     ax.set(
         yticks=np.arange(n_splits) + 0.5,
@@ -695,7 +683,7 @@ plt.show()
 
 \vspace{12pt}
 
-\ \ \ Para aplicar a validação cruzada com K-Fold nos modelos utilizados neste trabalho, foi empregada uma função e uma classe da biblioteca scikit-learn, ambas disponíveis no módulo model_selection. A função utilizada para a validação cruzada é a **cross_val_score**, na qual o modelo a ser validado é passado por meio do argumento estimator. O critério de avaliação é especificado no argumento **scoring**, e a técnica de validação cruzada é definida pelo argumento cv. No caso deste trabalho, foi utilizada a classe **KFold(n_splits=20)**, responsável por realizar a validação cruzada com K-Fold. O argumento **n_splits** define o número de folds utilizados durante a validação, que neste caso foram 20. Por fim, basta calcular a média das métricas retornadas pelo **cross_val_score** para cada um dos folds.
+\ \ \ Para aplicar a validação cruzada com K-Fold nos modelos utilizados neste trabalho, foi empregada uma função e uma classe da biblioteca scikit-learn, ambas disponíveis no módulo model_selection. A função utilizada para a validação cruzada é a `cross_val_score`, na qual o modelo a ser validado é passado por meio do argumento estimator. O critério de avaliação é especificado no argumento `scoring`, e a técnica de validação cruzada é definida pelo argumento cv. No caso deste trabalho, foi utilizada a classe `KFold(n_splits=20)`, responsável por realizar a validação cruzada com K-Fold. O argumento `n_splits` define o número de folds utilizados durante a validação, que neste caso foram 20. Por fim, basta calcular a média das métricas retornadas pelo `cross_val_score` para cada um dos folds.
 
 \vspace{12pt}
 
@@ -717,70 +705,21 @@ $$
 \
 em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
 
-## Tunagem de hiperparâmetros
+## Otimização de hiperparâmetros
 
-
-<!-- \ \ \ Na aprendizagem de máquina, uma das etapas fundamentais é a tunagem dos hiperparâmetros dos algoritmos de aprendizagem. Essa etapa consiste em encontrar a melhor combinação de hiperparâmetros e, consequentemente, resultando em uma configuração algoritmo que proporciona melhor performance e capacidade de generalização. No entanto, essa configuração não é trivial. -->
-
-\vspace{12pt}
-
-<!-- \ \ \ Os algoritmos de otimização de hiperparâmetros procuram pelo melhor ajuste de hiperparâmetros $\lambda \in \tilde{\Lambda}$ para um algoritmo de aprendizagem $I_{\lambda}$. O espaço de procura $\tilde{\Lambda} \in \Lambda$ contém todas as possíveis configurações de hiperparâmetros consideradas para otimização. Dessa forma, temos que: -->
-
-<!-- $$
-\tilde{\Lambda} = \tilde \Lambda_1 \cup \tilde \Lambda_2 \cup ... \cup \tilde \Lambda_l
-$${#eq-space}
-em que $l$ são todas as possíveis configurações de hiperparâmetros. Além disso, $\tilde \Lambda_i \ \left(i = 1, 2, ..., l\right)$ representam o subconjunto de limites dos domínios do i-ésimo hiperparâmetro $\Lambda_i$, podendo ser contínuo, discreto ou categórico (BISCHL et al., 2023). -->
+\ \ \ Existem diversas técnicas para otimização de hiperparâmetros em aprendizado de máquina. Uma das mais comuns é o GridSearch. Segundo @bischl2023hyperparameter, o GridSearch consiste em dividir o intervalo contínuo de valores possíveis de cada hiperparâmetro em um conjunto de valores discretos, avaliando exaustivamente o algoritmo para todas as combinações possíveis. No entanto, como o número de combinações cresce exponencialmente com o aumento das combinações de hiperparâmetros, o GridSearch apresenta um custo computacional elevado. Por isso, existem métodos de otimização mais sofisticados que oferecem melhor desempenho, como a otimização bayesiana, que foi utilizada neste trabalho.
 
 \vspace{12pt}
 
-A busca pela melhor combinação de hiperparâmetros $\lambda$ é feito de forma iterativa, utilizando métodos de reamostragem para dividir o conjunto de dados entre teste e treinamento. Portanto, para validar e encontrar os hiperparâmetos, o algoritmo de aprendizagem é validado através da divisão do conjunto de dados. Assim, tem-se a seguinte estratégia de separação do conjunto de dados:
-
-$$
-\mathcal{J} = \left(\left(J_{treino, 1},\ J_{teste, 1}\right), ..., \left(J_{treino, B},\ J_{test, B}\right)\right)
-$${#eq-teste}
-onde $J_{treino, i}, \ J_{teste, i}$ representam os vetores de índices $\left(i = 1, \, 2, ..., \ B\right)$ para os conjuntos de treino e teste, respectivamente, e $B$ representa o número total de divisões.
+\ \ \ A otimização bayesiana não se refere a um algoritmo específico, mas sim a uma abordagem de otimização fundamentada na inferência bayesiana, que engloba uma ampla família de algoritmos [@garnett2023bayesian]. Além disso, a otimização bayesiana tem alcançado benchmarks superiores em comparação com outros algoritmos em diversos problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
 
 \vspace{12pt}
 
-A motivação para fazer a divisão do conjunto de dados entre treino e teste é ajustar o algoritmo em dados reais e avaliar a sua performance em dados ainda não vistos, processo representado pelo banco de treino e teste, respectivamente. Para fazer a avaliação dessa performance é necessário estimar uma métrica de performance em cada divisão. Assim, para um dado algoritmo $I_{\lambda}$ é calculado uma métrica de performance $\rho$ para cada $J_{teste, i}$ após o ajuste do algoritmo no $J_{treino, i}$. Por fim, pode ser calculado uma média amostral da métrica de cada uma das divisões. Dessa forma, o problema de otimizar os hiperparâmetros pode ser definida da seguinte forma:
-
-$$
-\lambda^* \in \underset{\lambda \in \tilde \Lambda}{\operatorname{argmin}} \ c\left(\lambda \right)
-$$
-onde $\lambda^*$ denota a melhor combinação possível de hiperparâmetros, $c\left(\lambda \right)$ representa a generalização do erro, podendo ser representado também por $\widehat{GE}\left(I, \ \mathcal J, \ \rho, \ \lambda\right)$, quando $I, \ \mathcal{J}, \ \rho$ são fixados e $I$ denota um algoritmo de aprendizagem de máquina. O erro de generalização é estimado e otimizado a fim de evitar um ajuste excessivo (overfitting), podendo prejudicar quando o algoritmo fizer estimativas em dados ainda não vistos. Assim, o processo pode ser visualizado pela figura @fig-hpo:
-
-
-```{mermaid}
-%%| label: fig-hpo
-%%| fig-cap: Processo de otimização de hiperparâmetros
-%%| fig-width: 4.5
-flowchart LR
-  A["$$\lambda$$"] --> B(Round edge)
-  B --> C{Decision}
-```
-
-\vspace{12pt}
-
-### Otimização Bayesiana
-
-\ \ \ Existem diversas técnicas para otimização de hiperparâmetros utilizadas em aprendizagem de máquina. Uma das técnicas mais comuns é o GridSearch. @bischl2023hyperparameter definem GridSearch como um processo que divide o intervalo contínuo de valores possíveis de cada hiperparâmetro em um conjunto de valores específicos e avalia exaustivamente o algoritmo para todas as combinações possíveis. No entanto, como todas as combinações possíveis aumentam exponencialmente com a quantidade necessária para avaliação do algoritmo, o GridSearh tem um custo computacional bastante elevado. Assim, existem algoritmos de otimização mais sofisticados que entregam melhores performances, como a otimização bayesiana, que foi utilizada neste trabalho.
-
-\vspace{12pt}
-
-\ \ \ A otimização bayesiana não se refere a um tipo específico de algoritmo de otimização, mas sim a uma filosofia de otimização baseada em inferência bayesiana, a qual contém uma extensa família de algoritmos de otimização [@garnett2023bayesian]. Não obstante, a otimização bayesiana tem obtido benchmarks melhores que outros algoritmos em inúmeros problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
-
-\vspace{12pt}
-
-\ \ \ Diferente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana determina as futuras tentativas de avaliação com base em resultados obtidos previamente [@yang2020hyperparameter]. Para a definição dos pontos futuros, é utilizada uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Assim, após o ajuste da função probabilística, tem-se como resultado para cada $\lambda$ uma estimativa da performance $\hat c \left(\lambda \right)$ e da predição da incerteza $\hat \sigma \left(\lambda \right)$, além de obter também a distribuição preditiva da função probabilística. Com a distribuição obtida, uma função de aquisição determina o trade-off entre exploitation e exploration^[exploitation pode ser entendido como procurar próximo a boas observações e ]. Dessa forma, os algoritmos de otimização bayesiana são definidos segundo a lei $\lambda \to c\left(\lambda \right)$ e  procuram um equilíbrio entre o processo de exploitation-exploration para detectar as regiões ótimas mais prováveis e não perder melhores configurações em áreas ainda não exploradas.
+\ \ \ Diferentemente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana ajusta suas tentativas futuras de avaliação com base nos resultados obtidos anteriormente [@yang2020hyperparameter]. Para definir os pontos futuros, utiliza-se uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Após ajustar essa função, obtém-se, para cada $\lambda$, uma estimativa da performance $\hat c \left(\lambda \right)$ e da incerteza da predição $\hat \sigma \left(\lambda \right)$, além da distribuição preditiva associada à função probabilística. Com essa distribuição, uma função de aquisição determina o equilíbrio entre exploitation e exploration^[Exploitation refere-se à busca por soluções próximas a boas observações anteriores, enquanto exploration visa explorar áreas ainda não investigadas]. Assim, os algoritmos de otimização bayesiana são regidos pela relação $\lambda \to c\left(\lambda \right)$ e buscam um equilíbrio entre exploitation e exploration para identificar as regiões mais promissoras, sem negligenciar possíveis configurações melhores em áreas ainda inexploradas.
 
 ### Tree-Structured Parzen Estimator
 
-\ \ \ Existem diversas funções probabilísticas para uso na otimização bayesiana, algumas delas é o Processo Gaussiano, Random Forest ou Tree-Structured Parzen Estimator (TPE). Nesse trabalho, foi utilizado o Tree-Structured Parzen Estimator, utilizando a biblioteca Optuna [@optuna_2019] para sua aplicação.
-
-\vspace{12pt}
-
-\ \ \ O TPE define duas funções, $l\left(x\right) \text{ e } g\left(x\right)$, que são usadas para modelar a distribuição das variáveis do domínio [@yang2020hyperparameter]. Utilizando as duas densidades, o TPE procura modelar a probabilidade de se observar um hiperparâmetro $x$ dado uma métrica de performance $\rho$. Dessa forma, tem-se a seguinte definição:
-
+\ \ \ A função probabilística utilizada para a otimização bayesiana neste trabalho foi a Tree-Structured Parzen Estimator (TPE). O TPE define duas funções, $l\left(x\right)$ e $g\left(x\right)$, que são utilizadas para modelar a distribuição das variáveis do domínio [@yang2020hyperparameter]. Essas duas densidades são empregadas para estimar a probabilidade de se observar um hiperparâmetro $x$, dado uma métrica de performance $\rho$. Assim, tem-se a seguinte definição:
 
 $$
 p(x|y) =
@@ -789,31 +728,93 @@ p(x|y) =
     g(x) & \text{if } y \ge y^*
 \end{cases}
 $${#eq-tpe}
-em que $l\left(x\right)$ é definido como a densidade em que a função perda é menor que um limiar $y^*$ e $g\left(x\right)$ representa é a densidade em que a função perda^[definição de função perda] tem valores acima do limiar $y^*$ [@bergstra2011algorithms]. O limite $y^*$ é escolhido através de um hiperparâmetro $\gamma$, onde $\gamma$ representa o percentil dos valores observados de $y$, de modo que $p\left(y < y^*\right) = \gamma$.
+em que $l\left(x\right)$ representa a densidade quando a função de perda é menor que um limiar $y^*$, e $g\left(x\right)$ é a densidade quando a função de perda tem valores acima de $y^*$ [@bergstra2011algorithms]. O limite $y^*$ é definido por um hiperparâmetro $\gamma$, onde $\gamma$ corresponde ao percentil dos valores observados de $y$, de modo que $p\left(y < y^*\right) = \gamma$.
 
 \vspace{12pt}
 
-Por padrão, o tree-structured parzen estimator tem como função de aquisição o Expected Improvement $\left(EI\right)$, que pode ser otimizado para o TPE da seguinte forma:
+\ \ \ Por padrão, o Tree-Structured Parzen Estimator (TPE) utiliza como função de aquisição o Expected Improvement (EI), que pode ser otimizado no TPE da seguinte forma:
 
 $$
   EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | x\right) dy
 $${#eq-exp}
 
-Ainda, para encontrar a probabilidade marginal de $x$, temos a seguinte integral $p\left(x\right) = \int_{\mathbb{R}} p\left(x | y\right)p\left(y\right)dy$. Particionando o domínio de $y$, chega-se em:
+\ \ \ Para encontrar a probabilidade marginal de $x$, temos a seguinte integral: $p\left(x\right) = \int_{\mathbb{R}} p\left(x | y\right)p\left(y\right)dy$. Particionando o domínio de $y$, obtemos:
 
 $$
-p\left(x\right) = \int_{-\infty}^{y^*} p\left(x | y\right)p\left(y\right)dy + \int_{y^*}^{\infty} p\left(x | y\right)p\left(y\right)dy = \gamma l\left(x\right) + \left(1 - \gamma \right) g\left(x\right)
+p\left(x\right) = \gamma l\left(x\right) + \left(1 - \gamma \right) g\left(x\right)
 $$
 
-Assim, utilizando o Teorema de Bayes e fazendo as substituições na integral da @eq-exp:
+\ \ \ Assim, aplicando o Teorema de Bayes e substituindo na integral da equação @eq-exp:
 
 $$
 EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right) \frac{p\left(x | y\right)p\left(y\right)}{p\left(x\right)}dy = \left(\gamma y^*  - \int_{-\infty}^{y^*} p\left(y\right)dy\right) \left(\gamma + \left(1 - \gamma\right)\frac{g\left(x\right)}{l\left(x\right)}\right) ^{-1}
 $$
-em que a segunda expressão do produto mostra que para maximizar o Expected Improvement é necessário pontos de $x$ com maior probabilidade em $l\left(x\right)$ e com baixa probabilidade em $g\left(x\right)$. Não obstante, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
 
+\ \ \ A segunda expressão do produto mostra que, para maximizar o Expected Improvement, é necessário encontrar pontos de $x$ com maior probabilidade em $l\left(x\right)$ e menor probabilidade em $g\left(x\right)$. No entanto, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições, definida como $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
+
+\vspace{12pt}
+
+### Otimização de hiperparâmetros com optuna
+
+\ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca `optuna` [@optuna_2019] da linguagem de programação Python. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
+
+```{python}
+#| echo: true
+#| eval: false
+
+import optuna
+import numpy as np
+import pandas as pd
+from sklearn import ensemble
+from sklearn.model_selection import cross_val_score, KFold
+
+def objective(trial):
+    X = train_df[variaveis_independentes]
+    y = train_df.variavel_dependente
+
+    params = dict(
+        n_estimators=trial.suggest_int(name='n_estimators', low=1, high=1000),
+        max_depth=trial.suggest_int(name='max_depth', low=20, high=1000),
+        max_features='sqrt',
+        random_state=42
+    )
+
+    model = ensemble.RandomForestRegressor(
+        *params
+    )
+    model.fit(X=X, y=y)
+
+    cv_scores = np.exp(np.sqrt(-cross_val_score(
+        estimator=model,
+        X=X,
+        y=y,
+        scoring="neg_mean_squared_error",
+        n_jobs=3,
+        cv=KFold(n_splits=20))))
+
+    return np.mean(cv_scores)
+
+study = optuna.create_study()
+study.optimize(objective, n_trials=100, n_jobs=-1)
+```
+
+\ \ \ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão otimizados, especificados no objeto `params` no início da função. Após definir o espaço de busca para cada hiperparâmetro, o modelo escolhido é ajustado aos dados de treinamento. Com o modelo ajustado, realiza-se a validação cruzada em cada trial, utilizando o método K-Fold com 20 divisões (folds), conforme definido previamente. Após definir a função objetivo, inicializa-se um estudo com `optuna.create_study` e, em seguida, inicia-se a otimização com `study.optimize(objective, n_trials=100, n_jobs=-1)`. Por fim, para selecionar os melhores hiperparâmetros ao fim do último trial, basta executar `study.best_params`.
+
+\vspace{12pt}
+
+\ \ \ Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar funções ou hiperparâmetros de um modelo. A técnica de otimização é selecionada por meio do argumento `sampler` no método `create_study`. Para escolher o TPE, basta passar `optuna.samplers.TPESampler` como argumento para o método de criação do estudo, utilizando `optuna.create_study(sampler=optuna.samplers.TPESampler())`.
 
 \newpage
+
+## Interpretação dos algoritmos de aprendizagem de máquina
+
+\ \ \ Na aplicação de aprendizado de máquina, o foco geralmente está em obter um modelo com o menor erro de generalização possível, o que muitas vezes resulta na negligência da interpretação dos resultados. Isso pode comprometer a compreensão do que o algoritmo está efetivamente fazendo. Em resposta a essa limitação, diversas técnicas têm sido desenvolvidas para interpretar os efeitos das variáveis independentes nas estimativas geradas pelos algoritmos. Assim, esta seção será dedicada a descrever a fundamentação teórica e a aplicação das técnicas de interpretação utilizadas neste trabalho.
+
+### Individual Conditional Expectation (ICE)
+
+### Local interpretable model-agnostic explanations (LIME)
+
+### SHapley Additive exPlanations (SHAP)
 
 # Resultados
 
@@ -1001,7 +1002,7 @@ plt.xticks([])
 plt.show()
 ```
 
-**ADICIONAR NO FIM UM GRÁFICO DE ESPACIALIZAÇÃO DOS DADOS (INCLUIR VARIAÇÃO DA COR PELO PREÇO DO IMÓVEL)**
+`ADICIONAR NO FIM UM GRÁFICO DE ESPACIALIZAÇÃO DOS DADOS (INCLUIR VARIAÇÃO DA COR PELO PREÇO DO IMÓVEL)`
 
 ## Construção dos modelos
 
