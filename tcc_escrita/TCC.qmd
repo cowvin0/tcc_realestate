@@ -825,6 +825,10 @@ onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ �
 
 ### Local interpretable model-agnostic explanations (LIME)
 
+\ \ \ Local interpretable model-agnostic (LIME) é mais uma técnica para interpretação de algoritmos de dificil interpretação. @ribeiro2016should define o LIME como tendo o objetivo geral de identificar um modelo interpretável para explicar predições individuais.
+
+\ \ \ Formalmente, é definido um modelo interpretável como sendo $g \in G$, em que $G$ é uma classe de potenciais modelos interpretáveis. Esses modelos podem ser lineares ou até mesmo árvores de decisão.
+
 ### SHapley Additive exPlanations (SHAP)
 
 # Resultados
