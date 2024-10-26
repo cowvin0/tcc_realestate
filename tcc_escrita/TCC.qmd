@@ -758,10 +758,7 @@ $$
 
 \ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca `optuna` [@optuna_2019] da linguagem de programação Python. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
 
-```{python}
-#| echo: true
-#| eval: false
-
+```
 import optuna
 import numpy as np
 import pandas as pd
@@ -773,8 +770,16 @@ def objective(trial):
     y = train_df.variavel_dependente
 
     params = dict(
-        n_estimators=trial.suggest_int(name='n_estimators', low=1, high=1000),
-        max_depth=trial.suggest_int(name='max_depth', low=20, high=1000),
+        n_estimators=trial.suggest_int(
+          name='n_estimators',
+          low=1,
+          high=1000
+        ),
+        max_depth=trial.suggest_int(
+          name='max_depth',
+          low=20,
+          high=1000
+          ),
         max_features='sqrt',
         random_state=42
     )
@@ -798,11 +803,55 @@ study = optuna.create_study()
 study.optimize(objective, n_trials=100, n_jobs=-1)
 ```
 
+<!-- ```{python}
+#| echo: true
+#| eval: false
+
+import optuna
+import numpy as np
+import pandas as pd
+from sklearn import ensemble
+from sklearn.model_selection import cross_val_score, KFold
+
+def objective(trial):
+    X = train_df[variaveis_independentes]
+    y = train_df.variavel_dependente
+
+    params = dict(
+        n_estimators=trial.suggest_int(
+          name='n_estimators',
+          low=1,
+          high=1000),
+        max_depth=trial.suggest_int(name='max_depth', low=20, high=1000),
+        max_features='sqrt',
+        random_state=42
+    )
+
+    model = ensemble.RandomForestRegressor(
+        *params
+    )
+    model.fit(X=X, y=y)
+
+    cv_scores = np.exp(np.sqrt(-cross_val_score(
+        estimator=model,
+        X=X,
+        y=y,
+        scoring="neg_mean_squared_error",
+        n_jobs=3,
+        cv=KFold(n_splits=20))))
+
+    return np.mean(cv_scores)
+
+study = optuna.create_study()
+study.optimize(objective, n_trials=100, n_jobs=-1)
+``` -->
+
 \ \ \ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão otimizados, especificados no objeto `params` no início da função. Após definir o espaço de busca para cada hiperparâmetro, o modelo escolhido é ajustado aos dados de treinamento. Com o modelo ajustado, realiza-se a validação cruzada em cada trial, utilizando o método K-Fold com 20 divisões (folds), conforme definido previamente. Após definir a função objetivo, inicializa-se um estudo com `optuna.create_study` e, em seguida, inicia-se a otimização com `study.optimize(objective, n_trials=100, n_jobs=-1)`. Por fim, para selecionar os melhores hiperparâmetros ao fim do último trial, basta executar `study.best_params`.
 
 \vspace{12pt}
 
-\ \ \ Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar funções ou hiperparâmetros de um modelo. A técnica de otimização é selecionada por meio do argumento `sampler` no método `create_study`. Para escolher o TPE, basta passar `optuna.samplers.TPESampler` como argumento para o método de criação do estudo, utilizando `optuna.create_study(sampler=optuna.samplers.TPESampler())`.
+\ \ \ Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca optuna. No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
+
 
 \newpage
 
