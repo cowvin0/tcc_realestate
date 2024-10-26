@@ -825,9 +825,21 @@ onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ �
 
 ### Local interpretable model-agnostic explanations (LIME)
 
-\ \ \ Local interpretable model-agnostic (LIME) é mais uma técnica para interpretação de algoritmos de dificil interpretação. @ribeiro2016should define o LIME como tendo o objetivo geral de identificar um modelo interpretável para explicar predições individuais.
+\ \ \ @ribeiro2016should definem o Local Interpretable Model-Agnostic Explanations (LIME) como um algoritmo capaz de explicar as previsões feitas por qualquer modelo de classificação ou regressão, aproximando-o localmente de um modelo mais interpretável. Dessa forma, o objetivo geral do LIME é identificar um modelo interpretável e gerar uma representação interpretável para traduzir modelos complexos.
 
-\ \ \ Formalmente, é definido um modelo interpretável como sendo $g \in G$, em que $G$ é uma classe de potenciais modelos interpretáveis. Esses modelos podem ser lineares ou até mesmo árvores de decisão.
+\vspace{12pt}
+
+\ \ \ Formalmente, para a construção da explicação produzida pelo LIME, deve-se definir a explicação como um modelo $g \in G$, onde $G$ é uma classe de potenciais modelos interpretáveis, como uma regressão linear ou árvores de decisão. O domínio de $g$ é $\{0, 1\}^{d^{'}}$, isto é, o modelo explicativo $g$ age sobre a ausência ou presença de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para ser interpretado, define-se uma medida de complexidade $\Omega\left(g\right)$ da explicação gerada por $g \in G$. Para uma árvore de regressão, por exemplo, $\Omega\left(g\right)$ pode ser a profundidade da árvore, enquanto que para modelos lineares $\Omega\left(g\right)$ pode ser o número de pesos diferentes de zero.
+
+\vspace{12pt}
+
+Seja $f: \mathbb{R}^d \rightarrow \mathbb{R}$ o modelo que está sendo explicado. Assim, define-se uma medida de aproximação $\pi_x\left(z\right)$ entre uma instância $z$ para $x$, de modo a definir a localidade ao redor de $x$. Por fim, seja $L\left(f, g, \pi_x\right)$ uma estatística do quanto $g$ erra ao tentar aproximar $f$ na localidade definida por $\pi_x$. Agora, para garantir a interpretabilidade e a fidelidade local, deve-se minimizar $L\left(f, g, \pi_x\right)$, mantendo $\Omega\left(g\right)$ suficiente baixo. Assim, tem-se a explicação produzida pelo LIME:
+
+$$
+\xi\left(x\right) = \arg \min_{g \in G} L\left(f, g, \pi_x\right) + \Omega\left(g\right)
+$$
+
+Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias de modelos explicativos $G$. Uma escolha para $L$, por exemplo, é o erro quadrático médio.
 
 ### SHapley Additive exPlanations (SHAP)
 
