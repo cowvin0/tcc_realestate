@@ -8,6 +8,8 @@ format:
       text: |
         \numberwithin{algorithm}{chapter}
         \algrenewcommand{\algorithmiccomment}[1]{\hskip3em$\rightarrow$ #1}
+    code-block-bg: "#F0F2F4"
+    code-block-background: true
 crossref:
   custom:
     - kind: float
@@ -107,15 +109,25 @@ test_df = test_df.rename(columns=rename)
 
 # Recursos Computacionais
 
-### Linguagem de Programação R
+## Linguagem de Programação R
 
-### Linguagem de Programação Python
+## Linguagem de Programação Python
 
-### Quarto
+\ \ \ Python [@van1995python] é uma linguagem de programação criada por Guido Van Rossum. Ela é uma linguagem de propósito geral e de fácil aprendizagem e entendimento devido a sua simples sintaxe.
 
-### Linguagem de Programação Python
+\vspace{12pt}
 
-### Web Scraping
+Neste trabalho, o seu principal uso foi para realizar a modelagem e também para coleta de dados de site de imóveis. Para a realização da modelagem, foi utilizada a biblioteca scikit-learn [@scikit-learn], que comporta diversas ferramentas estatísticas e técnicas utilizadas em aprendizagem de máquinas. Os modelos utilizados tinham a necessidade de encontrar seus hiperparâmetros e, para encontrar esses hiperparâmetros, foi utilizado a biblioteca optuna, que comporta diversos métodos de otimização, até mesmo alguns métodos mais recentes de otimização bayesiana. Para a coleta de dados de imóveis, foi utilizado a biblioteca Scrapy @kouzis2016learning, que é um framework open-source em Python usado para realizar web scraping, ou seja, extrair dados de páginas da web de maneira automatizada. Ele permite que os usuários criem "crawlers" ou "spiders" para navegar em sites, coletando e estruturando informações específicas de maneira eficiente.
+
+\vspace{12pt}
+
+Além disso, o Python também foi utilizado para a criação de todos os gráficos e para manipulação de base de dados. A biblioteca para visualização de dados utilizada foi o Matplotlib [@Hunter:2007] e para a manipulação e organização das bases de dados foi utilizado a biblioteca pandas [@mckinney-proc-scipy-2010; @reback2020pandas], que é a biblioteca de Python mais utilizadas para manipulação de dados de séries temporais, análise de dados e estatísticas.
+
+## Quarto
+
+## Linguagem de Programação Python
+
+## Web Scraping
 
 \newpage
 
@@ -758,7 +770,7 @@ $$
 
 \ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca `optuna` [@optuna_2019] da linguagem de programação Python. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
 
-```
+<!-- ```{python eval=FALSE}
 import optuna
 import numpy as np
 import pandas as pd
@@ -801,11 +813,12 @@ def objective(trial):
 
 study = optuna.create_study()
 study.optimize(objective, n_trials=100, n_jobs=-1)
-```
+``` -->
 
-<!-- ```{python}
+```{python}
 #| echo: true
 #| eval: false
+#| code-block-background: true
 
 import optuna
 import numpy as np
@@ -822,7 +835,10 @@ def objective(trial):
           name='n_estimators',
           low=1,
           high=1000),
-        max_depth=trial.suggest_int(name='max_depth', low=20, high=1000),
+        max_depth=trial.suggest_int(
+          name='max_depth',
+          low=20,
+          high=1000),
         max_features='sqrt',
         random_state=42
     )
@@ -844,7 +860,7 @@ def objective(trial):
 
 study = optuna.create_study()
 study.optimize(objective, n_trials=100, n_jobs=-1)
-``` -->
+```
 
 \ \ \ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão otimizados, especificados no objeto `params` no início da função. Após definir o espaço de busca para cada hiperparâmetro, o modelo escolhido é ajustado aos dados de treinamento. Com o modelo ajustado, realiza-se a validação cruzada em cada trial, utilizando o método K-Fold com 20 divisões (folds), conforme definido previamente. Após definir a função objetivo, inicializa-se um estudo com `optuna.create_study` e, em seguida, inicia-se a otimização com `study.optimize(objective, n_trials=100, n_jobs=-1)`. Por fim, para selecionar os melhores hiperparâmetros ao fim do último trial, basta executar `study.best_params`.
 
