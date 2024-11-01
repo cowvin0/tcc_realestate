@@ -109,23 +109,25 @@ test_df = test_df.rename(columns=rename)
 
 # Recursos Computacionais
 
-## Linguagem de Programação R
+## Linguagem Python
 
-## Linguagem de Programação Python
-
-\ \ \ Python [@van1995python] é uma linguagem de programação criada por Guido Van Rossum. Ela é uma linguagem de propósito geral e de fácil aprendizagem e entendimento devido a sua simples sintaxe.
+\ \ \ Python [@van1995python] é uma linguagem de programação criada por Guido Van Rossum. Guido começou a desenvolver o Python no final dos anos 80 como uma sucessora da linguagem ABC, e a primeira versão foi lançada oficialmente em 1991. Python é uma linguagem de alto nível, de propósito geral, que enfatiza a simplicidade e a legibilidade do código.
 
 \vspace{12pt}
 
-Neste trabalho, o seu principal uso foi para realizar a modelagem e também para coleta de dados de site de imóveis. Para a realização da modelagem, foi utilizada a biblioteca scikit-learn [@scikit-learn], que comporta diversas ferramentas estatísticas e técnicas utilizadas em aprendizagem de máquinas. Os modelos utilizados tinham a necessidade de encontrar seus hiperparâmetros e, para encontrar esses hiperparâmetros, foi utilizado a biblioteca optuna, que comporta diversos métodos de otimização, até mesmo alguns métodos mais recentes de otimização bayesiana. Para a coleta de dados de imóveis, foi utilizado a biblioteca Scrapy @kouzis2016learning, que é um framework open-source em Python usado para realizar web scraping, ou seja, extrair dados de páginas da web de maneira automatizada. Ele permite que os usuários criem "crawlers" ou "spiders" para navegar em sites, coletando e estruturando informações específicas de maneira eficiente.
+\ \ \ Neste trabalho, Python foi utilizado principalmente para modelagem e coleta de dados de sites de imóveis. Para a modelagem, utilizou-se a biblioteca scikit-learn [@scikit-learn], que oferece uma grande quantidade de ferramentas estatísticas e de aprendizado de máquina. A otimização dos hiperparâmetros dos modelos foi realizada com a biblioteca Optuna, que dispõe de diversos métodos de otimização, incluindo métodos avançados de otimização bayesiana. Para a coleta de dados de imóveis, foi empregada a biblioteca Scrapy [@kouzis2016learning], um framework open-source em Python voltado para web scraping, que permite extrair dados de páginas da web de forma automatizada. Com o Scrapy, é possível criar "crawlers" ou "spiders" que navegam em sites, coletando e organizando informações específicas de maneira eficiente.
 
 \vspace{12pt}
 
-Além disso, o Python também foi utilizado para a criação de todos os gráficos e para manipulação de base de dados. A biblioteca para visualização de dados utilizada foi o Matplotlib [@Hunter:2007] e para a manipulação e organização das bases de dados foi utilizado a biblioteca pandas [@mckinney-proc-scipy-2010; @reback2020pandas], que é a biblioteca de Python mais utilizadas para manipulação de dados de séries temporais, análise de dados e estatísticas.
+\ \ \ Além disso, Python foi utilizado para a criação de todos os gráficos e para a manipulação das bases de dados. A biblioteca utilizada para visualização de dados foi o Matplotlib [@Hunter:2007], enquanto a manipulação e organização das bases de dados foram realizadas com a biblioteca pandas [@mckinney-proc-scipy-2010; @reback2020pandas], amplamente utilizada em Python para manipulação de dados e limbeza de dados, análise de dados e estatísticas.
 
 ## Quarto
 
-## Linguagem de Programação Python
+\ \ \ Quarto [@quarto] é uma plataforma de publicação científica desenvolvida pela empresa Posit com o objetivo de criar documentos de alta qualidade a partir de arquivos que combinam texto e código. É uma evolução do R Markdown, sendo compatível com várias linguagens de programação, como R, Python, Julia e outros, o que o torna bastante versátil para a análise de dados e geração de relatórios interativos. Com o Quarto, é possível produzir relatórios, artigos, livros, apresentações e sites. Ele é amplamente utilizado na comunidade R e oferece suporte para Markdown e \LaTeX, facilitando a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais, que são renderizados em formatos como HTML, PDF e MS Word.
+
+\vspace{12pt}
+
+O Quarto foi utilizado para a produção de todo o texto deste trabalho, atendendo aos requisitos das normas ABNT. Com sua flexibilidade e suporte para formatação customizável, Quarto permitiu integrar texto, código e visualizações de forma reprodutível e organizada, facilitando a geração de documentos acadêmicos de alta qualidade.
 
 ## Web Scraping
 
