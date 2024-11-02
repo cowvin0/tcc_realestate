@@ -109,17 +109,27 @@ test_df = test_df.rename(columns=rename)
 
 # Recursos Computacionais
 
+## Linguagem R
+
+\ \ \ R [@r_language] é uma linguagem de programação voltada para computação científica e visualização de dados. Seu desenvolvimento foi iniciado pelos professores Ross Ihaka e Robert Gentleman, que a criaram com o objetivo de ser uma linguagem para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do R foi lançada em 1993, e em 1997 ele se tornou oficialmente parte do Projeto GNU.
+
+\vspace{12pt}
+
+A linguagem R é fortemente inspirada no paradigma de programção funcional, o que a torna poderosa para manipulação e análise de dados. No R, as funções são de primeira classe, o que significa que elas podem ser passadas como argumentos para outras funções, retornadas como resultados e atribuídas a variáveis. Essa possibilidade permite códigos mais modulares, reutilizáveis e facilitam a implementação de pipelines de transformação de dados. O R oferece funções como `apply`, `lapply`, `sapply` e pacotes como `purrr` e `furrr`, especialmente focados em programação funcional. Embora essa grande inspiração do R no paradigma funcional, o R também permite o uso de programação orientada a objetos através de sistemas como S3, R6 e S4.
+
+\vspace{12pt}
+
 ## Linguagem Python
 
 \ \ \ Python [@van1995python] é uma linguagem de programação criada por Guido Van Rossum. Guido começou a desenvolver o Python no final dos anos 80 como uma sucessora da linguagem ABC, e a primeira versão foi lançada oficialmente em 1991. Python é uma linguagem de alto nível, de propósito geral, que enfatiza a simplicidade e a legibilidade do código.
 
 \vspace{12pt}
 
-\ \ \ Neste trabalho, Python foi utilizado principalmente para modelagem e coleta de dados de sites de imóveis. Para a modelagem, utilizou-se a biblioteca scikit-learn [@scikit-learn], que oferece uma grande quantidade de ferramentas estatísticas e de aprendizado de máquina. A otimização dos hiperparâmetros dos modelos foi realizada com a biblioteca Optuna, que dispõe de diversos métodos de otimização, incluindo métodos avançados de otimização bayesiana. Para a coleta de dados de imóveis, foi empregada a biblioteca Scrapy [@kouzis2016learning], um framework open-source em Python voltado para web scraping, que permite extrair dados de páginas da web de forma automatizada. Com o Scrapy, é possível criar "crawlers" ou "spiders" que navegam em sites, coletando e organizando informações específicas de maneira eficiente.
+Neste trabalho, Python foi utilizado principalmente para modelagem e coleta de dados de sites de imóveis. Para a modelagem, utilizou-se a biblioteca scikit-learn [@scikit-learn], que oferece uma grande quantidade de ferramentas estatísticas e de aprendizado de máquina. A otimização dos hiperparâmetros dos modelos foi realizada com a biblioteca Optuna, que dispõe de diversos métodos de otimização, incluindo métodos avançados de otimização bayesiana. Para a coleta de dados de imóveis, foi empregada a biblioteca Scrapy [@kouzis2016learning], um framework open-source em Python voltado para web scraping, que permite extrair dados de páginas da web de forma automatizada. Com o Scrapy, é possível criar "crawlers" ou "spiders" que navegam em sites, coletando e organizando informações específicas de maneira eficiente.
 
 \vspace{12pt}
 
-\ \ \ Além disso, Python foi utilizado para a criação de todos os gráficos e para a manipulação das bases de dados. A biblioteca utilizada para visualização de dados foi o Matplotlib [@Hunter:2007], enquanto a manipulação e organização das bases de dados foram realizadas com a biblioteca pandas [@mckinney-proc-scipy-2010; @reback2020pandas], amplamente utilizada em Python para manipulação de dados e limbeza de dados, análise de dados e estatísticas.
+Além disso, Python foi utilizado para a criação de todos os gráficos e para a manipulação das bases de dados. A biblioteca utilizada para visualização de dados foi o Matplotlib [@Hunter:2007], enquanto a manipulação e organização das bases de dados foram realizadas com a biblioteca pandas [@mckinney-proc-scipy-2010; @reback2020pandas], amplamente utilizada em Python para manipulação de dados e limbeza de dados, análise de dados e estatísticas.
 
 ## Quarto
 
