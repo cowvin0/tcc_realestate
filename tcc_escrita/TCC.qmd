@@ -115,9 +115,17 @@ test_df = test_df.rename(columns=rename)
 
 \vspace{12pt}
 
-A linguagem R é fortemente inspirada no paradigma de programção funcional, o que a torna poderosa para manipulação e análise de dados. No R, as funções são de primeira classe, o que significa que elas podem ser passadas como argumentos para outras funções, retornadas como resultados e atribuídas a variáveis. Essa possibilidade permite códigos mais modulares, reutilizáveis e facilitam a implementação de pipelines de transformação de dados. O R oferece funções como `apply`, `lapply`, `sapply` e pacotes como `purrr` e `furrr`, especialmente focados em programação funcional. Embora essa grande inspiração do R no paradigma funcional, o R também permite o uso de programação orientada a objetos através de sistemas como S3, R6 e S4.
+A linguagem R é fortemente inspirada no paradigma de programação funcional, o que a torna poderosa para manipulação e análise de dados. Em R, as funções são "cidadãs de primeira classe", ou seja, podem ser passadas como argumentos para outras funções, retornadas como resultados e atribuídas a variáveis. Isso permite a criação de códigos mais modulares e reutilizáveis, além de facilitar a implementação de pipelines de transformação de dados.
 
 \vspace{12pt}
+
+O R oferece funções como apply, lapply, sapply, além de pacotes como purrr e furrr, que são voltados para programação funcional e paralelismo. Esses recursos permitem a aplicação de funções em estruturas de dados de maneira concisa e eficiente, simplificando o processamento e a transformação de grandes conjuntos de dados. Embora o R seja fortemente inspirado pelo paradigma funcional, o R também oferece suporte à programação orientada a objetos, com sistemas como S3, S4 e R6.
+
+<!-- A linguagem R é fortemente inspirada no paradigma de programção funcional, o que a torna poderosa para manipulação e análise de dados. No R, as funções são de primeira classe, o que significa que elas podem ser passadas como argumentos para outras funções, retornadas como resultados e atribuídas a variáveis. Essa possibilidade permite códigos mais modulares, reutilizáveis e facilitam a implementação de pipelines de transformação de dados. O R oferece funções como `apply`, `lapply`, `sapply` e pacotes como `purrr` e `furrr`, especialmente focados em programação funcional. Embora essa grande inspiração do R no paradigma funcional, o R também permite o uso de programação orientada a objetos através de sistemas como S3, R6 e S4. -->
+
+\vspace{12pt}
+
+Neste trabalho, a linguagem R foi utilizada para a raspagem de dados de imóveis e para geocodificação do endereço dos imóveis. O R possuí um vasto ecossistema de pacotes focados em para coleta de dados da web. Os dois pacotes utilizados para a raspagem foi o xlm2 e o rvest, além do selenium para interagir com conteúdo dinâmicos contidos na página do site raspado. A obtenção da latitude e longitude dos imóveis foi feito a partir da geocodificação de seus endereços, utilizando a biblioteca [@geocoder].
 
 ## Linguagem Python
 
