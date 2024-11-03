@@ -44,6 +44,7 @@ mermaid:
   theme: forest
 date: today
 date-format: long
+# highlight-style: custom.theme
 highlight-style: github
 fontsize: 12pt
 interlinespace: 1.5pt
@@ -115,17 +116,15 @@ test_df = test_df.rename(columns=rename)
 
 \vspace{12pt}
 
-A linguagem R é fortemente inspirada no paradigma de programação funcional, o que a torna poderosa para manipulação e análise de dados. Em R, as funções são "cidadãs de primeira classe", ou seja, podem ser passadas como argumentos para outras funções, retornadas como resultados e atribuídas a variáveis. Isso permite a criação de códigos mais modulares e reutilizáveis, além de facilitar a implementação de pipelines de transformação de dados.
+A linguagem R é fortemente inspirada no paradigma de programação funcional, o que a torna poderosa para manipulação e análise de dados. Em R, as funções são de primeira classe, ou seja, podem ser passadas como argumentos para outras funções, retornadas como resultados e atribuídas a variáveis. Isso permite a criação de códigos mais modulares e reutilizáveis, além de facilitar a implementação de pipelines de transformação de dados.
 
 \vspace{12pt}
 
-O R oferece funções como apply, lapply, sapply, além de pacotes como purrr e furrr, que são voltados para programação funcional e paralelismo. Esses recursos permitem a aplicação de funções em estruturas de dados de maneira concisa e eficiente, simplificando o processamento e a transformação de grandes conjuntos de dados. Embora o R seja fortemente inspirado pelo paradigma funcional, o R também oferece suporte à programação orientada a objetos, com sistemas como S3, S4 e R6.
-
-<!-- A linguagem R é fortemente inspirada no paradigma de programção funcional, o que a torna poderosa para manipulação e análise de dados. No R, as funções são de primeira classe, o que significa que elas podem ser passadas como argumentos para outras funções, retornadas como resultados e atribuídas a variáveis. Essa possibilidade permite códigos mais modulares, reutilizáveis e facilitam a implementação de pipelines de transformação de dados. O R oferece funções como `apply`, `lapply`, `sapply` e pacotes como `purrr` e `furrr`, especialmente focados em programação funcional. Embora essa grande inspiração do R no paradigma funcional, o R também permite o uso de programação orientada a objetos através de sistemas como S3, R6 e S4. -->
+O R oferece funções como apply, lapply, sapply, além de pacotes como purrr e furrr, que são voltados para programação funcional. Esses recursos permitem a aplicação de funções em estruturas de dados de maneira concisa e eficiente, simplificando o processamento e a transformação de grandes conjuntos de dados. Embora o R seja fortemente inspirado pelo paradigma funcional, o R também oferece suporte à programação orientada a objetos, com sistemas como S3, S4 e R6.
 
 \vspace{12pt}
 
-Neste trabalho, a linguagem R foi utilizada para a raspagem de dados de imóveis e para geocodificação do endereço dos imóveis. O R possuí um vasto ecossistema de pacotes focados em para coleta de dados da web. Os dois pacotes utilizados para a raspagem foi o xlm2 e o rvest, além do selenium para interagir com conteúdo dinâmicos contidos na página do site raspado. A obtenção da latitude e longitude dos imóveis foi feito a partir da geocodificação de seus endereços, utilizando a biblioteca [@geocoder].
+Neste trabalho, a linguagem R foi utilizada para a raspagem de dados de imóveis e para a geocodificação dos endereços desses imóveis. O R possui um vasto ecossistema de pacotes focados na coleta de dados da web. Para a raspagem, foram utilizados os pacotes xml2 [@xml2] e rvest [@rvest], além do Selenium [@selenium], que permitiu interagir com conteúdos dinâmicos das páginas. A obtenção das coordenadas dos imóveis foi realizada através da geocodificação de seus endereços, utilizando a biblioteca tidygeocoder [@geocoder].
 
 ## Linguagem Python
 
@@ -133,11 +132,11 @@ Neste trabalho, a linguagem R foi utilizada para a raspagem de dados de imóveis
 
 \vspace{12pt}
 
-Neste trabalho, Python foi utilizado principalmente para modelagem e coleta de dados de sites de imóveis. Para a modelagem, utilizou-se a biblioteca scikit-learn [@scikit-learn], que oferece uma grande quantidade de ferramentas estatísticas e de aprendizado de máquina. A otimização dos hiperparâmetros dos modelos foi realizada com a biblioteca Optuna, que dispõe de diversos métodos de otimização, incluindo métodos avançados de otimização bayesiana. Para a coleta de dados de imóveis, foi empregada a biblioteca Scrapy [@kouzis2016learning], um framework open-source em Python voltado para web scraping, que permite extrair dados de páginas da web de forma automatizada. Com o Scrapy, é possível criar "crawlers" ou "spiders" que navegam em sites, coletando e organizando informações específicas de maneira eficiente.
+Neste trabalho, Python foi utilizado principalmente para modelagem e coleta de dados de sites de imóveis. Para a modelagem, utilizou-se a biblioteca scikit-learn [@scikit-learn], que oferece uma grande quantidade de ferramentas estatísticas e de aprendizado de máquina. A otimização dos hiperparâmetros dos modelos foi realizada com a biblioteca Optuna, que dispõe de diversos métodos de otimização, incluindo métodos avançados de otimização bayesiana. Para a coleta de dados de imóveis, foi empregada a biblioteca Scrapy [@kouzis2016learning], um framework open-source em Python voltado para web scraping, que permite extrair dados de páginas da web de forma automatizada. Com o Scrapy, é possível criar "crawlers" ou "spiders" que navegam em sites, coletando e organizando informações específicas de maneira eficiente. Além do Scrapy, foi utilizado também a biblioteca Playwright, com o objetivo de interagir com o conteúdo dinâmico presente na página.
 
 \vspace{12pt}
 
-Além disso, Python foi utilizado para a criação de todos os gráficos e para a manipulação das bases de dados. A biblioteca utilizada para visualização de dados foi o Matplotlib [@Hunter:2007], enquanto a manipulação e organização das bases de dados foram realizadas com a biblioteca pandas [@mckinney-proc-scipy-2010; @reback2020pandas], amplamente utilizada em Python para manipulação de dados e limbeza de dados, análise de dados e estatísticas.
+Além disso, Python foi utilizado para a criação de todos os gráficos e para a manipulação das bases de dados. Para visualização, foram usadas as bibliotecas Matplotlib [@Hunter:2007] e Seaborn [@Waskom2021], enquanto a manipulação e organização das bases de dados foi feira com a biblioteca Pandas [@mckinney-proc-scipy-2010; @reback2020pandas], amplamente utilizada em Python para limpeza, análise e organização de dados, além de suportar operações estatísticas.
 
 ## Quarto
 
@@ -148,6 +147,24 @@ Além disso, Python foi utilizado para a criação de todos os gráficos e para 
 O Quarto foi utilizado para a produção de todo o texto deste trabalho, atendendo aos requisitos das normas ABNT. Com sua flexibilidade e suporte para formatação customizável, Quarto permitiu integrar texto, código e visualizações de forma reprodutível e organizada, facilitando a geração de documentos acadêmicos de alta qualidade.
 
 ## Web Scraping
+
+\ \ \ Web scraping, ou raspagem de dados, é uma técnica utilizada para extrair informações de sites na internet, salvando-as em arquivos ou sistemas de banco de dados para realizar análise, construção de aplicações ou ter acesso a informações de difícil disponibilização. Geralmente a raspagem de dados é realizada utilizando o Hypertext Transfer Protocol (HTTP) ou a partir da simulação do comportamento de um usuário de navegador. O HTTP é o protocolo responsável por fazer toda a comunicação cliente-servidor contida na internet com base na definição de oito métodos de requisição: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS e CONNECT. Cada método indica a ação a ser realizada no recurso especificado.
+
+- GET: O método GET serve para requisitar uma representação do recurso especificado. Ou seja, ele serve para visualizar dados de um site.
+
+- HEAD: O HEAD é bastante semelhante o GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
+
+- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML.
+
+- PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma semelhante. No entanto, caso seja necessário atualizar um usuário diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas um único registro atualizado. Para o método POST, serão criados diversos registros para cada requisição realizada.
+
+- DELETE: Exclui o recurso.
+
+- TRACE: O método TRACE HTTP é usado para diagnóstico, depuração e solução de problemas. Ele simplesmente retorna um rastreamento de diagnóstico que registra dados do ciclo de forma que o cliente possa saber o que os servidores intermediários estão mudando em sua requisição.
+
+- OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são suportados e permitidos pelo servidor.
+
+- CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método HTTP CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
 
 \newpage
 
@@ -789,51 +806,6 @@ $$
 ### Otimização de hiperparâmetros com optuna
 
 \ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca `optuna` [@optuna_2019] da linguagem de programação Python. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
-
-<!-- ```{python eval=FALSE}
-import optuna
-import numpy as np
-import pandas as pd
-from sklearn import ensemble
-from sklearn.model_selection import cross_val_score, KFold
-
-def objective(trial):
-    X = train_df[variaveis_independentes]
-    y = train_df.variavel_dependente
-
-    params = dict(
-        n_estimators=trial.suggest_int(
-          name='n_estimators',
-          low=1,
-          high=1000
-        ),
-        max_depth=trial.suggest_int(
-          name='max_depth',
-          low=20,
-          high=1000
-          ),
-        max_features='sqrt',
-        random_state=42
-    )
-
-    model = ensemble.RandomForestRegressor(
-        *params
-    )
-    model.fit(X=X, y=y)
-
-    cv_scores = np.exp(np.sqrt(-cross_val_score(
-        estimator=model,
-        X=X,
-        y=y,
-        scoring="neg_mean_squared_error",
-        n_jobs=3,
-        cv=KFold(n_splits=20))))
-
-    return np.mean(cv_scores)
-
-study = optuna.create_study()
-study.optimize(objective, n_trials=100, n_jobs=-1)
-``` -->
 
 ```{python}
 #| echo: true
