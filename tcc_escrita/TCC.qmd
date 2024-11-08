@@ -166,11 +166,15 @@ O Quarto foi utilizado para a produção de todo o texto deste trabalho, atenden
 
 - CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método HTTP CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
 
-Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo pelo site e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua para reformatar e organizar os dados de forma estruturada.
+Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo site e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua com a reformatação e organização dos dados de forma estruturada.
 
 \vspace{12pt}
 
+A extração de informações de um arquivo HTML é geralmente feita com módulos como BeautifulSoup [@richardson2007beautiful], em Python, ou rvest, em R. No entanto, muitas vezes é necessário interagir com conteúdos dinâmicos da página para carregar todas as informações disponíveis. Para esses casos, são utilizadas bibliotecas como Playwright ou Selenium, que permitem lidar com autenticação, cookies e redirecionamentos, simulando a navegação em um navegador como Google Chrome, Firefox, ou outros. Essas bibliotecas fazem requisições HTTP enquanto reproduzem a experiência de um usuário real, com o objetivo de automatizar processos de busca e interação com a página.
 
+\vspace{12pt}
+
+A raspagem de dados possui diversas utilidades, como monitoramento de variações de preços, análise de produtos, acompanhamento de condições tempo, análise da oscilação de preços de ativos do mercado financeiro ao longo do tempo ou coleta de postagens em redes sociais para investigação de opinião pública. Neste trabalho, a raspagem de dados foi utilizada para coletar informações sobre imóveis na cidade de João Pessoa, capital da Paraíba.
 
 \newpage
 
