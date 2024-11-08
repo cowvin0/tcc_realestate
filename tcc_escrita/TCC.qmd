@@ -124,7 +124,7 @@ O R oferece funções como apply, lapply, sapply, além de pacotes como purrr e 
 
 \vspace{12pt}
 
-Neste trabalho, a linguagem R foi utilizada para a raspagem de dados de imóveis e para a geocodificação dos endereços desses imóveis. O R possui um vasto ecossistema de pacotes focados na coleta de dados da web. Para a raspagem, foram utilizados os pacotes xml2 [@xml2] e rvest [@rvest], além do Selenium [@selenium], que permitiu interagir com conteúdos dinâmicos das páginas. A obtenção das coordenadas dos imóveis foi realizada através da geocodificação de seus endereços, utilizando a biblioteca tidygeocoder [@geocoder].
+Neste trabalho, a linguagem R foi utilizada para a raspagem de dados de imóveis e para a geocodificação dos endereços desses imóveis. O R possui um vasto ecossistema de pacotes focados na coleta de dados da web. Para a raspagem, foram utilizados os pacotes xml2 [@xml2], rvest [@rvest] e httr [@httr] para fazer as requisições HTTP, além do Selenium [@selenium], que permitiu interagir com conteúdos dinâmicos das páginas. A obtenção das coordenadas dos imóveis foi realizada através da geocodificação de seus endereços, utilizando a biblioteca tidygeocoder [@geocoder].
 
 ## Linguagem Python
 
@@ -165,6 +165,12 @@ O Quarto foi utilizado para a produção de todo o texto deste trabalho, atenden
 - OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são suportados e permitidos pelo servidor.
 
 - CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método HTTP CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
+
+Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo pelo site e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua para reformatar e organizar os dados de forma estruturada.
+
+\vspace{12pt}
+
+
 
 \newpage
 
