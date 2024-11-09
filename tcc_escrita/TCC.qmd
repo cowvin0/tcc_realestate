@@ -184,7 +184,7 @@ A raspagem de dados possui diversas utilidades, como monitoramento de variaçõe
 
 \vspace{12pt}
 
-\ \ \ Os métodos baseados em árvore envolvem a estratificação ou segmentação do espaço dos preditores^[O espaço dos preditores é o conjunto de todos os valores possíveis para as variáveis independentes $\mathbf{x}$] em várias regiões simples. Dessa forma, todos os algoritmos utilizados neste trabalho partem dessa ideia. Portanto, o primeiro a ser explicado será o de árvores de decisão, pois fundamenta todos os outros algoritmos. Depois das árvores de decisão, serão explicados os métodos ensemble e, por fim, diferentes variações do método de gradient boosting.
+Os métodos baseados em árvore envolvem a estratificação ou segmentação do espaço dos preditores^[O espaço dos preditores é o conjunto de todos os valores possíveis para as variáveis independentes $\mathbf{x}$] em várias regiões simples. Dessa forma, todos os algoritmos utilizados neste trabalho partem dessa ideia. Portanto, o primeiro a ser explicado será o de árvores de decisão, pois fundamenta todos os outros algoritmos. Depois das árvores de decisão, serão explicados os métodos ensemble e, por fim, diferentes variações do método de gradient boosting.
 
 
 ## Árvores de decisão
@@ -209,13 +209,13 @@ graph TD
 
 \vspace{12pt}
 
-\ \ \ O espaço dos preditores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, \dots, R_J$. Essas regiões são construídas em formato de caixa de forma a minimizar a soma dos quadrados dos resíduos. Dessa forma, pode-se modelar a variável resposta como uma constante $c_j$ em cada região $R_j$
+O espaço dos preditores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, \dots, R_J$. Essas regiões são construídas em formato de caixa de forma a minimizar a soma dos quadrados dos resíduos. Dessa forma, pode-se modelar a variável resposta como uma constante $c_j$ em cada região $R_j$
 
 $$
 f\left(x\right) = \sum^J_{j=1}c_j I\left(x \in R_j \right)
 $$
 
-\ \ \ O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados. Assim, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(x_i\right)\right]^2$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se for observada a definição da função indicadora $I\left(x \in R_j\right)$
+O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados. Assim, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(x_i\right)\right]^2$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se for observada a definição da função indicadora $I\left(x \in R_j\right)$
 
 $$
 I_{R_j}(x_i) =
@@ -224,6 +224,7 @@ I_{R_j}(x_i) =
     0,& \text{se } x_i \notin R_j
 \end{cases}
 $$
+
 Como as regiões são disjuntas, $x_i$ não pode estar simultaneamente em duas regiões. Assim, para um ponto específico $x_i$, apenas um dos casos da função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Agora, derivando $\sum_{x_i \in R_j}\left(yi - c_j\right)^2$ em relação a $c_j$
 
 $$
@@ -260,11 +261,11 @@ em que $c_1$ e $c_2$ é a média da variável dependente para as observações d
 
 \vspace{12pt}
 
-\ \ \ O tamanho da árvore pode ser considerado um hiperparâmetro para regular a complexidade do modelo, pois uma árvore muito grande pode causar sobreajuste aos dados de treinamento, capturando não apenas os padrões relevantes, mas também o ruído. Como resultado, o modelo pode apresentar bom desempenho nos dados de treinamento, mas falhar ao lidar com novos dados devido à sua incapacidade de generalização. Por outro lado, uma árvore muito pequena pode não captar padrões, relações e estruturas importantes presentes nos dados. Dessa forma, a estratégia adotada para selecionar o tamanho da árvore consiste em crescer uma grande árvore $T_0$, interrompendo o processo de divisão apenas ao atingir um tamanho mínimo de nós. Posteriormente, a árvore $T_0$ é podada utilizando o critério de custo complexidade, que será definido a seguir.
+O tamanho da árvore pode ser considerado um hiperparâmetro para regular a complexidade do modelo, pois uma árvore muito grande pode causar sobreajuste aos dados de treinamento, capturando não apenas os padrões relevantes, mas também o ruído. Como resultado, o modelo pode apresentar bom desempenho nos dados de treinamento, mas falhar ao lidar com novos dados devido à sua incapacidade de generalização. Por outro lado, uma árvore muito pequena pode não captar padrões, relações e estruturas importantes presentes nos dados. Dessa forma, a estratégia adotada para selecionar o tamanho da árvore consiste em crescer uma grande árvore $T_0$, interrompendo o processo de divisão apenas ao atingir um tamanho mínimo de nós. Posteriormente, a árvore $T_0$ é podada utilizando o critério de custo complexidade, que será definido a seguir.
 
 \vspace{12pt}
 
-\ \ \ Para o processo de poda da árvore, definimos uma árvore qualquer $T$ que pode ser obtida através do processo da poda de $T_0$, de modo que $T \subset T_0$. Assim, sendo $N_j$ a quantidade de pontos na região $R_j$, seja
+Para o processo de poda da árvore, definimos uma árvore qualquer $T$ que pode ser obtida através do processo da poda de $T_0$, de modo que $T \subset T_0$. Assim, sendo $N_j$ a quantidade de pontos na região $R_j$, seja
 
 $$
 Q_j\left(T\right) = \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)^2
@@ -278,7 +279,7 @@ onde $|T|$ denota a quantidade total de folhas, e $\alpha \geq 0$ é um hiperpar
 
 \vspace{12pt}
 
-\ \ \ A estimação de $\alpha$ é realizada por validação cruzada com cinco ou dez folds, sendo $\hat \alpha$ escolhido para minimizar a soma dos quadrados dos resíduos durante o processo de validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
+A estimação de $\alpha$ é realizada por validação cruzada com cinco ou dez folds, sendo $\hat \alpha$ escolhido para minimizar a soma dos quadrados dos resíduos durante o processo de validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
 
 ::: {#algo-buildtree}
 
@@ -316,7 +317,7 @@ Fonte: @james2013introduction [p. 337].
 
 \vspace{12pt}
 
-\ \ \ No caso de uma árvore de decisão para classificação, a principal diferença está no critério de divisão dos nós e na poda da árvore. Para a classificação, a previsão em um nó $j$, correspondente a uma região $R_j$ com $N_j$ observações, será simplesmente a classe majoritária. Assim, tem-se
+No caso de uma árvore de decisão para classificação, a principal diferença está no critério de divisão dos nós e na poda da árvore. Para a classificação, a previsão em um nó $j$, correspondente a uma região $R_j$ com $N_j$ observações, será simplesmente a classe majoritária. Assim, tem-se
 
 $$
 \hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)
@@ -325,7 +326,7 @@ como a proporção de observações da classe $k$ no nó $j$. Dessa forma, as ob
 
 \vspace{12pt}
 
-\ \ \ Para a divisão dos nós no caso da regressão, foi utilizado o erro quadrático médio como medida de impureza. Para a classificação, algumas medidas comuns para $Q_j\left(T\right)$ são o erro de classificação, o índice de Gini ou a entropia cruzada.
+Para a divisão dos nós no caso da regressão, foi utilizado o erro quadrático médio como medida de impureza. Para a classificação, algumas medidas comuns para $Q_j\left(T\right)$ são o erro de classificação, o índice de Gini ou a entropia cruzada.
 
 ## Métodos Ensemble
 
@@ -337,7 +338,7 @@ como a proporção de observações da classe $k$ no nó $j$. Dessa forma, as ob
 
 \vspace{12pt}
 
-\ \ \ @breiman1996bagging define formalmente o algoritmo de Bagging, que utiliza um conjunto de treinamento $\mathcal{L}$. A partir desse conjunto, são geradas amostras bootstrap $\mathcal{L}^{(B)}$ com $B$ réplicas, formando uma coleção de modelos $\{f(x, \mathcal{L}^{(B)})\}$, onde $f$ representa um modelo estatístico ou algoritmo treinado nas amostras bootstrap para prever ou classificar uma variável dependente $y$ com base em variáveis independentes $\mathbf{x}$. Se a variável dependente $y$ for numérica, a predição é obtida pela média das previsões dos modelos:
+@breiman1996bagging define formalmente o algoritmo de Bagging, que utiliza um conjunto de treinamento $\mathcal{L}$. A partir desse conjunto, são geradas amostras bootstrap $\mathcal{L}^{(B)}$ com $B$ réplicas, formando uma coleção de modelos $\{f(x, \mathcal{L}^{(B)})\}$, onde $f$ representa um modelo estatístico ou algoritmo treinado nas amostras bootstrap para prever ou classificar uma variável dependente $y$ com base em variáveis independentes $\mathbf{x}$. Se a variável dependente $y$ for numérica, a predição é obtida pela média das previsões dos modelos:
 
 $$
 f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)
@@ -351,21 +352,21 @@ isto é, o $j$ para o qual $N_j$ é máximo
 
 \vspace{12pt}
 
-\ \ \ Embora a técnica de Bagging possa melhorar o desempenho de uma árvore de regressão ou de classificação, isso geralmente vem ao custo de menor interpretabilidade. Quando o Bagging é aplicado a uma árvore de regressão, construímos $B$ árvores de regressão usando $B$ réplicas de amostras bootstrap e tomamos a média das predições resultantes [@james2013introduction]. Nesse processo, as árvores de regressão crescem até seu máximo, sem passar pelo processo de poda, resultando em cada árvore individual com alta variância e baixo viés. No entanto, ao agregar as predições das $B$ árvores, a variância é reduzida.
+Embora a técnica de Bagging possa melhorar o desempenho de uma árvore de regressão ou de classificação, isso geralmente vem ao custo de menor interpretabilidade. Quando o Bagging é aplicado a uma árvore de regressão, construímos $B$ árvores de regressão usando $B$ réplicas de amostras bootstrap e tomamos a média das predições resultantes [@james2013introduction]. Nesse processo, as árvores de regressão crescem até seu máximo, sem passar pelo processo de poda, resultando em cada árvore individual com alta variância e baixo viés. No entanto, ao agregar as predições das $B$ árvores, a variância é reduzida.
 
 \vspace{12pt}
 
-\ \ \ Para mitigar a falta de interpretabilidade do método Bagging aplicado a árvores de regressão, pode-se usar a medida de impureza baseada no erro quadrático médio, definida anteriormente, como uma métrica de importância das variáveis independentes. Um valor elevado na redução total média do erro quadrático médio, calculado com base nas divisões realizadas por um determinado preditor em todas as $B$ árvores, indica que o preditor é importante.
+Para mitigar a falta de interpretabilidade do método Bagging aplicado a árvores de regressão, pode-se usar a medida de impureza baseada no erro quadrático médio, definida anteriormente, como uma métrica de importância das variáveis independentes. Um valor elevado na redução total média do erro quadrático médio, calculado com base nas divisões realizadas por um determinado preditor em todas as $B$ árvores, indica que o preditor é importante.
 
 \vspace{12pt}
 
-\ \ \ As árvores construídas pelo algoritmo de árvore de decisão se beneficiam da proposta de agregação do Bagging, mas esse benefício é limitado devido à correlação positiva existente entre as árvores. Se as árvores forem variáveis aleatórias independentes e identicamente distribuídas, cada uma com variância $\sigma^2$, a variância da média das previsões das $B$ árvores será $\frac{1}{B} \sigma^2$. No entanto, se as árvores forem apenas identicamente distribuídas, mas não necessariamente independentes, e apresentarem uma correlação positiva $\rho$, a esperança da média das $B$ árvores será a mesma que a esperança de uma árvore individual. Portanto, o viés do agregado das árvores é o mesmo das árvores individuais, e a melhoria é alcançada apenas pela redução da variância. A variância da média das previsões será dada por:
+As árvores construídas pelo algoritmo de árvore de decisão se beneficiam da proposta de agregação do Bagging, mas esse benefício é limitado devido à correlação positiva existente entre as árvores. Se as árvores forem variáveis aleatórias independentes e identicamente distribuídas, cada uma com variância $\sigma^2$, a variância da média das previsões das $B$ árvores será $\frac{1}{B} \sigma^2$. No entanto, se as árvores forem apenas identicamente distribuídas, mas não necessariamente independentes, e apresentarem uma correlação positiva $\rho$, a esperança da média das $B$ árvores será a mesma que a esperança de uma árvore individual. Portanto, o viés do agregado das árvores é o mesmo das árvores individuais, e a melhoria é alcançada apenas pela redução da variância. A variância da média das previsões será dada por:
 
 $$
 \rho \sigma^2 + \frac{1 - \rho}{B}\sigma^2
 $${#eq-cor}
 
-\ \ \ Isso significa que, à medida que o número de árvores $B$ aumenta, o segundo termo da soma se torna menos significativo. Portanto, os benefícios da agregação proporcionados pelo algoritmo de Bagging são limitados pela correlação entre as árvores [@hastie2009elements]. Mesmo com o aumento do número de árvores no Bagging, a correlação entre elas impede que as previsões individuais sejam completamente independentes, resultando em menor diminuição da variância da média das previsões do que seria esperado se as árvores fossem totalmente independentes. Uma maneira de melhorar o algoritmo de Bagging é por meio do Random Forest, que será descrito a seguir.
+Isso significa que, à medida que o número de árvores $B$ aumenta, o segundo termo da soma se torna menos significativo. Portanto, os benefícios da agregação proporcionados pelo algoritmo de Bagging são limitados pela correlação entre as árvores [@hastie2009elements]. Mesmo com o aumento do número de árvores no Bagging, a correlação entre elas impede que as previsões individuais sejam completamente independentes, resultando em menor diminuição da variância da média das previsões do que seria esperado se as árvores fossem totalmente independentes. Uma maneira de melhorar o algoritmo de Bagging é por meio do Random Forest, que será descrito a seguir.
 
 ### Random Forest
 
@@ -426,11 +427,11 @@ Fonte: @hastie2009elements [p. 588].
 
 \vspace{12pt}
 
-\ \ \  No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, antes de cada divisão, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão (com $m = p$ no caso do Bagging). Apenas uma dessas $m$ variáveis é usada para realizar a divisão, com base em critérios como a minimização da impureza. Diferentemente do Bagging, que tende a gerar árvores de decisão semelhantes e, portanto, previsões altamente correlacionadas, o Random Forest visa minimizar esse problema ao proporcionar oportunidades para que outros preditores sejam considerados. Assim, em média, $\left(p - m\right)/p$ das divisões nem sequer considerarão o preditor mais forte, permitindo que outros preditores também tenham a chance de serem usados [@james2013introduction]. Esse processo de redução da correlação entre as árvores resulta em uma média das árvores menos variável e, consequentemente, mais confiável.
+No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, antes de cada divisão, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão (com $m = p$ no caso do Bagging). Apenas uma dessas $m$ variáveis é usada para realizar a divisão, com base em critérios como a minimização da impureza. Diferentemente do Bagging, que tende a gerar árvores de decisão semelhantes e, portanto, previsões altamente correlacionadas, o Random Forest visa minimizar esse problema ao proporcionar oportunidades para que outros preditores sejam considerados. Assim, em média, $\left(p - m\right)/p$ das divisões nem sequer considerarão o preditor mais forte, permitindo que outros preditores também tenham a chance de serem usados [@james2013introduction]. Esse processo de redução da correlação entre as árvores resulta em uma média das árvores menos variável e, consequentemente, mais confiável.
 
 \vspace{12pt}
 
-\ \ \ A quantidade de variáveis independentes $m$ selecionadas aleatoriamente é um hiperparâmetro que pode ser estimado por meio de validação cruzada. Valores comuns para $m$ são $m=\sqrt{p}$​ com tamanho mínimo do nó igual a um para classificação, e $m=p/3$​ com tamanho mínimo do nó igual a cinco para regressão [@hastie2009elements]. Quando o número de variáveis é grande, mas poucas são realmente relevantes, o algoritmo Random Forest pode ter um desempenho inferior com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis mais importantes. No entanto, usar um valor pequeno de $m$ pode ser vantajoso quando há muitos preditores correlacionados. Além disso, assim como no Bagging, a Random Forest não sofre de sobreajuste com o aumento da quantidade de árvores $B$. Portanto, é suficiente usar um $B$ grande o bastante para que a taxa de erro se estabilize [@james2013introduction].
+A quantidade de variáveis independentes $m$ selecionadas aleatoriamente é um hiperparâmetro que pode ser estimado por meio de validação cruzada. Valores comuns para $m$ são $m=\sqrt{p}$​ com tamanho mínimo do nó igual a um para classificação, e $m=p/3$​ com tamanho mínimo do nó igual a cinco para regressão [@hastie2009elements]. Quando o número de variáveis é grande, mas poucas são realmente relevantes, o algoritmo Random Forest pode ter um desempenho inferior com valores pequenos de $m$, pois isso reduz as chances de selecionar as variáveis mais importantes. No entanto, usar um valor pequeno de $m$ pode ser vantajoso quando há muitos preditores correlacionados. Além disso, assim como no Bagging, a Random Forest não sofre de sobreajuste com o aumento da quantidade de árvores $B$. Portanto, é suficiente usar um $B$ grande o bastante para que a taxa de erro se estabilize [@james2013introduction].
 
 ### Boosting Trees
 
@@ -487,15 +488,15 @@ Fonte: @james2013introduction [p. 349].
 
 :::
 
-\ \ \ No algoritmo de Bagging, cada árvore é construída e ajustada utilizando amostras bootstrap, e ao final, um estimador agregado $\varphi_B$​ é formado a partir das $B$ árvores. O Boosting Trees funciona de maneira semelhante, mas sem o uso de amostras bootstrap. A ideia principal é corrigir os erros das árvores anteriores, ajustando as novas árvores aos resíduos das anteriores, visando melhorar suas previsões. Assim, as árvores são construídas de forma sequencial, incorporando as informações das árvores anteriores.
+No algoritmo de Bagging, cada árvore é construída e ajustada utilizando amostras bootstrap, e ao final, um estimador agregado $\varphi_B$​ é formado a partir das $B$ árvores. O Boosting Trees funciona de maneira semelhante, mas sem o uso de amostras bootstrap. A ideia principal é corrigir os erros das árvores anteriores, ajustando as novas árvores aos resíduos das anteriores, visando melhorar suas previsões. Assim, as árvores são construídas de forma sequencial, incorporando as informações das árvores anteriores.
 
 \vspace{12pt}
 
-\ \ \ No caso da regressão, o Boosting combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. A primeira árvore é construída utilizando o conjunto de dados original, e seus resíduos são calculados. Com a primeira árvore ajustada, a segunda árvore é ajustada aos da árvore anterior resíduos e, em seguida, é adicionada ao estimador para atualizar os resíduos. Dessa forma, os resíduos servem como informação crucial para construir novas árvores e corrigir os erros das árvores anteriores. Como cada nova árvore depende das árvores já construídas, árvores menores são suficientes [@james2013introduction].
+No caso da regressão, o Boosting combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. A primeira árvore é construída utilizando o conjunto de dados original, e seus resíduos são calculados. Com a primeira árvore ajustada, a segunda árvore é ajustada aos da árvore anterior resíduos e, em seguida, é adicionada ao estimador para atualizar os resíduos. Dessa forma, os resíduos servem como informação crucial para construir novas árvores e corrigir os erros das árvores anteriores. Como cada nova árvore depende das árvores já construídas, árvores menores são suficientes [@james2013introduction].
 
 \vspace{12pt}
 
-\ \ \ O processo de aprendizado no método de Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis.
+O processo de aprendizado no método de Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis.
 
 
 ### Stacked generalization
@@ -504,7 +505,7 @@ Fonte: @james2013introduction [p. 349].
 
 \vspace{12pt}
 
-\ \ \ Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em x, utilizando o modelo $m$, aplicado ao conjunto de treinamento com a $i\text{-ésima}$ observação removida [@hastie2009elements]. Assim, os peso são estimados de forma a minimizar o erro de predição combinado, dado pela seguinte expressão:
+Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em x, utilizando o modelo $m$, aplicado ao conjunto de treinamento com a $i\text{-ésima}$ observação removida [@hastie2009elements]. Assim, os peso são estimados de forma a minimizar o erro de predição combinado, dado pela seguinte expressão:
 
 $$
 \hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m f^{-i}_m\left(x_i\right)\right]^2
@@ -600,7 +601,7 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 \vspace{12pt}
 
-\ \ \ Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que faziam sentido para a modelagem, priorizando aquelas com menor probabilidade de gerar problemas durante o tratamento dos dados. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas de latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços, utilizando o pacote tidygeocoder [@geocoder] da linguagem R. Dessa forma, tem-se as seguintes variáveis:
+Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que faziam sentido para a modelagem, priorizando aquelas com menor probabilidade de gerar problemas durante o tratamento dos dados. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas de latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços, utilizando o pacote tidygeocoder [@geocoder] da linguagem R. Dessa forma, tem-se as seguintes variáveis:
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
@@ -632,7 +633,7 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 \vspace{12pt}
 
-\ \ \ No entanto, com base nas observações realizadas durante o estudo, nem todas as variáveis coletadas foram utilizadas na modelagem do valor dos imóveis. Algumas foram excluídas devido a uma quantidade excessiva de valores ausentes, enquanto outras se mostraram pouco significativas para explicar o valor do imóvel. Após o processo de coleta e limpeza dos dados, o banco de dados final conta com 31.782 observações.
+No entanto, com base nas observações realizadas durante o estudo, nem todas as variáveis coletadas foram utilizadas na modelagem do valor dos imóveis. Algumas foram excluídas devido a uma quantidade excessiva de valores ausentes, enquanto outras se mostraram pouco significativas para explicar o valor do imóvel. Após o processo de coleta e limpeza dos dados, o banco de dados final conta com 31.782 observações.
 
 ## Análise exploratória de dados
 
@@ -644,11 +645,11 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 \vspace{12pt}
 
-\ \ \ Com as variáveis selecionadas, o conjunto de dados foi dividido em treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe StratifiedShuffleSplit, que garante uma amostragem estratificada e aleatória. A estratificação foi baseada na variável "tipo de imóvel", preservando a proporção de amostras para cada categoria. Definiu-se 20% do conjunto de dados para o teste, enquanto os 80% restantes foram reservados para o treinamento.
+Com as variáveis selecionadas, o conjunto de dados foi dividido em treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe StratifiedShuffleSplit, que garante uma amostragem estratificada e aleatória. A estratificação foi baseada na variável "tipo de imóvel", preservando a proporção de amostras para cada categoria. Definiu-se 20% do conjunto de dados para o teste, enquanto os 80% restantes foram reservados para o treinamento.
 
 \vspace{12pt}
 
-\ \ \ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas `scikit-learn`, `lightgbm` e `xgboost`. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva.
+Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas `scikit-learn`, `lightgbm` e `xgboost`. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva.
 
 ### Etapas de pré-processamento
 
@@ -656,7 +657,7 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 \vspace{12pt}
 
-\ \ \ O método utilizado para a imputação de valores ausentes foi o algoritmo k-nearest neighbors (KNN). Esse algoritmo estima os valores ausentes de acordo com a fórmula:
+O método utilizado para a imputação de valores ausentes foi o algoritmo k-nearest neighbors (KNN). Esse algoritmo estima os valores ausentes de acordo com a fórmula:
 
 $$
 \hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i
@@ -665,11 +666,11 @@ onde $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou se
 
 \vspace{12pt}
 
-\ \ \ A transformação utilizada para estabilizar a variância e aproximar a distribuição dos regressores de uma distribuição normal foi a transformação logarítmica. Para lidar com variáveis categóricas, foi utilizada a classe OneHotEncoder, que aplica a codificação one hot. Essa técnica transforma as categorias das variáveis em variáveis dicotômicas, criando uma nova coluna para cada categoria. Além disso, o OrdinalEncoder foi utilizado para variáveis ordinais, que possuem uma ordem. Dessa forma, o OneHotEncoder foi aplicado à variável de tipo de imóvel, transformando cada categoria de imóvel em variáveis dummy. Já o OrdinalEncoder foi aplicado à variável de tamanho do imóvel, que foi criada posteriormente para classificar os imóveis em diferentes faixas: pequenos, médios e grandes.
+A transformação utilizada para estabilizar a variância e aproximar a distribuição dos regressores de uma distribuição normal foi a transformação logarítmica. Para lidar com variáveis categóricas, foi utilizada a classe OneHotEncoder, que aplica a codificação one hot. Essa técnica transforma as categorias das variáveis em variáveis dicotômicas, criando uma nova coluna para cada categoria. Além disso, o OrdinalEncoder foi utilizado para variáveis ordinais, que possuem uma ordem. Dessa forma, o OneHotEncoder foi aplicado à variável de tipo de imóvel, transformando cada categoria de imóvel em variáveis dummy. Já o OrdinalEncoder foi aplicado à variável de tamanho do imóvel, que foi criada posteriormente para classificar os imóveis em diferentes faixas: pequenos, médios e grandes.
 
 \vspace{12pt}
 
-\ \ \ Por fim, as variáveis numéricas foram normalizadas utilizando a classe StandardScaler, que padroniza os dados aplicando a seguinte transformação:
+Por fim, as variáveis numéricas foram normalizadas utilizando a classe StandardScaler, que padroniza os dados aplicando a seguinte transformação:
 
 $$
 z = \frac{x - \mu}{\sigma}
@@ -683,7 +684,7 @@ onde $\mu$ é a média da amostra de treinamento e $\sigma$ é o desvio padrão 
 
 \vspace{12pt}
 
-\ \ \ A validação cruzada K-Fold é uma técnica que utiliza parte dos dados para ajustar o modelo e outra parte para testá-lo. Nessa abordagem, os dados são divididos em $K$ folds. Em cada iteração, um desses folds é reservado para testar o modelo, enquanto os $K−1$ folds restantes são usados para treiná-lo. O modelo é ajustado nos $K−1$ subconjuntos e avaliado no subconjunto de teste, permitindo estimar o erro de predição. Esse processo é repetido $K$ vezes, alternando o subconjunto de teste em cada rodada, e ao final, os $K$ erros de predição são combinados. O erro de predição estimado pela validação cruzada é dado por:
+A validação cruzada K-Fold é uma técnica que utiliza parte dos dados para ajustar o modelo e outra parte para testá-lo. Nessa abordagem, os dados são divididos em $K$ folds. Em cada iteração, um desses folds é reservado para testar o modelo, enquanto os $K−1$ folds restantes são usados para treiná-lo. O modelo é ajustado nos $K−1$ subconjuntos e avaliado no subconjunto de teste, permitindo estimar o erro de predição. Esse processo é repetido $K$ vezes, alternando o subconjunto de teste em cada rodada, e ao final, os $K$ erros de predição são combinados. O erro de predição estimado pela validação cruzada é dado por:
 
 $$
 CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)
@@ -738,15 +739,15 @@ plt.show()
 
 \vspace{12pt}
 
-\ \ \ A figura acima ilustra exatamente o caso da validação cruzada por K-Fold. As divisões do conjunto de dados para treinamento do modelo são representados pela cor azul, enquanto as laranjas são os conjuntos de validação, onde o modelo ajustado será testado e validado com uma função perda $L$.
+A figura acima ilustra exatamente o caso da validação cruzada por K-Fold. As divisões do conjunto de dados para treinamento do modelo são representados pela cor azul, enquanto as laranjas são os conjuntos de validação, onde o modelo ajustado será testado e validado com uma função perda $L$.
 
 \vspace{12pt}
 
-\ \ \ Para aplicar a validação cruzada com K-Fold nos modelos utilizados neste trabalho, foi empregada uma função e uma classe da biblioteca scikit-learn, ambas disponíveis no módulo model_selection. A função utilizada para a validação cruzada é a `cross_val_score`, na qual o modelo a ser validado é passado por meio do argumento estimator. O critério de avaliação é especificado no argumento `scoring`, e a técnica de validação cruzada é definida pelo argumento cv. No caso deste trabalho, foi utilizada a classe `KFold(n_splits=20)`, responsável por realizar a validação cruzada com K-Fold. O argumento `n_splits` define o número de folds utilizados durante a validação, que neste caso foram 20. Por fim, basta calcular a média das métricas retornadas pelo `cross_val_score` para cada um dos folds.
+Para aplicar a validação cruzada com K-Fold nos modelos utilizados neste trabalho, foi empregada uma função e uma classe da biblioteca scikit-learn, ambas disponíveis no módulo model_selection. A função utilizada para a validação cruzada é a `cross_val_score`, na qual o modelo a ser validado é passado por meio do argumento estimator. O critério de avaliação é especificado no argumento `scoring`, e a técnica de validação cruzada é definida pelo argumento cv. No caso deste trabalho, foi utilizada a classe `KFold(n_splits=20)`, responsável por realizar a validação cruzada com K-Fold. O argumento `n_splits` define o número de folds utilizados durante a validação, que neste caso foram 20. Por fim, basta calcular a média das métricas retornadas pelo `cross_val_score` para cada um dos folds.
 
 \vspace{12pt}
 
-\ \ \ A métrica utilizada para avaliar o desempenho dos modelos durante a validação cruzada foi a raiz do erro quadrático médio (RMSE). O RMSE mede o quanto os valores estimados pelo modelo se afastam, em média, dos valores observados, sendo que quanto menor o RMSE, melhor é o desempenho do modelo. Além do RMSE, foi também utilizada a métrica MAPE (Erro Percentual Absoluto Médio), que quantifica, em termos percentuais, o desvio médio entre os valores estimados e os observados. Por fim, foi analisado o coeficiente de determinação ($R^2$), uma medida que indica a proporção da variação da variável dependente explicada pelas variáveis independentes; neste caso, o valor do imóvel. As métricas são definidas da seguinte forma:
+A métrica utilizada para avaliar o desempenho dos modelos durante a validação cruzada foi a raiz do erro quadrático médio (RMSE). O RMSE mede o quanto os valores estimados pelo modelo se afastam, em média, dos valores observados, sendo que quanto menor o RMSE, melhor é o desempenho do modelo. Além do RMSE, foi também utilizada a métrica MAPE (Erro Percentual Absoluto Médio), que quantifica, em termos percentuais, o desvio médio entre os valores estimados e os observados. Por fim, foi analisado o coeficiente de determinação ($R^2$), uma medida que indica a proporção da variação da variável dependente explicada pelas variáveis independentes; neste caso, o valor do imóvel. As métricas são definidas da seguinte forma:
 
 ::: {layout-ncol=3}
 $$
@@ -770,11 +771,11 @@ em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivament
 
 \vspace{12pt}
 
-\ \ \ A otimização bayesiana não se refere a um algoritmo específico, mas sim a uma abordagem de otimização fundamentada na inferência bayesiana, que engloba uma ampla família de algoritmos [@garnett2023bayesian]. Além disso, a otimização bayesiana tem alcançado benchmarks superiores em comparação com outros algoritmos em diversos problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
+A otimização bayesiana não se refere a um algoritmo específico, mas sim a uma abordagem de otimização fundamentada na inferência bayesiana, que engloba uma ampla família de algoritmos [@garnett2023bayesian]. Além disso, a otimização bayesiana tem alcançado benchmarks superiores em comparação com outros algoritmos em diversos problemas complexos de otimização de hiperparâmetros [@snoek2012practical].
 
 \vspace{12pt}
 
-\ \ \ Diferentemente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana ajusta suas tentativas futuras de avaliação com base nos resultados obtidos anteriormente [@yang2020hyperparameter]. Para definir os pontos futuros, utiliza-se uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Após ajustar essa função, obtém-se, para cada $\lambda$, uma estimativa da performance $\hat c \left(\lambda \right)$ e da incerteza da predição $\hat \sigma \left(\lambda \right)$, além da distribuição preditiva associada à função probabilística. Com essa distribuição, uma função de aquisição determina o equilíbrio entre exploitation e exploration^[Exploitation refere-se à busca por soluções próximas a boas observações anteriores, enquanto exploration visa explorar áreas ainda não investigadas]. Assim, os algoritmos de otimização bayesiana são regidos pela relação $\lambda \to c\left(\lambda \right)$ e buscam um equilíbrio entre exploitation e exploration para identificar as regiões mais promissoras, sem negligenciar possíveis configurações melhores em áreas ainda inexploradas.
+Diferentemente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana ajusta suas tentativas futuras de avaliação com base nos resultados obtidos anteriormente [@yang2020hyperparameter]. Para definir os pontos futuros, utiliza-se uma função probabilística $P\left(\rho |  \lambda \right)$ [@bergstra2013making]. Após ajustar essa função, obtém-se, para cada $\lambda$, uma estimativa da performance $\hat c \left(\lambda \right)$ e da incerteza da predição $\hat \sigma \left(\lambda \right)$, além da distribuição preditiva associada à função probabilística. Com essa distribuição, uma função de aquisição determina o equilíbrio entre exploitation e exploration^[Exploitation refere-se à busca por soluções próximas a boas observações anteriores, enquanto exploration visa explorar áreas ainda não investigadas]. Assim, os algoritmos de otimização bayesiana são regidos pela relação $\lambda \to c\left(\lambda \right)$ e buscam um equilíbrio entre exploitation e exploration para identificar as regiões mais promissoras, sem negligenciar possíveis configurações melhores em áreas ainda inexploradas.
 
 ### Tree-Structured Parzen Estimator
 
@@ -791,25 +792,25 @@ em que $l\left(x\right)$ representa a densidade quando a função de perda é me
 
 \vspace{12pt}
 
-\ \ \ Por padrão, o Tree-Structured Parzen Estimator (TPE) utiliza como função de aquisição o Expected Improvement (EI), que pode ser otimizado no TPE da seguinte forma:
+Por padrão, o Tree-Structured Parzen Estimator (TPE) utiliza como função de aquisição o Expected Improvement (EI), que pode ser otimizado no TPE da seguinte forma:
 
 $$
   EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | x\right) dy
 $${#eq-exp}
 
-\ \ \ Para encontrar a probabilidade marginal de $x$, temos a seguinte integral: $p\left(x\right) = \int_{\mathbb{R}} p\left(x | y\right)p\left(y\right)dy$. Particionando o domínio de $y$, obtemos:
+Para encontrar a probabilidade marginal de $x$, temos a seguinte integral: $p\left(x\right) = \int_{\mathbb{R}} p\left(x | y\right)p\left(y\right)dy$. Particionando o domínio de $y$, obtemos:
 
 $$
 p\left(x\right) = \gamma l\left(x\right) + \left(1 - \gamma \right) g\left(x\right)
 $$
 
-\ \ \ Assim, aplicando o Teorema de Bayes e substituindo na integral da equação @eq-exp:
+Assim, aplicando o Teorema de Bayes e substituindo na integral da equação @eq-exp:
 
 $$
 EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right) \frac{p\left(x | y\right)p\left(y\right)}{p\left(x\right)}dy = \left(\gamma y^*  - \int_{-\infty}^{y^*} p\left(y\right)dy\right) \left(\gamma + \left(1 - \gamma\right)\frac{g\left(x\right)}{l\left(x\right)}\right) ^{-1}
 $$
 
-\ \ \ A segunda expressão do produto mostra que, para maximizar o Expected Improvement, é necessário encontrar pontos de $x$ com maior probabilidade em $l\left(x\right)$ e menor probabilidade em $g\left(x\right)$. No entanto, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições, definida como $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
+A segunda expressão do produto mostra que, para maximizar o Expected Improvement, é necessário encontrar pontos de $x$ com maior probabilidade em $l\left(x\right)$ e menor probabilidade em $g\left(x\right)$. No entanto, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições, definida como $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo].
 
 \vspace{12pt}
 
@@ -864,11 +865,11 @@ study = optuna.create_study()
 study.optimize(objective, n_trials=100, n_jobs=-1)
 ```
 
-\ \ \ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão otimizados, especificados no objeto `params` no início da função. Após definir o espaço de busca para cada hiperparâmetro, o modelo escolhido é ajustado aos dados de treinamento. Com o modelo ajustado, realiza-se a validação cruzada em cada trial, utilizando o método K-Fold com 20 divisões (folds), conforme definido previamente. Após definir a função objetivo, inicializa-se um estudo com `optuna.create_study` e, em seguida, inicia-se a otimização com `study.optimize(objective, n_trials=100, n_jobs=-1)`. Por fim, para selecionar os melhores hiperparâmetros ao fim do último trial, basta executar `study.best_params`.
+Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão otimizados, especificados no objeto `params` no início da função. Após definir o espaço de busca para cada hiperparâmetro, o modelo escolhido é ajustado aos dados de treinamento. Com o modelo ajustado, realiza-se a validação cruzada em cada trial, utilizando o método K-Fold com 20 divisões (folds), conforme definido previamente. Após definir a função objetivo, inicializa-se um estudo com `optuna.create_study` e, em seguida, inicia-se a otimização com `study.optimize(objective, n_trials=100, n_jobs=-1)`. Por fim, para selecionar os melhores hiperparâmetros ao fim do último trial, basta executar `study.best_params`.
 
 \vspace{12pt}
 
-\ \ \ Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca optuna. No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
+Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca optuna. No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
 
 
 \newpage
@@ -883,7 +884,7 @@ study.optimize(objective, n_trials=100, n_jobs=-1)
 
 \vspace{12pt}
 
-\ \ \ Formalmente, o ICE considera as observações $\{x_{S_i}, \mathbf{x}_{C_i}\}_{i=1}^{N}$​ e os valores preditos $\hat f$​. Para cada uma das $N$ observações e valores ajustados $x_C$, uma curva $\hat f_S^{\left(i\right)}$​ é traçada em função dos valores observados de $x_S$. Dessa forma, a variável $x_S$ é representada no eixo das abscissas, enquanto os valores observados de $\mathbf x_C$​ permanecem fixos. Quando há um grande número de linhas no gráfico ICE, a interpretação pode se tornar difícil. Para facilitar a análise, considera-se a centralização das curvas em um ponto específico das variáveis, representando apenas a diferença nas predições em relação a esse ponto. Essa centralização é conhecida como c-ICE. As novas curvas são então definidas da seguinte forma:
+Formalmente, o ICE considera as observações $\{x_{S_i}, \mathbf{x}_{C_i}\}_{i=1}^{N}$​ e os valores preditos $\hat f$​. Para cada uma das $N$ observações e valores ajustados $x_C$, uma curva $\hat f_S^{\left(i\right)}$​ é traçada em função dos valores observados de $x_S$. Dessa forma, a variável $x_S$ é representada no eixo das abscissas, enquanto os valores observados de $\mathbf x_C$​ permanecem fixos. Quando há um grande número de linhas no gráfico ICE, a interpretação pode se tornar difícil. Para facilitar a análise, considera-se a centralização das curvas em um ponto específico das variáveis, representando apenas a diferença nas predições em relação a esse ponto. Essa centralização é conhecida como c-ICE. As novas curvas são então definidas da seguinte forma:
 
 $$
 \hat{f}_{cent}^{\left(i\right)} = \hat{f}^{\left(i\right)} - \mathbf{1} \hat{f}\left(x^*, \mathbf x_{C_i}\right)
@@ -896,7 +897,7 @@ onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ �
 
 \vspace{12pt}
 
-\ \ \ Formalmente, para a construção da explicação produzida pelo LIME, deve-se definir a explicação como um modelo $g \in G$, onde $G$ é uma classe de potenciais modelos interpretáveis, como uma regressão linear ou árvores de decisão. O domínio de $g$ é $\{0, 1\}^{d^{'}}$, isto é, o modelo explicativo $g$ age sobre a ausência ou presença de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para ser interpretado, define-se uma medida de complexidade $\Omega\left(g\right)$ da explicação gerada por $g \in G$. Para uma árvore de regressão, por exemplo, $\Omega\left(g\right)$ pode ser a profundidade da árvore, enquanto que para modelos lineares $\Omega\left(g\right)$ pode ser o número de pesos diferentes de zero.
+Formalmente, para a construção da explicação produzida pelo LIME, deve-se definir a explicação como um modelo $g \in G$, onde $G$ é uma classe de potenciais modelos interpretáveis, como uma regressão linear ou árvores de decisão. O domínio de $g$ é $\{0, 1\}^{d^{'}}$, isto é, o modelo explicativo $g$ age sobre a ausência ou presença de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para ser interpretado, define-se uma medida de complexidade $\Omega\left(g\right)$ da explicação gerada por $g \in G$. Para uma árvore de regressão, por exemplo, $\Omega\left(g\right)$ pode ser a profundidade da árvore, enquanto que para modelos lineares $\Omega\left(g\right)$ pode ser o número de pesos diferentes de zero.
 
 \vspace{12pt}
 
@@ -918,7 +919,7 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 \vspace{12pt}
 
-\ \ \ A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas, enquanto as demais com valores ausentes foram tratadas por meio de imputação.
+A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas, enquanto as demais com valores ausentes foram tratadas por meio de imputação.
 
 
 ```{python}
@@ -951,11 +952,11 @@ g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
 
 \vspace{12pt}
 
-\ \ \ Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na previsão de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
+Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na previsão de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
 
 \vspace{12pt}
 
-\ \ \ A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
+A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
 
 ```{python}
 #| label: fig-violin
@@ -1037,7 +1038,7 @@ plt.show()
 
 \vspace{12pt}
 
-\ \ \ Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
+Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
 
 ```{python}
 #| label: fig-densitarg
@@ -1070,7 +1071,7 @@ plt.show()
 
 \vspace{12pt}
 
-\ \ \ A @fig-corplot apresenta a matriz de correlação entre as variáveis numéricas do conjunto de dados. As cores mais escuras indicam uma correlação mais forte entre as variáveis, enquanto as cores mais claras indicam o contrário. O valor do imóvel apresenta maior correlação com as variáveis de área do imóvel e número de vagas de estacionamento. Além disso, o valor do imóvel tem alta correlação com o valor médio do aluguel, número de quartos e banheiros, além de ser fortemente influenciado pela localização das propriedades. Algumas variáveis apresentam multicolinearidade entre si, mas os algoritmos utilizados selecionam aleatoriamente as variáveis para a modelagem, o que reduz o risco de selecionar variáveis redundantes.
+A @fig-corplot apresenta a matriz de correlação entre as variáveis numéricas do conjunto de dados. As cores mais escuras indicam uma correlação mais forte entre as variáveis, enquanto as cores mais claras indicam o contrário. O valor do imóvel apresenta maior correlação com as variáveis de área do imóvel e número de vagas de estacionamento. Além disso, o valor do imóvel tem alta correlação com o valor médio do aluguel, número de quartos e banheiros, além de ser fortemente influenciado pela localização das propriedades. Algumas variáveis apresentam multicolinearidade entre si, mas os algoritmos utilizados selecionam aleatoriamente as variáveis para a modelagem, o que reduz o risco de selecionar variáveis redundantes.
 
 ```{python}
 #| label: fig-corplot
@@ -1098,11 +1099,43 @@ plt.show()
 
 `ADICIONAR NO FIM UM GRÁFICO DE ESPACIALIZAÇÃO DOS DADOS (INCLUIR VARIAÇÃO DA COR PELO PREÇO DO IMÓVEL)`
 
-## Construção dos modelos
+## Tunagem dos modelos
 
-### Random Forest
+\ \ \ Como os algoritmos utilizados nesse trabalho são baseados em árvore de decisão ou fazem uso de árvore de decisão, como o Random Forest, Gradient Boosting e suas variações, os parâmetros escolhidos para otimização foram bastante semelhante. Dessa forma, foram tunados hiperparâmetros como a quantidade de árvores, a profundidade da árvore para representar a complexidade das relações presentes nos dados. Por fim, como alguns dos algoritmos são baseados no Gradient Boosting, foi também tunado o hiperparâmetro da taxa de aprendizado.
 
-### Gradient Boosting
+\vspace{12pt}
+
+Todos os modelos e bibliotecas utilizadas nesse trabalho se baseiam no funcionamento da API do scikit-learn. A API do scikit-learn define o hiperparâmetro da quantidade de árvores como `n_estimators`, o de profundidade da árvore como `max_depth` e o de taxa de aprendizado como `learning_rate`. Dessa forma, a partir da configuração da função objetivo pela biblioteca optuna, a procura pela quantidade ótima de árvores variou entre 50 e 1500, o de profundidade da árvore foi de 3 a 500 e o de taxa de aprendizado foi de $1 \cdot 10^{-4}$ a $1 \cdot 10^{-1}$.
+
+```{python}
+import optuna.visualization
+import joblib
+
+study1 = joblib.load('../app/modeling/study_pkl/study_rf.pkl')
+study2 = joblib.load('../app/modeling/study_pkl/study_gdt.pkl')
+study3 = joblib.load('../app/modeling/study_pkl/study_lgbm.pkl')
+study4 = joblib.load('../app/modeling/study_pkl/study_xgb.pkl')
+# optuna.visualization.plot_edf([study1, study2, study3, study4])
+# optuna.visualization.plot_optimization_history([study1, study2, study3, study4])
+optuna.visualization.matplotlib.plot_optimization_history(study1)
+optuna.visualization.matplotlib.plot_optimization_history(study2)
+optuna.visualization.matplotlib.plot_optimization_history(study3)
+optuna.visualization.matplotlib.plot_optimization_history(study4)
+```
+
+```{python}
+optuna.visualization.matplotlib.plot_contour(study1)
+optuna.visualization.matplotlib.plot_contour(study2)
+optuna.visualization.matplotlib.plot_contour(study3)
+optuna.visualization.matplotlib.plot_contour(study4)
+```
+
+```{python}
+optuna.visualization.matplotlib.plot_slice(study1)
+optuna.visualization.matplotlib.plot_slice(study2)
+optuna.visualization.matplotlib.plot_slice(study3)
+optuna.visualization.matplotlib.plot_slice(study4)
+```
 
 # Conclusão
 
