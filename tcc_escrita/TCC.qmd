@@ -1140,7 +1140,9 @@ study4 = joblib.load('../app/modeling/study_pkl/study_xgb.pkl')
 
 
 fig_rf_slice = optuna.visualization.matplotlib.plot_slice(study1)
+plt.suptitle('')
 fig_rf_slice[0].set_ylabel('RMSE')
+fig_rf_slice[0].set_title('RMSE')
 for _ in fig_rf_slice:
   _.set_title('')
   _.grid(True, color='grey', linewidth=.05)
