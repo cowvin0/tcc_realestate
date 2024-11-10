@@ -1101,11 +1101,27 @@ plt.show()
 
 ## Tunagem dos modelos
 
-\ \ \ Como os algoritmos utilizados nesse trabalho são baseados em árvore de decisão ou fazem uso de árvore de decisão, como o Random Forest, Gradient Boosting e suas variações, os parâmetros escolhidos para otimização foram bastante semelhante. Dessa forma, foram tunados hiperparâmetros como a quantidade de árvores, a profundidade da árvore para representar a complexidade das relações presentes nos dados. Por fim, como alguns dos algoritmos são baseados no Gradient Boosting, foi também tunado o hiperparâmetro da taxa de aprendizado.
+\ \ \ Como os algoritmos utilizados neste trabalho são baseados em árvores de decisão ou podem utilizar algoritmos baseados em árvore, como Random Forest, Gradient Boosting e suas variações, os parâmetros escolhidos para otimização serão bastantes parecidos. Assim, foram ajustados hiperparâmetros como o número de árvores e a profundidade das árvores, de forma a capturar a complexidade das relações presentes nos dados. Além disso, para os algoritmos baseados em Gradient Boosting, o hiperparâmetro de taxa de aprendizado também foi ajustado.
 
 \vspace{12pt}
 
-Todos os modelos e bibliotecas utilizadas nesse trabalho se baseiam no funcionamento da API do scikit-learn. A API do scikit-learn define o hiperparâmetro da quantidade de árvores como `n_estimators`, o de profundidade da árvore como `max_depth` e o de taxa de aprendizado como `learning_rate`. Dessa forma, a partir da configuração da função objetivo pela biblioteca optuna, a procura pela quantidade ótima de árvores variou entre 50 e 1500, o de profundidade da árvore foi de 3 a 500 e o de taxa de aprendizado foi de $1 \cdot 10^{-4}$ a $1 \cdot 10^{-1}$.
+Todos os modelos e bibliotecas usados neste trabalho seguem a API do scikit-learn. Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca Optuna, foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo.
+
+### Tunagem da Random Forest
+
+\ \ \ Para o modelo Random Forest, a função objetivo foi definido apenas para otimizar os hiperparâmetros de quantidade de árvores e de profundidade da árvore. O espaço de procura para a quantidade de árvores foi definido entre 1 a 1000 árvores. Já o hiperparâmetro de profundidade da árvore foi definido entre 20 a 1000. Além disso, foi utilizado aleatoriamente $m = \sqrt{p}$ das $p$ variáveis independentes como candidatas para a divisão.
+
+\vspace{12pt}
+
+A figura @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método FANOVA. Na figura @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a figura @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
+
+\vspace{12pt}
+
+A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores (max_depth). Em contraste, para o hiperparâmetro de número de árvores (n_estimators), o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado em @fig-rf_contour, onde valores menores para max_depth e maiores para n_estimators resultam em um modelo com menor erro de generalização.
+
+\vspace{12pt}
+
+Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import revela que o hiperparâmetro n_estimators possui uma maior contribuição na performance do modelo. A figura @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20. Após esse ponto, o otimizador não consegue encontrar valores de erro significativamente menores.
 
 ```{python}
 import optuna.visualization
@@ -1115,27 +1131,140 @@ study1 = joblib.load('../app/modeling/study_pkl/study_rf.pkl')
 study2 = joblib.load('../app/modeling/study_pkl/study_gdt.pkl')
 study3 = joblib.load('../app/modeling/study_pkl/study_lgbm.pkl')
 study4 = joblib.load('../app/modeling/study_pkl/study_xgb.pkl')
-# optuna.visualization.plot_edf([study1, study2, study3, study4])
-# optuna.visualization.plot_optimization_history([study1, study2, study3, study4])
-optuna.visualization.matplotlib.plot_optimization_history(study1)
+```
+
+::: {#fig-rf_param layout-ncol=2}
+
+```{python}
+#| label: fig-rf_slice
+
+
+fig_rf_slice = optuna.visualization.matplotlib.plot_slice(study1)
+fig_rf_slice[0].set_ylabel('RMSE')
+for _ in fig_rf_slice:
+  _.set_title('')
+  _.grid(True, color='grey', linewidth=.05)
+  _.set_facecolor('white')
+  _.spines['top'].set_visible(True)
+  _.spines['right'].set_visible(True)
+  _.spines['left'].set_visible(True)
+  _.spines['bottom'].set_visible(True)
+
+plt.show()
+```
+
+```{python}
+#| label: fig-rf_import
+
+fig_rf_import = optuna.visualization.matplotlib.plot_param_importances(study1)
+fig_rf_import.grid(True, color="grey", linewidth=0.05)
+fig_rf_import.set_facecolor("white")
+fig_rf_import.get_children()[-4].set_text('')
+fig_rf_import.spines['top'].set_visible(True)
+fig_rf_import.spines['right'].set_visible(True)
+fig_rf_import.spines['left'].set_visible(True)
+fig_rf_import.spines['bottom'].set_visible(True)
+fig_rf_import.set_xlabel('Importância do Hiperparâmetro')
+fig_rf_import.set_ylabel('Hiperparâmetro')
+h, l = fig_rf_import.get_legend_handles_labels()
+fig_rf_import.legend(h, ['RMSE'])
+
+plt.show()
+```
+
+```{python}
+#| label: fig-rf_history
+
+fig_rf_hist = optuna.visualization.matplotlib.plot_optimization_history(study1)
+
+fig_rf_hist.grid(True, color="grey", linewidth=0.05)
+fig_rf_hist.set_facecolor("white")
+fig_rf_hist.get_children()[-5].set_text('')
+fig_rf_hist.spines['top'].set_visible(True)
+fig_rf_hist.spines['right'].set_visible(True)
+fig_rf_hist.spines['left'].set_visible(True)
+fig_rf_hist.spines['bottom'].set_visible(True)
+fig_rf_hist.set_xlabel('Trial')
+fig_rf_hist.set_ylabel('RMSE')
+h, l = fig_rf_hist.get_legend_handles_labels()
+fig_rf_hist.legend(h, ['RMSE', 'Melhor trial'])
+
+plt.show()
+```
+
+```{python}
+#| label: fig-rf_contour
+
+fig_rf_contour = optuna.visualization.matplotlib.plot_contour(study1)
+fig_rf_contour.get_children()[1].set_cmap('crest')
+
+fig_rf_contour.get_children()[-4].set_text('')
+# contour = fig_rf_contour.get_children()[0]
+
+# Adicionar a barra de cores manualmente usando plt.colorbar()
+# cbar = plt.colorbar(contour, ax=fig_rf_contour)
+# cbar.set_label("Nova Legenda da Barra de Cores", rotation=270, labelpad=15)
+
+
+plt.show()
+```
+
+Resultados da Tunagem do modelo Random Forest.
+:::
+
+### Tunagem do Gradient Boosting
+
+::: {#fig-gdt_param layout-nrow=2}
+
+```{python}
+#| label: fig-gdt_slice
+
+optuna.visualization.matplotlib.plot_slice(study2)
+plt.show()
+```
+
+```{python}
+#| label: fig-gdt_import
+
+optuna.visualization.matplotlib.plot_param_importances(study2)
+plt.show()
+```
+
+```{python}
+#| label: fig-gdt_history
+
 optuna.visualization.matplotlib.plot_optimization_history(study2)
+plt.show()
+```
+
+```{python}
+#| label: fig-gdt_contour
+
+optuna.visualization.matplotlib.plot_contour(study2)
+plt.show()
+```
+
+:::
+
+<!-- ```{python}
 optuna.visualization.matplotlib.plot_optimization_history(study3)
 optuna.visualization.matplotlib.plot_optimization_history(study4)
 ```
 
 ```{python}
-optuna.visualization.matplotlib.plot_contour(study1)
-optuna.visualization.matplotlib.plot_contour(study2)
 optuna.visualization.matplotlib.plot_contour(study3)
 optuna.visualization.matplotlib.plot_contour(study4)
 ```
 
 ```{python}
-optuna.visualization.matplotlib.plot_slice(study1)
-optuna.visualization.matplotlib.plot_slice(study2)
 optuna.visualization.matplotlib.plot_slice(study3)
 optuna.visualization.matplotlib.plot_slice(study4)
 ```
+
+```{python}
+optuna.visualization.matplotlib.plot_param_importances(study3)
+optuna.visualization.matplotlib.plot_param_importances(study4)
+``` -->
 
 # Conclusão
 
