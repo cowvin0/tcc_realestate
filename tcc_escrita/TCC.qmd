@@ -1398,7 +1398,11 @@ plt.show()
 Resultados da tunagem do LGBM
 :::
 
+As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um comportamento semelhante ao do Gradient Boosting, porém com maior estabilidade em cada tentativa e uma convergência mais rápida. Ao analisar a contribuição de cada hiperparâmetro para o desempenho do modelo na @fig-lgbm_import, observa-se que a quantidade de árvores é o hiperparâmetro de maior influência, seguido pela taxa de aprendizado, número de folhas e, por último, a profundidade da árvore.
 
+\vspace{12pt}
+
+Analisando a relação entre o hiperparâmetro de profundidade e o de número de folhas variando pela estatística de erro na @fig-lgbm_contour, observa-se que números maiores de folhas e uma profundidade menor na árvore apresenta um modelo com um menor erro. É possível também observar esse mesmo comportamento para os outros hiperparâmetros. Uma maior quantidade de folhas e uma taxa de aprendizado crescente apresentam também um modelo com menor erro, assim como uma maior quantidade de árvores também apresentam um modelo com menor erro.
 
 ### Tunagem do XGBoost
 
