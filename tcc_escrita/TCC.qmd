@@ -1201,76 +1201,294 @@ fig_rf_contour = optuna.visualization.matplotlib.plot_contour(study1)
 fig_rf_contour.get_children()[1].set_cmap('crest')
 
 fig_rf_contour.get_children()[-4].set_text('')
-# contour = fig_rf_contour.get_children()[0]
-
-# Adicionar a barra de cores manualmente usando plt.colorbar()
-# cbar = plt.colorbar(contour, ax=fig_rf_contour)
-# cbar.set_label("Nova Legenda da Barra de Cores", rotation=270, labelpad=15)
-
 
 plt.show()
 ```
 
-Resultados da Tunagem do modelo Random Forest.
+Resultados da tunagem da Random Forest.
 :::
 
 ### Tunagem do Gradient Boosting
 
-::: {#fig-gdt_param layout-nrow=2}
+\ \ \ Para o algoritmo de Gradient Boosting, os hiperparâmetros ajustados foram a taxa de aprendizado, a quantidade de árvores e a profundidade das árvores. No Optuna, o espaço de busca definido na função objetivo para a taxa de aprendizado variou de $1 \cdot 10^{-5}$ a $1 \cdot 10^{-1}$; para a profundidade das árvores, de 3 a 500; e para a quantidade de árvores, de 50 a 1500. Assim como no Random Forest, foi utilizada  $m = \sqrt{p}$​ das $p$ variáveis independentes para realizar as divisões nas árvores.
+
+\vspace{12pt}
+
+A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import, indica que o hiperparâmetro com maior influência na variação da função objetivo — e, consequentemente, na performance do modelo — é a taxa de aprendizado. Em seguida, a profundidade das árvores é o segundo mais relevante, enquanto o número de árvores tem a menor influência.
+
+::: {#fig-gdt_param layout="[[1, 1, 1], [1]]"}
 
 ```{python}
 #| label: fig-gdt_slice
 
-optuna.visualization.matplotlib.plot_slice(study2)
+fig_gdt_slice = optuna.visualization.matplotlib.plot_slice(study2)
+plt.suptitle('')
+fig_gdt_slice[0].set_ylabel('RMSE')
+fig_gdt_slice[0].set_title('RMSE')
+for _ in fig_gdt_slice:
+  _.set_title('')
+  _.grid(True, color='grey', linewidth=.05)
+  _.set_facecolor('white')
+  _.spines['top'].set_visible(True)
+  _.spines['right'].set_visible(True)
+  _.spines['left'].set_visible(True)
+  _.spines['bottom'].set_visible(True)
+
 plt.show()
 ```
 
 ```{python}
 #| label: fig-gdt_import
 
-optuna.visualization.matplotlib.plot_param_importances(study2)
+fig_gdt_import = optuna.visualization.matplotlib.plot_param_importances(study2)
+fig_gdt_import.grid(True, color="grey", linewidth=0.05)
+fig_gdt_import.set_facecolor("white")
+fig_gdt_import.get_children()[-4].set_text('')
+fig_gdt_import.spines['top'].set_visible(True)
+fig_gdt_import.spines['right'].set_visible(True)
+fig_gdt_import.spines['left'].set_visible(True)
+fig_gdt_import.spines['bottom'].set_visible(True)
+fig_gdt_import.set_xlabel('Importância do Hiperparâmetro')
+fig_gdt_import.set_ylabel('Hiperparâmetro')
+h, l = fig_gdt_import.get_legend_handles_labels()
+fig_gdt_import.legend(h, ['RMSE'])
+
 plt.show()
 ```
 
 ```{python}
 #| label: fig-gdt_history
+fig_gdt_hist = optuna.visualization.matplotlib.plot_optimization_history(study2)
 
-optuna.visualization.matplotlib.plot_optimization_history(study2)
+fig_gdt_hist.grid(True, color="grey", linewidth=0.05)
+fig_gdt_hist.set_facecolor("white")
+fig_gdt_hist.get_children()[-5].set_text('')
+fig_gdt_hist.spines['top'].set_visible(True)
+fig_gdt_hist.spines['right'].set_visible(True)
+fig_gdt_hist.spines['left'].set_visible(True)
+fig_gdt_hist.spines['bottom'].set_visible(True)
+fig_gdt_hist.set_xlabel('Trial')
+fig_gdt_hist.set_ylabel('RMSE')
+h, l = fig_gdt_hist.get_legend_handles_labels()
+fig_gdt_hist.legend(h, ['RMSE', 'Melhor trial'])
+
 plt.show()
 ```
 
 ```{python}
 #| label: fig-gdt_contour
 
-optuna.visualization.matplotlib.plot_contour(study2)
+fig_gdt_contour = optuna.visualization.matplotlib.plot_contour(study2)
+plt.suptitle('')
+
+for i in range(fig_gdt_contour.shape[0]):
+
+    for j in range(fig_gdt_contour.shape[1]):
+
+      # if j == 0:
+      #   fig_gdt_contour[i,0].set_ylabel(
+      #     fig_gdt_contour[i,0].get_ylabel(),
+      #     rotation=-55
+      #   )
+      if j == i:
+        fig_gdt_contour[i,j].grid(True, color='grey', linewidth=.05)
+        fig_gdt_contour[i,j].spines['top'].set_visible(True)
+        fig_gdt_contour[i,j].spines['right'].set_visible(True)
+        fig_gdt_contour[i,j].spines['left'].set_visible(True)
+        fig_gdt_contour[i,j].spines['bottom'].set_visible(True)
+        fig_gdt_contour[i,j].set_facecolor('white')
+      else:
+        fig_gdt_contour[i,j].get_children()[1].set_cmap('crest')
+
 plt.show()
 ```
 
+Resultados da tunagem do Gradient Boosting
 :::
 
-<!-- ```{python}
-optuna.visualization.matplotlib.plot_optimization_history(study3)
-optuna.visualization.matplotlib.plot_optimization_history(study4)
+\vspace{12pt}
+
+Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não apresentou melhorias significativas, como ilustrado na @fig-gdt_history, onde a estatística de erro poucas vezes ficou abaixo de 1,3. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores. No entanto, também há uma preferência por uma menor quantidade de árvores quando a taxa de aprendizado diminui.
+
+### Tunagem do LGBM
+
+\ \ \ Para a otimização do LGBM, foram considerados os mesmos hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com a tunagem do número de folhas das árvores. O espaço de busca para a quantidade de árvores foi definido entre 100 e 2000, para a taxa de aprendizado no mesmo intervalo usado no Gradient Boosting, para a profundidade das árvores e número de folhas o intervalo foi definido da mesma forma, entre 100 e 500
+
+::: {#fig-lgbm_param layout="[[1, 1, 1], [1]]"}
+
+```{python}
+#| label: fig-lgbm_slice
+
+fig_lgbm_slice = optuna.visualization.matplotlib.plot_slice(study3)
+plt.suptitle('')
+fig_lgbm_slice[0].set_ylabel('RMSE')
+fig_lgbm_slice[0].set_title('RMSE')
+for _ in fig_lgbm_slice:
+  _.set_title('')
+  _.grid(True, color='grey', linewidth=.05)
+  _.set_facecolor('white')
+  _.spines['top'].set_visible(True)
+  _.spines['right'].set_visible(True)
+  _.spines['left'].set_visible(True)
+  _.spines['bottom'].set_visible(True)
+
+plt.show()
 ```
 
 ```{python}
-optuna.visualization.matplotlib.plot_contour(study3)
-optuna.visualization.matplotlib.plot_contour(study4)
+#| label: fig-lgbm_import
+
+fig_lgbm_import = optuna.visualization.matplotlib.plot_param_importances(study3)
+fig_lgbm_import.grid(True, color="grey", linewidth=0.05)
+fig_lgbm_import.set_facecolor("white")
+fig_lgbm_import.get_children()[-4].set_text('')
+fig_lgbm_import.spines['top'].set_visible(True)
+fig_lgbm_import.spines['right'].set_visible(True)
+fig_lgbm_import.spines['left'].set_visible(True)
+fig_lgbm_import.spines['bottom'].set_visible(True)
+fig_lgbm_import.set_xlabel('Importância do Hiperparâmetro')
+fig_lgbm_import.set_ylabel('Hiperparâmetro')
+h, l = fig_lgbm_import.get_legend_handles_labels()
+fig_lgbm_import.legend(h, ['RMSE'])
+
+plt.show()
 ```
 
 ```{python}
-optuna.visualization.matplotlib.plot_slice(study3)
-optuna.visualization.matplotlib.plot_slice(study4)
+#| label: fig-lgbm_history
+fig_lgbm_hist = optuna.visualization.matplotlib.plot_optimization_history(study3)
+
+fig_lgbm_hist.grid(True, color="grey", linewidth=0.05)
+fig_lgbm_hist.set_facecolor("white")
+fig_lgbm_hist.get_children()[-5].set_text('')
+fig_lgbm_hist.spines['top'].set_visible(True)
+fig_lgbm_hist.spines['right'].set_visible(True)
+fig_lgbm_hist.spines['left'].set_visible(True)
+fig_lgbm_hist.spines['bottom'].set_visible(True)
+fig_lgbm_hist.set_xlabel('Trial')
+fig_lgbm_hist.set_ylabel('RMSE')
+h, l = fig_lgbm_hist.get_legend_handles_labels()
+fig_lgbm_hist.legend(h, ['RMSE', 'Melhor trial'])
+
+plt.show()
 ```
 
 ```{python}
-optuna.visualization.matplotlib.plot_param_importances(study3)
-optuna.visualization.matplotlib.plot_param_importances(study4)
-``` -->
+#| label: fig-lgbm_contour
+
+fig_lgbm_contour = optuna.visualization.matplotlib.plot_contour(study3)
+plt.suptitle('')
+
+for i in range(fig_lgbm_contour.shape[0]):
+
+    for j in range(fig_lgbm_contour.shape[1]):
+      if j == i:
+        fig_lgbm_contour[i,j].grid(True, color='grey', linewidth=.05)
+        fig_lgbm_contour[i,j].spines['top'].set_visible(True)
+        fig_lgbm_contour[i,j].spines['right'].set_visible(True)
+        fig_lgbm_contour[i,j].spines['left'].set_visible(True)
+        fig_lgbm_contour[i,j].spines['bottom'].set_visible(True)
+        fig_lgbm_contour[i,j].set_facecolor('white')
+      else:
+        fig_lgbm_contour[i,j].get_children()[1].set_cmap('crest')
+
+plt.show()
+```
+
+Resultados da tunagem do LGBM
+:::
+
+
+
+### Tunagem do XGBoost
+
+::: {#fig-xgb_param layout="[[1, 1, 1], [1]]"}
+
+```{python}
+#| label: fig-xgb_slice
+
+fig_xgb_slice = optuna.visualization.matplotlib.plot_slice(study4)
+plt.suptitle('')
+fig_xgb_slice[0].set_ylabel('RMSE')
+fig_xgb_slice[0].set_title('RMSE')
+for _ in fig_xgb_slice:
+  _.set_title('')
+  _.grid(True, color='grey', linewidth=.05)
+  _.set_facecolor('white')
+  _.spines['top'].set_visible(True)
+  _.spines['right'].set_visible(True)
+  _.spines['left'].set_visible(True)
+  _.spines['bottom'].set_visible(True)
+
+plt.show()
+```
+
+```{python}
+#| label: fig-xgb_import
+
+fig_xgb_import = optuna.visualization.matplotlib.plot_param_importances(study4)
+fig_xgb_import.grid(True, color="grey", linewidth=0.05)
+fig_xgb_import.set_facecolor("white")
+fig_xgb_import.get_children()[-4].set_text('')
+fig_xgb_import.spines['top'].set_visible(True)
+fig_xgb_import.spines['right'].set_visible(True)
+fig_xgb_import.spines['left'].set_visible(True)
+fig_xgb_import.spines['bottom'].set_visible(True)
+fig_xgb_import.set_xlabel('Importância do Hiperparâmetro')
+fig_xgb_import.set_ylabel('Hiperparâmetro')
+h, l = fig_xgb_import.get_legend_handles_labels()
+fig_xgb_import.legend(h, ['RMSE'])
+
+plt.show()
+```
+
+```{python}
+#| label: fig-xgb_history
+fig_xgb_hist = optuna.visualization.matplotlib.plot_optimization_history(study4)
+
+fig_xgb_hist.grid(True, color="grey", linewidth=0.05)
+fig_xgb_hist.set_facecolor("white")
+fig_xgb_hist.get_children()[-5].set_text('')
+fig_xgb_hist.spines['top'].set_visible(True)
+fig_xgb_hist.spines['right'].set_visible(True)
+fig_xgb_hist.spines['left'].set_visible(True)
+fig_xgb_hist.spines['bottom'].set_visible(True)
+fig_xgb_hist.set_xlabel('Trial')
+fig_xgb_hist.set_ylabel('RMSE')
+h, l = fig_xgb_hist.get_legend_handles_labels()
+fig_xgb_hist.legend(h, ['RMSE', 'Melhor trial'])
+
+plt.show()
+```
+
+```{python}
+#| label: fig-xgb_contour
+
+fig_xgb_contour = optuna.visualization.matplotlib.plot_contour(study4)
+plt.suptitle('')
+
+for i in range(fig_xgb_contour.shape[0]):
+
+    for j in range(fig_xgb_contour.shape[1]):
+      if j == i:
+        fig_xgb_contour[i,j].grid(True, color='grey', linewidth=.05)
+        fig_xgb_contour[i,j].spines['top'].set_visible(True)
+        fig_xgb_contour[i,j].spines['right'].set_visible(True)
+        fig_xgb_contour[i,j].spines['left'].set_visible(True)
+        fig_xgb_contour[i,j].spines['bottom'].set_visible(True)
+        fig_xgb_contour[i,j].set_facecolor('white')
+      else:
+        fig_xgb_contour[i,j].get_children()[1].set_cmap('crest')
+
+plt.show()
+```
+
+Resultados da tunagem do XGBoost
+:::
 
 # Conclusão
 
-# Referências
+# Referências Bibliográficas
 
 ::: {#refs}
 :::
