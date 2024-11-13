@@ -1208,6 +1208,12 @@ plt.show()
 Resultados da tunagem da Random Forest.
 :::
 
+| Tentativa |  RMSE  | n_estimators | max_depth |
+|:---------:|:------:|:------------:|:---------:|
+|     67    | 1,2968 |      650     |     22    |
+
+: Melhores hiperparâmetros para Random Forest
+
 ### Tunagem do Gradient Boosting
 
 \ \ \ Para o algoritmo de Gradient Boosting, os hiperparâmetros ajustados foram a taxa de aprendizado, a quantidade de árvores e a profundidade das árvores. No Optuna, o espaço de busca definido na função objetivo para a taxa de aprendizado variou de $1 \cdot 10^{-5}$ a $1 \cdot 10^{-1}$; para a profundidade das árvores, de 3 a 500; e para a quantidade de árvores, de 50 a 1500. Assim como no Random Forest, foi utilizada  $m = \sqrt{p}$​ das $p$ variáveis independentes para realizar as divisões nas árvores.
@@ -1306,9 +1312,13 @@ plt.show()
 Resultados da tunagem do Gradient Boosting
 :::
 
-\vspace{12pt}
-
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não apresentou melhorias significativas, como ilustrado na @fig-gdt_history, onde a estatística de erro poucas vezes ficou abaixo de 1,3. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores. No entanto, também há uma preferência por uma menor quantidade de árvores quando a taxa de aprendizado diminui.
+
+| Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
+|:---------:|:------:|:------------:|:---------:|:-------------:|
+|     50    | 1,2889 |     1500     |     6     |     0,0873    |
+
+: Melhores hiperparâmetros para Gradient Boosting
 
 ### Tunagem do LGBM
 
@@ -1402,9 +1412,25 @@ As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um com
 
 \vspace{12pt}
 
-Analisando a relação entre o hiperparâmetro de profundidade e o de número de folhas variando pela estatística de erro na @fig-lgbm_contour, observa-se que números maiores de folhas e uma profundidade menor na árvore apresenta um modelo com um menor erro. É possível também observar esse mesmo comportamento para os outros hiperparâmetros. Uma maior quantidade de folhas e uma taxa de aprendizado crescente apresentam também um modelo com menor erro, assim como uma maior quantidade de árvores também apresentam um modelo com menor erro.
+Analisando a relação entre o hiperparâmetro de profundidade e o número de folhas em função da estatística de erro na @fig-lgbm_contour, observa-se que uma maior quantidade de folhas e uma menor profundidade das árvores resultam em um modelo com erro menor. Esse mesmo comportamento é observado para os outros hiperparâmetros, uma quantidade maior de folhas combinada com uma taxa de aprendizado crescente também produz um modelo com menor erro, assim como um número maior de árvores.
+
+| Tentativa |  RMSE  | n_estimators | num_leaves | max_depth | learning_rate |
+|:---------:|:------:|:------------:|:----------:|:---------:|:-------------:|
+|     96    | 1,2872 |     1798     |     247    |    299    |     0.009     |
+
+: Melhores hiperparâmetros para Light Gradient Boosting
 
 ### Tunagem do XGBoost
+
+\ \ \ Para o algoritmo Extreme Gradient Boosting, os hiperparâmetros selecionados para a tunagem foi a taxa de aprendizagem, profundidade da árvore e quantidade máxima de árvores. Na configuração da função objetivo para a tunagem dos hiperparâmetros pelo optuna, a taxa de aprendizagem variou entre $1 \cdot 10^{-7}$ e $0.5$, a profundidade da árvore variou entre 3 e 50 e a quantidade de árvores variou entre 50 e 1000.
+
+\vspace{12pt}
+
+A partir da @fig-xgb_import, o hiperparâmetro que representou a maior variação na função objetivo, e portanto a maior importância para a performance do modelo, foi a taxa de aprendizagem. A profundidade da árvore representou 22% da variação e por último vem a quantidade de árvores. Observando a @fig-xgb_history, é possível ver que o algoritmo de XGBoost foi aquele que apresentou a menor variação entre os trials, com um único trial com erro acima de 2,0.
+
+\vspace{12pt}
+
+O algoritmo de otimização TPE apresentou uma maior frequência de procura do hiperparâmetro de taxa de aprendizagem para valores menores, como pode ser visto na @fig-xgb_slice. O mesmo acontece para o hiperparâmetro de profundidade de árvores, há uma repetição maior para valores menores, indicando que o a estatística de erro tendeu a ter valores menores para essa região. Para a quantidade de árvores esse padrão foi diferente, uma quantidade maior de árvores faz com que o modelo tenha um melhor ajuste. Essas relações também podem ser observadas a partir da @fig-xgb_contour, menores taxas de aprendizado, combinado com uma menor profundidade de árvore e maior quantidade de árvores apresentam menor valor na função objetivo.
 
 ::: {#fig-xgb_param layout="[[1, 1, 1], [1]]"}
 
@@ -1489,6 +1515,12 @@ plt.show()
 
 Resultados da tunagem do XGBoost
 :::
+
+| Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
+|:---------:|:------:|:------------:|:---------:|:-------------:|
+|     81    | 1,2875 |      788     |     8     |     0.0711    |
+
+: Melhores hiperparâmetros para Extreme Gradient Boosting
 
 # Conclusão
 
