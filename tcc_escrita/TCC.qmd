@@ -1522,6 +1522,21 @@ Resultados da tunagem do XGBoost
 
 : Melhores hiperparâmetros para Extreme Gradient Boosting
 
+## Resultados dos modelos
+
+![](includes/rf_plot_predict.svg)
+
+![](includes/gdt_plot_predict.svg)
+
+![](includes/lgbm_plot_predict.svg)
+
+
+![](includes/xgb_plot_predict.svg)
+
+![](includes/stacking_plot_predict.svg)
+
+## Efeito e importância das variáveis na predição
+
 # Conclusão
 
 # Referências Bibliográficas
