@@ -1530,10 +1530,17 @@ Resultados da tunagem do XGBoost
 
 ![](includes/lgbm_plot_predict.svg)
 
-
 ![](includes/xgb_plot_predict.svg)
 
 ![](includes/stacking_plot_predict.svg)
+
+|           Algoritmo          |   RMSE  |   $R^2$   |   MAPE  |
+|:-------------------------:|:-------:|:---------:|:-------:|
+|       Random Forest       | 0.28972 | $86,78792%$ | 0.01373 |
+|  Light Gradient Boosting  | 0.28493 | $87,17132%$ | 0.01346 |
+|     Gradient Boosting     | 0.28730 | $86,98259%$ | 0.01377 |
+| Extreme Gradient Boosting | 0.28659 | $87,03891%$ | 0.01340 |
+|          Stacking         | 0.28473 | $87,18793%$ | 0.01357 |
 
 ## Efeito e importância das variáveis na predição
 
