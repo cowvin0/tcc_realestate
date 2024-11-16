@@ -1208,11 +1208,15 @@ plt.show()
 Resultados da tunagem da Random Forest.
 :::
 
+::: {#tbl-params_rf}
+
 | Tentativa |  RMSE  | n_estimators | max_depth |
 |:---------:|:------:|:------------:|:---------:|
-|     67    | 1,2968 |      650     |     22    |
+|     67    | 1,29682 |      650     |     22    |
 
 : Melhores hiperparâmetros para Random Forest
+
+:::
 
 ### Tunagem do Gradient Boosting
 
@@ -1314,11 +1318,15 @@ Resultados da tunagem do Gradient Boosting
 
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não apresentou melhorias significativas, como ilustrado na @fig-gdt_history, onde a estatística de erro poucas vezes ficou abaixo de 1,3. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores. No entanto, também há uma preferência por uma menor quantidade de árvores quando a taxa de aprendizado diminui.
 
+::: {#tbl-params_gdt}
+
 | Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:---------:|:-------------:|
-|     50    | 1,2889 |     1500     |     6     |     0,0873    |
+|     50    | 1,28891 |     1500     |     6     |     0,08730    |
 
 : Melhores hiperparâmetros para Gradient Boosting
+
+:::
 
 ### Tunagem do LGBM
 
@@ -1408,17 +1416,23 @@ plt.show()
 Resultados da tunagem do LGBM
 :::
 
+\vspace{12pt}
+
 As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um comportamento semelhante ao do Gradient Boosting, porém com maior estabilidade em cada tentativa e uma convergência mais rápida. Ao analisar a contribuição de cada hiperparâmetro para o desempenho do modelo na @fig-lgbm_import, observa-se que a quantidade de árvores é o hiperparâmetro de maior influência, seguido pela taxa de aprendizado, número de folhas e, por último, a profundidade da árvore.
 
 \vspace{12pt}
 
 Analisando a relação entre o hiperparâmetro de profundidade e o número de folhas em função da estatística de erro na @fig-lgbm_contour, observa-se que uma maior quantidade de folhas e uma menor profundidade das árvores resultam em um modelo com erro menor. Esse mesmo comportamento é observado para os outros hiperparâmetros, uma quantidade maior de folhas combinada com uma taxa de aprendizado crescente também produz um modelo com menor erro, assim como um número maior de árvores.
 
+::: {#tbl-params_lgbm}
+
 | Tentativa |  RMSE  | n_estimators | num_leaves | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:----------:|:---------:|:-------------:|
-|     96    | 1,2872 |     1798     |     247    |    299    |     0.009     |
+|     96    | 1,28722 |     1798     |     247    |    299    |     0,00903     |
 
 : Melhores hiperparâmetros para Light Gradient Boosting
+
+:::
 
 ### Tunagem do XGBoost
 
@@ -1516,23 +1530,70 @@ plt.show()
 Resultados da tunagem do XGBoost
 :::
 
+::: {#tbl-params_xgb}
+
 | Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:---------:|:-------------:|
-|     81    | 1,2875 |      788     |     8     |     0.0711    |
+|     81    | 1,28752 |      788     |     8     |     0,07119    |
 
 : Melhores hiperparâmetros para Extreme Gradient Boosting
 
+:::
+
+A tabela @tbl-params_xgb apresenta a tentativa em que a combinação de hiperparâmetros resultou no menor erro para o algoritmo de Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81, com uma configuração de 788 árvores, profundidade máxima de 8 e taxa de aprendizado de 0,07119.
+
+\vspace{12pt}
+
+Para o LGBM, a melhor combinação foi encontrada na tentativa 96, com 1.798 árvores, 247 folhas, profundidade máxima de 299 e taxa de aprendizado de 0,00903, como apresentado na tabela @tbl-params_lgbm.
+
+\vspace{12pt}
+
+Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tentativas foram as de números 50 e 67, respectivamente. No caso do Gradient Boosting, a configuração ideal foi composta por 1.500 árvores, profundidade máxima de 6 e taxa de aprendizado de 0,08730. Já para o Random Forest, a melhor combinação consistiu em 650 árvores e profundidade máxima de 22. Os resultados estão na @tbl-params_gdt e @tbl-params_rf, respectivamente.
+
 ## Resultados dos modelos
+
+\ \ \ Nesta seção, serão apresentados os resultados do ajuste de cada algoritmo utilizado: Random Forest, Gradient Boosting, LightGBM e Extreme Gradient Boosting. A análise do ajuste foi realizada com base no gráfico que compara os valores estimados aos valores observados dos imóveis. Além disso, foram utilizadas métricas de erro, como MAPE, $R^2$ e RMSE, para avaliar o desempenho dos modelos.
+
+\vspace{12pt}
+
+O ajuste do algoritmo Random Forest pode ser visto na @fig-preds_rf dos valores previstos vs observados.
+
+::: {#fig-preds_rf}
 
 ![](includes/rf_plot_predict.svg)
 
+Valores previstos em função dos observados do algoritmo Random Forest
+:::
+
+::: {#fig-preds_gdt}
+
 ![](includes/gdt_plot_predict.svg)
+
+Valores previstos em função dos observados do algoritmo Gradient Boosting
+:::
+
+::: {#fig-preds_lgbm}
 
 ![](includes/lgbm_plot_predict.svg)
 
+Valores previstos em função dos observados do algoritmo Light Gradient Boosting
+:::
+
+::: {#fig-preds_xgb}
+
 ![](includes/xgb_plot_predict.svg)
 
+Valores previstos em função dos observados do algoritmo Extreme Gradient Boosting
+:::
+
+::: {#fig-preds_stacking}
+
 ![](includes/stacking_plot_predict.svg)
+
+Valores previstos em função dos observados do algoritmo Stacking
+:::
+
+::: {#tbl-metrics_models}
 
 |           Algoritmo          |   RMSE  |   $R^2$   |   MAPE  |
 |:-------------------------:|:-------:|:---------:|:-------:|
@@ -1541,6 +1602,10 @@ Resultados da tunagem do XGBoost
 |     Gradient Boosting     | 0.28730 | $86,98259%$ | 0.01377 |
 | Extreme Gradient Boosting | 0.28659 | $87,03891%$ | 0.01340 |
 |          Stacking         | 0.28473 | $87,18793%$ | 0.01357 |
+
+: Métricas dos algoritmos
+
+:::
 
 ## Efeito e importância das variáveis na predição
 
