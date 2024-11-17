@@ -851,7 +851,7 @@ def objective(trial):
     )
     model.fit(X=X, y=y)
 
-    cv_scores = np.exp(np.sqrt(-cross_val_score(
+    cv_scores = np.expm1(np.sqrt(-cross_val_score(
         estimator=model,
         X=X,
         y=y,
@@ -1556,7 +1556,7 @@ Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tenta
 
 \vspace{12pt}
 
-O ajuste do algoritmo Random Forest pode ser visto na @fig-preds_rf dos valores previstos vs observados.
+O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972, enquanto o coeficiente de determinação $R^2$ alcançou $86,79%$, indicando que o modelo explica $86,79%$ da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram 1,373% distantes dos valores reais.
 
 ::: {#fig-preds_rf}
 
@@ -1565,6 +1565,8 @@ O ajuste do algoritmo Random Forest pode ser visto na @fig-preds_rf dos valores 
 Valores previstos em função dos observados do algoritmo Random Forest
 :::
 
+Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $86,98\%$ dos dados, bastante semelhante à Random Forest, com uma diferença não tão significativa. Por outro lado, o RMSE do Gradient Boosting foi menor que a Random Forest, tendo sido de 0,28730. Observando o MAPE, não houve também muitas diferenças, embora o MAPE do Gradient Boosting tenha sido maior. O MAPE indica que as predições geradas pelo Gradient Boosting estão $1,377\%$ distantes de seus valores observados. Seu ajuste pode ser observado na @fig-preds_gdt.
+
 ::: {#fig-preds_gdt}
 
 ![](includes/gdt_plot_predict.svg)
@@ -1572,12 +1574,18 @@ Valores previstos em função dos observados do algoritmo Random Forest
 Valores previstos em função dos observados do algoritmo Gradient Boosting
 :::
 
+O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos últimos dois algoritmos. Em relação ao seu $R^2$, o modelo consegue explicar $87,17\%$ dos dados. O seu RMSE ficou em $0,28493$ e o MAPE em $0,01346$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão em média $1,346\%$ distantes de seus valores reais. A melhora do ajuste do Light Gradient Boosting fica bastante perceptível observando a figura de seus valores estimados em função dos observados (@fig-preds_lgbm). As predições geradas pelos Gradient Boosting e Random Forest desviam bastante, principalmente em relação ao final da distribuição.
+
 ::: {#fig-preds_lgbm}
 
 ![](includes/lgbm_plot_predict.svg)
 
 Valores previstos em função dos observados do algoritmo Light Gradient Boosting
 :::
+
+\vspace{12pt}
+
+Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest e Gradient Boosting. Entretanto, obteve piores em relação às estatísticas de erro de RMSE e $R^2$. O RMSE obtido pelo XGBoost foi de $0,28659$ e o seu $R^2$ foi de $87,03891\%$, indicando que o modelo consegue explicar $87,03891\%$ dos dados. No entanto, obteve um MAPE pouco menor que o LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média $1,357%$ distantes de seus valores reais.
 
 ::: {#fig-preds_xgb}
 
@@ -1597,13 +1605,13 @@ Valores previstos em função dos observados do algoritmo Stacking
 
 |           Algoritmo          |   RMSE  |   $R^2$   |   MAPE  |
 |:-------------------------:|:-------:|:---------:|:-------:|
-|       Random Forest       | 0.28972 | $86,78792%$ | 0.01373 |
-|  Light Gradient Boosting  | 0.28493 | $87,17132%$ | 0.01346 |
-|     Gradient Boosting     | 0.28730 | $86,98259%$ | 0.01377 |
-| Extreme Gradient Boosting | 0.28659 | $87,03891%$ | 0.01340 |
-|          Stacking         | 0.28473 | $87,18793%$ | 0.01357 |
+|       Random Forest       | 0,28972 | $86,78792\%$ | 0,01373 |
+|     Gradient Boosting     | 0,28730 | $86,98259\%$ | 0,01377 |
+|  Light Gradient Boosting  | 0,28493 | $87,17132\%$ | 0,01346 |
+| Extreme Gradient Boosting | 0,28659 | $87,03891\%$ | 0,01340 |
+|          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
 
-: Métricas dos algoritmos
+: Métricas obtidadas de cada algoritmo
 
 :::
 
