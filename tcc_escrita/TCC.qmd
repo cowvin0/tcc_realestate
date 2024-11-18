@@ -98,11 +98,11 @@ test_df = test_df.rename(columns=rename)
 
 # Introdução
 
-## Objetivos
+# Objetivos
 
-### Objetivo Geral
+## Objetivo Geral
 
-### Objetivos Específicos
+## Objetivos Específicos
 
 ## Organização do Trabalho
 
@@ -649,7 +649,7 @@ Com as variáveis selecionadas, o conjunto de dados foi dividido em treino e tes
 
 \vspace{12pt}
 
-Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas `scikit-learn`, `lightgbm` e `xgboost`. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva.
+Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas `scikit-learn`, `lightgbm` e `xgboost`. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Light Gradient Boosting.
 
 ### Etapas de pré-processamento
 
@@ -1097,6 +1097,47 @@ plt.xticks([])
 plt.show()
 ```
 
+```{python}
+pair_plot_df = train_df.copy()
+pair_plot_df['Área'] = np.log1p(pair_plot_df['Área'])
+pair_plot_df['Banheiro'] = np.log1p(pair_plot_df['Banheiro'])
+pair_plot_df['Quarto'] = np.log1p(pair_plot_df['Quarto'])
+pair_plot_df['Vaga'] = np.log1p(pair_plot_df['Vaga'])
+pair_plot_df['Área de aluguel'] = np.log1p(pair_plot_df['Área de aluguel'])
+pair_plot_df['Valor de aluguel'] = np.log1p(pair_plot_df['Valor de aluguel'])
+pair_plot_df['Valor'] = np.log1p(pair_plot_df['Valor'])
+
+g = sns.pairplot(
+  pair_plot_df\
+    .assign(
+
+    )\
+    .loc[:, [
+      'Valor', 'Área',
+      'Banheiro', 'Latitude',
+      'Longitude', 'Valor de aluguel',
+      'Quarto', 'Vaga',
+      'Área de aluguel', 'Tipo'
+      ]],
+  hue='Tipo',
+  palette='crest'
+  # diag_kind="kde",
+  )
+g._legend.remove()
+g.add_legend(loc="upper center", bbox_to_anchor=(.5, .5), ncol=6)
+
+# l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
+# l.get_texts()[0].set_text('Apartamentos')
+# l.get_texts()[1].set_text('Casas')
+# l.get_texts()[2].set_text('Casas de condomínio')
+# l.get_texts()[3].set_text('Flats')
+# l.get_texts()[4].set_text('Terrenos, lotes e condomínios')
+# l.get_texts()[5].set_text('Terrenos e lotes comerciais')
+
+# g.map_lower(sns.kdeplot, levels=4, color=".2")
+# g.map_upper(sns.kdeplot, levels=4, color=".2")
+```
+
 `ADICIONAR NO FIM UM GRÁFICO DE ESPACIALIZAÇÃO DOS DADOS (INCLUIR VARIAÇÃO DA COR PELO PREÇO DO IMÓVEL)`
 
 ## Tunagem dos modelos
@@ -1105,7 +1146,21 @@ plt.show()
 
 \vspace{12pt}
 
-Todos os modelos e bibliotecas usados neste trabalho seguem a API do scikit-learn. Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca Optuna, foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo.
+Todos os modelos e bibliotecas usados neste trabalho seguem a API do scikit-learn. Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca Optuna, foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas obtidas para cada algoritmo pode ser visualizado na @tbl-metrics_models.
+
+::: {#tbl-metrics_models}
+
+|           Algoritmo          |   RMSE  |   $R^2$   |   MAPE  |
+|:-------------------------:|:-------:|:---------:|:-------:|
+|       Random Forest       | 0,28972 | $86,78792\%$ | 0,01373 |
+|     Gradient Boosting     | 0,28730 | $86,98259\%$ | 0,01377 |
+|  Light Gradient Boosting  | 0,28493 | $87,17132\%$ | 0,01346 |
+| Extreme Gradient Boosting | 0,28659 | $87,03891\%$ | 0,01340 |
+|          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
+
+: Métricas obtidadas de cada algoritmo
+
+:::
 
 ### Tunagem da Random Forest
 
@@ -1594,7 +1649,9 @@ Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhore
 Valores previstos em função dos observados do algoritmo Extreme Gradient Boosting
 :::
 
+\vspace{12pt}
 
+Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando o Light Gradient Boosting como estimador final, as predições foram feitas com o Stacking. As predições geradas pelo Stacking, analisando as métricas de erro utilizadas, foram melhores até mesmo que o Light Gradient Boosting. O RMSE obtido para o Stacking foi de 0,28473 e o modelo consegue explicar $87,18793\%$. A única métrica que não foi melhor que do algoritmo LGBM foi o MAPE, que foi de $1,357\%$, mas a diferença é pouca.
 
 ::: {#fig-preds_stacking}
 
@@ -1603,19 +1660,6 @@ Valores previstos em função dos observados do algoritmo Extreme Gradient Boost
 Valores previstos em função dos observados do algoritmo Stacking
 :::
 
-::: {#tbl-metrics_models}
-
-|           Algoritmo          |   RMSE  |   $R^2$   |   MAPE  |
-|:-------------------------:|:-------:|:---------:|:-------:|
-|       Random Forest       | 0,28972 | $86,78792\%$ | 0,01373 |
-|     Gradient Boosting     | 0,28730 | $86,98259\%$ | 0,01377 |
-|  Light Gradient Boosting  | 0,28493 | $87,17132\%$ | 0,01346 |
-| Extreme Gradient Boosting | 0,28659 | $87,03891\%$ | 0,01340 |
-|          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
-
-: Métricas obtidadas de cada algoritmo
-
-:::
 
 ## Efeito e importância das variáveis na predição
 
