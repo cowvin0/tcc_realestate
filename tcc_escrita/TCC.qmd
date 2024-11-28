@@ -372,6 +372,11 @@ Isso significa que, à medida que o número de árvores $B$ aumenta, o segundo t
 
 \ \ \ O algoritmo Random Forest é uma técnica derivada do método de Bagging, mas com modificações específicas na construção das árvores. O objetivo é melhorar a redução da variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de variáveis independentes.
 
+\vspace{12pt}
+
+No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão, antes de cada ramificação (com $m = p$ no caso do Bagging). Dessa forma, diferente do Bagging, aqui não se considera todas as $p$ variáveis independentes para realizar a divisão e minimizar a impureza, mas apenas $m$ dessas $p$ variáveis. A escolha aleatória de apenas $m$ covariáveis como candidatas para a divisão ajuda a solucionar um dos principais problemas do algoritmo de Bagging, que tende a gerar árvores de decisão semelhantes, resultando em previsões altamente correlacionadas. O Random Forest busca diminuir esse problema ao criar oportunidades para que diferentes preditores sejam considerados. Em média, uma fração $(p -m)/ p$ das divisões nem sequer incluirá o preditor mais forte como candidato, permitindo que outros preditores tenham a chance de serem selecionados [@james2013introduction]. Esse mecanismo reduz a correlação entre as árvores, o que, por sua vez, diminui a variabilidade das predições produzidas pelas árvores.
+
+
 ::: {#algo-rf}
 
 ```pseudocode
@@ -424,10 +429,6 @@ $$
 Fonte: @hastie2009elements [p. 588].
 
 :::
-
-\vspace{12pt}
-
-No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, antes de cada divisão, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão (com $m = p$ no caso do Bagging). Apenas uma dessas $m$ variáveis é usada para realizar a divisão, com base em critérios como a minimização da impureza. Diferentemente do Bagging, que tende a gerar árvores de decisão semelhantes e, portanto, previsões altamente correlacionadas, o Random Forest visa minimizar esse problema ao proporcionar oportunidades para que outros preditores sejam considerados. Assim, em média, $\left(p - m\right)/p$ das divisões nem sequer considerarão o preditor mais forte, permitindo que outros preditores também tenham a chance de serem usados [@james2013introduction]. Esse processo de redução da correlação entre as árvores resulta em uma média das árvores menos variável e, consequentemente, mais confiável.
 
 \vspace{12pt}
 
@@ -582,6 +583,7 @@ $$
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)
 $$
 em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $0 < \lambda \leq 1$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
+
 
 ### Diferentes implementações de Gradient Boosting
 
@@ -1098,33 +1100,40 @@ plt.show()
 ```
 
 ```{python}
-pair_plot_df = train_df.copy()
-pair_plot_df['Área'] = np.log1p(pair_plot_df['Área'])
-pair_plot_df['Banheiro'] = np.log1p(pair_plot_df['Banheiro'])
-pair_plot_df['Quarto'] = np.log1p(pair_plot_df['Quarto'])
-pair_plot_df['Vaga'] = np.log1p(pair_plot_df['Vaga'])
-pair_plot_df['Área de aluguel'] = np.log1p(pair_plot_df['Área de aluguel'])
-pair_plot_df['Valor de aluguel'] = np.log1p(pair_plot_df['Valor de aluguel'])
-pair_plot_df['Valor'] = np.log1p(pair_plot_df['Valor'])
+# pair_plot_df = train_df.copy()
+# pair_plot_df['Área'] = np.log1p(pair_plot_df['Área'])
+# pair_plot_df['Banheiro'] = np.log1p(pair_plot_df['Banheiro'])
+# pair_plot_df['Quarto'] = np.log1p(pair_plot_df['Quarto'])
+# pair_plot_df['Vaga'] = np.log1p(pair_plot_df['Vaga'])
+# pair_plot_df['Área de aluguel'] = np.log1p(pair_plot_df['Área de aluguel'])
+# pair_plot_df['Valor de aluguel'] = np.log1p(pair_plot_df['Valor de aluguel'])
+# pair_plot_df['Valor'] = np.log1p(pair_plot_df['Valor'])
 
-g = sns.pairplot(
-  pair_plot_df\
-    .assign(
+# g = sns.pairplot(
+#   pair_plot_df\
+#     .assign(
 
-    )\
-    .loc[:, [
-      'Valor', 'Área',
-      'Banheiro', 'Latitude',
-      'Longitude', 'Valor de aluguel',
-      'Quarto', 'Vaga',
-      'Área de aluguel', 'Tipo'
-      ]],
-  hue='Tipo',
-  palette='crest'
-  # diag_kind="kde",
-  )
-g._legend.remove()
-g.add_legend(loc="upper center", bbox_to_anchor=(.5, .5), ncol=6)
+#     )\
+#     .loc[:, [
+#       'Valor', 'Área',
+#       'Banheiro', 'Latitude',
+#       'Longitude', 'Valor de aluguel',
+#       'Quarto', 'Vaga',
+#       'Área de aluguel', 'Tipo'
+#       ]],
+#   hue='Tipo',
+#   palette='crest'
+#   # diag_kind="kde",
+#   )
+# g._legend.remove()
+# g.add_legend(
+#   legend_data={
+#     'apartamentos': 'Apartamentos',
+#     ''
+#   },
+#   loc="upper center",
+#   bbox_to_anchor=(.5, .5),
+#   ncol=6)
 
 # l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
 # l.get_texts()[0].set_text('Apartamentos')
