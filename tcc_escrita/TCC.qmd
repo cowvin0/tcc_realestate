@@ -585,15 +585,18 @@ em que $\gamma_{jm}$ representa a atualização da constante ótima para cada re
 
 ### Diferentes implementações de Gradient Boosting
 
-\ \ \ O algoritmo de Gradient Boosting aplicado a árvores de decisão é um dos mais eficientes e amplamente utilizados, sendo frequentemente vencedor em competições de modelagem estatística. Existem diversas variações desse algoritmo, cada uma com seus próprios motivos de existênica. Esses motivos incluem a busca por maior eficiência computacional, facilidade de uso, adição de recursos (como no caso da implementação CatBoost, que suporta dados categóricos) e até mesmo maior flexibilidade.
+\ \ \ O algoritmo de Gradient Boosting aplicado a árvores de decisão é um dos mais eficientes e amplamente utilizados, sendo frequentemente vencedor em competições de modelagem estatística. Existem diversas variações desse algoritmo, cada uma com seus próprios motivos de existênica. Esses motivos incluem a busca por maior eficiência computacional, facilidade de uso, adição de recursos (como no caso da implementação Extreme Gradient Boosting, que adiciona diferentes métodos de regularização) e até mesmo maior flexibilidade.
 
 \vspace{12pt}
 
-Além da definição anterior de Gradient Boosting aplicado a árvores de decisão dada anteriormente, esse trabalho também utilizou como outras implementações de Gradient Boosting, como o Light Gradeint Boosting e o Extreme Gradient Boosting, que partem da mesma premissa do Gradient Boosting, mas adicionam outras funcionalidades e tem uma implementação mais computacionalmente eficiente. Dessa forma, esta sessão irá definir as diferentes implementações que foram utilizadas e evidenciará as suas principais característica.
+Além da definição anterior de Gradient Boosting aplicado a árvores de decisão, este trabalho também utilizou outras implementações de Gradient Boosting, como o Light Gradient Boosting Machine e o Extreme Gradient Boosting. Essas variações partem da mesma premissa do Gradient Boosting, mas adicionam funcionalidades adicionais e são mais eficientes computacionalmente. Assim, esta seção irá definir as diferentes implementações utilizadas e destacar suas principais características.
+
+#### Extreme Gradient Boosting
+
+\ \ \ Extreme Gradient Boosting [@chen2016xgboost], também conhecido como XGBoost, é um sistema escalável de aprendizagem de máquinas para boosting de árvores de decisão. O sistema está disponível como uma biblioteca de código aberto para diversas linguagens de programação, como C, C++, Python, R, Ruby, JVM, Julia e até mesmo Swift. Aqui foi utilizado a implementação de Python, disponibilizada pela biblioteca `xgboost`.
 
 #### Light Gradient Boosting
 
-#### Extreme Gradient Boosting
 
 
 
