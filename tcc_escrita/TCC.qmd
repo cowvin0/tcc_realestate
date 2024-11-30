@@ -582,6 +582,23 @@ f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{j
 $$
 em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $0 < \lambda \leq 1$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
 
+\vspace{12pt}
+
+As outras implementações de Gradient Boosting aplicadas à árvores de decisão tem seus próprios motivos de existência. Esses motivos incluem a busca por maior eficiência computacional, adição de recursos e até mesmo maior flexibilidade. As duas outras implementações utilizadas foram o Extreme Gradient Boosting e Light Gradient Boosting.
+
+\vspace{12pt}
+
+O Extreme Gradient Boosting [@chen2016xgboost] é uma implementação altamente eficiente do algoritmo e flexível de Gradient Boosting aplicado à árvores de decisão. Além disso, é adicionado um novo recurso, técnicas de regularização para diminuir o sobreajuste do modelo. A função objetivo agora passa a ser definida da seguinte forma:
+
+$$
+\mathcal{L}\left(\phi\right) = \sum_{i}l\left(\hat{y}_{i}, y_{i}\right) + \sum_{k}\Omega\left(f_{k}\right)
+$$
+em que $l$ é uma função de perda convexa diferenciável e o segundo termo $Omega$ penaliza a complexidade de cada função de árvore de decisão. O termo de regularização adicional ajuda a suavizar os pesos finais para evitar o sobreajuste. $\Omega$ é definido dado como:
+
+$$
+\Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}
+$$
+onde $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Além disso, é fácil ver que $\frac{1}{2}\lambda\|\omega\|^{2}$ representa a penalização L2 (Ridge). Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo.
 
 ### Diferentes implementações de Gradient Boosting
 
