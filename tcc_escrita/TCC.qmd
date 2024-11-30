@@ -598,9 +598,13 @@ em que $l$ é uma função de perda convexa diferenciável e o segundo termo $Om
 $$
 \Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}
 $$
-onde $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Além disso, é fácil ver que $\frac{1}{2}\lambda\|\omega\|^{2}$ representa a penalização L2 (Ridge). Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo.
+onde $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Além disso, é fácil ver que $\frac{1}{2}\lambda\|\omega\|^{2}$ representa a penalização L2 (Ridge). Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em Python utilizam a regularização L2 como padrão, mas também permitem o uso da regularização L1 (Lasso).
 
-### Diferentes implementações de Gradient Boosting
+\vspace{12pt}
+
+Assim como o Gradient Boosting, as implementações existentes de Light Gradient Boosting também permite utilizar a regularização L1 ou L2, mas não utiliza nenhuma das duas por padrão. A principal diferença do Light Gradient Boosting está na forma de crescimento das árvores, primeiro é dividido a folha com a maior redução na função de erro. Além disso, tem um grande foco na velocidade e uma melhor eficiência no uso da memória atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que invés de avaliar cada ponto quando realiza a divisão, ele divide valores contínuos em intervalos, como um histograma, o que reduz grandemente o custo computacional.
+
+<!-- ### Diferentes implementações de Gradient Boosting
 
 \ \ \ O algoritmo de Gradient Boosting aplicado a árvores de decisão é um dos mais eficientes e amplamente utilizados, sendo frequentemente vencedor em competições de modelagem estatística. Existem diversas variações desse algoritmo, cada uma com seus próprios motivos de existênica. Esses motivos incluem a busca por maior eficiência computacional, facilidade de uso, adição de recursos (como no caso da implementação Extreme Gradient Boosting, que adiciona diferentes métodos de regularização) e até mesmo maior flexibilidade.
 
@@ -612,7 +616,7 @@ Além da definição anterior de Gradient Boosting aplicado a árvores de decis�
 
 \ \ \ Extreme Gradient Boosting [@chen2016xgboost], também conhecido como XGBoost, é um sistema escalável de aprendizagem de máquinas para boosting de árvores de decisão. O sistema está disponível como uma biblioteca de código aberto para diversas linguagens de programação, como C, C++, Python, R, Ruby, JVM, Julia e até mesmo Swift. Aqui foi utilizado a implementação de Python, disponibilizada pela biblioteca `xgboost`.
 
-#### Light Gradient Boosting
+#### Light Gradient Boosting -->
 
 
 
