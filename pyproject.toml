@@ -29,6 +29,10 @@ nbformat = ">=5.10.4,<5.11.0"
 numpy = ">=1.26.4,<1.27.0"
 xgboost = ">=2.1.1,<2.2.0"
 nbclient = ">=0.10.0,<0.11.0"
+dash-bootstrap-components = ">=1.6.0,<1.7.0"
+fastapi = ">=0.115.5,<0.116.0"
+uvicorn = ">=0.32.1,<0.33.0"
+flask-caching = ">=2.3.0,<2.4.0"
 
 
 [tool.poetry.group.dev.dependencies]
