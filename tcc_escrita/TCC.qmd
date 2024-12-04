@@ -942,6 +942,19 @@ $$
 $$
 onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ é o modelo ajustado, e $\mathbf 1$ é um vetor de uns. Quando $x^*$ é o valor mínimo de $x^S$​, isso garante que todas as curvas comecem em 0, removendo assim as diferenças de nível causadas pelos distintos $x_C^{\left(i\right)}$. Se $x^*$ for o valor máximo de $x_S$​, o nível de cada curva centralizada reflete o efeito cumulativo de $x_S$​ sobre $\hat f$​ em relação ao ponto de centralização nas variáveis.
 
+\vspace{12pt}
+
+O método ICE é equivalente ao Partial Dependence Plot, com a diferença que o ICE faz o mesmo considerando uma linha para cada instância, o que permite observar o comportamento das predições em relação a variação das variáveis. Por outro lado, o Partial Dependence Plot é um método mais global, ele vai ser a média de todas as linhas presentes em um gráfico do método ICE. Dessa forma, o PDP, para regressão, é definido da seguinte forma:
+
+$$
+\hat{f}_{S}\left(x_{S}\right) = E_{\mathbf{X}_{C}}\left[\hat{f}\left(x_{S}, \mathbf{X}_{C}\right)\right]
+$$
+em que $\mathbf{X}_C$ representa as variáveis independentes utilizadas para o ajuste do modelo e $x_S$ são as variáveis que se deseja conhecer os efeitos na predição. Através de simulação de Monte Carlo $\hat{f}_S$ pode ser estimado da seguinte forma:
+
+$$
+\hat{f}_S\left(X_S\right) = \frac{1}{N} \sum^{N}_{i=1}\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)
+$$
+
 ### Local interpretable model-agnostic explanations (LIME)
 
 \ \ \ @ribeiro2016should definem o Local Interpretable Model-Agnostic Explanations (LIME) como um algoritmo capaz de explicar as previsões feitas por qualquer modelo de classificação ou regressão, aproximando-o localmente de um modelo mais interpretável. Dessa forma, o objetivo geral do LIME é identificar um modelo interpretável e gerar uma representação interpretável para traduzir modelos complexos.
