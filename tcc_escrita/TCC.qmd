@@ -42,7 +42,6 @@ mermaid:
   theme: forest
 date: today
 date-format: long
-# highlight-style: custom.theme
 highlight-style: github
 fontsize: 12pt
 interlinespace: 1.5pt
@@ -92,17 +91,39 @@ test_df = test_df.rename(columns=rename)
 \listoffigures
 \egroup
 
-# Resumo
+# Resumo {.unnumbered}
 
 # Introdução
 
-# Objetivos
+## Objetivos
 
-## Objetivo Geral
+### Objetivo Geral
 
-## Objetivos Específicos
+Realizar uma análise e modelagem do valor de imóveis na cidade de João Pessoa, Paraíba, utilizando ferramentas computacionais e técnicas de aprendizagem de máquina, com o intuito de compreender os fatores que influenciam esses valores e propor modelos preditivos eficientes.
+
+### Objetivos Específicos
+
+- Definir um modelo para a predição de imóveis da cidade de João Pessoa para ajudar na tomada de decisão de avaliação de imóveis.
+
+- Desenvolver uma aplicação prática e interativa que permita a entrada de características dos imóveis e forneça estimativas de seus valores com base nos modelos construídos.
+
+- Criar visualizações e relatórios que facilitem a interpretação dos resultados e apoiem a tomada de decisões no mercado imobiliário.
 
 ## Organização do Trabalho
+
+Além deste capítulo de introdução, em que é apresentado os problemas que serão abordados no trabalho e toda discussão envolvida, este trabalho também é composto por 6 outros capítulos. Os outros capítulos estão organizados da seguinte forma:
+
+- **Capítulo 2**: No capítulo 2 serão apresentadas todas as ferramentas computacionais utilizadas, linguagens de programação, bibliotecas e sobre o processo para a coleta dos dados através da técnica de raspagem de dados.
+
+- **Capítulo 3**:  Aqui é apresentada toda a descrição teórica de cada um dos modelos e algoritmos utilizados.
+
+- **Capítulo 4**: O capítulo 4 apresenta todo o processo para obtenção dos dados e a descrição da variável dos dados. Além disso, são apresentados também as etapas para a construção do modelo, as transformações realizadas nas variáveis, o processo para encontrar os hiperparâmetros ótimos dos modelos através de validação cruzada e técnicas de otimização. Por fim, para descrever as técnicas para análise de como os predições se comportam, são apresentadas e descritas as técnicas de Individual Conditional Expectation, Local Interpretable model-agnostic explanations e SHapley Additive exPlanations.
+
+- **Capítulo 5**: No capítulo 5 são apresentados os resultados da análise exploratória, a tunagem dos modelos, os efeitos e importância das variáveis na predição.
+
+- **Capítulo 6**: O capítulo 6 apresenta a conclusão do trabalho a partir da discussão dos resultados obtidos durante seu desenvolvimento.
+
+- **Capítulo 7**: Por fim, o capítulo 7 apresenta a aplicação final desenvolvida e discute as suas funcionalidades e utilidade prática.
 
 \newpage
 
@@ -1657,6 +1678,8 @@ O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que 
 Valores previstos em função dos observados do algoritmo Random Forest
 :::
 
+\vspace{12pt}
+
 Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $86,98\%$ dos dados, bastante semelhante à Random Forest, com uma diferença não tão significativa. Por outro lado, o RMSE do Gradient Boosting foi menor que a Random Forest, tendo sido de 0,28730. Observando o MAPE, não houve também muitas diferenças, embora o MAPE do Gradient Boosting tenha sido maior. O MAPE indica que as predições geradas pelo Gradient Boosting estão $1,377\%$ distantes de seus valores observados. Seu ajuste pode ser observado na @fig-preds_gdt.
 
 ::: {#fig-preds_gdt}
@@ -1665,6 +1688,8 @@ Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $
 
 Valores previstos em função dos observados do algoritmo Gradient Boosting
 :::
+
+\vspace{12pt}
 
 O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos últimos dois algoritmos. Em relação ao seu $R^2$, o modelo consegue explicar $87,17\%$ dos dados. O seu RMSE ficou em $0,28493$ e o MAPE em $0,01346$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão em média $1,346\%$ distantes de seus valores reais. A melhora do ajuste do Light Gradient Boosting fica bastante perceptível observando a figura de seus valores estimados em função dos observados (@fig-preds_lgbm). As predições geradas pelos Gradient Boosting e Random Forest desviam bastante, principalmente em relação ao final da distribuição.
 
