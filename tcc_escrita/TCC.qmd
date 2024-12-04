@@ -975,6 +975,8 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 ### SHapley Additive exPlanations (SHAP)
 
+\ \ \ O SHapley Additive exPlanations é um método que explica tem como objetivo explicar predições individuais de uma instância $x$ através da computação da contribuição de cada variável para a predição. Ele é baseado nos Shapley Values. Dessa forma, o Shapley Values serão definidos primeiramente.
+
 # Resultados
 
 ## Análise exploratória de dados
