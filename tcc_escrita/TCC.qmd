@@ -975,7 +975,16 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 ### SHapley Additive exPlanations (SHAP)
 
-\ \ \ O SHapley Additive exPlanations é um método que explica tem como objetivo explicar predições individuais de uma instância $x$ através da computação da contribuição de cada variável para a predição. Ele é baseado nos Shapley Values. Dessa forma, o Shapley Values serão definidos primeiramente.
+\ \ \ O SHapley Additive exPlanations é um método que explica tem como objetivo explicar predições individuais de uma instância $x$ através da computação da contribuição de cada variável para a predição. Ele é baseado nos Shapley Values. Dessa forma, os valores SHapley serão definidos primeiramente.
+
+\vspace{12pt}
+
+Os Shapley Values foram introduzidos por Lloyd Shapley [@shapley1953value] e são baseados no conceito da teoria de jogo de coalizão. A sua teoria foi aplicada para explicar as predições realizadas por um modelo e representam a contribuição média de uma variável para a predição, considerando coalizões. Aqui as coalizões significam diferentes combinações de variáveis. Matematicamente, os valores Shapley são definidos da seguinte forma:
+
+$$
+\phi_j\left(val\right) = \sum_{S \subseteq \{1, \dots, p\} | \{j\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)
+$$
+onde $$
 
 # Resultados
 
