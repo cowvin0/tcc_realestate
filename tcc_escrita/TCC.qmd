@@ -979,12 +979,17 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 \vspace{12pt}
 
-Os Shapley Values foram introduzidos por Lloyd Shapley [@shapley1953value] e são baseados no conceito da teoria de jogo de coalizão. A sua teoria foi aplicada para explicar as predições realizadas por um modelo e representam a contribuição média de uma variável para a predição, considerando coalizões. Aqui as coalizões significam diferentes combinações de variáveis. Matematicamente, os valores Shapley são definidos da seguinte forma:
+Os Shapley Values foram introduzidos por @shapley1953value e são baseados no conceito da teoria de jogo de coalizão. A sua teoria foi aplicada para explicar as predições realizadas por um modelo e representam a contribuição média de uma variável para a predição, considerando coalizões. Aqui as coalizões significam diferentes combinações de variáveis. Matematicamente, os valores Shapley são definidos da seguinte forma:
 
 $$
-\phi_j\left(val\right) = \sum_{S \subseteq \{1, \dots, p\} | \{j\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)
+\phi_i\left(x\right) = \sum_{Q \subseteq S | \{i\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)
+$${#eq-shapley}
+onde $Q$ é um subconjunto das covariáveis utilizadas no modelo, $S$ representa todas as covariáveis. A diferença $\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)$ é a contribuição marginal da variável $i$ ao ser adicionada ao subconjunto das variáveis $Q$. No entanto, a @eq-shapley cresce exponencialmente. Dessa forma, pode ser estimado a partir de Monte-Carlo a partir da seguinte expressão:
+
 $$
-onde $$
+\hat{\phi}_{i}\left(x\right) = \frac{1}{n!} \sum_{O \in \pi \left(n \right)} \left( \Delta_{{Pre}^{i} \left(O\right) \cup \{i\}} - \Delta_{{Pre}^{i} \left(O\right)} \right), \ i = 1, \dots, n
+$$
+em que $\pi\left(n\right)$ é o conjunto de todas as permutações ordenadas dos índices das variáveis $\{1, 2, \dots, n\}$ e ${Pre}^{i}\left(i\right)$ é o conjunto de todos os índices que precedem $i$ na permutação $O \in \pi \left(n\right)$ [@vstrumbelj2014explaining].
 
 # Resultados
 
