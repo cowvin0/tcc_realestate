@@ -991,6 +991,10 @@ $$
 $$
 em que $\pi\left(n\right)$ é o conjunto de todas as permutações ordenadas dos índices das variáveis $\{1, 2, \dots, n\}$ e ${Pre}^{i}\left(i\right)$ é o conjunto de todos os índices que precedem $i$ na permutação $O \in \pi \left(n\right)$ [@vstrumbelj2014explaining].
 
+\vspace{12pt}
+
+(INCLUIR SOBRE O MÉTODO SHAP)
+
 # Resultados
 
 ## Análise exploratória de dados
