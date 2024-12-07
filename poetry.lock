@@ -1647,6 +1647,33 @@ files = [
 referencing = ">=0.31.0"
 
 [[package]]
+name = "jupyter-cache"
+version = "1.0.1"
+description = "A defined interface for working with a cache of jupyter notebooks."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "jupyter_cache-1.0.1-py3-none-any.whl", hash = "sha256:9c3cafd825ba7da8b5830485343091143dff903e4d8c69db9349b728b140abf6"},
+    {file = "jupyter_cache-1.0.1.tar.gz", hash = "sha256:16e808eb19e3fb67a223db906e131ea6e01f03aa27f49a7214ce6a5fec186fb9"},
+]
+
+[package.dependencies]
+attrs = "*"
+click = "*"
+importlib-metadata = "*"
+nbclient = ">=0.2"
+nbformat = "*"
+pyyaml = "*"
+sqlalchemy = ">=1.3.12,<3"
+tabulate = "*"
+
+[package.extras]
+cli = ["click-log"]
+code-style = ["pre-commit (>=2.12)"]
+rtd = ["ipykernel", "jupytext", "myst-nb", "nbdime", "sphinx-book-theme", "sphinx-copybutton"]
+testing = ["coverage", "ipykernel", "jupytext", "matplotlib", "nbdime", "nbformat (>=5.1)", "numpy", "pandas", "pytest (>=6)", "pytest-cov", "pytest-regressions", "sympy"]
+
+[[package]]
 name = "jupyter-client"
 version = "8.6.2"
 description = "Jupyter protocol implementation and client libraries"
@@ -4228,6 +4255,20 @@ anyio = ">=3.4.0,<5"
 full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.7)", "pyyaml"]
 
 [[package]]
+name = "tabulate"
+version = "0.9.0"
+description = "Pretty-print tabular data"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f"},
+    {file = "tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c"},
+]
+
+[package.extras]
+widechars = ["wcwidth"]
+
+[[package]]
 name = "tenacity"
 version = "9.0.0"
 description = "Retry code until it succeeds"
@@ -4959,4 +5000,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4662c763b10ddd4f1f4baf1a9090da64dc5e17e5556c774edd2a5266094444ef"
+content-hash = "3c36bb34c9d9d69c72de067645157deb18322fadfc6d89595a12bb9aafa05312"

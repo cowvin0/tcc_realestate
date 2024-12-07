@@ -1,4 +1,5 @@
 ---
+cache: true
 nocite: |
   @bischl2023hyperparameter
   @garnett2023bayesian
@@ -1047,6 +1048,22 @@ Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento 
 
 \vspace{12pt}
 
+::: {#fig-mapas_jp layout-nrow=2}
+![Variação do valor médio dos imóveis.](includes/map_valor_normal.png){#fig-mapa_valor}
+
+![Variação da média da área dos imóveis.](includes/map_area_normal.png){#fig-mapa_area}
+
+Mapa da região de João Pessoa, área de estudo
+:::
+
+A partir da @fig-mapas_jp, é possível visualizar o mapa da região de estudo, correspondente à cidade de João Pessoa. O mapa representado pela @fig-mapa_valor exibe a variação da média do valor dos imóveis, enquanto o mapa @fig-mapa_area apresenta a variação da média da área dos imóveis. Essas variações estão foram calculadas com base na delimitação dos bairros da cidade de João Pessoa. Contudo, alguns bairros não possuíam dados no momento da raspagem de dados e, por isso, estão representados pela cor cinza. Já os bairros com variação nas cores indicam valores mais altos de áreas ou de valor dos imóveis conforme as tonalidades se tornam mais escuras. Dessa forma, observa-se que o bairro com a maior média de valor, aquele que apresenta a tonalidade mais escura, é o bairro de Altiplano Cabo Branco, seguido pelo Portal do Sol e em terceiro o bairro de Cabo Branco.
+
+\vspace{12pt}
+
+Embora os bairros de Altiplano Cabo Branco, Portal do sol e Cabo Branco sejam aqueles com o maior valor são ao mesmo tempo um dos que apresentam uma das menores áreas médias dos imóveis, como pode ser observado na @fig-mapa_area. O bairro de Barra de Gramame aparece com a maior área, mas contém apenas um imóvel do tipo terreno com uma área de 1100 $m^2$, assim como Jardim Veneza que também possuí apenas um terreno com área de 1050 $m^2$. O Centro é o bairro com uma das maiores média de $m^2$ da cidade de João Pessoa, assim como Costa do Sol.
+
+\vspace{12pt}
+
 A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
 
 ```{python}
@@ -1160,10 +1177,6 @@ axes[1].set_ylabel(ylabel='Densidade')
 plt.show()
 ```
 
-\vspace{12pt}
-
-A @fig-corplot apresenta a matriz de correlação entre as variáveis numéricas do conjunto de dados. As cores mais escuras indicam uma correlação mais forte entre as variáveis, enquanto as cores mais claras indicam o contrário. O valor do imóvel apresenta maior correlação com as variáveis de área do imóvel e número de vagas de estacionamento. Além disso, o valor do imóvel tem alta correlação com o valor médio do aluguel, número de quartos e banheiros, além de ser fortemente influenciado pela localização das propriedades. Algumas variáveis apresentam multicolinearidade entre si, mas os algoritmos utilizados selecionam aleatoriamente as variáveis para a modelagem, o que reduz o risco de selecionar variáveis redundantes.
-
 ```{python}
 #| label: fig-corplot
 #| fig-cap: "Gráfico de correlação de Spearman das variáveis independentes."
@@ -1187,6 +1200,10 @@ heatmap.figure.axes[-1].tick_params(labelsize=16)
 plt.xticks([])
 plt.show()
 ```
+
+\vspace{12pt}
+
+A @fig-corplot apresenta a matriz de correlação entre as variáveis numéricas do conjunto de dados. As cores mais escuras indicam uma correlação mais forte entre as variáveis, enquanto as cores mais claras indicam o contrário. O valor do imóvel apresenta maior correlação com as variáveis de área do imóvel e número de vagas de estacionamento. Além disso, o valor do imóvel tem alta correlação com o valor médio do aluguel, número de quartos e banheiros, além de ser fortemente influenciado pela localização das propriedades. Algumas variáveis apresentam multicolinearidade entre si, mas os algoritmos utilizados selecionam aleatoriamente as variáveis para a modelagem, o que reduz o risco de selecionar variáveis redundantes.
 
 ```{python eval=FALSE}
 import io
@@ -1249,7 +1266,7 @@ df_inteiro = df_inteiro\
       .query('Bairro not in ["INTERMATES", "PRAIA DE INTERMARES"]')
 
 
-average_values = df_inteiro.groupby("Bairro")["Área"].mean().reset_index(name='Área')
+average_values_area = df_inteiro.groupby("Bairro")["Área"].mean().reset_index(name='Área')
 
 m = folium.Map(
   location=[-7.15, -34.85],
@@ -1262,7 +1279,7 @@ folium.Choropleth(
     geo_data=state_geo,
     name="choropleth",
     nan_fill_color="gray",
-    data=average_values,
+    data=average_values_area,
     columns=["Bairro", "Área"],
     key_on="feature.properties.nome",
     fill_color='YlGnBu',
@@ -1382,7 +1399,6 @@ img = Image.open(io.BytesIO(img_data))
 img.save('includes/map_valor_dark.png')
 ```
 
-
 ```{python}
 # pair_plot_df = train_df.copy()
 # pair_plot_df['Área'] = np.log1p(pair_plot_df['Área'])
@@ -1431,13 +1447,7 @@ img.save('includes/map_valor_dark.png')
 # g.map_upper(sns.kdeplot, levels=4, color=".2")
 ```
 
-
-
-![Variação do valor médio dos imóveis](includes/map_valor_normal.png){#fig-mapa_valor fig-align="center"}
-
-![Variação da média da área dos imóveis](includes/map_area_normal.png){#fig-mapa_area fig-align="center"}
-
-
+{{< pagebreak >}}
 
 ## Tunagem dos modelos
 
@@ -1491,7 +1501,6 @@ study4 = joblib.load('../app/modeling/study_pkl/study_xgb.pkl')
 
 ```{python}
 #| label: fig-rf_slice
-
 
 fig_rf_slice = optuna.visualization.matplotlib.plot_slice(study1)
 plt.suptitle('')
