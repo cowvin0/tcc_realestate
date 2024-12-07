@@ -42,7 +42,7 @@ author: Gabriel de Jesus Pereira
 mermaid:
   theme: forest
 date: today
-date-format: long
+date-format: "MMMM, YYYY"
 highlight-style: github
 fontsize: 12pt
 interlinespace: 1.5pt
@@ -1188,6 +1188,201 @@ plt.xticks([])
 plt.show()
 ```
 
+```{python eval=FALSE}
+import io
+import geopandas as gpd
+import folium
+import pandas
+import requests
+import imgkit
+from PIL import Image
+from branca.colormap import linear
+
+state_geo = gpd.read_file('includes/bairros.geojson')\
+  .assign(nome=lambda x: x.nome.str.strip())
+df_inteiro = pd.concat([train_df, test_df])
+df_inteiro = df_inteiro\
+      .assign(Bairro=lambda x: x\
+        .Bairro\
+        .str\
+        .replace('_', ' ')\
+        .str.upper()\
+        .replace(
+          {
+            'ALTIPLANO': 'ALTIPLANO CABO BRANCO',
+            'JOSE AMERICO': 'JOSÉ AMÉRICO',
+            'TAMBAU': 'TAMBAÚ',
+            'JARDIM CIDADE UNIVERSITARIA': 'JARDIM CIDADE UNIVERSITÁRIA',
+            'MANAIRA': 'MANAÍRA',
+            'VARJAO': 'VARJÃO',
+            'BANCARIOS': 'BANCÁRIOS',
+            'EXPEDICIONARIOS': 'EXPEDICIONÁRIOS',
+            'JOAO AGRIPINO': 'JOÃO AGRIPINO',
+            'MANDACARU': 'MANDACARÚ',
+            'JARDIM SAO PAULO': 'JARDIM SÃO PAULO',
+            'COLIBRIS': 'CIDADE DOS COLIBRIS',
+            'ANATOLIA': 'ANATÓLIA',
+            'MUCUMAGRO': 'MUÇUMAGRO',
+            'AGUA FRIA': 'ÁGUA FRIA',
+            'BAIRRO DOS IPES': 'BAIRRO DOS IPÊS',
+            'JARDIM LUNA': 'BRISAMAR',
+            'VALENTINA DE FIGUEIREDO': 'VALENTINA',
+            'PLANALTO BOA ESPERANCA': 'PLANALTO DA BOA ESPERANÇA',
+            'CUIA': 'CUIÁ',
+            'MANGABEIRA IV': 'MANGABEIRA',
+            'GEISEL': 'ERNESTO GEISEL',
+            'JOAO PAULO II': 'JOÃO PAULO II',
+            'TAMBIA': 'TAMBIÁ',
+            'ALTO DO CEU': 'ALTO DO CÉU',
+            'QUADRAMARES': 'PORTAL DO SOL',
+            'CIDADE UNIVERSITARIA': 'JARDIM CIDADE UNIVERSITÁRIA',
+            'MANGABEIRA VII': 'MANGABEIRA',
+            'SAO JOSE': 'SÃO JOSÉ',
+            'JARDIM 13 DE MAIO': 'TREZE DE MAIO',
+            'PRAIA DO SOL': 'COSTA DO SOL',
+            'SEIXAS': 'PONTA DO SEIXAS',
+            'RANGEL': 'VARJÃO',
+            'COLINAS DO SUL': 'GRAMAME',
+            'AREA RURAL DE JOAO PESSOA': 'MANAÍRA'}
+        ).str.strip()
+      )\
+      .query('Bairro not in ["INTERMATES", "PRAIA DE INTERMARES"]')
+
+
+average_values = df_inteiro.groupby("Bairro")["Área"].mean().reset_index(name='Área')
+
+m = folium.Map(
+  location=[-7.15, -34.85],
+  zoom_control=False,
+  tiles="CartoDB dark_matter",
+  attribution_control=False,
+  zoom_start=12.49994)
+
+folium.Choropleth(
+    geo_data=state_geo,
+    name="choropleth",
+    nan_fill_color="gray",
+    data=average_values,
+    columns=["Bairro", "Área"],
+    key_on="feature.properties.nome",
+    fill_color='YlGnBu',
+    fill_opacity=0.7,
+    line_opacity=0.2,
+    legend_name="Variação da média da área dos imóveis",
+).add_to(m)
+
+legend_css = """
+<style>
+    .legend text {
+        fill: white;
+    }
+</style>
+"""
+m.get_root().html.add_child(folium.Element(legend_css))
+
+img_data = m._to_png(20)
+img = Image.open(io.BytesIO(img_data))
+img.save('includes/map_area_dark.png')
+```
+
+```{python eval=FALSE}
+import io
+import geopandas as gpd
+import folium
+import pandas
+import requests
+import imgkit
+from PIL import Image
+from branca.colormap import linear
+
+state_geo = gpd.read_file('includes/bairros.geojson')\
+  .assign(nome=lambda x: x.nome.str.strip())
+df_inteiro = pd.concat([train_df, test_df])
+df_inteiro = df_inteiro\
+      .assign(Bairro=lambda x: x\
+        .Bairro\
+        .str\
+        .replace('_', ' ')\
+        .str.upper()\
+        .replace(
+          {
+            'ALTIPLANO': 'ALTIPLANO CABO BRANCO',
+            'JOSE AMERICO': 'JOSÉ AMÉRICO',
+            'TAMBAU': 'TAMBAÚ',
+            'JARDIM CIDADE UNIVERSITARIA': 'JARDIM CIDADE UNIVERSITÁRIA',
+            'MANAIRA': 'MANAÍRA',
+            'VARJAO': 'VARJÃO',
+            'BANCARIOS': 'BANCÁRIOS',
+            'EXPEDICIONARIOS': 'EXPEDICIONÁRIOS',
+            'JOAO AGRIPINO': 'JOÃO AGRIPINO',
+            'MANDACARU': 'MANDACARÚ',
+            'JARDIM SAO PAULO': 'JARDIM SÃO PAULO',
+            'COLIBRIS': 'CIDADE DOS COLIBRIS',
+            'ANATOLIA': 'ANATÓLIA',
+            'MUCUMAGRO': 'MUÇUMAGRO',
+            'AGUA FRIA': 'ÁGUA FRIA',
+            'BAIRRO DOS IPES': 'BAIRRO DOS IPÊS',
+            'JARDIM LUNA': 'BRISAMAR',
+            'VALENTINA DE FIGUEIREDO': 'VALENTINA',
+            'PLANALTO BOA ESPERANCA': 'PLANALTO DA BOA ESPERANÇA',
+            'CUIA': 'CUIÁ',
+            'MANGABEIRA IV': 'MANGABEIRA',
+            'GEISEL': 'ERNESTO GEISEL',
+            'JOAO PAULO II': 'JOÃO PAULO II',
+            'TAMBIA': 'TAMBIÁ',
+            'ALTO DO CEU': 'ALTO DO CÉU',
+            'QUADRAMARES': 'PORTAL DO SOL',
+            'CIDADE UNIVERSITARIA': 'JARDIM CIDADE UNIVERSITÁRIA',
+            'MANGABEIRA VII': 'MANGABEIRA',
+            'SAO JOSE': 'SÃO JOSÉ',
+            'JARDIM 13 DE MAIO': 'TREZE DE MAIO',
+            'PRAIA DO SOL': 'COSTA DO SOL',
+            'SEIXAS': 'PONTA DO SEIXAS',
+            'RANGEL': 'VARJÃO',
+            'COLINAS DO SUL': 'GRAMAME',
+            'AREA RURAL DE JOAO PESSOA': 'MANAÍRA'}
+        ).str.strip()
+      )\
+      .query('Bairro not in ["INTERMATES", "PRAIA DE INTERMARES"]')
+
+
+average_values = df_inteiro.groupby("Bairro")["Valor"].mean().reset_index(name='Valor')
+
+m = folium.Map(
+  location=[-7.15, -34.85],
+  zoom_control=False,
+  tiles="CartoDB dark_matter",
+  attribution_control=False,
+  zoom_start=12.49994)
+
+folium.Choropleth(
+    geo_data=state_geo,
+    name="choropleth",
+    nan_fill_color="gray",
+    data=average_values,
+    columns=["Bairro", "Valor"],
+    key_on="feature.properties.nome",
+    fill_color='YlGnBu',
+    fill_opacity=0.7,
+    line_opacity=0.2,
+    legend_name="Variação do valor médio dos imóveis",
+).add_to(m)
+
+legend_css = """
+<style>
+    .legend text {
+        fill: white; /* Change legend text color to white */
+    }
+</style>
+"""
+m.get_root().html.add_child(folium.Element(legend_css))
+
+img_data = m._to_png(20)
+img = Image.open(io.BytesIO(img_data))
+img.save('includes/map_valor_dark.png')
+```
+
+
 ```{python}
 # pair_plot_df = train_df.copy()
 # pair_plot_df['Área'] = np.log1p(pair_plot_df['Área'])
@@ -1236,7 +1431,13 @@ plt.show()
 # g.map_upper(sns.kdeplot, levels=4, color=".2")
 ```
 
-`ADICIONAR NO FIM UM GRÁFICO DE ESPACIALIZAÇÃO DOS DADOS (INCLUIR VARIAÇÃO DA COR PELO PREÇO DO IMÓVEL)`
+
+
+![Variação do valor médio dos imóveis](includes/map_valor_normal.png){#fig-mapa_valor fig-align="center"}
+
+![Variação da média da área dos imóveis](includes/map_area_normal.png){#fig-mapa_area fig-align="center"}
+
+
 
 ## Tunagem dos modelos
 
