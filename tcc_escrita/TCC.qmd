@@ -2,6 +2,8 @@
 nocite: |
   @bischl2023hyperparameter
   @garnett2023bayesian
+template-partials:
+  - includes/before-body.tex
 format:
   pdf:
     include-before-body:
@@ -33,10 +35,9 @@ bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
 toc: true
 title: |
-  ![](includes/ufpb.png){width=1in}
 
   Escrever título (escolher no final)
-subtitle: Universidade Federal da Paraíba - CCEN
+# subtitle: Universidade Federal da Paraíba \newline Centro de Ciências Exatas e da Natureza \newline Departamento de Estatística
 author: Gabriel de Jesus Pereira
 mermaid:
   theme: forest

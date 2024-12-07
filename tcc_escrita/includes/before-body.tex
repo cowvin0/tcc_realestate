@@ -1,0 +1,56 @@
+$if(has-frontmatter)$
+\scrreprt
+$endif$
+\cleardoublepage
+\thispagestyle{empty}
+{\centering
+\noindent\rule{\textwidth}{0.5pt}
+
+\vspace{2ex}
+
+{\Large\bfseries Universidade Federal da Paraíba \par}
+\vspace{1ex}
+{\Large\bfseries Centro de Ciências Exatas e da Natureza \par}
+\vspace{1ex}
+{\Large\bfseries Departamento de Estatística \par}
+
+\vfill
+
+$if(title)$
+{\large\bfseries $title$ \par}
+$endif$
+
+\vfill
+
+$for(by-author)$
+{\large $by-author.name.literal$ \par}
+\vfill
+{\normalsize $date$ \par}
+$endfor$
+
+
+\noindent\rule{\textwidth}{0.5pt}
+
+\newpage
+
+$for(by-author)$
+{\normalsize\bfseries $by-author.name.literal$ \par}
+$endfor$
+
+$if(title)$
+{\large\bfseries $title$ \par}
+$endif$
+
+% $if(subtitle)$
+% \vspace{3ex}
+% {\Large\bfseries $subtitle$ \par}
+% $endif$
+% $for(by-author.affiliations)$
+% $if(it.department)$%
+% {\bfseries\large $it.department$ \par}
+% \vspace{3ex}
+% $endif$
+% {\bfseries\large $it.name$ \par}
+% $endfor$
+% \vspace{12ex}
+}
