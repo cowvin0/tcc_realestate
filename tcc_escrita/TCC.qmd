@@ -4,6 +4,7 @@ nocite: |
   @garnett2023bayesian
 template-partials:
   - includes/before-body.tex
+toc-title: Sumário
 format:
   pdf:
     include-before-body:
@@ -37,7 +38,6 @@ toc: true
 title: |
 
   Escrever título (escolher no final)
-# subtitle: Universidade Federal da Paraíba \newline Centro de Ciências Exatas e da Natureza \newline Departamento de Estatística
 author: Gabriel de Jesus Pereira
 mermaid:
   theme: forest
@@ -51,10 +51,13 @@ warning: false
 echo: false
 include-in-header:
   - text: |
+      \usepackage[shortlabels]{enumitem}
+      \usepackage{ragged2e}
       \usepackage{pdflscape}
       \newcommand{\blandscape}{\begin{landscape}}
       \newcommand{\elandscape}{\end{landscape}}
 ---
+
 
 ```{python}
 import pandas as pd
@@ -90,9 +93,12 @@ test_df = test_df.rename(columns=rename)
 \bgroup
 \hypersetup{linkcolor = black}
 \listoffigures
+\listoftables
+\renewcommand{\listalgorithmname}{Lista de Algoritmos}
+\listofalgorithms
 \egroup
 
-# Resumo {.unnumbered}
+# Resumo {.unnumbered .unlisted}
 
 # Introdução
 
@@ -1761,7 +1767,7 @@ Valores previstos em função dos observados do algoritmo Stacking
 
 # Conclusão
 
-# Referências Bibliográficas
+# Referências {.unnumbered}
 
 ::: {#refs}
 :::

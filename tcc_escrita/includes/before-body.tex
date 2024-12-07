@@ -37,20 +37,25 @@ $for(by-author)$
 {\normalsize\bfseries $by-author.name.literal$ \par}
 $endfor$
 
+\vfill
+
 $if(title)$
 {\large\bfseries $title$ \par}
 $endif$
 
-% $if(subtitle)$
-% \vspace{3ex}
-% {\Large\bfseries $subtitle$ \par}
-% $endif$
-% $for(by-author.affiliations)$
-% $if(it.department)$%
-% {\bfseries\large $it.department$ \par}
-% \vspace{3ex}
-% $endif$
-% {\bfseries\large $it.name$ \par}
-% $endfor$
-% \vspace{12ex}
+\vfill
+
+\hfill \parbox{8cm}{\normalsize{Trabalho de conclusão de curso apresentado ao Curso de Bacharelado em Estatística, do Departamento de Estatística, do Centro de Ciências Exatas e da Natureza, da Universidade Federal da Paraíba, como requisito para obtenção do título de Bacharel em Estatística.}}
+
+\vfill
+
+{\normalsize Orientador: Prof. Dr. Pedro Rafael Diniz Marinho}
+
+\vfill
+
+$for(by-author)$
+{\normalsize\bfseries João Pessoa \par}
+{\normalsize\bfseries $date$ \par}
+$endfor$
+
 }
