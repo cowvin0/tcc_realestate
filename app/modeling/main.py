@@ -6,11 +6,14 @@ from pages.navbar import navbar
 from dash import dcc, html, Input, Output, State
 from flask_caching import Cache
 
+FONT_AWESOME = "https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+
 app = dash.Dash(
     __name__,
     title='Imóveis',
     external_stylesheets=[
-        dbc.themes.COSMO
+        dbc.themes.COSMO,
+        FONT_AWESOME
     ],
     use_pages=True,
     update_title=False,
@@ -20,7 +23,7 @@ app = dash.Dash(
 
 app.layout = html.Div(
     [
-        navbar(),
+        # navbar(),
         dash.page_container
     ]
 )
