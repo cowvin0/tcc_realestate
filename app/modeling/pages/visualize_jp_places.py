@@ -1,8 +1,6 @@
 import dash
 import dash_bootstrap_components as dbc
-import plotly.express as px
-
-from dash import dcc, html, Input, Output, State, callback
+from dash import html
 
 dash.register_page(
     __name__,
@@ -21,73 +19,116 @@ sidebar = html.Div(
         ),
         html.Div(
             [
-                dbc.Button(
-                    html.Span(
-                        dbc.Stack([
+                dbc.Row([
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
                             html.I(className="fas fa-solid fa-map ml-2"),
                             " Bairros"
-                        ])
-                    ),
-                    color="light",
-                    className="m-1",
-                    style={"width": "100%"},
-                ),
-                dbc.Button(
-                    html.Span(
-                        dbc.Stack([
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
                             html.I(className="fas fa-leaf ml-2"),
                             " Praças"
-                        ])
-                    ),
-                    color="light",
-                    className="m-1",
-                    style={"width": "100%"},
-                ),
-                dbc.Button(
-                    html.Span(
-                        dbc.Stack([
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+                ]),
+
+                dbc.Row([
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
                             html.I(className="fas fa-solid fa-tree ml-2"),
                             " Parques"
-                        ])
-                    ),
-                    color="light",
-                    className="m-1",
-                    style={"width": "100%"},
-                ),
-                dbc.Button(
-                    html.Span(
-                        dbc.Stack([
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
                             html.I(className="fas fa-solid fa-water ml-2"),
                             " Rios"
-                        ])
-                    ),
-                    color="light",
-                    className="m-1",
-                    style={"width": "100%"},
-                ),
-                dbc.Button(
-                    html.Span(
-                        dbc.Stack([
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+                ]),
+
+                dbc.Row([
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
                             html.I(className="fas fa-solid fa-bicycle ml-2"),
                             " Ciclovário"
-                        ])
-                    ),
-                    color="light",
-                    className="m-1",
-                    style={"width": "100%"},
-                ),
-                dbc.Button(
-                    html.Span(
-                        dbc.Stack([
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
                             html.I(className="fas fa-solid fa-bus ml-2"),
                             " Faixas exclusivas"
-                        ])
-                    ),
-                    color="light",
-                    className="m-1",
-                    style={"width": "100%"},
-                ),
-            ],
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+                ]),
+
+                dbc.Row([
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
+                            html.I(className="fas fa-solid fa-road ml-2"),
+                            " Corredores"
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
+                            html.I(className="fas fa-solid fa-school ml-2"),
+                            " Escolas públicas"
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+                ]),
+
+                dbc.Row([
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
+                            html.I(className="fas fa-solid fa-home ml-2"),
+                            " Comunidades"
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+
+                    dbc.Col(dbc.Button(
+                        html.Span(dbc.Stack([
+                            html.I(className="fas fa-sun ml-2"),
+                            " Área rural"
+                        ])),
+                        color="light",
+                        className="m-1",
+                        style={"width": "100%"},
+                    ), width=6),
+                ]),
+            ]
         ),
     ],
     style={
@@ -98,17 +139,8 @@ sidebar = html.Div(
         "position": "fixed",
         "left": 0,
         "top": "56px",
+        "overflow-y": "auto",
     },
 )
 
-main_content = html.Div(
-    [
-        html.Iframe(
-            srcDoc="<iframe src='https://www.openstreetmap.org' width='100%' height='100%'></iframe>",
-            style={"width": "100%", "height": "100vh", "border": "none"},
-        )
-    ],
-    style={"margin-left": "20%", "padding": "0px"},
-)
-
-layout = [sidebar, main_content]
+layout = sidebar
