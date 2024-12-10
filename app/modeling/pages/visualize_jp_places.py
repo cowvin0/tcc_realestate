@@ -1,3 +1,4 @@
+import folium
 import dash
 import dash_bootstrap_components as dbc
 from dash import html
@@ -143,4 +144,23 @@ sidebar = html.Div(
     },
 )
 
-layout = sidebar
+map_folium = folium.Map(location=[-7.1195, -34.845], zoom_start=13)
+folium.TileLayer("cartodbpositron").add_to(map_folium)
+
+map_component = html.Div(
+    html.Iframe(
+        srcDoc=map_folium.get_root().render(),
+        style={
+            "height": "92.5vh",
+            "width": "80vw",
+            "border": "none",
+            },
+    ),
+    style={
+        "position": "fixed",
+        "top": "56px",
+        "left": "20%"
+        },
+)
+
+layout = [sidebar, map_component]
