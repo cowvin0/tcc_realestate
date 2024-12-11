@@ -1,3 +1,4 @@
+import geopandas as gpd
 import folium
 import dash
 import dash_bootstrap_components as dbc
@@ -144,8 +145,9 @@ sidebar = html.Div(
     },
 )
 
+geo_data = gpd.read_file('https://raw.githubusercontent.com/paulovitorweb/geodata-jp/refs/heads/main/data/bairros.geojson')
 map_folium = folium.Map(location=[-7.1195, -34.845], zoom_start=13)
-folium.TileLayer("cartodbpositron").add_to(map_folium)
+folium.GeoJson(geo_data, name="hello world").add_to(map_folium)
 
 map_component = html.Div(
     html.Iframe(
