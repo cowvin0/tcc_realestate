@@ -103,6 +103,15 @@ test_df = test_df.rename(columns=rename)
 
 # Introdução
 
+## Introdução
+
+\ \ \ Assim como em todos os países, grande parte da história do Brasil foi marcada por uma predominância rural. Em 1940, apenas 15% da população vivia em áreas urbanas. No entanto, esse número cresceu rapidamente, ultrapassando 50% em 1970 [@wagner1980urbanization]. Esse tendência se manteve nas décadas seguintes, até que, em 2014, 85,1% da população brasileira já residia em regiões urbanas.
+
+\vspace{12pt}
+
+No Brasil, o processo de urbanização ocorreu de forma tardia e desordenada, quando comparado com os países pioneiros da Revolução Industrial, que tiveram todo um planejamento para suportar a grande transição demográfica que a população estava passando naquele momento. Um dos principais fatores que impulsionaram essa rápida urbanização foram os chamados fatores de repulsão, característicos de nações em desenvolvimento. Esses fatores estão ligados às precárias condições de vida no meio rural, decorrentes da estrutura fundiária concentrada, dos baixos salários e da falta de suporte para pequenos agricultores. Como consequência, houve um êxodo rural significativo, que resultou no crescimento desordenado das grandes metrópoles e no agravamento de problemas urbanos, como déficit habitacional, precariedade nos serviços públicos e aumento das desigualdades sociais.
+
+
 ## Objetivos
 
 ### Objetivo Geral

@@ -173,6 +173,8 @@ def generate_map(map_type):
     return map_file
 
 
+# FONTE DIN
+
 map_component = html.Div(
     html.Iframe(
         id="map-iframe",
