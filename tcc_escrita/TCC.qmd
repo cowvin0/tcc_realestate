@@ -119,7 +119,13 @@ O êxodo rural no Brasil foi um processo gradual, mas que ocorreu de forma acele
 
 Com os incentivos gerados pelo processo de industrialização e urbanização no Brasil, a demanda por habitação aumentou significativamente. Nesse cenário, surgiu a necessidade de se estabelecer, ainda que tardiamente, um sistema imobiliário no país. A criação desse sistema foi iniciada pela Lei nº 4.380, de 21 de agosto de 1964, que introduziu a correção monetária nos contratos imobiliários de interesse social e institui o sistema financeiro para aquisição da casa própria. Essa legislação foi responsável pela criação do Banco Nacional da Habitação (BNH), das Sociedades de Crédito Imobiliário (SCI) e do Sistema Financeiro de Habitação (SFH), estabelecendo um sistema de crédito imobiliário regulamentado pela primeira vez no país.
 
+\vspace{12pt}
 
+Antes de 1968, o FGTS (Fundo de Garantia por Tempo de Serviço) era o principal recurso para crédito imobiliário. Em 1968, a caderneta de poupança se torna a principal fonte de recursos para o setor após a regulamentação para seu uso para crédito imobiliário. A poupança era a grande financiadora do SFH. A partir da década de 80 com o aumento da inflação no país, o SFH começa a ser afetado, principalmente com as ações tomadas pelos governos para combater a inflação. Em 1985, o reajuste das prestações foi de 112% e inflação acumulada já alcançava os 246%, porcentual aplicado na correção dos saldos devedores. Acuado pela inflação, os governos passados deu início a uma série de planos heterodoxos.
+
+\vspace{12pt}
+
+O Plano Cruzado, em 1986, converteu o valor das prestações pela média de até 12 meses anteriores e, em seguida, congelou os reajustes pelos 12 meses seguintes, o que atingiu a totalidade a totalidade dos contratos e permitiu a redução de cerca de 40% no valor das prestações. No entanto, a medida afetou os contrados e os tornou mais caros. Em 1987 e 1989, as prestações foram congeladas temporariamente com as medidas tomadas pelo Plano Bresser e o Plano Verão. (FALAR DO PLANO COLLOR)
 
 ## Objetivos
 
