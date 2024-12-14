@@ -121,11 +121,24 @@ Com os incentivos gerados pelo processo de industrialização e urbanização no
 
 \vspace{12pt}
 
-Antes de 1968, o FGTS (Fundo de Garantia por Tempo de Serviço) era o principal recurso para crédito imobiliário. Em 1968, a caderneta de poupança se torna a principal fonte de recursos para o setor após a regulamentação para seu uso para crédito imobiliário. A poupança era a grande financiadora do SFH. A partir da década de 80 com o aumento da inflação no país, o SFH começa a ser afetado, principalmente com as ações tomadas pelos governos para combater a inflação. Em 1985, o reajuste das prestações foi de 112% e inflação acumulada já alcançava os 246%, porcentual aplicado na correção dos saldos devedores. Acuado pela inflação, os governos passados deu início a uma série de planos heterodoxos.
+Antes de 1968, o FGTS (Fundo de Garantia por Tempo de Serviço) era o principal recurso para crédito imobiliário. Em 1968, a caderneta de poupança se torna a principal fonte de recursos para o setor após a regulamentação para seu uso para crédito imobiliário. A poupança era a grande financiadora do SFH. A partir da década de 80 com o aumento da inflação no país, o SFH começa a ser afetado, principalmente com as ações tomadas pelos governos para combater a inflação. A queda nas unidades habitacionais financiada pelo SFH pode ser vista a partir da @fig-hab_sfh. Em 1985, o reajuste das prestações foi de 112% e inflação acumulada já alcançava os 246%, porcentual aplicado na correção dos saldos devedores. Acuado pela inflação, os governos passados deram início a uma série de planos heterodoxos.
+
+![Unidades habitacionais financiadas pelo SFH, 1964-2005. \newline Fonte: BNH – Caixa Econômica Federal e Banco Central do Brasil](includes/hab_sfh.png){#fig-hab_sfh}
 
 \vspace{12pt}
 
-O Plano Cruzado, em 1986, converteu o valor das prestações pela média de até 12 meses anteriores e, em seguida, congelou os reajustes pelos 12 meses seguintes, o que atingiu a totalidade a totalidade dos contratos e permitiu a redução de cerca de 40% no valor das prestações. No entanto, a medida afetou os contrados e os tornou mais caros. Em 1987 e 1989, as prestações foram congeladas temporariamente com as medidas tomadas pelo Plano Bresser e o Plano Verão. (FALAR DO PLANO COLLOR)
+O Plano Cruzado, implementado em 1986, converteu o valor das prestações pela média dos 12 meses anteriores e, em seguida, congelou os reajustes pelos 12 meses seguintes. Essa medida atingiu a totalidade dos contratos e resultou em uma redução de cerca de 40% no valor das prestações. No entanto, a longo prazo, essa política afetou os contratos e os deixou mais caros. Nos anos seguintes, novas medidas foram implementadas. Em 1987 e 1989, as prestações foram congeladas temporariamente pelo Plano Bresser e pelo Plano Verão, respectivamente.
+
+\vspace{12pt}
+
+No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de metate foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
+
+\vspace{12pt}
+
+
+![](includes/financ_hab.png){#fig-fincanc_hab}
+
+A evolução do investimento habitacional per capita pode ser observada na @fig-fincanc_hab. Durante o período de auge do SFH, entre 1978 e 1982, o investimento habitacional por habitante manteve-se em torno de R$ 500. Contudo, com as políticas econômicas adotadas pelos governos para combater a inflação, o investimento em habitação recuou e retornou ao patamar de R$ 300. Com a criação do Plano Real, em 1994, observou-se uma pequena recuperação, embora ele permanecesse abaixo dos R$ 500 no auge.
 
 ## Objetivos
 
