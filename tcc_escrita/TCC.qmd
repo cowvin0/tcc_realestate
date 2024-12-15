@@ -53,6 +53,7 @@ echo: false
 include-in-header:
   - text: |
       \usepackage[shortlabels]{enumitem}
+      \usepackage{booktabs}
       \usepackage{ragged2e}
       \usepackage{pdflscape}
       \newcommand{\blandscape}{\begin{landscape}}
@@ -140,34 +141,79 @@ No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 199
 
 A evolução do investimento habitacional per capita pode ser observada na @fig-fincanc_hab. Durante o período de auge do SFH, entre 1978 e 1982, o investimento habitacional por habitante manteve-se em torno de R$ 500. Contudo, com as políticas econômicas adotadas pelos governos para combater a inflação, o investimento em habitação recuou e retornou ao patamar de R$ 300. Com a criação do Plano Real, em 1994, observou-se uma pequena recuperação, embora ele permanecesse abaixo dos R$ 500 no auge.
 
+
 ```{python}
 #| eval: true
 
-import pandas as pd
+# import pandas as pd
+# import matplotlib.pyplot as plt
 
-dados = {
-    "Anos": ["1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "Set 2005"],
-    "Números de Contratos Ativos": [1291685, 1279198, 1138973, 1027322, 910877, 816648, 596397, 451461, 410335, 384348, 371614, 359073],
-    "Atraso Geral": ["8,80%", "10,90%", "14,10%", "14,60%", "14,70%", "19,30%", "23,70%", "27,60%", "28,10%", "29,80%", "29,90%", "29,40%"],
-    "Atraso Assinados Até 1998": ["8,70%", "10,80%", "14,00%", "14,30%", "14,40%", "20,00%", "26,00%", "32,30%", "34,10%", "37,80%", "41,30%", "42,90%"],
-    "Atraso Pós 1998": ["-", "-", "-", "-", "1,70%", "9,20%", "12,00%", "11,10%", "10,50%", "11,20%", "9,70%", "9,00%"],
-    "Carteira Hipotecária": ["12,10%", "15,10%", "19,00%", "21,00%", "23,70%", "23,80%", "24,60%", "28,10%", "30,00%", "29,60%", "25,40%", "29,40%"]
-}
+# data = {
+#     "Anos": ["1994", "1995", "1996", "1997", "1998", "1999", "2000",
+#              "2001", "2002", "2003", "2004", "Set 2005"],
+#     "Números de Contratos Ativos": ["1.291.685", "1.279.198", "1.138.973", "1.027.322", "910.877",
+#                                     "816.648", "596.397", "451.461", "410.335", "384.348", "371.614", "359.073"],
+#     "Geral": ["8,80%", "10,90%", "14,10%", "14,60%", "14,70%", "19,30%",
+              # "23,70%", "27,60%", "28,10%", "29,80%", "29,90%", "29,40%"],
+#     "Até 1998": ["8,70%", "10,80%", "14,00%", "14,30%", "14,40%", "20,00%",
+#                   "26,00%", "32,30%", "34,10%", "37,80%", "41,30%", "42,90%"],
+#     "Pós 1998": ["-", "-", "-", "-", "1,70%", "9,20%", "12,00%", "11,10%",
+#                  "10,50%", "11,20%", "9,70%", "9,00%"],
+#     "Carteira Hipotecária": ["12,10%", "15,10%", "19,00%", "21,00%", "23,70%",
+#                              "23,80%", "24,60%", "28,10%", "30,00%", "29,60%",
+#                              "25,40%", "29,40%"]
+# }
 
-df_inad = pd.DataFrame(dados)
+# df = pd.DataFrame(data)
 
-df_inad.columns = pd.MultiIndex.from_tuples([
-    ("Anos", ""),
-    ("Números de Contratos Ativos", ""),
-    ("% mais de 3 prestações", "Geral"),
-    ("% mais de 3 prestações", "Assinados Até 1998"),
-    ("% mais de 3 prestações", "Pós 1998"),
-    ("Carteira Hipotecária", "")
-])
-df_inad.style.set_table_styles([dict(selector='th', props=[('text-align', 'center')])])\
-        .hide(axis='index')
+# columns = pd.MultiIndex.from_tuples([
+#     ("", "", "Anos"),
+#     ("", "", "Números de Contratos Ativos"),
+#     ("% mais de 3 prestações em atraso", "", "Geral"),
+#     ("% mais de 3 prestações em atraso", "Assinados", "Até 1998"),
+#     ("% mais de 3 prestações em atraso", "Assinados", "Pós 1998"),
+#     ("% mais de 3 prestações em atraso", "", "Carteira Hipotecária")
+# ])
+# df.columns = columns
+
+# teste = df.style.set_table_styles([
+#     dict(selector='th', props=[('text-align', 'center')]),
+#     # dict(selector='td', props=[('text-align', 'center')])
+#     ])\
+#     .set_properties(
+#       **{
+#         'text-align': 'center'
+#         }
+#     )\
+#     .hide()
+# df.style.set_table_styles([dict(selector='th', props=[('text-align', 'center')])]).set_properties(**{'text-align': 'center'}).hide()
 ```
 
+```{=Latex}
+\begin{table}[]
+\centering
+\caption{Inadimplência.\\Fonte: ABECIP}
+\label{tab:contratos_atraso}
+\begin{tabular}{cccccc}
+\hline
+ &  & \multicolumn{4}{c}{\% mais de 3 prestações em atraso} \\ \cline{3-6}
+ &  &  & \multicolumn{2}{c}{Assinados} &  \\ \cline{4-5}
+Anos & \begin{tabular}[c]{@{}c@{}}Números de\\ Contratos Ativos\end{tabular} & Geral & Até 1998 & Pós 1998 & \begin{tabular}[c]{@{}c@{}}Carteira\\ hipotecária\end{tabular} \\ \hline
+1994 & 1.291.685 & 8,80\% & 8,70\% & - & 12,10\% \\
+1995 & 1.279.198 & 10,90\% & 10,80\% & - & 15,10\% \\
+1996 & 1.138.973 & 14,10\% & 14,00\% & - & 19,00\% \\
+1997 & 1.027.322 & 14,60\% & 14,30\% & - & 21,00 \\
+1998 & 910.877 & 14,70\% & 14,40\% & 1,70\% & 23,70\% \\
+1999 & 816.648 & 19,30\% & 20,00\% & 9,20\% & 23,80\% \\
+2000 & 596.397 & 23,70\% & 26,00\% & 12,00\% & 24,60\% \\
+2001 & 451.461 & 27,60\% & 32,30\% & 11,10\% & 28,10\% \\
+2002 & 410.335 & 28,10\% & 34,10\% & 10,50\% & 30,00\% \\
+2003 & 384.348 & 29,80\% & 37,80\% & 11,20\% & 29,60\% \\
+2004 & 371.614 & 29,90\% & 41,30\% & 9,70\% & 25,40\% \\
+Set. 2005 & 359.073 & 29,40\% & 42,90\% & 9,00\% & 29,40\% \\ \hline
+\end{tabular}
+\end{table}
+```
 
 ## Objetivos
 
