@@ -141,59 +141,11 @@ No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 199
 
 A evolução do investimento habitacional per capita pode ser observada na @fig-fincanc_hab. Durante o período de auge do SFH, entre 1978 e 1982, o investimento habitacional por habitante manteve-se em torno de R$ 500. Contudo, com as políticas econômicas adotadas pelos governos para combater a inflação, o investimento em habitação recuou e retornou ao patamar de R$ 300. Com a criação do Plano Real, em 1994, observou-se uma pequena recuperação, embora ele permanecesse abaixo dos R$ 500 no auge.
 
-
-```{python}
-#| eval: true
-
-# import pandas as pd
-# import matplotlib.pyplot as plt
-
-# data = {
-#     "Anos": ["1994", "1995", "1996", "1997", "1998", "1999", "2000",
-#              "2001", "2002", "2003", "2004", "Set 2005"],
-#     "Números de Contratos Ativos": ["1.291.685", "1.279.198", "1.138.973", "1.027.322", "910.877",
-#                                     "816.648", "596.397", "451.461", "410.335", "384.348", "371.614", "359.073"],
-#     "Geral": ["8,80%", "10,90%", "14,10%", "14,60%", "14,70%", "19,30%",
-              # "23,70%", "27,60%", "28,10%", "29,80%", "29,90%", "29,40%"],
-#     "Até 1998": ["8,70%", "10,80%", "14,00%", "14,30%", "14,40%", "20,00%",
-#                   "26,00%", "32,30%", "34,10%", "37,80%", "41,30%", "42,90%"],
-#     "Pós 1998": ["-", "-", "-", "-", "1,70%", "9,20%", "12,00%", "11,10%",
-#                  "10,50%", "11,20%", "9,70%", "9,00%"],
-#     "Carteira Hipotecária": ["12,10%", "15,10%", "19,00%", "21,00%", "23,70%",
-#                              "23,80%", "24,60%", "28,10%", "30,00%", "29,60%",
-#                              "25,40%", "29,40%"]
-# }
-
-# df = pd.DataFrame(data)
-
-# columns = pd.MultiIndex.from_tuples([
-#     ("", "", "Anos"),
-#     ("", "", "Números de Contratos Ativos"),
-#     ("% mais de 3 prestações em atraso", "", "Geral"),
-#     ("% mais de 3 prestações em atraso", "Assinados", "Até 1998"),
-#     ("% mais de 3 prestações em atraso", "Assinados", "Pós 1998"),
-#     ("% mais de 3 prestações em atraso", "", "Carteira Hipotecária")
-# ])
-# df.columns = columns
-
-# teste = df.style.set_table_styles([
-#     dict(selector='th', props=[('text-align', 'center')]),
-#     # dict(selector='td', props=[('text-align', 'center')])
-#     ])\
-#     .set_properties(
-#       **{
-#         'text-align': 'center'
-#         }
-#     )\
-#     .hide()
-# df.style.set_table_styles([dict(selector='th', props=[('text-align', 'center')])]).set_properties(**{'text-align': 'center'}).hide()
-```
-
 ```{=Latex}
 \begin{table}[]
 \centering
-\caption{Inadimplência.\\Fonte: ABECIP}
-\label{tab:contratos_atraso}
+\caption{Inadimplência.\\ Fonte: ABECIP}
+\label{tbl-contratos_atraso}
 \begin{tabular}{cccccc}
 \hline
  &  & \multicolumn{4}{c}{\% mais de 3 prestações em atraso} \\ \cline{3-6}
@@ -214,6 +166,15 @@ Set. 2005 & 359.073 & 29,40\% & 42,90\% & 9,00\% & 29,40\% \\ \hline
 \end{tabular}
 \end{table}
 ```
+
+\vspace{12pt}
+
+Como consequência da crise econômica que ocorreu entre o período de 1980 e 1990, o arrocho salarial, a queda do poder aquisitivo, as altas taxas de juros praticadas e a inflação ocasionaram o aumento na inadimplência no SFH. Como pode ser visto na tabela acima, em 1994, a inadimplência estava próxima dos 9% e, em 2005, ficou bastante próximo de 30%. Diante desse cenário, novos mecanismos começaram a ser pensados para contornar a crise e reformular o modelo de financiamento habitacional no Brasil.
+
+\vspace{12pt}
+
+(FALAR SOBRE O SFI COMO SOLUÇÃO PARA O MERCADO IMOBILIÁRIO)
+
 
 ## Objetivos
 
