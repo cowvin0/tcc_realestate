@@ -100,6 +100,8 @@ test_df = test_df.rename(columns=rename)
 \listofalgorithms
 \egroup
 
+# Agradecimentos {.unnumbered .unlisted}
+
 # Resumo {.unnumbered .unlisted}
 
 # Introdução
@@ -175,9 +177,13 @@ Como consequência da crise econômica que marcou o período entre 1980 e 1990, 
 
 Após a experiência acumulada com o SFH, a principal medida para reformular o modelo de financiamento habitacional no Brasil foi a criação do Sistema de Financiamento Imobiliário (SFI), que não significou o fim do SFH. O SFI foi instituído em 1997, pela Lei nº 9.514, como um complemento ao SFH.
 
-Os principais fundamentos do SFI são a securitização dos créditos imobiliários e a maior segurança jurídica dos contratos. Diferentemente do SFH, o novo sistema capta recursos diretamente no mercado por meio de operações realizadas por entidades autorizadas, como caixas econômicas, bancos comerciais, bancos de investimento, bancos com carteira de crédito imobiliário, sociedades de crédito imobiliário, associações de poupança e empréstimo e companhias hipotecárias.
+\vspace{12pt}
 
-Essas entidades podem aplicar os recursos utilizando instrumentos financeiros introduzidos com o SFI, tais como o Certificado de Recebíveis Imobiliários (CRI), a Letra de Crédito Imobiliário (LCI) e a Cédula de Crédito Imobiliário (CCI). A segurança jurídica dos contratos passou a ser garantida pela introdução da alienação fiduciária, um mecanismo que trouxe maior confiança e eficiência ao processo de financiamento imobiliário. Assim, o SFI representa a efetiva modernização do mercado imobiliário no País.
+Os principais fundamentos do SFI são a securitização dos créditos imobiliários e a maior segurança jurídica dos contratos. Diferentemente do SFH, o novo sistema capta recursos diretamente no mercado por meio de operações realizadas por entidades autorizadas, como caixas econômicas, bancos comerciais, bancos de investimento, bancos com carteira de crédito imobiliário, sociedades de crédito imobiliário, associações de poupança e empréstimo e companhias hipotecárias. Essas entidades podem aplicar os recursos utilizando instrumentos financeiros introduzidos com o SFI, tais como o Certificado de Recebíveis Imobiliários (CRI), a Letra de Crédito Imobiliário (LCI) e a Cédula de Crédito Imobiliário (CCI). A segurança jurídica dos contratos passou a ser garantida pela introdução da alienação fiduciária, um mecanismo que trouxe maior confiança e eficiência ao processo de financiamento imobiliário. Assim, o SFI representa a efetiva modernização do mercado imobiliário no País.
+
+\vspace{12pt}
+
+Em muitas capitais brasileiras o mercado imobiliário tem se mostrado bastante promissor. Em especial para a capital Paraibana, João Pessoa, de acordo com a FipeZAP, foi a capital que registrou a maior valorização considerando apenas o ano de 2024, até setembro... (falar outros dados de João Pessoa...)
 
 ## Objetivos
 
