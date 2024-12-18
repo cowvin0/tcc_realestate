@@ -183,7 +183,19 @@ Os principais fundamentos do SFI são a securitização dos créditos imobiliár
 
 \vspace{12pt}
 
-Em muitas capitais brasileiras o mercado imobiliário tem se mostrado bastante promissor. Em especial para a capital Paraibana, João Pessoa, de acordo com a FipeZAP, foi a capital que registrou a maior valorização considerando apenas o ano de 2024, até setembro... (falar outros dados de João Pessoa...)
+O mercado imobiliário tem demonstrado grande potencial em diversas capitais brasileiras, com destaque para João Pessoa, capital da Paraíba, que também tem se tornado um dos locais mais procurados para se morar devido a sua grande qualidade de vida. João Pessoa foi fundada no atual bairro do Varadouro, às margens do Rio Sanhauá, por Martim Leitão e Colonos vindo de Pernambuco, no dia 04 de novembro de 1585. A cidade recebeu três nomes até chegar a atual nomenclatura, Nossa Senhora das Neves (1585), Frederickstadt (1634 a 1654), Parahyba até 1930, onde em julho do mesmo ano foi rebatizada para João Pessoa, em homenagem ao Governador do Estado da Época. Dividida em Cidade Alta e Cidade Baixa, no período colonial, sendo interligadas por ladeiras.
+
+\vspace{12pt}
+
+Atualmente, a cidade é detentora de um território de 211.475 $km^2$ e possui uma população de 833.932 habitantes, de acordo com o censo do IBGE 2022. Segundo o Índice de Preços Imóveis Anunciados - FIPEZAP, João Pessoa apresentou a maior valorização acumulada nos imóveis residenciais nos últimos 12 meses, até novembro de 2024, com uma variação de 16,13%. No mesmo período, considerando apenas o ano de 2024, a valorização acumulada foi de 15,15%, com o valor médio do metro quadrado residencial atingindo R$ 6.867 no mês de novembro.
+
+\vspace{12pt}
+
+O crescimento do mercado imobiliário de João Pessoa trás consigo inúmeras necessidades de melhor precificação de imóveis. Avaliar corretamente o valor de um imóvel é crucial para uma série de finalidades, como a negociação justa entre compradores e vendedores e a determinação de valores tributários, como o Imposto de Transmissão de Bens Imóveis (ITBI). Assim, a determinação do valor de um imóvel continua sendo um desafio, muitas vezes dependente de avaliações subjetivas ou métodos tradicionais que nem sempre refletem a complexidade dos fatores envolvidos.
+
+\vspace{12pt}
+
+(falar sobre o objetivo do trabalho)
 
 ## Objetivos
 
