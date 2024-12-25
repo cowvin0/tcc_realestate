@@ -1082,7 +1082,7 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 ### SHapley Additive exPlanations (SHAP)
 
-\ \ \ O SHapley Additive exPlanations é um método que explica tem como objetivo explicar predições individuais de uma instância $x$ através da computação da contribuição de cada variável para a predição. Ele é baseado nos Shapley Values. Dessa forma, os valores SHapley serão definidos primeiramente.
+\ \ \ O SHapley Additive exPlanations é um método que explica tem como objetivo explicar predições individuais de uma instância $x$ através da computação da contribuição de cada variável para a predição. Ele é baseado nos Shapley Values. Dessa forma, os valores Shapley serão definidos primeiramente.
 
 \vspace{12pt}
 
@@ -1091,7 +1091,7 @@ Os Shapley Values foram introduzidos por @shapley1953value e são baseados no co
 $$
 \phi_i\left(x\right) = \sum_{Q \subseteq S | \{i\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)
 $${#eq-shapley}
-onde $Q$ é um subconjunto das covariáveis utilizadas no modelo, $S$ representa todas as covariáveis. A diferença $\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)$ é a contribuição marginal da variável $i$ ao ser adicionada ao subconjunto das variáveis $Q$. No entanto, a @eq-shapley cresce exponencialmente. Dessa forma, pode ser estimado a partir de Monte-Carlo a partir da seguinte expressão:
+onde $Q$ é um subconjunto das covariáveis utilizadas no modelo, $S$ representa todas as covariáveis. A diferença $\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)$ é a contribuição marginal da variável $i$ ao ser adicionada ao subconjunto das variáveis $Q$. No entanto, a @eq-shapley cresce exponencialmente. Dessa forma, pode ser estimado a partir de Monte-Carlo com a seguinte expressão:
 
 $$
 \hat{\phi}_{i}\left(x\right) = \frac{1}{n!} \sum_{O \in \pi \left(n \right)} \left( \Delta_{{Pre}^{i} \left(O\right) \cup \{i\}} - \Delta_{{Pre}^{i} \left(O\right)} \right), \ i = 1, \dots, n
@@ -1100,7 +1100,16 @@ em que $\pi\left(n\right)$ é o conjunto de todas as permutações ordenadas dos
 
 \vspace{12pt}
 
-(INCLUIR SOBRE O MÉTODO SHAP)
+O SHAP estabelece uma conexão entre o conceito de valores de Shapley e o método LIME, previamente definido. O modelo explicativo do SHAP, denotado por $g$, é definido como uma função linear de variáveis binárias e está em função valores de Shapley, conforme apresentado abaixo:
+
+$$
+g\left(z^{'}\right) = \phi_0 + \sum_{j = 1}^{M} \phi_{j} z_{j}^{'}
+$$
+onde $g$ é o modelo explicativo, $z^{'} \in \{0, 1\}^{M}$ é o vetor de coalizão, representando a presença $\left(z^{'}_j = 1\right)$ ou ausência $\left(z^{'}_j = 0\right)$ de cada covariável e $\phi_j$ denota os valores Shapley.
+
+\vspace{12pt}
+
+Além disso, de acordo com @lundberg2018consistent, o SHAP possui três propriedades: Local accuracy, Missingness e Consistency. A propriedade de Local accuracy diz que a soma das contribuições das covariáveis $\left( \phi_ j \right)$ é igual ao valor da predição do modelo que se deseja explicar. O Missingness diz que covariáveis ausentes no vetor de coalizão $\left(\text{tal que } z_{j}^{'} = 0\right)$ não são atribuídas nenhuma importância, ou seja $\phi_j = 0$.
 
 # Resultados
 
