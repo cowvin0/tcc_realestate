@@ -2083,6 +2083,14 @@ Valores previstos em função dos observados do algoritmo Stacking
 
 ## Efeito e importância das variáveis na predição
 
+
+::: {#fig-shap_summary}
+
+![](includes/shap_summary_plot.svg)
+
+Gráfico de Resumo do SHAP
+:::
+
 # Conclusão
 
 # Referências {.unnumbered}
