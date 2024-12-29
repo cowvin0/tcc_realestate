@@ -131,7 +131,14 @@ O BNH tinha como objetivo oferecer incentivos ao mercado imobiliário, promovend
 
 A partir da década de 80 com o aumento da inflação no país, o SFH começa a ser afetado, principalmente com as ações tomadas pelos governos para combater a inflação. A queda nas unidades habitacionais financiada pelo SFH pode ser vista a partir da @fig-hab_sfh. Em 1985, o reajuste das prestações foi de 112% e inflação acumulada já alcançava os 246%, porcentual aplicado na correção dos saldos devedores [@revolucao_credito_imobiliario]. Acuado pela inflação, os governos passados deram início a uma série de planos heterodoxos.
 
-![Unidades habitacionais financiadas pelo SFH, 1964-2005. \newline Fonte: @abecip_credito2007](includes/hab_sfh.png){#fig-hab_sfh}
+::: {#fig-abecip-inve layout-ncol=2}
+
+![Unidades habitacionais financiadas pelo SFH, 1964-2005.](includes/hab_sfh.png){#fig-hab_sfh}
+
+![Evolução do investimento habitacional.](includes/financ_hab.png){#fig-fincanc_hab}
+
+Fonte: @abecip_credito2007
+:::
 
 \vspace{12pt}
 
@@ -144,7 +151,6 @@ No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 199
 \vspace{12pt}
 
 
-![Fonte: @abecip_credito2007](includes/financ_hab.png){#fig-fincanc_hab}
 
 A evolução do investimento habitacional per capita pode ser observada na @fig-fincanc_hab. Durante o período de auge do SFH, entre 1978 e 1982, o investimento habitacional por habitante manteve-se em torno de R$ 500. Contudo, com as políticas econômicas adotadas pelos governos para combater a inflação, o investimento em habitação recuou e retornou ao patamar de R$ 300. Com a criação do Plano Real, em 1994, observou-se uma pequena recuperação, embora ele permanecesse abaixo dos R$ 500 no auge.
 
@@ -496,13 +502,6 @@ Isso significa que, à medida que o número de árvores $B$ aumenta, o segundo t
 
 ### Random Forest
 
-\ \ \ O algoritmo Random Forest é uma técnica derivada do método de Bagging, mas com modificações específicas na construção das árvores. O objetivo é melhorar a redução da variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de variáveis independentes.
-
-\vspace{12pt}
-
-No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão, antes de cada ramificação (com $m = p$ no caso do Bagging). Dessa forma, diferente do Bagging, aqui não se considera todas as $p$ variáveis independentes para realizar a divisão e minimizar a impureza, mas apenas $m$ dessas $p$ variáveis. A escolha aleatória de apenas $m$ covariáveis como candidatas para a divisão ajuda a solucionar um dos principais problemas do algoritmo de Bagging, que tende a gerar árvores de decisão semelhantes, resultando em previsões altamente correlacionadas. O Random Forest busca diminuir esse problema ao criar oportunidades para que diferentes preditores sejam considerados. Em média, uma fração $(p -m)/ p$ das divisões nem sequer incluirá o preditor mais forte como candidato, permitindo que outros preditores tenham a chance de serem selecionados [@james2013introduction]. Esse mecanismo reduz a correlação entre as árvores, o que, por sua vez, diminui a variabilidade das predições produzidas pelas árvores.
-
-
 ::: {#algo-rf}
 
 ```pseudocode
@@ -555,6 +554,15 @@ $$
 Fonte: @hastie2009elements [p. 588].
 
 :::
+
+\ \ \ O algoritmo Random Forest é uma técnica derivada do método de Bagging, mas com modificações específicas na construção das árvores. O objetivo é melhorar a redução da variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de variáveis independentes.
+
+
+\vspace{12pt}
+
+No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão, antes de cada ramificação (com $m = p$ no caso do Bagging). Dessa forma, diferente do Bagging, aqui não se considera todas as $p$ variáveis independentes para realizar a divisão e minimizar a impureza, mas apenas $m$ dessas $p$ variáveis. A escolha aleatória de apenas $m$ covariáveis como candidatas para a divisão ajuda a solucionar um dos principais problemas do algoritmo de Bagging, que tende a gerar árvores de decisão semelhantes, resultando em previsões altamente correlacionadas. O Random Forest busca diminuir esse problema ao criar oportunidades para que diferentes preditores sejam considerados. Em média, uma fração $(p -m)/ p$ das divisões nem sequer incluirá o preditor mais forte como candidato, permitindo que outros preditores tenham a chance de serem selecionados [@james2013introduction]. Esse mecanismo reduz a correlação entre as árvores, o que, por sua vez, diminui a variabilidade das predições produzidas pelas árvores.
+
+
 
 \vspace{12pt}
 
@@ -2069,10 +2077,6 @@ Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhore
 Valores previstos em função dos observados do algoritmo Extreme Gradient Boosting
 :::
 
-\vspace{12pt}
-
-Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando o Light Gradient Boosting como estimador final, as predições foram feitas com o Stacking. As predições geradas pelo Stacking, analisando as métricas de erro utilizadas, foram melhores até mesmo que o Light Gradient Boosting. O RMSE obtido para o Stacking foi de 0,28473 e o modelo consegue explicar $87,18793\%$. A única métrica que não foi melhor que do algoritmo LGBM foi o MAPE, que foi de $1,357\%$, mas a diferença é pouca.
-
 ::: {#fig-preds_stacking}
 
 ![](includes/stacking_plot_predict.svg)
@@ -2080,16 +2084,62 @@ Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando
 Valores previstos em função dos observados do algoritmo Stacking
 :::
 
+\vspace{12pt}
 
-## Efeito e importância das variáveis na predição
+Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando o Light Gradient Boosting como estimador final, as predições foram feitas com o Stacking. As predições geradas pelo Stacking, analisando as métricas de erro utilizadas, foram melhores até mesmo que o Light Gradient Boosting. O RMSE obtido para o Stacking foi de 0,28473 e o modelo consegue explicar $87,18793\%$. A única métrica que não foi melhor que do algoritmo LGBM foi o MAPE, que foi de $1,357\%$, mas a diferença é pouca.
+
+## Impacto e importância das variáveis na predição
+
+\ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Stacking.
 
 
-::: {#fig-shap_summary}
+::: {#fig-teste layout-ncol=2}
+![Gráfico de resumo dos valores SHAP.](includes/shap_summary_plot.svg){#fig-shap_summary}
 
-![](includes/shap_summary_plot.svg)
+![Importância das variáveis.](includes/shap_importance.svg){#fig-shap_importance}
 
-Gráfico de Resumo do SHAP
+Impacto e importância das variáveis na predição a partir do método SHAP.
 :::
+
+A análise da importância das variáveis foi realizada utilizando o método SHAP. Diferentemente da importância de variáveis gerada por algoritmos baseados em árvores, que é calculada com base na redução da impureza ou no ganho de informação ao longo das divisões no modelo, o SHAP é baseado na magnitude dos valores de Shapley atribuídos a cada variável. Dessa forma, como pode ser observado na @fig-shap_importance, a variável com maior impacto na predição do modelo é a área, a qual altera, em média, mais de 25 pontos percentuais na predição absoluta dos imóveis. A quantidade de vagas de garagem, o valor médio do aluguel e a localização geográfica também se destacam entre as variáveis mais relevantes na predição do valor dos imóveis.
+
+\vspace{12pt}
+
+Com a @fig-shap_summary, observa-se um resumo da análise dos valores Shapley. A variável área se destaca como a de maior impacto no modelo, especialmente para valores elevados, que aumentam significativamente as predições. As coordenadas geográficas indicam que valores mais altos tendem a elevar a predição do valor dos imóveis, refletindo a valorização de imóveis localizados mais próximos às regiões litorâneas de João Pessoa. Por outro lado, a variável de área média de aluguel apresenta um padrão menos linear, com valores baixos ainda gerando impacto positivo nas predições, evidenciando uma relação mais complexa com o valor dos imóveis.
+
+::: {#fig-dependence_plot layout-nrow=4, layout-ncol=3}
+
+![](includes/dependence_plot_cat/dep_plot_academia.svg)
+
+![](includes/dependence_plot_cat/dep_plot_area_servico.svg)
+
+![](includes/dependence_plot_cat/dep_plot_elevador.svg)
+
+![](includes/dependence_plot_cat/dep_plot_espaco_gourmet.svg)
+
+![](includes/dependence_plot_cat/dep_plot_piscina.svg)
+
+![](includes/dependence_plot_cat/dep_plot_playground.svg)
+
+![](includes/dependence_plot_cat/dep_plot_portaria_24_horas.svg)
+
+![](includes/dependence_plot_cat/dep_plot_quadra_de_esporte.svg)
+
+![](includes/dependence_plot_cat/dep_plot_salao_de_festa.svg)
+
+![](includes/dependence_plot_cat/dep_plot_sauna.svg)
+
+![](includes/dependence_plot_cat/dep_plot_spa.svg)
+
+![](includes/dependence_plot_cat/dep_plot_varanda_gourmet.svg)
+
+Gráfico de dependência de valores SHAP para variáveis binárias.
+:::
+
+\vspace{12pt}
+
+alskdjfaklsjdflkasjflkajsd
+
 
 # Conclusão
 
