@@ -2138,8 +2138,7 @@ Gráfico de dependência de valores SHAP para variáveis binárias.
 
 \vspace{12pt}
 
-alskdjfaklsjdflkasjflkajsd
-
+Para analisar as variáveis binárias, foram utilizados gráficos de dependência para cada uma delas, os quais podem ser visualizados na @fig-dependence_plot. Ao analisar os valores SHAP para os imóveis com e sem academia, observa-se que essa variável tende a aumentar a predição para imóveis que possuem academia. O mesmo padrão é identificado para imóveis com elevador, embora aqueles sem elevador também apresentem uma tendência de aumento na predição, o que pode ser explicado pela influência de outras características dos imóveis. Como já mencionado na análise da importância das variáveis, sauna e spa são características com baixa importância. No entanto, ao observar seus gráficos de dependência, é possível perceber que essas variáveis podem ser úteis na avaliação de imóveis que possuem essa característica e tem valores mais elevados. O mesmo comportamento é observado para varanda gourmet, playground e espaço gourmet.
 
 # Conclusão
 
