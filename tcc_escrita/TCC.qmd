@@ -2037,45 +2037,34 @@ Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tenta
 
 O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972, enquanto o coeficiente de determinação $R^2$ alcançou $86,79%$, indicando que o modelo explica $86,79%$ da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram 1,373% distantes dos valores reais.
 
-::: {#fig-preds_rf}
-
-![](includes/rf_plot_predict.svg)
-
-Valores previstos em função dos observados do algoritmo Random Forest
-:::
-
 \vspace{12pt}
 
 Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $86,98\%$ dos dados, bastante semelhante à Random Forest, com uma diferença não tão significativa. Por outro lado, o RMSE do Gradient Boosting foi menor que a Random Forest, tendo sido de 0,28730. Observando o MAPE, não houve também muitas diferenças, embora o MAPE do Gradient Boosting tenha sido maior. O MAPE indica que as predições geradas pelo Gradient Boosting estão $1,377\%$ distantes de seus valores observados. Seu ajuste pode ser observado na @fig-preds_gdt.
 
-::: {#fig-preds_gdt}
+::: {#fig-preds1 layout-ncol=2}
 
-![](includes/gdt_plot_predict.svg)
+![](includes/rf_plot_predict.svg){#fig-preds_rf}
 
-Valores previstos em função dos observados do algoritmo Gradient Boosting
+![](includes/gdt_plot_predict.svg){#fig-preds_gdt}
+
+Valores previstos em função dos observados do algoritmo Random Forest e Gradient Boosting, respectivamente.
 :::
 
 \vspace{12pt}
 
 O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos últimos dois algoritmos. Em relação ao seu $R^2$, o modelo consegue explicar $87,17\%$ dos dados. O seu RMSE ficou em $0,28493$ e o MAPE em $0,01346$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão em média $1,346\%$ distantes de seus valores reais. A melhora do ajuste do Light Gradient Boosting fica bastante perceptível observando a figura de seus valores estimados em função dos observados (@fig-preds_lgbm). As predições geradas pelos Gradient Boosting e Random Forest desviam bastante, principalmente em relação ao final da distribuição.
 
-::: {#fig-preds_lgbm}
+::: {#fig-preds2 layout-ncol=2}
 
-![](includes/lgbm_plot_predict.svg)
+![](includes/lgbm_plot_predict.svg){#fig-preds_lgbm}
 
-Valores previstos em função dos observados do algoritmo Light Gradient Boosting
+![](includes/xgb_plot_predict.svg){#fig-preds_xgb}
+
+Valores previstos em função dos observados do algoritmo Light Gradient Boosting e Extreme Gradient Boosting, respectivamente.
 :::
-
-\vspace{12pt}
 
 Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest e Gradient Boosting. Entretanto, obteve piores em relação às estatísticas de erro de RMSE e $R^2$. O RMSE obtido pelo XGBoost foi de $0,28659$ e o seu $R^2$ foi de $87,03891\%$, indicando que o modelo consegue explicar $87,03891\%$ dos dados. No entanto, obteve um MAPE pouco menor que o LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média $1,357%$ distantes de seus valores reais.
 
-::: {#fig-preds_xgb}
-
-![](includes/xgb_plot_predict.svg)
-
-Valores previstos em função dos observados do algoritmo Extreme Gradient Boosting
-:::
 
 ::: {#fig-preds_stacking}
 
@@ -2094,6 +2083,7 @@ Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando
 
 \ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Stacking.
 
+\vspace{12pt}
 
 ::: {#fig-teste layout-ncol=2}
 ![Gráfico de resumo dos valores SHAP.](includes/shap_summary_plot.svg){#fig-shap_summary}
