@@ -2090,6 +2090,8 @@ Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando
 
 ## Impacto e importância das variáveis na predição
 
+![](includes/pdp_ice.svg)
+
 \ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Stacking.
 
 
