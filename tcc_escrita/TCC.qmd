@@ -1070,6 +1070,27 @@ $$
 \hat{f}_S\left(X_S\right) = \frac{1}{N} \sum^{N}_{i=1}\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)
 $$
 
+Em Python, a biblioteca scikit-learn disponibiliza a classe sklearn.inspection.PartialDependenceDisplay para a criação de gráficos de ICE (Individual Conditional Expectation) e a inclusão opcional da linha de PDP (Partial Dependence Plot). Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
+
+```{python}
+#| eval: false
+#| echo: true
+
+from sklearn.inspection import PartialDependenceDisplay
+
+PartialDependenceDisplay\
+	.from_estimator(
+		model,
+        df,
+        features,
+        kind="both",
+        centered=True,
+        random_state=set_seed
+    )
+```
+
+No exemplo acima, o método `.from_estimator` é usado para criar o gráfico diretamente a partir de um modelo ajustado. Ele recebe como argumentos o modelo (`model`), a base de dados (`df`) e as variáveis de interesse (`features`). O argumento `kind` permite definir o tipo de visualização, podendo exibir apenas o PDP, as linhas do ICE ou ambos (`kind="both"`). Já o argumento `centered` oferece a opção de centralizar as curvas.
+
 ### Local interpretable model-agnostic explanations (LIME)
 
 \ \ \ @ribeiro2016should definem o Local Interpretable Model-Agnostic Explanations (LIME) como um algoritmo capaz de explicar as previsões feitas por qualquer modelo de classificação ou regressão, aproximando-o localmente de um modelo mais interpretável. Dessa forma, o objetivo geral do LIME é identificar um modelo interpretável e gerar uma representação interpretável para traduzir modelos complexos.
@@ -1138,7 +1159,43 @@ $$
 
 Esse gráfico permite visualizar diretamente como as observações de uma variável estão relacionadas aos seus efeitos no modelo, representados pelos valores de Shapley. Ele foi utilizado somente para analisar como as variáveis binárias se comportam.
 
+\vspace{12pt}
 
+Para aplicar o método SHAP em Python, foi utilizada a biblioteca shap [@NIPS2017_7062]. Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca shap para gerar esses gráficos baseado no algoritmo Stacking:
+
+```{python}
+#| eval: false
+#| echo: true
+
+import shap
+
+X1000 = shap.utils.sample(train_df, 1000)
+explainer_stacking = shap.Explainer(
+	model=stacking.predict,
+	mask=X1000
+	)
+shap_values_stacking = explainer_stacking(test_df)
+
+shap.summary_plot(
+	shap_values_stacking,
+    test_df,
+	)
+
+shap.summary_plot(
+	shap_values_stacking,
+    test_df,
+	plot_type="bar",
+	)
+
+shap.dependence_plot(
+	variavel,
+	shap_values_stacking.values,
+    test_df.values,
+    interaction_index=None,
+	)
+```
+
+Por padrão, a classe `shap.Explainer` utiliza o algoritmo de explicação considerado a melhor escolha com base no modelo passado como argumento. Neste trabalho, foi selecionado o algoritmo de explicação utilizando a classe Permutation. Essa escolha foi realizada automaticamente pela classe `shap.Explainer(algorithm="auto")`. O algoritmo Permutation funciona iterando sobre todas as permutações possíveis das variáveis, tanto na ordem original quanto na ordem inversa. Em relação ao gráfico de importância, ele é gerado de maneira semelhante ao gráfico de resumo, com a diferença de que o argumento plot_type="bar" é utilizado para criar o gráfico de importância. Por fim, o método `shap.utils.sample` é utilizado para selecionar aleatoriamente observações para a construção de uma amostra, a fim de estimar os valores de Shapley.
 
 # Resultados
 
@@ -1270,6 +1327,13 @@ sns.violinplot(
   palette='crest'
 ).legend_.remove()
 
+axes_shape = axes.shape
+for i in range(axes_shape[0]):
+	for j in range(axes_shape[1]):
+		axes[i,j].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
+		axes[i,j].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
+
+
 l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
 l.get_texts()[0].set_text('Apartamentos')
 l.get_texts()[1].set_text('Casas de condomínio')
@@ -1309,10 +1373,10 @@ dens_plot = sns.kdeplot(
   color="#00708d"
   )
 
-axes[0].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
-axes[0].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
-axes[1].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
-axes[1].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
+axes[0].grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
+axes[0].grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
+axes[1].grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
+axes[1].grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
 axes[0].set_ylabel(ylabel='Densidade', fontsize=13)
 axes[1].set_ylabel(ylabel='Densidade', fontsize=13)
 axes[0].set_xlabel(xlabel='Valor', fontsize=13)
