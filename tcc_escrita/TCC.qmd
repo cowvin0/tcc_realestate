@@ -1059,7 +1059,7 @@ onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ �
 
 \vspace{12pt}
 
-O método ICE é equivalente ao Partial Dependence Plot, com a diferença que o ICE faz o mesmo considerando uma linha para cada instância, o que permite observar o comportamento das predições em relação a variação das variáveis. Por outro lado, o Partial Dependence Plot é um método mais global, ele vai ser a média de todas as linhas presentes em um gráfico do método ICE. Dessa forma, o PDP, para regressão, é definido da seguinte forma:
+O método ICE é equivalente ao Partial Dependence Plot (PDP), com a diferença que o ICE faz o mesmo considerando uma linha para cada instância, o que permite observar o comportamento das predições em relação a variação das variáveis. Por outro lado, o PDP é um método mais global, ele vai ser a média de todas as linhas presentes em um gráfico do método ICE. Dessa forma, o PDP, para regressão, é definido da seguinte forma:
 
 $$
 \hat{f}_{S}\left(x_{S}\right) = E_{\mathbf{X}_{C}}\left[\hat{f}\left(x_{S}, \mathbf{X}_{C}\right)\right]
@@ -1117,7 +1117,28 @@ onde $g$ é o modelo explicativo, $z^{'} \in \{0, 1\}^{M}$ é o vetor de coaliz�
 
 \vspace{12pt}
 
-Além disso, de acordo com @lundberg2018consistent, o SHAP possui três propriedades: Local accuracy, Missingness e Consistency. A propriedade de Local accuracy diz que a soma das contribuições das covariáveis $\left( \phi_ j \right)$ é igual ao valor da predição do modelo que se deseja explicar. O Missingness diz que covariáveis ausentes no vetor de coalizão $\left(\text{tal que } z_{j}^{'} = 0\right)$ não são atribuídas nenhuma importância, ou seja $\phi_j = 0$.
+A partir do método SHAP, é possível ter diversas visualizações que ajudam a entender como as predições do modelo se comportam. Neste trabalho foi utilizado o gráfico de importância das variáveis, resumo dos valores shapley e o de dependência. Os métodos serão descritos a seguir tendo como referência o livro de @molnar2020interpretable.
+
+\vspace{12pt}
+
+O gráfico de importância das variáveis é bastante simples, variáveis com valores absolutos elevados de Shapley são importantes. No entanto, como se deseja obter a importância global, calcula-se a média dos valores absolutos de Shapley por variável em todo o conjunto de dados. Assim, tem-se a seguinte expressão:
+
+$$
+I_j = \frac{1}{n}\sum^{n}_{i = 1} |\phi_j^{\left(i\right)}|
+$$
+
+O gráfico de resumo combina a importância das variáveis com seus efeitos, representados pelos valores de Shapley e pela variação das observações de cada variável. No eixo x estão os valores de Shapley, que tem sua variação representada por pontos, enquanto no eixo y encontram-se as variáveis, ordenadas de forma decrescente com base em sua importância. Os pontos, que representam os valores de Shapley, são coloridos de acordo com os valores altos ou baixos das observações originais de cada variável. Essa representação facilita a compreensão de como as predições do modelo estão sendo influenciadas por cada variável, permitindo uma análise mais detalhada de seus efeitos.
+
+\vspace{12pt}
+
+Por fim, o gráfico de dependência é o mais simples de todos. Nele, os valores de Shapley de uma variável são plotados em função de suas respectivas observações. Matematicamente, é definido como:
+$$
+\{\left(x_j^{\left(i\right)}, \phi_j^{\left(i\right)} \right)\}^{n}_{i=1}
+$$
+
+Esse gráfico permite visualizar diretamente como as observações de uma variável estão relacionadas aos seus efeitos no modelo, representados pelos valores de Shapley. Ele foi utilizado somente para analisar como as variáveis binárias se comportam.
+
+
 
 # Resultados
 
@@ -1276,7 +1297,7 @@ sns.kdeplot(
   ax=axes[0],
   fill=True,
   alpha=.5,
-  palette='crest'
+  color="#00708d"
   )
 
 dens_plot = sns.kdeplot(
@@ -1285,11 +1306,17 @@ dens_plot = sns.kdeplot(
   ax=axes[1],
   fill=True,
   alpha=.5,
-  palette='crest'
+  color="#00708d"
   )
 
-axes[0].set_ylabel(ylabel='Densidade')
-axes[1].set_ylabel(ylabel='Densidade')
+axes[0].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
+axes[0].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
+axes[1].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
+axes[1].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
+axes[0].set_ylabel(ylabel='Densidade', fontsize=13)
+axes[1].set_ylabel(ylabel='Densidade', fontsize=13)
+axes[0].set_xlabel(xlabel='Valor', fontsize=13)
+axes[1].set_xlabel(xlabel='Valor', fontsize=13)
 plt.show()
 ```
 
@@ -1513,54 +1540,6 @@ m.get_root().html.add_child(folium.Element(legend_css))
 img_data = m._to_png(20)
 img = Image.open(io.BytesIO(img_data))
 img.save('includes/map_valor_dark.png')
-```
-
-```{python}
-# pair_plot_df = train_df.copy()
-# pair_plot_df['Área'] = np.log1p(pair_plot_df['Área'])
-# pair_plot_df['Banheiro'] = np.log1p(pair_plot_df['Banheiro'])
-# pair_plot_df['Quarto'] = np.log1p(pair_plot_df['Quarto'])
-# pair_plot_df['Vaga'] = np.log1p(pair_plot_df['Vaga'])
-# pair_plot_df['Área de aluguel'] = np.log1p(pair_plot_df['Área de aluguel'])
-# pair_plot_df['Valor de aluguel'] = np.log1p(pair_plot_df['Valor de aluguel'])
-# pair_plot_df['Valor'] = np.log1p(pair_plot_df['Valor'])
-
-# g = sns.pairplot(
-#   pair_plot_df\
-#     .assign(
-
-#     )\
-#     .loc[:, [
-#       'Valor', 'Área',
-#       'Banheiro', 'Latitude',
-#       'Longitude', 'Valor de aluguel',
-#       'Quarto', 'Vaga',
-#       'Área de aluguel', 'Tipo'
-#       ]],
-#   hue='Tipo',
-#   palette='crest'
-#   # diag_kind="kde",
-#   )
-# g._legend.remove()
-# g.add_legend(
-#   legend_data={
-#     'apartamentos': 'Apartamentos',
-#     ''
-#   },
-#   loc="upper center",
-#   bbox_to_anchor=(.5, .5),
-#   ncol=6)
-
-# l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
-# l.get_texts()[0].set_text('Apartamentos')
-# l.get_texts()[1].set_text('Casas')
-# l.get_texts()[2].set_text('Casas de condomínio')
-# l.get_texts()[3].set_text('Flats')
-# l.get_texts()[4].set_text('Terrenos, lotes e condomínios')
-# l.get_texts()[5].set_text('Terrenos e lotes comerciais')
-
-# g.map_lower(sns.kdeplot, levels=4, color=".2")
-# g.map_upper(sns.kdeplot, levels=4, color=".2")
 ```
 
 {{< pagebreak >}}
@@ -2079,11 +2058,18 @@ Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando
 
 ## Impacto e importância das variáveis na predição
 
-![](includes/pdp_ice.svg)
+![Gráfico de ICE e PDP.](includes/pdp_ice.svg){#fig-ice_pdp}
 
 \ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Stacking.
 
 \vspace{12pt}
+
+Para analisar a influência das variáveis na predição dos valores de imóveis, foi utilizado o gráfico de ICE (Individual Conditional Expectation) em conjunto com a linha de PDP (Partial Dependence Plot). Esses gráficos estão representados na @fig-ice_pdp.
+
+\vspace{12pt}
+
+As previsões mostram um aumento claro com o tamanho da área, com o PDP apresentando uma tendência crescente consistente, alinhada à maioria das curvas ICE. Para a quantidade de banheiro, a relação é majoritariamente plana, com apenas pequenas variações. Um comportamento semelhante é observado para a quantidade de quartos, indicando uma influência limitada dessas variáveis no modelo. No caso do valor médio de aluguel, o PDP revela uma tendência ascendente bem definida, e as curvas ICE reforçam esse padrão, sugerindo que valores de aluguel mais altos estão fortemente associados a preços de imóveis mais elevados. Já a área média de aluguel apresenta um padrão mais uniforme, indicando uma contribuição menos significativa para explicar os preços dos imóveis. As curvas ICE para as coordenadas geográficas exibem um padrão mais complexo nas previsões. No entanto, é possível identificar um aumento nos valores previstos dos imóveis à medida que as coordenadas aumentam. Esse comportamento sugere que os imóveis localizados mais próximos da região litorânea de João Pessoa tendem a apresentar valores mais elevados. Por fim, a quantidade de vagas de garagem demonstra uma relação ascendente clara nas predições, evidenciando uma influência positiva dessa variável no valor dos imóveis.
+
 
 ::: {#fig-teste layout-ncol=2}
 ![Gráfico de resumo dos valores SHAP.](includes/shap_summary_plot.svg){#fig-shap_summary}
