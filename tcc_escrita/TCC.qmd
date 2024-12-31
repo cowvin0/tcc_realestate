@@ -38,8 +38,8 @@ bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
 toc: true
 title: |
-
-  Escrever título (escolher no final)
+  O Mercado Imobiliário de João Pessoa: aplicação de técnicas estatísticas e algoritmos de aprendizado de máquina para a predição e análise de valores imobiliários
+#   Análise e Modelagem de Valores de Imóveis no Município de João Pessoa: Uma Abordagem com Aprendizado de Máquina
 author: Gabriel de Jesus Pereira
 mermaid:
   theme: forest
@@ -1070,7 +1070,7 @@ $$
 \hat{f}_S\left(X_S\right) = \frac{1}{N} \sum^{N}_{i=1}\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)
 $$
 
-Em Python, a biblioteca scikit-learn disponibiliza a classe sklearn.inspection.PartialDependenceDisplay para a criação de gráficos de ICE (Individual Conditional Expectation) e a inclusão opcional da linha de PDP (Partial Dependence Plot). Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
+Em Python, a biblioteca scikit-learn disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
 
 ```{python}
 #| eval: false
