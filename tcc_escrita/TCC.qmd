@@ -70,9 +70,10 @@ include-in-header:
 \fancyhead[RE]{\thepage}
 
 \fancypagestyle{plain}{
+  \pagestyle{fancy}
   \fancyhf{}
+  \fancyhead[RO, LE]{\thepage}
   \fancyhead[RE]{\thepage}
-  \renewcommand{\headrulewidth}{0pt}
 }
 
 ```{python}
@@ -2223,9 +2224,10 @@ Para analisar as variáveis binárias, foram utilizados gráficos de dependênci
 
 aklsfaklsdflkasjdf
 
-\newpage
 
 # \centering Referências {.unlisted .unnumbered}
+
+\markboth{Referências}{Referências}
 
 ::: {#refs}
 :::

@@ -219,7 +219,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, sharp corners, frame hidden, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, boxrule=0pt, enhanced, breakable, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -331,9 +331,10 @@
 \fancyhead[RE]{\thepage}
 
 \fancypagestyle{plain}{
+  \pagestyle{fancy}
   \fancyhf{}
+  \fancyhead[RO, LE]{\thepage}
   \fancyhead[RE]{\thepage}
-  \renewcommand{\headrulewidth}{0pt}
 }
 
 \thispagestyle{empty}
@@ -3437,9 +3438,9 @@ gourmet, playground e espaço gourmet.
 
 aklsfaklsdflkasjdf
 
-\newpage
-
 \chapter*{\texorpdfstring{\centering Referências}{Referências}}\label{referuxeancias}
+
+\markboth{Referências}{Referências}
 
 \phantomsection\label{refs}
 \begin{CSLReferences}{0}{1}
