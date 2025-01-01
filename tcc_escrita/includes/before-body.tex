@@ -1,5 +1,4 @@
 $if(has-frontmatter)$
-\scrreprt
 $endif$
 \cleardoublepage
 \thispagestyle{empty}
@@ -32,6 +31,7 @@ $endfor$
 \noindent\rule{\textwidth}{0.5pt}
 
 \newpage
+\thispagestyle{empty}
 
 $for(by-author)$
 {\normalsize\bfseries $by-author.name.literal$ \par}

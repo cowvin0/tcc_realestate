@@ -1,4 +1,5 @@
 ---
+block-headings: false
 cache: true
 nocite: |
   @bischl2023hyperparameter
@@ -6,9 +7,15 @@ nocite: |
   @evolucao_abecip
 template-partials:
   - includes/before-body.tex
-toc-title: Sumário
+toc-title: \centering Sumário \thispagestyle{empty}
 format:
   pdf:
+    keep-tex: true
+    geometry:
+      - left=3cm,
+      - right=2cm,
+      - top=3cm,
+      - bottom=2cm
     include-before-body:
       text: |
         \numberwithin{algorithm}{chapter}
@@ -38,8 +45,7 @@ bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
 toc: true
 title: |
-  O Mercado Imobiliário de João Pessoa: aplicação de técnicas estatísticas e algoritmos de aprendizado de máquina para a predição e análise de valores imobiliários
-#   Análise e Modelagem de Valores de Imóveis no Município de João Pessoa: Uma Abordagem com Aprendizado de Máquina
+  (Escolher no final)
 author: Gabriel de Jesus Pereira
 mermaid:
   theme: forest
@@ -52,15 +58,23 @@ fig-cap-location: bottom
 warning: false
 echo: false
 include-in-header:
-  - text: |
-      \usepackage[shortlabels]{enumitem}
-      \usepackage{booktabs}
-      \usepackage{ragged2e}
-      \usepackage{pdflscape}
-      \newcommand{\blandscape}{\begin{landscape}}
-      \newcommand{\elandscape}{\end{landscape}}
+  - includes/pdf_config.sty
 ---
 
+\pagenumbering{arabic}
+\pagestyle{fancy}
+
+\fancyhf{}
+\fancyhead[RO, LE]{\thepage}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\thepage}
+
+\fancypagestyle{plain}{
+  \pagestyle{fancy}
+  \fancyhf{}
+  \fancyhead[RO, LE]{\thepage}
+  \fancyhead[RE]{\thepage}
+}
 
 ```{python}
 import pandas as pd
@@ -93,23 +107,46 @@ train_df = train_df.rename(columns=rename)
 test_df = test_df.rename(columns=rename)
 ```
 
+\thispagestyle{empty}
+
+\newpage
+
 \bgroup
 \hypersetup{linkcolor = black}
+
+\cleardoublepage
+\renewcommand{\listfigurename}{\centering{Lista de Figuras}}
 \listoffigures
+\thispagestyle{empty}
+
+\cleardoublepage
+\renewcommand{\listtablename}{\centering{Lista de Tabelas}}
 \listoftables
-\renewcommand{\listalgorithmname}{Lista de Algoritmos}
+\thispagestyle{empty}
+
+\cleardoublepage
+\renewcommand{\listalgorithmname}{\centering{Lista de Algoritmos}}
 \listofalgorithms
+\thispagestyle{empty}
+
 \egroup
 
-# Agradecimentos {.unnumbered .unlisted}
+\chapter*{\centering Agradecimentos}
+\thispagestyle{empty}
 
-# Resumo {.unnumbered .unlisted}
+
+\chapter*{\centering Resumo}
+\thispagestyle{empty}
+
+\ \ \ A história do Brasil, assim como a de muitos outros países, foi marcada por uma predominância rural durante grande parte de sua trajetória. Em 1940, apenas 31% da população vivia em áreas urbanas. Contudo, esse cenário mudou rapidamente, e, em 1970, mais da metade da população já residia em cidades [@wagner1980urbanization]. Esse processo de urbanização acelerado e desordenado resultou em um crescimento desorganizado das grandes metrópoles, agravando problemas urbanos, como o déficit habitacional. Com o aumento das regiões urbanizadas, a demanda por habitação tornou-se cada vez maior, exigindo medidas para mitigar o déficit habitacional. Nesse contexto, foi instituída a Lei nº 4.380, de 21 de agosto de 1964, que criou pela primeira vez no país um mecanismo de crédito habitacional. Essa legislação foi crucial para articular a oferta e a demanda de recursos destinados ao setor habitacional e resultou na criação do Sistema Financeiro de Habitação (SFH), que introduziu inovações como a correção monetária, o Banco Nacional da Habitação (BNH) e as Sociedades de Crédito Imobiliário (SCI). Embora o SFH tenha obtido muitos sucessos, o aumento da inflação na década de 1980 impactou seu funcionamento, agravado por medidas adotadas pelos governos para combater a inflação. Assim, com a experiência acumulada pelo SFH, foi criado o Sistema de Financiamento Imobiliário (SFI), que não substituiu o SFH, mas marcou o início de um modelo moderno de financiamento habitacional no Brasil.
+
+
 
 # Introdução
 
 ## Introdução
 
-\ \ \ Assim como em todos os países, a maior parte da história do Brasil foi marcada por uma predominância rural. Em 1940, apenas 31% da população vivia em áreas urbanas. No entanto, esse número cresceu rapidamente, ultrapassando 50% em 1970 [@wagner1980urbanization]. Esse tendência se manteve nas décadas seguintes, até que, em 2014, 85,1% da população brasileira já residia em regiões urbanas.
+\ \ \ Assim como em todos os países, a maior parte da história do Brasil foi marcada por uma predominância rural. Em 1940, apenas 31% da população vivia em áreas urbanas. No entanto, esse número cresceu rapidamente, ultrapassando 50% em 1970 [@wagner1980urbanization]. Essa tendência se manteve nas décadas seguintes, até que, em 2014, 85,1% da população brasileira já residia em regiões urbanas.
 
 \vspace{12pt}
 
@@ -121,7 +158,7 @@ O êxodo rural no Brasil foi um processo gradual, mas ocorreu de forma acelerada
 
 \vspace{12pt}
 
-Com os incentivos gerados pelo processo de industrialização e urbanização no Brasil, a demanda por habitação aumentou significativamente. Nesse cenário, surgiu a necessidade de se estabelecer, ainda que tardiamente, um sistema imobiliário no país. A criação desse sistema foi iniciada pela Lei nº 4.380, de 21 de agosto de 1964, que instituiu o Sistema Financeiro de Habitação (SFH). O sistema propiciou diversas inovações, como a correção monetária, a criação do Banco Nacional da Habitação (BNH) e as Sociedades de Crédito Imobiliário (SCI). Além disso, a legislação estabeleceu, pela primeira vez, um mecanismo de crédito habitacional capaz de articular a oferta e a demanda de recursos necessárioos para a realização de investimentos habitacionais.
+Com os incentivos gerados pelo processo de industrialização e urbanização no Brasil, a demanda por habitação aumentou significativamente. Nesse cenário, surgiu a necessidade de se estabelecer, ainda que tardiamente, um sistema imobiliário no país. A criação desse sistema foi iniciada pela Lei nº 4.380, de 21 de agosto de 1964, que instituiu o Sistema Financeiro de Habitação (SFH). O sistema propiciou diversas inovações, como a correção monetária, a criação do Banco Nacional da Habitação (BNH) e as Sociedades de Crédito Imobiliário (SCI). Além disso, a legislação estabeleceu, pela primeira vez, um mecanismo de crédito habitacional capaz de articular a oferta e a demanda de recursos necessários para a realização de investimentos habitacionais.
 
 \vspace{12pt}
 
@@ -2184,7 +2221,13 @@ Para analisar as variáveis binárias, foram utilizados gráficos de dependênci
 
 # Conclusão
 
-# Referências {.unnumbered}
+
+aklsfaklsdflkasjdf
+
+
+# \centering Referências {.unlisted .unnumbered}
+
+\markboth{Referências}{Referências}
 
 ::: {#refs}
 :::
