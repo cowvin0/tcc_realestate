@@ -10,6 +10,7 @@ template-partials:
 toc-title: \centering Sumário \thispagestyle{empty}
 format:
   pdf:
+    papersize: A4
     keep-tex: true
     geometry:
       - left=3cm,
@@ -138,9 +139,14 @@ test_df = test_df.rename(columns=rename)
 \chapter*{\centering Resumo}
 \thispagestyle{empty}
 
-\ \ \ A história do Brasil, assim como a de muitos outros países, foi marcada por uma predominância rural durante grande parte de sua trajetória. Em 1940, apenas 31% da população vivia em áreas urbanas. Contudo, esse cenário mudou rapidamente, e, em 1970, mais da metade da população já residia em cidades [@wagner1980urbanization]. Esse processo de urbanização acelerado e desordenado resultou em um crescimento desorganizado das grandes metrópoles, agravando problemas urbanos, como o déficit habitacional. Com o aumento das regiões urbanizadas, a demanda por habitação tornou-se cada vez maior, exigindo medidas para mitigar o déficit habitacional. Nesse contexto, foi instituída a Lei nº 4.380, de 21 de agosto de 1964, que criou pela primeira vez no país um mecanismo de crédito habitacional. Essa legislação foi crucial para articular a oferta e a demanda de recursos destinados ao setor habitacional e resultou na criação do Sistema Financeiro de Habitação (SFH), que introduziu inovações como a correção monetária, o Banco Nacional da Habitação (BNH) e as Sociedades de Crédito Imobiliário (SCI). Embora o SFH tenha obtido muitos sucessos, o aumento da inflação na década de 1980 impactou seu funcionamento, agravado por medidas adotadas pelos governos para combater a inflação. Assim, com a experiência acumulada pelo SFH, foi criado o Sistema de Financiamento Imobiliário (SFI), que não substituiu o SFH, mas marcou o início de um modelo moderno de financiamento habitacional no Brasil.
+\ \ \ A história do Brasil, assim como a de muitos outros países, foi marcada por uma predominância rural durante grande parte de sua trajetória, com apenas 31% da população vivendo em áreas urbanas em 1940. Contudo, esse cenário mudou rapidamente e, em 1970, mais da metade da população já residia em cidades [@wagner1980urbanization]. O processo de urbanização acelerado e desordenado resultou no crescimento desorganizado das grandes metrópoles, agravando problemas urbanos como o déficit habitacional. Com o aumento das áreas urbanizadas, a demanda por habitação tornou-se cada vez maior, levando à criação de medidas para mitigar esse déficit. Nesse contexto, a Lei nº 4.380, de 21 de agosto de 1964, instituiu pela primeira vez no país um mecanismo de crédito habitacional, sendo fundamental para articular a oferta e a demanda de recursos destinados ao setor habitacional. Essa legislação resultou na criação do Sistema Financeiro de Habitação (SFH), que trouxe inovações como a correção monetária, o Banco Nacional da Habitação (BNH) e as Sociedades de Crédito Imobiliário (SCI). Apesar dos avanços do SFH, o aumento da inflação na década de 1980 impactou seu funcionamento, agravado por medidas governamentais para conter a inflação. Como evolução desse sistema, foi criado o Sistema de Financiamento Imobiliário (SFI), que não substituiu o SFH, mas introduziu um modelo moderno de financiamento habitacional, fundamentado na securitização de créditos imobiliários, maior segurança jurídica dos contratos e captação de recursos diretamente no mercado por meio de operações realizadas por entidades autorizadas. A dinâmica do tempo e a modernização do mercado imobiliário trouxe impacto significativo para diversas cidades brasileiras, incluindo João Pessoa, capital da Paraíba, que se tornou um dos destinos mais procurados para viver e visitar. A cidade destacou-se como uma das capitais com maior valorização acumulada de imóveis residenciais nos últimos 12 meses, até novembro de 2024, apresentando uma variação de 16,13%. O crescimento do mercado imobiliário em João Pessoa tem gerado novas demandas, incluindo a necessidade de métodos mais precisos para precificação de imóveis. Dessa forma, este trabalho teve como objetivo desenvolver uma modelagem estatística para precificação de valores imobiliários na cidade de João Pessoa, utilizando dados coletados por meio de raspagem de sites especializados. Além da modelagem, buscou-se também analisar o impacto das variáveis utilizadas na estimativa dos preços dos imóveis, empregando técnicas de aprendizagem de máquina como base metodológica. O modelo final foi construído utilizando o algoritmo Stacking e apresentou resultados satisfatórios, com um ($R^2$) de 87,19%, erro percentual absoluto médio (MAPE) de 1,357% e raiz do erro quadrático médio (RMSE) de 0,28473. A análise das variáveis revelou que a área do imóvel foi o fator mais determinante na precificação, seguida pela quantidade de vagas de garagem, valor médio de aluguel do bairro, coordenadas geográficas, número de quartos e banheiros, e área média de aluguel do bairro. Por fim, foi desenvolvida uma aplicação prática baseada no modelo final, destinada a facilitar a precificação e a análise de imóveis em João Pessoa, contribuindo para maior precisão no processo de avaliação imobiliária.
 
 
+```{=Latex}
+\begin{flushleft}
+\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa
+\end{flushleft}
+```
 
 # Introdução
 
@@ -2159,13 +2165,15 @@ Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando
 
 ## Impacto e importância das variáveis na predição
 
-![Gráfico de ICE e PDP.](includes/pdp_ice.svg){#fig-ice_pdp}
 
 \ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Stacking.
 
+![Gráfico de ICE e PDP.](includes/pdp_ice.svg){#fig-ice_pdp}
+
 \vspace{12pt}
 
-Para analisar a influência das variáveis na predição dos valores de imóveis, foi utilizado o gráfico de ICE (Individual Conditional Expectation) em conjunto com a linha de PDP (Partial Dependence Plot). Esses gráficos estão representados na @fig-ice_pdp.
+Para analisar a influência das variáveis na predição dos valores de imóveis, foi utilizado o gráfico de ICE em conjunto com a linha de PDP. Esses gráficos estão representados na @fig-ice_pdp.
+
 
 \vspace{12pt}
 
