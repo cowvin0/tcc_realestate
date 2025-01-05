@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, boxrule=0pt, frame hidden, breakable, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, enhanced, frame hidden, boxrule=0pt, sharp corners, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -407,16 +407,15 @@ Além da modelagem, buscou-se também analisar o impacto das variáveis
 utilizadas na estimativa dos preços dos imóveis, empregando técnicas de
 aprendizagem de máquina como base metodológica. O modelo final foi
 construído utilizando o algoritmo Stacking e apresentou resultados
-satisfatórios, com um (\(R^2\)) de 87,19\%, erro percentual absoluto
-médio (MAPE) de 1,357\% e raiz do erro quadrático médio (RMSE) de
-0,28473. A análise das variáveis revelou que a área do imóvel foi o
-fator mais determinante na precificação, seguida pela quantidade de
-vagas de garagem, valor médio de aluguel do bairro, coordenadas
-geográficas, número de quartos e banheiros, e área média de aluguel do
-bairro. Por fim, foi desenvolvida uma aplicação prática baseada no
-modelo final, destinada a facilitar a precificação e a análise de
-imóveis em João Pessoa, contribuindo para maior precisão no processo de
-avaliação imobiliária.
+satisfatórios, com um \(R^2\) de 87,19\%, erro percentual absoluto médio
+(MAPE) de 1,357\% e raiz do erro quadrático médio (RMSE) de 0,28473. A
+análise das variáveis revelou que a área do imóvel foi o fator mais
+determinante na precificação, seguida pela quantidade de vagas de
+garagem, valor médio de aluguel do bairro, coordenadas geográficas,
+número de quartos e banheiros, e área média de aluguel do bairro. Por
+fim, foi desenvolvida uma aplicação prática para facilitar a
+precificação e a análise de imóveis em João Pessoa, contribuindo para
+maior precisão no processo de avaliação imobiliária.
 
 \begin{flushleft}
 \textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa
@@ -3466,8 +3465,6 @@ valores mais elevados. O mesmo comportamento é observado para varanda
 gourmet, playground e espaço gourmet.
 
 \chapter{Conclusão}\label{conclusuxe3o}
-
-aklsfaklsdflkasjdf
 
 \chapter*{\texorpdfstring{\centering Referências}{Referências}}\label{referuxeancias}
 

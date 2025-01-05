@@ -3,9 +3,11 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import (
     StandardScaler, OneHotEncoder,
     FunctionTransformer, SplineTransformer,
-    OrdinalEncoder, PowerTransformer
+    OrdinalEncoder, PowerTransformer, PolynomialFeatures,
+    RobustScaler
     )
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.cluster import KMeans
 import pandas as pd
 import numpy as np
 
@@ -13,21 +15,31 @@ cols_imputer = ['latitude', 'longitude', 'area', 'quarto', 'vaga', 'banheiro',
                 'piscina', 'elevador', 'salao_de_festa', 'academia',
                 'quadra_de_esporte', 'varanda_gourmet', 'playground',
                 'espaco_gourmet', 'area_servico', 'sauna', 'spa',
-                'valor_aluguel', 'area_aluguel'
+                'area_aluguel', 'valor_aluguel'
                 ]
 
-transformar_features = ['area', 'vaga', 'total_comodo',
-                        'banheiro', 'quarto']
+transformar_features = [
+    'area', 'vaga', 'banheiro', 'quarto',
+    'total_comodo', 'area_quarto_banheiro']
 
-numerical = ['area', 'quarto', 'vaga', 'total_comodo',
-             'banheiro', 'latitude', 'longitude']
+numerical = [
+    'banheiro', 'latitude', 'longitude',
+    'area', 'quarto', 'vaga', 'area_quarto_banheiro'
+    ]
+
 
 class Imputer(BaseEstimator, TransformerMixin):
     """Imputer valores ausentes com KNNImputer"""
-    def __init__(self, n_neighbors = 17):
+    def __init__(self, n_neighbors=17):
         self.n_neighbors = n_neighbors
         self.imputer = ColumnTransformer(
-            [("imputer", KNNImputer(n_neighbors=self.n_neighbors), cols_imputer)]
+            [
+                (
+                    "imputer",
+                    KNNImputer(n_neighbors=self.n_neighbors),
+                    cols_imputer
+                )
+            ]
         )
 
     def fit(self, X, y=None):
@@ -42,6 +54,35 @@ class Imputer(BaseEstimator, TransformerMixin):
             )
 
         return X_copy
+
+
+class Poly(BaseEstimator, TransformerMixin):
+    def __init__(self, degree=2):
+        self.degree = degree
+        self.poly = ColumnTransformer(
+                transformers=[('polynomial_features',
+                               PolynomialFeatures(degree=self.degree),
+                               ['quarto', 'banheiro']
+                               )]
+                )
+
+    def fit(self, X, y=None):
+        self.poly.fit(X)
+        return self
+
+    def transform(self, X, y=None):
+        X_copy = X.copy()
+        transformed = self.poly.transform(X_copy)
+        columns_remove = self.poly.get_feature_names_out()
+        X_transformed = pd.DataFrame(
+                transformed,
+                columns=columns_remove
+                )
+
+        X_copy = pd.concat([X_copy, X_transformed], axis=1)
+
+        return X_copy
+
 
 class BedAreaBedToi(BaseEstimator, TransformerMixin):
     """Passo que adiciona as combinações total de quarto e
@@ -71,20 +112,18 @@ class BedAreaBedToi(BaseEstimator, TransformerMixin):
             return 0
 
     def fit(self, X, y=None):
-        return self # nothing else to do
+        return self
 
     def transform(self, X, y=None):
         X_copy = X.copy()
         X_copy = X_copy.assign(
-            vertical_horizontal = X_copy["tipo"].apply(self.vert_hori),
-            total_comodo = X_copy["tipo"].apply(self.detect_type) + X_copy[["quarto", "banheiro"]].sum(axis=1),
-            # area_quarto_banheiro = X["quarto"] * X["banheiro"] * X["area"],
-            tamanho_imovel = X_copy["area"].apply(self.house)
+            vertical_horizontal=X_copy["tipo"].apply(self.vert_hori),
+            total_comodo=X_copy["tipo"].apply(self.detect_type) + X_copy[["quarto", "banheiro"]].sum(axis=1),
+            area_quarto_banheiro=X["quarto"] * X["banheiro"] * X["area"],
+            tamanho_imovel=X_copy["area"].apply(self.house)
                               )
         return X_copy
 
-
-# Ordinal Encoder
 
 class OrdEncoder(BaseEstimator, TransformerMixin):
     def __init__(self):
@@ -100,19 +139,19 @@ class OrdEncoder(BaseEstimator, TransformerMixin):
     def transform(self, X, y=None):
         X_copy = X.copy()
         X_copy = X_copy.assign(
-                tamanho_imovel = self.ordinal.transform(X_copy)
+                tamanho_imovel=self.ordinal.transform(X_copy)
                 )
 
         return X_copy
 
-# One-Hot Encoding
 
 class OneEncoder(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.encoder = ColumnTransformer(
-        transformers=[
-            ('encoder', OneHotEncoder(), None)
-        ])
+            transformers=[
+                ('encoder', OneHotEncoder(), None)
+            ]
+        )
 
     def fit(self, X, y=None):
         categorical_features = X.select_dtypes(include=[object]).columns
@@ -127,14 +166,13 @@ class OneEncoder(BaseEstimator, TransformerMixin):
         X_copy = X.copy()
         encoded = self.encoder.transform(X_copy)
         encoded_features_df = pd.DataFrame(
-                encoded.toarray(),
-                columns=self.encoder.get_feature_names_out()
-                )
+            encoded.toarray(),
+            columns=self.encoder.get_feature_names_out()
+        )
         X_copy = pd.concat([X_copy, encoded_features_df], axis=1)
 
         return X_copy.drop(['tipo', 'tamanho_imovel'], axis=1)
 
-# Interpolate coordinates
 
 class Interpolate(BaseEstimator, TransformerMixin):
     def __init__(self, n_knots=7, degree=20):
@@ -154,13 +192,12 @@ class Interpolate(BaseEstimator, TransformerMixin):
         X_copy = X.copy()
         X_transformed = pd.DataFrame(
                 self.interpolate.transform(X_copy),
-                columns = self.interpolate.get_feature_names_out())
+                columns=self.interpolate.get_feature_names_out())
         X_copy = (pd.concat([X_copy, X_transformed], axis=1).
                   drop(["latitude", "longitude"], axis=1))
 
         return X_copy
 
-# Transformação logaritmíca
 
 class LogTransform(BaseEstimator, TransformerMixin):
     """Adiciona transformação logaritmíca"""
@@ -184,7 +221,6 @@ class LogTransform(BaseEstimator, TransformerMixin):
 
         return X_copy
 
-# Transformação Yeo-Johnson
 
 class YeoTransform(BaseEstimator, TransformerMixin):
     def __init__(self):
@@ -206,12 +242,12 @@ class YeoTransform(BaseEstimator, TransformerMixin):
 
         return X_copy
 
-# Standard Scale
 
 class Scale(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.scale = ColumnTransformer(
-        transformers=[('scale', StandardScaler(), numerical)])
+            transformers=[('scale', StandardScaler(), numerical)]
+        )
 
     def fit(self, X, y=None):
         self.scale.fit(X)
@@ -223,3 +259,41 @@ class Scale(BaseEstimator, TransformerMixin):
                                          columns=numerical)
 
         return X_copy
+
+
+class Robust(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        self.scale = ColumnTransformer(
+            transformers=[('scale', RobustScaler(), numerical)])
+
+    def fit(self, X, y=None):
+        self.scale.fit(X)
+        return self
+
+    def transform(self, X, y=None):
+        X_copy = X.copy()
+
+        transformed_scale = pd.DataFrame(
+            self.scale.transform(X_copy),
+            columns=numerical
+        )
+
+        X_copy = X_copy.drop(numerical, axis=1)
+
+        X_copy = pd.concat([X_copy, transformed_scale], axis=1)
+
+        return X_copy
+
+
+class GroupCord(BaseEstimator, TransformerMixin):
+    def __init__(self, n_clusters=8):
+        self.n_clusters = n_clusters
+        self.kmeans = KMeans(n_clusters=self.n_clusters)
+
+    def fit(self, X, y=None):
+        self.kmeans.fit(X[numerical])
+        return self
+
+    def transform(self, X, y=None):
+        labels = self.kmeans.predict(X[numerical])
+        return X.assign(k_groups=labels)
