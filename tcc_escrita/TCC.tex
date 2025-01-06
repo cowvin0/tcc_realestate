@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, colback={codebgcolor}, breakable, enhanced, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, colback={codebgcolor}, boxrule=0pt, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -921,25 +921,20 @@ final é chamado de folha ou nó terminal. Em cada nó, é definida uma
 condição e, caso essa condição seja satisfeita, o resultado será uma das
 folhas desse nó. Caso contrário, o processo segue para o próximo nó e
 verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja
-um exemplo na \textbf{?@fig-arvore}.
+um exemplo na Figura~\ref{fig-arvore}.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{\%\%| label: fig{-}arvore}
-\NormalTok{\%\%| fig{-}cap: Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos.}
-\NormalTok{\%\%| fig{-}width: 5.5}
+\begin{figure}
 
-\NormalTok{graph TD}
-\NormalTok{    A[Condição 1] {-}{-}\textgreater{}|Condição 1: Sim| B[Condição 2]}
-\NormalTok{    A {-}{-}\textgreater{}|Condição 1: Não| C[Condição 3]}
-\NormalTok{    B {-}{-}\textgreater{}|Condição 2: Sim| D[Folha 1]}
-\NormalTok{    B {-}{-}\textgreater{}|Condição 2: Não| E[Folha 2]}
-\NormalTok{    C {-}{-}\textgreater{}|Condição 3: Sim| F[Folha 3]}
-\NormalTok{    C {-}{-}\textgreater{}|Condição 3: Não| G[Condição 4]}
-\NormalTok{    G {-}{-}\textgreater{}|Condição 4: Sim| H[Folha 4]}
-\NormalTok{    G {-}{-}\textgreater{}|Condição 4: Não| I[Folha 5]}
-\end{Highlighting}
-\end{Shaded}
+\centering{
+
+\includegraphics[width=5.5in,height=3.4in]{TCC_files/figure-latex/mermaid-figure-1.png}
+
+}
+
+\caption{\label{fig-arvore}Exemplo de estrutura de árvore de regressão.
+A árvore tem cinco folhas e quatro nós internos.}
+
+\end{figure}%
 
 \vspace{12pt}
 
@@ -999,7 +994,7 @@ ser adotada é uma divisão binária recursiva. O processo começa no topo
 da árvore de regressão, o ponto em que contém todas as observações, e
 continua sucessivamente dividindo o espaço dos preditores. As divisões
 são indicadas como dois novos ramos na árvore, como pode ser visto na
-\textbf{?@fig-arvore}.
+Figura~\ref{fig-arvore}.
 
 \vspace{12pt}
 
@@ -2405,7 +2400,17 @@ evitar o sobreajuste do modelo e garantir que o algoritmo não aprenda
 com informações indisponíveis no conjunto de teste. Assim, a descritiva
 dos dados foi realizada utilizando o conjunto de treinamento.
 
-\vspace{12pt}
+\begin{figure}
+
+\centering{
+
+\includegraphics{TCC_files/figure-pdf/fig-miss-output-1.pdf}
+
+}
+
+\caption{\label{fig-miss}Proporção de valores ausentes por variáveis}
+
+\end{figure}%
 
 A primeira etapa da análise exploratória de dados foi identificar os
 dados faltantes e determinar a melhor forma de tratá-los. A
@@ -2420,18 +2425,6 @@ valores faltantes, nem mesmo métodos de imputação proporcionariam um
 tratamento adequado. Dessa forma, apenas as variáveis de valor do
 condomínio e IPTU foram removidas, enquanto as demais com valores
 ausentes foram tratadas por meio de imputação.
-
-\begin{figure}
-
-\centering{
-
-\includegraphics{TCC_files/figure-pdf/fig-miss-output-1.pdf}
-
-}
-
-\caption{\label{fig-miss}Quantidade de valores ausentes por variáveis}
-
-\end{figure}%
 
 \vspace{12pt}
 
