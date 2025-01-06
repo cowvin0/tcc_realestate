@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, enhanced, frame hidden, boxrule=0pt, sharp corners, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, colback={codebgcolor}, boxrule=0pt, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -504,44 +504,10 @@ Poupança e Empréstimo.
 
 A partir da década de 80 com o aumento da inflação no país, o SFH começa
 a ser afetado, principalmente com as ações tomadas pelos governos para
-combater a inflação. A queda nas unidades habitacionais financiada pelo
-SFH pode ser vista a partir da Figura~\ref{fig-hab_sfh}. Em 1985, o
-reajuste das prestações foi de 112\% e inflação acumulada já alcançava
-os 246\%, porcentual aplicado na correção dos saldos devedores (ABECIP,
-2007a). Acuado pela inflação, os governos passados deram início a uma
-série de planos heterodoxos.
-
-\begin{figure}
-
-\begin{minipage}{0.50\linewidth}
-
-\centering{
-
-\includegraphics{includes/hab_sfh.png}
-
-}
-
-\subcaption{\label{fig-hab_sfh}Unidades habitacionais financiadas pelo
-SFH, 1964-2005.}
-
-\end{minipage}%
-%
-\begin{minipage}{0.50\linewidth}
-
-\centering{
-
-\includegraphics{includes/financ_hab.png}
-
-}
-
-\subcaption{\label{fig-fincanc_hab}Evolução do investimento
-habitacional.}
-
-\end{minipage}%
-
-\caption{\label{fig-abecip-inve}Fonte: ABECIP (2007b)}
-
-\end{figure}%
+combater a inflação. Em 1985, o reajuste das prestações foi de 112\% e a
+inflação acumulada já alcançava os 246\%, porcentual aplicado na
+correção dos saldos devedores (ABECIP, 2007a). Acuado pela inflação, os
+governos passados deram início a uma série de planos heterodoxos.
 
 \vspace{12pt}
 
@@ -570,8 +536,7 @@ com o ativo integral.
 
 \vspace{12pt}
 
-A evolução do investimento habitacional per capita pode ser observada na
-Figura~\ref{fig-fincanc_hab}. Durante o período de auge do SFH, entre
+De acordo com a ABECIP (2007b), durante o período de auge do SFH, entre
 1978 e 1982, o investimento habitacional por habitante manteve-se em
 torno de R\$ 500. Contudo, com as políticas econômicas adotadas pelos
 governos para combater a inflação, o investimento em habitação recuou e
@@ -579,40 +544,16 @@ retornou ao patamar de R\$ 300. Com a criação do Plano Real, em 1994,
 observou-se uma pequena recuperação, embora ele permanecesse abaixo dos
 R\$ 500 no auge.
 
-\begin{table}[]
-\centering
-\caption{Inadimplência no SBPE.\\ Fonte: ABECIP}
-\label{tbl-contratos_atraso}
-\begin{tabular}{cccccc}
-\hline
- &  & \multicolumn{4}{c}{\% mais de 3 prestações em atraso} \\ \cline{3-6}
- &  &  & \multicolumn{2}{c}{Assinados} &  \\ \cline{4-5}
-Anos & \begin{tabular}[c]{@{}c@{}}Números de\\ Contratos Ativos\end{tabular} & Geral & Até 1998 & Pós 1998 & \begin{tabular}[c]{@{}c@{}}Carteira\\ hipotecária\end{tabular} \\ \hline
-1994 & 1.291.685 & 8,80\% & 8,70\% & - & 12,10\% \\
-1995 & 1.279.198 & 10,90\% & 10,80\% & - & 15,10\% \\
-1996 & 1.138.973 & 14,10\% & 14,00\% & - & 19,00\% \\
-1997 & 1.027.322 & 14,60\% & 14,30\% & - & 21,00 \\
-1998 & 910.877 & 14,70\% & 14,40\% & 1,70\% & 23,70\% \\
-1999 & 816.648 & 19,30\% & 20,00\% & 9,20\% & 23,80\% \\
-2000 & 596.397 & 23,70\% & 26,00\% & 12,00\% & 24,60\% \\
-2001 & 451.461 & 27,60\% & 32,30\% & 11,10\% & 28,10\% \\
-2002 & 410.335 & 28,10\% & 34,10\% & 10,50\% & 30,00\% \\
-2003 & 384.348 & 29,80\% & 37,80\% & 11,20\% & 29,60\% \\
-2004 & 371.614 & 29,90\% & 41,30\% & 9,70\% & 25,40\% \\
-Set. 2005 & 359.073 & 29,40\% & 42,90\% & 9,00\% & 29,40\% \\ \hline
-\end{tabular}
-\end{table}
-
 \vspace{12pt}
 
 Como consequência da crise econômica que marcou o período entre 1980 e
 1990, o arrocho salarial, a queda do poder aquisitivo, as altas taxas de
 juros e a inflação contribuíram significativamente para o aumento da
-inadimplência no SFH. Conforme demonstrado na tabela abaixo, em 1994, a
-taxa de inadimplência estava próxima de 9\%, enquanto em 2005 já havia
-se aproximado de 30\%. Diante desse cenário, surgiram novos esforços e
-iniciativas para contornar a crise e reformular o modelo de
-financiamento habitacional no Brasil.
+inadimplência no SFH. Em 1994, a taxa de inadimplência estava próxima de
+9\%, enquanto em 2005 já havia se aproximado de 30\% (COSTA FARIAS,
+2010). Diante desse cenário, surgiram novos esforços e iniciativas para
+contornar a crise e reformular o modelo de financiamento habitacional no
+Brasil.
 
 \vspace{12pt}
 
@@ -2459,7 +2400,17 @@ evitar o sobreajuste do modelo e garantir que o algoritmo não aprenda
 com informações indisponíveis no conjunto de teste. Assim, a descritiva
 dos dados foi realizada utilizando o conjunto de treinamento.
 
-\vspace{12pt}
+\begin{figure}
+
+\centering{
+
+\includegraphics{TCC_files/figure-pdf/fig-miss-output-1.pdf}
+
+}
+
+\caption{\label{fig-miss}Proporção de valores ausentes por variáveis}
+
+\end{figure}%
 
 A primeira etapa da análise exploratória de dados foi identificar os
 dados faltantes e determinar a melhor forma de tratá-los. A
@@ -2474,18 +2425,6 @@ valores faltantes, nem mesmo métodos de imputação proporcionariam um
 tratamento adequado. Dessa forma, apenas as variáveis de valor do
 condomínio e IPTU foram removidas, enquanto as demais com valores
 ausentes foram tratadas por meio de imputação.
-
-\begin{figure}
-
-\centering{
-
-\includegraphics{TCC_files/figure-pdf/fig-miss-output-1.pdf}
-
-}
-
-\caption{\label{fig-miss}Quantidade de valores ausentes por variáveis}
-
-\end{figure}%
 
 \vspace{12pt}
 
