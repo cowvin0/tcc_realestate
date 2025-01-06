@@ -171,16 +171,16 @@ O BNH tinha como objetivo oferecer incentivos ao mercado imobiliário, promovend
 
 \vspace{12pt}
 
-A partir da década de 80 com o aumento da inflação no país, o SFH começa a ser afetado, principalmente com as ações tomadas pelos governos para combater a inflação. A queda nas unidades habitacionais financiada pelo SFH pode ser vista a partir da @fig-hab_sfh. Em 1985, o reajuste das prestações foi de 112% e inflação acumulada já alcançava os 246%, porcentual aplicado na correção dos saldos devedores [@revolucao_credito_imobiliario]. Acuado pela inflação, os governos passados deram início a uma série de planos heterodoxos.
+A partir da década de 80 com o aumento da inflação no país, o SFH começa a ser afetado, principalmente com as ações tomadas pelos governos para combater a inflação. Em 1985, o reajuste das prestações foi de 112% e a inflação acumulada já alcançava os 246%, porcentual aplicado na correção dos saldos devedores [@revolucao_credito_imobiliario]. Acuado pela inflação, os governos passados deram início a uma série de planos heterodoxos.
 
-::: {#fig-abecip-inve layout-ncol=2}
+<!-- ::: {#fig-abecip-inve layout-ncol=2}
 
 ![Unidades habitacionais financiadas pelo SFH, 1964-2005.](includes/hab_sfh.png){#fig-hab_sfh}
 
 ![Evolução do investimento habitacional.](includes/financ_hab.png){#fig-fincanc_hab}
 
 Fonte: @abecip_credito2007
-:::
+::: -->
 
 \vspace{12pt}
 
@@ -192,11 +192,9 @@ No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 199
 
 \vspace{12pt}
 
+De acordo com a @abecip_credito2007, durante o período de auge do SFH, entre 1978 e 1982, o investimento habitacional por habitante manteve-se em torno de R$ 500. Contudo, com as políticas econômicas adotadas pelos governos para combater a inflação, o investimento em habitação recuou e retornou ao patamar de R$ 300. Com a criação do Plano Real, em 1994, observou-se uma pequena recuperação, embora ele permanecesse abaixo dos R$ 500 no auge.
 
-
-A evolução do investimento habitacional per capita pode ser observada na @fig-fincanc_hab. Durante o período de auge do SFH, entre 1978 e 1982, o investimento habitacional por habitante manteve-se em torno de R$ 500. Contudo, com as políticas econômicas adotadas pelos governos para combater a inflação, o investimento em habitação recuou e retornou ao patamar de R$ 300. Com a criação do Plano Real, em 1994, observou-se uma pequena recuperação, embora ele permanecesse abaixo dos R$ 500 no auge.
-
-```{=Latex}
+<!-- ```{=Latex}
 \begin{table}[]
 \centering
 \caption{Inadimplência no SBPE.\\ Fonte: ABECIP}
@@ -220,11 +218,11 @@ Anos & \begin{tabular}[c]{@{}c@{}}Números de\\ Contratos Ativos\end{tabular} & 
 Set. 2005 & 359.073 & 29,40\% & 42,90\% & 9,00\% & 29,40\% \\ \hline
 \end{tabular}
 \end{table}
-```
+``` -->
 
 \vspace{12pt}
 
-Como consequência da crise econômica que marcou o período entre 1980 e 1990, o arrocho salarial, a queda do poder aquisitivo, as altas taxas de juros e a inflação contribuíram significativamente para o aumento da inadimplência no SFH. Conforme demonstrado na tabela abaixo, em 1994, a taxa de inadimplência estava próxima de 9%, enquanto em 2005 já havia se aproximado de 30%. Diante desse cenário, surgiram novos esforços e iniciativas para contornar a crise e reformular o modelo de financiamento habitacional no Brasil.
+Como consequência da crise econômica que marcou o período entre 1980 e 1990, o arrocho salarial, a queda do poder aquisitivo, as altas taxas de juros e a inflação contribuíram significativamente para o aumento da inadimplência no SFH. Em 1994, a taxa de inadimplência estava próxima de 9%, enquanto em 2005 já havia se aproximado de 30% [@evolucao_abecip]. Diante desse cenário, surgiram novos esforços e iniciativas para contornar a crise e reformular o modelo de financiamento habitacional no Brasil.
 
 \vspace{12pt}
 
