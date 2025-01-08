@@ -810,11 +810,11 @@ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas
 
 ### Etapas de pré-processamento
 
-\ \ \ Após toda a organização e limpeza dos dados, foram aplicadas algumas transformações com o objetivo de estabelecer uma relação compreensível das variáveis que mais interferem no valor do imóvel. Além disso, foi aplicado também o tratamento de valores ausentes presentes no conjunto de dados.
+\ \ \ Após a organização e limpeza dos dados, foram realizadas transformações nas variáveis para aprimorar a capacidade preditiva dos modelos em relação aos valores dos imóveis. Além disso, foi aplicado um tratamento específico para lidar com valores ausentes em algumas variáveis do conjunto de dados. Esse tratamento foi restrito às variáveis com menos de 20% de valores ausentes, incluindo as variáveis de número de banheiros, quartos, vagas, valor médio do aluguel e área média do aluguel. Por outro lado, as variáveis de condomínio e IPTU apresentaram um elevado percentual de valores ausentes, com a variável de condomínio tendo quase 60% de observações ausentes e a variável IPTU mais de 80%. Devido a essa alta proporção de valores ausentes, essas variáveis foram excluídas das análises.
 
 \vspace{12pt}
 
-O método utilizado para a imputação de valores ausentes foi o algoritmo k-nearest neighbors (KNN). Esse algoritmo estima os valores ausentes de acordo com a fórmula:
+O método utilizado para a imputação de valores ausentes foi o algoritmo k-nearest neighbors (KNN). Esse algoritmo estima os valores ausentes de acordo com a seguinte fórmula:
 
 $$
 \hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i
@@ -823,17 +823,16 @@ onde $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou se
 
 \vspace{12pt}
 
-A transformação utilizada para estabilizar a variância e aproximar a distribuição dos regressores de uma distribuição normal foi a transformação logarítmica. Para lidar com variáveis categóricas, foi utilizada a classe OneHotEncoder, que aplica a codificação one hot. Essa técnica transforma as categorias das variáveis em variáveis dicotômicas, criando uma nova coluna para cada categoria. Além disso, o OrdinalEncoder foi utilizado para variáveis ordinais, que possuem uma ordem. Dessa forma, o OneHotEncoder foi aplicado à variável de tipo de imóvel, transformando cada categoria de imóvel em variáveis dummy. Já o OrdinalEncoder foi aplicado à variável de tamanho do imóvel, que foi criada posteriormente para classificar os imóveis em diferentes faixas: pequenos, médios e grandes.
+A transformação logarítmica $\log(1 + x)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Para as variáveis categóricas, utilizou-se a classe `sklearn.preprocessing.OneHotEncoder`, que converte as categorias em variáveis dicotômicas, criando uma nova coluna para cada categoria. Especificamente, a `OneHotEncoder` foi aplicada à variável que representa o tipo de imóvel, transformando cada categoria em uma variável binária.
 
 \vspace{12pt}
 
-Por fim, as variáveis numéricas foram normalizadas utilizando a classe StandardScaler, que padroniza os dados aplicando a seguinte transformação:
+Após a aplicação da transformação logarítmica às variáveis numéricas, essas variáveis também foram padronizadas utilizando a classe `StandardScaler`, disponível no módulo `preprocessing` da biblioteca `scikit-learn`. Essa classe ajusta os dados para que fiquem na mesma escala, padronizando-os de acordo com a fórmula:
 
 $$
 z = \frac{x - \mu}{\sigma}
 $$
-onde $\mu$ é a média da amostra de treinamento e $\sigma$ é o desvio padrão da amostra de treinamento.
-
+onde $\mu$ representa a média e $\sigma$ o desvio padrão. Essa padronização é essencial para garantir que os modelos estatísticos e de aprendizado de máquina tratem as variáveis em escalas consistentes.
 
 ### Validação cruzada
 
