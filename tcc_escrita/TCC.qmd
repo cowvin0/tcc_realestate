@@ -235,7 +235,7 @@ Além deste capítulo de introdução, em que é apresentado os problemas que se
 
 - **Capítulo 3**:  Aqui é apresentada toda a descrição teórica de cada um dos modelos e algoritmos utilizados.
 
-- **Capítulo 4**: O capítulo 4 apresenta todo o processo para obtenção dos dados e a descrição da variável dos dados. Além disso, são apresentados também as etapas para a construção do modelo, as transformações realizadas nas variáveis, o processo para encontrar os hiperparâmetros ótimos dos modelos através de validação cruzada e técnicas de otimização. Por fim, para descrever as técnicas para análise de como os predições se comportam, são apresentadas e descritas as técnicas de Individual Conditional Expectation, Local Interpretable model-agnostic explanations e SHapley Additive exPlanations.
+- **Capítulo 4**: O capítulo 4 apresenta todo o processo para obtenção dos dados e a descrição da variável dos dados. Além disso, são apresentados também as etapas para a construção do modelo, as transformações realizadas nas variáveis, o processo para encontrar os hiperparâmetros ótimos dos modelos através de validação cruzada e técnicas de otimização. Por fim, para descrever as técnicas para análise de como os predições se comportam, são apresentadas e descritas as técnicas de Individual Conditional Expectation, Local Interpretable model-agnostic explanations e Shapley Additive Explanations.
 
 - **Capítulo 5**: No capítulo 5 são apresentados os resultados da análise exploratória, a tunagem dos modelos, os efeitos e importância das variáveis na predição.
 
@@ -745,34 +745,16 @@ onde $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do qua
 
 Assim como o Gradient Boosting, as implementações existentes de Light Gradient Boosting também permite utilizar a regularização L1 ou L2, mas não utiliza nenhuma das duas por padrão. A principal diferença do Light Gradient Boosting está na forma de crescimento das árvores, primeiro é dividido a folha com a maior redução na função de erro. Além disso, tem um grande foco na velocidade e uma melhor eficiência no uso da memória atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que invés de avaliar cada ponto quando realiza a divisão, ele divide valores contínuos em intervalos, como um histograma, o que reduz grandemente o custo computacional.
 
-<!-- ### Diferentes implementações de Gradient Boosting
-
-\ \ \ O algoritmo de Gradient Boosting aplicado a árvores de decisão é um dos mais eficientes e amplamente utilizados, sendo frequentemente vencedor em competições de modelagem estatística. Existem diversas variações desse algoritmo, cada uma com seus próprios motivos de existênica. Esses motivos incluem a busca por maior eficiência computacional, facilidade de uso, adição de recursos (como no caso da implementação Extreme Gradient Boosting, que adiciona diferentes métodos de regularização) e até mesmo maior flexibilidade.
-
-\vspace{12pt}
-
-Além da definição anterior de Gradient Boosting aplicado a árvores de decisão, este trabalho também utilizou outras implementações de Gradient Boosting, como o Light Gradient Boosting Machine e o Extreme Gradient Boosting. Essas variações partem da mesma premissa do Gradient Boosting, mas adicionam funcionalidades adicionais e são mais eficientes computacionalmente. Assim, esta seção irá definir as diferentes implementações utilizadas e destacar suas principais características.
-
-#### Extreme Gradient Boosting
-
-\ \ \ Extreme Gradient Boosting [@chen2016xgboost], também conhecido como XGBoost, é um sistema escalável de aprendizagem de máquinas para boosting de árvores de decisão. O sistema está disponível como uma biblioteca de código aberto para diversas linguagens de programação, como C, C++, Python, R, Ruby, JVM, Julia e até mesmo Swift. Aqui foi utilizado a implementação de Python, disponibilizada pela biblioteca `xgboost`.
-
-#### Light Gradient Boosting -->
-
-
-
-
-\vspace{12pt}
 
 # Metodologia
 
 ## Obtenção dos dados
 
-\ \ \ Os dados foram obtidos por meio de web scraping, uma técnica automatizada de extração de informações de páginas web. Para isso, foram utilizadas as linguagens de programação R e Python. No R, os pacotes xml2 [@xml2] e rvest [@rvest] foram utilizados para extrair dados de páginas estáticas de forma estruturada. No Python, as bibliotecas Scrapy [@kouzis2016learning] e Playwright, desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com páginas dinâmicas, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A ferramenta utilizada para a rotação das informações do usuário que acessa o site é a API criada pela empresa ScrapeOps.
+\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação R e Python. No R, os pacotes xml2 [@xml2] e rvest [@rvest] foram utilizados para extrair dados de páginas estáticas de forma estruturada. No Python, as bibliotecas Scrapy [@kouzis2016learning] e Playwright, desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e pode ser acessada através do domínio <https://scrapeops.io/> após a criação de uma conta no site.
 
 \vspace{12pt}
 
-Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que faziam sentido para a modelagem, priorizando aquelas com menor probabilidade de gerar problemas durante o tratamento dos dados. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas de latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços, utilizando o pacote tidygeocoder [@geocoder] da linguagem R. Dessa forma, tem-se as seguintes variáveis:
+Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote tidygeocoder [@geocoder] da linguagem R. Dessa forma, tem-se as seguintes variáveis:
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
@@ -812,11 +794,15 @@ No entanto, com base nas observações realizadas durante o estudo, nem todas as
 
 ## Construção do modelo
 
-\ \ \ No conjunto de dados extraído, foram avaliados diferentes modelos para a previsão do valor do imóvel. Inicialmente, o valor do imóvel foi explicado por variáveis consideradas relevantes para o estudo, como: valor médio do aluguel no bairro, área, área média do aluguel no bairro, número de banheiros, vagas de estacionamento, número de quartos, latitude, longitude, tipo de imóvel e variáveis dicotômicas obtidas durante o processo de extração. As variáveis relacionadas ao valor do condomínio e IPTU foram excluídas do modelo devido à alta quantidade de valores ausentes.
+\ \ \ No conjunto de dados extraído, foram avaliados diferentes modelos para a previsão do valor do imóvel. O valor do imóvel foi explicado por variáveis consideradas relevantes para o estudo, como: valor médio do aluguel no bairro, área, área média do aluguel no bairro, número de banheiros, vagas de estacionamento, número de quartos, latitude, longitude, tipo de imóvel e variáveis dicotômicas obtidas durante o processo de extração. As variáveis relacionadas ao valor do condomínio e IPTU foram excluídas do modelo devido à alta quantidade de valores ausentes.
 
 \vspace{12pt}
 
-Com as variáveis selecionadas, o conjunto de dados foi dividido em treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe StratifiedShuffleSplit, que garante uma amostragem estratificada e aleatória. A estratificação foi baseada na variável "tipo de imóvel", preservando a proporção de amostras para cada categoria. Definiu-se 20% do conjunto de dados para o teste, enquanto os 80% restantes foram reservados para o treinamento.
+Após a seleção das variáveis, o conjunto de dados foi dividido em conjuntos de treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe `sklearn.model_selection.StratifiedShuffleSplit`, da biblioteca scikit-learn. Essa classe permite dividir a base de dados de maneira aleatória, preservando a proporção das classes definidas.
+
+\vspace{12pt}
+
+A estratificação foi baseada em intervalos criados a partir da variável que representa o valor dos imóveis. Foram definidos cinco intervalos: o primeiro abrange valores entre o mínimo e 200.000; o segundo, entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto, entre 600.000 e 800.000; e o último intervalo cobre os valores de 800.000 até o máximo da variável. Dessa forma, 20% do conjunto de dados foi reservado para o teste, enquanto os 80% restantes foram utilizados para o treinamento do modelo.
 
 \vspace{12pt}
 
@@ -1114,7 +1100,7 @@ $$
 
 Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias de modelos explicativos $G$. Uma escolha para $L$, por exemplo, é o erro quadrático médio.
 
-### SHapley Additive exPlanations (SHAP)
+### Shapley Additive Explanations (SHAP)
 
 \ \ \ O SHapley Additive exPlanations é um método que explica tem como objetivo explicar predições individuais de uma instância $x$ através da computação da contribuição de cada variável para a predição. Ele é baseado nos Shapley Values. Dessa forma, os valores Shapley serão definidos primeiramente.
 
