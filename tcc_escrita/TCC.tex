@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, colback={codebgcolor}, boxrule=0pt, enhanced, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, colback={codebgcolor}, boxrule=0pt, sharp corners, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -682,8 +682,8 @@ organizados da seguinte forma:
   técnicas de otimização. Por fim, para descrever as técnicas para
   análise de como os predições se comportam, são apresentadas e
   descritas as técnicas de Individual Conditional Expectation, Local
-  Interpretable model-agnostic explanations e SHapley Additive
-  exPlanations.
+  Interpretable model-agnostic explanations e Shapley Additive
+  Explanations.
 \item
   \textbf{Capítulo 5}: No capítulo 5 são apresentados os resultados da
   análise exploratória, a tunagem dos modelos, os efeitos e importância
@@ -1603,40 +1603,42 @@ invés de avaliar cada ponto quando realiza a divisão, ele divide valores
 contínuos em intervalos, como um histograma, o que reduz grandemente o
 custo computacional.
 
-\vspace{12pt}
-
 \chapter{Metodologia}\label{metodologia}
 
 \section{Obtenção dos dados}\label{obtenuxe7uxe3o-dos-dados}
 
-~~~Os dados foram obtidos por meio de web scraping, uma técnica
-automatizada de extração de informações de páginas web. Para isso, foram
-utilizadas as linguagens de programação R e Python. No R, os pacotes
-xml2 (WICKHAM; HESTER; OOMS, 2023) e rvest (WICKHAM, 2024) foram
+~~~Os dados foram obtidos por meio de web scraping, que é uma técnica
+para coleta automatizada de dados de páginas da internet. Para isso,
+foram utilizadas as linguagens de programação R e Python. No R, os
+pacotes xml2 (WICKHAM; HESTER; OOMS, 2023) e rvest (WICKHAM, 2024) foram
 utilizados para extrair dados de páginas estáticas de forma estruturada.
 No Python, as bibliotecas Scrapy (KOUZIS-LOUKAS, 2016) e Playwright,
 desenvolvida pela Microsoft, foram empregadas, sendo esta última
-essencial para a interação com páginas dinâmicas, possibilitando a
-extração de informações que exigem interações como cliques ou rolagem de
-página. Além dessas ferramentas, foram implementadas técnicas de
-rotacionamento de IPs e de modificação das informações do usuário que
-acessa o site, a fim de evitar bloqueios durante o processo de coleta de
-dados, garantindo assim a continuidade e eficácia da extração. A
-ferramenta utilizada para a rotação das informações do usuário que
-acessa o site é a API criada pela empresa ScrapeOps.
+essencial para a interação com componentes dinâmicos da página,
+possibilitando a extração de informações que exigem interações como
+cliques ou rolagem de página para ser gerada. Além dessas ferramentas,
+foram implementadas técnicas de rotacionamento de IPs e de modificação
+das informações do usuário que acessa o site, a fim de evitar bloqueios
+durante o processo de coleta de dados, garantindo assim a continuidade e
+eficácia da extração. A API utilizada para gerenciar a rotação de
+informações dos usuários que acessam o site foi desenvolvida pela
+empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e
+pode ser acessada através do domínio \url{https://scrapeops.io/} após a
+criação de uma conta no site.
 
 \vspace{12pt}
 
 Assim, utilizando as ferramentas e técnicas de web scraping, foram
-coletadas as variáveis que faziam sentido para a modelagem, priorizando
-aquelas com menor probabilidade de gerar problemas durante o tratamento
-dos dados. Ao todo, foram extraídas 25 variáveis, das quais 10 são
-quantitativas e 15 qualitativas nominais, sendo 13 de caráter
-dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente
-por web scraping. As coordenadas de latitude e longitude, por exemplo,
-foram geradas por meio da geocodificação dos endereços, utilizando o
-pacote tidygeocoder (CAMBON \emph{et al.}, 2021) da linguagem R. Dessa
-forma, tem-se as seguintes variáveis:
+coletadas as variáveis que poderiam fazer sentido para a modelagem,
+priorizando aquelas com menor chance de gerar problemas durante o
+tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao
+todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15
+qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem
+todas as variáveis foram obtidas diretamente por web scraping. As
+coordenadas geográficas, latitude e longitude, por exemplo, foram
+geradas por meio da geocodificação dos endereços de cada imóvel,
+utilizando o pacote tidygeocoder (CAMBON \emph{et al.}, 2021) da
+linguagem R. Dessa forma, tem-se as seguintes variáveis:
 
 \begin{itemize}
 \item
@@ -1706,25 +1708,34 @@ as variáveis independentes e a variável dependente.
 \section{Construção do modelo}\label{construuxe7uxe3o-do-modelo}
 
 ~~~No conjunto de dados extraído, foram avaliados diferentes modelos
-para a previsão do valor do imóvel. Inicialmente, o valor do imóvel foi
-explicado por variáveis consideradas relevantes para o estudo, como:
-valor médio do aluguel no bairro, área, área média do aluguel no bairro,
-número de banheiros, vagas de estacionamento, número de quartos,
-latitude, longitude, tipo de imóvel e variáveis dicotômicas obtidas
-durante o processo de extração. As variáveis relacionadas ao valor do
-condomínio e IPTU foram excluídas do modelo devido à alta quantidade de
-valores ausentes.
+para a previsão do valor do imóvel. O valor do imóvel foi explicado por
+variáveis consideradas relevantes para o estudo, como: valor médio do
+aluguel no bairro, área, área média do aluguel no bairro, número de
+banheiros, vagas de estacionamento, número de quartos, latitude,
+longitude, tipo de imóvel e variáveis dicotômicas obtidas durante o
+processo de extração. As variáveis relacionadas ao valor do condomínio e
+IPTU foram excluídas do modelo devido à alta quantidade de valores
+ausentes.
 
 \vspace{12pt}
 
-Com as variáveis selecionadas, o conjunto de dados foi dividido em
-treino e teste para avaliar o desempenho dos modelos. A divisão foi
-realizada de forma estratificada, utilizando a classe
-StratifiedShuffleSplit, que garante uma amostragem estratificada e
-aleatória. A estratificação foi baseada na variável ``tipo de imóvel'',
-preservando a proporção de amostras para cada categoria. Definiu-se 20\%
-do conjunto de dados para o teste, enquanto os 80\% restantes foram
-reservados para o treinamento.
+Após a seleção das variáveis, o conjunto de dados foi dividido em
+conjuntos de treino e teste para avaliar o desempenho dos modelos. A
+divisão foi realizada de forma estratificada, utilizando a classe
+\texttt{sklearn.model\_selection.StratifiedShuffleSplit}, da biblioteca
+scikit-learn. Essa classe permite dividir a base de dados de maneira
+aleatória, preservando a proporção das classes definidas.
+
+\vspace{12pt}
+
+A estratificação foi baseada em intervalos criados a partir da variável
+que representa o valor dos imóveis. Foram definidos cinco intervalos: o
+primeiro abrange valores entre o mínimo e 200.000; o segundo, entre
+200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto, entre
+600.000 e 800.000; e o último intervalo cobre os valores de 800.000 até
+o máximo da variável. Dessa forma, 20\% do conjunto de dados foi
+reservado para o teste, enquanto os 80\% restantes foram utilizados para
+o treinamento do modelo.
 
 \vspace{12pt}
 
@@ -1743,17 +1754,24 @@ preditor final o algoritmo de Light Gradient Boosting.
 \subsection{Etapas de
 pré-processamento}\label{etapas-de-pruxe9-processamento}
 
-~~~Após toda a organização e limpeza dos dados, foram aplicadas algumas
-transformações com o objetivo de estabelecer uma relação compreensível
-das variáveis que mais interferem no valor do imóvel. Além disso, foi
-aplicado também o tratamento de valores ausentes presentes no conjunto
-de dados.
+~~~Após a organização e limpeza dos dados, foram realizadas
+transformações nas variáveis para aprimorar a capacidade preditiva dos
+modelos em relação aos valores dos imóveis. Além disso, foi aplicado um
+tratamento específico para lidar com valores ausentes em algumas
+variáveis do conjunto de dados. Esse tratamento foi restrito às
+variáveis com menos de 20\% de valores ausentes, incluindo as variáveis
+de número de banheiros, quartos, vagas, valor médio do aluguel e área
+média do aluguel. Por outro lado, as variáveis de condomínio e IPTU
+apresentaram um elevado percentual de valores ausentes, com a variável
+de condomínio tendo quase 60\% de observações ausentes e a variável IPTU
+mais de 80\%. Devido a essa alta proporção de valores ausentes, essas
+variáveis foram excluídas das análises.
 
 \vspace{12pt}
 
 O método utilizado para a imputação de valores ausentes foi o algoritmo
 k-nearest neighbors (KNN). Esse algoritmo estima os valores ausentes de
-acordo com a fórmula:
+acordo com a seguinte fórmula:
 
 \[
 \hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i
@@ -1768,29 +1786,28 @@ vizinhos, definido pelo argumento \texttt{n\_neighbors} da classe
 
 \vspace{12pt}
 
-A transformação utilizada para estabilizar a variância e aproximar a
-distribuição dos regressores de uma distribuição normal foi a
-transformação logarítmica. Para lidar com variáveis categóricas, foi
-utilizada a classe OneHotEncoder, que aplica a codificação one hot. Essa
-técnica transforma as categorias das variáveis em variáveis dicotômicas,
-criando uma nova coluna para cada categoria. Além disso, o
-OrdinalEncoder foi utilizado para variáveis ordinais, que possuem uma
-ordem. Dessa forma, o OneHotEncoder foi aplicado à variável de tipo de
-imóvel, transformando cada categoria de imóvel em variáveis dummy. Já o
-OrdinalEncoder foi aplicado à variável de tamanho do imóvel, que foi
-criada posteriormente para classificar os imóveis em diferentes faixas:
-pequenos, médios e grandes.
+A transformação logarítmica \(\log(1 + x)\) foi aplicada para
+estabilizar a variância e tornar a distribuição dos regressores mais
+simétrica. Para as variáveis categóricas, utilizou-se a classe
+\texttt{sklearn.preprocessing.OneHotEncoder}, que converte as categorias
+em variáveis dicotômicas, criando uma nova coluna para cada categoria.
+Especificamente, a \texttt{OneHotEncoder} foi aplicada à variável que
+representa o tipo de imóvel, transformando cada categoria em uma
+variável binária.
 
 \vspace{12pt}
 
-Por fim, as variáveis numéricas foram normalizadas utilizando a classe
-StandardScaler, que padroniza os dados aplicando a seguinte
-transformação:
+Após a aplicação da transformação logarítmica às variáveis numéricas,
+essas variáveis também foram padronizadas utilizando a classe
+\texttt{StandardScaler}, disponível no módulo \texttt{preprocessing} da
+biblioteca \texttt{scikit-learn}. Essa classe ajusta os dados para que
+fiquem na mesma escala, padronizando-os de acordo com a fórmula:
 
 \[
 z = \frac{x - \mu}{\sigma}
-\] onde \(\mu\) é a média da amostra de treinamento e \(\sigma\) é o
-desvio padrão da amostra de treinamento.
+\] onde \(\mu\) representa a média e \(\sigma\) o desvio padrão. Essa
+padronização é essencial para garantir que os modelos estatísticos e de
+aprendizado de máquina tratem as variáveis em escalas consistentes.
 
 \subsection{Validação cruzada}\label{validauxe7uxe3o-cruzada}
 
@@ -2233,7 +2250,7 @@ Podem exister diversas variações para \(L\) e \(\Omega\) com diferentes
 famílias de modelos explicativos \(G\). Uma escolha para \(L\), por
 exemplo, é o erro quadrático médio.
 
-\subsection{SHapley Additive exPlanations
+\subsection{Shapley Additive Explanations
 (SHAP)}\label{shapley-additive-explanations-shap}
 
 ~~~O SHapley Additive exPlanations é um método que explica tem como
