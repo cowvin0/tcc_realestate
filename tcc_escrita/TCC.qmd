@@ -836,7 +836,7 @@ onde $\mu$ representa a média e $\sigma$ o desvio padrão. Essa padronização 
 
 ### Validação cruzada
 
-\ \ \ A técnica utilizada para validar o modelo, além das métricas, foi a validação cruzada. A validação cruzada serve para estimar um erro de generalização médio da seguinte forma $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, em que $L$ é uma função perda e $\hat f$ é um estimador. Existem diversar técnicas de validação cruzada, a que foi utilizada nesse trabalho é a validação cruzada K-Fold.
+\ \ \ A técnica utilizada para otimizar e determinar os hiperparâmetros dos modelos, além de identificar os vizinhos mais próximos para a imputação de valores ausentes, foi a validação cruzada. A validação cruzada serve para estimar um erro de generalização médio da seguinte forma $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, em que $L$ é uma função perda e $\hat f$ é um estimador. Existem diversar técnicas de validação cruzada, a que foi utilizada nesse trabalho é a validação cruzada K-Fold.
 
 \vspace{12pt}
 
@@ -845,7 +845,7 @@ A validação cruzada K-Fold é uma técnica que utiliza parte dos dados para aj
 $$
 CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)
 $$
-onde $N$ é o número total de observações, $L$ é a função de perda, $y_i$​ é o valor observado, $x_i$​ é a entrada correspondente, e $\hat{f}^{-k\left(i\right)}$ é o modelo ajustado sem o i-ésimo subconjunto.
+onde $N$ representa o número total de observações, $L$ é a função de perda, $y_i$ é o valor observado, $x_i$ é a entrada correspondente, $\hat{f}^{-k(i)}$ é o modelo ajustado sem o $k$-ésimo subconjunto, e $k: \{1, \dots, N\} \mapsto \{1, \dots, K\}$ indica a partição à qual a observação $i$ foi alocada por meio de randomização.
 
 ```{python}
 def plot_cv_indices(cv, X, ax, n_splits, lw=10):
@@ -895,15 +895,46 @@ plt.show()
 
 \vspace{12pt}
 
-A figura acima ilustra exatamente o caso da validação cruzada por K-Fold. As divisões do conjunto de dados para treinamento do modelo são representados pela cor azul, enquanto as laranjas são os conjuntos de validação, onde o modelo ajustado será testado e validado com uma função perda $L$.
+A @fig-kfold ilustra exatamente o caso da validação cruzada por K-Fold. As divisões do conjunto de dados para treinamento são representados pela cor azul, enquanto as laranjas são os conjuntos de validação, onde o modelo, após ser ajustado, será testado com uma função perda $L$.
 
 \vspace{12pt}
 
-Para aplicar a validação cruzada com K-Fold nos modelos utilizados neste trabalho, foi empregada uma função e uma classe da biblioteca scikit-learn, ambas disponíveis no módulo model_selection. A função utilizada para a validação cruzada é a `cross_val_score`, na qual o modelo a ser validado é passado por meio do argumento estimator. O critério de avaliação é especificado no argumento `scoring`, e a técnica de validação cruzada é definida pelo argumento cv. No caso deste trabalho, foi utilizada a classe `KFold(n_splits=20)`, responsável por realizar a validação cruzada com K-Fold. O argumento `n_splits` define o número de folds utilizados durante a validação, que neste caso foram 20. Por fim, basta calcular a média das métricas retornadas pelo `cross_val_score` para cada um dos folds.
+Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca `scikit-learn`, ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em Python:
+
+```{python}
+#| echo: true
+#| eval: false
+
+from sklearn.model_selection import cross_val_score, KFold
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
+
+X, y = load_iris(return_X_y=True)
+
+model = RandomForestClassifier()
+
+kf = KFold(n_splits=20)
+
+scores = cross_val_score(
+  estimator=model,
+  X=X, y=y,
+  scoring='neg_mean_squared_error',
+  cv=kf)
+
+mse_scores = - scores
+mean_mse = mse_scores.mean()
+
+print(f'Média de acurácia: {mean_mse:.4f}')
+```
 
 \vspace{12pt}
 
-A métrica utilizada para avaliar o desempenho dos modelos durante a validação cruzada foi a raiz do erro quadrático médio (RMSE). O RMSE mede o quanto os valores estimados pelo modelo se afastam, em média, dos valores observados, sendo que quanto menor o RMSE, melhor é o desempenho do modelo. Além do RMSE, foi também utilizada a métrica MAPE (Erro Percentual Absoluto Médio), que quantifica, em termos percentuais, o desvio médio entre os valores estimados e os observados. Por fim, foi analisado o coeficiente de determinação ($R^2$), uma medida que indica a proporção da variação da variável dependente explicada pelas variáveis independentes; neste caso, o valor do imóvel. As métricas são definidas da seguinte forma:
+A métrica utilizada para avaliar o desempenho dos modelos durante a validação cruzada foi a raiz do erro quadrático médio (RMSE). O RMSE avalia, em média, o quanto os valores estimados pelo modelo se afastam dos valores observados, sendo que valores menores de RMSE indicam melhor desempenho do modelo.
+
+\vspace{12pt}
+
+Embora não tenha sido utilizada na validação cruzada, outra métrica considerada para a análise do desempenho dos modelos foi o MAPE (Erro Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o desvio médio entre os valores estimados e os valores observados, oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelas variáveis independentes. Neste caso, o $R^2$ avalia o quão bem as variáveis utilizadas para a contrução do modelo conseguem representar a variação no valor do imóvel. As métricas utilizadas são definidas da seguinte forma:
+
 
 ::: {layout-ncol=3}
 $$
@@ -918,7 +949,6 @@ $$
 \text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|
 $$
 :::
-\
 em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
 
 ## Otimização de hiperparâmetros
@@ -1027,8 +1057,6 @@ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão ot
 
 Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca optuna. No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
 
-
-\newpage
 
 ## Interpretação dos algoritmos de aprendizagem de máquina
 

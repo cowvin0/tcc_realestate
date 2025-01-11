@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, colback={codebgcolor}, boxrule=0pt, sharp corners, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, sharp corners, colback={codebgcolor}, frame hidden, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1811,9 +1811,10 @@ aprendizado de máquina tratem as variáveis em escalas consistentes.
 
 \subsection{Validação cruzada}\label{validauxe7uxe3o-cruzada}
 
-~~~A técnica utilizada para validar o modelo, além das métricas, foi a
-validação cruzada. A validação cruzada serve para estimar um erro de
-generalização médio da seguinte forma
+~~~A técnica utilizada para otimizar e determinar os hiperparâmetros dos
+modelos, além de identificar os vizinhos mais próximos para a imputação
+de valores ausentes, foi a validação cruzada. A validação cruzada serve
+para estimar um erro de generalização médio da seguinte forma
 \(Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]\), em que
 \(L\) é uma função perda e \(\hat f\) é um estimador. Existem diversar
 técnicas de validação cruzada, a que foi utilizada nesse trabalho é a
@@ -1833,10 +1834,12 @@ erro de predição estimado pela validação cruzada é dado por:
 
 \[
 CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)
-\] onde \(N\) é o número total de observações, \(L\) é a função de
-perda, \(y_i\)\hspace{0pt} é o valor observado, \(x_i\)\hspace{0pt} é a
-entrada correspondente, e \(\hat{f}^{-k\left(i\right)}\) é o modelo
-ajustado sem o i-ésimo subconjunto.
+\] onde \(N\) representa o número total de observações, \(L\) é a função
+de perda, \(y_i\) é o valor observado, \(x_i\) é a entrada
+correspondente, \(\hat{f}^{-k(i)}\) é o modelo ajustado sem o
+\(k\)-ésimo subconjunto, e
+\(k: \{1, \dots, N\} \mapsto \{1, \dots, K\}\) indica a partição à qual
+a observação \(i\) foi alocada por meio de randomização.
 
 \begin{figure}
 
@@ -1852,41 +1855,76 @@ ajustado sem o i-ésimo subconjunto.
 
 \vspace{12pt}
 
-A figura acima ilustra exatamente o caso da validação cruzada por
-K-Fold. As divisões do conjunto de dados para treinamento do modelo são
+A Figura~\ref{fig-kfold} ilustra exatamente o caso da validação cruzada
+por K-Fold. As divisões do conjunto de dados para treinamento são
 representados pela cor azul, enquanto as laranjas são os conjuntos de
-validação, onde o modelo ajustado será testado e validado com uma função
+validação, onde o modelo, após ser ajustado, será testado com uma função
 perda \(L\).
 
 \vspace{12pt}
 
-Para aplicar a validação cruzada com K-Fold nos modelos utilizados neste
-trabalho, foi empregada uma função e uma classe da biblioteca
-scikit-learn, ambas disponíveis no módulo model\_selection. A função
-utilizada para a validação cruzada é a \texttt{cross\_val\_score}, na
-qual o modelo a ser validado é passado por meio do argumento estimator.
-O critério de avaliação é especificado no argumento \texttt{scoring}, e
-a técnica de validação cruzada é definida pelo argumento cv. No caso
-deste trabalho, foi utilizada a classe \texttt{KFold(n\_splits=20)},
-responsável por realizar a validação cruzada com K-Fold. O argumento
-\texttt{n\_splits} define o número de folds utilizados durante a
-validação, que neste caso foram 20. Por fim, basta calcular a média das
-métricas retornadas pelo \texttt{cross\_val\_score} para cada um dos
-folds.
+Para realizar a validação cruzada com K-Fold nos modelos empregados
+neste trabalho, utilizou-se uma função e uma classe da biblioteca
+\texttt{scikit-learn}, ambas disponíveis no módulo
+\texttt{model\_selection}. A função utilizada foi a
+\texttt{cross\_val\_score}, que recebe o modelo por meio do argumento
+\texttt{estimator}. A função perda para avaliação é especificado pelo
+argumento \texttt{scoring}, enquanto a técnica de validação cruzada é
+definida pelo argumento \texttt{cv}. Especificamente, foi empregada a
+classe \texttt{KFold(n\_splits=20)} para configurar a validação cruzada
+do tipo K-Fold, em que o parâmetro \texttt{n\_splits} define o número de
+divisões (folds) a serem realizadas, neste caso, 20. Após a execução da
+validação, a média das métricas retornadas pela função
+\texttt{cross\_val\_score} para cada fold foi calculada, como forma de
+se obter uma estimativa do desempenho do modelo. O código abaixo é um
+exemplo de como se utilizar a validação cruzada em Python:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.model\_selection }\ImportTok{import}\NormalTok{ cross\_val\_score, KFold}
+\ImportTok{from}\NormalTok{ sklearn.ensemble }\ImportTok{import}\NormalTok{ RandomForestClassifier}
+\ImportTok{from}\NormalTok{ sklearn.datasets }\ImportTok{import}\NormalTok{ load\_iris}
+
+\NormalTok{X, y }\OperatorTok{=}\NormalTok{ load\_iris(return\_X\_y}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+
+\NormalTok{model }\OperatorTok{=}\NormalTok{ RandomForestClassifier()}
+
+\NormalTok{kf }\OperatorTok{=}\NormalTok{ KFold(n\_splits}\OperatorTok{=}\DecValTok{20}\NormalTok{)}
+
+\NormalTok{scores }\OperatorTok{=}\NormalTok{ cross\_val\_score(}
+\NormalTok{  estimator}\OperatorTok{=}\NormalTok{model,}
+\NormalTok{  X}\OperatorTok{=}\NormalTok{X, y}\OperatorTok{=}\NormalTok{y,}
+\NormalTok{  scoring}\OperatorTok{=}\StringTok{\textquotesingle{}neg\_mean\_squared\_error\textquotesingle{}}\NormalTok{,}
+\NormalTok{  cv}\OperatorTok{=}\NormalTok{kf)}
+
+\NormalTok{mse\_scores }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{ scores}
+\NormalTok{mean\_mse }\OperatorTok{=}\NormalTok{ mse\_scores.mean()}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Média de acurácia: }\SpecialCharTok{\{}\NormalTok{mean\_mse}\SpecialCharTok{:.4f\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \vspace{12pt}
 
 A métrica utilizada para avaliar o desempenho dos modelos durante a
 validação cruzada foi a raiz do erro quadrático médio (RMSE). O RMSE
-mede o quanto os valores estimados pelo modelo se afastam, em média, dos
-valores observados, sendo que quanto menor o RMSE, melhor é o desempenho
-do modelo. Além do RMSE, foi também utilizada a métrica MAPE (Erro
-Percentual Absoluto Médio), que quantifica, em termos percentuais, o
-desvio médio entre os valores estimados e os observados. Por fim, foi
-analisado o coeficiente de determinação (\(R^2\)), uma medida que indica
-a proporção da variação da variável dependente explicada pelas variáveis
-independentes; neste caso, o valor do imóvel. As métricas são definidas
-da seguinte forma:
+avalia, em média, o quanto os valores estimados pelo modelo se afastam
+dos valores observados, sendo que valores menores de RMSE indicam melhor
+desempenho do modelo.
+
+\vspace{12pt}
+
+Embora não tenha sido utilizada na validação cruzada, outra métrica
+considerada para a análise do desempenho dos modelos foi o MAPE (Erro
+Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o
+desvio médio entre os valores estimados e os valores observados,
+oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o
+coeficiente de determinação (\(R^2\)), que indica a proporção da
+variância da variável dependente explicada pelas variáveis
+independentes. Neste caso, o \(R^2\) avalia o quão bem as variáveis
+utilizadas para a contrução do modelo conseguem representar a variação
+no valor do imóvel. As métricas utilizadas são definidas da seguinte
+forma:
 
 \begin{figure}
 
@@ -1907,7 +1945,6 @@ R^2 = 1 - \dfrac{SS_{\text{resíduos}}}{SS_{\text{total}}}
 
 \end{figure}%
 
-\hfill\break
 em que \(SS_{\text{resíduos}}\) e \(SS_{\text{total}}\) representam,
 respectivamente, a soma dos quadrados dos resíduos e a soma dos
 quadrados totais.
@@ -2097,8 +2134,6 @@ estudo. O método TPE é o padrão para otimização na biblioteca optuna. No
 entanto, caso se deseje utilizar outro método de otimização da
 biblioteca, basta especificá-lo da mesma forma:
 \texttt{optuna.create\_study(sampler=metodo\_otimizacao)}.
-
-\newpage
 
 \section{Interpretação dos algoritmos de aprendizagem de
 máquina}\label{interpretauxe7uxe3o-dos-algoritmos-de-aprendizagem-de-muxe1quina}
