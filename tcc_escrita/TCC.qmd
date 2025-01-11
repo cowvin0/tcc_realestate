@@ -1057,38 +1057,52 @@ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão ot
 
 Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca optuna. No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
 
-
 ## Interpretação dos algoritmos de aprendizagem de máquina
 
-\ \ \ Na aplicação de aprendizado de máquina, o foco geralmente está em obter um modelo com o menor erro de generalização possível, o que muitas vezes resulta na negligência da interpretação dos resultados. Isso pode comprometer a compreensão do que o algoritmo está efetivamente fazendo. Em resposta a essa limitação, diversas técnicas têm sido desenvolvidas para interpretar os efeitos das variáveis independentes nas estimativas geradas pelos algoritmos. Assim, esta seção será dedicada a descrever a fundamentação teórica e a aplicação das técnicas de interpretação utilizadas neste trabalho.
+\ \ \ Na aplicação de aprendizado de máquina, o foco geralmente está em obter um modelo com o menor erro de generalização possível, o que muitas vezes resulta na negligência da interpretação dos resultados e do que mais influenciou a variável dependente. Isso pode comprometer a compreensão do que o algoritmo está efetivamente fazendo. Em resposta a essa limitação, diversas técnicas têm sido desenvolvidas para interpretar os efeitos das variáveis independentes nas estimativas geradas pelos algoritmos. Assim, esta seção será dedicada a descrever a fundamentação teórica e a aplicação das técnicas de interpretação utilizadas neste trabalho.
 
 ### Individual Conditional Expectation (ICE)
 
-\ \ \ O método de Individual Conditional Expectation (ICE) é uma ferramenta gráfica utilizada para visualizar as estimativas de um modelo. Esse método traça a relação entre os valores preditos pelo modelo e as variáveis, considerando cada observação individual. Com isso, o ICE permite analisar a variação dos valores ajustados ao longo do intervalo de uma covariável, facilitando a visualização de onde e em que medida pode haver heterogeneidade, além de como cada observação responde individualmente às mudanças em uma variável específica [@goldstein2015peeking].
+\ \ \ O método Individual Conditional Expectation (ICE) é uma ferramenta gráfica que permite visualizar as estimativas de um modelo de forma detalhada. Esse método traça a relação entre os valores preditos pelo modelo e uma variável específica, analisando cada observação individualmente. Dessa forma, o ICE possibilita a análise da variação dos valores ajustados ao longo do domínio de uma covariável, destacando tanto a heterogeneidade entre as observações quanto a forma como cada uma responde individualmente às mudanças na variável em questão. Essa abordagem facilita a identificação de padrões e variações que poderiam ser obscurecidos em análises agregadas [@goldstein2015peeking].
 
 \vspace{12pt}
 
-Formalmente, o ICE considera as observações $\{x_{S_i}, \mathbf{x}_{C_i}\}_{i=1}^{N}$​ e os valores preditos $\hat f$​. Para cada uma das $N$ observações e valores ajustados $x_C$, uma curva $\hat f_S^{\left(i\right)}$​ é traçada em função dos valores observados de $x_S$. Dessa forma, a variável $x_S$ é representada no eixo das abscissas, enquanto os valores observados de $\mathbf x_C$​ permanecem fixos. Quando há um grande número de linhas no gráfico ICE, a interpretação pode se tornar difícil. Para facilitar a análise, considera-se a centralização das curvas em um ponto específico das variáveis, representando apenas a diferença nas predições em relação a esse ponto. Essa centralização é conhecida como c-ICE. As novas curvas são então definidas da seguinte forma:
+Formalmente, o método ICE considera as observações $\{x_{S_i}, \mathbf{x}_{C_i}\}_{i=1}^{N}$​ e os valores preditos $\hat f$​. Para cada uma das $N$ observações, é traçada uma curva $\hat f_S^{\left(i\right)}$​ em função dos valores da variável de interesse $x_S$​, enquanto as demais variáveis $x_C$​ permanecem fixas em seus valores observados. Nesse gráfico, $x_S$​ é representado no eixo das abscissas, e as predições correspondentes pelo modelo aparecem no eixo das ordenadas.
+
+\vspace{12pt}
+
+Quando há um grande número de curvas no gráfico ICE, a interpretação pode se tornar desafiadora devido à sobreposição ou excesso de linhas. Para simplificar a análise, pode-se aplicar uma técnica de centralização, conhecida como c-ICE (centered ICE). Essa abordagem centraliza as curvas em um ponto específico de $x_S$​, mostrando apenas a diferença nas predições em relação a esse ponto. Assim, as novas curvas c-ICE são definidas da seguinte forma:
 
 $$
 \hat{f}_{cent}^{\left(i\right)} = \hat{f}^{\left(i\right)} - \mathbf{1} \hat{f}\left(x^*, \mathbf x_{C_i}\right)
 $$
-onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ é o modelo ajustado, e $\mathbf 1$ é um vetor de uns. Quando $x^*$ é o valor mínimo de $x^S$​, isso garante que todas as curvas comecem em 0, removendo assim as diferenças de nível causadas pelos distintos $x_C^{\left(i\right)}$. Se $x^*$ for o valor máximo de $x_S$​, o nível de cada curva centralizada reflete o efeito cumulativo de $x_S$​ sobre $\hat f$​ em relação ao ponto de centralização nas variáveis.
+onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ é o modelo ajustado, e $\mathbf 1$ é um vetor de uns.
 
 \vspace{12pt}
 
-O método ICE é equivalente ao Partial Dependence Plot (PDP), com a diferença que o ICE faz o mesmo considerando uma linha para cada instância, o que permite observar o comportamento das predições em relação a variação das variáveis. Por outro lado, o PDP é um método mais global, ele vai ser a média de todas as linhas presentes em um gráfico do método ICE. Dessa forma, o PDP, para regressão, é definido da seguinte forma:
+Quando $x^∗$ é escolhido como o valor mínimo de $x_S$, todas as curvas c-ICE iniciam em zero, eliminando as diferenças de nível causadas pelas variações nos valores de $x_C^{\left(i\right)}$​ entre as observações. Por outro lado, se $x^∗$ for o valor máximo de $x_S$, as curvas centralizadas mostram o efeito cumulativo de $x_S$​ sobre $\hat f$​ em relação ao ponto de centralização. Essa abordagem facilita a interpretação do impacto de $x_S$.
+
+\vspace{12pt}
+
+O método Individual Conditional Expectation (ICE) é similar ao Partial Dependence Plot (PDP), mas com a diferença de que o PDP apresenta uma visão agregada (global) dos efeitos das variáveis independentes nas predições e, por outro lado, o ICE fornece uma análise mais detalhada, mostrando uma linha para cada instância do conjunto de dados. O PDP é obtido como a média das linhas geradas pelo método ICE, oferecendo uma visão mais generalizada do impacto de uma variável. Matematicamente, o PDP é definido como:
 
 $$
 \hat{f}_{S}\left(x_{S}\right) = E_{\mathbf{X}_{C}}\left[\hat{f}\left(x_{S}, \mathbf{X}_{C}\right)\right]
 $$
-em que $\mathbf{X}_C$ representa as variáveis independentes utilizadas para o ajuste do modelo e $x_S$ são as variáveis que se deseja conhecer os efeitos na predição. Através de simulação de Monte Carlo $\hat{f}_S$ pode ser estimado da seguinte forma:
+em que $\mathbf{X}_C$ representa o conjunto das variáveis independentes que são mantidas fixas durante a análise e $x_S$ é a variável independente de interesse, cujo efeito sobre a predição se deseja analisar.
+
+\vspace{12pt}
+
+Para calcular $\hat{f}_S\left(x_S\right)$ na prática, pode-se utilizar simulação de Monte Carlo. O PDP pode, então, ser estimado da seguinte forma:
 
 $$
-\hat{f}_S\left(X_S\right) = \frac{1}{N} \sum^{N}_{i=1}\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)
+\hat{f}_S\left(x_S\right) = \frac{1}{N} \sum^{N}_{i=1}\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)
 $$
+onde N é o número de amostras utilizadas na simulação e $\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)$ são as predições do modelo.
 
-Em Python, a biblioteca scikit-learn disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
+\vspace{12pt}
+
+Em Python, a biblioteca `scikit-learn` disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
 
 ```{python}
 #| eval: false
@@ -1111,21 +1125,26 @@ No exemplo acima, o método `.from_estimator` é usado para criar o gráfico dir
 
 ### Local interpretable model-agnostic explanations (LIME)
 
-\ \ \ @ribeiro2016should definem o Local Interpretable Model-Agnostic Explanations (LIME) como um algoritmo capaz de explicar as previsões feitas por qualquer modelo de classificação ou regressão, aproximando-o localmente de um modelo mais interpretável. Dessa forma, o objetivo geral do LIME é identificar um modelo interpretável e gerar uma representação interpretável para traduzir modelos complexos.
+\ \ \ @ribeiro2016should definem o Local Interpretable Model-Agnostic Explanations (LIME) como um algoritmo capaz de explicar as previsões realizadas por qualquer modelo de classificação ou regressão, aproximando-o localmente de um modelo mais interpretável. O objetivo principal do LIME é identificar um modelo interpretável e gerar uma representação compreensível que permita traduzir o comportamento de modelos complexos.
 
 \vspace{12pt}
 
-Formalmente, para a construção da explicação produzida pelo LIME, deve-se definir a explicação como um modelo $g \in G$, onde $G$ é uma classe de potenciais modelos interpretáveis, como uma regressão linear ou árvores de decisão. O domínio de $g$ é $\{0, 1\}^{d^{'}}$, isto é, o modelo explicativo $g$ age sobre a ausência ou presença de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para ser interpretado, define-se uma medida de complexidade $\Omega\left(g\right)$ da explicação gerada por $g \in G$. Para uma árvore de regressão, por exemplo, $\Omega\left(g\right)$ pode ser a profundidade da árvore, enquanto que para modelos lineares $\Omega\left(g\right)$ pode ser o número de pesos diferentes de zero.
+Formalmente, para a construção da explicação gerada pelo LIME, a explicação é definida como um modelo $g \in G$, onde $G$ representa uma classe de potenciais modelos interpretáveis, como regressão linear ou árvores de decisão. O domínio de $g$ é dado por ${0, 1}^{d^{'}}$, ou seja, o modelo explicativo $g$ opera sobre a presença ou ausência de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore, enquanto que, para modelos lineares, $\Omega\left(g\right)$ pode ser o número de pesos diferentes de zero.
 
 \vspace{12pt}
 
-Seja $f: \mathbb{R}^d \rightarrow \mathbb{R}$ o modelo que está sendo explicado. Assim, define-se uma medida de aproximação $\pi_x\left(z\right)$ entre uma instância $z$ para $x$, de modo a definir a localidade ao redor de $x$. Por fim, seja $L\left(f, g, \pi_x\right)$ uma estatística do quanto $g$ erra ao tentar aproximar $f$ na localidade definida por $\pi_x$. Agora, para garantir a interpretabilidade e a fidelidade local, deve-se minimizar $L\left(f, g, \pi_x\right)$, mantendo $\Omega\left(g\right)$ suficiente baixo. Assim, tem-se a explicação produzida pelo LIME:
+Seja $f: \mathbb{R}^d \rightarrow \mathbb{R}$ o modelo que está sendo explicado. Define-se, então, uma medida de aproximação $\pi_x\left(z\right)$ entre uma instância $z$ e $x$, com o objetivo de estabelecer a localidade ao redor de $x$. Por fim, seja $L\left(f, g, \pi_x\right)$ uma estatística que quantifica o erro de $g$ ao tentar aproximar $f$ na localidade definida por $\pi_x$. Para garantir a interpretabilidade e a fidelidade local, é necessário minimizar $L(f, g, \pi_x)$, mantendo $\Omega(g)$ suficientemente baixo. Dessa forma, obtém-se a explicação gerada pelo LIME:
 
 $$
 \xi\left(x\right) = \arg \min_{g \in G} L\left(f, g, \pi_x\right) + \Omega\left(g\right)
 $$
 
 Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias de modelos explicativos $G$. Uma escolha para $L$, por exemplo, é o erro quadrático médio.
+
+\vspace{12pt}
+
+Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em Python, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>.
+
 
 ### Shapley Additive Explanations (SHAP)
 
