@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, enhanced, frame hidden, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, breakable, boxrule=0pt, enhanced, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2321,47 +2321,54 @@ acessada em \url{https://lime-ml.readthedocs.io/en/latest/lime.html}.
 \subsection{Shapley Additive Explanations
 (SHAP)}\label{shapley-additive-explanations-shap}
 
-~~~O SHapley Additive exPlanations é um método que explica tem como
-objetivo explicar predições individuais de uma instância \(x\) através
-da computação da contribuição de cada variável para a predição. Ele é
-baseado nos Shapley Values. Dessa forma, os valores Shapley serão
-definidos primeiramente.
+~~~O SHapley Additive exPlanations (SHAP) é um método cujo objetivo é
+explicar as predições individuais de uma instância xx por meio da
+computação da contribuição de cada variável para o resultado da
+predição. Esse método é fundamentado nos valores de Shapley, que serão
+definidos a seguir.
 
 \vspace{12pt}
 
-Os Shapley Values foram introduzidos por SHAPLEY (1953) e são baseados
-no conceito da teoria de jogo de coalizão. A sua teoria foi aplicada
-para explicar as predições realizadas por um modelo e representam a
-contribuição média de uma variável para a predição, considerando
-coalizões. Aqui as coalizões significam diferentes combinações de
-variáveis. Matematicamente, os valores Shapley são definidos da seguinte
-forma:
+Os valores de Shapley foram introduzidos por SHAPLEY (1953) e baseiam-se
+nos conceitos da teoria dos jogos de coalizão. Essa teoria foi adaptada
+para explicar predições realizadas por modelos, representando a
+contribuição média de uma variável para a predição, considerando todas
+as possíveis coalizões. Nesse contexto, coalizões referem-se a
+diferentes combinações de variáveis. Matematicamente, os valores de
+Shapley são definidos como:
 
 \begin{equation}\phantomsection\label{eq-shapley}{
 \phi_i\left(x\right) = \sum_{Q \subseteq S | \{i\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)
-}\end{equation} onde \(Q\) é um subconjunto das covariáveis utilizadas
-no modelo, \(S\) representa todas as covariáveis. A diferença
-\(\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\) é a
-contribuição marginal da variável \(i\) ao ser adicionada ao subconjunto
-das variáveis \(Q\). No entanto, a Equação~\ref{eq-shapley} cresce
-exponencialmente. Dessa forma, pode ser estimado a partir de Monte-Carlo
-com a seguinte expressão:
+}\end{equation} onde \(Q\) é um subconjunto das covariáveis consideradas
+no modelo e \(S\) representa o conjunto completo de todas as
+covariáveis. A diferença
+\(\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\)
+corresponde à contribuição marginal da variável \(i\) ao ser adicionada
+ao subconjunto \(Q\).
+
+\vspace{12pt}
+
+No entanto, a Equação~\ref{eq-shapley} apresenta crescimento exponencial
+em termos de complexidade computacional à medida que o número de
+variáveis aumenta. Para contornar esse problema e reduzir o custo
+computacional, os valores de Shapley podem ser estimados de forma
+aproximada e eficiente utilizando o método de Monte Carlo, conforme a
+seguinte expressão:
 
 \[
 \hat{\phi}_{i}\left(x\right) = \frac{1}{n!} \sum_{O \in \pi \left(n \right)} \left( \Delta_{{Pre}^{i} \left(O\right) \cup \{i\}} - \Delta_{{Pre}^{i} \left(O\right)} \right), \ i = 1, \dots, n
 \] em que \(\pi\left(n\right)\) é o conjunto de todas as permutações
 ordenadas dos índices das variáveis \(\{1, 2, \dots, n\}\) e
-\({Pre}^{i}\left(i\right)\) é o conjunto de todos os índices que
-precedem \(i\) na permutação \(O \in \pi \left(n\right)\) (ŠTRUMBELJ;
-KONONENKO, 2014).
+\({Pre}^{i}\left(O\right)\) representa o conjunto de índices das
+variáveis que precedem \(i\) na permutação \(O \in \pi \left(n\right)\)
+(ŠTRUMBELJ; KONONENKO, 2014).
 
 \vspace{12pt}
 
-O SHAP estabelece uma conexão entre o conceito de valores de Shapley e o
-método LIME, previamente definido. O modelo explicativo do SHAP,
-denotado por \(g\), é definido como uma função linear de variáveis
-binárias e está em função valores de Shapley, conforme apresentado
-abaixo:
+O SHAP estabelece uma conexão entre os valores de Shapley e o método
+LIME, previamente definido. O modelo explicativo do SHAP, denotado por
+\(g\), é uma função linear de variáveis binárias, construído a partir
+dos valores de Shapley, conforme define a expressão a seguir:
 
 \[
 g\left(z^{'}\right) = \phi_0 + \sum_{j = 1}^{M} \phi_{j} z_{j}^{'}
