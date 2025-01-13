@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, colback={codebgcolor}, enhanced, breakable, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, enhanced, frame hidden, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -336,6 +336,7 @@
   \fancyhf{}
   \fancyhead[RO, LE]{\thepage}
   \fancyhead[RE]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
 }
 
 \thispagestyle{empty}
@@ -2542,7 +2543,7 @@ resultados.
 }
 
 \caption{\label{fig-mapa_valor}Variação da média do valor do \(m^2\) dos
-imóveis em João Pessoa, área de estudo.}
+imóveis de João Pessoa, área de estudo.}
 
 \end{figure}%
 
@@ -2565,7 +2566,7 @@ pouco superior a R\$ 10.000,00. Em segundo lugar, está o bairro de
 Tambaú, com um valor médio de R\$ 8.951,45 por \(m^2\). Em terceiro,
 encontra-se o bairro Jardim Oceania, com um valor médio de R\$ 7.879,60
 por \(m^2\), seguido pelo bairro Altiplano Cabo Branco, com um valor
-médio de R\$ 7.218,70 por \$m\^{}2.
+médio de R\$ 7.218,70 por \(m^2\).
 
 \vspace{12pt}
 
@@ -2578,6 +2579,10 @@ médio por \(m^2\), também possuía poucos registros. Isso indica que os
 valores apresentados para esses bairros podem não refletir com precisão
 o mercado imobiliário local e podem ser superiores em outras
 circunstâncias.
+
+\vspace{12pt}
+
+(FALAR DAS VARIÁVEIS BINÁRIAS)
 
 \vspace{12pt}
 
