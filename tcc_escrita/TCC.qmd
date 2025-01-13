@@ -1295,13 +1295,11 @@ A partir da @fig-mapa_valor, tem-se o mapa da região de estudo, correspondente 
 
 \vspace{12pt}
 
-O bairro com o maior preço médio do  $m^2$ é Cabo Branco, com um valor pouco superior a R$ 10.000,00. Em segundo lugar, está o bairro de Tambaú, com um valor médio de R$ 8.951,45 por $m^2. Em terceiro, encontra-se o bairro Jardim Oceania, com um valor médio de R$ 7.879,60 por $m^2, seguido pelo bairro Altiplano Cabo Branco, com um valor médio de R$ 7.218,70 por $m^2.
+O bairro com o maior preço médio do  $m^2$ é Cabo Branco, com um valor pouco superior a R$ 10.000,00. Em segundo lugar, está o bairro de Tambaú, com um valor médio de R$ 8.951,45 por $m^2$. Em terceiro, encontra-se o bairro Jardim Oceania, com um valor médio de R$ 7.879,60 por $m^2$, seguido pelo bairro Altiplano Cabo Branco, com um valor médio de R$ 7.218,70 por $m^2.
 
 \vspace{12pt}
 
 A análise de alguns bairros se torna limitada devido à baixa quantidade de imóveis disponíveis no momento da raspagem de dados. Por exemplo, o bairro de Barra de Gramame, que apresenta o menor valor médio de $m^2$, tinha apenas um imóvel à venda no momento da coleta de dados. Da mesma forma, o bairro Jardim Veneza, o segundo com o menor valor médio por $m^2$, também possuía poucos registros. Isso indica que os valores apresentados para esses bairros podem não refletir com precisão o mercado imobiliário local e podem ser superiores em outras circunstâncias.
-
-
 
 \vspace{12pt}
 
