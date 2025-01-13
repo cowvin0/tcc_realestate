@@ -1281,19 +1281,27 @@ Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento 
 
 \vspace{12pt}
 
-::: {#fig-mapas_jp layout-nrow=2}
+![Variação da média do valor do $m^2$ dos imóveis em João Pessoa, área de estudo.](includes/map_valor_m2.png){#fig-mapa_valor}
+
+<!-- ::: {#fig-mapas_jp layout-nrow=2}
 ![Variação do valor médio dos imóveis.](includes/map_valor_normal.png){#fig-mapa_valor}
 
 ![Variação da média da área dos imóveis.](includes/map_area_normal.png){#fig-mapa_area}
 
 Mapa da região de João Pessoa, área de estudo
-:::
+::: -->
 
-A partir da @fig-mapas_jp, é possível visualizar o mapa da região de estudo, correspondente à cidade de João Pessoa. O mapa representado pela @fig-mapa_valor exibe a variação da média do valor dos imóveis, enquanto o mapa @fig-mapa_area apresenta a variação da média da área dos imóveis. Essas variações estão foram calculadas com base na delimitação dos bairros da cidade de João Pessoa. Contudo, alguns bairros não possuíam dados no momento da raspagem de dados e, por isso, estão representados pela cor cinza. Já os bairros com variação nas cores indicam valores mais altos de áreas ou de valor dos imóveis conforme as tonalidades se tornam mais escuras. Dessa forma, observa-se que o bairro com a maior média de valor, aquele que apresenta a tonalidade mais escura, é o bairro de Altiplano Cabo Branco, seguido pelo Portal do Sol e em terceiro o bairro de Cabo Branco.
+A partir da @fig-mapa_valor, tem-se o mapa da região de estudo, correspondente à cidade de João Pessoa. O mapa apresenta a variação da média do valor do $m^2$ dos imóveis, calculada com base nos bairros da cidade. Vale destacar que alguns bairros não possuíam dados disponíveis no momento da coleta de informações por raspagem dos sites de imóveis. Esses bairros estão representados pela cor cinza. Por outro lado, os bairros com dados disponíveis apresentam variações de cores que indicam diferentes faixas de valores do $m^2$. Tonalidades mais escuras representam bairros com valores médios mais altos para o $m^2$, enquanto tonalidades mais claras indicam valores médios menores.
 
 \vspace{12pt}
 
-Embora os bairros de Altiplano Cabo Branco, Portal do sol e Cabo Branco sejam aqueles com o maior valor são ao mesmo tempo um dos que apresentam uma das menores áreas médias dos imóveis, como pode ser observado na @fig-mapa_area. O bairro de Barra de Gramame aparece com a maior área, mas contém apenas um imóvel do tipo terreno com uma área de 1100 $m^2$, assim como Jardim Veneza que também possuí apenas um terreno com área de 1050 $m^2$. O Centro é o bairro com uma das maiores média de $m^2$ da cidade de João Pessoa, assim como Costa do Sol.
+O bairro com o maior preço médio do  $m^2$ é Cabo Branco, com um valor pouco superior a R$ 10.000,00. Em segundo lugar, está o bairro de Tambaú, com um valor médio de R$ 8.951,45 por $m^2. Em terceiro, encontra-se o bairro Jardim Oceania, com um valor médio de R$ 7.879,60 por $m^2, seguido pelo bairro Altiplano Cabo Branco, com um valor médio de R$ 7.218,70 por $m^2.
+
+\vspace{12pt}
+
+A análise de alguns bairros se torna limitada devido à baixa quantidade de imóveis disponíveis no momento da raspagem de dados. Por exemplo, o bairro de Barra de Gramame, que apresenta o menor valor médio de $m^2$, tinha apenas um imóvel à venda no momento da coleta de dados. Da mesma forma, o bairro Jardim Veneza, o segundo com o menor valor médio por $m^2$, também possuía poucos registros. Isso indica que os valores apresentados para esses bairros podem não refletir com precisão o mercado imobiliário local e podem ser superiores em outras circunstâncias.
+
+
 
 \vspace{12pt}
 
@@ -1545,7 +1553,7 @@ m.get_root().html.add_child(folium.Element(legend_css))
 
 img_data = m._to_png(20)
 img = Image.open(io.BytesIO(img_data))
-img.save('includes/map_area_dark.png')
+# img.save('includes/map_area_dark.png')
 ```
 
 ```{python eval=FALSE}
@@ -1609,12 +1617,15 @@ df_inteiro = df_inteiro\
       .query('Bairro not in ["INTERMATES", "PRAIA DE INTERMARES"]')
 
 
-average_values = df_inteiro.groupby("Bairro")["Valor"].mean().reset_index(name='Valor')
+average_values = df_inteiro\
+  .assign(**{"Valor $m^2$": lambda x: x.Valor / x["Área"]})\
+  .groupby("Bairro")["Valor $m^2$"]\
+  .mean().reset_index(name='Valor $m^2$')\
+  .query("Bairro != 'INTERMARES'")
 
 m = folium.Map(
   location=[-7.15, -34.85],
   zoom_control=False,
-  tiles="CartoDB dark_matter",
   attribution_control=False,
   zoom_start=12.49994)
 
@@ -1623,26 +1634,26 @@ folium.Choropleth(
     name="choropleth",
     nan_fill_color="gray",
     data=average_values,
-    columns=["Bairro", "Valor"],
+    columns=["Bairro", "Valor $m^2$"],
     key_on="feature.properties.nome",
     fill_color='YlGnBu',
     fill_opacity=0.7,
     line_opacity=0.2,
-    legend_name="Variação do valor médio dos imóveis",
+    legend_name="Variação do valor médio do m² dos imóveis",
 ).add_to(m)
 
-legend_css = """
-<style>
-    .legend text {
-        fill: white; /* Change legend text color to white */
-    }
-</style>
-"""
-m.get_root().html.add_child(folium.Element(legend_css))
+# legend_css = """
+# <style>
+#     .legend text {
+#         fill: white; /* Change legend text color to white */
+#     }
+# </style>
+# """
+# m.get_root().html.add_child(folium.Element(legend_css))
 
 img_data = m._to_png(20)
 img = Image.open(io.BytesIO(img_data))
-img.save('includes/map_valor_dark.png')
+img.save('includes/map_valor_m2.png')
 ```
 
 {{< pagebreak >}}
@@ -2339,6 +2350,7 @@ Gráfico de dependência de valores SHAP para variáveis binárias.
 \vspace{12pt}
 
 Para analisar as variáveis binárias, foram utilizados gráficos de dependência para cada uma delas, os quais podem ser visualizados na @fig-dependence_plot. Ao analisar os valores SHAP para os imóveis com e sem academia, observa-se que essa variável tende a aumentar a predição para imóveis que possuem academia. O mesmo padrão é identificado para imóveis com elevador, embora aqueles sem elevador também apresentem uma tendência de aumento na predição, o que pode ser explicado pela influência de outras características dos imóveis. Como já mencionado na análise da importância das variáveis, sauna e spa são características com baixa importância. No entanto, ao observar seus gráficos de dependência, é possível perceber que essas variáveis podem ser úteis na avaliação de imóveis que possuem essa característica e tem valores mais elevados. O mesmo comportamento é observado para varanda gourmet, playground e espaço gourmet.
+
 
 # Conclusão
 
