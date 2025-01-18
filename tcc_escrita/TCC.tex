@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, colback={codebgcolor}, frame hidden, sharp corners, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced, frame hidden, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2057,20 +2057,22 @@ desempenho superior em relação ao limiar \(y^∗\).
 
 \vspace{12pt}
 
-Portanto, para o cálculo do EI utilizando as definições dadas pelo TPE e
-assumindo que \(y^* > y\), considera-se a parametrização de
+Portanto, para o cálculo do EI utilizando as definições fornecidas pelo
+TPE e assumindo que \(y^∗>y\), adota-se a parametrização de
 \(p\left(\lambda,y\right)\) como
 \(p\left(y\right)p\left(\lambda∣y\right)\), com o objetivo de
-simplificar os cálculos. Dessa forma, a expressão do EI é reduzida para:
+simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz
+a:
 
 \begin{equation}\phantomsection\label{eq-exp}{
 EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy
 }\end{equation}
 
 A partir da Equação~\ref{eq-tpe} e da definição
-\(P\left(y < y^*\right) = \gamma\) e
-\(P\left(y \geq y^*\right) = 1 - \gamma\), pode-se encontrar a
-distribuição marginal \(p\left(\lambda\right)\). Portanto, segue-se que:
+\(p\left(y < y^*\right) = \gamma\) e
+\(p\left(y \geq y^*\right) = 1 - \gamma\), pode-se encontrar a
+distribuição marginal \(p\left(\lambda\right)\). Dessa forma, segue-se
+que:
 
 \[
 \begin{aligned}
@@ -2082,16 +2084,29 @@ p\left(\lambda\right) &= \int_{-\infty}^{\infty} p\left(\lambda, y\right) dy \\
 \end{aligned}
 \]
 
-Dessa forma, agora basta calcular a integral
-\(\int_{\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy\).
-Assim,
-\(l\left(\lambda\right) \int_{\infty}^{y^*}\left(y^* - y\right)p\left(y\right)dy = \gamma y^{*} l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} y p\left(y\right)dy\).
-Finalmente, substituindo as expressões anteriores na
-Equação~\ref{eq-exp}, tem-se que:
+Agora, basta calcular a integral
+\(\int_{-\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy\).
+Tem-se, portanto:
+
+\[
+\begin{aligned}
+\int_{-\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy &= l\left(\lambda\right) \int_{-\infty}^{y^*} \left(y^* - y\right) p\left(y\right)dy \\
+&= \gamma y^{*} l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} y p\left(y\right)dy
+\end{aligned}
+\]
+
+Finalmente, substituindo essa última expressão encontrada e
+\(p\left(\lambda\right)\) na Equação~\ref{eq-exp}, chega-se a:
 
 \[
 EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 + \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}
 \]
+
+Essa última expressão mostra que, para maximizar o Expected Improvement,
+é necessário encontrar valores de \(\lambda\) que apresentem alta
+probabilidade em \(l\left(\lambda\right)\) e baixa probabilidade em
+\(g\left(\lambda\right)\). Portanto, no TPE, maximizar o EI equivale a
+maximizar a razão \(l\left(\lambda\right) / g\left(\lambda\right)\)
 
 \subsection{Otimização de hiperparâmetros com
 optuna}\label{otimizauxe7uxe3o-de-hiperparuxe2metros-com-optuna}

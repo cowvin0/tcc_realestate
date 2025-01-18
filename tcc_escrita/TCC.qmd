@@ -998,13 +998,13 @@ Se, para o valor de $\lambda$, o modelo prevê um $y$ tal que $y > y^∗$, a dif
 
 \vspace{12pt}
 
-Portanto, para o cálculo do EI utilizando as definições dadas pelo TPE e assumindo que $y^* > y$, considera-se a parametrização de $p\left(\lambda,y\right)$ como $p\left(y\right)p\left(\lambda∣y\right)$, com o objetivo de simplificar os cálculos. Dessa forma, a expressão do EI é reduzida para:
+Portanto, para o cálculo do EI utilizando as definições fornecidas pelo TPE e assumindo que $y^∗>y$, adota-se a parametrização de $p\left(\lambda,y\right)$ como $p\left(y\right)p\left(\lambda∣y\right)$, com o objetivo de simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz a:
 
 $$
 EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy
 $${#eq-exp}
 
-A partir da @eq-tpe e da definição $P\left(y < y^*\right) = \gamma$ e $P\left(y \geq y^*\right) = 1 - \gamma$, pode-se encontrar a distribuição marginal $p\left(\lambda\right)$. Portanto, segue-se que:
+A partir da @eq-tpe e da definição $p\left(y < y^*\right) = \gamma$ e $p\left(y \geq y^*\right) = 1 - \gamma$, pode-se encontrar a distribuição marginal $p\left(\lambda\right)$. Dessa forma, segue-se que:
 
 $$
 \begin{aligned}
@@ -1016,13 +1016,23 @@ p\left(\lambda\right) &= \int_{-\infty}^{\infty} p\left(\lambda, y\right) dy \\
 \end{aligned}
 $$
 
-Dessa forma, agora basta calcular a integral $\int_{\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy$. Assim, $l\left(\lambda\right) \int_{\infty}^{y^*}\left(y^* - y\right)p\left(y\right)dy = \gamma y^{*} l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} y p\left(y\right)dy$. Finalmente, substituindo as expressões anteriores na @eq-exp, tem-se que:
+Agora, basta calcular a integral $\int_{-\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy$. Tem-se, portanto:
+
+$$
+\begin{aligned}
+\int_{-\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy &= l\left(\lambda\right) \int_{-\infty}^{y^*} \left(y^* - y\right) p\left(y\right)dy \\
+&= \gamma y^{*} l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} y p\left(y\right)dy
+\end{aligned}
+$$
+
+Finalmente, substituindo essa última expressão encontrada e $p\left(\lambda\right)$ na @eq-exp, chega-se a:
 
 $$
 EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 + \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}
 $$
 
-<!-- A segunda expressão do produto mostra que, para maximizar o Expected Improvement, é necessário encontrar pontos de $x$ com maior probabilidade em $l\left(x\right)$ e menor probabilidade em $g\left(x\right)$. No entanto, no TPE, maximizar o $EI$ é equivalente a maximizar a razão entre as duas distribuições, definida como $r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}$ [@cowen2022hebo]. -->
+Essa última expressão mostra que, para maximizar o Expected Improvement, é necessário encontrar valores de $\lambda$ que apresentem alta probabilidade em $l\left(\lambda\right)$ e baixa probabilidade em $g\left(\lambda\right)$. Portanto, no TPE, maximizar o EI equivale a maximizar a razão $l\left(\lambda\right) / g\left(\lambda\right)$
+
 
 ### Otimização de hiperparâmetros com optuna
 
