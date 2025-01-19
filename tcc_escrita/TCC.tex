@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, enhanced, frame hidden, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, enhanced, frame hidden, boxrule=0pt, breakable, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -726,8 +726,7 @@ O Web scraping é uma técnica utilizada para extrair informações de sites
 na internet, salvando-as em arquivos ou sistemas de banco de dados para
 realizar análise, construção de aplicações ou ter acesso a informações
 de difícil disponibilização. Geralmente a raspagem de dados é realizada
-utilizando o Hypertext Transfer Protocol (HTTP) ou a partir da simulação
-do comportamento de um usuário de navegador. O HTTP é o protocolo
+utilizando o Hypertext Transfer Protocol (HTTP). O HTTP é o protocolo
 responsável por fazer toda a comunicação cliente-servidor contida na
 internet com base na definição de oito métodos de requisição: GET, HEAD,
 POST, PUT, DELETE, TRACE, OPTIONS e CONNECT. Cada método indica a ação a
@@ -908,7 +907,7 @@ Uma API bastante interessante que possuí integração completa com o
 neste trabalho foi o uso de uma API gratuita oferecida pelos
 desenvolvedores da ScrapeOps, que permite o rotacionamento automático de
 cabeçalhos, como o \texttt{User-Agent}. Essa API está disponível em
-https://scrapeops.io/.
+\url{https://scrapeops.io/}.
 
 \vspace{12pt}
 
@@ -920,188 +919,36 @@ chances de ser bloqueado. Essas middlewares tornam o
 \href{https://docs.scrapy.org/en/latest}{Scrapy} altamente flexível,
 permitindo ajustes específicos para atender às necessidades do projeto.
 
-\section{Linguagem R}\label{linguagem-r}
+\vspace{12pt}
 
-~~~R (R CORE TEAM, 2024) é uma linguagem de programação voltada para
-computação científica e visualização de dados. Seu desenvolvimento foi
-iniciado pelos professores Ross Ihaka e Robert Gentleman, que a criaram
-com o objetivo de ser uma linguagem para ensinar introdução à
-estatística na Universidade de Auckland. A primeira versão do R foi
-lançada em 1993, e em 1997 ele se tornou oficialmente parte do Projeto
-GNU.
+Embora o \href{https://docs.scrapy.org/en/latest}{Scrapy} ofereça uma
+ampla gama de funcionalidades, pode ser necessário recorrer a
+ferramentas externas para lidar com conteúdos dinâmicos presentes em
+algumas páginas web. O Scrapy possui integração com bibliotecas
+especializadas que facilitam o tratamento desse tipo de conteúdo. Uma
+dessas bibliotecas, utilizada neste trabalho, é o
+\href{https://github.com/scrapy-plugins/scrapy-playwright}{scrapy-playwright},
+que integra o poder do \href{https://playwright.dev/python/}{Playwright}
+ao \href{https://docs.scrapy.org/en/latest}{Scrapy}.
 
 \vspace{12pt}
 
-A linguagem R é fortemente inspirada no paradigma de programação
-funcional, o que a torna poderosa para manipulação e análise de dados.
-Em R, as funções são de primeira classe, ou seja, podem ser passadas
-como argumentos para outras funções, retornadas como resultados e
-atribuídas a variáveis. Isso permite a criação de códigos mais modulares
-e reutilizáveis, além de facilitar a implementação de pipelines de
-transformação de dados.
-
-\vspace{12pt}
-
-O R oferece funções como apply, lapply, sapply, além de pacotes como
-purrr e furrr, que são voltados para programação funcional. Esses
-recursos permitem a aplicação de funções em estruturas de dados de
-maneira concisa e eficiente, simplificando o processamento e a
-transformação de grandes conjuntos de dados. Embora o R seja fortemente
-inspirado pelo paradigma funcional, o R também oferece suporte à
-programação orientada a objetos, com sistemas como S3, S4 e R6.
-
-\vspace{12pt}
-
-Neste trabalho, a linguagem R foi utilizada para a raspagem de dados de
-imóveis e para a geocodificação dos endereços desses imóveis. O R possui
-um vasto ecossistema de pacotes focados na coleta de dados da web. Para
-a raspagem, foram utilizados os pacotes xml2 (WICKHAM; HESTER; OOMS,
-2023), rvest (WICKHAM, 2024) e httr (WICKHAM, 2023) para fazer as
-requisições HTTP, além do Selenium (THORPE, 2024), que permitiu
-interagir com conteúdos dinâmicos das páginas. A obtenção das
-coordenadas dos imóveis foi realizada através da geocodificação de seus
-endereços, utilizando a biblioteca tidygeocoder (CAMBON \emph{et al.},
-2021).
-
-\section{Linguagem Python}\label{linguagem-python}
-
-~~~Python (VAN ROSSUM; DRAKE JR, 1995) é uma linguagem de programação
-criada por Guido Van Rossum. Guido começou a desenvolver o Python no
-final dos anos 80 como uma sucessora da linguagem ABC, e a primeira
-versão foi lançada oficialmente em 1991. Python é uma linguagem de alto
-nível, de propósito geral, que enfatiza a simplicidade e a legibilidade
-do código.
-
-\vspace{12pt}
-
-Neste trabalho, Python foi utilizado principalmente para modelagem e
-coleta de dados de sites de imóveis. Para a modelagem, utilizou-se a
-biblioteca scikit-learn (PEDREGOSA \emph{et al.}, 2011), que oferece uma
-grande quantidade de ferramentas estatísticas e de aprendizado de
-máquina. A otimização dos hiperparâmetros dos modelos foi realizada com
-a biblioteca Optuna, que dispõe de diversos métodos de otimização,
-incluindo métodos avançados de otimização bayesiana. Para a coleta de
-dados de imóveis, foi empregada a biblioteca Scrapy (KOUZIS-LOUKAS,
-2016), um framework open-source em Python voltado para web scraping, que
-permite extrair dados de páginas da web de forma automatizada. Com o
-Scrapy, é possível criar ``crawlers'' ou ``spiders'' que navegam em
-sites, coletando e organizando informações específicas de maneira
-eficiente. Além do Scrapy, foi utilizado também a biblioteca Playwright,
-com o objetivo de interagir com o conteúdo dinâmico presente na página.
-
-\vspace{12pt}
-
-Além disso, Python foi utilizado para a criação de todos os gráficos e
-para a manipulação das bases de dados. Para visualização, foram usadas
-as bibliotecas Matplotlib (HUNTER, 2007) e Seaborn (WASKOM, 2021),
-enquanto a manipulação e organização das bases de dados foi feira com a
-biblioteca Pandas (MCKINNEY, 2010; TEAM, 2020), amplamente utilizada em
-Python para limpeza, análise e organização de dados, além de suportar
-operações estatísticas.
-
-\section{Quarto}\label{quarto}
-
-~~~Quarto (ALLAIRE; DERVIEUX, 2024) é uma plataforma de publicação
-científica desenvolvida pela empresa Posit com o objetivo de criar
-documentos de alta qualidade a partir de arquivos que combinam texto e
-código. É uma evolução do R Markdown, sendo compatível com várias
-linguagens de programação, como R, Python, Julia e outros, o que o torna
-bastante versátil para a análise de dados e geração de relatórios
-interativos. Com o Quarto, é possível produzir relatórios, artigos,
-livros, apresentações e sites. Ele é amplamente utilizado na comunidade
-R e oferece suporte para Markdown e \LaTeX, facilitando a inclusão de
-fórmulas matemáticas, gráficos, tabelas e outros elementos visuais, que
-são renderizados em formatos como HTML, PDF e MS Word.
-
-\vspace{12pt}
-
-O Quarto foi utilizado para a produção de todo o texto deste trabalho,
-atendendo aos requisitos das normas ABNT. Com sua flexibilidade e
-suporte para formatação customizável, Quarto permitiu integrar texto,
-código e visualizações de forma reprodutível e organizada, facilitando a
-geração de documentos acadêmicos de alta qualidade.
-
-\section{Web Scraping}\label{web-scraping}
-
-~~~Web scraping, ou raspagem de dados, é uma técnica utilizada para
-extrair informações de sites na internet, salvando-as em arquivos ou
-sistemas de banco de dados para realizar análise, construção de
-aplicações ou ter acesso a informações de difícil disponibilização.
-Geralmente a raspagem de dados é realizada utilizando o Hypertext
-Transfer Protocol (HTTP) ou a partir da simulação do comportamento de um
-usuário de navegador. O HTTP é o protocolo responsável por fazer toda a
-comunicação cliente-servidor contida na internet com base na definição
-de oito métodos de requisição: GET, HEAD, POST, PUT, DELETE, TRACE,
-OPTIONS e CONNECT. Cada método indica a ação a ser realizada no recurso
-especificado.
-
-\begin{itemize}
-\item
-  GET: O método GET serve para requisitar uma representação do recurso
-  especificado. Ou seja, ele serve para visualizar dados de um site.
-\item
-  HEAD: O HEAD é bastante semelhante o GET, mas ele retorna apenas
-  metadados sobre um recurso no servidor, sem que o recurso seja
-  retornado. Ele retorna todos os cabeçalhos associados a um recurso em
-  uma determinada URL.
-\item
-  POST: O método POST envia dados para serem processados para o recurso
-  especificado. Esses dados podem ser, por exemplo, dados de um
-  formulário HTML.
-\item
-  PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma
-  semelhante. No entanto, caso seja necessário atualizar um usuário
-  diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas
-  um único registro atualizado. Para o método POST, serão criados
-  diversos registros para cada requisição realizada.
-\item
-  DELETE: Exclui o recurso.
-\item
-  TRACE: O método TRACE HTTP é usado para diagnóstico, depuração e
-  solução de problemas. Ele simplesmente retorna um rastreamento de
-  diagnóstico que registra dados do ciclo de forma que o cliente possa
-  saber o que os servidores intermediários estão mudando em sua
-  requisição.
-\item
-  OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são
-  suportados e permitidos pelo servidor.
-\item
-  CONNECT: O CONNECT é usado para criar uma conexão com um recurso do
-  lado do servidor. O alvo mais comum do método HTTP CONNECT é um
-  servidor proxy, que um cliente deve acessar para sair da rede local.
-\end{itemize}
-
-Toda raspagem inicia com a composição de uma requisição HTTP para
-adquirir recursos de um site. Geralmente, essa requisição é formatada
-numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST.
-Quando a requisição é recebida e processado com sucesso, o recurso
-requisitado é salvo site e enviado de volta em diversos formatos de
-arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do
-conteúdo do site, o processo de extração continua com a reformatação e
-organização dos dados de forma estruturada.
-
-\vspace{12pt}
-
-A extração de informações de um arquivo HTML é geralmente feita com
-módulos como BeautifulSoup (RICHARDSON, 2007), em Python, ou rvest, em
-R. No entanto, muitas vezes é necessário interagir com conteúdos
-dinâmicos da página para carregar todas as informações disponíveis. Para
-esses casos, são utilizadas bibliotecas como Playwright ou Selenium, que
-permitem lidar com autenticação, cookies e redirecionamentos, simulando
-a navegação em um navegador como Google Chrome, Firefox, ou outros.
-Essas bibliotecas fazem requisições HTTP enquanto reproduzem a
-experiência de um usuário real, com o objetivo de automatizar processos
-de busca e interação com a página.
-
-\vspace{12pt}
-
-A raspagem de dados possui diversas utilidades, como monitoramento de
-variações de preços, análise de produtos, acompanhamento de condições
-tempo, análise da oscilação de preços de ativos do mercado financeiro ao
-longo do tempo ou coleta de postagens em redes sociais para investigação
-de opinião pública. Neste trabalho, a raspagem de dados foi utilizada
-para coletar informações sobre imóveis na cidade de João Pessoa, capital
-da Paraíba.
+O \href{https://playwright.dev/python/}{Playwright} foi originalmente
+desenvolvido para realizar testes em aplicações web e executar tarefas
+de automação. No entanto, aqui ele foi empregado para interagir com o
+conteúdo dinâmico de páginas, como carregar elementos gerados por
+\texttt{JavaScript}. Sua utilização neste trabalho teve o mesmo
+propósito que o pacote
+\href{https://cran.r-project.org/web/packages/selenium/index.html}{selenium}
+desempenhou na raspagem de dados feita com \texttt{R}, permitindo
+capturar dados que não seriam acessíveis diretamente via requisições
+HTTP convencionais. Além disso, ele também permite simular navegadores
+para acompanhar em tempo real o que cada requisição está alterando. Por
+fim, ao coletar os dados de imóveis, foi necessário realizar também a
+geocodificação dos endereços. Para isso, foi utilizado o pacote
+\href{https://jessecambon.github.io/tidygeocoder/}{tidygeocoder} (CAMBON
+\emph{et al.}, 2021) da linguagem \texttt{R}, que também serviu para os
+dados que estavam sendo coletados em \texttt{Python}.
 
 \chapter{Algoritmos de Aprendizado de
 Máquina}\label{algoritmos-de-aprendizado-de-muxe1quina}
@@ -2242,8 +2089,8 @@ desempenho \(y\). A definição é dada por:
 \begin{equation}\phantomsection\label{eq-tpe}{
 P(\lambda|y) =
 \begin{cases}
-    l(\lambda) & \text{if } y < c^* \\
-    g(\lambda) & \text{if } y \ge c^*
+    l(\lambda) & \text{if } y < y^* \\
+    g(\lambda) & \text{if } y \ge y^*
 \end{cases}
 }\end{equation} em que \(l\left(\lambda\right)\) representa a densidade
 associada aos valores de \(y\) menores que o limiar \(y^*\) e
@@ -3784,12 +3631,6 @@ de Crédito Imobiliário e Poupança, 2015.
 AKIBA, T. \emph{et al.} Optuna: A Next-generation Hyperparameter
 Optimization Framework. {[}S.l.{]}: {[}s.n.{]}, 2019.
 
-\bibitem[\citeproctext]{ref-quarto}
-ALLAIRE, J.; DERVIEUX, C.
-\textbf{\href{https://CRAN.R-project.org/package=quarto}{quarto: R
-Interface to 'Quarto' Markdown Publishing System}}. {[}S.l.{]}:
-{[}s.n.{]}, 2024.
-
 \bibitem[\citeproctext]{ref-assumpccao2011credito}
 ASSUMPÇÃO FILHO, C. A. B. O cr{é}dito imobili{á}rio no Brasil. 2011.
 
@@ -3855,11 +3696,6 @@ HASTIE, T. \emph{et al.} \textbf{The elements of statistical learning:
 data mining, inference, and prediction}. {[}S.l.{]}: Springer, 2009. V.
 2.
 
-\bibitem[\citeproctext]{ref-Hunter:2007}
-HUNTER, J. D. \href{https://doi.org/10.1109/MCSE.2007.55}{Matplotlib: A
-2D graphics environment}. \textbf{Computing in Science \& Engineering},
-2007. v. 9, n. 3, p. 90--95.
-
 \bibitem[\citeproctext]{ref-james2013introduction}
 JAMES, G. \emph{et al.} \textbf{An introduction to statistical
 learning}. {[}S.l.{]}: Springer, 2013. V. 112.
@@ -3876,20 +3712,9 @@ I. \emph{et al.} (Org.). \textbf{Advances in Neural Information
 Processing Systems 30}. {[}S.l.{]}: Curran Associates, Inc., 2017, p.
 4765--4774.
 
-\bibitem[\citeproctext]{ref-mckinney-proc-scipy-2010}
-MCKINNEY, Wes.
-\href{https://doi.org/\%2010.25080/Majora-92bf1922-00a\%20}{{D}ata
-{S}tructures for {S}tatistical {C}omputing in {P}ython}. (Stéfan van der
-Walt \& Jarrod Millman, Org.). {[}S.l.{]}: {[}s.n.{]}, 2010. p. 56--61.
-
 \bibitem[\citeproctext]{ref-molnar2020interpretable}
 MOLNAR, C. \textbf{Interpretable machine learning}. {[}S.l.{]}: Lulu.
 com, 2020.
-
-\bibitem[\citeproctext]{ref-scikit-learn}
-PEDREGOSA, F. \emph{et al.} Scikit-learn: Machine Learning in {P}ython.
-\textbf{Journal of Machine Learning Research}, 2011. v. 12, p.
-2825--2830.
 
 \bibitem[\citeproctext]{ref-r_language}
 R CORE TEAM. \textbf{\href{https://www.R-project.org/}{R: A Language and
@@ -3900,9 +3725,6 @@ for Statistical Computing, 2024.
 RIBEIRO, M. T.; SINGH, S.; GUESTRIN, C. " Why should i trust you?"
 Explaining the predictions of any classifier. {[}S.l.{]}: {[}s.n.{]},
 2016. p. 1135--1144.
-
-\bibitem[\citeproctext]{ref-richardson2007beautiful}
-RICHARDSON, L. Beautiful soup documentation. \textbf{April}, 2007.
 
 \bibitem[\citeproctext]{ref-shapley1953value}
 SHAPLEY, L. S. A value for n-person games. \textbf{Contribution to the
@@ -3918,16 +3740,6 @@ processing systems}, 2012. v. 25.
 predictions with feature contributions. \textbf{Knowledge and
 information systems}, 2014. v. 41, p. 647--665.
 
-\bibitem[\citeproctext]{ref-reback2020pandas}
-TEAM, T. Pandas Development. \textbf{pandas-dev/pandas: Pandas}. Zenodo.
-Disponível em:
-\textless{}\url{https://doi.org/10.5281/zenodo.3509134}\textgreater.
-
-\bibitem[\citeproctext]{ref-selenium}
-THORPE, A.
-\textbf{\href{https://CRAN.R-project.org/package=selenium}{selenium:
-Low-Level Browser Automation Interface}}. {[}S.l.{]}: {[}s.n.{]}, 2024.
-
 \bibitem[\citeproctext]{ref-van1995python}
 VAN ROSSUM, G.; DRAKE JR, F. L. \textbf{Python reference manual}.
 {[}S.l.{]}: Centrum voor Wiskunde en Informatica Amsterdam, 1995.
@@ -3936,11 +3748,6 @@ VAN ROSSUM, G.; DRAKE JR, F. L. \textbf{Python reference manual}.
 WAGNER, F. E.; WARD, J. O. Urbanization and Migration in Brazil.
 \textbf{The American Journal of Economics and Sociology}, 1980. v. 39,
 n. 3, p. 249--259.
-
-\bibitem[\citeproctext]{ref-Waskom2021}
-WASKOM, M. L. seaborn: statistical data visualization. \textbf{Journal
-of Open Source Software}, 2021. v. 6, n. 60, p. 3021. Disponível em:
-\textless{}\url{https://doi.org/10.21105/joss.03021}\textgreater.
 
 \bibitem[\citeproctext]{ref-httr}
 WICKHAM, H. \textbf{\href{https://CRAN.R-project.org/package=httr}{httr:
