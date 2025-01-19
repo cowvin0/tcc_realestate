@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, enhanced, frame hidden, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced, frame hidden, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1953,17 +1953,24 @@ quadrados totais.
 \section{Otimização de
 hiperparâmetros}\label{otimizauxe7uxe3o-de-hiperparuxe2metros}
 
-~~~Existem diversas técnicas para otimização de hiperparâmetros em
-aprendizado de máquina. Uma das mais comuns é o GridSearch. Segundo
-BISCHL \emph{et al.} (2023), o GridSearch consiste em dividir o
-intervalo contínuo de valores possíveis de cada hiperparâmetro em um
-conjunto de valores discretos, avaliando exaustivamente o algoritmo para
-todas as combinações possíveis. No entanto, como o número de combinações
-cresce exponencialmente com o aumento das combinações de
-hiperparâmetros, o GridSearch apresenta um custo computacional elevado.
-Por isso, existem métodos de otimização mais sofisticados que oferecem
-melhor desempenho, como a otimização bayesiana, que foi utilizada neste
-trabalho.
+~~~Existem diversas técnicas para a otimização de hiperparâmetros em
+aprendizado de máquina. Uma das mais comuns é o Grid Search. Segundo
+BISCHL \emph{et al.} (2023), o Grid Search divide o intervalo contínuo
+de valores possíveis de cada hiperparâmetro em um conjunto de valores
+discretos, avaliando exaustivamente o desempenho do algoritmo para todas
+as combinações possíveis. No entanto, como o número de combinações
+cresce exponencialmente com o aumento do número de hiperparâmetros, o
+Grid Search apresenta um custo computacional elevado.
+
+\vspace{12pt}
+
+Por essa razão, métodos de otimização mais avançados, como a otimização
+bayesiana, têm ganhado destaque, pois oferecem um desempenho superior ao
+explorar o espaço de hiperparâmetros de maneira mais eficiente. Neste
+trabalho, utilizamos a otimização bayesiana para realizar a otimização
+dos modelos e determinar a quantidade ideal de vizinhos mais próximos na
+classe \texttt{KNNImputer}, empregada para a imputação de valores
+ausentes.
 
 \vspace{12pt}
 
@@ -1977,22 +1984,30 @@ hiperparâmetros (SNOEK; LAROCHELLE; ADAMS, 2012).
 \vspace{12pt}
 
 Diferentemente de outros algoritmos de otimização de hiperparâmetros, a
-otimização bayesiana ajusta suas tentativas futuras de avaliação com
-base nos resultados obtidos anteriormente (YANG; SHAMI, 2020). Para
-definir os pontos futuros, utiliza-se uma função probabilística
-\(P\left(\rho |  \lambda \right)\) (BERGSTRA; YAMINS; COX, 2013). Após
-ajustar essa função, obtém-se, para cada \(\lambda\), uma estimativa da
-performance \(\hat c \left(\lambda \right)\) e da incerteza da predição
-\(\hat \sigma \left(\lambda \right)\), além da distribuição preditiva
-associada à função probabilística. Com essa distribuição, uma função de
-aquisição determina o equilíbrio entre exploitation e
-exploration\footnote{Exploitation refere-se à busca por soluções
-  próximas a boas observações anteriores, enquanto exploration visa
-  explorar áreas ainda não investigadas}. Assim, os algoritmos de
-otimização bayesiana são regidos pela relação
-\(\lambda \to c\left(\lambda \right)\) e buscam um equilíbrio entre
-exploitation e exploration para identificar as regiões mais promissoras,
-sem negligenciar possíveis configurações melhores em áreas ainda
+otimização bayesiana ajusta suas tentativas futuras com base nos
+resultados obtidos anteriormente (YANG; SHAMI, 2020). Para definir os
+pontos de avaliação futuros, utiliza-se uma função probabilística
+\(P\left(c | \lambda \right)\), que modela a relação entre os
+hiperparâmetros \(\lambda\) e a métrica de desempenho \(c\) (BERGSTRA;
+YAMINS; COX, 2013). A partir dessa função, estima-se, para cada conjunto
+de hiperparâmetros \(\lambda\), a performance esperada
+\(\hat{c}\left(\lambda\right)\) e a incerteza associada à predição
+\(\hat{\sigma}\left(\lambda\right)\). Com essas estimativas, a
+distribuição preditiva derivada da função probabilística permite a
+aplicação de uma função de aquisição. Essa função orienta a escolha dos
+próximos pontos a serem avaliados, equilibrando exploitation (explorar
+regiões próximas às melhores observações anteriores) e exploration
+(investigar áreas ainda não exploradas)\footnote{Exploitation refere-se
+  à busca por soluções promissoras com base em dados prévios, enquanto
+  exploration visa descobrir novas regiões potencialmente vantajosas}.
+
+\vspace{12pt}
+
+Portanto, os algoritmos de otimização bayesiana são regidos pela relação
+\(\lambda \rightarrow c\left(\lambda \right)\) e buscam equilibrar
+exploitation e exploration. Isso permite identificar as regiões mais
+promissoras no espaço de hiperparâmetros, ao mesmo tempo em que evita
+negligenciar possíveis configurações melhores em áreas ainda
 inexploradas.
 
 \subsection{Tree-Structured Parzen
@@ -2000,61 +2015,98 @@ Estimator}\label{tree-structured-parzen-estimator}
 
 ~~~A função probabilística utilizada para a otimização bayesiana neste
 trabalho foi a Tree-Structured Parzen Estimator (TPE). O TPE define duas
-funções, \(l\left(x\right)\) e \(g\left(x\right)\), que são utilizadas
-para modelar a distribuição das variáveis do domínio (YANG; SHAMI,
-2020). Essas duas densidades são empregadas para estimar a probabilidade
-de se observar um hiperparâmetro \(x\), dado uma métrica de performance
-\(\rho\). Assim, tem-se a seguinte definição:
+funções de densidade, \(l\left(\lambda\right)\) e
+\(g\left(\lambda\right)\), que são empregadas para modelar a
+distribuição das variáveis no domínio dos hiperparâmetros \(\lambda\)
+(YANG; SHAMI, 2020). Essas densidades são utilizadas para estimar a
+probabilidade condicional \(p\left(\lambda | y\right)\) de observar uma
+combinação de hiperparâmetros \(\lambda\), dado um valor de métrica de
+desempenho \(y\). A definição é dada por:
 
 \begin{equation}\phantomsection\label{eq-tpe}{
-p(x|y) =
+P(\lambda|y) =
 \begin{cases}
-    l(x) & \text{if } y < y^* \\
-    g(x) & \text{if } y \ge y^*
+    l(\lambda) & \text{if } y < c^* \\
+    g(\lambda) & \text{if } y \ge c^*
 \end{cases}
-}\end{equation} em que \(l\left(x\right)\) representa a densidade quando
-a função de perda é menor que um limiar \(y^*\), e \(g\left(x\right)\) é
-a densidade quando a função de perda tem valores acima de \(y^*\)
-(BERGSTRA \emph{et al.}, 2011). O limite \(y^*\) é definido por um
-hiperparâmetro \(\gamma\), onde \(\gamma\) corresponde ao percentil dos
-valores observados de \(y\), de modo que
+}\end{equation} em que \(l\left(\lambda\right)\) representa a densidade
+associada aos valores de \(y\) menores que o limiar \(y^*\) e
+\(g\left(\lambda\right)\) é a densidade associada aos valores de \(y\)
+iguais ou superiores a \(y^*\) (BERGSTRA \emph{et al.}, 2011). No
+algoritmo de TPE, o valor de \(y^*\) é definido como sendo um quantil
+\(\gamma\) dos valores observados de \(y\), de forma que
 \(p\left(y < y^*\right) = \gamma\).
 
 \vspace{12pt}
 
 Por padrão, o Tree-Structured Parzen Estimator (TPE) utiliza como função
-de aquisição o Expected Improvement (EI), que pode ser otimizado no TPE
-da seguinte forma:
-
-\begin{equation}\phantomsection\label{eq-exp}{
-  EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | x\right) dy
-}\end{equation}
-
-Para encontrar a probabilidade marginal de \(x\), temos a seguinte
-integral:
-\(p\left(x\right) = \int_{\mathbb{R}} p\left(x | y\right)p\left(y\right)dy\).
-Particionando o domínio de \(y\), obtemos:
+de aquisição o Expected Improvement (EI). O EI representa a expectativa
+de um modelo \(M\), que mapeia \(f:\Lambda \rightarrow \mathbb{R}^N\),
+sobre a melhora esperada em relação a um limiar \(y^*\). Formalmente, o
+EI é definido como:
 
 \[
-p\left(x\right) = \gamma l\left(x\right) + \left(1 - \gamma \right) g\left(x\right)
+EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{\infty} \max\left(y^* - y, 0\right)p_{M}\left(y|\lambda\right)dy
 \]
 
-Assim, aplicando o Teorema de Bayes e substituindo na integral da
-equação Equação~\ref{eq-exp}:
-
-\[
-EI_{y^*}\left(x\right) = \int_{-\infty}^{y^*} \left(y^* - y\right) \frac{p\left(x | y\right)p\left(y\right)}{p\left(x\right)}dy = \left(\gamma y^*  - \int_{-\infty}^{y^*} p\left(y\right)dy\right) \left(\gamma + \left(1 - \gamma\right)\frac{g\left(x\right)}{l\left(x\right)}\right) ^{-1}
-\]
-
-A segunda expressão do produto mostra que, para maximizar o Expected
-Improvement, é necessário encontrar pontos de \(x\) com maior
-probabilidade em \(l\left(x\right)\) e menor probabilidade em
-\(g\left(x\right)\). No entanto, no TPE, maximizar o \(EI\) é
-equivalente a maximizar a razão entre as duas distribuições, definida
-como \(r\left(x\right) = \frac{l\left(x\right)}{g\left(x\right)}\)
-(COWEN-RIVERS \emph{et al.}, 2022).
+Se, para o valor de \(\lambda\), o modelo prevê um \(y\) tal que
+\(y > y^∗\), a diferença \(y^∗ − y\) será negativa, e o retorno será 0,
+o que significa que não haverá melhora. Por outro lado, se \(y < y^∗\),
+a diferença será positiva, indicando que o modelo apresenta um
+desempenho superior em relação ao limiar \(y^∗\).
 
 \vspace{12pt}
+
+Portanto, para o cálculo do EI utilizando as definições fornecidas pelo
+TPE e assumindo que \(y^∗>y\), adota-se a parametrização de
+\(p\left(\lambda,y\right)\) como
+\(p\left(y\right)p\left(\lambda∣y\right)\), com o objetivo de
+simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz
+a:
+
+\begin{equation}\phantomsection\label{eq-exp}{
+EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy
+}\end{equation}
+
+A partir da Equação~\ref{eq-tpe} e da definição
+\(p\left(y < y^*\right) = \gamma\) e
+\(p\left(y \geq y^*\right) = 1 - \gamma\), pode-se encontrar a
+distribuição marginal \(p\left(\lambda\right)\). Dessa forma, segue-se
+que:
+
+\[
+\begin{aligned}
+p\left(\lambda\right) &= \int_{-\infty}^{\infty} p\left(\lambda, y\right) dy \\
+&= \int_{-\infty}^{\infty} p\left(\lambda | y\right) p\left(y\right) dy \\
+&= \int_{-\infty}^{y^*} p\left(\lambda | y\right) p\left(y\right) dy + \int_{y^*}^{\infty} p\left(\lambda | y\right) p\left(y\right) dy \\
+&= \int_{-\infty}^{y^*} l\left(\lambda\right) p\left(y\right) dy + \int_{y^*}^{\infty} g\left(\lambda\right) p\left(y\right) dy \\
+&= \gamma l\left(\lambda\right) + \left(1 - \gamma\right) g\left(\lambda\right)
+\end{aligned}
+\]
+
+Agora, basta calcular a integral
+\(\int_{-\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy\).
+Tem-se, portanto:
+
+\[
+\begin{aligned}
+\int_{-\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy &= l\left(\lambda\right) \int_{-\infty}^{y^*} \left(y^* - y\right) p\left(y\right)dy \\
+&= \gamma y^{*} l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} y p\left(y\right)dy
+\end{aligned}
+\]
+
+Finalmente, substituindo essa última expressão encontrada e
+\(p\left(\lambda\right)\) na Equação~\ref{eq-exp}, chega-se a:
+
+\[
+EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 + \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}
+\]
+
+Essa última expressão mostra que, para maximizar o Expected Improvement,
+é necessário encontrar valores de \(\lambda\) que apresentem alta
+probabilidade em \(l\left(\lambda\right)\) e baixa probabilidade em
+\(g\left(\lambda\right)\). Portanto, no TPE, maximizar o EI equivale a
+maximizar a razão \(l\left(\lambda\right) / g\left(\lambda\right)\)
 
 \subsection{Otimização de hiperparâmetros com
 optuna}\label{otimizauxe7uxe3o-de-hiperparuxe2metros-com-optuna}
@@ -3562,11 +3614,6 @@ CHEN, T.; GUESTRIN, C. Xgboost: A scalable tree boosting system.
 \bibitem[\citeproctext]{ref-evolucao_abecip}
 COSTA FARIAS, B. M. Da. A evolu{ç}{ã}o do mercado imobili{á}rio
 brasileiro e o conceito de Home Equity. 2010.
-
-\bibitem[\citeproctext]{ref-cowen2022hebo}
-COWEN-RIVERS, A. I. \emph{et al.} Hebo: Pushing the limits of
-sample-efficient hyper-parameter optimisation. \textbf{Journal of
-Artificial Intelligence Research}, 2022. v. 74, p. 1269--1349.
 
 \bibitem[\citeproctext]{ref-fipe_metodologia}
 FIPE -- FUNDAÇÃO INSTITUTO DE PESQUISAS ECONÔMICAS. \textbf{Índice
