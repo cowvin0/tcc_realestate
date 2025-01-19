@@ -256,7 +256,7 @@ Uma das principais dificuldades no trabalho com dados do mercado imobiliário é
 
 \vspace{12pt}
 
-O Web scraping é uma técnica utilizada para extrair informações de sites na internet, salvando-as em arquivos ou sistemas de banco de dados para realizar análise, construção de aplicações ou ter acesso a informações de difícil disponibilização. Geralmente a raspagem de dados é realizada utilizando o Hypertext Transfer Protocol (HTTP) ou a partir da simulação do comportamento de um usuário de navegador. O HTTP é o protocolo responsável por fazer toda a comunicação cliente-servidor contida na internet com base na definição de oito métodos de requisição: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS e CONNECT. Cada método indica a ação a ser realizada no recurso especificado.
+O Web scraping é uma técnica utilizada para extrair informações de sites na internet, salvando-as em arquivos ou sistemas de banco de dados para realizar análise, construção de aplicações ou ter acesso a informações de difícil disponibilização. Geralmente a raspagem de dados é realizada utilizando o Hypertext Transfer Protocol (HTTP). O HTTP é o protocolo responsável por fazer toda a comunicação cliente-servidor contida na internet com base na definição de oito métodos de requisição: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS e CONNECT. Cada método indica a ação a ser realizada no recurso especificado.
 
 - GET: O método GET serve para requisitar uma representação do recurso especificado. Ou seja, ele serve para visualizar dados de um site.
 
@@ -314,13 +314,21 @@ As middlewares no [Scrapy](https://docs.scrapy.org/en/latest) são componentes i
 
 \vspace{12pt}
 
-As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [Scrapy](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em https://scrapeops.io/.
+As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [Scrapy](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/>.
 
 \vspace{12pt}
 
 Por outro lado, as middlewares de download têm a função de gerenciar o processo de download das páginas. Elas podem ser configuradas para evitar redirecionamentos indesejados, implementar atrasos entre requisições para evitar sobrecarregar os servidores e diminuir as chances de ser bloqueado. Essas middlewares tornam o [Scrapy](https://docs.scrapy.org/en/latest) altamente flexível, permitindo ajustes específicos para atender às necessidades do projeto.
 
-## Linguagem R
+\vspace{12pt}
+
+Embora o [Scrapy](https://docs.scrapy.org/en/latest) ofereça uma ampla gama de funcionalidades, pode ser necessário recorrer a ferramentas externas para lidar com conteúdos dinâmicos presentes em algumas páginas web. O Scrapy possui integração com bibliotecas especializadas que facilitam o tratamento desse tipo de conteúdo. Uma dessas bibliotecas, utilizada neste trabalho, é o [scrapy-playwright](https://github.com/scrapy-plugins/scrapy-playwright), que integra o poder do [Playwright](https://playwright.dev/python/) ao [Scrapy](https://docs.scrapy.org/en/latest).
+
+\vspace{12pt}
+
+O [Playwright](https://playwright.dev/python/) foi originalmente desenvolvido para realizar testes em aplicações web e executar tarefas de automação. No entanto, aqui ele foi empregado para interagir com o conteúdo dinâmico de páginas, como carregar elementos gerados por `JavaScript`. Sua utilização neste trabalho teve o mesmo propósito que o pacote [selenium](https://cran.r-project.org/web/packages/selenium/index.html) desempenhou na raspagem de dados feita com `R`, permitindo capturar dados que não seriam acessíveis diretamente via requisições HTTP convencionais. Além disso, ele também permite simular navegadores para acompanhar em tempo real o que cada requisição está alterando. Por fim, ao coletar os dados de imóveis, foi necessário realizar também a geocodificação dos endereços. Para isso, foi utilizado o pacote [tidygeocoder](https://jessecambon.github.io/tidygeocoder/) [@geocoder] da linguagem `R`, que também serviu para os dados que estavam sendo coletados em `Python`.
+
+<!-- ## Linguagem R
 
 \ \ \ R [@r_language] é uma linguagem de programação voltada para computação científica e visualização de dados. Seu desenvolvimento foi iniciado pelos professores Ross Ihaka e Robert Gentleman, que a criaram com o objetivo de ser uma linguagem para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do R foi lançada em 1993, e em 1997 ele se tornou oficialmente parte do Projeto GNU.
 
@@ -376,7 +384,7 @@ O Quarto foi utilizado para a produção de todo o texto deste trabalho, atenden
 
 - CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método HTTP CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
 
-Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo site e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua com a reformatação e organização dos dados de forma estruturada.
+Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua com a reformatação e organização dos dados de forma estruturada.
 
 \vspace{12pt}
 
@@ -384,7 +392,7 @@ A extração de informações de um arquivo HTML é geralmente feita com módulo
 
 \vspace{12pt}
 
-A raspagem de dados possui diversas utilidades, como monitoramento de variações de preços, análise de produtos, acompanhamento de condições tempo, análise da oscilação de preços de ativos do mercado financeiro ao longo do tempo ou coleta de postagens em redes sociais para investigação de opinião pública. Neste trabalho, a raspagem de dados foi utilizada para coletar informações sobre imóveis na cidade de João Pessoa, capital da Paraíba.
+A raspagem de dados possui diversas utilidades, como monitoramento de variações de preços, análise de produtos, acompanhamento de condições tempo, análise da oscilação de preços de ativos do mercado financeiro ao longo do tempo ou coleta de postagens em redes sociais para investigação de opinião pública. Neste trabalho, a raspagem de dados foi utilizada para coletar informações sobre imóveis na cidade de João Pessoa, capital da Paraíba. -->
 
 
 # Algoritmos de Aprendizado de Máquina
@@ -1051,8 +1059,8 @@ Portanto, os algoritmos de otimização bayesiana são regidos pela relação $\
 $$
 P(\lambda|y) =
 \begin{cases}
-    l(\lambda) & \text{if } y < c^* \\
-    g(\lambda) & \text{if } y \ge c^*
+    l(\lambda) & \text{if } y < y^* \\
+    g(\lambda) & \text{if } y \ge y^*
 \end{cases}
 $${#eq-tpe}
 em que $l\left(\lambda\right)$ representa a densidade associada aos valores de $y$ menores que o limiar $y^*$ e $g\left(\lambda\right)$ é a densidade associada aos valores de $y$ iguais ou superiores a $y^*$ [@bergstra2011algorithms]. No algoritmo de TPE, o valor de $y^*$ é definido como sendo um quantil $\gamma$ dos valores observados de $y$, de forma que $p\left(y < y^*\right) = \gamma$.
