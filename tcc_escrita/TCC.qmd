@@ -290,7 +290,35 @@ Embora o pacote [rvest](https://rvest.tidyverse.org/) compartilhe algumas funcio
 
 \vspace{12pt}
 
-Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [selenium](https://cran.r-project.org/web/packages/selenium/index.html), que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, Firefox, entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP foi o `httr` [@httr].
+Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [selenium](https://cran.r-project.org/web/packages/selenium/index.html), que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, Firefox, entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [selenium](https://cran.r-project.org/web/packages/selenium/index.html), foi o [httr](https://httr.r-lib.org/) [@httr].
+
+\vspace{12pt}
+
+Como mencionado anteriormente, `Python` também foi utilizado para realizar a raspagem de dados, embora tenha sido empregado em momentos subsequentes à utilização do `R`. `Python` [@van1995python] é uma linguagem de programação criada por Guido van Rossum, que iniciou seu desenvolvimento no final dos anos 1980 como sucessora da linguagem `ABC`. A primeira versão oficial do `Python` foi lançada em 1991. Trata-se de uma linguagem de alto nível, de propósito geral, que prioriza a simplicidade e a legibilidade do código, tornando-a amplamente adotada para diversas aplicações, incluindo análise de dados e automação de tarefas, além de ser amplamente utilizada para aprendizagem de máquina.
+
+\vspace{12pt}
+
+A linguagem de programação `Python` possui um ecossistema diversificado de bibliotecas para a realização de diversas tarefas, incluindo a raspagem de dados. Especificamente para essa finalidade, foi utilizada a biblioteca [Scrapy](https://docs.scrapy.org/en/latest) [@kouzis2016learning], um framework voltado para web scraping e crawling que permite extrair dados de páginas da web de forma automatizada.
+
+\vspace{12pt}
+
+O [Scrapy](https://docs.scrapy.org/en/latest) é uma ferramenta robusta e completa, com suporte nativo para diversos métodos HTTP. Ele foi projetado para ser rápido e eficiente, facilitando a criação de spiders — programas que navegam automaticamente por páginas web e extraem dados de forma estruturada. Além disso, o framework permite a exportação dos dados coletados para diversos formatos, como CSV, JSON ou bancos de dados, tornando-o uma solução ideal para projetos de coleta de informações em grande escala.
+
+\vspace{12pt}
+
+O framework também possui seletores `XPath` e `CSS`, que facilitam a localização e extração de informações específicas de páginas HTML. Uma funcionalidade especialmente interessante é sua capacidade de lidar com redirecionamentos de IP, permitindo superação de restrições impostas por alguns sites durante o processo de raspagem. Além disso, o [Scrapy](https://docs.scrapy.org/en/latest) permite a criação de `pipelines`, que são etapas de processamento dos dados em tempo de execução. Essas `pipelines` são extremamente úteis para transformar, limpar e organizar as informações antes de serem salvas, garantindo que os dados extraídos já estejam em um formato estruturado e pronto para análise ou armazenamento.
+
+\vspace{12pt}
+
+As middlewares no [Scrapy](https://docs.scrapy.org/en/latest) são componentes intermediárias que permitem modificar e processar requisições e respostas em tempo de execução. Elas são fundamentais para personalizar o comportamento do framework durante o fluxo de raspagem. Existem dois tipos principais de middlewares no [Scrapy](https://docs.scrapy.org/en/latest): middlewares de requisição e middlewares de download.
+
+\vspace{12pt}
+
+As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [Scrapy](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em https://scrapeops.io/.
+
+\vspace{12pt}
+
+Por outro lado, as middlewares de download têm a função de gerenciar o processo de download das páginas. Elas podem ser configuradas para evitar redirecionamentos indesejados, implementar atrasos entre requisições para evitar sobrecarregar os servidores e diminuir as chances de ser bloqueado. Essas middlewares tornam o [Scrapy](https://docs.scrapy.org/en/latest) altamente flexível, permitindo ajustes específicos para atender às necessidades do projeto.
 
 ## Linguagem R
 
