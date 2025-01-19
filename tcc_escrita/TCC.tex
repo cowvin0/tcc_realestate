@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced, frame hidden, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, colback={codebgcolor}, frame hidden, enhanced, breakable, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -702,6 +702,142 @@ organizados da seguinte forma:
 
 \chapter{Recursos Computacionais}\label{recursos-computacionais}
 
+~~~Nesta seção, serão apresentados os recursos computacionais utilizados
+no desenvolvimento deste trabalho. As ferramentas selecionadas incluem
+linguagens de programação amplamente conhecidas, como \texttt{Python} e
+\texttt{R}, e sistemas de publicação técnica, como o \texttt{Quarto}.
+Cada uma dessas tecnologias será descrita em relação ao seu papel na
+modelagem, coleta e manipulação de dados, bem como na criação da
+aplicação final.
+
+\vspace{12pt}
+
+Uma das principais dificuldades no trabalho com dados do mercado
+imobiliário é a escassez de informações disponíveis na internet, o que
+exige a busca por alternativas para sua obtenção. Uma solução amplamente
+utilizada é a extração direta de informações de sites especializados, um
+processo conhecido como Web Scraping (raspagem de dados). Essa abordagem
+não se restringe ao setor imobiliário, sendo igualmente aplicável a
+outras áreas, como a obtenção de dados sobre automóveis, entre outros.
+
+\vspace{12pt}
+
+O Web scraping é uma técnica utilizada para extrair informações de sites
+na internet, salvando-as em arquivos ou sistemas de banco de dados para
+realizar análise, construção de aplicações ou ter acesso a informações
+de difícil disponibilização. Geralmente a raspagem de dados é realizada
+utilizando o Hypertext Transfer Protocol (HTTP) ou a partir da simulação
+do comportamento de um usuário de navegador. O HTTP é o protocolo
+responsável por fazer toda a comunicação cliente-servidor contida na
+internet com base na definição de oito métodos de requisição: GET, HEAD,
+POST, PUT, DELETE, TRACE, OPTIONS e CONNECT. Cada método indica a ação a
+ser realizada no recurso especificado.
+
+\begin{itemize}
+\item
+  GET: O método GET serve para requisitar uma representação do recurso
+  especificado. Ou seja, ele serve para visualizar dados de um site.
+\item
+  HEAD: O HEAD é bastante semelhante o GET, mas ele retorna apenas
+  metadados sobre um recurso no servidor, sem que o recurso seja
+  retornado. Ele retorna todos os cabeçalhos associados a um recurso em
+  uma determinada URL.
+\item
+  POST: O método POST envia dados para serem processados para o recurso
+  especificado. Esses dados podem ser, por exemplo, dados de um
+  formulário HTML.
+\item
+  PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma
+  semelhante. No entanto, caso seja necessário atualizar um usuário
+  diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas
+  um único registro atualizado. Para o método POST, serão criados
+  diversos registros para cada requisição realizada.
+\item
+  DELETE: Exclui o recurso.
+\item
+  TRACE: O método TRACE HTTP é usado para diagnóstico, depuração e
+  solução de problemas. Ele simplesmente retorna um rastreamento de
+  diagnóstico que registra dados do ciclo de forma que o cliente possa
+  saber o que os servidores intermediários estão mudando em sua
+  requisição.
+\item
+  OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são
+  suportados e permitidos pelo servidor.
+\item
+  CONNECT: O CONNECT é usado para criar uma conexão com um recurso do
+  lado do servidor. O alvo mais comum do método HTTP CONNECT é um
+  servidor proxy, que um cliente deve acessar para sair da rede local.
+\end{itemize}
+
+Toda raspagem inicia com a composição de uma requisição HTTP para
+adquirir recursos de um site. Geralmente, essa requisição é formatada
+numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST.
+Quando a requisição é recebida e processado com sucesso, o recurso
+requisitado é salvo site e enviado de volta em diversos formatos de
+arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do
+conteúdo do site, o processo de extração continua com a reformatação e
+organização dos dados de forma estruturada.
+
+\vspace{12pt}
+
+Para realizar a raspagem de dados, foram utilizadas as linguagens de
+programação \texttt{R} (R CORE TEAM, 2024) e \texttt{Python} (VAN
+ROSSUM; DRAKE JR, 1995). \texttt{R} é uma linguagem voltada para
+computação científica e visualização de dados, desenvolvida pelos
+professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente
+para ensinar introdução à estatística na Universidade de Auckland. A
+primeira versão do \texttt{R} foi lançada em 1993, e, em 1997, a
+linguagem tornou-se oficialmente parte do Projeto GNU. Em \texttt{R}, há
+diversos pacotes disponíveis para a realização de raspagem de dados.
+Neste trabalho, foi utilizado o pacote
+\href{https://xml2.r-lib.org/}{xml2} (WICKHAM; HESTER; OOMS, 2023) e o
+\href{https://rvest.tidyverse.org/}{rvest}.
+
+\vspace{12pt}
+
+O pacote \href{https://xml2.r-lib.org/}{xml2} foi inspirado no
+\href{https://jquery.com/}{jQuery}, uma biblioteca \texttt{JavaScript}
+projetada para facilitar tarefas como a manipulação de documentos HTML.
+Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo
+ferramentas eficientes para acessar, navegar e modificar os nós de
+documentos estruturados. Essas funcionalidades permitem, por exemplo, a
+extração de informações específicas de páginas web ou arquivos XML.
+Embora o \href{https://xml2.r-lib.org/}{xml2} não possua suporte direto
+para compor requisições HTTP, ele se destaca por sua capacidade de
+interpretar a estrutura hierárquica de sites e organizar os dados
+extraídos de maneira estruturada e eficiente.
+
+\vspace{12pt}
+
+Embora o pacote \href{https://rvest.tidyverse.org/}{rvest} compartilhe
+algumas funcionalidades com o \href{https://xml2.r-lib.org/}{xml2}, ele
+oferece diversas características adicionais que tornam o processo de web
+scraping ainda mais simples. O
+\href{https://rvest.tidyverse.org/}{rvest} facilita o acesso direto a
+páginas web e a extração de informações com o uso de seletores
+\texttt{CSS} e \texttt{XPath}, permitindo a seleção precisa de elementos
+específicos da página. Uma funcionalidade particularmente interessante é
+o recurso \texttt{LiveHTML}, que possibilita a interação direta com a
+página, abrindo-a em um navegador para observar, em tempo real, as
+operações realizadas no site. Isso torna o processo de coleta de dados
+mais intuitivo, uma vez que se torna possível observar as operações que
+se deseja realizar em tempo real.
+
+\vspace{12pt}
+
+Apesar de os pacotes mencionados anteriormente oferecerem diversas
+possibilidades para realizar raspagem de dados, muitas páginas possuem
+conteúdos dinâmicos que só podem ser acessados por meio de outros
+pacotes, capazes de carregar o restante do conteúdo da página em
+questão. Nesse contexto, foi utilizado o pacote
+\href{https://cran.r-project.org/web/packages/selenium/index.html}{selenium},
+que realiza requisições HTTP enquanto simula a experiência de um usuário
+real. Ele permite automatizar interações com a página, como clicar em
+botões, rolar a página automaticamente, lidar com autenticação, cookies
+e redirecionamentos, além de simular navegadores como Google Chrome,
+Firefox, entre outros. Por fim, um dos pacotes que também foi utilizado
+para fazer requisições HTTP foi o \texttt{httr} (WICKHAM, 2023).
+
 \section{Linguagem R}\label{linguagem-r}
 
 ~~~R (R CORE TEAM, 2024) é uma linguagem de programação voltada para
@@ -884,8 +1020,6 @@ longo do tempo ou coleta de postagens em redes sociais para investigação
 de opinião pública. Neste trabalho, a raspagem de dados foi utilizada
 para coletar informações sobre imóveis na cidade de João Pessoa, capital
 da Paraíba.
-
-\newpage
 
 \chapter{Algoritmos de Aprendizado de
 Máquina}\label{algoritmos-de-aprendizado-de-muxe1quina}
@@ -2711,8 +2845,6 @@ apresentam multicolinearidade entre si, mas os algoritmos utilizados
 selecionam aleatoriamente as variáveis para a modelagem, o que reduz o
 risco de selecionar variáveis redundantes.
 
-\newpage{}
-
 \section{Tunagem dos modelos}\label{tunagem-dos-modelos}
 
 ~~~Como os algoritmos utilizados neste trabalho são baseados em árvores
@@ -3455,6 +3587,8 @@ no valor dos imóveis.
 predição a partir do método SHAP.}
 
 \end{figure}%
+
+\vspace{12pt}
 
 A análise da importância das variáveis foi realizada utilizando o método
 SHAP. Diferentemente da importância de variáveis gerada por algoritmos
