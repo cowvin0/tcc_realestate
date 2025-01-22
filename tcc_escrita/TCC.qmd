@@ -150,8 +150,6 @@ test_df = test_df.rename(columns=rename)
 
 # Introdução
 
-## Introdução
-
 \ \ \ Assim como em todos os países, a maior parte da história do Brasil foi marcada por uma predominância rural. Em 1940, apenas 31% da população vivia em áreas urbanas. No entanto, esse número cresceu rapidamente, ultrapassando 50% em 1970 [@wagner1980urbanization]. Essa tendência se manteve nas décadas seguintes, até que, em 2014, 85,1% da população brasileira já residia em regiões urbanas.
 
 \vspace{12pt}
@@ -248,11 +246,11 @@ Além deste capítulo de introdução, em que é apresentado os problemas que se
 
 # Recursos Computacionais
 
-\ \ \ Nesta seção, serão apresentados os recursos computacionais utilizados no desenvolvimento deste trabalho. As ferramentas selecionadas incluem linguagens de programação amplamente conhecidas, como `Python` e `R`, e sistemas de publicação técnica, como o `Quarto`. Cada uma dessas tecnologias será descrita em relação ao seu papel na modelagem, coleta e manipulação de dados, bem como na criação da aplicação final.
+\ \ \ Nesta seção, serão apresentados os recursos computacionais utilizados no desenvolvimento deste trabalho. As ferramentas selecionadas incluem linguagens de programação amplamente conhecidas, como `Python` e `R`, e sistemas de publicação técnica, como o `Quarto`. Cada uma dessas tecnologias será descrita em relação ao seu papel na modelagem, coleta e manipulação de dados, bem como na criação da aplicação final. Portanto, a primeira etapa será descrever as tecnologias utilizadas para a coleta dos dados.
 
-\vspace{12pt}
+## Tecnologias utilizadas para a coleta de dados
 
-Uma das principais dificuldades no trabalho com dados do mercado imobiliário é a escassez de informações disponíveis na internet, o que exige a busca por alternativas para sua obtenção. Uma solução amplamente utilizada é a extração direta de informações de sites especializados, um processo conhecido como Web Scraping (raspagem de dados). Essa abordagem não se restringe ao setor imobiliário, sendo igualmente aplicável a outras áreas, como a obtenção de dados sobre automóveis, entre outros.
+\ \ \ Uma das principais dificuldades no trabalho com dados do mercado imobiliário é a escassez de informações disponíveis na internet, o que exige a busca por alternativas para sua obtenção. Uma solução amplamente utilizada é a extração direta de informações de sites especializados, um processo conhecido como Web Scraping (raspagem de dados). Essa abordagem não se restringe ao setor imobiliário, sendo igualmente aplicável a outras áreas, como a obtenção de dados sobre automóveis, entre outros.
 
 \vspace{12pt}
 
@@ -278,7 +276,7 @@ Toda raspagem inicia com a composição de uma requisição HTTP para adquirir r
 
 \vspace{12pt}
 
-Para realizar a raspagem de dados, foram utilizadas as linguagens de programação `R` [@r_language] e `Python` [@van1995python]. `R` é uma linguagem voltada para computação científica e visualização de dados, desenvolvida pelos professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do `R` foi lançada em 1993, e, em 1997, a linguagem tornou-se oficialmente parte do Projeto GNU. Em `R`, há diversos pacotes disponíveis para a realização de raspagem de dados. Neste trabalho, foi utilizado o pacote [xml2](https://xml2.r-lib.org/) [@xml2] e o [rvest](https://rvest.tidyverse.org/).
+Para realizar a raspagem de dados, foram utilizadas as linguagens de programação `R` [@r_language] e `Python` [@van1995python]. `R` é uma linguagem voltada para computação científica e visualização de dados, desenvolvida pelos professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do `R` foi lançada em 1993, e, em 1997, a linguagem tornou-se oficialmente parte do Projeto GNU. Em `R`, há diversos pacotes disponíveis para a realização de raspagem de dados. Neste trabalho, foi utilizado o pacote [xml2](https://xml2.r-lib.org/) [@xml2] e o [rvest](https://rvest.tidyverse.org/) [@rvest].
 
 \vspace{12pt}
 
@@ -290,7 +288,7 @@ Embora o pacote [rvest](https://rvest.tidyverse.org/) compartilhe algumas funcio
 
 \vspace{12pt}
 
-Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [selenium](https://cran.r-project.org/web/packages/selenium/index.html), que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, Firefox, entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [selenium](https://cran.r-project.org/web/packages/selenium/index.html), foi o [httr](https://httr.r-lib.org/) [@httr].
+Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [selenium](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, Firefox, entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [selenium](https://cran.r-project.org/web/packages/selenium/index.html), foi o [httr](https://httr.r-lib.org/) [@httr].
 
 \vspace{12pt}
 
@@ -328,72 +326,63 @@ Embora o [Scrapy](https://docs.scrapy.org/en/latest) ofereça uma ampla gama de 
 
 O [Playwright](https://playwright.dev/python/) foi originalmente desenvolvido para realizar testes em aplicações web e executar tarefas de automação. No entanto, aqui ele foi empregado para interagir com o conteúdo dinâmico de páginas, como carregar elementos gerados por `JavaScript`. Sua utilização neste trabalho teve o mesmo propósito que o pacote [selenium](https://cran.r-project.org/web/packages/selenium/index.html) desempenhou na raspagem de dados feita com `R`, permitindo capturar dados que não seriam acessíveis diretamente via requisições HTTP convencionais. Além disso, ele também permite simular navegadores para acompanhar em tempo real o que cada requisição está alterando. Por fim, ao coletar os dados de imóveis, foi necessário realizar também a geocodificação dos endereços. Para isso, foi utilizado o pacote [tidygeocoder](https://jessecambon.github.io/tidygeocoder/) [@geocoder] da linguagem `R`, que também serviu para os dados que estavam sendo coletados em `Python`.
 
-<!-- ## Linguagem R
+\vspace{12pt}
 
-\ \ \ R [@r_language] é uma linguagem de programação voltada para computação científica e visualização de dados. Seu desenvolvimento foi iniciado pelos professores Ross Ihaka e Robert Gentleman, que a criaram com o objetivo de ser uma linguagem para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do R foi lançada em 1993, e em 1997 ele se tornou oficialmente parte do Projeto GNU.
+Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados. Entretanto, a linguagem `Python`, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Portanto, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem.
+
+## Recursos utilizados para modelagem
+
+\ \ \ Com os dados coletados, a etapa de modelagem dos valores de imóveis torna-se essencial para converter essas informações em entendimentos relevantes e aplicáveis. Essa etapa permite identificar padrões de comportamento entre as variáveis que influenciam os valores imobiliários, além de determinar quais fatores exercem maior impacto sobre esses valores. Para chegar a esses resultados, foram utilizadas bibliotecas desenvolvidas em `Python`, como [scikit-learn](https://scikit-learn.org/stable/) [@scikit-learn], entre outras.
 
 \vspace{12pt}
 
-A linguagem R é fortemente inspirada no paradigma de programação funcional, o que a torna poderosa para manipulação e análise de dados. Em R, as funções são de primeira classe, ou seja, podem ser passadas como argumentos para outras funções, retornadas como resultados e atribuídas a variáveis. Isso permite a criação de códigos mais modulares e reutilizáveis, além de facilitar a implementação de pipelines de transformação de dados.
+O [scikit-learn](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em Python. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [scikit-learn](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [SciPy](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em Python.
+
 
 \vspace{12pt}
 
-O R oferece funções como apply, lapply, sapply, além de pacotes como purrr e furrr, que são voltados para programação funcional. Esses recursos permitem a aplicação de funções em estruturas de dados de maneira concisa e eficiente, simplificando o processamento e a transformação de grandes conjuntos de dados. Embora o R seja fortemente inspirado pelo paradigma funcional, o R também oferece suporte à programação orientada a objetos, com sistemas como S3, S4 e R6.
+Uma das funcionalidades mais úteis do [scikit-learn](https://scikit-learn.org/stable/) é o uso de pipelines para transformar dados. As pipelines permitem combinar etapas de pré-processamento e ajuste de modelos em um único fluxo organizado. Isso não apenas simplifica o código, mas também assegura que as transformações aplicadas aos dados de treinamento sejam automaticamente replicadas nos dados de teste ou em novos dados. Além de serem úteis para tarefas mais simples, como normalização de variáveis, as pipelines permitem a inclusão de etapas personalizadas para lidar com cenários mais complexos, como tratamentos avançados de dados ou integração com ferramentas externas.
 
 \vspace{12pt}
 
-Neste trabalho, a linguagem R foi utilizada para a raspagem de dados de imóveis e para a geocodificação dos endereços desses imóveis. O R possui um vasto ecossistema de pacotes focados na coleta de dados da web. Para a raspagem, foram utilizados os pacotes xml2 [@xml2], rvest [@rvest] e httr [@httr] para fazer as requisições HTTP, além do Selenium [@selenium], que permitiu interagir com conteúdos dinâmicos das páginas. A obtenção das coordenadas dos imóveis foi realizada através da geocodificação de seus endereços, utilizando a biblioteca tidygeocoder [@geocoder].
+O exemplo abaixo ilustra uma pipeline para pré-processamento e modelagem. As variáveis numéricas passam por padronização, enquanto as variáveis categóricas são transformadas em variáveis binárias utilizando codificação one-hot. Por fim, os dados processados alimentam um algoritmo de Random Forest para regressão:
 
-## Linguagem Python
 
-\ \ \ Python [@van1995python] é uma linguagem de programação criada por Guido Van Rossum. Guido começou a desenvolver o Python no final dos anos 80 como uma sucessora da linguagem ABC, e a primeira versão foi lançada oficialmente em 1991. Python é uma linguagem de alto nível, de propósito geral, que enfatiza a simplicidade e a legibilidade do código.
+```{python}
+#| echo: true
+#| eval: false
 
-\vspace{12pt}
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.ensemble import RandomForestRegressor
 
-Neste trabalho, Python foi utilizado principalmente para modelagem e coleta de dados de sites de imóveis. Para a modelagem, utilizou-se a biblioteca scikit-learn [@scikit-learn], que oferece uma grande quantidade de ferramentas estatísticas e de aprendizado de máquina. A otimização dos hiperparâmetros dos modelos foi realizada com a biblioteca Optuna, que dispõe de diversos métodos de otimização, incluindo métodos avançados de otimização bayesiana. Para a coleta de dados de imóveis, foi empregada a biblioteca Scrapy [@kouzis2016learning], um framework open-source em Python voltado para web scraping, que permite extrair dados de páginas da web de forma automatizada. Com o Scrapy, é possível criar "crawlers" ou "spiders" que navegam em sites, coletando e organizando informações específicas de maneira eficiente. Além do Scrapy, foi utilizado também a biblioteca Playwright, com o objetivo de interagir com o conteúdo dinâmico presente na página.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42
+)
 
-\vspace{12pt}
+numerical_features = X.select_dtypes(include=np.number).columns
+categorical_features = X.select_dtypes(include=object).columns
 
-Além disso, Python foi utilizado para a criação de todos os gráficos e para a manipulação das bases de dados. Para visualização, foram usadas as bibliotecas Matplotlib [@Hunter:2007] e Seaborn [@Waskom2021], enquanto a manipulação e organização das bases de dados foi feira com a biblioteca Pandas [@mckinney-proc-scipy-2010; @reback2020pandas], amplamente utilizada em Python para limpeza, análise e organização de dados, além de suportar operações estatísticas.
+pipeline = Pipeline([
+    ('preprocessor', ColumnTransformer([
+        ('num', StandardScaler(), numerical_features),
+        ('cat', OneHotEncoder(), categorical_features)
+    ])),
+    ('model', RandomForestRegressor(
+        n_estimators=100,
+        random_state=42
+    ))
+])
 
-## Quarto
+pipeline.fit(X_train, y_train)
+```
 
-\ \ \ Quarto [@quarto] é uma plataforma de publicação científica desenvolvida pela empresa Posit com o objetivo de criar documentos de alta qualidade a partir de arquivos que combinam texto e código. É uma evolução do R Markdown, sendo compatível com várias linguagens de programação, como R, Python, Julia e outros, o que o torna bastante versátil para a análise de dados e geração de relatórios interativos. Com o Quarto, é possível produzir relatórios, artigos, livros, apresentações e sites. Ele é amplamente utilizado na comunidade R e oferece suporte para Markdown e \LaTeX, facilitando a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais, que são renderizados em formatos como HTML, PDF e MS Word.
-
-\vspace{12pt}
-
-O Quarto foi utilizado para a produção de todo o texto deste trabalho, atendendo aos requisitos das normas ABNT. Com sua flexibilidade e suporte para formatação customizável, Quarto permitiu integrar texto, código e visualizações de forma reprodutível e organizada, facilitando a geração de documentos acadêmicos de alta qualidade.
-
-## Web Scraping
-
-\ \ \ Web scraping, ou raspagem de dados, é uma técnica utilizada para extrair informações de sites na internet, salvando-as em arquivos ou sistemas de banco de dados para realizar análise, construção de aplicações ou ter acesso a informações de difícil disponibilização. Geralmente a raspagem de dados é realizada utilizando o Hypertext Transfer Protocol (HTTP) ou a partir da simulação do comportamento de um usuário de navegador. O HTTP é o protocolo responsável por fazer toda a comunicação cliente-servidor contida na internet com base na definição de oito métodos de requisição: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS e CONNECT. Cada método indica a ação a ser realizada no recurso especificado.
-
-- GET: O método GET serve para requisitar uma representação do recurso especificado. Ou seja, ele serve para visualizar dados de um site.
-
-- HEAD: O HEAD é bastante semelhante o GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
-
-- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML.
-
-- PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma semelhante. No entanto, caso seja necessário atualizar um usuário diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas um único registro atualizado. Para o método POST, serão criados diversos registros para cada requisição realizada.
-
-- DELETE: Exclui o recurso.
-
-- TRACE: O método TRACE HTTP é usado para diagnóstico, depuração e solução de problemas. Ele simplesmente retorna um rastreamento de diagnóstico que registra dados do ciclo de forma que o cliente possa saber o que os servidores intermediários estão mudando em sua requisição.
-
-- OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são suportados e permitidos pelo servidor.
-
-- CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método HTTP CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
-
-Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua com a reformatação e organização dos dados de forma estruturada.
-
-\vspace{12pt}
-
-A extração de informações de um arquivo HTML é geralmente feita com módulos como BeautifulSoup [@richardson2007beautiful], em Python, ou rvest, em R. No entanto, muitas vezes é necessário interagir com conteúdos dinâmicos da página para carregar todas as informações disponíveis. Para esses casos, são utilizadas bibliotecas como Playwright ou Selenium, que permitem lidar com autenticação, cookies e redirecionamentos, simulando a navegação em um navegador como Google Chrome, Firefox, ou outros. Essas bibliotecas fazem requisições HTTP enquanto reproduzem a experiência de um usuário real, com o objetivo de automatizar processos de busca e interação com a página.
-
-\vspace{12pt}
-
-A raspagem de dados possui diversas utilidades, como monitoramento de variações de preços, análise de produtos, acompanhamento de condições tempo, análise da oscilação de preços de ativos do mercado financeiro ao longo do tempo ou coleta de postagens em redes sociais para investigação de opinião pública. Neste trabalho, a raspagem de dados foi utilizada para coletar informações sobre imóveis na cidade de João Pessoa, capital da Paraíba. -->
-
+INICIAR FALANDO DO OPTUNA
 
 # Algoritmos de Aprendizado de Máquina
 
@@ -402,6 +391,9 @@ A raspagem de dados possui diversas utilidades, como monitoramento de variaçõe
 \vspace{12pt}
 
 Os métodos baseados em árvore envolvem a estratificação ou segmentação do espaço dos preditores^[O espaço dos preditores é o conjunto de todos os valores possíveis para as variáveis independentes $\mathbf{x}$] em várias regiões simples. Dessa forma, todos os algoritmos utilizados neste trabalho partem dessa ideia. Portanto, o primeiro a ser explicado será o de árvores de decisão, pois fundamenta todos os outros algoritmos. Depois das árvores de decisão, serão explicados os métodos ensemble e, por fim, diferentes variações do método de gradient boosting.
+
+\vspace{12pt}
+
 
 
 ## Árvores de decisão
