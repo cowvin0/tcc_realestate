@@ -248,7 +248,7 @@ Além deste capítulo de introdução, em que é apresentado os problemas que se
 
 \ \ \ Nesta seção, serão apresentados os recursos computacionais utilizados no desenvolvimento deste trabalho. As ferramentas selecionadas incluem linguagens de programação amplamente conhecidas, como `Python` e `R`, e sistemas de publicação técnica, como o `Quarto`. Cada uma dessas tecnologias será descrita em relação ao seu papel na modelagem, coleta e manipulação de dados, bem como na criação da aplicação final. Portanto, a primeira etapa será descrever as tecnologias utilizadas para a coleta dos dados.
 
-## Tecnologias utilizadas para a coleta de dados
+## Recursos utilizados para a coleta de dados
 
 \ \ \ Uma das principais dificuldades no trabalho com dados do mercado imobiliário é a escassez de informações disponíveis na internet, o que exige a busca por alternativas para sua obtenção. Uma solução amplamente utilizada é a extração direta de informações de sites especializados, um processo conhecido como Web Scraping (raspagem de dados). Essa abordagem não se restringe ao setor imobiliário, sendo igualmente aplicável a outras áreas, como a obtenção de dados sobre automóveis, entre outros.
 
@@ -328,9 +328,9 @@ O [Playwright](https://playwright.dev/python/) foi originalmente desenvolvido pa
 
 \vspace{12pt}
 
-Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados. Entretanto, a linguagem `Python`, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Portanto, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem.
+Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados. Entretanto, a linguagem `Python`, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Portanto, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
 
-## Recursos utilizados para modelagem
+## Recursos utilizados para modelagem e visualização dos resultados
 
 \ \ \ Com os dados coletados, a etapa de modelagem dos valores de imóveis torna-se essencial para converter essas informações em entendimentos relevantes e aplicáveis. Essa etapa permite identificar padrões de comportamento entre as variáveis que influenciam os valores imobiliários, além de determinar quais fatores exercem maior impacto sobre esses valores. Para chegar a esses resultados, foram utilizadas bibliotecas desenvolvidas em `Python`, como [scikit-learn](https://scikit-learn.org/stable/) [@scikit-learn], entre outras.
 
@@ -382,7 +382,25 @@ pipeline = Pipeline([
 pipeline.fit(X_train, y_train)
 ```
 
-INICIAR FALANDO DO OPTUNA
+Outra etapa fundamental no processo de aprendizado de máquina, além do pré-processamento dos dados e do ajuste do algoritmo, é a otimização dos hiperparâmetros. O [scikit-learn](https://scikit-learn.org/stable/) oferece algumas ferramentas para essa tarefa, mas elas possuem funcionalidades mais básicas e podem ser limitadas para cenários mais complexos. Dessa forma, de forma complementar, esse trabalho utilizou a biblioteca [Optuna](https://optuna.org/) [@optuna_2019], que é uma biblioteca que contém uma grande quantidade de algoritmos para otimização, como, por exemplo, métodos de otimização bayesiana.
+
+\vspace{12pt}
+
+Além das funcionalidades de otimização, o [Optuna](https://optuna.org/) também oferece ferramentas para analisar o comportamento da função objetivo durante o processo de otimização e identificar os hiperparâmetros mais relevantes. Uma dessas ferramentas é a função `plot_param_importances`, que gera um gráfico destacando a importância relativa de cada hiperparâmetro. Além disso, como o `plot_param_importances` utiliza a biblioteca [Matplotlib](https://matplotlib.org/) [@Hunter:2007], os gráficos gerados podem ser personalizados pelo usuário.
+
+\vspace{12pt}
+
+Vale destacar que bibliotecas como o [Matplotlib](https://matplotlib.org/) e o [seaborn](https://seaborn.pydata.org/) [@Waskom2021] desempenharam um papel fundamental na geração dos gráficos e na visualização dos dados apresentados neste trabalho. Essas ferramentas foram indispensáveis para a análise exploratória e a apresentação dos resultados de forma clara e compreensível. Além dessas bibliotecas, também foram utilizados recursos voltados para a análise do impacto e das relações entre as variáveis e as previsões realizadas pelos modelos. Nesse contexto, destacam-se o [SHAP](https://shap.readthedocs.io/en/latest) [@NIPS2017_7062], que fornece explicações interpretáveis para os modelos de aprendizado de máquina, e o próprio [scikit-learn](https://scikit-learn.org/stable/), que foi essencial para a criação dos gráficos de ICE (Individual Conditional Expectation). Esses métodos serão detalhados na seção de metodologia deste trabalho.
+
+\vspace{12pt}
+
+Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e visualização dos resultados. A seguir, serão descritas as tecnologias utilizadas no desenvolvimento da aplicação final deste trabalho. Vale destacar que o [scikit-learn](https://scikit-learn.org/stable/) continuou desempenhando um papel relevante na aplicação, com sua pipeline sendo serializada no formato `.pkl` por meio da biblioteca [pickle](https://docs.python.org/3/library/pickle.html). Essa biblioteca permitiu a reutilização da pipeline no back-end da aplicação, garantindo a consistência e eficiência do processamento dos dados. Segue, então, a descrição das ferramentas empregadas na construção da aplicação final.
+
+## Recursos utilizados para a criação da aplicação final
+
+## Recursos utilizados de forma complementar à programação
+
+## Recurso utilizado para a criação do documento de texto
 
 # Algoritmos de Aprendizado de Máquina
 
@@ -1102,7 +1120,7 @@ $$
 EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 + \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}
 $$
 
-Essa última expressão mostra que, para maximizar o Expected Improvement, é necessário encontrar valores de $\lambda$ que apresentem alta probabilidade em $l\left(\lambda\right)$ e baixa probabilidade em $g\left(\lambda\right)$. Portanto, no TPE, maximizar o EI equivale a maximizar a razão $l\left(\lambda\right) / g\left(\lambda\right)$
+Essa última expressão mostra que, para maximizar o Expected Improvement, é necessário encontrar valores de $\lambda$ que apresentem alta probabilidade em $l\left(\lambda\right)$ e baixa probabilidade em $g\left(\lambda\right)$. Portanto, no TPE, maximizar o EI equivale a maximizar a razão $l\left(\lambda\right) / g\left(\lambda\right)$.
 
 
 ### Otimização de hiperparâmetros com optuna
@@ -1307,7 +1325,7 @@ Esse gráfico permite visualizar diretamente como as observações de uma variá
 
 \vspace{12pt}
 
-Para aplicar o método SHAP em Python, foi utilizada a biblioteca shap [@NIPS2017_7062]. Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca shap para gerar esses gráficos baseado no algoritmo Stacking:
+Para aplicar o método SHAP em Python, foi utilizada a biblioteca shap. Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca shap para gerar esses gráficos baseado no algoritmo Stacking:
 
 ```{python}
 #| eval: false

@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, enhanced, boxrule=0pt, breakable, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, colback={codebgcolor}, sharp corners, frame hidden, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -709,8 +709,8 @@ modelagem, coleta e manipulação de dados, bem como na criação da
 aplicação final. Portanto, a primeira etapa será descrever as
 tecnologias utilizadas para a coleta dos dados.
 
-\section{Tecnologias utilizadas para a coleta de
-dados}\label{tecnologias-utilizadas-para-a-coleta-de-dados}
+\section{Recursos utilizados para a coleta de
+dados}\label{recursos-utilizados-para-a-coleta-de-dados}
 
 ~~~Uma das principais dificuldades no trabalho com dados do mercado
 imobiliário é a escassez de informações disponíveis na internet, o que
@@ -957,10 +957,11 @@ Assim chega ao fim descrição das tecnologias utilizadas para a obtenção
 dos dados. Entretanto, a linguagem \texttt{Python}, em particular,
 continuou sendo empregada em outras etapas deste trabalho, como na
 modelagem dos valores de imóveis. Portanto, os próximos recursos
-apresentados serão aqueles utilizados especificamente para a modelagem.
+apresentados serão aqueles utilizados especificamente para a modelagem e
+visualização dos resultados.
 
-\section{Recursos utilizados para
-modelagem}\label{recursos-utilizados-para-modelagem}
+\section{Recursos utilizados para modelagem e visualização dos
+resultados}\label{recursos-utilizados-para-modelagem-e-visualizauxe7uxe3o-dos-resultados}
 
 ~~~Com os dados coletados, a etapa de modelagem dos valores de imóveis
 torna-se essencial para converter essas informações em entendimentos
@@ -1041,7 +1042,70 @@ algoritmo de Random Forest para regressão:
 \end{Highlighting}
 \end{Shaded}
 
-INICIAR FALANDO DO OPTUNA
+Outra etapa fundamental no processo de aprendizado de máquina, além do
+pré-processamento dos dados e do ajuste do algoritmo, é a otimização dos
+hiperparâmetros. O \href{https://scikit-learn.org/stable/}{scikit-learn}
+oferece algumas ferramentas para essa tarefa, mas elas possuem
+funcionalidades mais básicas e podem ser limitadas para cenários mais
+complexos. Dessa forma, de forma complementar, esse trabalho utilizou a
+biblioteca \href{https://optuna.org/}{Optuna} (AKIBA \emph{et al.},
+2019), que é uma biblioteca que contém uma grande quantidade de
+algoritmos para otimização, como, por exemplo, métodos de otimização
+bayesiana.
+
+\vspace{12pt}
+
+Além das funcionalidades de otimização, o
+\href{https://optuna.org/}{Optuna} também oferece ferramentas para
+analisar o comportamento da função objetivo durante o processo de
+otimização e identificar os hiperparâmetros mais relevantes. Uma dessas
+ferramentas é a função \texttt{plot\_param\_importances}, que gera um
+gráfico destacando a importância relativa de cada hiperparâmetro. Além
+disso, como o \texttt{plot\_param\_importances} utiliza a biblioteca
+\href{https://matplotlib.org/}{Matplotlib} (HUNTER, 2007), os gráficos
+gerados podem ser personalizados pelo usuário.
+
+\vspace{12pt}
+
+Vale destacar que bibliotecas como o
+\href{https://matplotlib.org/}{Matplotlib} e o
+\href{https://seaborn.pydata.org/}{seaborn} (WASKOM, 2021) desempenharam
+um papel fundamental na geração dos gráficos e na visualização dos dados
+apresentados neste trabalho. Essas ferramentas foram indispensáveis para
+a análise exploratória e a apresentação dos resultados de forma clara e
+compreensível. Além dessas bibliotecas, também foram utilizados recursos
+voltados para a análise do impacto e das relações entre as variáveis e
+as previsões realizadas pelos modelos. Nesse contexto, destacam-se o
+\href{https://shap.readthedocs.io/en/latest}{SHAP} (LUNDBERG; LEE,
+2017), que fornece explicações interpretáveis para os modelos de
+aprendizado de máquina, e o próprio
+\href{https://scikit-learn.org/stable/}{scikit-learn}, que foi essencial
+para a criação dos gráficos de ICE (Individual Conditional Expectation).
+Esses métodos serão detalhados na seção de metodologia deste trabalho.
+
+\vspace{12pt}
+
+Conclui-se, assim, a apresentação das ferramentas empregadas na
+modelagem e visualização dos resultados. A seguir, serão descritas as
+tecnologias utilizadas no desenvolvimento da aplicação final deste
+trabalho. Vale destacar que o
+\href{https://scikit-learn.org/stable/}{scikit-learn} continuou
+desempenhando um papel relevante na aplicação, com sua pipeline sendo
+serializada no formato \texttt{.pkl} por meio da biblioteca
+\href{https://docs.python.org/3/library/pickle.html}{pickle}. Essa
+biblioteca permitiu a reutilização da pipeline no back-end da aplicação,
+garantindo a consistência e eficiência do processamento dos dados.
+Segue, então, a descrição das ferramentas empregadas na construção da
+aplicação final.
+
+\section{Recursos utilizados para a criação da aplicação
+final}\label{recursos-utilizados-para-a-criauxe7uxe3o-da-aplicauxe7uxe3o-final}
+
+\section{Recursos utilizados de forma complementar à
+programação}\label{recursos-utilizados-de-forma-complementar-uxe0-programauxe7uxe3o}
+
+\section{Recurso utilizado para a criação do documento de
+texto}\label{recurso-utilizado-para-a-criauxe7uxe3o-do-documento-de-texto}
 
 \chapter{Algoritmos de Aprendizado de
 Máquina}\label{algoritmos-de-aprendizado-de-muxe1quina}
@@ -2264,7 +2328,7 @@ Essa última expressão mostra que, para maximizar o Expected Improvement,
 é necessário encontrar valores de \(\lambda\) que apresentem alta
 probabilidade em \(l\left(\lambda\right)\) e baixa probabilidade em
 \(g\left(\lambda\right)\). Portanto, no TPE, maximizar o EI equivale a
-maximizar a razão \(l\left(\lambda\right) / g\left(\lambda\right)\)
+maximizar a razão \(l\left(\lambda\right) / g\left(\lambda\right)\).
 
 \subsection{Otimização de hiperparâmetros com
 optuna}\label{otimizauxe7uxe3o-de-hiperparuxe2metros-com-optuna}
@@ -2634,15 +2698,15 @@ as variáveis binárias se comportam.
 
 \vspace{12pt}
 
-Para aplicar o método SHAP em Python, foi utilizada a biblioteca shap
-(LUNDBERG; LEE, 2017). Essa biblioteca calcula os valores de Shapley com
-base no modelo ajustado e no algoritmo de explicação escolhido,
-implementado na classe \texttt{shap.Explainer}. Esse algoritmo estima os
-valores de Shapley de maneira eficiente e adaptada ao modelo em análise.
-Após obter os valores de Shapley, é possível criar gráficos como os de
-resumo, dependência e importância. O gráfico de dependência pode ser
-gerado utilizando a função \texttt{shap.dependence\_plot}, enquanto os
-gráficos de importância e resumo são criados com a função
+Para aplicar o método SHAP em Python, foi utilizada a biblioteca shap.
+Essa biblioteca calcula os valores de Shapley com base no modelo
+ajustado e no algoritmo de explicação escolhido, implementado na classe
+\texttt{shap.Explainer}. Esse algoritmo estima os valores de Shapley de
+maneira eficiente e adaptada ao modelo em análise. Após obter os valores
+de Shapley, é possível criar gráficos como os de resumo, dependência e
+importância. O gráfico de dependência pode ser gerado utilizando a
+função \texttt{shap.dependence\_plot}, enquanto os gráficos de
+importância e resumo são criados com a função
 \texttt{shap.summary\_plot}. Abaixo, é apresentado um exemplo de código
 que utiliza a biblioteca shap para gerar esses gráficos baseado no
 algoritmo Stacking:
@@ -3791,6 +3855,11 @@ HASTIE, T. \emph{et al.} \textbf{The elements of statistical learning:
 data mining, inference, and prediction}. {[}S.l.{]}: Springer, 2009. V.
 2.
 
+\bibitem[\citeproctext]{ref-Hunter:2007}
+HUNTER, J. D. \href{https://doi.org/10.1109/MCSE.2007.55}{Matplotlib: A
+2D graphics environment}. \textbf{Computing in Science \& Engineering},
+2007. v. 9, n. 3, p. 90--95.
+
 \bibitem[\citeproctext]{ref-james2013introduction}
 JAMES, G. \emph{et al.} \textbf{An introduction to statistical
 learning}. {[}S.l.{]}: Springer, 2013. V. 112.
@@ -3859,6 +3928,11 @@ Fundamental Algorithms for Scientific Computing in Python}}.
 WAGNER, F. E.; WARD, J. O. Urbanization and Migration in Brazil.
 \textbf{The American Journal of Economics and Sociology}, 1980. v. 39,
 n. 3, p. 249--259.
+
+\bibitem[\citeproctext]{ref-Waskom2021}
+WASKOM, M. L. seaborn: statistical data visualization. \textbf{Journal
+of Open Source Software}, 2021. v. 6, n. 60, p. 3021. Disponível em:
+\textless{}\url{https://doi.org/10.21105/joss.03021}\textgreater.
 
 \bibitem[\citeproctext]{ref-httr}
 WICKHAM, H. \textbf{\href{https://CRAN.R-project.org/package=httr}{httr:
