@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, breakable, frame hidden, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1088,6 +1088,20 @@ Esses métodos serão detalhados na seção de metodologia deste trabalho.
 
 \vspace{12pt}
 
+Vale ressaltar que algumas bibliotecas externas, baseadas na API do
+\href{https://scikit-learn.org/stable/}{scikit-learn}, também foram
+utilizadas neste trabalho. Entre elas, destacam-se a
+\href{https://lightgbm.readthedocs.io/en/stable/}{LightGBM} (KE \emph{et
+al.}, 2017) e a
+\href{https://xgboost.readthedocs.io/en/stable/}{XGBoost} (CHEN, T.;
+GUESTRIN, 2016) (CHEN, T.; GUESTRIN, 2016), empregadas para a
+implementação de algoritmos de aprendizado de máquina. Essas bibliotecas
+fornecem, respectivamente, os algoritmos de gradient boosting LightGBM e
+Extreme Gradient Boosting, reconhecidos por sua eficiência computacional
+e desempenho em tarefas de modelagem preditiva.
+
+\vspace{12pt}
+
 Conclui-se, assim, a apresentação das ferramentas empregadas na
 modelagem e visualização dos resultados. A seguir, serão descritas as
 tecnologias utilizadas no desenvolvimento da aplicação final deste
@@ -1203,7 +1217,7 @@ formatação de código, execução e identificação de possíveis erros.
 
 \vspace{12pt}
 
-Para a elaboração deste documento, foi utilizado o Quarto
+Para a elaboração deste documento, foi utilizado o
 \href{https://quarto.org/}{Quarto} (ALLAIRE; DERVIEUX, 2024), uma
 plataforma de publicação científica desenvolvida pela empresa Posit. O
 \href{https://quarto.org/}{Quarto} é uma evolução do RMarkdown e se
@@ -1221,11 +1235,11 @@ diversos formatos, como HTML, PDF, MS Word, entre outros.
 
 \vspace{12pt}
 
-No contexto deste trabalho, o Quarto foi utilizado para a produção de
-todo o texto, garantindo conformidade com as normas da ABNT. Sua
-capacidade de integrar texto, código e gráficos de maneira organizada
-foi essencial para facilitar o desenvolvimento do documento e assegurar
-sua qualidade final.
+No contexto deste trabalho, o \href{https://quarto.org/}{Quarto} foi
+utilizado para a produção de todo o texto, garantindo conformidade com
+as normas da ABNT. Sua capacidade de integrar texto, código e gráficos
+de maneira organizada foi essencial para facilitar o desenvolvimento do
+documento.
 
 \chapter{Algoritmos de Aprendizado de
 Máquina}\label{algoritmos-de-aprendizado-de-muxe1quina}
@@ -1904,11 +1918,11 @@ Extreme Gradient Boosting e Light Gradient Boosting.
 
 \vspace{12pt}
 
-O Extreme Gradient Boosting (CHEN; GUESTRIN, 2016) é uma implementação
-altamente eficiente do algoritmo e flexível de Gradient Boosting
-aplicado à árvores de decisão. Além disso, é adicionado um novo recurso,
-técnicas de regularização para diminuir o sobreajuste do modelo. A
-função objetivo agora passa a ser definida da seguinte forma:
+O Extreme Gradient Boosting é uma implementação altamente eficiente do
+algoritmo e flexível de Gradient Boosting aplicado à árvores de decisão.
+Além disso, é adicionado um novo recurso, técnicas de regularização para
+diminuir o sobreajuste do modelo. A função objetivo agora passa a ser
+definida da seguinte forma:
 
 \[
 \mathcal{L}\left(\phi\right) = \sum_{i}l\left(\hat{y}_{i}, y_{i}\right) + \sum_{k}\Omega\left(f_{k}\right)
@@ -4008,6 +4022,11 @@ INC., P. T. Collaborative data science. 2015. Disponível em:
 \bibitem[\citeproctext]{ref-james2013introduction}
 JAMES, G. \emph{et al.} \textbf{An introduction to statistical
 learning}. {[}S.l.{]}: Springer, 2013. V. 112.
+
+\bibitem[\citeproctext]{ref-ke2017lightgbm}
+KE, G. \emph{et al.} Lightgbm: A highly efficient gradient boosting
+decision tree. \textbf{Advances in neural information processing
+systems}, 2017. v. 30.
 
 \bibitem[\citeproctext]{ref-kouzis2016learning}
 KOUZIS-LOUKAS, D. \textbf{Learning Scrapy}. {[}S.l.{]}: Packt Publishing

@@ -392,6 +392,10 @@ Vale destacar que bibliotecas como o [Matplotlib](https://matplotlib.org/) e o [
 
 \vspace{12pt}
 
+Vale ressaltar que algumas bibliotecas externas, baseadas na API do [scikit-learn](https://scikit-learn.org/stable/), também foram utilizadas neste trabalho. Entre elas, destacam-se a [LightGBM](https://lightgbm.readthedocs.io/en/stable/) [@ke2017lightgbm] e a [XGBoost](https://xgboost.readthedocs.io/en/stable/) [@chen2016xgboost] [@chen2016xgboost], empregadas para a implementação de algoritmos de aprendizado de máquina. Essas bibliotecas fornecem, respectivamente, os algoritmos de gradient boosting LightGBM e Extreme Gradient Boosting, reconhecidos por sua eficiência computacional e desempenho em tarefas de modelagem preditiva.
+
+\vspace{12pt}
+
 Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e visualização dos resultados. A seguir, serão descritas as tecnologias utilizadas no desenvolvimento da aplicação final deste trabalho. Vale destacar que o [scikit-learn](https://scikit-learn.org/stable/) continuou desempenhando um papel relevante na aplicação, com sua pipeline sendo serializada no formato `.pkl` por meio da biblioteca [pickle](https://docs.python.org/3/library/pickle.html). Essa biblioteca permitiu a reutilização da pipeline no back-end da aplicação, garantindo a consistência, eficiência do processamento dos dados e predição do modelo para novos dados. Segue, então, a descrição das ferramentas empregadas na construção da aplicação final.
 
 ## Recursos utilizados para a criação da aplicação final
@@ -424,11 +428,11 @@ O [Visual Studio Code (VSCode)](https://code.visualstudio.com/) foi a principal 
 
 \vspace{12pt}
 
-Para a elaboração deste documento, foi utilizado o Quarto [Quarto](https://quarto.org/) [@quarto], uma plataforma de publicação científica desenvolvida pela empresa Posit. O [Quarto](https://quarto.org/) é uma evolução do RMarkdown e se destaca por sua capacidade de criar documentos de alta qualidade que integram texto e código. Compatível com diversas linguagens de programação, como `R`, `Python`, e outras, essa ferramenta é extremamente versátil para análise de dados e geração de relatórios. Com o [Quarto](https://quarto.org/), é possível produzir relatórios, artigos, livros, apresentações e até sites. Ele é amplamente adotado na comunidade científica, especialmente entre usuários de `R`, e oferece suporte a Markdown e \LaTeX, o que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais. Além disso, os documentos gerados podem ser exportados para diversos formatos, como HTML, PDF, MS Word, entre outros.
+Para a elaboração deste documento, foi utilizado o [Quarto](https://quarto.org/) [@quarto], uma plataforma de publicação científica desenvolvida pela empresa Posit. O [Quarto](https://quarto.org/) é uma evolução do RMarkdown e se destaca por sua capacidade de criar documentos de alta qualidade que integram texto e código. Compatível com diversas linguagens de programação, como `R`, `Python`, e outras, essa ferramenta é extremamente versátil para análise de dados e geração de relatórios. Com o [Quarto](https://quarto.org/), é possível produzir relatórios, artigos, livros, apresentações e até sites. Ele é amplamente adotado na comunidade científica, especialmente entre usuários de `R`, e oferece suporte a Markdown e \LaTeX, o que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais. Além disso, os documentos gerados podem ser exportados para diversos formatos, como HTML, PDF, MS Word, entre outros.
 
 \vspace{12pt}
 
-No contexto deste trabalho, o Quarto foi utilizado para a produção de todo o texto, garantindo conformidade com as normas da ABNT. Sua capacidade de integrar texto, código e gráficos de maneira organizada foi essencial para facilitar o desenvolvimento do documento e assegurar sua qualidade final.
+No contexto deste trabalho, o [Quarto](https://quarto.org/) foi utilizado para a produção de todo o texto, garantindo conformidade com as normas da ABNT. Sua capacidade de integrar texto, código e gráficos de maneira organizada foi essencial para facilitar o desenvolvimento do documento.
 
 # Algoritmos de Aprendizado de Máquina
 
@@ -843,7 +847,7 @@ As outras implementações de Gradient Boosting aplicadas à árvores de decisã
 
 \vspace{12pt}
 
-O Extreme Gradient Boosting [@chen2016xgboost] é uma implementação altamente eficiente do algoritmo e flexível de Gradient Boosting aplicado à árvores de decisão. Além disso, é adicionado um novo recurso, técnicas de regularização para diminuir o sobreajuste do modelo. A função objetivo agora passa a ser definida da seguinte forma:
+O Extreme Gradient Boosting é uma implementação altamente eficiente do algoritmo e flexível de Gradient Boosting aplicado à árvores de decisão. Além disso, é adicionado um novo recurso, técnicas de regularização para diminuir o sobreajuste do modelo. A função objetivo agora passa a ser definida da seguinte forma:
 
 $$
 \mathcal{L}\left(\phi\right) = \sum_{i}l\left(\hat{y}_{i}, y_{i}\right) + \sum_{k}\Omega\left(f_{k}\right)
