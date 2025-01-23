@@ -45,8 +45,7 @@ lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
 toc: true
-title: |
-  (Escolher no final)
+title: Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores Imobiliários no Mercado Imobiliário da Cidade de João Pessoa
 author: Gabriel de Jesus Pereira
 mermaid:
   theme: forest
@@ -276,19 +275,19 @@ Toda raspagem inicia com a composição de uma requisição HTTP para adquirir r
 
 \vspace{12pt}
 
-Para realizar a raspagem de dados, foram utilizadas as linguagens de programação `R` [@r_language] e `Python` [@van1995python]. `R` é uma linguagem voltada para computação científica e visualização de dados, desenvolvida pelos professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do `R` foi lançada em 1993, e, em 1997, a linguagem tornou-se oficialmente parte do Projeto GNU. Em `R`, há diversos pacotes disponíveis para a realização de raspagem de dados. Neste trabalho, foi utilizado o pacote [xml2](https://xml2.r-lib.org/) [@xml2] e o [rvest](https://rvest.tidyverse.org/) [@rvest].
+Para realizar a raspagem de dados, foram utilizadas as linguagens de programação `R` [@r_language] e `Python` [@van1995python]. `R` é uma linguagem voltada para computação científica e visualização de dados, desenvolvida pelos professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do `R` foi lançada em 1993, e, em 1997, a linguagem tornou-se oficialmente parte do Projeto GNU. Em `R`, há diversos pacotes disponíveis para a realização de raspagem de dados. Neste trabalho, foi utilizado o pacote [**xml2**](https://xml2.r-lib.org/) [@xml2] e o [**rvest**](https://rvest.tidyverse.org/) [@rvest].
 
 \vspace{12pt}
 
-O pacote [xml2](https://xml2.r-lib.org/) foi inspirado no [jQuery](https://jquery.com/), uma biblioteca `JavaScript` projetada para facilitar tarefas como a manipulação de documentos HTML. Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e modificar os nós de documentos estruturados. Essas funcionalidades permitem, por exemplo, a extração de informações específicas de páginas web ou arquivos XML. Embora o [xml2](https://xml2.r-lib.org/) não possua suporte direto para compor requisições HTTP, ele se destaca por sua capacidade de interpretar a estrutura hierárquica de sites e organizar os dados extraídos de maneira estruturada e eficiente.
+O pacote [**xml2**](https://xml2.r-lib.org/) foi inspirado no [**jQuery**](https://jquery.com/), uma biblioteca `JavaScript` projetada para facilitar tarefas como a manipulação de documentos HTML. Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e modificar os nós de documentos estruturados. Essas funcionalidades permitem, por exemplo, a extração de informações específicas de páginas web ou arquivos XML. Embora o [**xml2**](https://xml2.r-lib.org/) não possua suporte direto para compor requisições HTTP, ele se destaca por sua capacidade de interpretar a estrutura hierárquica de sites e organizar os dados extraídos de maneira estruturada e eficiente.
 
 \vspace{12pt}
 
-Embora o pacote [rvest](https://rvest.tidyverse.org/) compartilhe algumas funcionalidades com o [xml2](https://xml2.r-lib.org/), ele oferece diversas características adicionais que tornam o processo de web scraping ainda mais simples. O [rvest](https://rvest.tidyverse.org/) facilita o acesso direto a páginas web e a extração de informações com o uso de seletores `CSS` e `XPath`, permitindo a seleção precisa de elementos específicos da página. Uma funcionalidade particularmente interessante é o recurso `LiveHTML`, que possibilita a interação direta com a página, abrindo-a em um navegador para observar, em tempo real, as operações realizadas no site. Isso torna o processo de coleta de dados mais intuitivo, uma vez que se torna possível observar as operações que se deseja realizar em tempo real.
+Embora o pacote [**rvest**](https://rvest.tidyverse.org/) compartilhe algumas funcionalidades com o [**xml2**](https://xml2.r-lib.org/), ele oferece diversas características adicionais que tornam o processo de web scraping ainda mais simples. O [**rvest**](https://rvest.tidyverse.org/) facilita o acesso direto a páginas web e a extração de informações com o uso de seletores `CSS` e `XPath`, permitindo a seleção precisa de elementos específicos da página. Uma funcionalidade particularmente interessante é o recurso `LiveHTML`, que possibilita a interação direta com a página, abrindo-a em um navegador para observar, em tempo real, as operações realizadas no site. Isso torna o processo de coleta de dados mais intuitivo, uma vez que se torna possível observar as operações que se deseja realizar em tempo real.
 
 \vspace{12pt}
 
-Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [selenium](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, Firefox, entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [selenium](https://cran.r-project.org/web/packages/selenium/index.html), foi o [httr](https://httr.r-lib.org/) [@httr].
+Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, Firefox, entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html), foi o [**httr**](https://httr.r-lib.org/) [@httr].
 
 \vspace{12pt}
 
@@ -296,35 +295,35 @@ Como mencionado anteriormente, `Python` também foi utilizado para realizar a ra
 
 \vspace{12pt}
 
-A linguagem de programação `Python` possui um ecossistema diversificado de bibliotecas para a realização de diversas tarefas, incluindo a raspagem de dados. Especificamente para essa finalidade, foi utilizada a biblioteca [Scrapy](https://docs.scrapy.org/en/latest) [@kouzis2016learning], um framework voltado para web scraping e crawling que permite extrair dados de páginas da web de forma automatizada.
+A linguagem de programação `Python` possui um ecossistema diversificado de bibliotecas para a realização de diversas tarefas, incluindo a raspagem de dados. Especificamente para essa finalidade, foi utilizada a biblioteca [**Scrapy**](https://docs.scrapy.org/en/latest) [@kouzis2016learning], um framework voltado para web scraping e crawling que permite extrair dados de páginas da web de forma automatizada.
 
 \vspace{12pt}
 
-O [Scrapy](https://docs.scrapy.org/en/latest) é uma ferramenta robusta e completa, com suporte nativo para diversos métodos HTTP. Ele foi projetado para ser rápido e eficiente, facilitando a criação de spiders — programas que navegam automaticamente por páginas web e extraem dados de forma estruturada. Além disso, o framework permite a exportação dos dados coletados para diversos formatos, como CSV, JSON ou bancos de dados, tornando-o uma solução ideal para projetos de coleta de informações em grande escala.
+O [**Scrapy**](https://docs.scrapy.org/en/latest) é uma ferramenta robusta e completa, com suporte nativo para diversos métodos HTTP. Ele foi projetado para ser rápido e eficiente, facilitando a criação de spiders — programas que navegam automaticamente por páginas web e extraem dados de forma estruturada. Além disso, o framework permite a exportação dos dados coletados para diversos formatos, como CSV, JSON ou bancos de dados, tornando-o uma solução ideal para projetos de coleta de informações em grande escala.
 
 \vspace{12pt}
 
-O framework também possui seletores `XPath` e `CSS`, que facilitam a localização e extração de informações específicas de páginas HTML. Uma funcionalidade especialmente interessante é sua capacidade de lidar com redirecionamentos de IP, permitindo superação de restrições impostas por alguns sites durante o processo de raspagem. Além disso, o [Scrapy](https://docs.scrapy.org/en/latest) permite a criação de `pipelines`, que são etapas de processamento dos dados em tempo de execução. Essas `pipelines` são extremamente úteis para transformar, limpar e organizar as informações antes de serem salvas, garantindo que os dados extraídos já estejam em um formato estruturado e pronto para análise ou armazenamento.
+O framework também possui seletores `XPath` e `CSS`, que facilitam a localização e extração de informações específicas de páginas HTML. Uma funcionalidade especialmente interessante é sua capacidade de lidar com redirecionamentos de IP, permitindo superação de restrições impostas por alguns sites durante o processo de raspagem. Além disso, o [**Scrapy**](https://docs.scrapy.org/en/latest) permite a criação de `pipelines`, que são etapas de processamento dos dados em tempo de execução. Essas `pipelines` são extremamente úteis para transformar, limpar e organizar as informações antes de serem salvas, garantindo que os dados extraídos já estejam em um formato estruturado e pronto para análise ou armazenamento.
 
 \vspace{12pt}
 
-As middlewares no [Scrapy](https://docs.scrapy.org/en/latest) são componentes intermediárias que permitem modificar e processar requisições e respostas em tempo de execução. Elas são fundamentais para personalizar o comportamento do framework durante o fluxo de raspagem. Existem dois tipos principais de middlewares no [Scrapy](https://docs.scrapy.org/en/latest): middlewares de requisição e middlewares de download.
+As middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest) são componentes intermediárias que permitem modificar e processar requisições e respostas em tempo de execução. Elas são fundamentais para personalizar o comportamento do framework durante o fluxo de raspagem. Existem dois tipos principais de middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest): middlewares de requisição e middlewares de download.
 
 \vspace{12pt}
 
-As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [Scrapy](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/>.
+As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [**Scrapy**](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/>.
 
 \vspace{12pt}
 
-Por outro lado, as middlewares de download têm a função de gerenciar o processo de download das páginas. Elas podem ser configuradas para evitar redirecionamentos indesejados, implementar atrasos entre requisições para evitar sobrecarregar os servidores e diminuir as chances de ser bloqueado. Essas middlewares tornam o [Scrapy](https://docs.scrapy.org/en/latest) altamente flexível, permitindo ajustes específicos para atender às necessidades do projeto.
+Por outro lado, as middlewares de download têm a função de gerenciar o processo de download das páginas. Elas podem ser configuradas para evitar redirecionamentos indesejados, implementar atrasos entre requisições para evitar sobrecarregar os servidores e diminuir as chances de ser bloqueado. Essas middlewares tornam o [**Scrapy**](https://docs.scrapy.org/en/latest) altamente flexível, permitindo ajustes específicos para atender às necessidades do projeto.
 
 \vspace{12pt}
 
-Embora o [Scrapy](https://docs.scrapy.org/en/latest) ofereça uma ampla gama de funcionalidades, pode ser necessário recorrer a ferramentas externas para lidar com conteúdos dinâmicos presentes em algumas páginas web. O Scrapy possui integração com bibliotecas especializadas que facilitam o tratamento desse tipo de conteúdo. Uma dessas bibliotecas, utilizada neste trabalho, é o [scrapy-playwright](https://github.com/scrapy-plugins/scrapy-playwright), que integra o poder do [Playwright](https://playwright.dev/python/) ao [Scrapy](https://docs.scrapy.org/en/latest).
+Embora o [**Scrapy**](https://docs.scrapy.org/en/latest) ofereça uma ampla gama de funcionalidades, pode ser necessário recorrer a ferramentas externas para lidar com conteúdos dinâmicos presentes em algumas páginas web. O Scrapy possui integração com bibliotecas especializadas que facilitam o tratamento desse tipo de conteúdo. Uma dessas bibliotecas, utilizada neste trabalho, é o [**scrapy-playwright**](https://github.com/scrapy-plugins/scrapy-playwright), que integra o poder do [**Playwright**](https://playwright.dev/python/) ao [**Scrapy**](https://docs.scrapy.org/en/latest).
 
 \vspace{12pt}
 
-O [Playwright](https://playwright.dev/python/) foi originalmente desenvolvido para realizar testes em aplicações web e executar tarefas de automação. No entanto, aqui ele foi empregado para interagir com o conteúdo dinâmico de páginas, como carregar elementos gerados por `JavaScript`. Sua utilização neste trabalho teve o mesmo propósito que o pacote [selenium](https://cran.r-project.org/web/packages/selenium/index.html) desempenhou na raspagem de dados feita com `R`, permitindo capturar dados que não seriam acessíveis diretamente via requisições HTTP convencionais. Além disso, ele também permite simular navegadores para acompanhar em tempo real o que cada requisição está alterando. Por fim, ao coletar os dados de imóveis, foi necessário realizar também a geocodificação dos endereços. Para isso, foi utilizado o pacote [tidygeocoder](https://jessecambon.github.io/tidygeocoder/) [@geocoder] da linguagem `R`, que também serviu para os dados que estavam sendo coletados em `Python`.
+O [**Playwright**](https://playwright.dev/python/) foi originalmente desenvolvido para realizar testes em aplicações web e executar tarefas de automação. No entanto, aqui ele foi empregado para interagir com o conteúdo dinâmico de páginas, como carregar elementos gerados por `JavaScript`. Sua utilização neste trabalho teve o mesmo propósito que o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) desempenhou na raspagem de dados feita com `R`, permitindo capturar dados que não seriam acessíveis diretamente via requisições HTTP convencionais. Além disso, ele também permite simular navegadores para acompanhar em tempo real o que cada requisição está alterando. Por fim, ao coletar os dados de imóveis, foi necessário realizar também a geocodificação dos endereços. Para isso, foi utilizado o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) [@geocoder] da linguagem `R`, que também serviu para os dados que estavam sendo coletados em `Python`.
 
 \vspace{12pt}
 
@@ -332,15 +331,15 @@ Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos 
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
-\ \ \ Com os dados coletados, a etapa de modelagem dos valores de imóveis torna-se essencial para converter essas informações em entendimentos relevantes e aplicáveis. Essa etapa permite identificar padrões de comportamento entre as variáveis que influenciam os valores imobiliários, além de determinar quais fatores exercem maior impacto sobre esses valores. Para chegar a esses resultados, foram utilizadas bibliotecas desenvolvidas em `Python`, como [scikit-learn](https://scikit-learn.org/stable/) [@scikit-learn], [pandas](https://pandas.pydata.org/) [@reback2020pandas], empregada para a manipulação das bases de dados utilizadas neste trabalho, [numpy](https://numpy.org/) [@harris2020array], voltada para computação numérica, entre outras.
+\ \ \ Com os dados coletados, a etapa de modelagem dos valores de imóveis torna-se essencial para converter essas informações em entendimentos relevantes e aplicáveis. Essa etapa permite identificar padrões de comportamento entre as variáveis que influenciam os valores imobiliários, além de determinar quais fatores exercem maior impacto sobre esses valores. Para chegar a esses resultados, foram utilizadas bibliotecas desenvolvidas em `Python`, como [**scikit-learn**](https://scikit-learn.org/stable/) [@scikit-learn], [**pandas**](https://pandas.pydata.org/) [@reback2020pandas], empregada para a manipulação das bases de dados utilizadas neste trabalho, [**numpy**](https://numpy.org/) [@harris2020array], voltada para computação numérica, entre outras.
 
 \vspace{12pt}
 
-O [scikit-learn](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em Python. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [scikit-learn](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [SciPy](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em Python.
+O [**scikit-learn**](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em Python. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [**scikit-learn**](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [**SciPy**](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em Python.
 
 \vspace{12pt}
 
-Uma das funcionalidades mais úteis do [scikit-learn](https://scikit-learn.org/stable/) é o uso de pipelines para transformar dados. As pipelines permitem combinar etapas de pré-processamento e ajuste de modelos em um único fluxo organizado. Isso não apenas simplifica o código, mas também assegura que as transformações aplicadas aos dados de treinamento sejam automaticamente replicadas nos dados de teste ou em novos dados. Além de serem úteis para tarefas mais simples, como normalização de variáveis, as pipelines permitem a inclusão de etapas personalizadas para lidar com cenários mais complexos, como tratamentos avançados de dados ou integração com ferramentas externas.
+Uma das funcionalidades mais úteis do [**scikit-learn**](https://scikit-learn.org/stable/) é o uso de pipelines para transformar dados. As pipelines permitem combinar etapas de pré-processamento e ajuste de modelos em um único fluxo organizado. Isso não apenas simplifica o código, mas também assegura que as transformações aplicadas aos dados de treinamento sejam automaticamente replicadas nos dados de teste ou em novos dados. Além de serem úteis para tarefas mais simples, como normalização de variáveis, as pipelines permitem a inclusão de etapas personalizadas para lidar com cenários mais complexos, como tratamentos avançados de dados ou integração com ferramentas externas.
 
 \vspace{12pt}
 
@@ -380,23 +379,23 @@ pipeline = Pipeline([
 pipeline.fit(X_train, y_train)
 ```
 
-Outra etapa fundamental no processo de aprendizado de máquina, além do pré-processamento dos dados e do ajuste do algoritmo, é a otimização dos hiperparâmetros. O [scikit-learn](https://scikit-learn.org/stable/) oferece algumas ferramentas para essa tarefa, mas elas possuem funcionalidades mais básicas e podem ser limitadas para cenários mais complexos. Dessa forma, de forma complementar, esse trabalho utilizou a biblioteca [Optuna](https://optuna.org/) [@optuna_2019], que é uma biblioteca que contém uma grande quantidade de algoritmos para otimização, como, por exemplo, métodos de otimização bayesiana.
+Outra etapa fundamental no processo de aprendizado de máquina, além do pré-processamento dos dados e do ajuste do algoritmo, é a otimização dos hiperparâmetros. O [**scikit-learn**](https://scikit-learn.org/stable/) oferece algumas ferramentas para essa tarefa, mas elas possuem funcionalidades mais básicas e podem ser limitadas para cenários mais complexos. Dessa forma, de forma complementar, esse trabalho utilizou a biblioteca [**Optuna**](https://optuna.org/) [@optuna_2019], que é uma biblioteca que contém uma grande quantidade de algoritmos para otimização, como, por exemplo, métodos de otimização bayesiana.
 
 \vspace{12pt}
 
-Além das funcionalidades de otimização, o [Optuna](https://optuna.org/) também oferece ferramentas para analisar o comportamento da função objetivo durante o processo de otimização e identificar os hiperparâmetros mais relevantes. Uma dessas ferramentas é a função `plot_param_importances`, que gera um gráfico destacando a importância relativa de cada hiperparâmetro. Além disso, como o `plot_param_importances` utiliza a biblioteca [Matplotlib](https://matplotlib.org/) [@Hunter:2007], os gráficos gerados podem ser personalizados pelo usuário.
+Além das funcionalidades de otimização, o [**Optuna**](https://optuna.org/) também oferece ferramentas para analisar o comportamento da função objetivo durante o processo de otimização e identificar os hiperparâmetros mais relevantes. Uma dessas ferramentas é a função `plot_param_importances`, que gera um gráfico destacando a importância relativa de cada hiperparâmetro. Além disso, como o `plot_param_importances` utiliza a biblioteca [**Matplotlib**](https://matplotlib.org/) [@Hunter:2007], os gráficos gerados podem ser personalizados pelo usuário.
 
 \vspace{12pt}
 
-Vale destacar que bibliotecas como o [Matplotlib](https://matplotlib.org/) e o [seaborn](https://seaborn.pydata.org/) [@Waskom2021] desempenharam um papel fundamental na geração dos gráficos e na visualização dos dados apresentados neste trabalho. Essas ferramentas foram indispensáveis para a análise exploratória e a apresentação dos resultados de forma clara e compreensível. Além dessas bibliotecas, também foram utilizados recursos voltados para a análise do impacto e das relações entre as variáveis e as previsões realizadas pelos modelos. Nesse contexto, destacam-se o [SHAP](https://shap.readthedocs.io/en/latest) [@NIPS2017_7062], que fornece explicações interpretáveis para os modelos de aprendizado de máquina, e o próprio [scikit-learn](https://scikit-learn.org/stable/), que foi essencial para a criação dos gráficos de ICE (Individual Conditional Expectation). Esses métodos serão detalhados na seção de metodologia deste trabalho.
+Vale destacar que bibliotecas como o [**Matplotlib**](https://matplotlib.org/) e o [**seaborn**](https://seaborn.pydata.org/) [@Waskom2021] desempenharam um papel fundamental na geração dos gráficos e na visualização dos dados apresentados neste trabalho. Essas ferramentas foram indispensáveis para a análise exploratória e a apresentação dos resultados de forma clara e compreensível. Além dessas bibliotecas, também foram utilizados recursos voltados para a análise do impacto e das relações entre as variáveis e as previsões realizadas pelos modelos. Nesse contexto, destacam-se o [**SHAP**](https://shap.readthedocs.io/en/latest) [@NIPS2017_7062], que fornece explicações interpretáveis para os modelos de aprendizado de máquina, e o próprio [**scikit-learn**](https://scikit-learn.org/stable/), que foi essencial para a criação dos gráficos de ICE (Individual Conditional Expectation). Esses métodos serão detalhados na seção de metodologia deste trabalho.
 
 \vspace{12pt}
 
-Vale ressaltar que algumas bibliotecas externas, baseadas na API do [scikit-learn](https://scikit-learn.org/stable/), também foram utilizadas neste trabalho. Entre elas, destacam-se a [LightGBM](https://lightgbm.readthedocs.io/en/stable/) [@ke2017lightgbm] e a [XGBoost](https://xgboost.readthedocs.io/en/stable/) [@chen2016xgboost] [@chen2016xgboost], empregadas para a implementação de algoritmos de aprendizado de máquina. Essas bibliotecas fornecem, respectivamente, os algoritmos de gradient boosting LightGBM e Extreme Gradient Boosting, reconhecidos por sua eficiência computacional e desempenho em tarefas de modelagem preditiva.
+Vale ressaltar que algumas bibliotecas externas, baseadas na API do [**scikit-learn**](https://scikit-learn.org/stable/), também foram utilizadas neste trabalho. Entre elas, destacam-se a [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) [@ke2017lightgbm] e a [**XGBoost**](https://xgboost.readthedocs.io/en/stable/) [@chen2016xgboost], empregadas para a implementação de algoritmos de aprendizado de máquina. Essas bibliotecas fornecem, respectivamente, os algoritmos de gradient boosting LightGBM e Extreme Gradient Boosting, reconhecidos por sua eficiência computacional e desempenho em tarefas de modelagem preditiva.
 
 \vspace{12pt}
 
-Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e visualização dos resultados. A seguir, serão descritas as tecnologias utilizadas no desenvolvimento da aplicação final deste trabalho. Vale destacar que o [scikit-learn](https://scikit-learn.org/stable/) continuou desempenhando um papel relevante na aplicação, com sua pipeline sendo serializada no formato `.pkl` por meio da biblioteca [pickle](https://docs.python.org/3/library/pickle.html). Essa biblioteca permitiu a reutilização da pipeline no back-end da aplicação, garantindo a consistência, eficiência do processamento dos dados e predição do modelo para novos dados. Segue, então, a descrição das ferramentas empregadas na construção da aplicação final.
+Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e visualização dos resultados. A seguir, serão descritas as tecnologias utilizadas no desenvolvimento da aplicação final deste trabalho. Vale destacar que o [**scikit-learn**](https://scikit-learn.org/stable/) continuou desempenhando um papel relevante na aplicação, com sua pipeline sendo serializada no formato `.pkl` por meio da biblioteca [**pickle**](https://docs.python.org/3/library/pickle.html). Essa biblioteca permitiu a reutilização da pipeline no back-end da aplicação, garantindo a consistência, eficiência do processamento dos dados e predição do modelo para novos dados. Segue, então, a descrição das ferramentas empregadas na construção da aplicação final.
 
 ## Recursos utilizados para a criação da aplicação final
 
@@ -404,15 +403,15 @@ Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e vi
 
 \vspace{12pt}
 
-O front-end da aplicação foi desenvolvido utilizando a biblioteca [Dash](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [Plotly](https://plotly.com/) [@plotly], a [Dash](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [Plotly](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`.
+O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`.
 
 \vspace{12pt}
 
-Para o desenvolvimento do back-end da aplicação foi utilizado o framework [FastAPI](https://fastapi.tiangolo.com/), uma ferramenta moderna e eficiente para a criação de APIs em `Python`. O [FastAPI](https://fastapi.tiangolo.com/) é conhecido por sua alta performance, graças ao uso de tipagem estática e a sua facilidade de suporte assíncrono, além de permitir a criação de APIs de maneira rápida e simples. Sua integração com bibliotecas como [Pydantic](https://docs.pydantic.dev/latest/) para validação de dados e [SQLAlchemy](https://www.sqlalchemy.org/) [@sqlalchemy] para interação e conexão com bancos de dados.
+Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**FastAPI**](https://fastapi.tiangolo.com/), uma ferramenta moderna e eficiente para a criação de APIs em `Python`. O [**FastAPI**](https://fastapi.tiangolo.com/) é conhecido por sua alta performance, graças ao uso de tipagem estática e a sua facilidade de suporte assíncrono, além de permitir a criação de APIs de maneira rápida e simples. Sua integração com bibliotecas como [**Pydantic**](https://docs.pydantic.dev/latest/) para validação de dados e [**SQLAlchemy**](https://www.sqlalchemy.org/) [@sqlalchemy] para interação e conexão com bancos de dados.
 
 \vspace{12pt}
 
-No projeto, o [SQLAlchemy](https://www.sqlalchemy.org/) foi utilizado para gerenciar a conexão com o banco de dados, implementado com [PostgresSQL](https://www.postgresql.org/), um sistema de gerenciamento de banco de dados relacional amplamente reconhecido por sua robustez e alto desempenho. Isso permitiu que os dados fossem expostos na API e consumidos no front-end. Além disso, a API foi responsável por expor a pipeline do modelo, possibilitando a realização de previsões de valores imobiliários diretamente na aplicação. Não obstante, os mapas da cidade de João Pessoa, criados com a biblioteca [Folium](https://python-visualization.github.io/folium/latest/) [@folium], foram servidos pela API, que expôs seus arquivos HTML para consumo no front-end.
+No projeto, o [**SQLAlchemy**](https://www.sqlalchemy.org/) foi utilizado para gerenciar a conexão com o banco de dados, implementado com [**PostgresSQL**](https://www.postgresql.org/), um sistema de gerenciamento de banco de dados relacional amplamente reconhecido por sua robustez e alto desempenho. Isso permitiu que os dados fossem expostos na API e consumidos no front-end. Além disso, a API foi responsável por expor a pipeline do modelo, possibilitando a realização de previsões de valores imobiliários diretamente na aplicação. Não obstante, os mapas da cidade de João Pessoa, criados com a biblioteca [**Folium**](https://python-visualization.github.io/folium/latest/) [@folium], foram servidos pela API, que expôs seus arquivos HTML para consumo no front-end.
 
 \vspace{12pt}
 
@@ -424,15 +423,15 @@ Com as tecnologias mencionadas anteriormente e o modelo final obtido, foi possí
 
 \vspace{12pt}
 
-O [Visual Studio Code (VSCode)](https://code.visualstudio.com/) foi a principal ferramenta utilizada para a escrita do código neste trabalho. O [VSCode]([vscodevim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)) é um editor bastante leve e oferece suporte a diversas linguagens de programação e permite integração com inúmeras tecnologias por meio de suas extensões. Entre as extensões utilizadas, destaca-se o [vscodevim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim), que incorpora os key mappings do editor de texto Vim, originalmente criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além disso, foram empregadas extensões específicas para as linguagens `Python` e `R`, tendo como principal objetivo uma melhor formatação de código, execução e identificação de possíveis erros.
+O [**Visual Studio Code (VSCode)**](https://code.visualstudio.com/) foi a principal ferramenta utilizada para a escrita do código neste trabalho. O [**VSCode**]([vscodevim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)) é um editor bastante leve e oferece suporte a diversas linguagens de programação e permite integração com inúmeras tecnologias por meio de suas extensões. Entre as extensões utilizadas, destaca-se o [**vscodevim**](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim), que incorpora os key mappings do editor de texto Vim, originalmente criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além disso, foram empregadas extensões específicas para as linguagens `Python` e `R`, tendo como principal objetivo uma melhor formatação de código, execução e identificação de possíveis erros.
 
 \vspace{12pt}
 
-Para a elaboração deste documento, foi utilizado o [Quarto](https://quarto.org/) [@quarto], uma plataforma de publicação científica desenvolvida pela empresa Posit. O [Quarto](https://quarto.org/) é uma evolução do RMarkdown e se destaca por sua capacidade de criar documentos de alta qualidade que integram texto e código. Compatível com diversas linguagens de programação, como `R`, `Python`, e outras, essa ferramenta é extremamente versátil para análise de dados e geração de relatórios. Com o [Quarto](https://quarto.org/), é possível produzir relatórios, artigos, livros, apresentações e até sites. Ele é amplamente adotado na comunidade científica, especialmente entre usuários de `R`, e oferece suporte a Markdown e \LaTeX, o que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais. Além disso, os documentos gerados podem ser exportados para diversos formatos, como HTML, PDF, MS Word, entre outros.
+Para a elaboração deste documento, foi utilizado o [**Quarto**](https://quarto.org/) [@quarto], uma plataforma de publicação científica desenvolvida pela empresa Posit. O [**Quarto**](https://quarto.org/) é uma evolução do RMarkdown e se destaca por sua capacidade de criar documentos de alta qualidade que integram texto e código. Compatível com diversas linguagens de programação, como `R`, `Python`, e outras, essa ferramenta é extremamente versátil para análise de dados e geração de relatórios. Com o [**Quarto**](https://quarto.org/), é possível produzir relatórios, artigos, livros, apresentações e até sites. Ele é amplamente adotado na comunidade científica, especialmente entre usuários de `R`, e oferece suporte a Markdown e \LaTeX, o que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais. Além disso, os documentos gerados podem ser exportados para diversos formatos, como HTML, PDF, MS Word, entre outros.
 
 \vspace{12pt}
 
-No contexto deste trabalho, o [Quarto](https://quarto.org/) foi utilizado para a produção de todo o texto, garantindo conformidade com as normas da ABNT. Sua capacidade de integrar texto, código e gráficos de maneira organizada foi essencial para facilitar o desenvolvimento do documento.
+No contexto deste trabalho, o [**Quarto**](https://quarto.org/) foi utilizado para a produção de todo o texto, garantindo conformidade com as normas da ABNT. Sua capacidade de integrar texto, código e gráficos de maneira organizada foi essencial para facilitar o desenvolvimento do documento.
 
 # Algoritmos de Aprendizado de Máquina
 
@@ -464,36 +463,36 @@ graph TD
 
 \vspace{12pt}
 
-O espaço dos preditores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, \dots, R_J$. Essas regiões são construídas em formato de caixa de forma a minimizar a soma dos quadrados dos resíduos. Dessa forma, pode-se modelar a variável resposta como uma constante $c_j$ em cada região $R_j$
+O espaço dos preditores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_1, R_2, \dots, R_J$. Essas regiões são construídas em formato de caixa de forma a minimizar a soma dos quadrados dos resíduos. Dessa forma, pode-se modelar a variável resposta como uma constante $c_j$ em cada região $R_j$:
 
 $$
-f\left(x\right) = \sum^J_{j=1}c_j I\left(x \in R_j \right)
+f\left(x\right) = \sum^J_{j=1}c_j I\left(x \in R_j \right)\text{.}
 $$
 
-O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados. Assim, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(x_i\right)\right]^2$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se for observada a definição da função indicadora $I\left(x \in R_j\right)$
+O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados. Assim, deve-se minimizar $\sum_{x_i \in R_j} \left[y_i - f\left(x_i\right)\right]^2$. No entanto, perceba que $f\left(x_i\right)$ está sendo avaliado somente em um ponto específico $x_i$, o que reduzirá $f\left(x_i\right)$ para uma constante $c_j$. É fácil de se chegar ao resultado se for observada a definição da função indicadora $I\left(x \in R_j\right)$:
 
 $$
 I_{R_j}(x_i) =
 \begin{cases}
     1,& \text{se } x_i \in R_j \\
     0,& \text{se } x_i \notin R_j
-\end{cases}
+\end{cases}\text{.}
 $$
 
-Como as regiões são disjuntas, $x_i$ não pode estar simultaneamente em duas regiões. Assim, para um ponto específico $x_i$, apenas um dos casos da função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Agora, derivando $\sum_{x_i \in R_j}\left(yi - c_j\right)^2$ em relação a $c_j$
+Como as regiões são disjuntas, $x_i$ não pode estar simultaneamente em duas regiões. Assim, para um ponto específico $x_i$, apenas um dos casos da função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Agora, derivando $\sum_{x_i \in R_j}\left(yi - c_j\right)^2$ em relação a $c_j$:
 
 $$
-\frac{\partial}{\partial{c_j}}\sum_{x_i \in R_j} \left(y_i - c_j\right)^2 = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)
+\frac{\partial}{\partial{c_j}}\sum_{x_i \in R_j} \left(y_i - c_j\right)^2 = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)\text{,}
 $${#eq-partialdev}
-e igualando @eq-partialdev a 0, tem-se a seguinte igualdade
+e igualando @eq-partialdev a 0, tem-se a seguinte igualdade:
 
 $$
-\sum_{x_i \in R_j} \left(y_i - \hat{c}_j\right) = 0
+\sum_{x_i \in R_j} \left(y_i - \hat{c}_j\right) = 0\text{,}
 $$
 que se abrirmos o somatório e dividirmos pelo número total de pontos $N_j$ na região $R_j$, teremos que o estimador de $c_j$ será simplesmente a média dos $y_i$ na região $R_j$:
 
 $$
-\sum_{x_i \in R_j} y_i - \hat{c}_j N_j = 0 \Rightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i
+\sum_{x_i \in R_j} y_i - \hat{c}_j N_j = 0 \Rightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i\text{.}
 $${#eq-estimacjdev}
 
 \vspace{12pt}
@@ -505,12 +504,12 @@ No entanto, @james2013introduction caracteriza como inviável considerar todas a
 Para executar a divisão binária recursiva, deve-se primeiramente selecionar a variável independente $X_j$ e o ponto de corte $s$ tal que a divisão do espaço dos preditores conduza a maior redução possível na soma dos quadrados dos resíduos. Dessa forma, definimos dois semi-planos
 
 $$
-R_{1}\left(j, s\right) = \{X | X_j \leq s\} \text{ e } R_{2}\left(j, s\right) = \{X | X_j > s\}
+R_{1}\left(j, s\right) = \{X | X_j \leq s\} \text{ e } R_{2}\left(j, s\right) = \{X | X_j > s\}\text{,}
 $$
 e procuramos a divisão da variável $j$ e o ponto de corte $s$ que resolve a equação
 
 $$
-\min_{j, s}\left[\min_{c_1} \sum_{x_i \in R_1\left(j, s\right)} \left(y_i - c_{1}\right)^2 + \min_{c_2} \sum_{x_i \in R_2\left(j, s\right)} \left(y_i - c_{2}\right)^2\right]
+\min_{j, s}\left[\min_{c_1} \sum_{x_i \in R_1\left(j, s\right)} \left(y_i - c_{1}\right)^2 + \min_{c_2} \sum_{x_i \in R_2\left(j, s\right)} \left(y_i - c_{2}\right)^2\right]\text{,}
 $$
 em que $c_1$ e $c_2$ é a média da variável dependente para as observações de treinamento nas regiões $R_1\left(j, s\right)$ e $R_2\left(j, s\right)$, respectivamente. Assim, encontrando a melhor divisão, os dados são particionados nas duas regiões resultantes e o processo de divisão é repetido em todas as outras regiões.
 
@@ -525,12 +524,12 @@ Para o processo de poda da árvore, definimos uma árvore qualquer $T$ que pode 
 $$
 Q_j\left(T\right) = \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)^2
 $$
-uma medida de impureza do nó pelo erro quadrático médio. Assim, define-se o critério de custo complexidade
+uma medida de impureza do nó pelo erro quadrático médio. Assim, define-se o critério de custo complexidade:
 
 $$
-C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|
+C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|\text{,}
 $$
-onde $|T|$ denota a quantidade total de folhas, e $\alpha \geq 0$ é um hiperparâmetro que equilibra o tamanho da árvore e a adequação aos dados. A ideia é encontrar, para cada $\alpha$, a árvore $T_{\alpha} \subset T_0$ que minimiza $C_{\alpha}\left(T\right)$. Valores grandes de $\alpha$ resultam em árvores menores, enquanto valores menores resultam em árvores maiores, e $\alpha = 0$ resulta na própria árvore $T_0$. A busca por $T_{\alpha}$ envolve colapsar sucessivamente o nó interno que provoca o menor aumento em $\sum_j N_j Q_j\left(T\right)$, continuando o processo até produzir uma árvore com um único nó. Esse processo gera uma sequência de subárvores, na qual existe uma única subárvore menor que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$.
+em que $|T|$ denota a quantidade total de folhas, e $\alpha \geq 0$ é um hiperparâmetro que equilibra o tamanho da árvore e a adequação aos dados. A ideia é encontrar, para cada $\alpha$, a árvore $T_{\alpha} \subset T_0$ que minimiza $C_{\alpha}\left(T\right)$. Valores grandes de $\alpha$ resultam em árvores menores, enquanto valores menores resultam em árvores maiores, e $\alpha = 0$ resulta na própria árvore $T_0$. A busca por $T_{\alpha}$ envolve colapsar sucessivamente o nó interno que provoca o menor aumento em $\sum_j N_j Q_j\left(T\right)$, continuando o processo até produzir uma árvore com um único nó. Esse processo gera uma sequência de subárvores, na qual existe uma única subárvore menor que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$.
 
 \vspace{12pt}
 
@@ -542,7 +541,7 @@ A estimação de $\alpha$ é realizada por validação cruzada com cinco ou dez 
 #| pdf-line-number: false
 
 \begin{algorithm}
-\caption{Algoritmo para crescer uma árvore de regressão}
+\caption{Algoritmo para crescer uma árvore de regressão.}
 \begin{algorithmic}
 \State \textbf{1.} Use a divisão binária recursiva para crescer uma árvore grande $T_0$ nos dados de treinamento, parando apenas quando cada folha tiver menos do que um número mínimo de observações.
 
@@ -572,12 +571,12 @@ Fonte: @james2013introduction [p. 337].
 
 \vspace{12pt}
 
-No caso de uma árvore de decisão para classificação, a principal diferença está no critério de divisão dos nós e na poda da árvore. Para a classificação, a previsão em um nó $j$, correspondente a uma região $R_j$ com $N_j$ observações, será simplesmente a classe majoritária. Assim, tem-se
+No caso de uma árvore de decisão para classificação, a principal diferença está no critério de divisão dos nós e na poda da árvore. Para a classificação, a previsão em um nó $j$, correspondente a uma região $R_j$ com $N_j$ observações, será simplesmente a classe majoritária. Assim, tem-se:
 
 $$
-\hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)
+\hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)\text{,}
 $$
-como a proporção de observações da classe $k$ no nó $j$. Dessa forma, as observações no nó $j$ são classificadas na classe $k\left(j\right) = \arg \max_{k} \hat{p}_{jk}$, que é a moda no nó $j$.
+como sendo a proporção de observações da classe $k$ no nó $j$. Dessa forma, as observações no nó $j$ são classificadas na classe $k\left(j\right) = \arg \max_{k} \hat{p}_{jk}$, que é a moda no nó $j$.
 
 \vspace{12pt}
 
@@ -596,12 +595,12 @@ Para a divisão dos nós no caso da regressão, foi utilizado o erro quadrático
 @breiman1996bagging define formalmente o algoritmo de Bagging, que utiliza um conjunto de treinamento $\mathcal{L}$. A partir desse conjunto, são geradas amostras bootstrap $\mathcal{L}^{(B)}$ com $B$ réplicas, formando uma coleção de modelos $\{f(x, \mathcal{L}^{(B)})\}$, onde $f$ representa um modelo estatístico ou algoritmo treinado nas amostras bootstrap para prever ou classificar uma variável dependente $y$ com base em variáveis independentes $\mathbf{x}$. Se a variável dependente $y$ for numérica, a predição é obtida pela média das previsões dos modelos:
 
 $$
-f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)
+f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)\text{,}
 $$
-onde $f_{B}$ representa a predição agregada. No caso em que $y$ prediz uma classe, utiliza-se a votação majoritária. Ou seja, se estivermos classificando em classes $j \in {1, \dots, J}$, então $N_j = \#\{B; f(x, \mathcal{L}^{(b)}) = j\}$ representa o número de vezes que a classe $j$ foi predita pelos estimadores. Assim,
+em que $f_{B}$ representa a predição agregada. No caso em que $y$ prediz uma classe, utiliza-se a votação majoritária. Ou seja, se estivermos classificando em classes $j \in {1, \dots, J}$, então $N_j = \#\{B; f(x, \mathcal{L}^{(b)}) = j\}$ representa o número de vezes que a classe $j$ foi predita pelos estimadores. Assim:
 
 $$
-f_{B}\left(x\right) = \arg \max_{j} N_j
+f_{B}\left(x\right) = \arg \max_{j} N_j\text{.}
 $$
 isto é, o $j$ para o qual $N_j$ é máximo
 
@@ -618,7 +617,7 @@ Para mitigar a falta de interpretabilidade do método Bagging aplicado a árvore
 As árvores construídas pelo algoritmo de árvore de decisão se beneficiam da proposta de agregação do Bagging, mas esse benefício é limitado devido à correlação positiva existente entre as árvores. Se as árvores forem variáveis aleatórias independentes e identicamente distribuídas, cada uma com variância $\sigma^2$, a variância da média das previsões das $B$ árvores será $\frac{1}{B} \sigma^2$. No entanto, se as árvores forem apenas identicamente distribuídas, mas não necessariamente independentes, e apresentarem uma correlação positiva $\rho$, a esperança da média das $B$ árvores será a mesma que a esperança de uma árvore individual. Portanto, o viés do agregado das árvores é o mesmo das árvores individuais, e a melhoria é alcançada apenas pela redução da variância. A variância da média das previsões será dada por:
 
 $$
-\rho \sigma^2 + \frac{1 - \rho}{B}\sigma^2
+\rho \sigma^2 + \frac{1 - \rho}{B}\sigma^2\text{.}
 $${#eq-cor}
 
 Isso significa que, à medida que o número de árvores $B$ aumenta, o segundo termo da soma se torna menos significativo. Portanto, os benefícios da agregação proporcionados pelo algoritmo de Bagging são limitados pela correlação entre as árvores [@hastie2009elements]. Mesmo com o aumento do número de árvores no Bagging, a correlação entre elas impede que as previsões individuais sejam completamente independentes, resultando em menor diminuição da variância da média das previsões do que seria esperado se as árvores fossem totalmente independentes. Uma maneira de melhorar o algoritmo de Bagging é por meio do Random Forest, que será descrito a seguir.
@@ -631,7 +630,7 @@ Isso significa que, à medida que o número de árvores $B$ aumenta, o segundo t
 #| pdf-line-number: false
 
 \begin{algorithm}
-\caption{Algoritmo de uma Random Forest para regressão ou classificação}
+\caption{Algoritmo de uma Random Forest para regressão ou classificação.}
 \begin{algorithmic}
 \State \hspace{1em} \textbf{1.} Para b = 1 até B:
 
@@ -703,7 +702,7 @@ A quantidade de variáveis independentes $m$ selecionadas aleatoriamente é um h
 #| pdf-line-number: false
 
 \begin{algorithm}
-\caption{Método Boosting aplicado a árvores de regressão}
+\caption{Método Boosting aplicado a árvores de regressão.}
 \begin{algorithmic}
 \State \hspace{1em} \textbf{1.} Defina $\hat{f}\left(x\right) = 0 \text{ e } r_i = y_i$ para todos os $i$ no conjunto de treinamento
 
@@ -766,8 +765,9 @@ O processo de aprendizado no método de Boosting é lenta, o que acaba gerando m
 Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em x, utilizando o modelo $m$, aplicado ao conjunto de treinamento com a $i\text{-ésima}$ observação removida [@hastie2009elements]. Assim, os peso são estimados de forma a minimizar o erro de predição combinado, dado pela seguinte expressão:
 
 $$
-\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m f^{-i}_m\left(x_i\right)\right]^2
+\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m f^{-i}_m\left(x_i\right)\right]^2\text{.}
 $$
+
 A previsão final dos modelos empilhados é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Assim, em vez de escolher um único modelo, o método de Stacking combina os modelos utilizando pesos estimados, o que melhora a performance preditiva, mas pode comprometer a interpretabilidade.
 
 ### Gradient Boosting
@@ -780,7 +780,7 @@ A previsão final dos modelos empilhados é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\l
 #| pdf-line-number: false
 
 \begin{algorithm}
-\caption{Gradient Tree Boosting}
+\caption{Algoritmo de Gradient Tree Boosting.}
 \begin{algorithmic}
 \State \hspace{1em} \textbf{1.} Inicialize $f_0\left(x\right) = \arg \min_{\gamma} \sum_{i = 1}^N L\left(y_i, \gamma \right)$
 
@@ -826,18 +826,18 @@ Fonte: @hastie2009elements [p. 361].
 O Gradient Boosting aplicado para árvores de regressão, tem que cada função base é uma árvore de regressão com $J_m$ folhas. Dessa forma, cada árvore de regressão tem a forma aditiva
 
 $$
-h_m\left(x;\{b_j, R_j\}^J_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)
+h_m\left(x;\{b_j, R_j\}^J_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)\text{,}
 $${#eq-treebost}
-em que $\{R_{jm}\}^{J_m}_{1}$ são as regiões disjuntas que, coletivamente, cobrem o espaço de todos os valores conjuntos das variáveis preditoras $\mathbf{x}$. Essas regiões são representadas pelas folhas de sua correspondente árvore. Como as regiões são disjuntas, @eq-treebost se reduz simplesmente a $h_m\left(x\right) = b_{jm}\text{ para } x \in  R_{jm}$. Por mínimos quadrados, $b_{jm}$ é simplesmente a média dos pseudo-resíduos $r_{im}$,
+em que $\{R_{jm}\}^{J_m}_{1}$ são as regiões disjuntas que, coletivamente, cobrem o espaço de todos os valores conjuntos das variáveis preditoras $\mathbf{x}$. Essas regiões são representadas pelas folhas de sua correspondente árvore. Como as regiões são disjuntas, @eq-treebost se reduz simplesmente a $h_m\left(x\right) = b_{jm}\text{ para } x \in  R_{jm}$. Por mínimos quadrados, $b_{jm}$ é simplesmente a média dos pseudo-resíduos $r_{im}$:
 
 
 $$
-\hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}
+\hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}\text{,}
 $$
-que dão a direção de diminuição da função perda $L$ pela expressão do gradiente da linha 2(a). Assim, cada árvore de regressão é ajustada aos $r_{im}$ de forma a minimizar o erro das árvores anteriores. $N_{jm}$ denota a quantidade de pontos na região $R_{jm}$. Por fim, o estimador é separadamente atualizado em cada região correspondente e é expresso
+que dão a direção de diminuição da função perda $L$ pela expressão do gradiente da linha 2(a). Assim, cada árvore de regressão é ajustada aos $r_{im}$ de forma a minimizar o erro das árvores anteriores. $N_{jm}$ denota a quantidade de pontos na região $R_{jm}$. Por fim, o estimador é separadamente atualizado em cada região correspondente e é expresso:
 
 $$
-f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)
+f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
 $$
 em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $0 < \lambda \leq 1$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
 
@@ -850,14 +850,14 @@ As outras implementações de Gradient Boosting aplicadas à árvores de decisã
 O Extreme Gradient Boosting é uma implementação altamente eficiente do algoritmo e flexível de Gradient Boosting aplicado à árvores de decisão. Além disso, é adicionado um novo recurso, técnicas de regularização para diminuir o sobreajuste do modelo. A função objetivo agora passa a ser definida da seguinte forma:
 
 $$
-\mathcal{L}\left(\phi\right) = \sum_{i}l\left(\hat{y}_{i}, y_{i}\right) + \sum_{k}\Omega\left(f_{k}\right)
+\mathcal{L}\left(\phi\right) = \sum_{i}l\left(\hat{y}_{i}, y_{i}\right) + \sum_{k}\Omega\left(f_{k}\right)\text{,}
 $$
 em que $l$ é uma função de perda convexa diferenciável e o segundo termo $Omega$ penaliza a complexidade de cada função de árvore de decisão. O termo de regularização adicional ajuda a suavizar os pesos finais para evitar o sobreajuste. $\Omega$ é definido dado como:
 
 $$
-\Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}
+\Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}\text{,}
 $$
-onde $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Além disso, é fácil ver que $\frac{1}{2}\lambda\|\omega\|^{2}$ representa a penalização L2 (Ridge). Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em Python utilizam a regularização L2 como padrão, mas também permitem o uso da regularização L1 (Lasso).
+em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Além disso, é fácil ver que $\frac{1}{2}\lambda\|\omega\|^{2}$ representa a penalização L2 (Ridge). Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em Python utilizam a regularização L2 como padrão, mas também permitem o uso da regularização L1 (Lasso).
 
 \vspace{12pt}
 
@@ -935,9 +935,9 @@ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas
 O método utilizado para a imputação de valores ausentes foi o algoritmo k-nearest neighbors (KNN). Esse algoritmo estima os valores ausentes de acordo com a seguinte fórmula:
 
 $$
-\hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i
+\hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i\text{,}
 $$
-onde $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe `KNNImputer` da biblioteca scikit-learn para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento `n_neighbors` da classe `KNNImputer`.
+em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe `KNNImputer` da biblioteca scikit-learn para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento `n_neighbors` da classe `KNNImputer`.
 
 \vspace{12pt}
 
@@ -948,9 +948,9 @@ A transformação logarítmica $\log(1 + x)$ foi aplicada para estabilizar a var
 Após a aplicação da transformação logarítmica às variáveis numéricas, essas variáveis também foram padronizadas utilizando a classe `StandardScaler`, disponível no módulo `preprocessing` da biblioteca `scikit-learn`. Essa classe ajusta os dados para que fiquem na mesma escala, padronizando-os de acordo com a fórmula:
 
 $$
-z = \frac{x - \mu}{\sigma}
+z = \frac{x - \mu}{\sigma}\text{,}
 $$
-onde $\mu$ representa a média e $\sigma$ o desvio padrão. Essa padronização é essencial para garantir que os modelos estatísticos e de aprendizado de máquina tratem as variáveis em escalas consistentes.
+em que $\mu$ representa a média e $\sigma$ o desvio padrão. Essa padronização é essencial para garantir que os modelos estatísticos e de aprendizado de máquina tratem as variáveis em escalas consistentes.
 
 ### Validação cruzada
 
@@ -961,9 +961,9 @@ onde $\mu$ representa a média e $\sigma$ o desvio padrão. Essa padronização 
 A validação cruzada K-Fold é uma técnica que utiliza parte dos dados para ajustar o modelo e outra parte para testá-lo. Nessa abordagem, os dados são divididos em $K$ folds. Em cada iteração, um desses folds é reservado para testar o modelo, enquanto os $K−1$ folds restantes são usados para treiná-lo. O modelo é ajustado nos $K−1$ subconjuntos e avaliado no subconjunto de teste, permitindo estimar o erro de predição. Esse processo é repetido $K$ vezes, alternando o subconjunto de teste em cada rodada, e ao final, os $K$ erros de predição são combinados. O erro de predição estimado pela validação cruzada é dado por:
 
 $$
-CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)
+CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)\text{,}
 $$
-onde $N$ representa o número total de observações, $L$ é a função de perda, $y_i$ é o valor observado, $x_i$ é a entrada correspondente, $\hat{f}^{-k(i)}$ é o modelo ajustado sem o $k$-ésimo subconjunto, e $k: \{1, \dots, N\} \mapsto \{1, \dots, K\}$ indica a partição à qual a observação $i$ foi alocada por meio de randomização.
+em que $N$ representa o número total de observações, $L$ é a função de perda, $y_i$ é o valor observado, $x_i$ é a entrada correspondente, $\hat{f}^{-k(i)}$ é o modelo ajustado sem o $k$-ésimo subconjunto, e $k: \{1, \dots, N\} \mapsto \{1, \dots, K\}$ indica a partição à qual a observação $i$ foi alocada por meio de randomização.
 
 ```{python}
 def plot_cv_indices(cv, X, ax, n_splits, lw=10):
@@ -1064,7 +1064,7 @@ R^2 = 1 - \dfrac{SS_{\text{resíduos}}}{SS_{\text{total}}}
 $$
 
 $$
-\text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|
+\text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|\text{,}
 $$
 :::
 em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
@@ -1099,7 +1099,7 @@ P(\lambda|y) =
 \begin{cases}
     l(\lambda) & \text{if } y < y^* \\
     g(\lambda) & \text{if } y \ge y^*
-\end{cases}
+\end{cases}\text{,}
 $${#eq-tpe}
 em que $l\left(\lambda\right)$ representa a densidade associada aos valores de $y$ menores que o limiar $y^*$ e $g\left(\lambda\right)$ é a densidade associada aos valores de $y$ iguais ou superiores a $y^*$ [@bergstra2011algorithms]. No algoritmo de TPE, o valor de $y^*$ é definido como sendo um quantil $\gamma$ dos valores observados de $y$, de forma que $p\left(y < y^*\right) = \gamma$.
 
@@ -1108,7 +1108,7 @@ em que $l\left(\lambda\right)$ representa a densidade associada aos valores de $
 Por padrão, o Tree-Structured Parzen Estimator (TPE) utiliza como função de aquisição o Expected Improvement (EI). O EI representa a expectativa de um modelo $M$, que mapeia $f:\Lambda \rightarrow \mathbb{R}^N$, sobre a melhora esperada em relação a um limiar $y^*$. Formalmente, o EI é definido como:
 
 $$
-EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{\infty} \max\left(y^* - y, 0\right)p_{M}\left(y|\lambda\right)dy
+EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{\infty} \max\left(y^* - y, 0\right)p_{M}\left(y|\lambda\right)dy\text{.}
 $$
 
 Se, para o valor de $\lambda$, o modelo prevê um $y$ tal que $y > y^∗$, a diferença $y^∗ − y$ será negativa, e o retorno será 0, o que significa que não haverá melhora. Por outro lado, se $y < y^∗$, a diferença será positiva, indicando que o modelo apresenta um desempenho superior em relação ao limiar $y^∗$.
@@ -1118,7 +1118,7 @@ Se, para o valor de $\lambda$, o modelo prevê um $y$ tal que $y > y^∗$, a dif
 Portanto, para o cálculo do EI utilizando as definições fornecidas pelo TPE e assumindo que $y^∗>y$, adota-se a parametrização de $p\left(\lambda,y\right)$ como $p\left(y\right)p\left(\lambda∣y\right)$, com o objetivo de simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz a:
 
 $$
-EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy
+EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy\text{.}
 $${#eq-exp}
 
 A partir da @eq-tpe e da definição $p\left(y < y^*\right) = \gamma$ e $p\left(y \geq y^*\right) = 1 - \gamma$, pode-se encontrar a distribuição marginal $p\left(\lambda\right)$. Dessa forma, segue-se que:
@@ -1129,7 +1129,7 @@ p\left(\lambda\right) &= \int_{-\infty}^{\infty} p\left(\lambda, y\right) dy \\
 &= \int_{-\infty}^{\infty} p\left(\lambda | y\right) p\left(y\right) dy \\
 &= \int_{-\infty}^{y^*} p\left(\lambda | y\right) p\left(y\right) dy + \int_{y^*}^{\infty} p\left(\lambda | y\right) p\left(y\right) dy \\
 &= \int_{-\infty}^{y^*} l\left(\lambda\right) p\left(y\right) dy + \int_{y^*}^{\infty} g\left(\lambda\right) p\left(y\right) dy \\
-&= \gamma l\left(\lambda\right) + \left(1 - \gamma\right) g\left(\lambda\right)
+&= \gamma l\left(\lambda\right) + \left(1 - \gamma\right) g\left(\lambda\right)\text{.}
 \end{aligned}
 $$
 
@@ -1138,14 +1138,14 @@ Agora, basta calcular a integral $\int_{-\infty}^{y^*}\left(y^* - y\right) p\lef
 $$
 \begin{aligned}
 \int_{-\infty}^{y^*}\left(y^* - y\right) p\left(\lambda|y\right)p\left(y\right)dy &= l\left(\lambda\right) \int_{-\infty}^{y^*} \left(y^* - y\right) p\left(y\right)dy \\
-&= \gamma y^{*} l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} y p\left(y\right)dy
+&= \gamma y^{*} l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} y p\left(y\right)dy\text{.}
 \end{aligned}
 $$
 
 Finalmente, substituindo essa última expressão encontrada e $p\left(\lambda\right)$ na @eq-exp, chega-se a:
 
 $$
-EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 + \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}
+EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 + \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}\text{.}
 $$
 
 Essa última expressão mostra que, para maximizar o Expected Improvement, é necessário encontrar valores de $\lambda$ que apresentem alta probabilidade em $l\left(\lambda\right)$ e baixa probabilidade em $g\left(\lambda\right)$. Portanto, no TPE, maximizar o EI equivale a maximizar a razão $l\left(\lambda\right) / g\left(\lambda\right)$.
@@ -1225,9 +1225,9 @@ Formalmente, o método ICE considera as observações $\{x_{S_i}, \mathbf{x}_{C_
 Quando há um grande número de curvas no gráfico ICE, a interpretação pode se tornar desafiadora devido à sobreposição ou excesso de linhas. Para simplificar a análise, pode-se aplicar uma técnica de centralização, conhecida como c-ICE (centered ICE). Essa abordagem centraliza as curvas em um ponto específico de $x_S$​, mostrando apenas a diferença nas predições em relação a esse ponto. Assim, as novas curvas c-ICE são definidas da seguinte forma:
 
 $$
-\hat{f}_{cent}^{\left(i\right)} = \hat{f}^{\left(i\right)} - \mathbf{1} \hat{f}\left(x^*, \mathbf x_{C_i}\right)
+\hat{f}_{cent}^{\left(i\right)} = \hat{f}^{\left(i\right)} - \mathbf{1} \hat{f}\left(x^*, \mathbf x_{C_i}\right)\text{,}
 $$
-onde $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ é o modelo ajustado, e $\mathbf 1$ é um vetor de uns.
+em que $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ é o modelo ajustado, e $\mathbf 1$ é um vetor de uns.
 
 \vspace{12pt}
 
@@ -1238,7 +1238,7 @@ Quando $x^∗$ é escolhido como o valor mínimo de $x_S$, todas as curvas c-ICE
 O método Individual Conditional Expectation (ICE) é similar ao Partial Dependence Plot (PDP), mas com a diferença de que o PDP apresenta uma visão agregada (global) dos efeitos das variáveis independentes nas predições e, por outro lado, o ICE fornece uma análise mais detalhada, mostrando uma linha para cada instância do conjunto de dados. O PDP é obtido como a média das linhas geradas pelo método ICE, oferecendo uma visão mais generalizada do impacto de uma variável. Matematicamente, o PDP é definido como:
 
 $$
-\hat{f}_{S}\left(x_{S}\right) = E_{\mathbf{X}_{C}}\left[\hat{f}\left(x_{S}, \mathbf{X}_{C}\right)\right]
+\hat{f}_{S}\left(x_{S}\right) = E_{\mathbf{X}_{C}}\left[\hat{f}\left(x_{S}, \mathbf{X}_{C}\right)\right]\text{,}
 $$
 em que $\mathbf{X}_C$ representa o conjunto das variáveis independentes que são mantidas fixas durante a análise e $x_S$ é a variável independente de interesse, cujo efeito sobre a predição se deseja analisar.
 
@@ -1247,9 +1247,9 @@ em que $\mathbf{X}_C$ representa o conjunto das variáveis independentes que sã
 Para calcular $\hat{f}_S\left(x_S\right)$ na prática, pode-se utilizar simulação de Monte Carlo. O PDP pode, então, ser estimado da seguinte forma:
 
 $$
-\hat{f}_S\left(x_S\right) = \frac{1}{N} \sum^{N}_{i=1}\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)
+\hat{f}_S\left(x_S\right) = \frac{1}{N} \sum^{N}_{i=1}\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)\text{,}
 $$
-onde N é o número de amostras utilizadas na simulação e $\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)$ são as predições do modelo.
+em que $N$ é o número de amostras utilizadas na simulação e $\hat{f}\left(x_{S}, \mathbf{X}_{C_i}\right)$ são as predições do modelo.
 
 \vspace{12pt}
 
@@ -1287,7 +1287,7 @@ Formalmente, para a construção da explicação gerada pelo LIME, a explicaçã
 Seja $f: \mathbb{R}^d \rightarrow \mathbb{R}$ o modelo que está sendo explicado. Define-se, então, uma medida de aproximação $\pi_x\left(z\right)$ entre uma instância $z$ e $x$, com o objetivo de estabelecer a localidade ao redor de $x$. Por fim, seja $L\left(f, g, \pi_x\right)$ uma estatística que quantifica o erro de $g$ ao tentar aproximar $f$ na localidade definida por $\pi_x$. Para garantir a interpretabilidade e a fidelidade local, é necessário minimizar $L(f, g, \pi_x)$, mantendo $\Omega(g)$ suficientemente baixo. Dessa forma, obtém-se a explicação gerada pelo LIME:
 
 $$
-\xi\left(x\right) = \arg \min_{g \in G} L\left(f, g, \pi_x\right) + \Omega\left(g\right)
+\xi\left(x\right) = \arg \min_{g \in G} L\left(f, g, \pi_x\right) + \Omega\left(g\right)\text{.}
 $$
 
 Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias de modelos explicativos $G$. Uma escolha para $L$, por exemplo, é o erro quadrático médio.
@@ -1306,16 +1306,16 @@ Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos f
 Os valores de Shapley foram introduzidos por @shapley1953value e baseiam-se nos conceitos da teoria dos jogos de coalizão. Essa teoria foi adaptada para explicar predições realizadas por modelos, representando a contribuição média de uma variável para a predição, considerando todas as possíveis coalizões. Nesse contexto, coalizões referem-se a diferentes combinações de variáveis. Matematicamente, os valores de Shapley são definidos como:
 
 $$
-\phi_i\left(x\right) = \sum_{Q \subseteq S | \{i\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)
+\phi_i\left(x\right) = \sum_{Q \subseteq S | \{i\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)\text{,}
 $${#eq-shapley}
-onde $Q$ é um subconjunto das covariáveis consideradas no modelo e $S$ representa o conjunto completo de todas as covariáveis. A diferença $\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)$ corresponde à contribuição marginal da variável $i$ ao ser adicionada ao subconjunto $Q$.
+em que $Q$ é um subconjunto das covariáveis consideradas no modelo e $S$ representa o conjunto completo de todas as covariáveis. A diferença $\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)$ corresponde à contribuição marginal da variável $i$ ao ser adicionada ao subconjunto $Q$.
 
 \vspace{12pt}
 
 No entanto, a @eq-shapley apresenta crescimento exponencial em termos de complexidade computacional à medida que o número de variáveis aumenta. Para contornar esse problema e reduzir o custo computacional, os valores de Shapley podem ser estimados de forma aproximada e eficiente utilizando o método de Monte Carlo, conforme a seguinte expressão:
 
 $$
-\hat{\phi}_{i}\left(x\right) = \frac{1}{n!} \sum_{O \in \pi \left(n \right)} \left( \Delta_{{Pre}^{i} \left(O\right) \cup \{i\}} - \Delta_{{Pre}^{i} \left(O\right)} \right), \ i = 1, \dots, n
+\hat{\phi}_{i}\left(x\right) = \frac{1}{n!} \sum_{O \in \pi \left(n \right)} \left( \Delta_{{Pre}^{i} \left(O\right) \cup \{i\}} - \Delta_{{Pre}^{i} \left(O\right)} \right), \ i = 1, \dots, n\text{,}
 $$
 em que $\pi\left(n\right)$ é o conjunto de todas as permutações ordenadas dos índices das variáveis $\{1, 2, \dots, n\}$ e ${Pre}^{i}\left(O\right)$ representa o conjunto de índices das variáveis que precedem $i$ na permutação $O \in \pi \left(n\right)$ [@vstrumbelj2014explaining].
 
@@ -1324,9 +1324,9 @@ em que $\pi\left(n\right)$ é o conjunto de todas as permutações ordenadas dos
 O SHAP estabelece uma conexão entre os valores de Shapley e o método LIME, previamente definido. O modelo explicativo do SHAP, denotado por $g$, é uma função linear de variáveis binárias, construído a partir dos valores de Shapley, conforme define a expressão a seguir:
 
 $$
-g\left(z^{'}\right) = \phi_0 + \sum_{j = 1}^{M} \phi_{j} z_{j}^{'}
+g\left(z^{'}\right) = \phi_0 + \sum_{j = 1}^{M} \phi_{j} z_{j}^{'}\text{,}
 $$
-onde $g$ é o modelo explicativo, $z^{'} \in \{0, 1\}^{M}$ é o vetor de coalizão, representando a presença $\left(z^{'}_j = 1\right)$ ou ausência $\left(z^{'}_j = 0\right)$ de cada covariável e $\phi_j$ denota os valores Shapley.
+em que $g$ é o modelo explicativo, $z^{'} \in \{0, 1\}^{M}$ é o vetor de coalizão, representando a presença $\left(z^{'}_j = 1\right)$ ou ausência $\left(z^{'}_j = 0\right)$ de cada covariável e $\phi_j$ denota os valores Shapley.
 
 \vspace{12pt}
 
@@ -1337,7 +1337,7 @@ A partir do método SHAP, é possível ter diversas visualizações que ajudam a
 O gráfico de importância das variáveis é bastante simples, variáveis com valores absolutos elevados de Shapley são importantes. No entanto, como se deseja obter a importância global, calcula-se a média dos valores absolutos de Shapley por variável em todo o conjunto de dados. Assim, tem-se a seguinte expressão:
 
 $$
-I_j = \frac{1}{n}\sum^{n}_{i = 1} |\phi_j^{\left(i\right)}|
+I_j = \frac{1}{n}\sum^{n}_{i = 1} |\phi_j^{\left(i\right)}|\text{.}
 $$
 
 O gráfico de resumo combina a importância das variáveis com seus efeitos, representados pelos valores de Shapley e pela variação das observações de cada variável. No eixo x estão os valores de Shapley, que tem sua variação representada por pontos, enquanto no eixo y encontram-se as variáveis, ordenadas de forma decrescente com base em sua importância. Os pontos, que representam os valores de Shapley, são coloridos de acordo com os valores altos ou baixos das observações originais de cada variável. Essa representação facilita a compreensão de como as predições do modelo estão sendo influenciadas por cada variável, permitindo uma análise mais detalhada de seus efeitos.
@@ -1346,7 +1346,7 @@ O gráfico de resumo combina a importância das variáveis com seus efeitos, rep
 
 Por fim, o gráfico de dependência é o mais simples de todos. Nele, os valores de Shapley de uma variável são plotados em função de suas respectivas observações. Matematicamente, é definido como:
 $$
-\{\left(x_j^{\left(i\right)}, \phi_j^{\left(i\right)} \right)\}^{n}_{i=1}
+\{\left(x_j^{\left(i\right)}, \phi_j^{\left(i\right)} \right)\}^{n}_{i=1}\text{.}
 $$
 
 Esse gráfico permite visualizar diretamente como as observações de uma variável estão relacionadas aos seus efeitos no modelo, representados pelos valores de Shapley. Ele foi utilizado somente para analisar como as variáveis binárias se comportam.
@@ -1397,7 +1397,7 @@ Por padrão, a classe `shap.Explainer` utiliza o algoritmo de explicação consi
 
 ```{python}
 #| label: fig-miss
-#| fig-cap: "Proporção de valores ausentes por variáveis"
+#| fig-cap: "Proporção de valores ausentes por variáveis."
 
 g_missing = sns.displot(
     data=train_df.isnull() \
@@ -1443,10 +1443,6 @@ O bairro com o maior preço médio do  $m^2$ é Cabo Branco, com um valor pouco 
 \vspace{12pt}
 
 A análise de alguns bairros se torna limitada devido à baixa quantidade de imóveis disponíveis no momento da raspagem de dados. Por exemplo, o bairro de Barra de Gramame, que apresenta o menor valor médio de $m^2$, tinha apenas um imóvel à venda no momento da coleta de dados. Da mesma forma, o bairro Jardim Veneza, o segundo com o menor valor médio por $m^2$, também possuía poucos registros. Isso indica que os valores apresentados para esses bairros podem não refletir com precisão o mercado imobiliário local e podem ser superiores em outras circunstâncias.
-
-\vspace{12pt}
-
-(FALAR DAS VARIÁVEIS BINÁRIAS)
 
 \vspace{12pt}
 
@@ -1820,7 +1816,7 @@ Todos os modelos e bibliotecas usados neste trabalho seguem a API do scikit-lear
 | Extreme Gradient Boosting | 0,28659 | $87,03891\%$ | 0,01340 |
 |          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
 
-: Métricas obtidadas de cada algoritmo
+: Métricas obtidas de cada algoritmo.
 
 :::
 
@@ -1951,7 +1947,7 @@ Resultados da tunagem da Random Forest.
 |:---------:|:------:|:------------:|:---------:|
 |     67    | 1,29682 |      650     |     22    |
 
-: Melhores hiperparâmetros para Random Forest
+: Melhores hiperparâmetros para Random Forest.
 
 :::
 
@@ -2072,7 +2068,7 @@ fig.axes[-1].set_ylabel("RMSE")
 plt.show()
 ```
 
-Resultados da tunagem do Gradient Boosting
+Resultados da tunagem do Gradient Boosting.
 :::
 
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não apresentou melhorias significativas, como ilustrado na @fig-gdt_history, onde a estatística de erro poucas vezes ficou abaixo de 1,3. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores. No entanto, também há uma preferência por uma menor quantidade de árvores quando a taxa de aprendizado diminui.
@@ -2083,7 +2079,7 @@ Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não
 |:---------:|:------:|:------------:|:---------:|:-------------:|
 |     50    | 1,28891 |     1500     |     6     |     0,08730    |
 
-: Melhores hiperparâmetros para Gradient Boosting
+: Melhores hiperparâmetros para Gradient Boosting.
 
 :::
 
@@ -2219,7 +2215,7 @@ fig.axes[-1].set_ylabel("RMSE")
 plt.show()
 ```
 
-Resultados da tunagem do LGBM
+Resultados da tunagem do LGBM.
 :::
 
 \vspace{12pt}
@@ -2236,7 +2232,7 @@ Analisando a relação entre o hiperparâmetro de profundidade e o número de fo
 |:---------:|:------:|:------------:|:----------:|:---------:|:-------------:|
 |     96    | 1,28722 |     1798     |     247    |    299    |     0,00903     |
 
-: Melhores hiperparâmetros para Light Gradient Boosting
+: Melhores hiperparâmetros para Light Gradient Boosting.
 
 :::
 
@@ -2360,7 +2356,7 @@ plt.show()
 
 ```
 
-Resultados da tunagem do XGBoost
+Resultados da tunagem do XGBoost.
 :::
 
 ::: {#tbl-params_xgb}
@@ -2369,7 +2365,7 @@ Resultados da tunagem do XGBoost
 |:---------:|:------:|:------------:|:---------:|:-------------:|
 |     81    | 1,28752 |      788     |     8     |     0,07119    |
 
-: Melhores hiperparâmetros para Extreme Gradient Boosting
+: Melhores hiperparâmetros para Extreme Gradient Boosting.
 
 :::
 
@@ -2424,7 +2420,7 @@ Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhore
 
 ![](includes/stacking_plot_predict.svg)
 
-Valores previstos em função dos observados do algoritmo Stacking
+Valores previstos em função dos observados do algoritmo Stacking.
 :::
 
 \vspace{12pt}
