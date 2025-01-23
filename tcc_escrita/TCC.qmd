@@ -332,7 +332,7 @@ Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos 
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
-\ \ \ Com os dados coletados, a etapa de modelagem dos valores de imóveis torna-se essencial para converter essas informações em entendimentos relevantes e aplicáveis. Essa etapa permite identificar padrões de comportamento entre as variáveis que influenciam os valores imobiliários, além de determinar quais fatores exercem maior impacto sobre esses valores. Para chegar a esses resultados, foram utilizadas bibliotecas desenvolvidas em `Python`, como [scikit-learn](https://scikit-learn.org/stable/) [@scikit-learn], entre outras.
+\ \ \ Com os dados coletados, a etapa de modelagem dos valores de imóveis torna-se essencial para converter essas informações em entendimentos relevantes e aplicáveis. Essa etapa permite identificar padrões de comportamento entre as variáveis que influenciam os valores imobiliários, além de determinar quais fatores exercem maior impacto sobre esses valores. Para chegar a esses resultados, foram utilizadas bibliotecas desenvolvidas em `Python`, como [scikit-learn](https://scikit-learn.org/stable/) [@scikit-learn], [pandas](https://pandas.pydata.org/) [@reback2020pandas], empregada para a manipulação das bases de dados utilizadas neste trabalho, [numpy](https://numpy.org/) [@harris2020array], voltada para computação numérica, entre outras.
 
 \vspace{12pt}
 
@@ -400,7 +400,7 @@ Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e vi
 
 \vspace{12pt}
 
-O front-end da aplicação foi desenvolvido utilizando a biblioteca [Dash](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [Plotly](https://plotly.com/) [@plotly], a [Dash](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [Plotly](https://plotly.com/) e [pandas](https://pandas.pydata.org/) [@reback2020pandas], esta última utilizada para a manipulação das bases de dados empregadas neste trabalho, e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`.
+O front-end da aplicação foi desenvolvido utilizando a biblioteca [Dash](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [Plotly](https://plotly.com/) [@plotly], a [Dash](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [Plotly](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`.
 
 \vspace{12pt}
 

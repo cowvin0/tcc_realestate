@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, colback={codebgcolor}, sharp corners, enhanced, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -971,7 +971,10 @@ imobiliários, além de determinar quais fatores exercem maior impacto
 sobre esses valores. Para chegar a esses resultados, foram utilizadas
 bibliotecas desenvolvidas em \texttt{Python}, como
 \href{https://scikit-learn.org/stable/}{scikit-learn} (PEDREGOSA, F.
-\emph{et al.}, 2011), entre outras.
+\emph{et al.}, 2011), \href{https://pandas.pydata.org/}{pandas} (TEAM,
+2020), empregada para a manipulação das bases de dados utilizadas neste
+trabalho, \href{https://numpy.org/}{numpy} (HARRIS \emph{et al.}, 2020),
+voltada para computação numérica, entre outras.
 
 \vspace{12pt}
 
@@ -1123,11 +1126,9 @@ desenvolvimento web, integrando tecnologias como \texttt{HTML},
 \texttt{CSS} e \texttt{JavaScript} diretamente no ambiente
 \texttt{Python}. Entre suas principais características, destacam-se a
 facilidade de criar gráficos interativos, a integração com bibliotecas
-populares como \href{https://plotly.com/}{Plotly} e
-\href{https://pandas.pydata.org/}{pandas} (TEAM, 2020), esta última
-utilizada para a manipulação das bases de dados empregadas neste
-trabalho, e a capacidade de atualizar componentes de forma dinâmica por
-meio de funções suas funções \texttt{callback}.
+populares como \href{https://plotly.com/}{Plotly} e a capacidade de
+atualizar componentes de forma dinâmica por meio de funções suas funções
+\texttt{callback}.
 
 \vspace{12pt}
 
@@ -3978,6 +3979,11 @@ GOLDSTEIN, A. \emph{et al.} Peeking inside the black box: Visualizing
 statistical learning with plots of individual conditional expectation.
 \textbf{journal of Computational and Graphical Statistics}, 2015. v. 24,
 n. 1, p. 44--65.
+
+\bibitem[\citeproctext]{ref-harris2020array}
+HARRIS, C. R. \emph{et al.} Array programming with {NumPy}.
+\textbf{Nature}, set. 2020. v. 585, n. 7825, p. 357--362. Disponível em:
+\textless{}\url{https://doi.org/10.1038/s41586-020-2649-2}\textgreater.
 
 \bibitem[\citeproctext]{ref-hastie2009elements}
 HASTIE, T. \emph{et al.} \textbf{The elements of statistical learning:
