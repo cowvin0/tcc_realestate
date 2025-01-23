@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, colback={codebgcolor}, sharp corners, frame hidden, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -419,7 +419,7 @@ precificação e a análise de imóveis em João Pessoa, contribuindo para
 maior precisão no processo de avaliação imobiliária.
 
 \begin{flushleft}
-\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa
+\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa.
 \end{flushleft}
 
 \chapter{Introdução}\label{introduuxe7uxe3o}
@@ -971,7 +971,10 @@ imobiliários, além de determinar quais fatores exercem maior impacto
 sobre esses valores. Para chegar a esses resultados, foram utilizadas
 bibliotecas desenvolvidas em \texttt{Python}, como
 \href{https://scikit-learn.org/stable/}{scikit-learn} (PEDREGOSA, F.
-\emph{et al.}, 2011), entre outras.
+\emph{et al.}, 2011), \href{https://pandas.pydata.org/}{pandas} (TEAM,
+2020), empregada para a manipulação das bases de dados utilizadas neste
+trabalho, \href{https://numpy.org/}{numpy} (HARRIS \emph{et al.}, 2020),
+voltada para computação numérica, entre outras.
 
 \vspace{12pt}
 
@@ -1094,18 +1097,135 @@ desempenhando um papel relevante na aplicação, com sua pipeline sendo
 serializada no formato \texttt{.pkl} por meio da biblioteca
 \href{https://docs.python.org/3/library/pickle.html}{pickle}. Essa
 biblioteca permitiu a reutilização da pipeline no back-end da aplicação,
-garantindo a consistência e eficiência do processamento dos dados.
-Segue, então, a descrição das ferramentas empregadas na construção da
-aplicação final.
+garantindo a consistência, eficiência do processamento dos dados e
+predição do modelo para novos dados. Segue, então, a descrição das
+ferramentas empregadas na construção da aplicação final.
 
 \section{Recursos utilizados para a criação da aplicação
 final}\label{recursos-utilizados-para-a-criauxe7uxe3o-da-aplicauxe7uxe3o-final}
 
-\section{Recursos utilizados de forma complementar à
-programação}\label{recursos-utilizados-de-forma-complementar-uxe0-programauxe7uxe3o}
+~~~A aplicação final foi desenvolvida com o objetivo de realizar
+previsões de valores de imóveis e oferecer uma análise detalhada do
+mercado imobiliário da cidade de João Pessoa. Além de integrar a
+pipeline de machine learning criada durante a etapa de modelagem, a
+aplicação também dispõe de funcionalidades interativas que permitem aos
+usuários explorar os dados e visualizar os resultados de forma clara e
+intuitiva. Para alcançar esses objetivos, foram empregadas tecnologias
+para o desenvolvimento do front-end e do back-end, que foram
+desenvolvidos em \texttt{Python}.
 
-\section{Recurso utilizado para a criação do documento de
-texto}\label{recurso-utilizado-para-a-criauxe7uxe3o-do-documento-de-texto}
+\vspace{12pt}
+
+O front-end da aplicação foi desenvolvido utilizando a biblioteca
+\href{https://dash.plotly.com/}{Dash} (HOSSAIN, 2019), uma ferramenta
+voltada para a criação de aplicativos web em \texttt{Python}.
+Desenvolvida pela \href{https://plotly.com/}{Plotly} (INC., 2015), a
+\href{https://dash.plotly.com/}{Dash} permite construir interfaces
+gráficas completas sem a necessidade de conhecimentos avançados em
+desenvolvimento web, integrando tecnologias como \texttt{HTML},
+\texttt{CSS} e \texttt{JavaScript} diretamente no ambiente
+\texttt{Python}. Entre suas principais características, destacam-se a
+facilidade de criar gráficos interativos, a integração com bibliotecas
+populares como \href{https://plotly.com/}{Plotly} e a capacidade de
+atualizar componentes de forma dinâmica por meio de funções suas funções
+\texttt{callback}.
+
+\vspace{12pt}
+
+Para o desenvolvimento do back-end da aplicação foi utilizado o
+framework \href{https://fastapi.tiangolo.com/}{FastAPI}, uma ferramenta
+moderna e eficiente para a criação de APIs em \texttt{Python}. O
+\href{https://fastapi.tiangolo.com/}{FastAPI} é conhecido por sua alta
+performance, graças ao uso de tipagem estática e a sua facilidade de
+suporte assíncrono, além de permitir a criação de APIs de maneira rápida
+e simples. Sua integração com bibliotecas como
+\href{https://docs.pydantic.dev/latest/}{Pydantic} para validação de
+dados e \href{https://www.sqlalchemy.org/}{SQLAlchemy} (BAYER, 2012)
+para interação e conexão com bancos de dados.
+
+\vspace{12pt}
+
+No projeto, o \href{https://www.sqlalchemy.org/}{SQLAlchemy} foi
+utilizado para gerenciar a conexão com o banco de dados, implementado
+com \href{https://www.postgresql.org/}{PostgresSQL}, um sistema de
+gerenciamento de banco de dados relacional amplamente reconhecido por
+sua robustez e alto desempenho. Isso permitiu que os dados fossem
+expostos na API e consumidos no front-end. Além disso, a API foi
+responsável por expor a pipeline do modelo, possibilitando a realização
+de previsões de valores imobiliários diretamente na aplicação. Não
+obstante, os mapas da cidade de João Pessoa, criados com a biblioteca
+\href{https://python-visualization.github.io/folium/latest/}{Folium}
+(PYTHON-VISUALIZATION, 2020), foram servidos pela API, que expôs seus
+arquivos HTML para consumo no front-end.
+
+\vspace{12pt}
+
+Com as tecnologias mencionadas anteriormente e o modelo final obtido,
+foi possível criar uma aplicação capaz de realizar previsões para os
+imóveis da cidade de João Pessoa, além de proporcionar uma análise de
+seu setor imobiliário. No entanto, o desenvolvimento de todo o código da
+aplicação exigiu o uso de ferramentas que facilitassem sua escrita,
+desenvolvimento e organização. Assim, a seguir serão apresentadas as
+ferramentas utilizadas tanto para a implementação do código deste
+trabalho quanto para a elaboração do documento final de texto que o
+descreve.
+
+\section{Recursos utilizados para escrita de código e de
+documento}\label{recursos-utilizados-para-escrita-de-cuxf3digo-e-de-documento}
+
+~~~O desenvolvimento deste trabalho foi realizado em um computador
+equipado com processador AMD Ryzen 7 5800H (16 núcleos), 8 GB de memória
+RAM, placa de vídeo GeForce GTX 1650 e um SSD NVMe de 256 GB, operando
+sob o sistema Pop!\_OS 22.04 LTS. Embora a máquina ofereça um desempenho
+geral satisfatório, a quantidade limitada de memória RAM apresentou
+desafios em tarefas mais intensivas, como a otimização de
+hiperparâmetros dos modelos. Essas tarefas frequentemente demandavam até
+dois dias para sua conclusão e, em alguns casos, falhavam próximo ao
+término devido ao alto consumo computacional. Dessa forma, a escolha das
+ferramentas utilizadas para a escrita do código foram as que impactassem
+o mínimo possível no desempenho do sistema.
+
+\vspace{12pt}
+
+O \href{https://code.visualstudio.com/}{Visual Studio Code (VSCode)} foi
+a principal ferramenta utilizada para a escrita do código neste
+trabalho. O
+\href{\%5Bvscodevim\%5D(https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)}{VSCode}
+é um editor bastante leve e oferece suporte a diversas linguagens de
+programação e permite integração com inúmeras tecnologias por meio de
+suas extensões. Entre as extensões utilizadas, destaca-se o
+\href{https://marketplace.visualstudio.com/items?itemName=vscodevim.vim}{vscodevim},
+que incorpora os key mappings do editor de texto Vim, originalmente
+criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além
+disso, foram empregadas extensões específicas para as linguagens
+\texttt{Python} e \texttt{R}, tendo como principal objetivo uma melhor
+formatação de código, execução e identificação de possíveis erros.
+
+\vspace{12pt}
+
+Para a elaboração deste documento, foi utilizado o Quarto
+\href{https://quarto.org/}{Quarto} (ALLAIRE; DERVIEUX, 2024), uma
+plataforma de publicação científica desenvolvida pela empresa Posit. O
+\href{https://quarto.org/}{Quarto} é uma evolução do RMarkdown e se
+destaca por sua capacidade de criar documentos de alta qualidade que
+integram texto e código. Compatível com diversas linguagens de
+programação, como \texttt{R}, \texttt{Python}, e outras, essa ferramenta
+é extremamente versátil para análise de dados e geração de relatórios.
+Com o \href{https://quarto.org/}{Quarto}, é possível produzir
+relatórios, artigos, livros, apresentações e até sites. Ele é amplamente
+adotado na comunidade científica, especialmente entre usuários de
+\texttt{R}, e oferece suporte a Markdown e \LaTeX, o que facilita a
+inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos
+visuais. Além disso, os documentos gerados podem ser exportados para
+diversos formatos, como HTML, PDF, MS Word, entre outros.
+
+\vspace{12pt}
+
+No contexto deste trabalho, o Quarto foi utilizado para a produção de
+todo o texto, garantindo conformidade com as normas da ABNT. Sua
+capacidade de integrar texto, código e gráficos de maneira organizada
+foi essencial para facilitar o desenvolvimento do documento e assegurar
+sua qualidade final.
 
 \chapter{Algoritmos de Aprendizado de
 Máquina}\label{algoritmos-de-aprendizado-de-muxe1quina}
@@ -1128,8 +1248,6 @@ primeiro a ser explicado será o de árvores de decisão, pois fundamenta
 todos os outros algoritmos. Depois das árvores de decisão, serão
 explicados os métodos ensemble e, por fim, diferentes variações do
 método de gradient boosting.
-
-\vspace{12pt}
 
 \section{Árvores de decisão}\label{uxe1rvores-de-decisuxe3o}
 
@@ -3790,8 +3908,20 @@ de Crédito Imobiliário e Poupança, 2015.
 AKIBA, T. \emph{et al.} Optuna: A Next-generation Hyperparameter
 Optimization Framework. {[}S.l.{]}: {[}s.n.{]}, 2019.
 
+\bibitem[\citeproctext]{ref-quarto}
+ALLAIRE, J.; DERVIEUX, C.
+\textbf{\href{https://CRAN.R-project.org/package=quarto}{quarto: R
+Interface to 'Quarto' Markdown Publishing System}}. {[}S.l.{]}:
+{[}s.n.{]}, 2024.
+
 \bibitem[\citeproctext]{ref-assumpccao2011credito}
 ASSUMPÇÃO FILHO, C. A. B. O cr{é}dito imobili{á}rio no Brasil. 2011.
+
+\bibitem[\citeproctext]{ref-sqlalchemy}
+BAYER, M. \href{http://aosabook.org/en/sqlalchemy.html}{SQLAlchemy}.
+\emph{Em}: BROWN, A.; WILSON, G. (Org.). \textbf{The Architecture of
+Open Source Applications Volume II: Structure, Scale, and a Few More
+Fearless Hacks}. {[}S.l.{]}: aosabook.org, 2012.
 
 \bibitem[\citeproctext]{ref-bergstra2011algorithms}
 BERGSTRA, J. \emph{et al.} Algorithms for hyper-parameter optimization.
@@ -3850,15 +3980,30 @@ statistical learning with plots of individual conditional expectation.
 \textbf{journal of Computational and Graphical Statistics}, 2015. v. 24,
 n. 1, p. 44--65.
 
+\bibitem[\citeproctext]{ref-harris2020array}
+HARRIS, C. R. \emph{et al.} Array programming with {NumPy}.
+\textbf{Nature}, set. 2020. v. 585, n. 7825, p. 357--362. Disponível em:
+\textless{}\url{https://doi.org/10.1038/s41586-020-2649-2}\textgreater.
+
 \bibitem[\citeproctext]{ref-hastie2009elements}
 HASTIE, T. \emph{et al.} \textbf{The elements of statistical learning:
 data mining, inference, and prediction}. {[}S.l.{]}: Springer, 2009. V.
 2.
 
+\bibitem[\citeproctext]{ref-shammamah_hossain-proc-scipy-2019}
+HOSSAIN, Shammamah.
+\href{https://doi.org/10.25080/Majora-7ddc1dd1-012}{{V}isualization of
+{B}ioinformatics {D}ata with {D}ash {B}io}. (Chris Calloway et al.,
+Org.). {[}S.l.{]}: {[}s.n.{]}, 2019. p. 126--133.
+
 \bibitem[\citeproctext]{ref-Hunter:2007}
 HUNTER, J. D. \href{https://doi.org/10.1109/MCSE.2007.55}{Matplotlib: A
 2D graphics environment}. \textbf{Computing in Science \& Engineering},
 2007. v. 9, n. 3, p. 90--95.
+
+\bibitem[\citeproctext]{ref-plotly}
+INC., P. T. Collaborative data science. 2015. Disponível em:
+\textless{}\url{https://plot.ly}\textgreater.
 
 \bibitem[\citeproctext]{ref-james2013introduction}
 JAMES, G. \emph{et al.} \textbf{An introduction to statistical
@@ -3885,6 +4030,10 @@ PEDREGOSA, F. \emph{et al.} Scikit-learn: Machine Learning in {P}ython.
 \textbf{Journal of Machine Learning Research}, 2011. v. 12, p.
 2825--2830.
 
+\bibitem[\citeproctext]{ref-folium}
+PYTHON-VISUALIZATION. \textbf{Folium}. Disponível em:
+\textless{}\url{https://python-visualization.github.io/folium/}\textgreater.
+
 \bibitem[\citeproctext]{ref-r_language}
 R CORE TEAM. \textbf{\href{https://www.R-project.org/}{R: A Language and
 Environment for Statistical Computing}}. Vienna, Austria: R Foundation
@@ -3908,6 +4057,11 @@ processing systems}, 2012. v. 25.
 ŠTRUMBELJ, E.; KONONENKO, I. Explaining prediction models and individual
 predictions with feature contributions. \textbf{Knowledge and
 information systems}, 2014. v. 41, p. 647--665.
+
+\bibitem[\citeproctext]{ref-reback2020pandas}
+TEAM, T. Pandas Development. \textbf{pandas-dev/pandas: Pandas}. Zenodo.
+Disponível em:
+\textless{}\url{https://doi.org/10.5281/zenodo.3509134}\textgreater.
 
 \bibitem[\citeproctext]{ref-selenium}
 THORPE, A.
