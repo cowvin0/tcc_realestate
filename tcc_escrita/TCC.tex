@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, enhanced, sharp corners, colback={codebgcolor}, frame hidden, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1954,7 +1954,7 @@ definida da seguinte forma:
 \] em que \(l\) é uma função de perda convexa diferenciável e o segundo
 termo \(\Omega\) penaliza a complexidade de cada função de árvore de
 decisão. O termo de regularização adicional ajuda a suavizar os pesos
-finais para evitar o sobreajuste. \(\Omega\) é definido dado como:
+finais para evitar o sobreajuste. \(\Omega\) é definido como:
 
 \[
 \Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}\text{,}
@@ -1962,13 +1962,12 @@ finais para evitar o sobreajuste. \(\Omega\) é definido dado como:
 a soma do quadrado dos pesos associados às folhas. \(\gamma\) e
 \(\lambda\) são os parâmetros de regularização, em que \(\lambda\)
 penaliza os pesos das folhas e \(\gamma\) penaliza a quantidade de
-folhas nas árvores. Além disso, é fácil ver que
-\(\frac{1}{2}\lambda\|\omega\|^{2}\) representa a penalização L2
-(Ridge). Assim, com a regularização aplicada a função objetivo, modelos
-e funções preditivas serão mais comuns pois simplificarão o modelo. As
-implementações do algoritmo de Extreme Gradient Boosting presentes em
-Python utilizam a regularização L2 como padrão, mas também permitem o
-uso da regularização L1 (Lasso).
+folhas nas árvores. Assim, com a regularização aplicada a função
+objetivo, modelos e funções preditivas serão mais comuns pois
+simplificarão o modelo. As implementações do algoritmo de Extreme
+Gradient Boosting presentes em \texttt{Python} utilizam a regularização
+L2 (Ridge) como padrão, mas também permitem o uso da regularização L1
+(Lasso).
 
 \vspace{12pt}
 
@@ -1978,10 +1977,10 @@ não utiliza nenhuma das duas por padrão. A principal diferença do Light
 Gradient Boosting está na forma de crescimento das árvores, primeiro é
 dividido a folha com a maior redução na função de erro. Além disso, tem
 um grande foco na velocidade e uma melhor eficiência no uso da memória
-atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que
-invés de avaliar cada ponto quando realiza a divisão, ele divide valores
-contínuos em intervalos, como um histograma, o que reduz grandemente o
-custo computacional.
+atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que, em
+vez de avaliar cada ponto quando realiza a divisão, ele divide valores
+contínuos em intervalos, como em um histograma, o que reduz grandemente
+o custo computacional.
 
 \chapter{Metodologia}\label{metodologia}
 
