@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, enhanced, sharp corners, colback={codebgcolor}, frame hidden, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, colback={codebgcolor}, frame hidden, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1156,7 +1156,72 @@ ambiente \texttt{Python}. Entre suas principais características,
 destacam-se a facilidade de criar gráficos interativos, a integração com
 bibliotecas populares como \href{https://plotly.com/}{\textbf{Plotly}} e
 a capacidade de atualizar componentes de forma dinâmica por meio de
-funções suas funções \texttt{callback}.
+funções suas funções \texttt{callback}. A seguir, veja um exemplo de
+função \texttt{callback}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ dash }\ImportTok{import}\NormalTok{ Dash, dcc, html, Output, Input}
+\ImportTok{import}\NormalTok{ plotly.express }\ImportTok{as}\NormalTok{ px}
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+
+\NormalTok{df }\OperatorTok{=}\NormalTok{ pd.DataFrame(\{}
+    \StringTok{\textquotesingle{}Categoria\textquotesingle{}}\NormalTok{: [}\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}C\textquotesingle{}}\NormalTok{],}
+    \StringTok{\textquotesingle{}Valores\textquotesingle{}}\NormalTok{: [}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{]}
+\NormalTok{\})}
+
+\NormalTok{app }\OperatorTok{=}\NormalTok{ Dash(}\VariableTok{\_\_name\_\_}\NormalTok{)}
+
+\NormalTok{app.layout }\OperatorTok{=}\NormalTok{ html.Div([}
+\NormalTok{    dcc.Dropdown(}
+        \BuiltInTok{id}\OperatorTok{=}\StringTok{\textquotesingle{}dropdown\textquotesingle{}}\NormalTok{,}
+\NormalTok{        options}\OperatorTok{=}\NormalTok{[}
+\NormalTok{          \{}\StringTok{\textquotesingle{}label\textquotesingle{}}\NormalTok{: cat, }\StringTok{\textquotesingle{}value\textquotesingle{}}\NormalTok{: cat\}}
+          \ControlFlowTok{for}\NormalTok{ cat }\KeywordTok{in}\NormalTok{ df[}\StringTok{\textquotesingle{}Categoria\textquotesingle{}}\NormalTok{]}
+\NormalTok{        ],}
+\NormalTok{        value}\OperatorTok{=}\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{,}
+\NormalTok{        clearable}\OperatorTok{=}\VariableTok{False}
+\NormalTok{    ),}
+\NormalTok{    dcc.Graph(}\BuiltInTok{id}\OperatorTok{=}\StringTok{\textquotesingle{}graph\textquotesingle{}}\NormalTok{)}
+\NormalTok{])}
+
+\AttributeTok{@app.callback}\NormalTok{(}
+\NormalTok{    Output(}\StringTok{\textquotesingle{}graph\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}figure\textquotesingle{}}\NormalTok{),}
+\NormalTok{    Input(}\StringTok{\textquotesingle{}dropdown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}value\textquotesingle{}}\NormalTok{)}
+\NormalTok{)}
+\KeywordTok{def}\NormalTok{ update\_graph(selected\_category):}
+\NormalTok{    filtered\_df }\OperatorTok{=}\NormalTok{ df[df[}\StringTok{\textquotesingle{}Categoria\textquotesingle{}}\NormalTok{] }\OperatorTok{==}\NormalTok{ selected\_category]}
+\NormalTok{    fig }\OperatorTok{=}\NormalTok{ px.bar(}
+\NormalTok{      filtered\_df,}
+\NormalTok{      x}\OperatorTok{=}\StringTok{\textquotesingle{}Categoria\textquotesingle{}}\NormalTok{,}
+\NormalTok{      y}\OperatorTok{=}\StringTok{\textquotesingle{}Valores\textquotesingle{}}\NormalTok{,}
+\NormalTok{      title}\OperatorTok{=}\SpecialStringTok{f\textquotesingle{}Valores da Categoria }\SpecialCharTok{\{}\NormalTok{selected\_category}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+
+    \ControlFlowTok{return}\NormalTok{ fig}
+
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{\textquotesingle{}\_\_main\_\_\textquotesingle{}}\NormalTok{:}
+\NormalTok{    app.run\_server(debug}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Neste exemplo, o código permite que o usuário selecione um valor em um
+menu suspenso, criado a partir da classe \texttt{Dropdown}, e exiba o
+valor escolhido em um gráfico. Primeiramente, é criado um pequeno
+conjunto de dados utilizando a biblioteca
+\href{https://pandas.pydata.org/}{\textbf{pandas}}, contendo categorias
+(A, B e C) e valores associados a elas. Em seguida, define-se o layout
+da aplicação (\texttt{app.layout}), que consiste em um \texttt{Dropdown}
+para selecionar uma categoria e um componente \texttt{Graph} para exibir
+o gráfico correspondente. A lógica para atualizar o gráfico conforme a
+seleção do usuário é implementada por meio da função \texttt{callback}.
+O decorador \texttt{@app.callback} conecta o valor selecionado no
+\texttt{Dropdown} (definido pela classe \texttt{Input}) ao gráfico
+(definido pela classe \texttt{Output}). A função associada ao decorador
+\texttt{callback}, chamada \texttt{update\_graph}, recebe como argumento
+o valor escolhido no \texttt{Dropdown}, filtra o DataFrame com base na
+categoria selecionada e gera um gráfico de barras utilizando a
+biblioteca \href{https://plotly.com/}{\textbf{Plotly}}. Este gráfico é
+então retornado para ser exibido no componente \texttt{Graph}.
 
 \vspace{12pt}
 

@@ -403,7 +403,55 @@ Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e vi
 
 \vspace{12pt}
 
-O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`.
+O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`. A seguir, veja um exemplo de função `callback`:
+
+```{python}
+#| eval: false
+#| echo: true
+
+from dash import Dash, dcc, html, Output, Input
+import plotly.express as px
+import pandas as pd
+
+df = pd.DataFrame({
+    'Categoria': ['A', 'B', 'C'],
+    'Valores': [10, 20, 30]
+})
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    dcc.Dropdown(
+        id='dropdown',
+        options=[
+          {'label': cat, 'value': cat}
+          for cat in df['Categoria']
+        ],
+        value='A',
+        clearable=False
+    ),
+    dcc.Graph(id='graph')
+])
+
+@app.callback(
+    Output('graph', 'figure'),
+    Input('dropdown', 'value')
+)
+def update_graph(selected_category):
+    filtered_df = df[df['Categoria'] == selected_category]
+    fig = px.bar(
+      filtered_df,
+      x='Categoria',
+      y='Valores',
+      title=f'Valores da Categoria {selected_category}')
+
+    return fig
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+```
+
+Neste exemplo, o código permite que o usuário selecione um valor em um menu suspenso, criado a partir da classe `Dropdown`, e exiba o valor escolhido em um gráfico. Primeiramente, é criado um pequeno conjunto de dados utilizando a biblioteca [**pandas**](https://pandas.pydata.org/), contendo categorias (A, B e C) e valores associados a elas. Em seguida, define-se o layout da aplicação (`app.layout`), que consiste em um `Dropdown` para selecionar uma categoria e um componente `Graph` para exibir o gráfico correspondente. A lógica para atualizar o gráfico conforme a seleção do usuário é implementada por meio da função `callback`. O decorador `@app.callback` conecta o valor selecionado no `Dropdown` (definido pela classe `Input`) ao gráfico (definido pela classe `Output`). A função associada ao decorador `callback`, chamada `update_graph`, recebe como argumento o valor escolhido no `Dropdown`, filtra o DataFrame com base na categoria selecionada e gera um gráfico de barras utilizando a biblioteca [**Plotly**](https://plotly.com/). Este gráfico é então retornado para ser exibido no componente `Graph`.
 
 \vspace{12pt}
 
