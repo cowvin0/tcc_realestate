@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, colback={codebgcolor}, boxrule=0pt, enhanced, breakable, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1267,7 +1267,8 @@ máquina utilizados neste trabalho. Alguns dos métodos utilizados podem
 fazer uso de diversos algoritmos ou modelos estatísticos. No entanto, o
 foco principal e o mais utilizado foram as árvores de decisão,
 especialmente em sua forma particular, as árvores de regressão. Assim,
-os algoritmos descritos são métodos baseados em árvores.
+os algoritmos descritos são métodos baseados em árvores ou que fazem uso
+dela.
 
 \vspace{12pt}
 
@@ -1341,18 +1342,21 @@ Como as regiões são disjuntas, \(x_i\) não pode estar simultaneamente em
 duas regiões. Assim, para um ponto específico \(x_i\), apenas um dos
 casos da função indicadora será diferente de 0. Portanto,
 \(f\left(x_i\right) = c_j\). Agora, derivando
-\(\sum_{x_i \in R_j}\left(yi - c_j\right)^2\) em relação a \(c_j\):
+\(\sum_{x_i \in R_j}\left(yi - c_j\right)^2\) em relação a \(c_j\)
 
 \begin{equation}\phantomsection\label{eq-partialdev}{
-\frac{\partial}{\partial{c_j}}\sum_{x_i \in R_j} \left(y_i - c_j\right)^2 = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)\text{,}
-}\end{equation} e igualando Equação~\ref{eq-partialdev} a 0, tem-se a
-seguinte igualdade:
+\frac{\partial}{\partial{c_j}}\sum_{x_i \in R_j} \left(y_i - c_j\right)^2 = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)
+}\end{equation} e, ao igualar a Equação~\ref{eq-partialdev} a 0, tem-se
+a seguinte igualdade:
 
 \[
-\sum_{x_i \in R_j} \left(y_i - \hat{c}_j\right) = 0\text{,}
-\] que se abrirmos o somatório e dividirmos pelo número total de pontos
-\(N_j\) na região \(R_j\), teremos que o estimador de \(c_j\) será
-simplesmente a média dos \(y_i\) na região \(R_j\):
+\sum_{x_i \in R_j} \left(y_i - \hat{c}_j\right) = 0\text{.}
+\]
+
+Expandindo o somatório e dividindo pelo número total de pontos \(N_j\)
+na região \(R_j\), concluí-se que o estimador de \(c_j\), denotado por
+\(\hat{c}_j\), é simplesmente a média dos valores observados \(y_i\)
+dentro da região \(R_j\):
 
 \begin{equation}\phantomsection\label{eq-estimacjdev}{
 \sum_{x_i \in R_j} y_i - \hat{c}_j N_j = 0 \Rightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i\text{.}
@@ -1375,20 +1379,20 @@ Para executar a divisão binária recursiva, deve-se primeiramente
 selecionar a variável independente \(X_j\) e o ponto de corte \(s\) tal
 que a divisão do espaço dos preditores conduza a maior redução possível
 na soma dos quadrados dos resíduos. Dessa forma, definimos dois
-semi-planos
+semi-planos:
 
 \[
 R_{1}\left(j, s\right) = \{X | X_j \leq s\} \text{ e } R_{2}\left(j, s\right) = \{X | X_j > s\}\text{,}
 \] e procuramos a divisão da variável \(j\) e o ponto de corte \(s\) que
-resolve a equação
+minimizem a seguinte expressão:
 
 \[
 \min_{j, s}\left[\min_{c_1} \sum_{x_i \in R_1\left(j, s\right)} \left(y_i - c_{1}\right)^2 + \min_{c_2} \sum_{x_i \in R_2\left(j, s\right)} \left(y_i - c_{2}\right)^2\right]\text{,}
 \] em que \(c_1\) e \(c_2\) é a média da variável dependente para as
-observações de treinamento nas regiões \(R_1\left(j, s\right)\) e
-\(R_2\left(j, s\right)\), respectivamente. Assim, encontrando a melhor
-divisão, os dados são particionados nas duas regiões resultantes e o
-processo de divisão é repetido em todas as outras regiões.
+observações nas regiões \(R_1\left(j, s\right)\) e
+\(R_2\left(j, s\right)\), respectivamente. Após determinar a melhor
+divisão, os dados são particionados nessas duas regiões, e o processo é
+repetido recursivamente para todas as sub-regiões resultantes.
 
 \vspace{12pt}
 
@@ -1434,10 +1438,10 @@ para cada \(\alpha\), minimiza \(C_{\alpha}\left(T\right)\).
 
 \vspace{12pt}
 
-A estimação de \(\alpha\) é realizada por validação cruzada com cinco ou
-dez folds, sendo \(\hat \alpha\) escolhido para minimizar a soma dos
-quadrados dos resíduos durante o processo de validação cruzada. Assim, a
-árvore final será \(T_{\hat \alpha}\). O
+A estimação de \(\alpha\) pode ser realizada por validação cruzada com
+cinco ou dez folds, sendo \(\hat \alpha\) escolhido para minimizar a
+soma dos quadrados dos resíduos durante o processo de validação cruzada.
+Assim, a árvore final será \(T_{\hat \alpha}\). O
  Algoritmo~\ref{algo-buildtree}  exemplifica o processo de crescimento
 de uma árvore de regressão:
 
@@ -1459,9 +1463,13 @@ de uma árvore de regressão:
 \State \textbf{3.} Use validação cruzada $K\text{-fold}$ para escolher \( \alpha \). Isto é, divida as observações de treinamento em $K$ folds. Para cada \( k = 1, \ldots, K \):
     \State \hspace{1em} (a) Repita os Passos 1 e 2 em todos os folds, exceto no $k\text{-ésimo}$ fold dos dados de
     \State \hspace{1em} treinamento.
-    \State \hspace{1em} (b) Avalie o erro quadrático médio de previsão nos dados no $k\text{-ésimo}$ fold deixado
-    \State \hspace{1em} de fora, em função de \( \alpha \). Faça a média dos resultados para cada valor de \( \alpha \) e
-    \State \hspace{1em} escolha \( \alpha \) que minimize o erro médio.
+    \State \hspace{1em} (b) Avalie o erro quadrático médio da previsão no $k\text{-ésimo}$ fold deixado
+    \State \hspace{1em} de fora, em função de \( \alpha \).
+
+    \vspace{3pt}
+
+    \State \hspace{1em} Faça a média dos resultados para cada valor de \( \alpha \) e escolha \( \alpha \) que minimize o erro
+    \State \hspace{1em} médio.
 
 \vspace{3.7pt}
 
@@ -1564,21 +1572,21 @@ predições das \(B\) árvores, a variância é reduzida.
 
 Para mitigar a falta de interpretabilidade do método Bagging aplicado a
 árvores de regressão, pode-se usar a medida de impureza baseada no erro
-quadrático médio, definida anteriormente, como uma métrica de
-importância das variáveis independentes. Um valor elevado na redução
-total média do erro quadrático médio, calculado com base nas divisões
-realizadas por um determinado preditor em todas as \(B\) árvores, indica
-que o preditor é importante.
+quadrático médio como uma métrica de importância das variáveis
+independentes. Um valor elevado na redução total média do erro
+quadrático médio, calculado com base nas divisões realizadas por um
+determinado preditor em todas as \(B\) árvores, indica que o preditor é
+importante.
 
 \vspace{12pt}
 
 As árvores construídas pelo algoritmo de árvore de decisão se beneficiam
 da proposta de agregação do Bagging, mas esse benefício é limitado
-devido à correlação positiva existente entre as árvores. Se as árvores
-forem variáveis aleatórias independentes e identicamente distribuídas,
-cada uma com variância \(\sigma^2\), a variância da média das previsões
-das \(B\) árvores será \(\frac{1}{B} \sigma^2\). No entanto, se as
-árvores forem apenas identicamente distribuídas, mas não necessariamente
+devido à correlação existente entre as árvores. Se as árvores forem
+variáveis aleatórias independentes e identicamente distribuídas, cada
+uma com variância \(\sigma^2\), a variância da média das previsões das
+\(B\) árvores será \(\frac{1}{B} \sigma^2\). No entanto, se as árvores
+forem apenas identicamente distribuídas, mas não necessariamente
 independentes, e apresentarem uma correlação positiva \(\rho\), a
 esperança da média das \(B\) árvores será a mesma que a esperança de uma
 árvore individual. Portanto, o viés do agregado das árvores é o mesmo
@@ -1614,11 +1622,11 @@ que será descrito a seguir.
 \vspace{0.8em}
 
     \State \hspace{2em} (a) Construa amostras bootstrap $\mathbf{\mathcal{L}}^*$ de tamanho \( N \) dos dados de
-    \State \hspace{2em} \vspace{0.1em} treinamento.
+    \State \hspace{3.6em} \vspace{0.1em} treinamento.
 
     \State \hspace{2em} (b) Faça crescer uma árvore de floresta aleatória \( T_b \) para os dados bootstrap,
-    \State \hspace{2em} repetindo recursivamente os seguintes passos para cada folha da árvore, até que
-    \State \hspace{2em} \vspace{0.5em} o tamanho mínimo do nó \( n_{min} \) seja atingido.
+    \State \hspace{3.6em} repetindo recursivamente os seguintes passos para cada folha da árvore,
+    \State \hspace{3.6em} \vspace{0.5em} até que o tamanho mínimo do nó \( n_{min} \) seja atingido:
     \State \hspace{4em} \vspace{0.1em} i. Selecione \( m \) variáveis aleatoriamente entre as \( p \) variáveis.
     \State \hspace{4em} \vspace{0.1em} ii. Escolha a melhor variável entre as \( m \).
     \State \hspace{4em} \vspace{0.1em} iii. Divida o nó em dois subnós.
@@ -1638,13 +1646,13 @@ $$
 
 \vspace{1em}
 
-\State \hspace{0.7em} Para a classificação é utilizado o voto majoritário. Assim, seja $\hat{C}_{b}\left(x\right)$ a previsão da classe da árvore de floresta aleatória $b$. Então,
+\State \hspace{0.7em} Para a classificação é utilizado o voto majoritário. Assim, seja $\hat{C}_{b}\left(x\right)$ a previsão da classe da árvore de floresta aleatória $b$. Assim:
 
 $$
-\hat{C}^{B}_{rf}\left(x\right) = \arg \max_c \sum^{B}_{b = 1}I\left(\hat{C}_b\left(x\right) = c\right)
+\hat{C}^{B}_{rf}\left(x\right) = \arg \max_c \sum^{B}_{b = 1}I\left(\hat{C}_b\left(x\right) = c\right)\text{,}
 $$
 
-\State onde $c$ representa as classes possíveis.
+\State em que $c$ representa as classes possíveis.
 
 \end{algorithmic}
 \end{algorithm}
@@ -1704,8 +1712,8 @@ para que a taxa de erro se estabilize (JAMES et al., 2013).
 ~~~O Boosting, assim como o Bagging, é um método destinado a melhorar o
 desempenho de modelos ou algoritmos. No entanto, neste trabalho, o
 Boosting foi aplicado apenas às árvores de regressão. Portanto, a
-explicação do Boosting será restrito ao caso de Boosting Trees
-( Algoritmo~\ref{algo-boos} ).
+explicação do Boosting será restrito ao caso de Boosting Trees. Seu
+algoritmo pode ser observado no  Algoritmo~\ref{algo-boos} .
 
 \vspace{12pt}
 
@@ -1722,11 +1730,10 @@ explicação do Boosting será restrito ao caso de Boosting Trees
 
 \State \hspace{1em} \vspace{0.8em} \textbf{2.} Para $b = 1, 2, \dots, B$, repita:
 
-  \State \hspace{2em} (a) Ajuste uma árvore $\hat{f}^b$ com $d$ divisões para os dados de
-  \State \hspace{2em} \vspace{0.1em} treinamento $\left(X, r\right)$.
+  \State \hspace{2em} (a) Ajuste uma árvore $\hat{f}^b$ com $d$ divisões para os dados de treinamento $\left(X, r\right)$.
 
   \State \hspace{2em} (b) Atualize $\hat{f}$ adicionando uma versão com o hiperparâmetro $\lambda$ de taxa de
-  \State \hspace{2em} aprendizado:
+  \State \hspace{3.6em} aprendizado:
 
 $$
 \hat{f}\left(x\right) \gets \hat{f}\left(x\right) + \lambda \hat{f}^b\left(x\right)
@@ -1762,22 +1769,24 @@ No algoritmo de Bagging, cada árvore é construída e ajustada utilizando
 amostras bootstrap, e ao final, um estimador agregado
 \(\varphi_B\)\hspace{0pt} é formado a partir das \(B\) árvores. O
 Boosting Trees funciona de maneira semelhante, mas sem o uso de amostras
-bootstrap. A ideia principal é corrigir os erros das árvores anteriores,
-ajustando as novas árvores aos resíduos das anteriores, visando melhorar
-suas previsões. Assim, as árvores são construídas de forma sequencial,
-incorporando as informações das árvores anteriores.
+bootstrap. A ideia central do Boosting é corrigir os erros das árvores
+anteriores, ajustando as novas árvores aos resíduos gerados pelas
+predições anteriores, com o objetivo de aprimorar a precisão do modelo.
+Assim, as árvores no Boosting são construídas de forma sequencial,
+incorporando gradualmente as informações dos erros cometidos pelas
+árvores anteriores.
 
 \vspace{12pt}
 
 No caso da regressão, o Boosting combina um grande número de árvores de
 decisão \(\hat{f}^1, \dots, \hat{f}^B\). A primeira árvore é construída
 utilizando o conjunto de dados original, e seus resíduos são calculados.
-Com a primeira árvore ajustada, a segunda árvore é ajustada aos da
-árvore anterior resíduos e, em seguida, é adicionada ao estimador para
-atualizar os resíduos. Dessa forma, os resíduos servem como informação
-crucial para construir novas árvores e corrigir os erros das árvores
-anteriores. Como cada nova árvore depende das árvores já construídas,
-árvores menores são suficientes (JAMES et al., 2013).
+Com a primeira árvore ajustada, a segunda árvore é ajustada aos resíduos
+resíduos da árvore anterior e, em seguida, é adicionada ao estimador
+para atualizar os resíduos. Dessa forma, os resíduos servem como
+informação crucial para construir novas árvores e corrigir os erros das
+árvores anteriores. Como cada nova árvore depende das árvores já
+construídas, árvores menores são suficientes (JAMES et al., 2013).
 
 \vspace{12pt}
 
@@ -1810,20 +1819,21 @@ a modelos com alta complexidade.
 \vspace{12pt}
 
 Matematicamente, o Stacking define predições
-\(\hat{f}_m^{-i}\left(x\right)\) em x, utilizando o modelo \(m\),
+\(\hat{f}_m^{-i}\left(x\right)\) em \(x\), utilizando o modelo \(m\),
 aplicado ao conjunto de treinamento com a \(i\text{-ésima}\) observação
-removida (HASTIE et al., 2009). Assim, os peso são estimados de forma a
-minimizar o erro de predição combinado, dado pela seguinte expressão:
+removida (HASTIE et al., 2009). Os pesos dos modelos são estimados por
+meio de uma regressão linear de mínimos quadrados, ajustando \(y_i\) em
+relação a \(\hat{f}^{-i}\left(x\right)\), para \(m=1,\dots,M\). A
+estimativa dos pesos é obtida pela seguinte expressão:
 
 \[
 \hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m f^{-i}_m\left(x_i\right)\right]^2\text{.}
 \]
 
-A previsão final dos modelos empilhados é
-\(\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)\). Assim, em vez de
-escolher um único modelo, o método de Stacking combina os modelos
-utilizando pesos estimados, o que melhora a performance preditiva, mas
-pode comprometer a interpretabilidade.
+A previsão final é \(\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)\).
+Assim, em vez de escolher um único modelo, o método de Stacking combina
+os modelos utilizando pesos estimados, o que melhora a performance
+preditiva, mas pode comprometer a interpretabilidade.
 
 \subsection{Gradient Boosting}\label{gradient-boosting}
 
@@ -1836,8 +1846,8 @@ trabalho, foram utilizadas diferentes implementações de Gradient
 Boosting. No entanto, todas empregam o Gradient Boosting com árvores de
 regressão, com algumas modificações para a construção das árvores ou
 para melhorar a eficiência do algoritmo existente. Assim, o algoritmo a
-ser explicado será o Gradient Tree Boosting
-( Algoritmo~\ref{algo-gradboos} ).
+ser explicado será o Gradient Tree Boosting. O
+ Algoritmo~\ref{algo-gradboos}  demonstra a sua construção.
 
 \begin{algo}
 
@@ -1859,7 +1869,7 @@ $$
 $$
 
   \State \hspace{2em} (b) Ajuste uma árvore de regressão aos pseudo-resíduos $r_{im}$, obtendo regiões
-  \State \hspace{2em} terminais $R_{jm}, \ j = 1, 2, \dots, J$.
+  \State \hspace{3.6em} terminais $R_{jm}, \ j = 1, 2, \dots, J_m$.
 
 
   \State \vspace{0.1em}
@@ -1891,27 +1901,27 @@ $$
 
 O Gradient Boosting aplicado para árvores de regressão, tem que cada
 função base é uma árvore de regressão com \(J_m\) folhas. Dessa forma,
-cada árvore de regressão tem a forma aditiva
+cada árvore de regressão tem a seguinte forma aditiva:
 
 \begin{equation}\phantomsection\label{eq-treebost}{
 h_m\left(x;\{b_j, R_j\}^J_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)\text{,}
 }\end{equation} em que \(\{R_{jm}\}^{J_m}_{1}\) são as regiões disjuntas
 que, coletivamente, cobrem o espaço de todos os valores conjuntos das
-variáveis preditoras \(\mathbf{x}\). Essas regiões são representadas
-pelas folhas de sua correspondente árvore. Como as regiões são
-disjuntas, Equação~\ref{eq-treebost} se reduz simplesmente a
+variáveis preditoras. Essas regiões são representadas pelas folhas de
+sua correspondente árvore. Como as regiões são disjuntas, a
+Equação~\ref{eq-treebost} se reduz simplesmente a
 \(h_m\left(x\right) = b_{jm}\text{ para } x \in  R_{jm}\). Por mínimos
 quadrados, \(b_{jm}\) é simplesmente a média dos pseudo-resíduos
-\(r_{im}\):
+\(r_{im}\)
 
 \[
 \hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}\text{,}
 \] que dão a direção de diminuição da função perda \(L\) pela expressão
-do gradiente da linha 2(a). Assim, cada árvore de regressão é ajustada
-aos \(r_{im}\) de forma a minimizar o erro das árvores anteriores.
-\(N_{jm}\) denota a quantidade de pontos na região \(R_{jm}\). Por fim,
-o estimador é separadamente atualizado em cada região correspondente e é
-expresso:
+do gradiente da linha 2(a), no  Algoritmo~\ref{algo-gradboos} . Assim,
+cada árvore de regressão é ajustada aos \(r_{im}\) de forma a minimizar
+o erro das árvores anteriores. \(N_{jm}\) denota a quantidade de pontos
+na região \(R_{jm}\). Por fim, o estimador é separadamente atualizado em
+cada região correspondente e é expresso:
 
 \[
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
@@ -1942,7 +1952,7 @@ definida da seguinte forma:
 \[
 \mathcal{L}\left(\phi\right) = \sum_{i}l\left(\hat{y}_{i}, y_{i}\right) + \sum_{k}\Omega\left(f_{k}\right)\text{,}
 \] em que \(l\) é uma função de perda convexa diferenciável e o segundo
-termo \(Omega\) penaliza a complexidade de cada função de árvore de
+termo \(\Omega\) penaliza a complexidade de cada função de árvore de
 decisão. O termo de regularização adicional ajuda a suavizar os pesos
 finais para evitar o sobreajuste. \(\Omega\) é definido dado como:
 
