@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, boxrule=0pt, sharp corners, breakable, colback={codebgcolor}, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, colback={codebgcolor}, breakable, frame hidden, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -641,10 +641,10 @@ imóveis e outros usos relacionados ao mercado imobiliário.
 
 \subsection{Objetivo Geral}\label{objetivo-geral}
 
-Realizar uma análise e modelagem do valor de imóveis na cidade de João
-Pessoa, Paraíba, utilizando ferramentas computacionais e técnicas de
+~~~Realizar uma análise e modelagem do valor de imóveis na cidade de
+João Pessoa, utilizando ferramentas computacionais e técnicas de
 aprendizagem de máquina, com o intuito de compreender os fatores que
-influenciam esses valores e propor modelos preditivos eficientes.
+influenciam e os quais mais impactam na predição desses valores.
 
 \subsection{Objetivos Específicos}\label{objetivos-especuxedficos}
 
@@ -663,45 +663,41 @@ influenciam esses valores e propor modelos preditivos eficientes.
 
 \section{Organização do Trabalho}\label{organizauxe7uxe3o-do-trabalho}
 
-Além deste capítulo de introdução, em que é apresentado os problemas que
-serão abordados no trabalho e toda discussão envolvida, este trabalho
-também é composto por 6 outros capítulos. Os outros capítulos estão
-organizados da seguinte forma:
+Este trabalho é composto por seis capítulos, incluindo este capítulo
+introdutório, que apresenta um panorama histórico do mercado
+imobiliário, a região de estudo e os objetivos finais da pesquisa. No
+Capítulo 2, são detalhadas as ferramentas computacionais utilizadas, as
+linguagens de programação empregadas, as bibliotecas adotadas e o
+processo de coleta de dados realizado por meio da técnica de raspagem de
+dados.
 
-\begin{itemize}
-\item
-  \textbf{Capítulo 2}: No capítulo 2 serão apresentadas todas as
-  ferramentas computacionais utilizadas, linguagens de programação,
-  bibliotecas e sobre o processo para a coleta dos dados através da
-  técnica de raspagem de dados.
-\item
-  \textbf{Capítulo 3}: Aqui é apresentada toda a descrição teórica de
-  cada um dos modelos e algoritmos utilizados.
-\item
-  \textbf{Capítulo 4}: O capítulo 4 apresenta todo o processo para
-  obtenção dos dados e a descrição da variável dos dados. Além disso,
-  são apresentados também as etapas para a construção do modelo, as
-  transformações realizadas nas variáveis, o processo para encontrar os
-  hiperparâmetros ótimos dos modelos através de validação cruzada e
-  técnicas de otimização. Por fim, para descrever as técnicas para
-  análise de como os predições se comportam, são apresentadas e
-  descritas as técnicas de Individual Conditional Expectation, Local
-  Interpretable model-agnostic explanations e Shapley Additive
-  Explanations.
-\item
-  \textbf{Capítulo 5}: No capítulo 5 são apresentados os resultados da
-  análise exploratória, a tunagem dos modelos, os efeitos e importância
-  das variáveis na predição.
-\item
-  \textbf{Capítulo 6}: O capítulo 6 apresenta a conclusão do trabalho a
-  partir da discussão dos resultados obtidos durante seu
-  desenvolvimento.
-\item
-  \textbf{Capítulo 7}: Por fim, o capítulo 7 apresenta a aplicação final
-  desenvolvida e discute as suas funcionalidades e utilidade prática.
-\end{itemize}
+\vspace{12pt}
 
-\newpage
+O Capítulo 3 descreve teoricamente os algoritmos utilizados na modelagem
+dos valores de imóveis, como Random Forest, Boosting, Gradient Boosting
+e, por fim, o algoritmo de Stacking, que combina os algoritmos
+anteriores para sua construção.
+
+\vspace{12pt}
+
+No Capítulo 4, é detalhado o processo de obtenção dos dados e a
+descrição das variáveis. Além disso, são explicadas as etapas de
+construção dos modelos, as transformações aplicadas às variáveis, e o
+processo de otimização dos hiperparâmetros por meio de validação cruzada
+e técnicas de otimização. Por fim, são descritas as técnicas de análise
+do comportamento das predições, incluindo Individual Conditional
+Expectation (ICE), Local Interpretable Model-Agnostic Explanations
+(LIME) e Shapley Additive Explanations (SHAP).
+
+\vspace{12pt}
+
+O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste
+dos modelos, bem como os efeitos e a importância das variáveis na
+predição. Por fim, o Capítulo 6 discute os resultados obtidos ao longo
+do trabalho, destacando o desempenho dos modelos e as relações e
+impactos das variáveis na previsão dos valores dos imóveis. Além disso,
+são descritos o funcionamento e as funcionalidades da aplicação final
+desenvolvida.
 
 \chapter{Recursos Computacionais}\label{recursos-computacionais}
 
@@ -1364,10 +1360,8 @@ dela.
 \vspace{12pt}
 
 Os métodos baseados em árvore envolvem a estratificação ou segmentação
-do espaço dos preditores\footnote{O espaço dos preditores é o conjunto
-  de todos os valores possíveis para as variáveis independentes
-  \(\mathbf{x}\)} em várias regiões simples. Dessa forma, todos os
-algoritmos utilizados neste trabalho partem dessa ideia. Portanto, o
+do espaço dos preditores em várias regiões simples. Dessa forma, todos
+os algoritmos utilizados neste trabalho partem dessa ideia. Portanto, o
 primeiro a ser explicado será o de árvores de decisão, pois fundamenta
 todos os outros algoritmos. Depois das árvores de decisão, serão
 explicados os métodos ensemble e, por fim, diferentes variações do
