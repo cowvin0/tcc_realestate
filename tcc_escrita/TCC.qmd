@@ -1267,6 +1267,18 @@ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão ot
 
 Por padrão, a biblioteca [**Optuna**](https://optuna.org/) utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca [**Optuna**](https://optuna.org/). No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
 
+\vspace{12pt}
+
+A otimização de hiperparâmetros realizada com o [**Optuna**](https://optuna.org/) oferece diversas possibilidades para analisar o histórico de comportamento do algoritmo e compreender a importância de cada hiperparâmetro utilizado no processo de otimização. Neste trabalho, foi empregado o método FANOVA [@pmlr-v32-hutter14] para a análise da importância dos hiperparâmetros.
+
+\vspace{12pt}
+
+O método FANOVA utiliza uma Random Forest para estimar a função objetivo com base nos hiperparâmetros avaliados. Ele realiza uma decomposição da variância explicada pela função objetivo, atribuindo contribuições individuais e interativas a cada hiperparâmetro. Isso permite identificar quais hiperparâmetros têm maior impacto no desempenho do modelo. No [**Optuna**](https://optuna.org/), esse método é disponibilizado por meio da classe `optuna.importance.FanovaImportanceEvaluator`. Além disso, a função `optuna.visualization.plot_param_importances`, que utiliza o método FANOVA por padrão, facilita a criação de gráficos que destacam a importância dos hiperparâmetros.
+
+\vspace{12pt}
+
+Além de analisar a importância dos hiperparâmetros, o  [**Optuna**](https://optuna.org/) também oferece ferramentas para explorar o histórico de otimização, as relações entre os hiperparâmetros e o comportamento da função objetivo em cada trial. Essas análises podem ser realizadas, respectivamente, pelas funções `plot_optimization_history`, `plot_contour` e `plot_slice`.
+
 ## Interpretação dos algoritmos de aprendizagem de máquina
 
 \ \ \ Na aplicação de aprendizado de máquina, o foco geralmente está em obter um modelo com o menor erro de generalização possível, o que muitas vezes resulta na negligência da interpretação dos resultados e do que mais influenciou a variável dependente. Isso pode comprometer a compreensão do que o algoritmo está efetivamente fazendo. Em resposta a essa limitação, diversas técnicas têm sido desenvolvidas para interpretar os efeitos das variáveis independentes nas estimativas geradas pelos algoritmos. Assim, esta seção será dedicada a descrever a fundamentação teórica e a aplicação das técnicas de interpretação utilizadas neste trabalho.

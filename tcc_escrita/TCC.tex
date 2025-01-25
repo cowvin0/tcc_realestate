@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, breakable, enhanced, boxrule=0pt, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, sharp corners, frame hidden, enhanced, colback={codebgcolor}, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2668,6 +2668,40 @@ entanto, caso se deseje utilizar outro método de otimização da
 biblioteca, basta especificá-lo da mesma forma:
 \texttt{optuna.create\_study(sampler=metodo\_otimizacao)}.
 
+\vspace{12pt}
+
+A otimização de hiperparâmetros realizada com o
+\href{https://optuna.org/}{\textbf{Optuna}} oferece diversas
+possibilidades para analisar o histórico de comportamento do algoritmo e
+compreender a importância de cada hiperparâmetro utilizado no processo
+de otimização. Neste trabalho, foi empregado o método FANOVA (HUTTER;
+HOOS; LEYTON-BROWN, 2014) para a análise da importância dos
+hiperparâmetros.
+
+\vspace{12pt}
+
+O método FANOVA utiliza uma Random Forest para estimar a função objetivo
+com base nos hiperparâmetros avaliados. Ele realiza uma decomposição da
+variância explicada pela função objetivo, atribuindo contribuições
+individuais e interativas a cada hiperparâmetro. Isso permite
+identificar quais hiperparâmetros têm maior impacto no desempenho do
+modelo. No \href{https://optuna.org/}{\textbf{Optuna}}, esse método é
+disponibilizado por meio da classe
+\texttt{optuna.importance.FanovaImportanceEvaluator}. Além disso, a
+função \texttt{optuna.visualization.plot\_param\_importances}, que
+utiliza o método FANOVA por padrão, facilita a criação de gráficos que
+destacam a importância dos hiperparâmetros.
+
+\vspace{12pt}
+
+Além de analisar a importância dos hiperparâmetros, o
+\href{https://optuna.org/}{\textbf{Optuna}} também oferece ferramentas
+para explorar o histórico de otimização, as relações entre os
+hiperparâmetros e o comportamento da função objetivo em cada trial.
+Essas análises podem ser realizadas, respectivamente, pelas funções
+\texttt{plot\_optimization\_history}, \texttt{plot\_contour} e
+\texttt{plot\_slice}.
+
 \section{Interpretação dos algoritmos de aprendizagem de
 máquina}\label{interpretauxe7uxe3o-dos-algoritmos-de-aprendizagem-de-muxe1quina}
 
@@ -4141,6 +4175,12 @@ Org.). {[}S.l.{]}: {[}s.n.{]}, 2019. p. 126--133.
 HUNTER, J. D. \href{https://doi.org/10.1109/MCSE.2007.55}{Matplotlib: A
 2D graphics environment}. \textbf{Computing in Science \& Engineering},
 2007. v. 9, n. 3, p. 90--95.
+
+\bibitem[\citeproctext]{ref-pmlr-v32-hutter14}
+HUTTER, F.; HOOS, H.; LEYTON-BROWN, K. An Efficient Approach for
+Assessing Hyperparameter Importance. (E. P. Xing \& T. Jebara, Org.).
+Bejing, China: PMLR, 2014. V. 32, p. 754--762. Disponível em:
+\textless{}\url{https://proceedings.mlr.press/v32/hutter14.html}\textgreater.
 
 \bibitem[\citeproctext]{ref-plotly}
 INC., P. T. Collaborative data science. 2015. Disponível em:
