@@ -335,7 +335,7 @@ Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos 
 
 \vspace{12pt}
 
-O [**scikit-learn**](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em Python. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [**scikit-learn**](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [**SciPy**](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em Python.
+O [**scikit-learn**](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em `Python`. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [**scikit-learn**](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [**SciPy**](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em `Python`.
 
 \vspace{12pt}
 
@@ -916,7 +916,7 @@ em que $l$ é uma função de perda convexa diferenciável e o segundo termo $\O
 $$
 \Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}\text{,}
 $$
-em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em `Python` utilizam a regularização L2 (Ridge) como padrão, mas também permitem o uso da regularização L1 (Lasso).
+em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em `Python` utilizam a regularização L2 como padrão, mas também permitem o uso da regularização L1.
 
 \vspace{12pt}
 
@@ -927,11 +927,11 @@ Assim como o Gradient Boosting, as implementações existentes de Light Gradient
 
 ## Obtenção dos dados
 
-\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação R e Python. No R, os pacotes xml2 [@xml2] e rvest [@rvest] foram utilizados para extrair dados de páginas estáticas de forma estruturada. No Python, as bibliotecas Scrapy [@kouzis2016learning] e Playwright, desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e pode ser acessada através do domínio <https://scrapeops.io/> após a criação de uma conta no site.
+\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação `R` e `Python`. No `R`, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No `Python`, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e pode ser acessada através do domínio <https://scrapeops.io/> após a criação de uma conta no site.
 
 \vspace{12pt}
 
-Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote tidygeocoder [@geocoder] da linguagem R. Dessa forma, tem-se as seguintes variáveis:
+Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem `R`. Dessa forma, tem-se as seguintes variáveis:
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
@@ -975,7 +975,7 @@ No entanto, com base nas observações realizadas durante o estudo, nem todas as
 
 \vspace{12pt}
 
-Após a seleção das variáveis, o conjunto de dados foi dividido em conjuntos de treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe `sklearn.model_selection.StratifiedShuffleSplit`, da biblioteca scikit-learn. Essa classe permite dividir a base de dados de maneira aleatória, preservando a proporção das classes definidas.
+Após a seleção das variáveis, o conjunto de dados foi dividido em conjuntos de treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe `sklearn.model_selection.StratifiedShuffleSplit`, da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/). Essa classe permite dividir a base de dados de maneira aleatória, preservando a proporção das classes definidas.
 
 \vspace{12pt}
 
@@ -983,7 +983,7 @@ A estratificação foi baseada em intervalos criados a partir da variável que r
 
 \vspace{12pt}
 
-Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas `scikit-learn`, `lightgbm` e `xgboost`. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Light Gradient Boosting.
+Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Light Gradient Boosting.
 
 ### Etapas de pré-processamento
 
@@ -996,7 +996,7 @@ O método utilizado para a imputação de valores ausentes foi o algoritmo k-nea
 $$
 \hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i\text{,}
 $$
-em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe `KNNImputer` da biblioteca scikit-learn para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento `n_neighbors` da classe `KNNImputer`.
+em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe `KNNImputer` da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento `n_neighbors` da classe `KNNImputer`.
 
 \vspace{12pt}
 
@@ -1004,7 +1004,7 @@ A transformação logarítmica $\log(1 + x)$ foi aplicada para estabilizar a var
 
 \vspace{12pt}
 
-Após a aplicação da transformação logarítmica às variáveis numéricas, essas variáveis também foram padronizadas utilizando a classe `StandardScaler`, disponível no módulo `preprocessing` da biblioteca `scikit-learn`. Essa classe ajusta os dados para que fiquem na mesma escala, padronizando-os de acordo com a fórmula:
+Após a aplicação da transformação logarítmica às variáveis numéricas, essas variáveis também foram padronizadas utilizando a classe `StandardScaler`, disponível no módulo `preprocessing` da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/). Essa classe ajusta os dados para que fiquem na mesma escala, padronizando-os de acordo com a fórmula:
 
 $$
 z = \frac{x - \mu}{\sigma}\text{,}
@@ -1076,7 +1076,7 @@ A @fig-kfold ilustra exatamente o caso da validação cruzada por K-Fold. As div
 
 \vspace{12pt}
 
-Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca `scikit-learn`, ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em Python:
+Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/), ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em `Python`:
 
 ```{python}
 #| echo: true
@@ -1212,7 +1212,7 @@ Essa última expressão mostra que, para maximizar o Expected Improvement, é ne
 
 ### Otimização de hiperparâmetros com optuna
 
-\ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca `optuna` [@optuna_2019] da linguagem de programação Python. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
+\ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca [**Optuna**](https://optuna.org/) da linguagem de programação `Python`. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
 
 ```{python}
 #| echo: true
@@ -1265,7 +1265,7 @@ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão ot
 
 \vspace{12pt}
 
-Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca optuna. No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
+Por padrão, a biblioteca [**Optuna**](https://optuna.org/) utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca [**Optuna**](https://optuna.org/). No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
 
 ## Interpretação dos algoritmos de aprendizagem de máquina
 
@@ -1312,7 +1312,7 @@ em que $N$ é o número de amostras utilizadas na simulação e $\hat{f}\left(x_
 
 \vspace{12pt}
 
-Em Python, a biblioteca `scikit-learn` disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
+Em `Python`, a biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
 
 ```{python}
 #| eval: false
@@ -1353,12 +1353,12 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 \vspace{12pt}
 
-Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em Python, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>.
+Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em `Python`, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>.
 
 
 ### Shapley Additive Explanations (SHAP)
 
-\ \ \ O SHapley Additive exPlanations (SHAP) é um método cujo objetivo é explicar as predições individuais de uma instância xx por meio da computação da contribuição de cada variável para o resultado da predição. Esse método é fundamentado nos valores de Shapley, que serão definidos a seguir.
+\ \ \ O Shapley Additive Explanations (SHAP) é um método cujo objetivo é explicar as predições individuais de uma instância $x$ por meio da computação da contribuição de cada variável para o resultado da predição. Esse método é fundamentado nos valores de Shapley, que serão definidos a seguir.
 
 \vspace{12pt}
 
@@ -1412,7 +1412,7 @@ Esse gráfico permite visualizar diretamente como as observações de uma variá
 
 \vspace{12pt}
 
-Para aplicar o método SHAP em Python, foi utilizada a biblioteca shap. Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca shap para gerar esses gráficos baseado no algoritmo Stacking:
+Para aplicar o método SHAP em `Python`, foi utilizada a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest/). Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest/) para gerar esses gráficos baseado no algoritmo Stacking:
 
 ```{python}
 #| eval: false
@@ -1446,7 +1446,7 @@ shap.dependence_plot(
 	)
 ```
 
-Por padrão, a classe `shap.Explainer` utiliza o algoritmo de explicação considerado a melhor escolha com base no modelo passado como argumento. Neste trabalho, foi selecionado o algoritmo de explicação utilizando a classe Permutation. Essa escolha foi realizada automaticamente pela classe `shap.Explainer(algorithm="auto")`. O algoritmo Permutation funciona iterando sobre todas as permutações possíveis das variáveis, tanto na ordem original quanto na ordem inversa. Em relação ao gráfico de importância, ele é gerado de maneira semelhante ao gráfico de resumo, com a diferença de que o argumento plot_type="bar" é utilizado para criar o gráfico de importância. Por fim, o método `shap.utils.sample` é utilizado para selecionar aleatoriamente observações para a construção de uma amostra, a fim de estimar os valores de Shapley.
+Por padrão, a classe `shap.Explainer` utiliza o algoritmo de explicação considerado a melhor escolha com base no modelo passado como argumento. Neste trabalho, foi selecionado o algoritmo de explicação utilizando a classe `Permutation`. Essa escolha foi realizada automaticamente pela classe `shap.Explainer(algorithm="auto")`. O algoritmo Permutation funciona iterando sobre todas as permutações possíveis das variáveis, tanto na ordem original quanto na ordem inversa. Em relação ao gráfico de importância, ele é gerado de maneira semelhante ao gráfico de resumo, com a diferença de que o argumento `plot_type="bar"` é utilizado para criar o gráfico de importância. Por fim, o método `shap.utils.sample` é utilizado para selecionar aleatoriamente observações para a construção de uma amostra, a fim de estimar os valores de Shapley.
 
 # Resultados
 
@@ -1863,7 +1863,7 @@ img.save('includes/map_valor_m2.png')
 
 \vspace{12pt}
 
-Todos os modelos e bibliotecas usados neste trabalho seguem a API do scikit-learn. Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca Optuna, foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas obtidas para cada algoritmo pode ser visualizado na @tbl-metrics_models.
+Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas obtidas para cada algoritmo pode ser visualizado na @tbl-metrics_models.
 
 ::: {#tbl-metrics_models}
 

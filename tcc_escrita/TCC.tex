@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, boxrule=0pt, breakable, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, breakable, enhanced, boxrule=0pt, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -991,16 +991,17 @@ trabalho, \href{https://numpy.org/}{\textbf{numpy}} (HARRIS et al.,
 \vspace{12pt}
 
 O \href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}} é uma
-das bibliotecas de aprendizado de máquina mais populares em Python. Ela
-oferece uma extensa coleção de algoritmos para tarefas como
-classificação, regressão, clusterização, além de ferramentas para
-pré-processamento de dados, validação cruzada e seleção de modelos. O
-projeto teve início no Google Summer of Code como uma iniciativa do
-engenheiro francês David Cournapeau. O
+das bibliotecas de aprendizado de máquina mais populares em
+\texttt{Python}. Ela oferece uma extensa coleção de algoritmos para
+tarefas como classificação, regressão, clusterização, além de
+ferramentas para pré-processamento de dados, validação cruzada e seleção
+de modelos. O projeto teve início no Google Summer of Code como uma
+iniciativa do engenheiro francês David Cournapeau. O
 \href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}} foi
 criado como uma ferramenta baseada na biblioteca
 \href{https://scipy.org/}{\textbf{SciPy}} (VIRTANEN et al., 2020), que é
-voltada para computação científica e cálculo numérico em Python.
+voltada para computação científica e cálculo numérico em
+\texttt{Python}.
 
 \vspace{12pt}
 
@@ -2056,8 +2057,7 @@ folhas nas árvores. Assim, com a regularização aplicada a função
 objetivo, modelos e funções preditivas serão mais comuns pois
 simplificarão o modelo. As implementações do algoritmo de Extreme
 Gradient Boosting presentes em \texttt{Python} utilizam a regularização
-L2 (Ridge) como padrão, mas também permitem o uso da regularização L1
-(Lasso).
+L2 como padrão, mas também permitem o uso da regularização L1.
 
 \vspace{12pt}
 
@@ -2078,22 +2078,25 @@ o custo computacional.
 
 ~~~Os dados foram obtidos por meio de web scraping, que é uma técnica
 para coleta automatizada de dados de páginas da internet. Para isso,
-foram utilizadas as linguagens de programação R e Python. No R, os
-pacotes xml2 (WICKHAM; HESTER; OOMS, 2023) e rvest (WICKHAM, 2024) foram
-utilizados para extrair dados de páginas estáticas de forma estruturada.
-No Python, as bibliotecas Scrapy (KOUZIS-LOUKAS, 2016) e Playwright,
-desenvolvida pela Microsoft, foram empregadas, sendo esta última
-essencial para a interação com componentes dinâmicos da página,
-possibilitando a extração de informações que exigem interações como
-cliques ou rolagem de página para ser gerada. Além dessas ferramentas,
-foram implementadas técnicas de rotacionamento de IPs e de modificação
-das informações do usuário que acessa o site, a fim de evitar bloqueios
-durante o processo de coleta de dados, garantindo assim a continuidade e
-eficácia da extração. A API utilizada para gerenciar a rotação de
-informações dos usuários que acessam o site foi desenvolvida pela
-empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e
-pode ser acessada através do domínio \url{https://scrapeops.io/} após a
-criação de uma conta no site.
+foram utilizadas as linguagens de programação \texttt{R} e
+\texttt{Python}. No \texttt{R}, os pacotes
+\href{https://xml2.r-lib.org/}{\textbf{xml2}} e
+\href{https://rvest.tidyverse.org/}{\textbf{rvest}} foram utilizados
+para extrair dados de páginas estáticas de forma estruturada. No
+\texttt{Python}, as bibliotecas
+\href{https://scrapy.org/}{\textbf{Scrapy}} e
+\href{https://playwright.dev/python/}{\textbf{Playwright}}, desenvolvida
+pela Microsoft, foram empregadas, sendo esta última essencial para a
+interação com componentes dinâmicos da página, possibilitando a extração
+de informações que exigem interações como cliques ou rolagem de página
+para ser gerada. Além dessas ferramentas, foram implementadas técnicas
+de rotacionamento de IPs e de modificação das informações do usuário que
+acessa o site, a fim de evitar bloqueios durante o processo de coleta de
+dados, garantindo assim a continuidade e eficácia da extração. A API
+utilizada para gerenciar a rotação de informações dos usuários que
+acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta
+é disponibilizada gratuitamente e pode ser acessada através do domínio
+\url{https://scrapeops.io/} após a criação de uma conta no site.
 
 \vspace{12pt}
 
@@ -2106,8 +2109,9 @@ qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem
 todas as variáveis foram obtidas diretamente por web scraping. As
 coordenadas geográficas, latitude e longitude, por exemplo, foram
 geradas por meio da geocodificação dos endereços de cada imóvel,
-utilizando o pacote tidygeocoder (CAMBON et al., 2021) da linguagem R.
-Dessa forma, tem-se as seguintes variáveis:
+utilizando o pacote
+\href{https://jessecambon.github.io/tidygeocoder/}{\textbf{tidygeocoder}}
+da linguagem \texttt{R}. Dessa forma, tem-se as seguintes variáveis:
 
 \begin{itemize}
 \item
@@ -2192,8 +2196,9 @@ Após a seleção das variáveis, o conjunto de dados foi dividido em
 conjuntos de treino e teste para avaliar o desempenho dos modelos. A
 divisão foi realizada de forma estratificada, utilizando a classe
 \texttt{sklearn.model\_selection.StratifiedShuffleSplit}, da biblioteca
-scikit-learn. Essa classe permite dividir a base de dados de maneira
-aleatória, preservando a proporção das classes definidas.
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}. Essa
+classe permite dividir a base de dados de maneira aleatória, preservando
+a proporção das classes definidas.
 
 \vspace{12pt}
 
@@ -2209,16 +2214,19 @@ o treinamento do modelo.
 \vspace{12pt}
 
 Para a aplicação das ferramentas de modelagem, foram utilizadas as
-bibliotecas \texttt{scikit-learn}, \texttt{lightgbm} e \texttt{xgboost}.
-As duas últimas foram empregadas especificamente na modelagem, enquanto
-a primeira também foi utilizada para criar pipelines de
-pré-processamento de dados, que organizam etapas sequenciais de
-preparação necessárias para o tratamento adequado dos dados. Assim, os
-quatro modelos aplicados na previsão do valor do imóvel foram: Random
-Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado
-o algoritmo de Stacking, combinando os modelos previamente construídos
-para melhorar a performance preditiva. No Stacking, foi utilizado como
-preditor final o algoritmo de Light Gradient Boosting.
+bibliotecas
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}},
+\href{https://lightgbm.readthedocs.io/en/stable/}{\textbf{LightGBM}} e
+\href{https://xgboost.readthedocs.io/en/stable/}{\textbf{XGBoost}}. As
+duas últimas foram empregadas especificamente na modelagem, enquanto a
+primeira também foi utilizada para criar pipelines de pré-processamento
+de dados, que organizam etapas sequenciais de preparação necessárias
+para o tratamento adequado dos dados. Assim, os quatro modelos aplicados
+na previsão do valor do imóvel foram: Random Forest, Gradient Boosting,
+LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking,
+combinando os modelos previamente construídos para melhorar a
+performance preditiva. No Stacking, foi utilizado como preditor final o
+algoritmo de Light Gradient Boosting.
 
 \subsection{Etapas de
 pré-processamento}\label{etapas-de-pruxe9-processamento}
@@ -2248,10 +2256,11 @@ acordo com a seguinte fórmula:
 próximos de \(x\), ou seja, os pontos \(x_i\) no conjunto de dados que
 estão mais próximos de \(x\). Essa proximidade é geralmente medida pela
 distância Euclidiana, que é a métrica padrão utilizada pela classe
-\texttt{KNNImputer} da biblioteca scikit-learn para imputação de valores
-ausentes. No processo de imputação, foi utilizado um total de 17
-vizinhos, definido pelo argumento \texttt{n\_neighbors} da classe
-\texttt{KNNImputer}.
+\texttt{KNNImputer} da biblioteca
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}} para
+imputação de valores ausentes. No processo de imputação, foi utilizado
+um total de 17 vizinhos, definido pelo argumento \texttt{n\_neighbors}
+da classe \texttt{KNNImputer}.
 
 \vspace{12pt}
 
@@ -2269,8 +2278,10 @@ variável binária.
 Após a aplicação da transformação logarítmica às variáveis numéricas,
 essas variáveis também foram padronizadas utilizando a classe
 \texttt{StandardScaler}, disponível no módulo \texttt{preprocessing} da
-biblioteca \texttt{scikit-learn}. Essa classe ajusta os dados para que
-fiquem na mesma escala, padronizando-os de acordo com a fórmula:
+biblioteca
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}. Essa
+classe ajusta os dados para que fiquem na mesma escala, padronizando-os
+de acordo com a fórmula:
 
 \[
 z = \frac{x - \mu}{\sigma}\text{,}
@@ -2334,9 +2345,9 @@ perda \(L\).
 
 Para realizar a validação cruzada com K-Fold nos modelos empregados
 neste trabalho, utilizou-se uma função e uma classe da biblioteca
-\texttt{scikit-learn}, ambas disponíveis no módulo
-\texttt{model\_selection}. A função utilizada foi a
-\texttt{cross\_val\_score}, que recebe o modelo por meio do argumento
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}, ambas
+disponíveis no módulo \texttt{model\_selection}. A função utilizada foi
+a \texttt{cross\_val\_score}, que recebe o modelo por meio do argumento
 \texttt{estimator}. A função perda para avaliação é especificado pelo
 argumento \texttt{scoring}, enquanto a técnica de validação cruzada é
 definida pelo argumento \texttt{cv}. Especificamente, foi empregada a
@@ -2346,7 +2357,7 @@ divisões (folds) a serem realizadas, neste caso, 20. Após a execução da
 validação, a média das métricas retornadas pela função
 \texttt{cross\_val\_score} para cada fold foi calculada, como forma de
 se obter uma estimativa do desempenho do modelo. O código abaixo é um
-exemplo de como se utilizar a validação cruzada em Python:
+exemplo de como se utilizar a validação cruzada em \texttt{Python}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2580,10 +2591,10 @@ maximizar a razão \(l\left(\lambda\right) / g\left(\lambda\right)\).
 optuna}\label{otimizauxe7uxe3o-de-hiperparuxe2metros-com-optuna}
 
 ~~~Para otimizar os hiperparâmetros dos modelos foi utilizado a
-bilbioteca \texttt{optuna} (AKIBA et al., 2019) da linguagem de
-programação Python. Essa biblioteca implementa diversos métodos para
-otimização automatizada de hiperparâmetros. Para a sua utilização, é
-preciso definir inicialmente uma função objetivo. Por exemplo, para
+bilbioteca \href{https://optuna.org/}{\textbf{Optuna}} da linguagem de
+programação \texttt{Python}. Essa biblioteca implementa diversos métodos
+para otimização automatizada de hiperparâmetros. Para a sua utilização,
+é preciso definir inicialmente uma função objetivo. Por exemplo, para
 otimizar os hiperparâmetros de uma random forest, seria necessário
 definir uma função objetivo da seguinte forma:
 
@@ -2646,12 +2657,13 @@ basta executar \texttt{study.best\_params}.
 
 \vspace{12pt}
 
-Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen
-Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de
-otimização é escolhida por meio do argumento \texttt{sampler} no método
-\texttt{create\_study}. Para selecionar o TPE, basta passar
-\texttt{optuna.samplers.TPESampler} como argumento para a criação do
-estudo. O método TPE é o padrão para otimização na biblioteca optuna. No
+Por padrão, a biblioteca \href{https://optuna.org/}{\textbf{Optuna}}
+utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar
+hiperparâmetros de um modelo. A técnica de otimização é escolhida por
+meio do argumento \texttt{sampler} no método \texttt{create\_study}.
+Para selecionar o TPE, basta passar \texttt{optuna.samplers.TPESampler}
+como argumento para a criação do estudo. O método TPE é o padrão para
+otimização na biblioteca \href{https://optuna.org/}{\textbf{Optuna}}. No
 entanto, caso se deseje utilizar outro método de otimização da
 biblioteca, basta especificá-lo da mesma forma:
 \texttt{optuna.create\_study(sampler=metodo\_otimizacao)}.
@@ -2755,11 +2767,12 @@ modelo.
 
 \vspace{12pt}
 
-Em Python, a biblioteca \texttt{scikit-learn} disponibiliza a classe
-\texttt{PartialDependenceDisplay} para a criação de gráficos de ICE e a
-inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário
-ter um modelo previamente ajustado. O código a seguir demonstra sua
-utilização:
+Em \texttt{Python}, a biblioteca
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}
+disponibiliza a classe \texttt{PartialDependenceDisplay} para a criação
+de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o
+gráfico, é necessário ter um modelo previamente ajustado. O código a
+seguir demonstra sua utilização:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2835,15 +2848,16 @@ exemplo, é o erro quadrático médio.
 
 Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos
 métodos fundamentais para a abordagem que será apresentada a seguir, o
-Shapley Additive Explanations (SHAP). Em Python, o LIME está disponível
-por meio da biblioteca \texttt{lime}, cuja documentação pode ser
-acessada em \url{https://lime-ml.readthedocs.io/en/latest/lime.html}.
+Shapley Additive Explanations (SHAP). Em \texttt{Python}, o LIME está
+disponível por meio da biblioteca \texttt{lime}, cuja documentação pode
+ser acessada em
+\url{https://lime-ml.readthedocs.io/en/latest/lime.html}.
 
 \subsection{Shapley Additive Explanations
 (SHAP)}\label{shapley-additive-explanations-shap}
 
-~~~O SHapley Additive exPlanations (SHAP) é um método cujo objetivo é
-explicar as predições individuais de uma instância xx por meio da
+~~~O Shapley Additive Explanations (SHAP) é um método cujo objetivo é
+explicar as predições individuais de uma instância \(x\) por meio da
 computação da contribuição de cada variável para o resultado da
 predição. Esse método é fundamentado nos valores de Shapley, que serão
 definidos a seguir.
@@ -2944,7 +2958,8 @@ as variáveis binárias se comportam.
 
 \vspace{12pt}
 
-Para aplicar o método SHAP em Python, foi utilizada a biblioteca shap.
+Para aplicar o método SHAP em \texttt{Python}, foi utilizada a
+biblioteca \href{https://shap.readthedocs.io/en/latest/}{\textbf{SHAP}}.
 Essa biblioteca calcula os valores de Shapley com base no modelo
 ajustado e no algoritmo de explicação escolhido, implementado na classe
 \texttt{shap.Explainer}. Esse algoritmo estima os valores de Shapley de
@@ -2954,8 +2969,9 @@ importância. O gráfico de dependência pode ser gerado utilizando a
 função \texttt{shap.dependence\_plot}, enquanto os gráficos de
 importância e resumo são criados com a função
 \texttt{shap.summary\_plot}. Abaixo, é apresentado um exemplo de código
-que utiliza a biblioteca shap para gerar esses gráficos baseado no
-algoritmo Stacking:
+que utiliza a biblioteca
+\href{https://shap.readthedocs.io/en/latest/}{\textbf{SHAP}} para gerar
+esses gráficos baseado no algoritmo Stacking:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2991,16 +3007,16 @@ algoritmo Stacking:
 Por padrão, a classe \texttt{shap.Explainer} utiliza o algoritmo de
 explicação considerado a melhor escolha com base no modelo passado como
 argumento. Neste trabalho, foi selecionado o algoritmo de explicação
-utilizando a classe Permutation. Essa escolha foi realizada
+utilizando a classe \texttt{Permutation}. Essa escolha foi realizada
 automaticamente pela classe \texttt{shap.Explainer(algorithm="auto")}. O
 algoritmo Permutation funciona iterando sobre todas as permutações
 possíveis das variáveis, tanto na ordem original quanto na ordem
 inversa. Em relação ao gráfico de importância, ele é gerado de maneira
 semelhante ao gráfico de resumo, com a diferença de que o argumento
-plot\_type=``bar'' é utilizado para criar o gráfico de importância. Por
-fim, o método \texttt{shap.utils.sample} é utilizado para selecionar
-aleatoriamente observações para a construção de uma amostra, a fim de
-estimar os valores de Shapley.
+\texttt{plot\_type="bar"} é utilizado para criar o gráfico de
+importância. Por fim, o método \texttt{shap.utils.sample} é utilizado
+para selecionar aleatoriamente observações para a construção de uma
+amostra, a fim de estimar os valores de Shapley.
 
 \chapter{Resultados}\label{resultados}
 
@@ -3189,13 +3205,15 @@ hiperparâmetro de taxa de aprendizado também foi ajustado.
 \vspace{12pt}
 
 Todos os modelos e bibliotecas usados neste trabalho seguem a API do
-scikit-learn. Nessa API, o hiperparâmetro que define a quantidade de
-árvores é denominado \texttt{n\_estimators}, o de profundidade das
-árvores é \texttt{max\_depth}, e o de taxa de aprendizado é
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}. Nessa
+API, o hiperparâmetro que define a quantidade de árvores é denominado
+\texttt{n\_estimators}, o de profundidade das árvores é
+\texttt{max\_depth}, e o de taxa de aprendizado é
 \texttt{learning\_rate}. Com a configuração da função objetivo na
-biblioteca Optuna, foi possível encontrar o ponto ótimo desses
-hiperparâmetros para cada modelo. As métricas obtidas para cada
-algoritmo pode ser visualizado na Tabela~\ref{tbl-metrics_models}.
+biblioteca \href{https://optuna.org/}{\textbf{Optuna}}, foi possível
+encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As
+métricas obtidas para cada algoritmo pode ser visualizado na
+Tabela~\ref{tbl-metrics_models}.
 
 \begin{longtable}[]{@{}cccc@{}}
 \caption{Métricas obtidas de cada
