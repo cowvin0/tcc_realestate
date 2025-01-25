@@ -220,7 +220,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, colback={codebgcolor}, frame hidden, enhanced, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, boxrule=0pt, breakable, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1285,8 +1285,7 @@ o mínimo possível no desempenho do sistema.
 
 O \href{https://code.visualstudio.com/}{\textbf{Visual Studio Code
 (VSCode)}} foi a principal ferramenta utilizada para a escrita do código
-neste trabalho. O
-\href{\%5Bvscodevim\%5D(https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)}{\textbf{VSCode}}
+neste trabalho. O \href{https://code.visualstudio.com/}{\textbf{VSCode}}
 é um editor bastante leve e oferece suporte a diversas linguagens de
 programação e permite integração com inúmeras tecnologias por meio de
 suas extensões. Entre as extensões utilizadas, destaca-se o
@@ -1296,6 +1295,29 @@ criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além
 disso, foram empregadas extensões específicas para as linguagens
 \texttt{Python} e \texttt{R}, tendo como principal objetivo uma melhor
 formatação de código, execução e identificação de possíveis erros.
+
+\vspace{12pt}
+
+Por exemplo, uma das extensões utilizadas para análise estática de
+código em \texttt{Python} foi o
+\href{https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright}{\textbf{Pyright}},
+desenvolvido pela Microsoft. Essa ferramenta é projetada para detectar
+erros durante o desenvolvimento e verificar a tipagem de código em
+\texttt{Python}, contribuindo para a melhoria da qualidade e da
+manutenção do programa. Outra ferramenta empregada foi o
+\href{https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter}{\textbf{Black
+Formatter}}, um formatador de código \texttt{Python}. Ele automatiza a
+padronização do estilo de código, garantindo consistência e
+legibilidade. Além disso, foi utilizado o
+\href{https://marketplace.visualstudio.com/items?itemName=ms-python.flake8}{\textbf{Flake8}},
+que analisa o código em busca de erros de sintaxe, problemas de estilo
+com base no padrão \href{https://peps.python.org/pep-0008/}{\textbf{PEP
+8}}, e outras questões, como redundâncias ou importações desnecessárias.
+Por fim, também foi utilizada uma extensão mais geral de suporte à
+linguagem \texttt{Python}, que oferece diversas funcionalidades, como
+correção de código por meio da extensão
+\href{https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy}{\textbf{PythonDebugger}},
+que utiliza a biblioteca debugpy para suporte ao processo de debugging.
 
 \vspace{12pt}
 
@@ -1314,7 +1336,10 @@ entre usuários de \texttt{R}, e oferece suporte a Markdown e \LaTeX, o
 que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e
 outros elementos visuais. Além disso, os documentos gerados podem ser
 exportados para diversos formatos, como HTML, PDF, MS Word, entre
-outros.
+outros. O \href{https://quarto.org/}{\textbf{Quarto}} também foi
+utilizado através do
+\href{https://code.visualstudio.com/}{\textbf{VSCode}}, com a sua
+extensão disponível em \url{https://quarto.org/docs/tools/vscode.html}.
 
 \vspace{12pt}
 
