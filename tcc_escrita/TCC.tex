@@ -131,6 +131,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{amsmath}
 \usepackage[explicit]{titlesec}
 \usepackage{setspace}
 \usepackage{caption}
@@ -220,7 +221,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, colback={codebgcolor}, breakable, frame hidden, enhanced, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, frame hidden, boxrule=0pt, sharp corners, breakable, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2668,23 +2669,91 @@ A otimização de hiperparâmetros realizada com o
 \href{https://optuna.org/}{\textbf{Optuna}} oferece diversas
 possibilidades para analisar o histórico de comportamento do algoritmo e
 compreender a importância de cada hiperparâmetro utilizado no processo
-de otimização. Neste trabalho, foi empregado o método FANOVA (HUTTER;
-HOOS; LEYTON-BROWN, 2014) para a análise da importância dos
-hiperparâmetros.
+de otimização. Neste trabalho, foi empregado o método fANOVA (Funcional
+Analysis of Variance) (HUTTER; HOOS; LEYTON-BROWN, 2014) para a análise
+da importância dos hiperparâmetros.
 
 \vspace{12pt}
 
-O método FANOVA utiliza uma Random Forest para estimar a função objetivo
+O método fANOVA utiliza uma Random Forest para estimar a função objetivo
 com base nos hiperparâmetros avaliados. Ele realiza uma decomposição da
 variância explicada pela função objetivo, atribuindo contribuições
-individuais e interativas a cada hiperparâmetro. Isso permite
-identificar quais hiperparâmetros têm maior impacto no desempenho do
-modelo. No \href{https://optuna.org/}{\textbf{Optuna}}, esse método é
-disponibilizado por meio da classe
-\texttt{optuna.importance.FanovaImportanceEvaluator}. Além disso, a
-função \texttt{optuna.visualization.plot\_param\_importances}, que
-utiliza o método FANOVA por padrão, facilita a criação de gráficos que
-destacam a importância dos hiperparâmetros.
+individuais a cada hiperparâmetro. Isso permite identificar quais
+hiperparâmetros têm maior impacto no desempenho do modelo.
+
+\vspace{12pt}
+
+Matematicamente, o fANOVA decompõe uma função
+\(\hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}\)
+em componentes aditivos que dependem apenas de subconjuntos de suas
+instâncias \(N\). Assim, define-se:
+
+\[
+\hat{y} = \sum_{U \subseteq N} \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\text{,}
+\] em que
+\(\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}\),
+é o vetor correspondente a uma configuração parcial dos hiperparâmetros
+para o subconjunto \(U = \{u_{1}, \dots, u_{m}\}\), que representa um
+subconjunto dos índices dos hiperparâmetros. Além disso, as componentes
+de \(\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\) são definidas da
+seguinte forma:
+
+\[
+\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=
+\begin{cases}
+  \frac{1}{\|\Theta\|} \int \hat{y} \left(\boldsymbol{\theta}\right) d\boldsymbol{\theta}, & \text{se } U= \emptyset \\
+  \hat{a}_{U}\left(\boldsymbol{\theta}_U\right) - \sum_{W \subseteq U} \hat{f}_{W}\left(\boldsymbol{\theta_{W}}\right), & \text{caso contrário}
+\end{cases}\text{,}
+\] em que
+\(\hat{a}_{U}\left(\boldsymbol{\theta}_U\right) = \frac{1}{\|\boldsymbol{\Theta}_{T}\|} \int \hat{y}\left(\boldsymbol{\theta}_{N|U}\right)d \boldsymbol{\theta}_{T}\)
+é uma estimativa da performance marginal
+\(a_U\left(\boldsymbol{\theta}_U\right)\) de um algoritmo \(A\).
+
+\vspace{12pt}
+
+Quando \(U = \emptyset\), tem-se a média da função
+\(\hat{f}_{\emptyset}\) em seu domínio. As funções unárias
+\(\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)\) são chamadas
+de efeitos principais e capturam o efeito da variação do hiperparâmetro
+\(j\), fazendo a média sobre todas as configurações dos outros
+hiperparâmetros. Quando \(|U| > 1\), as funções
+\(\hat{f}_{U}\left(\boldsymbol{\theta}_U\right)\) capturam exatamente os
+efeitos de interação entre todos os hiperparâmetros em \(U\) (excluindo
+todos os efeitos principais de ordem inferior e efeitos de interação de
+\(W \subsetneq U\)).
+
+\vspace{12pt}
+
+A variância de \(\hat{y}\) em seu domínio \(\boldsymbol{\Theta}\) é
+definido por:
+
+\[
+\mathbb{V} = \frac{1}{\|\boldsymbol{\Theta}\|} \int\left(\hat{y}\left(\boldsymbol{\theta}\right) - \hat{f}_{\emptyset}\right)^2 d \boldsymbol{\theta}\text{,}
+\] e`a fANOVA decompõe essa variância em contribuições de todos os
+conjuntos de hiperparâmetros:
+
+\[
+\mathbb{V} = \sum_{U \subset N}\mathbb{V}_{U} \text{, em que } \mathbb{V}_U = \frac{1}{\|\boldsymbol{\Theta}_{U}\|} \int \hat{f}_U\left(\boldsymbol{\theta}_U\right)^2 d\boldsymbol{\theta}_U\text{.}
+\]
+
+\vspace{12pt}
+
+Por fim, a importância de cada efeito principal e efeito de interação
+\(\hat{f}_U\) pode então ser quantificado pela fração da variância
+explicada:
+
+\[
+\mathbb{F}_{U} = \mathbb{V}_{U} / \mathbb{V}\text{.}
+\]
+
+\vspace{12pt}
+
+A classe \texttt{FanovaImportanceEvaluator}, do
+\href{https://optuna.org/}{\textbf{Optuna}}, disponibiliza esse método.
+Além disso, a função
+\texttt{optuna.visualization.plot\_param\_importances}, que utiliza o
+método fANOVA por padrão, facilita a criação de gráficos que destacam a
+importância dos hiperparâmetros.
 
 \vspace{12pt}
 
@@ -3278,7 +3347,7 @@ candidatas para a divisão.
 A figura Figura~\ref{fig-rf_slice} mostra a variação da estatística de
 erro em função dos valores de cada hiperparâmetro ao longo dos trials. O
 gráfico Figura~\ref{fig-rf_import} exibe a importância de cada
-hiperparâmetro, calculada pelo método FANOVA. Na figura
+hiperparâmetro, calculada pelo método fANOVA. Na figura
 Figura~\ref{fig-rf_history}, observa-se a variação do erro para cada
 trial, com a linha vermelha representando o menor valor obtido em cada
 etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
