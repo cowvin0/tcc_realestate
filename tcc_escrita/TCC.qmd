@@ -335,7 +335,7 @@ Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos 
 
 \vspace{12pt}
 
-O [**scikit-learn**](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em Python. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [**scikit-learn**](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [**SciPy**](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em Python.
+O [**scikit-learn**](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em `Python`. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [**scikit-learn**](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [**SciPy**](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em `Python`.
 
 \vspace{12pt}
 
@@ -403,7 +403,55 @@ Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e vi
 
 \vspace{12pt}
 
-O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`.
+O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`. A seguir, veja um exemplo de função `callback`:
+
+```{python}
+#| eval: false
+#| echo: true
+
+from dash import Dash, dcc, html, Output, Input
+import plotly.express as px
+import pandas as pd
+
+df = pd.DataFrame({
+    'Categoria': ['A', 'B', 'C'],
+    'Valores': [10, 20, 30]
+})
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    dcc.Dropdown(
+        id='dropdown',
+        options=[
+          {'label': cat, 'value': cat}
+          for cat in df['Categoria']
+        ],
+        value='A',
+        clearable=False
+    ),
+    dcc.Graph(id='graph')
+])
+
+@app.callback(
+    Output('graph', 'figure'),
+    Input('dropdown', 'value')
+)
+def update_graph(selected_category):
+    filtered_df = df[df['Categoria'] == selected_category]
+    fig = px.bar(
+      filtered_df,
+      x='Categoria',
+      y='Valores',
+      title=f'Valores da Categoria {selected_category}')
+
+    return fig
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+```
+
+Neste exemplo, o código permite que o usuário selecione um valor em um menu suspenso, criado a partir da classe `Dropdown`, e exiba o valor escolhido em um gráfico. Primeiramente, é criado um pequeno conjunto de dados utilizando a biblioteca [**pandas**](https://pandas.pydata.org/), contendo categorias (A, B e C) e valores associados a elas. Em seguida, define-se o layout da aplicação (`app.layout`), que consiste em um `Dropdown` para selecionar uma categoria e um componente `Graph` para exibir o gráfico correspondente. A lógica para atualizar o gráfico conforme a seleção do usuário é implementada por meio da função `callback`. O decorador `@app.callback` conecta o valor selecionado no `Dropdown` (definido pela classe `Input`) ao gráfico (definido pela classe `Output`). A função associada ao decorador `callback`, chamada `update_graph`, recebe como argumento o valor escolhido no `Dropdown`, filtra o DataFrame com base na categoria selecionada e gera um gráfico de barras utilizando a biblioteca [**Plotly**](https://plotly.com/). Este gráfico é então retornado para ser exibido no componente `Graph`.
 
 \vspace{12pt}
 
@@ -423,11 +471,16 @@ Com as tecnologias mencionadas anteriormente e o modelo final obtido, foi possí
 
 \vspace{12pt}
 
-O [**Visual Studio Code (VSCode)**](https://code.visualstudio.com/) foi a principal ferramenta utilizada para a escrita do código neste trabalho. O [**VSCode**]([vscodevim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)) é um editor bastante leve e oferece suporte a diversas linguagens de programação e permite integração com inúmeras tecnologias por meio de suas extensões. Entre as extensões utilizadas, destaca-se o [**vscodevim**](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim), que incorpora os key mappings do editor de texto Vim, originalmente criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além disso, foram empregadas extensões específicas para as linguagens `Python` e `R`, tendo como principal objetivo uma melhor formatação de código, execução e identificação de possíveis erros.
+O [**Visual Studio Code (VSCode)**](https://code.visualstudio.com/) foi a principal ferramenta utilizada para a escrita do código neste trabalho. O [**VSCode**](https://code.visualstudio.com/) é um editor bastante leve e oferece suporte a diversas linguagens de programação e permite integração com inúmeras tecnologias por meio de suas extensões. Entre as extensões utilizadas, destaca-se o [**vscodevim**](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim), que incorpora os key mappings do editor de texto Vim, originalmente criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além disso, foram empregadas extensões específicas para as linguagens `Python` e `R`, tendo como principal objetivo uma melhor formatação de código, execução e identificação de possíveis erros.
 
 \vspace{12pt}
 
-Para a elaboração deste documento, foi utilizado o [**Quarto**](https://quarto.org/) [@quarto], uma plataforma de publicação científica desenvolvida pela empresa Posit. O [**Quarto**](https://quarto.org/) é uma evolução do RMarkdown e se destaca por sua capacidade de criar documentos de alta qualidade que integram texto e código. Compatível com diversas linguagens de programação, como `R`, `Python`, e outras, essa ferramenta é extremamente versátil para análise de dados e geração de relatórios. Com o [**Quarto**](https://quarto.org/), é possível produzir relatórios, artigos, livros, apresentações e até sites. Ele é amplamente adotado na comunidade científica, especialmente entre usuários de `R`, e oferece suporte a Markdown e \LaTeX, o que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais. Além disso, os documentos gerados podem ser exportados para diversos formatos, como HTML, PDF, MS Word, entre outros.
+Por exemplo, uma das extensões utilizadas para análise estática de código em `Python` foi o [**Pyright**](https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright), desenvolvido pela Microsoft. Essa ferramenta é projetada para detectar erros durante o desenvolvimento e verificar a tipagem de código em `Python`, contribuindo para a melhoria da qualidade e da manutenção do programa. Outra ferramenta empregada foi o [**Black Formatter**](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter), um formatador de código `Python`. Ele automatiza a padronização do estilo de código, garantindo consistência e legibilidade. Além disso, foi utilizado o [**Flake8**](https://marketplace.visualstudio.com/items?itemName=ms-python.flake8), que analisa o código em busca de erros de sintaxe, problemas de estilo com base no padrão [**PEP 8**](https://peps.python.org/pep-0008/), e outras questões, como redundâncias ou importações desnecessárias. Por fim, também foi utilizada uma extensão mais geral de suporte à linguagem `Python`, que oferece diversas funcionalidades, como correção de código por meio da extensão [**PythonDebugger**](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy), que utiliza a biblioteca debugpy para suporte ao processo de debugging.
+
+
+\vspace{12pt}
+
+Para a elaboração deste documento, foi utilizado o [**Quarto**](https://quarto.org/) [@quarto], uma plataforma de publicação científica desenvolvida pela empresa Posit. O [**Quarto**](https://quarto.org/) é uma evolução do RMarkdown e se destaca por sua capacidade de criar documentos de alta qualidade que integram texto e código. Compatível com diversas linguagens de programação, como `R`, `Python`, e outras, essa ferramenta é extremamente versátil para análise de dados e geração de relatórios. Com o [**Quarto**](https://quarto.org/), é possível produzir relatórios, artigos, livros, apresentações e até sites. Ele é amplamente adotado na comunidade científica, especialmente entre usuários de `R`, e oferece suporte a Markdown e \LaTeX, o que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais. Além disso, os documentos gerados podem ser exportados para diversos formatos, como HTML, PDF, MS Word, entre outros. O [**Quarto**](https://quarto.org/) também foi utilizado através do [**VSCode**](https://code.visualstudio.com/), com a sua extensão disponível em <https://quarto.org/docs/tools/vscode.html>.
 
 \vspace{12pt}
 
@@ -863,7 +916,7 @@ em que $l$ é uma função de perda convexa diferenciável e o segundo termo $\O
 $$
 \Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}\text{,}
 $$
-em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em `Python` utilizam a regularização L2 (Ridge) como padrão, mas também permitem o uso da regularização L1 (Lasso).
+em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em `Python` utilizam a regularização L2 como padrão, mas também permitem o uso da regularização L1.
 
 \vspace{12pt}
 
@@ -874,11 +927,11 @@ Assim como o Gradient Boosting, as implementações existentes de Light Gradient
 
 ## Obtenção dos dados
 
-\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação R e Python. No R, os pacotes xml2 [@xml2] e rvest [@rvest] foram utilizados para extrair dados de páginas estáticas de forma estruturada. No Python, as bibliotecas Scrapy [@kouzis2016learning] e Playwright, desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e pode ser acessada através do domínio <https://scrapeops.io/> após a criação de uma conta no site.
+\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação `R` e `Python`. No `R`, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No `Python`, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e pode ser acessada através do domínio <https://scrapeops.io/> após a criação de uma conta no site.
 
 \vspace{12pt}
 
-Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote tidygeocoder [@geocoder] da linguagem R. Dessa forma, tem-se as seguintes variáveis:
+Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem `R`. Dessa forma, tem-se as seguintes variáveis:
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
@@ -922,7 +975,7 @@ No entanto, com base nas observações realizadas durante o estudo, nem todas as
 
 \vspace{12pt}
 
-Após a seleção das variáveis, o conjunto de dados foi dividido em conjuntos de treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe `sklearn.model_selection.StratifiedShuffleSplit`, da biblioteca scikit-learn. Essa classe permite dividir a base de dados de maneira aleatória, preservando a proporção das classes definidas.
+Após a seleção das variáveis, o conjunto de dados foi dividido em conjuntos de treino e teste para avaliar o desempenho dos modelos. A divisão foi realizada de forma estratificada, utilizando a classe `sklearn.model_selection.StratifiedShuffleSplit`, da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/). Essa classe permite dividir a base de dados de maneira aleatória, preservando a proporção das classes definidas.
 
 \vspace{12pt}
 
@@ -930,7 +983,7 @@ A estratificação foi baseada em intervalos criados a partir da variável que r
 
 \vspace{12pt}
 
-Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas `scikit-learn`, `lightgbm` e `xgboost`. As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Light Gradient Boosting.
+Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Light Gradient Boosting.
 
 ### Etapas de pré-processamento
 
@@ -943,7 +996,7 @@ O método utilizado para a imputação de valores ausentes foi o algoritmo k-nea
 $$
 \hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i\text{,}
 $$
-em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe `KNNImputer` da biblioteca scikit-learn para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento `n_neighbors` da classe `KNNImputer`.
+em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou seja, os pontos $x_i$ no conjunto de dados que estão mais próximos de $x$. Essa proximidade é geralmente medida pela distância Euclidiana, que é a métrica padrão utilizada pela classe `KNNImputer` da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) para imputação de valores ausentes. No processo de imputação, foi utilizado um total de 17 vizinhos, definido pelo argumento `n_neighbors` da classe `KNNImputer`.
 
 \vspace{12pt}
 
@@ -951,7 +1004,7 @@ A transformação logarítmica $\log(1 + x)$ foi aplicada para estabilizar a var
 
 \vspace{12pt}
 
-Após a aplicação da transformação logarítmica às variáveis numéricas, essas variáveis também foram padronizadas utilizando a classe `StandardScaler`, disponível no módulo `preprocessing` da biblioteca `scikit-learn`. Essa classe ajusta os dados para que fiquem na mesma escala, padronizando-os de acordo com a fórmula:
+Após a aplicação da transformação logarítmica às variáveis numéricas, essas variáveis também foram padronizadas utilizando a classe `StandardScaler`, disponível no módulo `preprocessing` da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/). Essa classe ajusta os dados para que fiquem na mesma escala, padronizando-os de acordo com a fórmula:
 
 $$
 z = \frac{x - \mu}{\sigma}\text{,}
@@ -1023,7 +1076,7 @@ A @fig-kfold ilustra exatamente o caso da validação cruzada por K-Fold. As div
 
 \vspace{12pt}
 
-Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca `scikit-learn`, ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em Python:
+Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/), ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em `Python`:
 
 ```{python}
 #| echo: true
@@ -1159,7 +1212,7 @@ Essa última expressão mostra que, para maximizar o Expected Improvement, é ne
 
 ### Otimização de hiperparâmetros com optuna
 
-\ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca `optuna` [@optuna_2019] da linguagem de programação Python. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
+\ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca [**Optuna**](https://optuna.org/) da linguagem de programação `Python`. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
 
 ```{python}
 #| echo: true
@@ -1212,7 +1265,19 @@ Primeiro, define-se, em cada tentativa (trial), quais hiperparâmetros serão ot
 
 \vspace{12pt}
 
-Por padrão, a biblioteca Optuna utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca optuna. No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
+Por padrão, a biblioteca [**Optuna**](https://optuna.org/) utiliza o Tree-Structured Parzen Estimator (TPE) para otimizar hiperparâmetros de um modelo. A técnica de otimização é escolhida por meio do argumento `sampler` no método `create_study`. Para selecionar o TPE, basta passar `optuna.samplers.TPESampler` como argumento para a criação do estudo. O método TPE é o padrão para otimização na biblioteca [**Optuna**](https://optuna.org/). No entanto, caso se deseje utilizar outro método de otimização da biblioteca, basta especificá-lo da mesma forma: `optuna.create_study(sampler=metodo_otimizacao)`.
+
+\vspace{12pt}
+
+A otimização de hiperparâmetros realizada com o [**Optuna**](https://optuna.org/) oferece diversas possibilidades para analisar o histórico de comportamento do algoritmo e compreender a importância de cada hiperparâmetro utilizado no processo de otimização. Neste trabalho, foi empregado o método FANOVA [@pmlr-v32-hutter14] para a análise da importância dos hiperparâmetros.
+
+\vspace{12pt}
+
+O método FANOVA utiliza uma Random Forest para estimar a função objetivo com base nos hiperparâmetros avaliados. Ele realiza uma decomposição da variância explicada pela função objetivo, atribuindo contribuições individuais e interativas a cada hiperparâmetro. Isso permite identificar quais hiperparâmetros têm maior impacto no desempenho do modelo. No [**Optuna**](https://optuna.org/), esse método é disponibilizado por meio da classe `optuna.importance.FanovaImportanceEvaluator`. Além disso, a função `optuna.visualization.plot_param_importances`, que utiliza o método FANOVA por padrão, facilita a criação de gráficos que destacam a importância dos hiperparâmetros.
+
+\vspace{12pt}
+
+Além de analisar a importância dos hiperparâmetros, o  [**Optuna**](https://optuna.org/) também oferece ferramentas para explorar o histórico de otimização, as relações entre os hiperparâmetros e o comportamento da função objetivo em cada trial. Essas análises podem ser realizadas, respectivamente, pelas funções `plot_optimization_history`, `plot_contour` e `plot_slice`.
 
 ## Interpretação dos algoritmos de aprendizagem de máquina
 
@@ -1259,7 +1324,7 @@ em que $N$ é o número de amostras utilizadas na simulação e $\hat{f}\left(x_
 
 \vspace{12pt}
 
-Em Python, a biblioteca `scikit-learn` disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
+Em `Python`, a biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
 
 ```{python}
 #| eval: false
@@ -1300,12 +1365,12 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 \vspace{12pt}
 
-Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em Python, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>.
+Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em `Python`, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>.
 
 
 ### Shapley Additive Explanations (SHAP)
 
-\ \ \ O SHapley Additive exPlanations (SHAP) é um método cujo objetivo é explicar as predições individuais de uma instância xx por meio da computação da contribuição de cada variável para o resultado da predição. Esse método é fundamentado nos valores de Shapley, que serão definidos a seguir.
+\ \ \ O Shapley Additive Explanations (SHAP) é um método cujo objetivo é explicar as predições individuais de uma instância $x$ por meio da computação da contribuição de cada variável para o resultado da predição. Esse método é fundamentado nos valores de Shapley, que serão definidos a seguir.
 
 \vspace{12pt}
 
@@ -1359,7 +1424,7 @@ Esse gráfico permite visualizar diretamente como as observações de uma variá
 
 \vspace{12pt}
 
-Para aplicar o método SHAP em Python, foi utilizada a biblioteca shap. Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca shap para gerar esses gráficos baseado no algoritmo Stacking:
+Para aplicar o método SHAP em `Python`, foi utilizada a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest/). Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest/) para gerar esses gráficos baseado no algoritmo Stacking:
 
 ```{python}
 #| eval: false
@@ -1393,7 +1458,7 @@ shap.dependence_plot(
 	)
 ```
 
-Por padrão, a classe `shap.Explainer` utiliza o algoritmo de explicação considerado a melhor escolha com base no modelo passado como argumento. Neste trabalho, foi selecionado o algoritmo de explicação utilizando a classe Permutation. Essa escolha foi realizada automaticamente pela classe `shap.Explainer(algorithm="auto")`. O algoritmo Permutation funciona iterando sobre todas as permutações possíveis das variáveis, tanto na ordem original quanto na ordem inversa. Em relação ao gráfico de importância, ele é gerado de maneira semelhante ao gráfico de resumo, com a diferença de que o argumento plot_type="bar" é utilizado para criar o gráfico de importância. Por fim, o método `shap.utils.sample` é utilizado para selecionar aleatoriamente observações para a construção de uma amostra, a fim de estimar os valores de Shapley.
+Por padrão, a classe `shap.Explainer` utiliza o algoritmo de explicação considerado a melhor escolha com base no modelo passado como argumento. Neste trabalho, foi selecionado o algoritmo de explicação utilizando a classe `Permutation`. Essa escolha foi realizada automaticamente pela classe `shap.Explainer(algorithm="auto")`. O algoritmo Permutation funciona iterando sobre todas as permutações possíveis das variáveis, tanto na ordem original quanto na ordem inversa. Em relação ao gráfico de importância, ele é gerado de maneira semelhante ao gráfico de resumo, com a diferença de que o argumento `plot_type="bar"` é utilizado para criar o gráfico de importância. Por fim, o método `shap.utils.sample` é utilizado para selecionar aleatoriamente observações para a construção de uma amostra, a fim de estimar os valores de Shapley.
 
 # Resultados
 
@@ -1810,7 +1875,7 @@ img.save('includes/map_valor_m2.png')
 
 \vspace{12pt}
 
-Todos os modelos e bibliotecas usados neste trabalho seguem a API do scikit-learn. Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca Optuna, foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas obtidas para cada algoritmo pode ser visualizado na @tbl-metrics_models.
+Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas obtidas para cada algoritmo pode ser visualizado na @tbl-metrics_models.
 
 ::: {#tbl-metrics_models}
 
