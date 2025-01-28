@@ -88,7 +88,7 @@ def generate_map(map_type):
     city_folder = f"app/modeling/assets/geo_joao_pessoa/{map_type}.geojson"
     geo_data = gpd.read_file(city_folder)
 
-    if map_type == "escolas_públicas":
+    if map_type == "escolas_publicas":
         marker_cluster = MarkerCluster().add_to(m)
         for _, row in geo_data.iterrows():
             folium.Marker(
