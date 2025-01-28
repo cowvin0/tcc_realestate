@@ -14,6 +14,7 @@ def get_available_datasets():
     city_folder = "app/modeling/assets/geo_joao_pessoa"
     if not os.path.exists(city_folder):
         return []
+
     return [
         os.path.splitext(file)[0]
         for file in os.listdir(city_folder)
@@ -91,9 +92,114 @@ def generate_map(map_type):
     if map_type == "escolas_publicas":
         marker_cluster = MarkerCluster().add_to(m)
         for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Nome:</b> {row['nome']}<br>
+            <b>Categoria:</b> {row['categoria']}<br>
+            <b>Dependência:</b> {row['dependencia']}
+            """
             folium.Marker(
                 location=[row.geometry.y, row.geometry.x],
+                popup=folium.Popup(popup_content, max_width=300),
             ).add_to(marker_cluster)
+    elif map_type == "bairros":
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Bairro:</b> {row['nome']}<br>
+            <b>Perímetro:</b> {row['perimetro']:.2f} m<br>
+            <b>Área:</b> {row['area']:.2f} m²<br>
+            <b>Hectares:</b> {row['hectares']:.2f} ha<br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["nome"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+    elif map_type == "rios":
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Nome :</b> {row['nome']} <br>
+            <b>Tipo :</b> {row['tipo']} <br>
+            <b>Afluente :</b> {row['afluente']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["nome"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+    elif map_type == "pracas":
+        geo_data = geo_data.assign(
+            area=lambda x: x.area.str.replace(",", ".").astype(float)
+        )
+
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Bairro :</b> {row['bairro']} <br>
+            <b>Nome :</b> {row['nome']} <br>
+            <b>Área :</b> {row['area']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["nome"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+    elif map_type == "parques":
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Nome :</b> {row['nome']} <br>
+            <b>Perímetro :</b> {row['perimetro']:.2f} m<br>
+            <b>Área :</b> {row['area']:.2f} m²<br>
+            <b>Hectares :</b> {row['hectares']:.2f} ha<br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["nome"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+    elif map_type == "faixas_exclusivas":
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Ano de implantação :</b> {row['ano_implantacao']} <br>
+            <b>Percurso :</b> {row['percurso']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["percurso"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+    elif map_type == "comunidades":
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Comunidade :</b> {row['comunidade']} <br>
+            <b>Área :</b> {row['area']:.2f} m²<br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["comunidade"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+    elif map_type == "corredores":
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Corredor :</b> {row['corredor']} <br>
+            <b>Descrição :</b> {row['descricao']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["descricao"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+    elif map_type == "ciclo":
+        for _, row in geo_data.astype({"ano_implantacao": int}).iterrows():
+            popup_content = f"""
+            <b>Tipo :</b> {row['tipo']} <br>
+            <b>Sentido :</b> {row['sentido']} <br>
+            <b>Ano de implantação :</b> {row['ano_implantacao']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["ano_implantacao"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
     else:
         folium.GeoJson(geo_data, name="geojson").add_to(m)
 
