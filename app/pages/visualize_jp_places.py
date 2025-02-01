@@ -2,6 +2,7 @@ import geopandas as gpd
 import folium
 import dash
 import dash_bootstrap_components as dbc
+import math
 import os
 
 from folium.plugins import MarkerCluster
@@ -11,7 +12,7 @@ dash.register_page(__name__, name="Locais importantes", path="/locals")
 
 
 def get_available_datasets():
-    city_folder = "app/modeling/assets/geo_joao_pessoa"
+    city_folder = "app/assets/geo_joao_pessoa"
     if not os.path.exists(city_folder):
         return []
 
@@ -86,7 +87,7 @@ def generate_map(map_type):
         zoom_start=12,
     )
 
-    city_folder = f"app/modeling/assets/geo_joao_pessoa/{map_type}.geojson"
+    city_folder = f"app/assets/geo_joao_pessoa/{map_type}.geojson"
     geo_data = gpd.read_file(city_folder)
 
     if map_type == "escolas_publicas":
@@ -127,15 +128,13 @@ def generate_map(map_type):
                 popup=folium.Popup(popup_content, max_width=300),
             ).add_to(m)
     elif map_type == "pracas":
-        geo_data = geo_data.assign(
-            area=lambda x: x.area.str.replace(",", ".").astype(float)
-        )
-
+        geo_data["area"] = geo_data["area"].str.replace(",", ".").astype(float)
         for _, row in geo_data.iterrows():
+            area_value = f"{row['area']:.2f}" if not math.isnan(row["area"]) else "N/A"
             popup_content = f"""
             <b>Bairro :</b> {row['bairro']} <br>
             <b>Nome :</b> {row['nome']} <br>
-            <b>Área :</b> {row['area']} <br>
+            <b>Área :</b> {area_value} <br>
             """
             folium.GeoJson(
                 row.geometry,
