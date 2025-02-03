@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 8050
 
 # execute app
-CMD ["uvicorn", "app.api:api", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.api:api", "--host", "0.0.0.0", "--port", "8050"]
