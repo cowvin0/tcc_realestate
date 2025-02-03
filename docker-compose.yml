@@ -1,8 +1,28 @@
 services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_HOST=${HOSTDB}
+      - POSTGRES_USER=${USERNAMEDB}
+      - POSTGRES_PASSWORD=${DBPASSWD}
+      - POSTGRES_DB=${DBNAME}
+    ports:
+      - "5432:5432"
   app:
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "8000:8000"
+      - "8050:8050"
+    depends_on:
+      - db
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "85:80"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
