@@ -5,12 +5,13 @@ from sqlalchemy import (
     Boolean,
     DECIMAL,
 )
-from api.database import Base
+from app.database import Base
 
 
-class ListaRelatorios(Base):
+class Realestate(Base):
     __tablename__ = "imoveis_jp_scrape"
 
+    id = Column(Integer, primary_key=True, autoincrement=True)
     academia = Column(Boolean)
     area = Column(DECIMAL)
     area_servico = Column(Boolean)
