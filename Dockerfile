@@ -7,9 +7,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # dir of app
-WORKDIR /app
+WORKDIR /app/api
 
-COPY ../requirements.txt .
+COPY ../../requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 8050
 
 # execute app
-CMD ["uvicorn", "app.api:api", "--host", "0.0.0.0", "--port", "8050"]
+CMD ["uvicorn", "app.api.api:api", "--host", "0.0.0.0", "--port", "8050"]

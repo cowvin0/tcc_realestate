@@ -8,7 +8,7 @@ services:
       - POSTGRES_DB=${DBNAME}
     ports:
       - "5434:5432"
-  app:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,12 +17,21 @@ services:
       - "8050:8050"
     depends_on:
       - db
-  nginx:
-    image: nginx:latest
+  dash:
+    build:
+      context: .
+      dockerfile: Dockerfile-bash
     restart: always
     ports:
-      - "86:80"
+      - "8080:8080"
     depends_on:
-      - app
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - api
+  # nginx:
+  #   image: nginx:latest
+  #   restart: always
+  #   ports:
+  #     - "86:80"
+  #   depends_on:
+  #     - app
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
