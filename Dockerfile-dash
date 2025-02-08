@@ -1,8 +1,16 @@
 FROM python:3.10-slim
 
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
 # workdir
-WORKDIR /app/dash/
+WORKDIR /app/dash
+
+COPY ../../requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
 # copy dash code
 COPY . .
@@ -11,4 +19,5 @@ COPY . .
 EXPOSE 8080
 
 # run dash app
-CMD ["python", "app/dash/main.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app.dash.main:server"]
+# CMD ["python", "app/dash/main.py"]

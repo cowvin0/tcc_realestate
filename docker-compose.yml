@@ -20,7 +20,7 @@ services:
   dash:
     build:
       context: .
-      dockerfile: Dockerfile-bash
+      dockerfile: Dockerfile-dash
     restart: always
     ports:
       - "8080:8080"

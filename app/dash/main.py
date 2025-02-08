@@ -1,6 +1,7 @@
 import dash
 import dash_bootstrap_components as dbc
 
+
 from app.dash.pages.navbar import navbar
 from dash import html
 
@@ -18,5 +19,7 @@ app = dash.Dash(
 
 app.layout = html.Div([navbar(), dash.page_container])
 
-if __name__ == "__main__":
-    app.run_server(host="0.0.0.0", port=8080, debug=True)
+server = app.server
+
+# if __name__ == "__main__":
+#     app.run_server(host="0.0.0.0", port=8080, debug=True)

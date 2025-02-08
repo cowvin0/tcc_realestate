@@ -12,7 +12,7 @@ dash.register_page(__name__, name="Locais importantes", path="/locals")
 
 
 def get_available_datasets():
-    city_folder = "app/assets/geo_joao_pessoa"
+    city_folder = "app/dash/assets/geo_joao_pessoa"
     if not os.path.exists(city_folder):
         return []
 
@@ -87,7 +87,7 @@ def generate_map(map_type):
         zoom_start=12,
     )
 
-    city_folder = f"app/assets/geo_joao_pessoa/{map_type}.geojson"
+    city_folder = f"app/dash/assets/geo_joao_pessoa/{map_type}.geojson"
     geo_data = gpd.read_file(city_folder)
 
     if map_type == "escolas_publicas":
