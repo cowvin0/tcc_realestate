@@ -8,19 +8,15 @@ from dash import html, dcc
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
-# Fetch data
 df_realestate = pd.DataFrame(
     requests.get("http://api:8050/real_data/return_data_db").json()
 )
 
-# Calculate center of the map
 center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
 
-# Create Folium map
 m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
 
-# Add marker clustering
 marker_cluster = MarkerCluster().add_to(m)
 
 for _, row in df_realestate.iterrows():
@@ -29,12 +25,10 @@ for _, row in df_realestate.iterrows():
         popup=f"{row['bairro']}: R$ {row['valor']:,.2f}",
     ).add_to(marker_cluster)
 
-# Render the map as an HTML string
 map_html = m.get_root().render()
 
 layout = html.Div(
     children=[
-        html.H1("📊 Análise de Imóveis em João Pessoa", style={"textAlign": "center"}),
         html.Div(
             [
                 html.Div(
@@ -59,7 +53,6 @@ layout = html.Div(
                 ),
                 html.Div(
                     [
-                        html.H3("🗺️ Localização e Valores dos Imóveis"),
                         html.Iframe(
                             srcDoc=map_html,
                             width="100%",

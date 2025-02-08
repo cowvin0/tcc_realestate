@@ -20,4 +20,3 @@ EXPOSE 8080
 
 # run dash app
 CMD ["gunicorn", "-b", "0.0.0.0:8080", "app.dash.main:server"]
-# CMD ["python", "app/dash/main.py"]
