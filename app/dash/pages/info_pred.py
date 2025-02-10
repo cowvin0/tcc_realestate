@@ -1,98 +1,74 @@
 import requests
 import pandas as pd
 import dash
-import plotly.express as px
-import folium
-from folium.plugins import MarkerCluster
-from dash import html, dcc
+import dash_leaflet as dl
+from dash import html, Output, Input, dcc, callback
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
+# Fetch real estate data
 df_realestate = pd.DataFrame(
     requests.get("http://api:8050/real_data/return_data_db").json()
 )
 
+# Calculate center of the map based on property locations
 center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
 
-m = folium.Map(location=[center_lat, center_lon], zoom_start=12)
-
-marker_cluster = MarkerCluster().add_to(m)
-
-for _, row in df_realestate.iterrows():
-    folium.Marker(
-        location=[row["latitude"], row["longitude"]],
-        popup=f"{row['bairro']}: R$ {row['valor']:,.2f}",
-    ).add_to(marker_cluster)
-
-map_html = m.get_root().render()
-
+# Layout with map and coordinate display
 layout = html.Div(
-    children=[
-        html.Div(
-            [
-                html.Div(
-                    [
-                        html.H3("🏘️ Quantidade de Imóveis por Bairro"),
-                        dcc.Graph(
-                            id="bar_qnt_imoveis",
-                            figure=px.bar(
-                                df_realestate["bairro"].value_counts().reset_index(),
-                                x="bairro",
-                                y="count",
-                                labels={"bairro": "Bairro", "count": "Quantidade"},
-                                title="Quantidade de Imóveis por Bairro",
-                            ),
-                        ),
-                    ],
-                    style={
-                        "width": "30%",
-                        "display": "inline-block",
-                        "padding": "10px",
-                    },
-                ),
-                html.Div(
-                    [
-                        html.Iframe(
-                            srcDoc=map_html,
-                            width="100%",
-                            height="500px",
-                            style={"border": "none"},
-                        ),
-                    ],
-                    style={
-                        "width": "40%",
-                        "display": "inline-block",
-                        "padding": "10px",
-                    },
-                ),
-                html.Div(
-                    [
-                        html.H3("📈 Média de Preço por Tipo de Imóvel"),
-                        dcc.Graph(
-                            id="bar_tipo_preco",
-                            figure=px.bar(
-                                df_realestate.groupby("tipo")["valor"]
-                                .mean()
-                                .reset_index(),
-                                x="tipo",
-                                y="valor",
-                                labels={
-                                    "tipo": "Tipo de Imóvel",
-                                    "valor": "Valor Médio",
-                                },
-                                title="Média de Preço por Tipo de Imóvel",
-                            ),
-                        ),
-                    ],
-                    style={
-                        "width": "30%",
-                        "display": "inline-block",
-                        "padding": "10px",
-                    },
-                ),
+    [
+        dl.Map(
+            id="map-id",
+            style={"width": "100%", "height": "600px"},
+            center=[center_lat, center_lon],
+            zoom=12,
+            children=[
+                dl.TileLayer(),
+                dl.LayerGroup(id="points-layer"),  # Property points
             ],
-            style={"display": "flex", "justify-content": "space-around"},
         ),
+        dcc.Store(id="stored-coordinates"),  # Hidden store for clicked coordinates
+        html.P("Clique no mapa para obter as coordenadas:"),
+        html.Div(id="coordinate-click-id", style={"fontSize": "18px", "color": "blue"}),
     ]
 )
+
+
+@callback(
+    [
+        Output("points-layer", "children"),
+        Output("coordinate-click-id", "children"),
+        Output("stored-coordinates", "data")
+    ],
+    [Input("map-id", "clickData")],
+    prevent_initial_call=True
+)
+def update_map(clickData):
+    points = [
+        dl.CircleMarker(
+            center=[row["latitude"], row["longitude"]],
+            radius=4,
+            color="blue",
+            fill=True,
+            fillColor="blue",
+            fillOpacity=0.7,
+            children=dl.Tooltip(f"{row['bairro']}: R$ {row['valor']:,.2f}")
+        )
+        for _, row in df_realestate.iterrows()
+    ]
+
+    if clickData and "latlng" in clickData:
+        lat, lon = clickData["latlng"]["lat"], clickData["latlng"]["lng"]
+        points.append(dl.CircleMarker(
+            center=[lat, lon],
+            radius=6,
+            color="red",
+            fill=True,
+            fillColor="red",
+            fillOpacity=0.8,
+            children=dl.Tooltip(f"Coordenadas clicadas: {lat:.6f}, {lon:.6f}")
+        ))
+        return points, f"Coordenadas clicadas: Latitude {lat:.6f}, Longitude {lon:.6f}", clickData
+
+    return points, "Clique no mapa para obter as coordenadas.", None
