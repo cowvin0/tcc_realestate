@@ -19,4 +19,6 @@ app = dash.Dash(
 
 app.layout = html.Div([navbar(), dash.page_container])
 
-server = app.server
+if __name__ == "__main__":
+    app.run(debug=True)
+# server = app.server

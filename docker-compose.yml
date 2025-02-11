@@ -26,12 +26,3 @@ services:
       - "8080:8080"
     depends_on:
       - api
-  # nginx:
-  #   image: nginx:latest
-  #   restart: always
-  #   ports:
-  #     - "86:80"
-  #   depends_on:
-  #     - app
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro

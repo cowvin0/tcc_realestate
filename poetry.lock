@@ -1022,6 +1022,18 @@ files = [
 ]
 
 [[package]]
+name = "dash-iconify"
+version = "0.1.2"
+description = "Iconify for Plotly Dash"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "dash_iconify-0.1.2-py3-none-any.whl", hash = "sha256:9ab0eda19bb4514e177bf1f8f36947bb9e5b44aba6ce947f22a1cf0f1a45fc14"},
+    {file = "dash_iconify-0.1.2.tar.gz", hash = "sha256:564774be6b11b0ac3a8999b7137c3d17a1d351d69b673aa313c7228eacc9d143"},
+]
+
+[[package]]
 name = "dash-leaflet"
 version = "1.0.15"
 description = "Dash Leaflet is a light wrapper around React-Leaflet. The syntax is similar to other Dash components, with naming conventions following the React-Leaflet API."
@@ -1040,6 +1052,18 @@ dash = ">=2.13.0"
 all = ["dash-extensions (>=1.0.3)", "dash-svg", "geobuf (==1.1.1)", "protobuf (==3.20.0)"]
 geobuf = ["geobuf (==1.1.1)", "protobuf (==3.20.0)"]
 svg = ["dash-svg"]
+
+[[package]]
+name = "dash-mantine-components"
+version = "0.13.0a2"
+description = "Plotly Dash Components based on Mantine"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "dash_mantine_components-0.13.0a2-py3-none-any.whl", hash = "sha256:583d79f7a5e9913d77a3ae907f50a8f67939b922aa93cbad181ec59cc6bc7cec"},
+    {file = "dash_mantine_components-0.13.0a2.tar.gz", hash = "sha256:dfd2bb6c9f7e05c21091474abe596cbafe50fc58a80f1842279c31c54c90e97c"},
+]
 
 [[package]]
 name = "dash-table"
@@ -6731,4 +6755,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "b0783d6e115e21cce9f174c68172c46ae7eae6240edb0a9899e78d816b92ff79"
+content-hash = "19cb947b1429e2a97147544e904f3c34f687baeb417308a99916a37169422fa0"
