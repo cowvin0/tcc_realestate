@@ -1,74 +1,187 @@
-import requests
 import pandas as pd
 import dash
 import dash_leaflet as dl
-from dash import html, Output, Input, dcc, callback
+import dash_bootstrap_components as dbc
+import dash_mantine_components as dmc
+import plotly.express as px
+from dash import html, Output, Input, dcc, callback, State
+from dash_iconify import DashIconify
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
-# Fetch real estate data
-df_realestate = pd.DataFrame(
-    requests.get("http://api:8050/real_data/return_data_db").json()
-)
+df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv")
 
-# Calculate center of the map based on property locations
 center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
 
-# Layout with map and coordinate display
-layout = html.Div(
-    [
-        dl.Map(
-            id="map-id",
-            style={"width": "100%", "height": "600px"},
-            center=[center_lat, center_lon],
-            zoom=12,
-            children=[
-                dl.TileLayer(),
-                dl.LayerGroup(id="points-layer"),  # Property points
-            ],
+fig_bar = px.bar(
+    df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
+    x="valor",
+    y="tipo",
+    labels={"tipo": "", "valor": "Valor Médio (R$)"},
+    text_auto=".2s",
+    template="plotly_white",
+)
+
+layout = dbc.Container(
+    fluid=True,
+    children=[
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        dcc.Graph(figure=fig_bar, style={"height": "600px"}),
+                    ],
+                    width=6,
+                ),
+                dbc.Col(
+                    [
+                        dl.Map(
+                            id="map-id",
+                            style={"width": "100%", "height": "600px"},
+                            center=[center_lat, center_lon],
+                            zoom=12,
+                            children=[
+                                dl.TileLayer(),
+                                dl.LayerGroup(id="points-layer"),
+                            ],
+                        ),
+                        dcc.Store(id="stored-coordinates"),
+                        html.Div(
+                            dmc.ActionIcon(
+                                DashIconify(icon="clarity:settings-line", width=25),
+                                color="blue",
+                                size="xl",
+                                variant="outline",
+                                id="open-offcanvas-btn",
+                                n_clicks=0,
+                            ),
+                            style={
+                                "position": "fixed",
+                                "bottom": "20px",
+                                "right": "20px",
+                                "zIndex": "1000",
+                            },
+                        ),
+                        dcc.Store(id="show-prediction-form", data=False),
+                        dbc.Offcanvas(
+                            id="offcanvas",
+                            title="Informações Adicionais",
+                            is_open=False,
+                            placement="end",
+                            children=[
+                                html.P(
+                                    "Aqui você pode colocar informações adicionais, filtros, etc."
+                                ),
+                                html.Hr(),
+                                html.Button(
+                                    "Previsão",
+                                    id="predict-button",
+                                    n_clicks=0,
+                                    className="btn btn-primary",
+                                ),
+                                html.Div(
+                                    id="prediction-form",
+                                    style={"display": "none"},
+                                    children=[
+                                        html.Hr(),
+                                        html.H4("Preencha as informações do imóvel"),
+                                        dcc.Input(
+                                            id="input-area",
+                                            type="number",
+                                            placeholder="Área (m²)",
+                                        ),
+                                        dcc.Input(
+                                            id="input-bedrooms",
+                                            type="number",
+                                            placeholder="Quartos",
+                                        ),
+                                        dcc.Input(
+                                            id="input-bathrooms",
+                                            type="number",
+                                            placeholder="Banheiros",
+                                        ),
+                                        dcc.Input(
+                                            id="input-lat",
+                                            type="text",
+                                            placeholder="Latitude",
+                                            disabled=True,
+                                        ),
+                                        dcc.Input(
+                                            id="input-lon",
+                                            type="text",
+                                            placeholder="Longitude",
+                                            disabled=True,
+                                        ),
+                                        html.Button(
+                                            "Calcular Previsão",
+                                            id="calculate-prediction",
+                                            className="btn btn-success",
+                                        ),
+                                        html.Div(
+                                            id="prediction-result",
+                                            style={
+                                                "marginTop": "10px",
+                                                "fontSize": "18px",
+                                                "color": "green",
+                                            },
+                                        ),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                    width=6,
+                ),
+            ]
         ),
-        dcc.Store(id="stored-coordinates"),  # Hidden store for clicked coordinates
-        html.P("Clique no mapa para obter as coordenadas:"),
-        html.Div(id="coordinate-click-id", style={"fontSize": "18px", "color": "blue"}),
-    ]
+    ],
 )
 
 
 @callback(
     [
         Output("points-layer", "children"),
-        Output("coordinate-click-id", "children"),
-        Output("stored-coordinates", "data")
+        Output("input-lat", "value"),
+        Output("input-lon", "value"),
+        Output("stored-coordinates", "data"),
     ],
     [Input("map-id", "clickData")],
-    prevent_initial_call=True
+    prevent_initial_call=True,
 )
 def update_map(clickData):
-    points = [
-        dl.CircleMarker(
-            center=[row["latitude"], row["longitude"]],
-            radius=4,
-            color="blue",
-            fill=True,
-            fillColor="blue",
-            fillOpacity=0.7,
-            children=dl.Tooltip(f"{row['bairro']}: R$ {row['valor']:,.2f}")
-        )
-        for _, row in df_realestate.iterrows()
-    ]
-
     if clickData and "latlng" in clickData:
         lat, lon = clickData["latlng"]["lat"], clickData["latlng"]["lng"]
-        points.append(dl.CircleMarker(
+        marker = dl.CircleMarker(
             center=[lat, lon],
             radius=6,
             color="red",
             fill=True,
             fillColor="red",
             fillOpacity=0.8,
-            children=dl.Tooltip(f"Coordenadas clicadas: {lat:.6f}, {lon:.6f}")
-        ))
-        return points, f"Coordenadas clicadas: Latitude {lat:.6f}, Longitude {lon:.6f}", clickData
+            children=dl.Tooltip(f"Latitude: {lat:.6f}, Longitude: {lon:.6f}"),
+        )
+        return [marker], f"{lat:.6f}", f"{lon:.6f}", clickData
 
-    return points, "Clique no mapa para obter as coordenadas.", None
+    return [], "", "", None
+
+
+@callback(
+    Output("offcanvas", "is_open"),
+    [Input("open-offcanvas-btn", "n_clicks")],
+    prevent_initial_call=True,
+)
+def toggle_offcanvas(n_clicks):
+    return True
+
+
+@callback(
+    [Output("prediction-form", "style"), Output("show-prediction-form", "data")],
+    [Input("predict-button", "n_clicks")],
+    [State("show-prediction-form", "data")],
+)
+def toggle_prediction_form(n_clicks, is_visible):
+    if n_clicks % 2 == 1:
+        return {"display": "block"}, True
+    else:
+        return {"display": "none"}, False

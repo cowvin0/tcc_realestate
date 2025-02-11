@@ -49,6 +49,8 @@ psycopg2 = ">=2.9.10,<2.10.0"
 ujson = ">=5.10.0,<5.11.0"
 dash-leaflet = "^1.0.15"
 gunicorn = "^23.0.0"
+dash-mantine-components = "0.13.0a2"
+dash-iconify = "^0.1.2"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.4"
