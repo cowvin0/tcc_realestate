@@ -7,6 +7,8 @@ import plotly.express as px
 import dash_ag_grid as dag
 from dash import html, Output, Input, dcc, callback, State
 from dash_iconify import DashIconify
+import folium
+from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
@@ -48,16 +50,7 @@ layout = dbc.Container(
                 dbc.Col(
                     dmc.Card(
                         children=[
-                            dl.Map(
-                                id="map-id",
-                                style={"width": "100%", "height": "400px"},
-                                center=[center_lat, center_lon],
-                                zoom=12,
-                                children=[
-                                    dl.TileLayer(),
-                                    dl.LayerGroup(id="points-layer"),
-                                ],
-                            ),
+                            html.Div(id="map-container"),
                             dcc.Store(id="stored-coordinates"),
                             html.Div(
                                 dmc.ActionIcon(
@@ -86,6 +79,11 @@ layout = dbc.Container(
                                         "Aqui você pode colocar informações adicionais, filtros, etc."
                                     ),
                                     html.Hr(),
+                                    dmc.Switch(
+                                        id="heatmap-toggle",
+                                        label="Ativar Heatmap",
+                                        checked=True,
+                                    ),
                                     html.Button(
                                         "Previsão",
                                         id="predict-button",
@@ -114,6 +112,11 @@ layout = dbc.Container(
                                                 id="input-bathrooms",
                                                 type="number",
                                                 placeholder="Banheiros",
+                                            ),
+                                            dmc.Switch(
+                                                id="switch-coordinates",
+                                                label="Selecionar no mapa",
+                                                checked=False,
                                             ),
                                             dcc.Input(
                                                 id="input-lat",
@@ -173,6 +176,34 @@ layout = dbc.Container(
 
 
 @callback(
+    Output("map-container", "children"),
+    [Input("heatmap-toggle", "checked"), Input("switch-coordinates", "checked")],
+)
+def update_map(use_heatmap, selecting_coords):
+    if selecting_coords:
+        use_heatmap = False
+
+    if use_heatmap:
+        data = df_realestate[["latitude", "longitude", "valor"]].values.tolist()
+        heatmap_map = folium.Map([center_lat, center_lon], zoom_start=12)
+        HeatMap(data).add_to(heatmap_map)
+        return html.Iframe(
+            srcDoc=heatmap_map._repr_html_(), width="100%", height="400px"
+        )
+    else:
+        return dl.Map(
+            id="map-id",
+            style={"width": "100%", "height": "400px"},
+            center=[center_lat, center_lon],
+            zoom=12,
+            children=[
+                dl.TileLayer(),
+                dl.LayerGroup(id="points-layer"),
+            ],
+        )
+
+
+@callback(
     [
         Output("points-layer", "children"),
         Output("input-lat", "value"),
@@ -180,9 +211,8 @@ layout = dbc.Container(
         Output("stored-coordinates", "data"),
     ],
     [Input("map-id", "clickData")],
-    prevent_initial_call=True,
 )
-def update_map(clickData):
+def update_coordinates(clickData):
     if clickData and "latlng" in clickData:
         lat, lon = clickData["latlng"]["lat"], clickData["latlng"]["lng"]
         marker = dl.CircleMarker(
@@ -195,7 +225,6 @@ def update_map(clickData):
             children=dl.Tooltip(f"Latitude: {lat:.6f}, Longitude: {lon:.6f}"),
         )
         return [marker], f"{lat:.6f}", f"{lon:.6f}", clickData
-
     return [], "", "", None
 
 
@@ -218,3 +247,11 @@ def toggle_prediction_form(n_clicks, is_visible):
         return {"display": "block"}, True
     else:
         return {"display": "none"}, False
+
+
+@callback(
+    [Output("input-lat", "disabled"), Output("input-lon", "disabled")],
+    [Input("switch-coordinates", "checked")],
+)
+def toggle_input_fields(use_map):
+    return use_map, use_map
