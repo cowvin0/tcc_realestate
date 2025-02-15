@@ -4,6 +4,7 @@ import dash_leaflet as dl
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 import plotly.express as px
+import dash_ag_grid as dag
 from dash import html, Output, Input, dcc, callback, State
 from dash_iconify import DashIconify
 
@@ -29,111 +30,143 @@ layout = dbc.Container(
         dbc.Row(
             [
                 dbc.Col(
-                    [
-                        dcc.Graph(figure=fig_bar, style={"height": "600px"}),
-                    ],
+                    dmc.Card(
+                        children=[
+                            dcc.Graph(
+                                figure=fig_bar,
+                                style={"height": "400px"},
+                                config={"displaylogo": False},
+                            )
+                        ],
+                        withBorder=True,
+                        shadow="sm",
+                        radius="md",
+                        style={"padding": "10px"},
+                    ),
                     width=6,
                 ),
                 dbc.Col(
-                    [
-                        dl.Map(
-                            id="map-id",
-                            style={"width": "100%", "height": "600px"},
-                            center=[center_lat, center_lon],
-                            zoom=12,
-                            children=[
-                                dl.TileLayer(),
-                                dl.LayerGroup(id="points-layer"),
-                            ],
-                        ),
-                        dcc.Store(id="stored-coordinates"),
-                        html.Div(
-                            dmc.ActionIcon(
-                                DashIconify(icon="clarity:settings-line", width=25),
-                                color="blue",
-                                size="xl",
-                                variant="outline",
-                                id="open-offcanvas-btn",
-                                n_clicks=0,
+                    dmc.Card(
+                        children=[
+                            dl.Map(
+                                id="map-id",
+                                style={"width": "100%", "height": "400px"},
+                                center=[center_lat, center_lon],
+                                zoom=12,
+                                children=[
+                                    dl.TileLayer(),
+                                    dl.LayerGroup(id="points-layer"),
+                                ],
                             ),
-                            style={
-                                "position": "fixed",
-                                "bottom": "20px",
-                                "right": "20px",
-                                "zIndex": "1000",
-                            },
-                        ),
-                        dcc.Store(id="show-prediction-form", data=False),
-                        dbc.Offcanvas(
-                            id="offcanvas",
-                            title="Informações Adicionais",
-                            is_open=False,
-                            placement="end",
-                            children=[
-                                html.P(
-                                    "Aqui você pode colocar informações adicionais, filtros, etc."
-                                ),
-                                html.Hr(),
-                                html.Button(
-                                    "Previsão",
-                                    id="predict-button",
+                            dcc.Store(id="stored-coordinates"),
+                            html.Div(
+                                dmc.ActionIcon(
+                                    DashIconify(icon="clarity:settings-line", width=25),
+                                    color="blue",
+                                    size="xl",
+                                    variant="outline",
+                                    id="open-offcanvas-btn",
                                     n_clicks=0,
-                                    className="btn btn-primary",
                                 ),
-                                html.Div(
-                                    id="prediction-form",
-                                    style={"display": "none"},
-                                    children=[
-                                        html.Hr(),
-                                        html.H4("Preencha as informações do imóvel"),
-                                        dcc.Input(
-                                            id="input-area",
-                                            type="number",
-                                            placeholder="Área (m²)",
-                                        ),
-                                        dcc.Input(
-                                            id="input-bedrooms",
-                                            type="number",
-                                            placeholder="Quartos",
-                                        ),
-                                        dcc.Input(
-                                            id="input-bathrooms",
-                                            type="number",
-                                            placeholder="Banheiros",
-                                        ),
-                                        dcc.Input(
-                                            id="input-lat",
-                                            type="text",
-                                            placeholder="Latitude",
-                                            disabled=True,
-                                        ),
-                                        dcc.Input(
-                                            id="input-lon",
-                                            type="text",
-                                            placeholder="Longitude",
-                                            disabled=True,
-                                        ),
-                                        html.Button(
-                                            "Calcular Previsão",
-                                            id="calculate-prediction",
-                                            className="btn btn-success",
-                                        ),
-                                        html.Div(
-                                            id="prediction-result",
-                                            style={
-                                                "marginTop": "10px",
-                                                "fontSize": "18px",
-                                                "color": "green",
-                                            },
-                                        ),
-                                    ],
-                                ),
-                            ],
-                        ),
-                    ],
+                                style={
+                                    "position": "fixed",
+                                    "bottom": "20px",
+                                    "right": "20px",
+                                    "zIndex": "1000",
+                                },
+                            ),
+                            dcc.Store(id="show-prediction-form", data=False),
+                            dbc.Offcanvas(
+                                id="offcanvas",
+                                title="Informações Adicionais",
+                                is_open=False,
+                                placement="end",
+                                children=[
+                                    html.P(
+                                        "Aqui você pode colocar informações adicionais, filtros, etc."
+                                    ),
+                                    html.Hr(),
+                                    html.Button(
+                                        "Previsão",
+                                        id="predict-button",
+                                        n_clicks=0,
+                                        className="btn btn-primary",
+                                    ),
+                                    html.Div(
+                                        id="prediction-form",
+                                        style={"display": "none"},
+                                        children=[
+                                            html.Hr(),
+                                            html.H4(
+                                                "Preencha as informações do imóvel"
+                                            ),
+                                            dcc.Input(
+                                                id="input-area",
+                                                type="number",
+                                                placeholder="Área (m²)",
+                                            ),
+                                            dcc.Input(
+                                                id="input-bedrooms",
+                                                type="number",
+                                                placeholder="Quartos",
+                                            ),
+                                            dcc.Input(
+                                                id="input-bathrooms",
+                                                type="number",
+                                                placeholder="Banheiros",
+                                            ),
+                                            dcc.Input(
+                                                id="input-lat",
+                                                type="text",
+                                                placeholder="Latitude",
+                                                disabled=True,
+                                            ),
+                                            dcc.Input(
+                                                id="input-lon",
+                                                type="text",
+                                                placeholder="Longitude",
+                                                disabled=True,
+                                            ),
+                                            html.Button(
+                                                "Calcular Previsão",
+                                                id="calculate-prediction",
+                                                className="btn btn-success",
+                                            ),
+                                            html.Div(
+                                                id="prediction-result",
+                                                style={
+                                                    "marginTop": "10px",
+                                                    "fontSize": "18px",
+                                                    "color": "green",
+                                                },
+                                            ),
+                                        ],
+                                    ),
+                                ],
+                            ),
+                        ],
+                        withBorder=True,
+                        shadow="sm",
+                        radius="md",
+                        style={"padding": "10px"},
+                    ),
                     width=6,
                 ),
             ]
+        ),
+        html.Hr(),
+        dag.AgGrid(
+            id="realestate-table",
+            columnDefs=[
+                {"headerName": col, "field": col, "sortable": True, "filter": True}
+                for col in df_realestate.columns
+            ],
+            rowData=df_realestate.to_dict("records"),
+            columnSize="autoSize",
+            defaultColDef={"resizable": True},
+            className="ag-theme-balham",
+            style={"height": "370px", "width": "100%"},
+            dashGridOptions={"pagination": True, "paginationPageSize": 50},
         ),
     ],
 )
