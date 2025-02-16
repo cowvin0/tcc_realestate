@@ -39,7 +39,19 @@ layout = dbc.Container(
                                 id="bar-graph",
                                 figure=fig_bar,
                                 style={"height": "400px"},
-                                config={"displaylogo": False},
+                                config={
+                                    "displaylogo": False,
+                                    "scrollZoom": False,
+                                    "doubleClick": "reset",
+                                    "modeBarButtonsToRemove": [
+                                        "zoom",
+                                        "zoomIn",
+                                        "zoomOut",
+                                        "pan",
+                                        "lasso2d",
+                                        "autoScale",
+                                    ],
+                                },
                             )
                         ],
                         withBorder=True,
@@ -301,13 +313,55 @@ def toggle_prediction_form(n_clicks, is_visible):
         return {"display": "none"}, False
 
 
+# @callback(
+#     Output("filtered-data", "data"),
+#     [Input("bar-graph", "clickData")],
+#     [State("filtered-data", "data")],
+# )
+# def filter_data(clickData, current_data):
+#     print("\n=== Callback Triggered ===")
+#     print(f"clickData: {clickData}")
+
+#     if clickData:
+#         selected_type = clickData["points"][0]["y"]
+#         print(f"Selected Type: {selected_type}")
+
+#         if current_data:
+#             current_df = pd.DataFrame(current_data)
+#             print(f"Current Data:\n{current_df.head()}")
+
+#             if not current_df.empty and current_df["tipo"].iloc[0] == selected_type:
+#                 print("Resetting to full dataset")
+#                 return df_realestate.to_dict("records")
+
+#         filtered_df = df_realestate[df_realestate["tipo"] == selected_type]
+#         print(f"Filtered Data:\n{filtered_df.head()}")
+#         return filtered_df.to_dict("records")
+
+#     print("Returning full dataset")
+#     return df_realestate.to_dict("records")
+
+
 @callback(
     Output("filtered-data", "data"),
-    [Input("bar-graph", "clickData")],
+    [Input("bar-graph", "selectedData")],
+    [State("filtered-data", "data")],
 )
-def filter_data(clickData):
-    if clickData:
-        selected_type = clickData["points"][0]["y"]
-        filtered_df = df_realestate[df_realestate["tipo"] == selected_type]
+def filter_data(selectedData, current_data):
+    print("\n=== Callback Triggered ===")
+    print(f"selectedData: {selectedData}")
+
+    if selectedData and "points" in selectedData:
+        selected_types = {point["y"] for point in selectedData["points"]}
+        print(f"Selected Types: {selected_types}")
+
+        if current_data:
+            current_df = pd.DataFrame(current_data)
+            print(f"Current Data:\n{current_df.head()}")
+
+        filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
+        print(f"Filtered Data:\n{filtered_df.head()}")
         return filtered_df.to_dict("records")
+
+    print("Returning full dataset")
     return df_realestate.to_dict("records")
