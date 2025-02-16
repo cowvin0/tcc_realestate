@@ -497,6 +497,7 @@ Os métodos baseados em árvore envolvem a estratificação ou segmentação do 
 
 \ \ \ Árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação. Elas servem de base para os modelos baseados em árvores empregados neste trabalho, focando particularmente nas árvores de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]. O processo de construção de uma árvore se baseia no particionamento recursivo do espaço dos preditores, onde cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal. Em cada nó, é definida uma condição e, caso essa condição seja satisfeita, o resultado será uma das folhas desse nó. Caso contrário, o processo segue para o próximo nó e verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja um exemplo na @fig-arvore.
 
+
 ```{mermaid}
 %%| label: fig-arvore
 %%| fig-cap: Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos.
@@ -512,6 +513,7 @@ graph TD
     G -->|Condição 4: Sim| H[Folha 4]
     G -->|Condição 4: Não| I[Folha 5]
 ```
+
 
 \vspace{12pt}
 
