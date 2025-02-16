@@ -4,4 +4,4 @@
 */.~lock*
 .Rhistory
 .RData
-.env/
+.env
