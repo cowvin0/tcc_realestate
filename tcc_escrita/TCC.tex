@@ -86,15 +86,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -221,7 +223,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, sharp corners, frame hidden, colback={codebgcolor}, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -232,6 +234,7 @@
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \makeatother
+
 \ifLuaTeX
 \usepackage[bidi=basic]{babel}
 \else
@@ -241,9 +244,6 @@
 % get rid of language-specific shorthands (see #6817):
 \let\LanguageShortHands\languageshorthands
 \def\languageshorthands#1{}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -259,10 +259,11 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
+
 \title{Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores
 Imobiliários no Mercado Imobiliário da Cidade de João Pessoa}
 \author{Gabriel de Jesus Pereira}
-\date{janeiro, 2025}
+\date{fevereiro, 2025}
 
 \begin{document}
 \cleardoublepage
@@ -288,7 +289,7 @@ Pessoa \par}
 
 {\large Gabriel de Jesus Pereira \par}
 \vfill
-{\normalsize janeiro, 2025 \par}
+{\normalsize fevereiro, 2025 \par}
 
 
 \noindent\rule{\textwidth}{0.5pt}
@@ -315,7 +316,7 @@ Pessoa \par}
 \vfill
 
 {\normalsize\bfseries João Pessoa \par}
-{\normalsize\bfseries janeiro, 2025 \par}
+{\normalsize\bfseries fevereiro, 2025 \par}
 
 }
 \numberwithin{algorithm}{chapter}
@@ -329,6 +330,7 @@ Pessoa \par}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+
 \pagenumbering{arabic}
 \pagestyle{fancy}
 
@@ -1387,7 +1389,7 @@ um exemplo na Figura~\ref{fig-arvore}.
 
 \centering{
 
-\includegraphics[width=5.5in,height=3.4in]{TCC_files/figure-latex/mermaid-figure-1.png}
+\includegraphics[width=5.5in,height=3.47in]{TCC_files/figure-latex/mermaid-figure-1.png}
 
 }
 
@@ -2320,7 +2322,7 @@ a observação \(i\) foi alocada por meio de randomização.
 
 \centering{
 
-\includegraphics{TCC_files/figure-pdf/fig-kfold-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-kfold-output-1.pdf}}
 
 }
 
@@ -3130,7 +3132,7 @@ dos dados foi realizada utilizando o conjunto de treinamento.
 
 \centering{
 
-\includegraphics{TCC_files/figure-pdf/fig-miss-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-miss-output-1.pdf}}
 
 }
 
@@ -3171,7 +3173,7 @@ resultados.
 
 \centering{
 
-\includegraphics{includes/map_valor_m2.png}
+\pandocbounded{\includegraphics[keepaspectratio]{includes/map_valor_m2.png}}
 
 }
 
@@ -3227,7 +3229,7 @@ variância.
 
 \centering{
 
-\includegraphics{TCC_files/figure-pdf/fig-violin-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-violin-output-1.pdf}}
 
 }
 
@@ -3252,7 +3254,7 @@ modelagem e análise estatística.
 
 \centering{
 
-\includegraphics{TCC_files/figure-pdf/fig-densitarg-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-densitarg-output-1.pdf}}
 
 }
 
@@ -3265,7 +3267,7 @@ dos imóveis antes e depois da transformação logarítmica.}
 
 \centering{
 
-\includegraphics{TCC_files/figure-pdf/fig-corplot-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-corplot-output-1.pdf}}
 
 }
 
@@ -3381,7 +3383,7 @@ não consegue encontrar valores de erro significativamente menores.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-rf_slice-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-rf_slice-output-1.pdf}}
 
 }
 
@@ -3393,7 +3395,7 @@ não consegue encontrar valores de erro significativamente menores.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-rf_import-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-rf_import-output-1.pdf}}
 
 }
 
@@ -3405,7 +3407,7 @@ não consegue encontrar valores de erro significativamente menores.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-rf_history-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-rf_history-output-1.pdf}}
 
 }
 
@@ -3417,7 +3419,7 @@ não consegue encontrar valores de erro significativamente menores.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-rf_contour-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-rf_contour-output-1.pdf}}
 
 }
 
@@ -3472,7 +3474,7 @@ de árvores tem a menor influência.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-gdt_slice-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-gdt_slice-output-1.pdf}}
 
 }
 
@@ -3484,7 +3486,7 @@ de árvores tem a menor influência.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-gdt_import-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-gdt_import-output-1.pdf}}
 
 }
 
@@ -3496,7 +3498,7 @@ de árvores tem a menor influência.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-gdt_history-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-gdt_history-output-1.pdf}}
 
 }
 
@@ -3508,7 +3510,7 @@ de árvores tem a menor influência.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-gdt_contour-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-gdt_contour-output-1.pdf}}
 
 }
 
@@ -3563,7 +3565,7 @@ mesma forma, entre 100 e 500
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-lgbm_slice-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-lgbm_slice-output-1.pdf}}
 
 }
 
@@ -3575,7 +3577,7 @@ mesma forma, entre 100 e 500
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-lgbm_import-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-lgbm_import-output-1.pdf}}
 
 }
 
@@ -3587,7 +3589,7 @@ mesma forma, entre 100 e 500
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-lgbm_history-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-lgbm_history-output-1.pdf}}
 
 }
 
@@ -3599,7 +3601,7 @@ mesma forma, entre 100 e 500
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-lgbm_contour-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-lgbm_contour-output-1.pdf}}
 
 }
 
@@ -3633,12 +3635,12 @@ de aprendizado crescente também produz um modelo com menor erro, assim
 como um número maior de árvores.
 
 \begin{longtable}[]{@{}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1549}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1127}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1972}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1690}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1549}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2113}}@{}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1549}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1127}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1972}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1690}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1549}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2113}}@{}}
 \caption{Melhores hiperparâmetros para Light Gradient
 Boosting.}\label{tbl-params_lgbm}\tabularnewline
 \toprule\noalign{}
@@ -3719,7 +3721,7 @@ quantidade de árvores apresentam menor valor na função objetivo.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-xgb_slice-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-xgb_slice-output-1.pdf}}
 
 }
 
@@ -3731,7 +3733,7 @@ quantidade de árvores apresentam menor valor na função objetivo.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-xgb_import-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-xgb_import-output-1.pdf}}
 
 }
 
@@ -3743,7 +3745,7 @@ quantidade de árvores apresentam menor valor na função objetivo.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-xgb_history-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-xgb_history-output-1.pdf}}
 
 }
 
@@ -3755,7 +3757,7 @@ quantidade de árvores apresentam menor valor na função objetivo.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/figure-pdf/fig-xgb_contour-output-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-xgb_contour-output-1.pdf}}
 
 }
 
@@ -3847,7 +3849,7 @@ Figura~\ref{fig-preds_gdt}.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/mediabag/includes/rf_plot_predict.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/rf_plot_predict.pdf}}
 
 }
 
@@ -3859,7 +3861,7 @@ Figura~\ref{fig-preds_gdt}.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/mediabag/includes/gdt_plot_predict.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/gdt_plot_predict.pdf}}
 
 }
 
@@ -3891,7 +3893,7 @@ relação ao final da distribuição.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/mediabag/includes/lgbm_plot_predict.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/lgbm_plot_predict.pdf}}
 
 }
 
@@ -3903,7 +3905,7 @@ relação ao final da distribuição.
 
 \centering{
 
-\captionsetup{labelsep=none}\includegraphics{TCC_files/mediabag/includes/xgb_plot_predict.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/xgb_plot_predict.pdf}}
 
 }
 
@@ -3931,7 +3933,7 @@ LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média
 
 \centering{
 
-\includegraphics{TCC_files/mediabag/includes/stacking_plot_predict.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/stacking_plot_predict.pdf}}
 
 }
 
@@ -3966,7 +3968,7 @@ algoritmo de Stacking.
 
 \centering{
 
-\includegraphics{TCC_files/mediabag/includes/pdp_ice.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/pdp_ice.pdf}}
 
 }
 
@@ -4008,7 +4010,7 @@ no valor dos imóveis.
 
 \centering{
 
-\includegraphics{TCC_files/mediabag/includes/shap_summary_plot.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/shap_summary_plot.pdf}}
 
 }
 
@@ -4020,7 +4022,7 @@ no valor dos imóveis.
 
 \centering{
 
-\includegraphics{TCC_files/mediabag/includes/shap_importance.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/shap_importance.pdf}}
 
 }
 
@@ -4063,40 +4065,40 @@ complexa com o valor dos imóveis.
 \begin{figure}
 
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_academia.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_academia.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_area_servico.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_area_servico.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_elevador.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_elevador.pdf}}\end{minipage}%
 \newline
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_espaco_gourmet.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_espaco_gourmet.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_piscina.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_piscina.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_playground.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_playground.pdf}}\end{minipage}%
 \newline
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_portaria_24_horas.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_portaria_24_horas.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_quadra_de_esporte.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_quadra_de_esporte.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_salao_de_festa.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_salao_de_festa.pdf}}\end{minipage}%
 \newline
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_sauna.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_sauna.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_spa.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_spa.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\includegraphics{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_varanda_gourmet.pdf}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_varanda_gourmet.pdf}}\end{minipage}%
 
 \caption{\label{fig-dependence_plot}Gráfico de dependência de valores
 SHAP para variáveis binárias.}
@@ -4355,6 +4357,7 @@ algorithms: Theory and practice. \textbf{Neurocomputing}, 2020. v. 415,
 p. 295--316.
 
 \end{CSLReferences}
+
 
 
 
