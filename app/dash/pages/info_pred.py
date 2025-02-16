@@ -5,9 +5,10 @@ import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 import plotly.express as px
 import dash_ag_grid as dag
+import folium
+
 from dash import html, Output, Input, dcc, callback, State
 from dash_iconify import DashIconify
-import folium
 from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
@@ -35,6 +36,7 @@ layout = dbc.Container(
                     dmc.Card(
                         children=[
                             dcc.Graph(
+                                id="bar-graph",
                                 figure=fig_bar,
                                 style={"height": "400px"},
                                 config={"displaylogo": False},
@@ -51,6 +53,10 @@ layout = dbc.Container(
                     dmc.Card(
                         children=[
                             html.Div(id="map-container"),
+                            dcc.Store(
+                                id="filtered-data",
+                                data=df_realestate.to_dict("records"),
+                            ),
                             dcc.Store(id="stored-coordinates"),
                             html.Div(
                                 dmc.ActionIcon(
@@ -79,13 +85,27 @@ layout = dbc.Container(
                                         "Aqui você pode colocar informações adicionais, filtros, etc."
                                     ),
                                     html.Hr(),
-                                    dmc.Switch(
-                                        id="heatmap-toggle",
-                                        label="Ativar Heatmap",
-                                        checked=True,
+                                    dmc.Select(
+                                        label="Tipo de Mapa",
+                                        placeholder="Selecione o tipo de mapa",
+                                        id="map-select",
+                                        value="heatmap",
+                                        data=[
+                                            {"value": "leaflet", "label": "Sem tipo"},
+                                            {
+                                                "value": "heatmap",
+                                                "label": "Mapa de Calor",
+                                            },
+                                            {
+                                                "value": "markers",
+                                                "label": "Mapa de pontos",
+                                            },
+                                        ],
+                                        w=200,
+                                        mb=10,
                                     ),
                                     html.Button(
-                                        "Previsão",
+                                        "Estimar valor de imóvel",
                                         id="predict-button",
                                         n_clicks=0,
                                         className="btn btn-primary",
@@ -113,22 +133,17 @@ layout = dbc.Container(
                                                 type="number",
                                                 placeholder="Banheiros",
                                             ),
-                                            dmc.Switch(
-                                                id="switch-coordinates",
-                                                label="Selecionar no mapa",
-                                                checked=False,
-                                            ),
                                             dcc.Input(
                                                 id="input-lat",
                                                 type="text",
                                                 placeholder="Latitude",
-                                                disabled=True,
+                                                disabled=False,
                                             ),
                                             dcc.Input(
                                                 id="input-lon",
                                                 type="text",
                                                 placeholder="Longitude",
-                                                disabled=True,
+                                                disabled=False,
                                             ),
                                             html.Button(
                                                 "Calcular Previsão",
@@ -177,18 +192,55 @@ layout = dbc.Container(
 
 @callback(
     Output("map-container", "children"),
-    [Input("heatmap-toggle", "checked"), Input("switch-coordinates", "checked")],
+    [Input("map-select", "value"), Input("filtered-data", "data")],
 )
-def update_map(use_heatmap, selecting_coords):
-    if selecting_coords:
-        use_heatmap = False
-
-    if use_heatmap:
-        data = df_realestate[["latitude", "longitude", "valor"]].values.tolist()
+def update_map(map_type, filtered_data):
+    df_filtered = pd.DataFrame(filtered_data)
+    if map_type == "heatmap":
+        data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
         heatmap_map = folium.Map([center_lat, center_lon], zoom_start=12)
-        HeatMap(data).add_to(heatmap_map)
+        HeatMap(data, radius=13).add_to(heatmap_map)
         return html.Iframe(
             srcDoc=heatmap_map._repr_html_(), width="100%", height="400px"
+        )
+    elif map_type == "markers":
+        fig_map_marker = px.scatter_mapbox(
+            df_filtered,
+            lat="latitude",
+            lon="longitude",
+            color="valor",
+            size="valor",
+            hover_name="tipo",
+            hover_data={"latitude": False, "longitude": False, "valor": ":.2f"},
+            color_continuous_scale="Viridis",
+            size_max=15,
+            zoom=12,
+            mapbox_style="open-street-map",
+            center={
+                "lat": df_filtered["latitude"].mean(),
+                "lon": df_filtered["longitude"].mean(),
+            },
+        )
+
+        fig_map_marker.update_layout(
+            margin={"r": 0, "t": 0, "l": 0, "b": 0},
+            coloraxis_colorbar=dict(
+                title="Valor (R$)",
+                orientation="h",
+                tickformat=".2s",
+                x=0,
+                xanchor="left",
+                y=0.85,
+                yanchor="bottom",
+                len=0.6,
+                thickness=15,
+                title_font=dict(size=12),
+            ),
+        )
+        return dcc.Graph(
+            figure=fig_map_marker,
+            style={"width": "100%", "height": "400px"},
+            config={"displaylogo": False},
         )
     else:
         return dl.Map(
@@ -224,7 +276,7 @@ def update_coordinates(clickData):
             fillOpacity=0.8,
             children=dl.Tooltip(f"Latitude: {lat:.6f}, Longitude: {lon:.6f}"),
         )
-        return [marker], f"{lat:.6f}", f"{lon:.6f}", clickData
+        return [marker], f"{lat}", f"{lon}", clickData
     return [], "", "", None
 
 
@@ -250,8 +302,12 @@ def toggle_prediction_form(n_clicks, is_visible):
 
 
 @callback(
-    [Output("input-lat", "disabled"), Output("input-lon", "disabled")],
-    [Input("switch-coordinates", "checked")],
+    Output("filtered-data", "data"),
+    [Input("bar-graph", "clickData")],
 )
-def toggle_input_fields(use_map):
-    return use_map, use_map
+def filter_data(clickData):
+    if clickData:
+        selected_type = clickData["points"][0]["y"]
+        filtered_df = df_realestate[df_realestate["tipo"] == selected_type]
+        return filtered_df.to_dict("records")
+    return df_realestate.to_dict("records")
