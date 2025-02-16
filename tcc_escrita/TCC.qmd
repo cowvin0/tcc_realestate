@@ -1911,7 +1911,7 @@ folium.Choropleth(
 
 img_data = m._to_png(20)
 img = Image.open(io.BytesIO(img_data))
-img.save('includes/map_valor_m2.png')
+# img.save('includes/map_valor_m2.png')
 ```
 
 
@@ -1957,10 +1957,10 @@ Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import r
 import optuna.visualization
 import joblib
 
-study1 = joblib.load('../app/modeling/study_pkl/study_rf.pkl')
-study2 = joblib.load('../app/modeling/study_pkl/study_gdt.pkl')
-study3 = joblib.load('../app/modeling/study_pkl/study_lgbm.pkl')
-study4 = joblib.load('../app/modeling/study_pkl/study_xgb.pkl')
+study1 = joblib.load('study_pkl/study_rf.pkl')
+study2 = joblib.load('study_pkl/study_gdt.pkl')
+study3 = joblib.load('study_pkl/study_lgbm.pkl')
+study4 = joblib.load('study_pkl/study_xgb.pkl')
 ```
 
 ::: {#fig-rf_param layout-ncol=2}
