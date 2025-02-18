@@ -107,7 +107,7 @@ def close_offcanvas(n, is_open):
 def display_floating_button(pathname):
     if pathname == "/realestate":
         return dmc.ActionIcon(
-            DashIconify(icon="clarity:settings-line", width=25),
+            DashIconify(icon="bx:filter-alt", width=25),
             color="blue",
             size="xl",
             variant="transparent",
