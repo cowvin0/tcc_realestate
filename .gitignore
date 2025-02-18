@@ -1,4 +1,6 @@
 *.whl
+*/TCC_files
+*/.jupyter_cache/
 */__pycache__
 */.scrapy
 */.~lock*
