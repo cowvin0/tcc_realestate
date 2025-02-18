@@ -8,7 +8,6 @@ import dash_ag_grid as dag
 import folium
 
 from dash import html, Output, Input, dcc, callback, State
-from dash_iconify import DashIconify
 from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
@@ -70,22 +69,6 @@ layout = dbc.Container(
                                 data=df_realestate.to_dict("records"),
                             ),
                             dcc.Store(id="stored-coordinates"),
-                            html.Div(
-                                dmc.ActionIcon(
-                                    DashIconify(icon="clarity:settings-line", width=25),
-                                    color="blue",
-                                    size="xl",
-                                    variant="outline",
-                                    id="open-offcanvas-btn",
-                                    n_clicks=0,
-                                ),
-                                style={
-                                    "position": "fixed",
-                                    "bottom": "20px",
-                                    "right": "20px",
-                                    "zIndex": "1000",
-                                },
-                            ),
                             dcc.Store(id="show-prediction-form", data=False),
                             dbc.Offcanvas(
                                 id="offcanvas",
@@ -324,10 +307,6 @@ def filter_data(selectedData, current_data):
     if selectedData and "points" in selectedData:
         selected_types = {point["y"] for point in selectedData["points"]}
         print(f"Selected Types: {selected_types}")
-
-        if current_data:
-            current_df = pd.DataFrame(current_data)
-            print(f"Current Data:\n{current_df.head()}")
 
         filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
         return filtered_df.to_dict("records")
