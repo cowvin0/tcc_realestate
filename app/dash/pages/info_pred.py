@@ -187,10 +187,18 @@ layout = dbc.Container(
 
 @callback(
     Output("map-container", "children"),
-    [Input("map-select", "value"), Input("filtered-data", "data")],
+    [
+        Input("map-select", "value"),
+        Input("filtered-data", "data"),
+        Input("predict-button", "n_clicks"),
+    ],
 )
-def update_map(map_type, filtered_data):
+def update_map(map_type, filtered_data, n_clicks):
     df_filtered = pd.DataFrame(filtered_data)
+
+    if n_clicks % 2 == 1:
+        map_type = None
+
     if map_type == "heatmap":
         data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
         heatmap_map = folium.Map([center_lat, center_lon], zoom_start=12)
@@ -299,9 +307,9 @@ def toggle_prediction_form(n_clicks, is_visible):
 @callback(
     Output("filtered-data", "data"),
     [Input("bar-graph", "selectedData")],
-    [State("filtered-data", "data")],
+    # [State("filtered-data", "data")],
 )
-def filter_data(selectedData, current_data):
+def filter_data(selectedData):
     print(f"selectedData: {selectedData}")
 
     if selectedData and "points" in selectedData:
