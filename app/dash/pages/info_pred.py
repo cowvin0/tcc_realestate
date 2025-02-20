@@ -7,6 +7,7 @@ import plotly.express as px
 import dash_ag_grid as dag
 import folium
 
+from dash_iconify import DashIconify
 from dash import html, Output, Input, dcc, callback, State
 from folium.plugins import HeatMap
 
@@ -70,6 +71,49 @@ layout = dbc.Container(
                             ),
                             dcc.Store(id="stored-coordinates"),
                             dcc.Store(id="show-prediction-form", data=False),
+                            dbc.Offcanvas(
+                                id="offcanvas-table",
+                                title="",
+                                is_open=False,
+                                scrollable=True,
+                                placement="bottom",
+                                style={"height": "53vh"},
+                                children=[
+                                    dag.AgGrid(
+                                        id="realestate-table",
+                                        columnDefs=[
+                                            {
+                                                "headerName": col,
+                                                "field": col,
+                                                "sortable": True,
+                                                "filter": True,
+                                            }
+                                            for col in df_realestate.columns
+                                        ],
+                                        rowData=df_realestate.to_dict("records"),
+                                        columnSize="autoSize",
+                                        defaultColDef={"resizable": True},
+                                        className="ag-theme-balham",
+                                        style={"width": "100%"},
+                                        dashGridOptions={
+                                            "pagination": True,
+                                            "paginationPageSize": 50,
+                                        },
+                                    ),
+                                    dmc.Button(
+                                        "Extraia os dados",
+                                        id="download-btn",
+                                        variant="subtle",
+                                        leftIcon=DashIconify(
+                                            icon="material-symbols-light:download-rounded",
+                                            width=25,
+                                        ),
+                                        m=20,
+                                        className="mt-2",
+                                    ),
+                                    dcc.Download(id="download-dataframe-csv"),
+                                ],
+                            ),
                             dbc.Offcanvas(
                                 id="offcanvas",
                                 title="Informações Adicionais",
@@ -168,21 +212,17 @@ layout = dbc.Container(
             ]
         ),
         html.Hr(),
-        dag.AgGrid(
-            id="realestate-table",
-            columnDefs=[
-                {"headerName": col, "field": col, "sortable": True, "filter": True}
-                for col in df_realestate.columns
-            ],
-            rowData=df_realestate.to_dict("records"),
-            columnSize="autoSize",
-            defaultColDef={"resizable": True},
-            className="ag-theme-balham",
-            style={"height": "370px", "width": "100%"},
-            dashGridOptions={"pagination": True, "paginationPageSize": 50},
-        ),
     ],
 )
+
+
+@callback(
+    Output("download-dataframe-csv", "data"),
+    Input("download-btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download_csv(_):
+    return dcc.send_data_frame(df_realestate.to_csv, "dados_imoveis.csv", index=False)
 
 
 @callback(
@@ -281,6 +321,15 @@ def update_coordinates(clickData):
         )
         return [marker], f"{lat}", f"{lon}", clickData
     return [], "", "", None
+
+
+@callback(
+    Output("offcanvas-table", "is_open"),
+    [Input("open-offcanvas-table-btn", "n_clicks")],
+    prevent_initial_call=True,
+)
+def toggle_offcanvas(n_clicks):
+    return True
 
 
 @callback(
