@@ -258,6 +258,83 @@ layout = dbc.Container(
                                                 mb=10,
                                             ),
                                             dmc.NumberInput(
+                                                id="input-pool",
+                                                placeholder="Informe se o imóvel possui piscina",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-playground",
+                                                placeholder="Informe se o imóvel possui playground",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-sport",
+                                                placeholder="Informe se o imóvel possui quadra de esporte",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-party",
+                                                placeholder="Informe se o imóvel possui salão de festa",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-sauna",
+                                                placeholder="Informe se o imóvel possui sauna",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-spa",
+                                                placeholder="Informe se o imóvel possui spa",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-gourmet-varan",
+                                                placeholder="Informe se o imóvel possui varanda gourmet",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
                                                 id="input-service",
                                                 placeholder="Informe se o imóvel possui área de serviço",
                                                 icon=DashIconify(
