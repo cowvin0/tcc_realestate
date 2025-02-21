@@ -118,6 +118,7 @@ layout = dbc.Container(
                                 id="offcanvas",
                                 title="Informações Adicionais",
                                 is_open=False,
+                                style={"width": ""},
                                 placement="end",
                                 children=[
                                     html.P(
@@ -143,7 +144,7 @@ layout = dbc.Container(
                                         w=200,
                                         mb=10,
                                     ),
-                                    html.Button(
+                                    dmc.Button(
                                         "Estimar valor de imóvel",
                                         id="predict-button",
                                         n_clicks=0,
@@ -157,34 +158,139 @@ layout = dbc.Container(
                                             html.H4(
                                                 "Preencha as informações do imóvel"
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
                                                 id="input-area",
-                                                type="number",
-                                                placeholder="Área (m²)",
+                                                placeholder="Insira o valor da área",
+                                                icon=DashIconify(
+                                                    icon="gis:measure-area-alt",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
+                                                id="input-price-alug",
+                                                placeholder="Insira o valor do preço médio de aluguel",
+                                                icon=DashIconify(
+                                                    icon="gis:measure-area-alt",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-area-alug",
+                                                placeholder="Insira o valor da área média de aluguel",
+                                                icon=DashIconify(
+                                                    icon="gis:measure-area-alt",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
                                                 id="input-bedrooms",
-                                                type="number",
-                                                placeholder="Quartos",
+                                                placeholder="Insira a quantidade de quartos",
+                                                icon=DashIconify(
+                                                    icon="game-icons:bed",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
                                                 id="input-bathrooms",
-                                                type="number",
-                                                placeholder="Banheiros",
+                                                placeholder="Insira a quantidade de banheiros",
+                                                icon=DashIconify(
+                                                    icon="iconoir:bathroom",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
+                                                id="input-parking",
+                                                placeholder="Insira a quantidade de vagas de garagem",
+                                                icon=DashIconify(
+                                                    icon="arcticons:car-parking",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-gym",
+                                                placeholder="Informe se o imóvel possuí academia",
+                                                icon=DashIconify(
+                                                    icon="iconoir:gym",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-elevator",
+                                                placeholder="Informe se o imóvel possui elevador",
+                                                icon=DashIconify(
+                                                    icon="material-symbols-light:elevator-outline-rounded",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-gourmet",
+                                                placeholder="Informe se o imóvel possui espaço gourmet",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-service",
+                                                placeholder="Informe se o imóvel possui área de serviço",
+                                                icon=DashIconify(
+                                                    icon="material-symbols-light:service-toolbox-outline-sharp",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
                                                 id="input-lat",
-                                                type="text",
-                                                placeholder="Latitude",
-                                                disabled=False,
+                                                placeholder="Insira a latitude ou selecione diretamente do mapa",
+                                                icon=DashIconify(
+                                                    icon="mingcute:earth-latitude-line",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
                                                 id="input-lon",
-                                                type="text",
-                                                placeholder="Longitude",
-                                                disabled=False,
+                                                placeholder="Insira a longitude ou selecione diretamente do mapa",
+                                                icon=DashIconify(
+                                                    icon="mingcute:earth-longitude-line",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            html.Button(
+                                            dmc.Button(
                                                 "Calcular Previsão",
                                                 id="calculate-prediction",
                                                 className="btn btn-success",
@@ -355,8 +461,7 @@ def toggle_prediction_form(n_clicks, is_visible):
 
 @callback(
     Output("filtered-data", "data"),
-    [Input("bar-graph", "selectedData")],
-    # [State("filtered-data", "data")],
+    Input("bar-graph", "selectedData"),
 )
 def filter_data(selectedData):
     print(f"selectedData: {selectedData}")

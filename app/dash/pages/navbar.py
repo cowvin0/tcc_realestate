@@ -44,18 +44,14 @@ def navbar():
                     placement="start",
                     backdrop=True,
                     scrollable=True,
-                    # style={
-                    #     "background-color": "rgba(0, 0, 0, 0.0)",
-                    #     "backdrop-filter": "blur(5px)",
-                    #     "box-shadow": "none",
-                    # },
                 ),
                 html.Div(id="floating-button-container", style={"marginLeft": "auto"}),
                 html.Div(
                     dmc.Switch(
                         label="",
-                        onLabel="🌙",
-                        offLabel="🌞",
+                        onLabel=DashIconify(icon="emojione:full-moon", width=15),
+                        offLabel=DashIconify(icon="noto-v1:sun", width=15),
+                        size="md",
                         id="theme-switch",
                         checked=False,
                     ),
