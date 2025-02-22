@@ -14,7 +14,12 @@ from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
-df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv")
+df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv").assign(
+    tipo=lambda x: x.tipo.str.capitalize()
+    .str.split("_")
+    .str.join(" ")
+    .str.replace("condominio", "condomínio")
+)
 
 center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
@@ -26,6 +31,13 @@ fig_bar = px.bar(
     labels={"tipo": "", "valor": "Valor Médio (R$)"},
     text_auto=".2s",
     template="plotly_white",
+)
+
+fig_bar.update_layout(
+    clickmode="event+select",
+    dragmode="select",
+    template="plotly_white",
+    margin=dict(l=30, r=30, t=30, b=30),
 )
 
 layout = dbc.Container(
@@ -42,6 +54,7 @@ layout = dbc.Container(
                                 style={"height": "400px"},
                                 config={
                                     "displaylogo": False,
+                                    "displayModeBar": False,
                                     "scrollZoom": False,
                                     "doubleClick": "reset",
                                     "modeBarButtonsToRemove": [
@@ -525,7 +538,24 @@ layout = dbc.Container(
                 dbc.Col(
                     dmc.Card(
                         children=[
-                            dcc.Graph(id="density-plot", style={"height": "400px"})
+                            dcc.Graph(
+                                id="density-plot",
+                                style={"height": "400px", "width": "100%"},
+                                config={
+                                    "displaylogo": False,
+                                    "scrollZoom": False,
+                                    "displayModeBar": False,
+                                    "doubleClick": "reset",
+                                    "modeBarButtonsToRemove": [
+                                        "zoom",
+                                        "zoomIn",
+                                        "zoomOut",
+                                        "pan",
+                                        "lasso2d",
+                                        "autoScale",
+                                    ],
+                                },
+                            )
                         ],
                         withBorder=True,
                         shadow="sm",
@@ -542,24 +572,32 @@ layout = dbc.Container(
                         style={"padding": "10px"},
                     )
                 ),
-                # dbc.Col(
-                #     dmc.Card(
-                #         children=[html.Div(id="density-plot-area")],
-                #         withBorder=True,
-                #         shadow="sm",
-                #         radius="md",
-                #         style={"padding": "10px"},
-                #     )
-                # ),
             ]
         ),
     ],
 )
 
 
+# @callback(Output("bar-graph", "figure"), Input("filtered-data", "data"))
+# def make_barplot(filtered_data):
+#     # df_filtered = pd.DataFrame(filtered_data)
+
+#     fig_bar = px.bar(
+#         df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
+#         x="valor",
+#         y="tipo",
+#         labels={"tipo": "", "valor": "Valor Médio (R$)"},
+#         text_auto=".2s",
+#         template="plotly_white",
+#     )
+
+#     return fig_bar
+
+
 @callback(Output("density-plot", "figure"), Input("filtered-data", "data"))
 def make_density_plot(filtered_data):
     df_filtered = pd.DataFrame(filtered_data)
+
     types_imo = df_filtered.tipo.unique()
 
     get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
@@ -567,12 +605,20 @@ def make_density_plot(filtered_data):
     fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
 
     fig.update_layout(
-        legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5),
+        legend=dict(
+            orientation="h",
+            yanchor="top",
+            y=-0.2,
+            xanchor="center",
+            x=0.5,
+        ),
+        margin=dict(l=30, r=30, t=30, b=30),
+        clickmode="event+select",
+        dragmode="select",
         template="plotly_white",
     )
 
     return fig
-    # return ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
 
 
 @callback(
