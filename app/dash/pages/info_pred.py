@@ -16,16 +16,6 @@ dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
 df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv")
 
-px.histogram(
-    df_realestate,
-    x="valor",
-    color="tipo",
-    nbins=50,
-    opacity=0.7,
-    marginal="rug",
-    histnorm="density",
-)
-
 center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
 
@@ -534,7 +524,9 @@ layout = dbc.Container(
             [
                 dbc.Col(
                     dmc.Card(
-                        children=[html.Div(id="teste")],
+                        children=[
+                            dcc.Graph(id="density-plot", style={"height": "400px"})
+                        ],
                         withBorder=True,
                         shadow="sm",
                         radius="md",
@@ -543,26 +535,44 @@ layout = dbc.Container(
                 ),
                 dbc.Col(
                     dmc.Card(
-                        children=[html.Div(id="teste2")],
+                        children=[html.Div(id="bar-plot-most-expensive")],
                         withBorder=True,
                         shadow="sm",
                         radius="md",
                         style={"padding": "10px"},
                     )
                 ),
-                dbc.Col(
-                    dmc.Card(
-                        children=[html.Div(id="teste3")],
-                        withBorder=True,
-                        shadow="sm",
-                        radius="md",
-                        style={"padding": "10px"},
-                    )
-                ),
+                # dbc.Col(
+                #     dmc.Card(
+                #         children=[html.Div(id="density-plot-area")],
+                #         withBorder=True,
+                #         shadow="sm",
+                #         radius="md",
+                #         style={"padding": "10px"},
+                #     )
+                # ),
             ]
         ),
     ],
 )
+
+
+@callback(Output("density-plot", "figure"), Input("filtered-data", "data"))
+def make_density_plot(filtered_data):
+    df_filtered = pd.DataFrame(filtered_data)
+    types_imo = df_filtered.tipo.unique()
+
+    get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
+
+    fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
+
+    fig.update_layout(
+        legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5),
+        template="plotly_white",
+    )
+
+    return fig
+    # return ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
 
 
 @callback(
@@ -677,16 +687,18 @@ def update_coordinates(clickData):
     [Input("open-offcanvas-table-btn", "n_clicks")],
     prevent_initial_call=True,
 )
-def toggle_offcanvas(n_clicks):
+def toggle_offcanvas_table(_):
     return True
 
 
 @callback(
     Output("offcanvas", "is_open"),
-    [Input("open-offcanvas-btn", "n_clicks")],
+    [
+        Input("open-offcanvas-btn", "n_clicks"),
+    ],
     prevent_initial_call=True,
 )
-def toggle_offcanvas(n_clicks):
+def toggle_offcanvas(_):
     return True
 
 
