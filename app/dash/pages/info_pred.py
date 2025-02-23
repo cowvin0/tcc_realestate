@@ -6,16 +6,24 @@ import dash_mantine_components as dmc
 import plotly.express as px
 import dash_ag_grid as dag
 import folium
+import plotly.figure_factory as ff
 
+from dash_iconify import DashIconify
 from dash import html, Output, Input, dcc, callback, State
 from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
-df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv")
+df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv").assign(
+    tipo=lambda x: x.tipo.str.capitalize()
+    .str.split("_")
+    .str.join(" ")
+    .str.replace("condominio", "condomínio")
+)
 
 center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
+
 
 fig_bar = px.bar(
     df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
@@ -24,6 +32,13 @@ fig_bar = px.bar(
     labels={"tipo": "", "valor": "Valor Médio (R$)"},
     text_auto=".2s",
     template="plotly_white",
+)
+
+fig_bar.update_layout(
+    clickmode="event+select",
+    dragmode="select",
+    template="plotly_white",
+    margin=dict(l=0, r=0, t=0, b=0),
 )
 
 layout = dbc.Container(
@@ -37,9 +52,10 @@ layout = dbc.Container(
                             dcc.Graph(
                                 id="bar-graph",
                                 figure=fig_bar,
-                                style={"height": "400px"},
+                                style={"height": "400px", "width": "100%"},
                                 config={
                                     "displaylogo": False,
+                                    "displayModeBar": False,
                                     "scrollZoom": False,
                                     "doubleClick": "reset",
                                     "modeBarButtonsToRemove": [
@@ -71,9 +87,53 @@ layout = dbc.Container(
                             dcc.Store(id="stored-coordinates"),
                             dcc.Store(id="show-prediction-form", data=False),
                             dbc.Offcanvas(
+                                id="offcanvas-table",
+                                title="",
+                                is_open=False,
+                                scrollable=True,
+                                placement="bottom",
+                                style={"height": "53vh"},
+                                children=[
+                                    dag.AgGrid(
+                                        id="realestate-table",
+                                        columnDefs=[
+                                            {
+                                                "headerName": col,
+                                                "field": col,
+                                                "sortable": True,
+                                                "filter": True,
+                                            }
+                                            for col in df_realestate.columns
+                                        ],
+                                        rowData=df_realestate.to_dict("records"),
+                                        columnSize="autoSize",
+                                        defaultColDef={"resizable": True},
+                                        className="ag-theme-balham",
+                                        style={"width": "100%"},
+                                        dashGridOptions={
+                                            "pagination": True,
+                                            "paginationPageSize": 50,
+                                        },
+                                    ),
+                                    dmc.Button(
+                                        "Extraia os dados",
+                                        id="download-btn",
+                                        variant="subtle",
+                                        leftIcon=DashIconify(
+                                            icon="material-symbols-light:download-rounded",
+                                            width=25,
+                                        ),
+                                        m=0,
+                                        className="mt-2",
+                                    ),
+                                    dcc.Download(id="download-dataframe-csv"),
+                                ],
+                            ),
+                            dbc.Offcanvas(
                                 id="offcanvas",
                                 title="Informações Adicionais",
                                 is_open=False,
+                                style={"width": ""},
                                 placement="end",
                                 children=[
                                     html.P(
@@ -99,7 +159,7 @@ layout = dbc.Container(
                                         w=200,
                                         mb=10,
                                     ),
-                                    html.Button(
+                                    dmc.Button(
                                         "Estimar valor de imóvel",
                                         id="predict-button",
                                         n_clicks=0,
@@ -113,34 +173,340 @@ layout = dbc.Container(
                                             html.H4(
                                                 "Preencha as informações do imóvel"
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
                                                 id="input-area",
-                                                type="number",
-                                                placeholder="Área (m²)",
+                                                placeholder="Insira o valor da área",
+                                                icon=DashIconify(
+                                                    icon="gis:measure-area-alt",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
+                                                id="input-price-alug",
+                                                placeholder="Insira o valor do preço médio de aluguel",
+                                                icon=DashIconify(
+                                                    icon="gis:measure-area-alt",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
+                                                id="input-area-alug",
+                                                placeholder="Insira o valor da área média de aluguel",
+                                                icon=DashIconify(
+                                                    icon="gis:measure-area-alt",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
                                                 id="input-bedrooms",
-                                                type="number",
-                                                placeholder="Quartos",
+                                                placeholder="Insira a quantidade de quartos",
+                                                icon=DashIconify(
+                                                    icon="game-icons:bed",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
                                                 id="input-bathrooms",
-                                                type="number",
-                                                placeholder="Banheiros",
+                                                placeholder="Insira a quantidade de banheiros",
+                                                icon=DashIconify(
+                                                    icon="iconoir:bathroom",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            dcc.Input(
+                                            dmc.Select(
+                                                id="input-parking",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Insira a quantidade de vagas de garagem",
+                                                icon=DashIconify(
+                                                    icon="arcticons:car-parking",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-gym",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Informe se o imóvel possuí academia",
+                                                icon=DashIconify(
+                                                    icon="iconoir:gym",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-elevator",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Informe se o imóvel possui elevador",
+                                                icon=DashIconify(
+                                                    icon="material-symbols-light:elevator-outline-rounded",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                id="input-gourmet",
+                                                placeholder="Informe se o imóvel possui espaço gourmet",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-pool",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Informe se o imóvel possui piscina",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-playground",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Informe se o imóvel possui playground",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-sport",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Informe se o imóvel possui quadra de esporte",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-party",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Informe se o imóvel possui salão de festa",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-sauna",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Informe se o imóvel possui sauna",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-spa",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                placeholder="Informe se o imóvel possui spa",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-gourmet-varan",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                placeholder="Informe se o imóvel possui varanda gourmet",
+                                                icon=DashIconify(
+                                                    icon="lucide-lab:chairs-table-platter",
+                                                    width=20,
+                                                ),
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-service",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação",
+                                                    },
+                                                ],
+                                                placeholder="Informe se o imóvel possui área de serviço",
+                                                icon=DashIconify(
+                                                    icon="material-symbols-light:service-toolbox-outline-sharp",
+                                                    width=20,
+                                                ),
+                                                rightSection=DashIconify(
+                                                    icon="radix-icons:chevron-down"
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.NumberInput(
                                                 id="input-lat",
-                                                type="text",
-                                                placeholder="Latitude",
-                                                disabled=False,
+                                                precision=10,
+                                                decimalSeparator=",",
+                                                placeholder="Insira a latitude ou selecione diretamente do mapa",
+                                                icon=DashIconify(
+                                                    icon="mingcute:earth-latitude-line",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            dcc.Input(
+                                            dmc.NumberInput(
                                                 id="input-lon",
-                                                type="text",
-                                                placeholder="Longitude",
-                                                disabled=False,
+                                                precision=10,
+                                                decimalSeparator=",",
+                                                placeholder="Insira a longitude ou selecione diretamente do mapa",
+                                                icon=DashIconify(
+                                                    icon="mingcute:earth-longitude-line",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
                                             ),
-                                            html.Button(
+                                            dmc.Button(
                                                 "Calcular Previsão",
                                                 id="calculate-prediction",
                                                 className="btn btn-success",
@@ -168,29 +534,151 @@ layout = dbc.Container(
             ]
         ),
         html.Hr(),
-        dag.AgGrid(
-            id="realestate-table",
-            columnDefs=[
-                {"headerName": col, "field": col, "sortable": True, "filter": True}
-                for col in df_realestate.columns
-            ],
-            rowData=df_realestate.to_dict("records"),
-            columnSize="autoSize",
-            defaultColDef={"resizable": True},
-            className="ag-theme-balham",
-            style={"height": "370px", "width": "100%"},
-            dashGridOptions={"pagination": True, "paginationPageSize": 50},
+        dbc.Row(
+            [
+                dbc.Col(
+                    dmc.Card(
+                        children=[
+                            dcc.Graph(
+                                id="density-plot",
+                                style={"height": "400px", "width": "100%"},
+                                config={
+                                    "displaylogo": False,
+                                    "scrollZoom": False,
+                                    "displayModeBar": False,
+                                    "doubleClick": "reset",
+                                    "modeBarButtonsToRemove": [
+                                        "zoom",
+                                        "zoomIn",
+                                        "zoomOut",
+                                        "pan",
+                                        "lasso2d",
+                                        "autoScale",
+                                    ],
+                                },
+                            )
+                        ],
+                        withBorder=True,
+                        shadow="sm",
+                        radius="md",
+                        style={"padding": "10px"},
+                    ),
+                    width=6,
+                ),
+                dbc.Col(
+                    dmc.Card(
+                        children=[
+                            dcc.Graph(
+                                id="bar-plot-most-expensive",
+                                style={"height": "400px", "width": "100%"},
+                                config={
+                                    "displaylogo": False,
+                                    "scrollZoom": False,
+                                    "displayModeBar": False,
+                                    "doubleClick": "reset",
+                                    "modeBarButtonsToRemove": [
+                                        "zoom",
+                                        "zoomIn",
+                                        "zoomOut",
+                                        "pan",
+                                        "lasso2d",
+                                        "autoScale",
+                                    ],
+                                },
+                            ),
+                        ],
+                        withBorder=True,
+                        shadow="sm",
+                        radius="md",
+                        style={"padding": "10px"},
+                    ),
+                    width=6,
+                ),
+            ]
         ),
     ],
 )
 
 
+@callback(Output("bar-plot-most-expensive", "figure"), Input("filtered-data", "data"))
+def make_barplot(filtered_data):
+    df_filtered = pd.DataFrame(filtered_data)
+
+    fig_bar = px.bar(
+        df_filtered.groupby("bairro")["valor"]
+        .mean()
+        .sort_values(ascending=False)
+        .head(10)
+        .sort_values()
+        .reset_index(),
+        x="valor",
+        y="bairro",
+        labels={"tipo": "", "valor": "Valor Médio (R$)"},
+        text_auto=".2s",
+        template="plotly_white",
+    )
+
+    fig_bar.update_layout(
+        clickmode="event+select",
+        dragmode="select",
+        template="plotly_white",
+        margin=dict(l=0, r=0, t=0, b=0),
+        yaxis=dict(tickformat=".2f"),
+    )
+
+    return fig_bar
+
+
+@callback(Output("density-plot", "figure"), Input("filtered-data", "data"))
+def make_density_plot(filtered_data):
+    df_filtered = pd.DataFrame(filtered_data)
+
+    types_imo = df_filtered.tipo.unique()
+
+    get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
+
+    fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
+
+    fig.update_layout(
+        legend=dict(
+            orientation="h",
+            yanchor="top",
+            y=-0.2,
+            xanchor="center",
+            x=0.5,
+        ),
+        margin=dict(l=0, r=0, t=0, b=0),
+        clickmode="event+select",
+        dragmode="select",
+        template="plotly_white",
+    )
+
+    return fig
+
+
+@callback(
+    Output("download-dataframe-csv", "data"),
+    Input("download-btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download_csv(_):
+    return dcc.send_data_frame(df_realestate.to_csv, "dados_imoveis.csv", index=False)
+
+
 @callback(
     Output("map-container", "children"),
-    [Input("map-select", "value"), Input("filtered-data", "data")],
+    [
+        Input("map-select", "value"),
+        Input("filtered-data", "data"),
+        Input("predict-button", "n_clicks"),
+    ],
 )
-def update_map(map_type, filtered_data):
+def update_map(map_type, filtered_data, n_clicks):
     df_filtered = pd.DataFrame(filtered_data)
+
+    if n_clicks % 2 == 1:
+        map_type = None
+
     if map_type == "heatmap":
         data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
         heatmap_map = folium.Map([center_lat, center_lon], zoom_start=12)
@@ -219,6 +707,8 @@ def update_map(map_type, filtered_data):
 
         fig_map_marker.update_layout(
             margin={"r": 0, "t": 0, "l": 0, "b": 0},
+            clickmode="event+select",
+            dragmode="select",
             coloraxis_colorbar=dict(
                 title="Valor (R$)",
                 orientation="h",
@@ -271,16 +761,27 @@ def update_coordinates(clickData):
             fillOpacity=0.8,
             children=dl.Tooltip(f"Latitude: {lat:.6f}, Longitude: {lon:.6f}"),
         )
-        return [marker], f"{lat}", f"{lon}", clickData
+        return [marker], lat, lon, clickData
     return [], "", "", None
 
 
 @callback(
-    Output("offcanvas", "is_open"),
-    [Input("open-offcanvas-btn", "n_clicks")],
+    Output("offcanvas-table", "is_open"),
+    [Input("open-offcanvas-table-btn", "n_clicks")],
     prevent_initial_call=True,
 )
-def toggle_offcanvas(n_clicks):
+def toggle_offcanvas_table(_):
+    return True
+
+
+@callback(
+    Output("offcanvas", "is_open"),
+    [
+        Input("open-offcanvas-btn", "n_clicks"),
+    ],
+    prevent_initial_call=True,
+)
+def toggle_offcanvas(_):
     return True
 
 
@@ -298,10 +799,9 @@ def toggle_prediction_form(n_clicks, is_visible):
 
 @callback(
     Output("filtered-data", "data"),
-    [Input("bar-graph", "selectedData")],
-    [State("filtered-data", "data")],
+    Input("bar-graph", "selectedData"),
 )
-def filter_data(selectedData, current_data):
+def filter_data(selectedData):
     print(f"selectedData: {selectedData}")
 
     if selectedData and "points" in selectedData:

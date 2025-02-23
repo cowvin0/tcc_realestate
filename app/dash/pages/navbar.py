@@ -14,7 +14,7 @@ def navbar():
                 dmc.ActionIcon(
                     DashIconify(icon="zondicons:menu", width=25),
                     color="white",
-                    variant="transparent",
+                    variant="subtle",
                     id="nav-btn",
                     m=25,
                     className="nav-container",
@@ -44,18 +44,14 @@ def navbar():
                     placement="start",
                     backdrop=True,
                     scrollable=True,
-                    style={
-                        "background-color": "rgba(0, 0, 0, 0.0)",
-                        "backdrop-filter": "blur(5px)",
-                        "box-shadow": "none",
-                    },
                 ),
                 html.Div(id="floating-button-container", style={"marginLeft": "auto"}),
                 html.Div(
                     dmc.Switch(
                         label="",
-                        onLabel="🌙",
-                        offLabel="🌞",
+                        onLabel=DashIconify(icon="emojione:full-moon", width=15),
+                        offLabel=DashIconify(icon="noto-v1:sun", width=15),
+                        size="md",
                         id="theme-switch",
                         checked=False,
                     ),
@@ -106,12 +102,22 @@ def close_offcanvas(n, is_open):
 @callback(Output("floating-button-container", "children"), Input("url", "pathname"))
 def display_floating_button(pathname):
     if pathname == "/realestate":
-        return dmc.ActionIcon(
-            DashIconify(icon="bx:filter-alt", width=25),
-            color="blue",
-            size="xl",
-            variant="transparent",
-            id="open-offcanvas-btn",
-            n_clicks=0,
+
+        def button(icon, id):
+            return dmc.ActionIcon(
+                DashIconify(icon=icon, width=25),
+                color="blue",
+                size="xl",
+                variant="transparent",
+                id=id,
+                n_clicks=0,
+            )
+
+        return dbc.Stack(
+            [
+                button("bx:filter-alt", "open-offcanvas-btn"),
+                button("lucide:file-spreadsheet", "open-offcanvas-table-btn"),
+            ],
+            direction="horizontal",
         )
     return ""
