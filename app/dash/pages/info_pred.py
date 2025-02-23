@@ -24,6 +24,7 @@ df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv").assign(
 center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
 
+
 fig_bar = px.bar(
     df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
     x="valor",
@@ -565,7 +566,7 @@ layout = dbc.Container(
                 ),
                 dbc.Col(
                     dmc.Card(
-                        children=[html.Div(id="bar-plot-most-expensive")],
+                        children=[dcc.Graph(id="bar-plot-most-expensive")],
                         withBorder=True,
                         shadow="sm",
                         radius="md",
@@ -578,20 +579,33 @@ layout = dbc.Container(
 )
 
 
-# @callback(Output("bar-graph", "figure"), Input("filtered-data", "data"))
-# def make_barplot(filtered_data):
-#     # df_filtered = pd.DataFrame(filtered_data)
+@callback(Output("bar-plot-most-expensive", "figure"), Input("filtered-data", "data"))
+def make_barplot(filtered_data):
+    df_filtered = pd.DataFrame(filtered_data)
 
-#     fig_bar = px.bar(
-#         df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
-#         x="valor",
-#         y="tipo",
-#         labels={"tipo": "", "valor": "Valor Médio (R$)"},
-#         text_auto=".2s",
-#         template="plotly_white",
-#     )
+    fig_bar = px.bar(
+        df_filtered.groupby("bairro")["valor"]
+        .mean()
+        .sort_values(ascending=False)
+        .head(10)
+        .sort_values()
+        .reset_index(),
+        x="valor",
+        y="bairro",
+        labels={"tipo": "", "valor": "Valor Médio (R$)"},
+        text_auto=".2s",
+        template="plotly_white",
+    )
 
-#     return fig_bar
+    fig_bar.update_layout(
+        clickmode="event+select",
+        dragmode="select",
+        template="plotly_white",
+        margin=dict(l=0, r=0, t=0, b=0),
+        yaxis=dict(tickformat=".2f"),
+    )
+
+    return fig_bar
 
 
 @callback(Output("density-plot", "figure"), Input("filtered-data", "data"))
