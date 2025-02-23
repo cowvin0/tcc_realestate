@@ -52,7 +52,7 @@ layout = dbc.Container(
                             dcc.Graph(
                                 id="bar-graph",
                                 figure=fig_bar,
-                                style={"height": "400px"},
+                                style={"height": "400px", "width": "100%"},
                                 config={
                                     "displaylogo": False,
                                     "displayModeBar": False,
@@ -562,16 +562,37 @@ layout = dbc.Container(
                         shadow="sm",
                         radius="md",
                         style={"padding": "10px"},
-                    )
+                    ),
+                    width=6,
                 ),
                 dbc.Col(
                     dmc.Card(
-                        children=[dcc.Graph(id="bar-plot-most-expensive")],
+                        children=[
+                            dcc.Graph(
+                                id="bar-plot-most-expensive",
+                                style={"height": "400px", "width": "100%"},
+                                config={
+                                    "displaylogo": False,
+                                    "scrollZoom": False,
+                                    "displayModeBar": False,
+                                    "doubleClick": "reset",
+                                    "modeBarButtonsToRemove": [
+                                        "zoom",
+                                        "zoomIn",
+                                        "zoomOut",
+                                        "pan",
+                                        "lasso2d",
+                                        "autoScale",
+                                    ],
+                                },
+                            ),
+                        ],
                         withBorder=True,
                         shadow="sm",
                         radius="md",
                         style={"padding": "10px"},
-                    )
+                    ),
+                    width=6,
                 ),
             ]
         ),
