@@ -37,7 +37,7 @@ fig_bar.update_layout(
     clickmode="event+select",
     dragmode="select",
     template="plotly_white",
-    margin=dict(l=30, r=30, t=30, b=30),
+    margin=dict(l=0, r=0, t=0, b=0),
 )
 
 layout = dbc.Container(
@@ -612,7 +612,7 @@ def make_density_plot(filtered_data):
             xanchor="center",
             x=0.5,
         ),
-        margin=dict(l=30, r=30, t=30, b=30),
+        margin=dict(l=0, r=0, t=0, b=0),
         clickmode="event+select",
         dragmode="select",
         template="plotly_white",
@@ -672,6 +672,8 @@ def update_map(map_type, filtered_data, n_clicks):
 
         fig_map_marker.update_layout(
             margin={"r": 0, "t": 0, "l": 0, "b": 0},
+            clickmode="event+select",
+            dragmode="select",
             coloraxis_colorbar=dict(
                 title="Valor (R$)",
                 orientation="h",
