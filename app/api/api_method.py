@@ -1,4 +1,7 @@
 import ujson
+import joblib
+import numpy as np
+import pandas as pd
 
 from decimal import Decimal
 from datetime import date
@@ -7,25 +10,40 @@ from fastapi import APIRouter, Depends, Response
 from sqlalchemy.engine.result import Result
 from sqlalchemy.sql import text
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.api.predict_model import ModelStructure
 from app.api.database import get_async_db
+from pathlib import Path
 
 
+PATH_FILE = Path(__file__)
 load_dotenv()
 
 router = APIRouter(prefix="/real_data", tags=["Realestate"])
 
 
-def convert_value(value):
-    if isinstance(value, Decimal):
-        return float(value)
-    elif isinstance(value, date):
-        return value.isoformat()
-    else:
-        return value
+@router.post("predict")
+def predict_house_price(data: ModelStructure):
+    body = data.model_dump()
+
+    file_model = PATH_FILE / "app/api/model.pkl"
+    model = joblib.load(file_model)
+
+    create_df = pd.DataFrame(body)
+
+    predicted = model.predict(create_df)
+    return np.expm1(predicted)
 
 
 @router.get("/return_data_db")
 async def return_data_db(db: AsyncSession = Depends(get_async_db)):
+
+    def convert_value(value):
+        if isinstance(value, Decimal):
+            return float(value)
+        elif isinstance(value, date):
+            return value.isoformat()
+        else:
+            return value
 
     query = text(
         """

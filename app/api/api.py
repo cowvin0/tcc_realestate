@@ -1,4 +1,4 @@
-import app.api.get_db_data as db_data
+import app.api.api_method as db_data
 from fastapi import FastAPI
 from app.api.database import engine, Base
 from app.api.models import *
