@@ -7,6 +7,8 @@ import plotly.express as px
 import dash_ag_grid as dag
 import folium
 import plotly.figure_factory as ff
+import httpx
+import asyncio
 
 from dash_iconify import DashIconify
 from dash import html, Output, Input, dcc, callback, State
@@ -14,12 +16,26 @@ from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
-df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv").assign(
+
+async def fetch_data():
+    async with httpx.AsyncClient() as client:
+        response = await client.get("http://api/real_data/return_data_db")
+        return response.json()
+
+
+df_realestate = pd.DataFrame(asyncio.run(fetch_data())).assign(
     tipo=lambda x: x.tipo.str.capitalize()
     .str.split("_")
     .str.join(" ")
     .str.replace("condominio", "condomínio")
 )
+
+# df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv").assign(
+#     tipo=lambda x: x.tipo.str.capitalize()
+#     .str.split("_")
+#     .str.join(" ")
+#     .str.replace("condominio", "condomínio")
+# )
 
 center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
