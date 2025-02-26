@@ -1,5 +1,8 @@
+import folium.plugins
+import geopandas as gpd
 import pandas as pd
 import dash
+import math
 import dash_leaflet as dl
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
@@ -7,12 +10,28 @@ import plotly.express as px
 import dash_ag_grid as dag
 import folium
 import plotly.figure_factory as ff
+import httpx
+import asyncio
 
 from dash_iconify import DashIconify
 from dash import html, Output, Input, dcc, callback, State
 from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
+
+
+# async def fetch_data():
+#     async with httpx.AsyncClient() as client:
+#         response = await client.get("http://api/real_data/return_data_db")
+#         return response.json()
+
+
+# df_realestate = pd.DataFrame(asyncio.run(fetch_data())).assign(
+#     tipo=lambda x: x.tipo.str.capitalize()
+#     .str.split("_")
+#     .str.join(" ")
+#     .str.replace("condominio", "condomínio")
+# )
 
 df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv").assign(
     tipo=lambda x: x.tipo.str.capitalize()
@@ -155,6 +174,13 @@ layout = dbc.Container(
                                                 "value": "markers",
                                                 "label": "Mapa de pontos",
                                             },
+                                            {"value": "rios", "label": "Rios"},
+                                            {"value": "ciclo", "label": "Ciclo"},
+                                            {
+                                                "value": "escolas_publicas",
+                                                "label": "Escolas públicas",
+                                            },
+                                            {"value": "pracas", "label": "Praças"},
                                         ],
                                         w=200,
                                         mb=10,
@@ -676,6 +702,14 @@ def download_csv(_):
 def update_map(map_type, filtered_data, n_clicks):
     df_filtered = pd.DataFrame(filtered_data)
 
+    city_folder = f"app/dash/assets/geo_joao_pessoa/{map_type}.geojson"
+    m = folium.Map(
+        location=[center_lat, center_lon],
+        zoom_control=True,
+        attribution_control=True,
+        zoom_start=12,
+    )
+
     if n_clicks % 2 == 1:
         map_type = None
 
@@ -686,6 +720,7 @@ def update_map(map_type, filtered_data, n_clicks):
         return html.Iframe(
             srcDoc=heatmap_map._repr_html_(), width="100%", height="400px"
         )
+
     elif map_type == "markers":
         fig_map_marker = px.scatter_mapbox(
             df_filtered,
@@ -727,6 +762,72 @@ def update_map(map_type, filtered_data, n_clicks):
             style={"width": "100%", "height": "400px"},
             config={"displaylogo": False},
         )
+    elif map_type == "ciclo":
+        geo_data = gpd.read_file(city_folder)
+        for _, row in geo_data.astype({"ano_implantacao": int}).iterrows():
+            popup_content = f"""
+            <b>Tipo :</b> {row['tipo']} <br>
+            <b>Sentido :</b> {row['sentido']} <br>
+            <b>Ano de implantação :</b> {row['ano_implantacao']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["ano_implantacao"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
+    elif map_type == "escolas_publicas":
+        geo_data = gpd.read_file(city_folder)
+        marker_cluster = folium.plugins.MarkerCluster().add_to(m)
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Nome:</b> {row['nome']}<br>
+            <b>Categoria:</b> {row['categoria']}<br>
+            <b>Dependência:</b> {row['dependencia']}
+            """
+            folium.Marker(
+                location=[row.geometry.y, row.geometry.x],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(marker_cluster)
+
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
+    elif map_type == "rios":
+
+        geo_data = gpd.read_file(city_folder)
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Nome :</b> {row['nome']} <br>
+            <b>Tipo :</b> {row['tipo']} <br>
+            <b>Afluente :</b> {row['afluente']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["nome"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
+    elif map_type == "pracas":
+        geo_data = gpd.read_file(city_folder)
+        geo_data["area"] = geo_data["area"].str.replace(",", ".").astype(float)
+        for _, row in geo_data.iterrows():
+            area_value = f"{row['area']:.2f}" if not math.isnan(row["area"]) else "N/A"
+            popup_content = f"""
+            <b>Bairro :</b> {row['bairro']} <br>
+            <b>Nome :</b> {row['nome']} <br>
+            <b>Área :</b> {area_value} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["nome"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
     else:
         return dl.Map(
             id="map-id",

@@ -1,7 +1,5 @@
-import app.api.get_db_data as db_data
+import app.api.api_method as db_data
 from fastapi import FastAPI
-# from fastapi.middleware.wsgi import WSGIMiddleware
-# from app.main import app
 from app.api.database import engine, Base
 from app.api.models import *
 
@@ -18,4 +16,3 @@ async def lifespan(app: FastAPI):
 
 api = FastAPI(lifespan=lifespan)
 api.include_router(db_data.router)
-# api.mount("/", WSGIMiddleware(app.server))
