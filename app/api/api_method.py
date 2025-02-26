@@ -25,7 +25,7 @@ router = APIRouter(prefix="/real_data", tags=["Realestate"])
 def predict_house_price(data: ModelStructure):
     body = data.model_dump()
 
-    file_model = PATH_FILE / "app/api/model.pkl"
+    file_model = "app/api/model.pkl"
     model = joblib.load(file_model)
 
     create_df = pd.DataFrame(body)
