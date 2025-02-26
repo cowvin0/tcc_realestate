@@ -181,6 +181,7 @@ layout = dbc.Container(
                                                 "label": "Escolas públicas",
                                             },
                                             {"value": "pracas", "label": "Praças"},
+                                            {"value": "parques", "label": "Parques"},
                                         ],
                                         w=200,
                                         mb=10,
@@ -775,6 +776,23 @@ def update_map(map_type, filtered_data, n_clicks):
                 name=row["ano_implantacao"],
                 popup=folium.Popup(popup_content, max_width=300),
             ).add_to(m)
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
+    elif map_type == "parques":
+        geo_data = gpd.read_file(city_folder)
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Nome :</b> {row['nome']} <br>
+            <b>Perímetro :</b> {row['perimetro']:.2f} m<br>
+            <b>Área :</b> {row['area']:.2f} m²<br>
+            <b>Hectares :</b> {row['hectares']:.2f} ha<br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["nome"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+
         return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
 
     elif map_type == "escolas_publicas":
