@@ -1,9 +1,9 @@
 import dash
 import dash_bootstrap_components as dbc
 
-# from app.dash.pages.navbar import navbar
+from app.dash.pages.navbar import navbar
 
-from pages.navbar import navbar
+# from pages.navbar import navbar
 from dash import html, dcc, Output, Input
 
 FONT_AWESOME = "https://use.fontawesome.com/releases/v5.7.2/css/all.css"
@@ -40,6 +40,6 @@ def toggle_theme(is_checked):
     return "light", dbc.themes.COSMO
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
-# server = app.server
+# if __name__ == "__main__":
+#     app.run(debug=True)
+server = app.server

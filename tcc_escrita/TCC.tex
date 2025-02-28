@@ -223,7 +223,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, enhanced, sharp corners, breakable, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, colback={codebgcolor}, boxrule=0pt, frame hidden, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -706,8 +706,8 @@ desenvolvida.
 
 ~~~Nesta seção, serão apresentados os recursos computacionais utilizados
 no desenvolvimento deste trabalho. As ferramentas selecionadas incluem
-linguagens de programação amplamente conhecidas, como \texttt{Python} e
-\texttt{R}, e sistemas de publicação técnica, como o \texttt{Quarto}.
+linguagens de programação amplamente conhecidas, como \textbf{Python} e
+\textbf{R}, e sistemas de publicação técnica, como o \texttt{Quarto}.
 Cada uma dessas tecnologias será descrita em relação ao seu papel na
 modelagem, coleta e manipulação de dados, bem como na criação da
 aplicação final. Portanto, a primeira etapa será descrever as
@@ -784,13 +784,13 @@ organização dos dados de forma estruturada.
 \vspace{12pt}
 
 Para realizar a raspagem de dados, foram utilizadas as linguagens de
-programação \texttt{R} (R CORE TEAM, 2024) e \texttt{Python} (VAN
-ROSSUM; DRAKE JR, 1995). \texttt{R} é uma linguagem voltada para
+programação \textbf{R} (R CORE TEAM, 2024) e \textbf{Python} (VAN
+ROSSUM; DRAKE JR, 1995). \textbf{R} é uma linguagem voltada para
 computação científica e visualização de dados, desenvolvida pelos
 professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente
 para ensinar introdução à estatística na Universidade de Auckland. A
-primeira versão do \texttt{R} foi lançada em 1993, e, em 1997, a
-linguagem tornou-se oficialmente parte do Projeto GNU. Em \texttt{R}, há
+primeira versão do \textbf{R} foi lançada em 1993, e, em 1997, a
+linguagem tornou-se oficialmente parte do Projeto GNU. Em \textbf{R}, há
 diversos pacotes disponíveis para a realização de raspagem de dados.
 Neste trabalho, foi utilizado o pacote
 \href{https://xml2.r-lib.org/}{\textbf{xml2}} (WICKHAM; HESTER; OOMS,
@@ -801,7 +801,7 @@ Neste trabalho, foi utilizado o pacote
 
 O pacote \href{https://xml2.r-lib.org/}{\textbf{xml2}} foi inspirado no
 \href{https://jquery.com/}{\textbf{jQuery}}, uma biblioteca
-\texttt{JavaScript} projetada para facilitar tarefas como a manipulação
+\textbf{JavaScript} projetada para facilitar tarefas como a manipulação
 de documentos HTML. Ele é especialmente útil para lidar com arquivos
 HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e
 modificar os nós de documentos estruturados. Essas funcionalidades
@@ -848,13 +848,13 @@ foi o \href{https://httr.r-lib.org/}{\textbf{httr}} (WICKHAM, 2023).
 
 \vspace{12pt}
 
-Como mencionado anteriormente, \texttt{Python} também foi utilizado para
+Como mencionado anteriormente, \textbf{Python} também foi utilizado para
 realizar a raspagem de dados, embora tenha sido empregado em momentos
-subsequentes à utilização do \texttt{R}. \texttt{Python} (VAN ROSSUM;
+subsequentes à utilização do \textbf{R}. \textbf{Python} (VAN ROSSUM;
 DRAKE JR, 1995) é uma linguagem de programação criada por Guido van
 Rossum, que iniciou seu desenvolvimento no final dos anos 1980 como
 sucessora da linguagem \texttt{ABC}. A primeira versão oficial do
-\texttt{Python} foi lançada em 1991. Trata-se de uma linguagem de alto
+\textbf{Python} foi lançada em 1991. Trata-se de uma linguagem de alto
 nível, de propósito geral, que prioriza a simplicidade e a legibilidade
 do código, tornando-a amplamente adotada para diversas aplicações,
 incluindo análise de dados e automação de tarefas, além de ser
@@ -862,7 +862,7 @@ amplamente utilizada para aprendizagem de máquina.
 
 \vspace{12pt}
 
-A linguagem de programação \texttt{Python} possui um ecossistema
+A linguagem de programação \textbf{Python} possui um ecossistema
 diversificado de bibliotecas para a realização de diversas tarefas,
 incluindo a raspagem de dados. Especificamente para essa finalidade, foi
 utilizada a biblioteca
@@ -948,23 +948,23 @@ O \href{https://playwright.dev/python/}{\textbf{Playwright}} foi
 originalmente desenvolvido para realizar testes em aplicações web e
 executar tarefas de automação. No entanto, aqui ele foi empregado para
 interagir com o conteúdo dinâmico de páginas, como carregar elementos
-gerados por \texttt{JavaScript}. Sua utilização neste trabalho teve o
+gerados por \textbf{JavaScript}. Sua utilização neste trabalho teve o
 mesmo propósito que o pacote
 \href{https://cran.r-project.org/web/packages/selenium/index.html}{\textbf{selenium}}
-desempenhou na raspagem de dados feita com \texttt{R}, permitindo
+desempenhou na raspagem de dados feita com \textbf{R}, permitindo
 capturar dados que não seriam acessíveis diretamente via requisições
 HTTP convencionais. Além disso, ele também permite simular navegadores
 para acompanhar em tempo real o que cada requisição está alterando. Por
 fim, ao coletar os dados de imóveis, foi necessário realizar também a
 geocodificação dos endereços. Para isso, foi utilizado o pacote
 \href{https://jessecambon.github.io/tidygeocoder/}{\textbf{tidygeocoder}}
-(CAMBON et al., 2021) da linguagem \texttt{R}, que também serviu para os
-dados que estavam sendo coletados em \texttt{Python}.
+(CAMBON et al., 2021) da linguagem \textbf{R}, que também serviu para os
+dados que estavam sendo coletados em \textbf{Python}.
 
 \vspace{12pt}
 
 Assim chega ao fim descrição das tecnologias utilizadas para a obtenção
-dos dados. Entretanto, a linguagem \texttt{Python}, em particular,
+dos dados. Entretanto, a linguagem \textbf{Python}, em particular,
 continuou sendo empregada em outras etapas deste trabalho, como na
 modelagem dos valores de imóveis. Portanto, os próximos recursos
 apresentados serão aqueles utilizados especificamente para a modelagem e
@@ -979,7 +979,7 @@ relevantes e aplicáveis. Essa etapa permite identificar padrões de
 comportamento entre as variáveis que influenciam os valores
 imobiliários, além de determinar quais fatores exercem maior impacto
 sobre esses valores. Para chegar a esses resultados, foram utilizadas
-bibliotecas desenvolvidas em \texttt{Python}, como
+bibliotecas desenvolvidas em \textbf{Python}, como
 \href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}
 (PEDREGOSA, F. et al., 2011),
 \href{https://pandas.pydata.org/}{\textbf{pandas}} (TEAM, 2020),
@@ -991,7 +991,7 @@ trabalho, \href{https://numpy.org/}{\textbf{numpy}} (HARRIS et al.,
 
 O \href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}} é uma
 das bibliotecas de aprendizado de máquina mais populares em
-\texttt{Python}. Ela oferece uma extensa coleção de algoritmos para
+\textbf{Python}. Ela oferece uma extensa coleção de algoritmos para
 tarefas como classificação, regressão, clusterização, além de
 ferramentas para pré-processamento de dados, validação cruzada e seleção
 de modelos. O projeto teve início no Google Summer of Code como uma
@@ -1000,7 +1000,7 @@ iniciativa do engenheiro francês David Cournapeau. O
 criado como uma ferramenta baseada na biblioteca
 \href{https://scipy.org/}{\textbf{SciPy}} (VIRTANEN et al., 2020), que é
 voltada para computação científica e cálculo numérico em
-\texttt{Python}.
+\textbf{Python}.
 
 \vspace{12pt}
 
@@ -1140,24 +1140,24 @@ aplicação também dispõe de funcionalidades interativas que permitem aos
 usuários explorar os dados e visualizar os resultados de forma clara e
 intuitiva. Para alcançar esses objetivos, foram empregadas tecnologias
 para o desenvolvimento do front-end e do back-end, que foram
-desenvolvidos em \texttt{Python}.
+desenvolvidos em \textbf{Python}.
 
 \vspace{12pt}
 
 O front-end da aplicação foi desenvolvido utilizando a biblioteca
 \href{https://dash.plotly.com/}{\textbf{Dash}} (HOSSAIN, 2019), uma
-ferramenta voltada para a criação de aplicativos web em \texttt{Python}.
+ferramenta voltada para a criação de aplicativos web em \textbf{Python}.
 Desenvolvida pela \href{https://plotly.com/}{\textbf{Plotly}} (INC.,
 2015), a \href{https://dash.plotly.com/}{\textbf{Dash}} permite
 construir interfaces gráficas completas sem a necessidade de
 conhecimentos avançados em desenvolvimento web, integrando tecnologias
-como \texttt{HTML}, \texttt{CSS} e \texttt{JavaScript} diretamente no
-ambiente \texttt{Python}. Entre suas principais características,
+como \texttt{HTML}, \texttt{CSS} e \textbf{JavaScript} diretamente no
+ambiente \textbf{Python}. Entre suas principais características,
 destacam-se a facilidade de criar gráficos interativos, a integração com
 bibliotecas populares como \href{https://plotly.com/}{\textbf{Plotly}} e
 a capacidade de atualizar componentes de forma dinâmica por meio de
-funções suas funções \texttt{callback}. A seguir, veja um exemplo de
-função \texttt{callback}:
+funções suas funções \texttt{callback}. A seguir é apresentado um
+exemplo do uso da função \texttt{callback}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1228,7 +1228,7 @@ então retornado para ser exibido no componente \texttt{Graph}.
 Para o desenvolvimento do back-end da aplicação foi utilizado o
 framework \href{https://fastapi.tiangolo.com/}{\textbf{FastAPI}}, uma
 ferramenta moderna e eficiente para a criação de APIs em
-\texttt{Python}. O
+\textbf{Python}. O
 \href{https://fastapi.tiangolo.com/}{\textbf{FastAPI}} é conhecido por
 sua alta performance, graças ao uso de tipagem estática e a sua
 facilidade de suporte assíncrono, além de permitir a criação de APIs de
@@ -1293,20 +1293,20 @@ suas extensões. Entre as extensões utilizadas, destaca-se o
 que incorpora os key mappings do editor de texto Vim, originalmente
 criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além
 disso, foram empregadas extensões específicas para as linguagens
-\texttt{Python} e \texttt{R}, tendo como principal objetivo uma melhor
+\textbf{Python} e \textbf{R}, tendo como principal objetivo uma melhor
 formatação de código, execução e identificação de possíveis erros.
 
 \vspace{12pt}
 
 Por exemplo, uma das extensões utilizadas para análise estática de
-código em \texttt{Python} foi o
+código em \textbf{Python} foi o
 \href{https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright}{\textbf{Pyright}},
 desenvolvido pela Microsoft. Essa ferramenta é projetada para detectar
 erros durante o desenvolvimento e verificar a tipagem de código em
-\texttt{Python}, contribuindo para a melhoria da qualidade e da
+\textbf{Python}, contribuindo para a melhoria da qualidade e da
 manutenção do programa. Outra ferramenta empregada foi o
 \href{https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter}{\textbf{Black
-Formatter}}, um formatador de código \texttt{Python}. Ele automatiza a
+Formatter}}, um formatador de código \textbf{Python}. Ele automatiza a
 padronização do estilo de código, garantindo consistência e
 legibilidade. Além disso, foi utilizado o
 \href{https://marketplace.visualstudio.com/items?itemName=ms-python.flake8}{\textbf{Flake8}},
@@ -1314,7 +1314,7 @@ que analisa o código em busca de erros de sintaxe, problemas de estilo
 com base no padrão \href{https://peps.python.org/pep-0008/}{\textbf{PEP
 8}}, e outras questões, como redundâncias ou importações desnecessárias.
 Por fim, também foi utilizada uma extensão mais geral de suporte à
-linguagem \texttt{Python}, que oferece diversas funcionalidades, como
+linguagem \textbf{Python}, que oferece diversas funcionalidades, como
 correção de código por meio da extensão
 \href{https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy}{\textbf{PythonDebugger}},
 que utiliza a biblioteca debugpy para suporte ao processo de debugging.
@@ -1327,12 +1327,12 @@ uma plataforma de publicação científica desenvolvida pela empresa Posit.
 O \href{https://quarto.org/}{\textbf{Quarto}} é uma evolução do
 RMarkdown e se destaca por sua capacidade de criar documentos de alta
 qualidade que integram texto e código. Compatível com diversas
-linguagens de programação, como \texttt{R}, \texttt{Python}, e outras,
+linguagens de programação, como \textbf{R}, \textbf{Python}, e outras,
 essa ferramenta é extremamente versátil para análise de dados e geração
 de relatórios. Com o \href{https://quarto.org/}{\textbf{Quarto}}, é
 possível produzir relatórios, artigos, livros, apresentações e até
 sites. Ele é amplamente adotado na comunidade científica, especialmente
-entre usuários de \texttt{R}, e oferece suporte a Markdown e \LaTeX, o
+entre usuários de \textbf{R}, e oferece suporte a Markdown e \LaTeX, o
 que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e
 outros elementos visuais. Além disso, os documentos gerados podem ser
 exportados para diversos formatos, como HTML, PDF, MS Word, entre
@@ -1383,20 +1383,9 @@ final é chamado de folha ou nó terminal. Em cada nó, é definida uma
 condição e, caso essa condição seja satisfeita, o resultado será uma das
 folhas desse nó. Caso contrário, o processo segue para o próximo nó e
 verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja
-um exemplo na Figura~\ref{fig-arvore}.
+um exemplo na \textbf{?@fig-arvore}.
 
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=5.5in,height=3.47in]{TCC_files/figure-latex/mermaid-figure-1.png}
-
-}
-
-\caption{\label{fig-arvore}Exemplo de estrutura de árvore de regressão.
-A árvore tem cinco folhas e quatro nós internos.}
-
-\end{figure}%
+\textbf{O MERMAID ESTAVA AQUI, ADICIONAR POSTERIORMENTE.}
 
 \vspace{12pt}
 
@@ -1459,7 +1448,7 @@ adotada é uma divisão binária recursiva. O processo começa no topo da
 árvore de regressão, o ponto em que contém todas as observações, e
 continua sucessivamente dividindo o espaço dos preditores. As divisões
 são indicadas como dois novos ramos na árvore, como pode ser visto na
-Figura~\ref{fig-arvore}.
+\textbf{?@fig-arvore}.
 
 \vspace{12pt}
 
@@ -2053,7 +2042,7 @@ penaliza os pesos das folhas e \(\gamma\) penaliza a quantidade de
 folhas nas árvores. Assim, com a regularização aplicada a função
 objetivo, modelos e funções preditivas serão mais comuns pois
 simplificarão o modelo. As implementações do algoritmo de Extreme
-Gradient Boosting presentes em \texttt{Python} utilizam a regularização
+Gradient Boosting presentes em \textbf{Python} utilizam a regularização
 L2 como padrão, mas também permitem o uso da regularização L1.
 
 \vspace{12pt}
@@ -2075,12 +2064,12 @@ o custo computacional.
 
 ~~~Os dados foram obtidos por meio de web scraping, que é uma técnica
 para coleta automatizada de dados de páginas da internet. Para isso,
-foram utilizadas as linguagens de programação \texttt{R} e
-\texttt{Python}. No \texttt{R}, os pacotes
+foram utilizadas as linguagens de programação \textbf{R} e
+\textbf{Python}. No \textbf{R}, os pacotes
 \href{https://xml2.r-lib.org/}{\textbf{xml2}} e
 \href{https://rvest.tidyverse.org/}{\textbf{rvest}} foram utilizados
 para extrair dados de páginas estáticas de forma estruturada. No
-\texttt{Python}, as bibliotecas
+\textbf{Python}, as bibliotecas
 \href{https://scrapy.org/}{\textbf{Scrapy}} e
 \href{https://playwright.dev/python/}{\textbf{Playwright}}, desenvolvida
 pela Microsoft, foram empregadas, sendo esta última essencial para a
@@ -2108,7 +2097,7 @@ coordenadas geográficas, latitude e longitude, por exemplo, foram
 geradas por meio da geocodificação dos endereços de cada imóvel,
 utilizando o pacote
 \href{https://jessecambon.github.io/tidygeocoder/}{\textbf{tidygeocoder}}
-da linguagem \texttt{R}. Dessa forma, tem-se as seguintes variáveis:
+da linguagem \textbf{R}. Dessa forma, tem-se as seguintes variáveis:
 
 \begin{itemize}
 \item
@@ -2354,7 +2343,7 @@ divisões (folds) a serem realizadas, neste caso, 20. Após a execução da
 validação, a média das métricas retornadas pela função
 \texttt{cross\_val\_score} para cada fold foi calculada, como forma de
 se obter uma estimativa do desempenho do modelo. O código abaixo é um
-exemplo de como se utilizar a validação cruzada em \texttt{Python}:
+exemplo de como se utilizar a validação cruzada em \textbf{Python}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2589,11 +2578,11 @@ optuna}\label{otimizauxe7uxe3o-de-hiperparuxe2metros-com-optuna}
 
 ~~~Para otimizar os hiperparâmetros dos modelos foi utilizado a
 bilbioteca \href{https://optuna.org/}{\textbf{Optuna}} da linguagem de
-programação \texttt{Python}. Essa biblioteca implementa diversos métodos
+programação \textbf{Python}. Essa biblioteca implementa diversos métodos
 para otimização automatizada de hiperparâmetros. Para a sua utilização,
 é preciso definir inicialmente uma função objetivo. Por exemplo, para
-otimizar os hiperparâmetros de uma random forest, seria necessário
-definir uma função objetivo da seguinte forma:
+otimizar os hiperparâmetros de uma random forest, é necessário definir
+uma função objetivo da seguinte forma:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2866,7 +2855,7 @@ modelo.
 
 \vspace{12pt}
 
-Em \texttt{Python}, a biblioteca
+Em \textbf{Python}, a biblioteca
 \href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}
 disponibiliza a classe \texttt{PartialDependenceDisplay} para a criação
 de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o
@@ -2947,7 +2936,7 @@ exemplo, é o erro quadrático médio.
 
 Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos
 métodos fundamentais para a abordagem que será apresentada a seguir, o
-Shapley Additive Explanations (SHAP). Em \texttt{Python}, o LIME está
+Shapley Additive Explanations (SHAP). Em \textbf{Python}, o LIME está
 disponível por meio da biblioteca \texttt{lime}, cuja documentação pode
 ser acessada em
 \url{https://lime-ml.readthedocs.io/en/latest/lime.html}.
@@ -3057,7 +3046,7 @@ as variáveis binárias se comportam.
 
 \vspace{12pt}
 
-Para aplicar o método SHAP em \texttt{Python}, foi utilizada a
+Para aplicar o método SHAP em \textbf{Python}, foi utilizada a
 biblioteca \href{https://shap.readthedocs.io/en/latest/}{\textbf{SHAP}}.
 Essa biblioteca calcula os valores de Shapley com base no modelo
 ajustado e no algoritmo de explicação escolhido, implementado na classe
