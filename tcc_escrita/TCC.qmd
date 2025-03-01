@@ -497,8 +497,7 @@ Os métodos baseados em árvore envolvem a estratificação ou segmentação do 
 
 \ \ \ Árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação. Elas servem de base para os modelos baseados em árvores empregados neste trabalho, focando particularmente nas árvores de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]. O processo de construção de uma árvore se baseia no particionamento recursivo do espaço dos preditores, onde cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal. Em cada nó, é definida uma condição e, caso essa condição seja satisfeita, o resultado será uma das folhas desse nó. Caso contrário, o processo segue para o próximo nó e verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja um exemplo na @fig-arvore.
 
-**O MERMAID ESTAVA AQUI, ADICIONAR POSTERIORMENTE.**
-
+![Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos](includes/mermaid-tree.png){#fig-arvore}
 
 \vspace{12pt}
 
@@ -1534,9 +1533,8 @@ A primeira etapa da análise exploratória de dados foi identificar os dados fal
 
 Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na previsão de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
 
-\vspace{12pt}
 
-![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m2.png){#fig-mapa_valor}
+![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m2.svg){#fig-mapa_valor width=450 height=250}
 
 A partir da @fig-mapa_valor, tem-se o mapa da região de estudo, correspondente à cidade de João Pessoa. O mapa apresenta a variação da média do valor do $m^2$ dos imóveis, calculada com base nos bairros da cidade. Vale destacar que alguns bairros não possuíam dados disponíveis no momento da coleta de informações por raspagem dos sites de imóveis. Esses bairros estão representados pela cor cinza. Por outro lado, os bairros com dados disponíveis apresentam variações de cores que indicam diferentes faixas de valores do $m^2$. Tonalidades mais escuras representam bairros com valores médios mais altos para o $m^2$, enquanto tonalidades mais claras indicam valores médios menores.
 
@@ -1550,13 +1548,15 @@ A análise de alguns bairros se torna limitada devido à baixa quantidade de im�
 
 \vspace{12pt}
 
-A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
+
+![Distribuição das variáveis numéricas](includes/violin_plots.svg){#fig-violin width=500 height=300}
 
 ```{python}
 #| label: fig-violin
 #| fig-cap: Distribuição das variáveis numéricas.
+#| eval: false
 
-fig, axes = plt.subplots(2, 3, figsize=(20, 10))
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
 
 dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -1634,18 +1634,17 @@ l.get_texts()[3].set_text('Flats')
 l.get_texts()[4].set_text('Terrenos, lotes e condomínios')
 l.get_texts()[5].set_text('Terrenos e lotes comerciais')
 # l.get_texts()[6].set_text('Casas comerciais')
+# plt.savefig("includes/violin_plots.svg", format="svg", dpi=600)
 plt.show()
 ```
 
-\vspace{12pt}
-
-Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
+A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
 
 ```{python}
 #| label: fig-densitarg
 #| fig-cap: Comparação entre distribuição dos valores dos imóveis antes e depois da transformação logarítmica.
 
-fig, axes = plt.subplots(1, 2, figsize=(20, 10))
+fig, axes = plt.subplots(1, 2, figsize=(5.7, 2.7))
 
 sns.kdeplot(
   data=train_df,
@@ -1654,33 +1653,38 @@ sns.kdeplot(
   fill=True,
   alpha=.5,
   color="#00708d"
-  )
+)
 
-dens_plot = sns.kdeplot(
+sns.kdeplot(
   data=train_df.assign(Valor=lambda x: np.log1p(x.Valor)),
   x='Valor',
   ax=axes[1],
   fill=True,
   alpha=.5,
   color="#00708d"
-  )
+)
 
-axes[0].grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
-axes[0].grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
-axes[1].grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
-axes[1].grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
-axes[0].set_ylabel(ylabel='Densidade', fontsize=13)
-axes[1].set_ylabel(ylabel='Densidade', fontsize=13)
-axes[0].set_xlabel(xlabel='Valor', fontsize=13)
-axes[1].set_xlabel(xlabel='Valor', fontsize=13)
+for ax in axes:
+    ax.grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
+    ax.grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
+    ax.set_ylabel('Densidade', fontsize=7.5)
+    ax.set_xlabel('Valor', fontsize=7.5)
+    ax.tick_params(labelsize=7.5)
+
+# plt.savefig("includes/density_plot_log.svg", format="svg", dpi=600)
 plt.show()
 ```
+
+Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
+
+<!-- ![Comparação entre distribuição dos valores dos imóveis antes e depois da transformação logarítmica.](includes/density_plot_log.svg){#fig-densitarg width=500 height=300} -->
+
 
 ```{python}
 #| label: fig-corplot
 #| fig-cap: "Gráfico de correlação de Spearman das variáveis independentes."
 
-fig = plt.figure(figsize=(20, 10))
+fig = plt.figure(figsize=(7, 3))
 
 mat_plot = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -1692,10 +1696,10 @@ heatmap = sns.heatmap(
   mat_plot,
   cmap='crest',
   annot=True,
-  annot_kws={'size': 17}
+  annot_kws={'size': 8}
   )
-plt.tick_params(axis='both', which='major', labelsize=17)
-heatmap.figure.axes[-1].tick_params(labelsize=16)
+plt.tick_params(axis='both', which='major', labelsize=8)
+heatmap.figure.axes[-1].tick_params(labelsize=8)
 plt.xticks([])
 plt.show()
 ```
