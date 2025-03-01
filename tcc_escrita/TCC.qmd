@@ -1027,7 +1027,7 @@ def plot_cv_indices(cv, X, ax, n_splits, lw=10):
             vmax=1.2,
         )
 
-    yticklabels = list(range(n_splits))
+    yticklabels = list(range(1, n_splits + 1))
     ax.set(
         yticks=np.arange(n_splits) + 0.5,
         yticklabels=yticklabels,
@@ -1036,6 +1036,10 @@ def plot_cv_indices(cv, X, ax, n_splits, lw=10):
         ylim=[n_splits + 0.2, -0.2],
         xlim=[0, 100],
     )
+
+    ax.set_xlabel("Posição da observação", fontsize=6)
+    ax.set_ylabel("CV iteração", fontsize=6)
+    ax.tick_params(labelsize=6)
     return ax
 ```
 
@@ -1515,15 +1519,16 @@ g_missing = sns.displot(
     hue="Valores ausentes",
     weights="proportion",
     multiple="fill",
-    height=5,
+    height=3.5,
     aspect=1.1,
     palette='crest'
     )
 
 sns.move_legend(obj=g_missing, loc="upper center",
-                bbox_to_anchor=(.5, -.0001), ncol=2, title="")
+                bbox_to_anchor=(.5, -0.000000001), ncol=2, title="", fontsize=6)
 g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
-g_missing.ax.set_xlabel("Proporção de valores ausentes (%)", fontsize=10)
+g_missing.ax.set_xlabel("Proporção de valores ausentes (%)", fontsize=6)
+g_missing.tick_params(labelsize=6)
 plt.show()
 ```
 
@@ -1549,14 +1554,11 @@ A análise de alguns bairros se torna limitada devido à baixa quantidade de im�
 \vspace{12pt}
 
 
-![Distribuição das variáveis numéricas](includes/violin_plots.svg){#fig-violin width=500 height=300}
-
 ```{python}
 #| label: fig-violin
 #| fig-cap: Distribuição das variáveis numéricas.
-#| eval: false
 
-fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+fig, axes = plt.subplots(2, 3, figsize=(5.7, 2.7))
 
 dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -1621,12 +1623,16 @@ sns.violinplot(
 
 axes_shape = axes.shape
 for i in range(axes_shape[0]):
-	for j in range(axes_shape[1]):
-		axes[i,j].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
-		axes[i,j].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
+    for j in range(axes_shape[1]):
+        axes[i, j].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
+        axes[i, j].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
+        axes[i, j].set_xlabel(axes[i, j].get_xlabel(), fontsize=6)
+        axes[i, j].set_ylabel(axes[i, j].get_ylabel(), fontsize=6)
+        axes[i, j].tick_params(axis='both', labelsize=6)
 
+plt.subplots_adjust(hspace=0.45)
 
-l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
+l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.4), ncol=7, fontsize=5.5)
 l.get_texts()[0].set_text('Apartamentos')
 l.get_texts()[1].set_text('Casas de condomínio')
 l.get_texts()[2].set_text('Casas')
@@ -1639,6 +1645,9 @@ plt.show()
 ```
 
 A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
+
+
+Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
 
 ```{python}
 #| label: fig-densitarg
@@ -1667,24 +1676,24 @@ sns.kdeplot(
 for ax in axes:
     ax.grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
     ax.grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
-    ax.set_ylabel('Densidade', fontsize=7.5)
-    ax.set_xlabel('Valor', fontsize=7.5)
-    ax.tick_params(labelsize=7.5)
+    ax.set_ylabel('Densidade', fontsize=6)
+    ax.set_xlabel('Valor', fontsize=6)
+    ax.tick_params(labelsize=6)
+    # ax.ticklabel_format(fontsize=6)
+    ax.get_xaxis().get_offset_text().set_fontsize(6)
+    ax.get_yaxis().get_offset_text().set_fontsize(6)
+
 
 # plt.savefig("includes/density_plot_log.svg", format="svg", dpi=600)
 plt.show()
 ```
-
-Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
-
-<!-- ![Comparação entre distribuição dos valores dos imóveis antes e depois da transformação logarítmica.](includes/density_plot_log.svg){#fig-densitarg width=500 height=300} -->
 
 
 ```{python}
 #| label: fig-corplot
 #| fig-cap: "Gráfico de correlação de Spearman das variáveis independentes."
 
-fig = plt.figure(figsize=(7, 3))
+fig = plt.figure(figsize=(5.7, 2.7))
 
 mat_plot = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -1696,10 +1705,10 @@ heatmap = sns.heatmap(
   mat_plot,
   cmap='crest',
   annot=True,
-  annot_kws={'size': 8}
+  annot_kws={'size': 6}
   )
-plt.tick_params(axis='both', which='major', labelsize=8)
-heatmap.figure.axes[-1].tick_params(labelsize=8)
+plt.tick_params(axis='both', which='major', labelsize=6)
+heatmap.figure.axes[-1].tick_params(labelsize=6)
 plt.xticks([])
 plt.show()
 ```
@@ -1932,18 +1941,6 @@ Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-l
 
 \ \ \ Para o modelo Random Forest, a função objetivo foi definido apenas para otimizar os hiperparâmetros de quantidade de árvores e de profundidade da árvore. O espaço de procura para a quantidade de árvores foi definido entre 1 a 1000 árvores. Já o hiperparâmetro de profundidade da árvore foi definido entre 20 a 1000. Além disso, foi utilizado aleatoriamente $m = \sqrt{p}$ das $p$ variáveis independentes como candidatas para a divisão.
 
-\vspace{12pt}
-
-A figura @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método fANOVA. Na figura @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a figura @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
-
-\vspace{12pt}
-
-A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores (max_depth). Em contraste, para o hiperparâmetro de número de árvores (n_estimators), o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado em @fig-rf_contour, onde valores menores para max_depth e maiores para n_estimators resultam em um modelo com menor erro de generalização.
-
-\vspace{12pt}
-
-Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import revela que o hiperparâmetro n_estimators possui uma maior contribuição na performance do modelo. A figura @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20. Após esse ponto, o otimizador não consegue encontrar valores de erro significativamente menores.
-
 ```{python}
 import optuna.visualization
 import joblib
@@ -1964,23 +1961,27 @@ plt.suptitle('')
 
 fig, ax = plt.gcf(), plt.gca()
 
+fig.set_size_inches(4.3, 2.3)
 fig.axes[-1].collections[1].set_cmap("crest")
-fig.axes[-1].set_ylabel("Tentativa")
+fig.axes[-1].set_ylabel("Tentativa", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 for ax in fig.axes[:-1]:
     for coll in ax.collections:
         coll.set_cmap("crest")
 
-fig_rf_slice[0].set_ylabel('RMSE')
-fig_rf_slice[0].set_title('RMSE')
+fig_rf_slice[0].set_ylabel('RMSE', fontsize=6)
+fig_rf_slice[0].set_title('RMSE', fontsize=6)
 for _ in fig_rf_slice:
   _.set_title('')
+  _.set_xlabel(_.get_xlabel(), fontsize=6)
   _.grid(True, color='grey', linewidth=.05)
   _.set_facecolor('white')
   _.spines['top'].set_visible(True)
   _.spines['right'].set_visible(True)
   _.spines['left'].set_visible(True)
   _.spines['bottom'].set_visible(True)
+  _.tick_params(axis="both", labelsize=6)
 
 plt.show()
 ```
@@ -1989,6 +1990,7 @@ plt.show()
 #| label: fig-rf_import
 
 fig_rf_import = optuna.visualization.matplotlib.plot_param_importances(study1)
+fig_rf_import.figure.set_size_inches(4.3, 2.3)
 
 for bar in fig_rf_import.patches:
     bar.set_color("#00708d")
@@ -2000,10 +2002,11 @@ fig_rf_import.spines['top'].set_visible(True)
 fig_rf_import.spines['right'].set_visible(True)
 fig_rf_import.spines['left'].set_visible(True)
 fig_rf_import.spines['bottom'].set_visible(True)
-fig_rf_import.set_xlabel('Importância do Hiperparâmetro')
-fig_rf_import.set_ylabel('Hiperparâmetro')
+fig_rf_import.set_xlabel('Importância do Hiperparâmetro', fontsize=6)
+fig_rf_import.tick_params(axis="both", labelsize=6)
+fig_rf_import.set_ylabel('')
 h, l = fig_rf_import.get_legend_handles_labels()
-fig_rf_import.legend(h, ['RMSE'])
+fig_rf_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
 ```
@@ -2012,6 +2015,7 @@ plt.show()
 #| label: fig-rf_history
 
 fig_rf_hist = optuna.visualization.matplotlib.plot_optimization_history(study1)
+fig_rf_hist.figure.set_size_inches(4.3, 2.3)
 
 for collection in fig_rf_hist.collections:
     collection.set_color("#00708d")
@@ -2023,10 +2027,11 @@ fig_rf_hist.spines['top'].set_visible(True)
 fig_rf_hist.spines['right'].set_visible(True)
 fig_rf_hist.spines['left'].set_visible(True)
 fig_rf_hist.spines['bottom'].set_visible(True)
-fig_rf_hist.set_xlabel('Trial')
-fig_rf_hist.set_ylabel('RMSE')
+fig_rf_hist.set_xlabel('Trial', fontsize=6)
+fig_rf_hist.set_ylabel('RMSE', fontsize=6)
+fig_rf_hist.tick_params(labelsize=6)
 h, l = fig_rf_hist.get_legend_handles_labels()
-fig_rf_hist.legend(h, ['RMSE', 'Melhor trial'])
+fig_rf_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
 ```
@@ -2038,8 +2043,14 @@ fig_rf_contour = optuna.visualization.matplotlib.plot_contour(study1)
 
 fig, ax = plt.gcf(), plt.gca()
 
-fig.axes[-1].set_ylabel("RMSE")
+fig.set_size_inches(4.3, 2.3)
+# fig.tick_params(labelsize=6)
+fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 fig_rf_contour.get_children()[1].set_cmap('crest')
+fig_rf_contour.tick_params(axis="both", labelsize=6)
+fig_rf_contour.set_xlabel(fig_rf_contour.get_xlabel(), fontsize=6)
+fig_rf_contour.set_ylabel(fig_rf_contour.get_ylabel(), fontsize=6)
 
 fig_rf_contour.get_children()[-4].set_text('')
 
@@ -2048,6 +2059,17 @@ plt.show()
 
 Resultados da tunagem da Random Forest.
 :::
+
+
+A figura @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método fANOVA. Na figura @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a figura @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
+
+\vspace{12pt}
+
+A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores (max_depth). Em contraste, para o hiperparâmetro de número de árvores (n_estimators), o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado em @fig-rf_contour, onde valores menores para max_depth e maiores para n_estimators resultam em um modelo com menor erro de generalização.
+
+\vspace{12pt}
+
+Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import revela que o hiperparâmetro n_estimators possui uma maior contribuição na performance do modelo. A figura @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20. Após esse ponto, o otimizador não consegue encontrar valores de erro significativamente menores.
 
 ::: {#tbl-params_rf}
 
@@ -2077,17 +2099,22 @@ plt.suptitle('')
 
 fig, ax = plt.gcf(), plt.gca()
 
+fig.set_size_inches(4.3, 2.3)
 fig.axes[-1].collections[1].set_cmap("crest")
-fig.axes[-1].set_ylabel("Tentativa")
+fig.axes[-1].set_ylabel("Tentativa", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 for ax in fig.axes[:-1]:
     for coll in ax.collections:
         coll.set_cmap("crest")
 
-fig_gdt_slice[0].set_ylabel('RMSE')
-fig_gdt_slice[0].set_title('RMSE')
+fig_gdt_slice[0].set_ylabel('RMSE', fontsize=6)
+fig_gdt_slice[0].tick_params(labelsize=6)
+fig_gdt_slice[0].set_title('RMSE', fontsize=6)
 for _ in fig_gdt_slice:
   _.set_title('')
+  _.tick_params(labelsize=6)
+  _.set_xlabel(_.get_xlabel(), fontsize=6)
   _.grid(True, color='grey', linewidth=.05)
   _.set_facecolor('white')
   _.spines['top'].set_visible(True)
@@ -2106,6 +2133,7 @@ fig_gdt_import = optuna.visualization.matplotlib.plot_param_importances(study2)
 for bar in fig_gdt_import.patches:
     bar.set_color("#00708d")
 
+fig_gdt_import.figure.set_size_inches(4.3, 2.3)
 fig_gdt_import.grid(True, color="grey", linewidth=0.05)
 fig_gdt_import.set_facecolor("white")
 fig_gdt_import.get_children()[-4].set_text('')
@@ -2113,10 +2141,11 @@ fig_gdt_import.spines['top'].set_visible(True)
 fig_gdt_import.spines['right'].set_visible(True)
 fig_gdt_import.spines['left'].set_visible(True)
 fig_gdt_import.spines['bottom'].set_visible(True)
-fig_gdt_import.set_xlabel('Importância do Hiperparâmetro')
-fig_gdt_import.set_ylabel('Hiperparâmetro')
+fig_gdt_import.set_xlabel('Importância do Hiperparâmetro', fontsize=6)
+fig_gdt_import.tick_params(axis="both", labelsize=6)
+fig_gdt_import.set_ylabel('')
 h, l = fig_gdt_import.get_legend_handles_labels()
-fig_gdt_import.legend(h, ['RMSE'])
+fig_gdt_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
 ```
@@ -2128,6 +2157,7 @@ fig_gdt_hist = optuna.visualization.matplotlib.plot_optimization_history(study2)
 for collection in fig_gdt_hist.collections:
     collection.set_color("#00708d")
 
+fig_gdt_hist.figure.set_size_inches(4.3, 2.3)
 fig_gdt_hist.grid(True, color="grey", linewidth=0.05)
 fig_gdt_hist.set_facecolor("white")
 fig_gdt_hist.get_children()[-5].set_text('')
@@ -2135,10 +2165,11 @@ fig_gdt_hist.spines['top'].set_visible(True)
 fig_gdt_hist.spines['right'].set_visible(True)
 fig_gdt_hist.spines['left'].set_visible(True)
 fig_gdt_hist.spines['bottom'].set_visible(True)
-fig_gdt_hist.set_xlabel('Trial')
-fig_gdt_hist.set_ylabel('RMSE')
+fig_gdt_hist.set_xlabel('Trial', fontsize=6)
+fig_gdt_hist.set_ylabel('RMSE', fontsize=6)
+fig_gdt_hist.tick_params(labelsize=6)
 h, l = fig_gdt_hist.get_legend_handles_labels()
-fig_gdt_hist.legend(h, ['RMSE', 'Melhor trial'])
+fig_gdt_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
 ```
@@ -2164,14 +2195,18 @@ for i in range(fig_gdt_contour.shape[0]):
         ax.get_children()[1].set_cmap('crest')
 
       if j == 0:
-        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=10)
+        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
       if i == fig_gdt_contour.shape[0] - 1:
-        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=10)
+        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
 fig, ax = plt.gcf(), plt.gca()
 
-fig.axes[-1].set_ylabel("RMSE")
+fig.set_size_inches(4.3, 2.3)
+fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 plt.show()
 ```
@@ -2205,17 +2240,22 @@ plt.suptitle('')
 
 fig, ax = plt.gcf(), plt.gca()
 
+fig.set_size_inches(4.3, 2.3)
 fig.axes[-1].collections[1].set_cmap("crest")
-fig.axes[-1].set_ylabel("Tentativa")
+fig.axes[-1].set_ylabel("Tentativa", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 for ax in fig.axes[:-1]:
     for coll in ax.collections:
         coll.set_cmap("crest")
 
-fig_lgbm_slice[0].set_ylabel('RMSE')
-fig_lgbm_slice[0].set_title('RMSE')
+fig_lgbm_slice[0].set_ylabel('RMSE', fontsize=6)
+fig_lgbm_slice[0].tick_params(labelsize=6)
+fig_lgbm_slice[0].set_title('RMSE', fontsize=6)
 for _ in fig_lgbm_slice:
   _.set_title('')
+  _.tick_params(labelsize=6)
+  _.set_xlabel(_.get_xlabel(), fontsize=6)
   _.grid(True, color='grey', linewidth=.05)
   _.set_facecolor('white')
   _.spines['top'].set_visible(True)
@@ -2224,6 +2264,30 @@ for _ in fig_lgbm_slice:
   _.spines['bottom'].set_visible(True)
 
 plt.show()
+
+# plt.suptitle('')
+
+# fig, ax = plt.gcf(), plt.gca()
+
+# fig.axes[-1].collections[1].set_cmap("crest")
+# fig.axes[-1].set_ylabel("Tentativa")
+
+# for ax in fig.axes[:-1]:
+#     for coll in ax.collections:
+#         coll.set_cmap("crest")
+
+# fig_lgbm_slice[0].set_ylabel('RMSE')
+# fig_lgbm_slice[0].set_title('RMSE')
+# for _ in fig_lgbm_slice:
+#   _.set_title('')
+#   _.grid(True, color='grey', linewidth=.05)
+#   _.set_facecolor('white')
+#   _.spines['top'].set_visible(True)
+#   _.spines['right'].set_visible(True)
+#   _.spines['left'].set_visible(True)
+#   _.spines['bottom'].set_visible(True)
+
+# plt.show()
 ```
 
 ```{python}
@@ -2234,6 +2298,7 @@ fig_lgbm_import = optuna.visualization.matplotlib.plot_param_importances(study3)
 for bar in fig_lgbm_import.patches:
     bar.set_color("#00708d")
 
+fig_lgbm_import.figure.set_size_inches(4.3, 2.3)
 fig_lgbm_import.grid(True, color="grey", linewidth=0.05)
 fig_lgbm_import.set_facecolor("white")
 fig_lgbm_import.get_children()[-4].set_text('')
@@ -2241,12 +2306,30 @@ fig_lgbm_import.spines['top'].set_visible(True)
 fig_lgbm_import.spines['right'].set_visible(True)
 fig_lgbm_import.spines['left'].set_visible(True)
 fig_lgbm_import.spines['bottom'].set_visible(True)
-fig_lgbm_import.set_xlabel('Importância do Hiperparâmetro')
-fig_lgbm_import.set_ylabel('Hiperparâmetro')
+fig_lgbm_import.set_xlabel('Importância do Hiperparâmetro', fontsize=6)
+fig_lgbm_import.tick_params(axis="both", labelsize=6)
+fig_lgbm_import.set_ylabel('')
 h, l = fig_lgbm_import.get_legend_handles_labels()
-fig_lgbm_import.legend(h, ['RMSE'])
+fig_lgbm_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
+
+# for bar in fig_lgbm_import.patches:
+#     bar.set_color("#00708d")
+
+# fig_lgbm_import.grid(True, color="grey", linewidth=0.05)
+# fig_lgbm_import.set_facecolor("white")
+# fig_lgbm_import.get_children()[-4].set_text('')
+# fig_lgbm_import.spines['top'].set_visible(True)
+# fig_lgbm_import.spines['right'].set_visible(True)
+# fig_lgbm_import.spines['left'].set_visible(True)
+# fig_lgbm_import.spines['bottom'].set_visible(True)
+# fig_lgbm_import.set_xlabel('Importância do Hiperparâmetro')
+# fig_lgbm_import.set_ylabel('Hiperparâmetro')
+# h, l = fig_lgbm_import.get_legend_handles_labels()
+# fig_lgbm_import.legend(h, ['RMSE'])
+
+# plt.show()
 ```
 
 ```{python}
@@ -2256,6 +2339,7 @@ fig_lgbm_hist = optuna.visualization.matplotlib.plot_optimization_history(study3
 for collection in fig_lgbm_hist.collections:
     collection.set_color("#00708d")
 
+fig_lgbm_hist.figure.set_size_inches(4.3, 2.3)
 fig_lgbm_hist.grid(True, color="grey", linewidth=0.05)
 fig_lgbm_hist.set_facecolor("white")
 fig_lgbm_hist.get_children()[-5].set_text('')
@@ -2263,38 +2347,38 @@ fig_lgbm_hist.spines['top'].set_visible(True)
 fig_lgbm_hist.spines['right'].set_visible(True)
 fig_lgbm_hist.spines['left'].set_visible(True)
 fig_lgbm_hist.spines['bottom'].set_visible(True)
-fig_lgbm_hist.set_xlabel('Trial')
-fig_lgbm_hist.set_ylabel('RMSE')
+fig_lgbm_hist.set_xlabel('Trial', fontsize=6)
+fig_lgbm_hist.set_ylabel('RMSE', fontsize=6)
+fig_lgbm_hist.tick_params(labelsize=6)
 h, l = fig_lgbm_hist.get_legend_handles_labels()
-fig_lgbm_hist.legend(h, ['RMSE', 'Melhor trial'])
+fig_lgbm_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
+
+# for collection in fig_lgbm_hist.collections:
+#     collection.set_color("#00708d")
+
+# fig_lgbm_hist.grid(True, color="grey", linewidth=0.05)
+# fig_lgbm_hist.set_facecolor("white")
+# fig_lgbm_hist.get_children()[-5].set_text('')
+# fig_lgbm_hist.spines['top'].set_visible(True)
+# fig_lgbm_hist.spines['right'].set_visible(True)
+# fig_lgbm_hist.spines['left'].set_visible(True)
+# fig_lgbm_hist.spines['bottom'].set_visible(True)
+# fig_lgbm_hist.set_xlabel('Trial')
+# fig_lgbm_hist.set_ylabel('RMSE')
+# h, l = fig_lgbm_hist.get_legend_handles_labels()
+# fig_lgbm_hist.legend(h, ['RMSE', 'Melhor trial'])
+
+# plt.show()
 ```
 
 ```{python}
 #| label: fig-lgbm_contour
 
 fig_lgbm_contour = optuna.visualization.matplotlib.plot_contour(study3)
+
 plt.suptitle('')
-
-# for i in range(fig_xgb_contour.shape[0]):
-#     for j in range(fig_xgb_contour.shape[1]):
-#         ax = fig_xgb_contour[i, j]
-#         if j == i:  # Diagonal plots
-#             ax.grid(True, color='grey', linewidth=.05)
-#             ax.spines['top'].set_visible(True)
-#             ax.spines['right'].set_visible(True)
-#             ax.spines['left'].set_visible(True)
-#             ax.spines['bottom'].set_visible(True)
-#             ax.set_facecolor('white')
-#         else:
-#             ax.get_children()[1].set_cmap('crest')
-
-#         if j == 0:
-#             ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right')
-
-#         # if i == fig_xgb_contour.shape[0] - 1:
-#         #     ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right')
 
 for i in range(fig_lgbm_contour.shape[0]):
 
@@ -2311,16 +2395,46 @@ for i in range(fig_lgbm_contour.shape[0]):
         ax.get_children()[1].set_cmap('crest')
 
       if j == 0:
-        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=10)
+        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
       if i == fig_lgbm_contour.shape[0] - 1:
-        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=10)
+        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
 fig, ax = plt.gcf(), plt.gca()
 
-fig.axes[-1].set_ylabel("RMSE")
+fig.set_size_inches(4.3, 2.3)
+fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 plt.show()
+
+# for i in range(fig_lgbm_contour.shape[0]):
+
+#     for j in range(fig_lgbm_contour.shape[1]):
+#       ax = fig_lgbm_contour[i,j]
+#       if j == i:
+#         ax.grid(True, color='grey', linewidth=.05)
+#         ax.spines['top'].set_visible(True)
+#         ax.spines['right'].set_visible(True)
+#         ax.spines['left'].set_visible(True)
+#         ax.spines['bottom'].set_visible(True)
+#         ax.set_facecolor('white')
+#       else:
+#         ax.get_children()[1].set_cmap('crest')
+
+#       if j == 0:
+#         ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=10)
+
+#       if i == fig_lgbm_contour.shape[0] - 1:
+#         ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=10)
+
+# fig, ax = plt.gcf(), plt.gca()
+
+# fig.axes[-1].set_ylabel("RMSE")
+
+# plt.show()
 ```
 
 Resultados da tunagem do LGBM.

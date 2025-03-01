@@ -223,7 +223,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, frame hidden, enhanced, boxrule=0pt, breakable, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, frame hidden, boxrule=0pt, enhanced, sharp corners, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -263,7 +263,7 @@
 \title{Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores
 Imobiliários no Mercado Imobiliário da Cidade de João Pessoa}
 \author{Gabriel de Jesus Pereira}
-\date{fevereiro, 2025}
+\date{março, 2025}
 
 \begin{document}
 \cleardoublepage
@@ -289,7 +289,7 @@ Pessoa \par}
 
 {\large Gabriel de Jesus Pereira \par}
 \vfill
-{\normalsize fevereiro, 2025 \par}
+{\normalsize março, 2025 \par}
 
 
 \noindent\rule{\textwidth}{0.5pt}
@@ -316,7 +316,7 @@ Pessoa \par}
 \vfill
 
 {\normalsize\bfseries João Pessoa \par}
-{\normalsize\bfseries fevereiro, 2025 \par}
+{\normalsize\bfseries março, 2025 \par}
 
 }
 \numberwithin{algorithm}{chapter}
@@ -3219,11 +3219,11 @@ circunstâncias.
 
 \centering{
 
-\includegraphics[width=5.20833in,height=3.125in]{TCC_files/mediabag/includes/violin_plots.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/figure-pdf/fig-violin-output-1.pdf}}
 
 }
 
-\caption{\label{fig-violin}Distribuição das variáveis numéricas}
+\caption{\label{fig-violin}Distribuição das variáveis numéricas.}
 
 \end{figure}%
 
@@ -3234,6 +3234,17 @@ negativa. Os apartamentos possuem caudas longas à direita, indicando
 presença de valores extremamente altos e que indicam que talvez seja
 necessário a aplicação de alguma transformação para a estabilização da
 variância.
+
+Para reduzir a assimetria da distribuição dos valores dos imóveis, foi
+aplicada uma transformação logarítmica. O gráfico de densidade à
+esquerda na Figura~\ref{fig-densitarg} mostra os dados originais da
+distribuição do valor dos imóveis. Há uma tendência dos valores ficarem
+mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam
+valores excepcionalmente altos, o que acaba gerando uma distribuição
+assimétrica positiva. Com a aplicação da transformação logarítmica, a
+assimetria é suavizada, comprimindo os valores mais altos. Isso tende a
+aproximar a distribuição de uma forma mais simétrica, facilitando a
+modelagem e análise estatística.
 
 \begin{figure}
 
@@ -3247,17 +3258,6 @@ variância.
 dos imóveis antes e depois da transformação logarítmica.}
 
 \end{figure}%
-
-Para reduzir a assimetria da distribuição dos valores dos imóveis, foi
-aplicada uma transformação logarítmica. O gráfico de densidade à
-esquerda na Figura~\ref{fig-densitarg} mostra os dados originais da
-distribuição do valor dos imóveis. Há uma tendência dos valores ficarem
-mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam
-valores excepcionalmente altos, o que acaba gerando uma distribuição
-assimétrica positiva. Com a aplicação da transformação logarítmica, a
-assimetria é suavizada, comprimindo os valores mais altos. Isso tende a
-aproximar a distribuição de uma forma mais simétrica, facilitando a
-modelagem e análise estatística.
 
 \begin{figure}
 
@@ -3340,39 +3340,6 @@ da árvore foi definido entre 20 a 1000. Além disso, foi utilizado
 aleatoriamente \(m = \sqrt{p}\) das \(p\) variáveis independentes como
 candidatas para a divisão.
 
-\vspace{12pt}
-
-A figura Figura~\ref{fig-rf_slice} mostra a variação da estatística de
-erro em função dos valores de cada hiperparâmetro ao longo dos trials. O
-gráfico Figura~\ref{fig-rf_import} exibe a importância de cada
-hiperparâmetro, calculada pelo método fANOVA. Na figura
-Figura~\ref{fig-rf_history}, observa-se a variação do erro para cada
-trial, com a linha vermelha representando o menor valor obtido em cada
-etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
-área que mostra a interação entre os hiperparâmetros tunados em relação
-à estatística de erro.
-
-\vspace{12pt}
-
-A partir de Figura~\ref{fig-rf_slice}, é possível ver que o erro tende a
-ser menor para valores menores do hiperparâmetro de profundidade das
-árvores (max\_depth). Em contraste, para o hiperparâmetro de número de
-árvores (n\_estimators), o erro apresenta uma tendência de redução e
-estabilização à medida que o número de árvores aumenta. Esse
-comportamento também é observado em Figura~\ref{fig-rf_contour}, onde
-valores menores para max\_depth e maiores para n\_estimators resultam em
-um modelo com menor erro de generalização.
-
-\vspace{12pt}
-
-Além disso, o gráfico de importância dos hiperparâmetros em
-Figura~\ref{fig-rf_import} revela que o hiperparâmetro n\_estimators
-possui uma maior contribuição na performance do modelo. A figura
-Figura~\ref{fig-rf_history} ilustra o comportamento da métrica de erro
-para cada trial, mostrando que o método de otimização alcança um de seus
-melhores valores pouco antes do trial 20. Após esse ponto, o otimizador
-não consegue encontrar valores de erro significativamente menores.
-
 \begin{figure}
 
 \begin{minipage}{0.50\linewidth}
@@ -3426,6 +3393,37 @@ não consegue encontrar valores de erro significativamente menores.
 \caption{\label{fig-rf_param}Resultados da tunagem da Random Forest.}
 
 \end{figure}%
+
+A figura Figura~\ref{fig-rf_slice} mostra a variação da estatística de
+erro em função dos valores de cada hiperparâmetro ao longo dos trials. O
+gráfico Figura~\ref{fig-rf_import} exibe a importância de cada
+hiperparâmetro, calculada pelo método fANOVA. Na figura
+Figura~\ref{fig-rf_history}, observa-se a variação do erro para cada
+trial, com a linha vermelha representando o menor valor obtido em cada
+etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
+área que mostra a interação entre os hiperparâmetros tunados em relação
+à estatística de erro.
+
+\vspace{12pt}
+
+A partir de Figura~\ref{fig-rf_slice}, é possível ver que o erro tende a
+ser menor para valores menores do hiperparâmetro de profundidade das
+árvores (max\_depth). Em contraste, para o hiperparâmetro de número de
+árvores (n\_estimators), o erro apresenta uma tendência de redução e
+estabilização à medida que o número de árvores aumenta. Esse
+comportamento também é observado em Figura~\ref{fig-rf_contour}, onde
+valores menores para max\_depth e maiores para n\_estimators resultam em
+um modelo com menor erro de generalização.
+
+\vspace{12pt}
+
+Além disso, o gráfico de importância dos hiperparâmetros em
+Figura~\ref{fig-rf_import} revela que o hiperparâmetro n\_estimators
+possui uma maior contribuição na performance do modelo. A figura
+Figura~\ref{fig-rf_history} ilustra o comportamento da métrica de erro
+para cada trial, mostrando que o método de otimização alcança um de seus
+melhores valores pouco antes do trial 20. Após esse ponto, o otimizador
+não consegue encontrar valores de erro significativamente menores.
 
 \begin{longtable}[]{@{}cccc@{}}
 \caption{Melhores hiperparâmetros para Random
