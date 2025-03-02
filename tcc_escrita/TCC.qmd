@@ -10,6 +10,7 @@ template-partials:
 toc-title: \centering Sumário \thispagestyle{empty}
 format:
   pdf:
+    pdf-engine: lualatex
     papersize: A4
     keep-tex: true
     geometry:
@@ -258,7 +259,7 @@ O Web scraping é uma técnica utilizada para extrair informações de sites na 
 
 - HEAD: O HEAD é bastante semelhante o GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
 
-- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML.
+- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.].
 
 - PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma semelhante. No entanto, caso seja necessário atualizar um usuário diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas um único registro atualizado. Para o método POST, serão criados diversos registros para cada requisição realizada.
 
@@ -326,7 +327,45 @@ O [**Playwright**](https://playwright.dev/python/) foi originalmente desenvolvid
 
 \vspace{12pt}
 
-Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados. Entretanto, a linguagem **Python**, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Portanto, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
+Na sessão a seguir, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, utilizam-se os pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para esse fim. É importante ressaltar que os códigos desenvolvidos para a raspagem de dados podem deixar de funcionar ao longo do tempo devido a possíveis mudanças na estrutura dos sites. Assim, eventuais ajustes no código poderão ser necessários.
+
+
+### Exemplo de web scraping em Python
+
+\ \ \ Os exemplos de raspagem de dados em **R** e **Python** utilizarão o mesmo site. O objetivo é extrair informações sobre todos os pacotes de **R**, tanto os ordenados por data de publicação quanto os organizados por nome, disponíveis em: <https://cran.r-project.org/web/packages/index.html>. A partir desses dados, serão gerados dois arquivos `.csv` contendo essas informações.
+
+\vspace{12pt}
+
+Para instalar o [**Scrapy**](https://docs.scrapy.org/en/latest) e suas dependências, pode-se instalar diretamente utilizando o [**pip**](https://pip.pypa.io/en/stable/), que é o gerenciador de pacotes para **Python**. Portanto, para isso, basta executar em seu terminal o comando `pip install Scrapy`.
+
+\vspace{12pt}
+
+Após a instalação do [**Scrapy**](https://docs.scrapy.org/en/latest), ficará disponível o uso de seu CLI^[CLI (Command Line Interface) é uma interface de linha de comando que permite a interação com um sistema operacional ou software por meio de comandos digitados em um terminal, sem o uso de interface gráfica.]. O CLI disponibilizará inúmeras funcionalidades para o [**Scrapy**](https://docs.scrapy.org/en/latest), tais como inspencionar o conteúdo da página para encontrar mais facilmente os seletores daquela página em específico e, o mais importante, iniciar um projeto [**Scrapy**](https://docs.scrapy.org/en/latest).
+
+\vspace{12pt}
+
+Antes de se iniciar a raspagem dos dados com o [**Scrapy**](https://docs.scrapy.org/en/latest), é necessário que se inicie um projeto usando o seu CLI. Para isso, é utilizado o comando `scrapy startproject <nome_do_projeto>`. Esse comando irá criar um diretório com todos os arquivos e configurações iniciais necessárias para se iniciar a extração de dados com o [**Scrapy**](https://docs.scrapy.org/en/latest). Por exemplo, suponha que o comando `scrapy startproject scraping_examples` tenha sido executado. Após a sua execução, será criado o diretório com a seguinte estrutura:
+
+```
+{=latex}
+\begin{verbatim}
+.
+|-- scraping_examples
+|   |-- __init__.py
+|   |-- items.py
+|   |-- middlewares.py
+|   |-- pipelines.py
+|   |-- __pycache__
+|   |   |-- __init__.cpython-310.pyc
+|   |   |-- settings.cpython-310.pyc
+|   |-- settings.py
+|   |-- spiders
+|       |-- __init__.py
+|       |-- __pycache__
+|           |-- __init__.cpython-310.pyc
+|-- scrapy.cfg
+\end{verbatim}
+```
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
@@ -1293,7 +1332,7 @@ A variância de $\hat{y}$ em seu domínio $\boldsymbol{\Theta}$ é definido por:
 $$
 \mathbb{V} = \frac{1}{\|\boldsymbol{\Theta}\|} \int\left(\hat{y}\left(\boldsymbol{\theta}\right) - \hat{f}_{\emptyset}\right)^2 d \boldsymbol{\theta}\text{,}
 $$
-e`a fANOVA decompõe essa variância em contribuições de todos os conjuntos de hiperparâmetros:
+e a fANOVA decompõe essa variância em contribuições de todos os conjuntos de hiperparâmetros:
 
 $$
 \mathbb{V} = \sum_{U \subset N}\mathbb{V}_{U} \text{, em que } \mathbb{V}_U = \frac{1}{\|\boldsymbol{\Theta}_{U}\|} \int \hat{f}_U\left(\boldsymbol{\theta}_U\right)^2 d\boldsymbol{\theta}_U\text{.}
@@ -2264,30 +2303,6 @@ for _ in fig_lgbm_slice:
   _.spines['bottom'].set_visible(True)
 
 plt.show()
-
-# plt.suptitle('')
-
-# fig, ax = plt.gcf(), plt.gca()
-
-# fig.axes[-1].collections[1].set_cmap("crest")
-# fig.axes[-1].set_ylabel("Tentativa")
-
-# for ax in fig.axes[:-1]:
-#     for coll in ax.collections:
-#         coll.set_cmap("crest")
-
-# fig_lgbm_slice[0].set_ylabel('RMSE')
-# fig_lgbm_slice[0].set_title('RMSE')
-# for _ in fig_lgbm_slice:
-#   _.set_title('')
-#   _.grid(True, color='grey', linewidth=.05)
-#   _.set_facecolor('white')
-#   _.spines['top'].set_visible(True)
-#   _.spines['right'].set_visible(True)
-#   _.spines['left'].set_visible(True)
-#   _.spines['bottom'].set_visible(True)
-
-# plt.show()
 ```
 
 ```{python}
@@ -2313,23 +2328,6 @@ h, l = fig_lgbm_import.get_legend_handles_labels()
 fig_lgbm_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
-
-# for bar in fig_lgbm_import.patches:
-#     bar.set_color("#00708d")
-
-# fig_lgbm_import.grid(True, color="grey", linewidth=0.05)
-# fig_lgbm_import.set_facecolor("white")
-# fig_lgbm_import.get_children()[-4].set_text('')
-# fig_lgbm_import.spines['top'].set_visible(True)
-# fig_lgbm_import.spines['right'].set_visible(True)
-# fig_lgbm_import.spines['left'].set_visible(True)
-# fig_lgbm_import.spines['bottom'].set_visible(True)
-# fig_lgbm_import.set_xlabel('Importância do Hiperparâmetro')
-# fig_lgbm_import.set_ylabel('Hiperparâmetro')
-# h, l = fig_lgbm_import.get_legend_handles_labels()
-# fig_lgbm_import.legend(h, ['RMSE'])
-
-# plt.show()
 ```
 
 ```{python}
@@ -2354,23 +2352,6 @@ h, l = fig_lgbm_hist.get_legend_handles_labels()
 fig_lgbm_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
-
-# for collection in fig_lgbm_hist.collections:
-#     collection.set_color("#00708d")
-
-# fig_lgbm_hist.grid(True, color="grey", linewidth=0.05)
-# fig_lgbm_hist.set_facecolor("white")
-# fig_lgbm_hist.get_children()[-5].set_text('')
-# fig_lgbm_hist.spines['top'].set_visible(True)
-# fig_lgbm_hist.spines['right'].set_visible(True)
-# fig_lgbm_hist.spines['left'].set_visible(True)
-# fig_lgbm_hist.spines['bottom'].set_visible(True)
-# fig_lgbm_hist.set_xlabel('Trial')
-# fig_lgbm_hist.set_ylabel('RMSE')
-# h, l = fig_lgbm_hist.get_legend_handles_labels()
-# fig_lgbm_hist.legend(h, ['RMSE', 'Melhor trial'])
-
-# plt.show()
 ```
 
 ```{python}
@@ -2409,32 +2390,6 @@ fig.axes[-1].set_ylabel("RMSE", fontsize=6)
 fig.axes[-1].tick_params(labelsize=6)
 
 plt.show()
-
-# for i in range(fig_lgbm_contour.shape[0]):
-
-#     for j in range(fig_lgbm_contour.shape[1]):
-#       ax = fig_lgbm_contour[i,j]
-#       if j == i:
-#         ax.grid(True, color='grey', linewidth=.05)
-#         ax.spines['top'].set_visible(True)
-#         ax.spines['right'].set_visible(True)
-#         ax.spines['left'].set_visible(True)
-#         ax.spines['bottom'].set_visible(True)
-#         ax.set_facecolor('white')
-#       else:
-#         ax.get_children()[1].set_cmap('crest')
-
-#       if j == 0:
-#         ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=10)
-
-#       if i == fig_lgbm_contour.shape[0] - 1:
-#         ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=10)
-
-# fig, ax = plt.gcf(), plt.gca()
-
-# fig.axes[-1].set_ylabel("RMSE")
-
-# plt.show()
 ```
 
 Resultados da tunagem do LGBM.
@@ -2480,17 +2435,22 @@ plt.suptitle('')
 
 fig, ax = plt.gcf(), plt.gca()
 
+fig.set_size_inches(4.3, 2.3)
 fig.axes[-1].collections[1].set_cmap("crest")
-fig.axes[-1].set_ylabel("Tentativa")
+fig.axes[-1].set_ylabel("Tentativa", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 for ax in fig.axes[:-1]:
     for coll in ax.collections:
         coll.set_cmap("crest")
 
-fig_xgb_slice[0].set_ylabel('RMSE')
-fig_xgb_slice[0].set_title('RMSE')
+fig_xgb_slice[0].set_ylabel('RMSE', fontsize=6)
+fig_xgb_slice[0].tick_params(labelsize=6)
+fig_xgb_slice[0].set_title('RMSE', fontsize=6)
 for _ in fig_xgb_slice:
   _.set_title('')
+  _.tick_params(labelsize=6)
+  _.set_xlabel(_.get_xlabel(), fontsize=6)
   _.grid(True, color='grey', linewidth=.05)
   _.set_facecolor('white')
   _.spines['top'].set_visible(True)
@@ -2509,6 +2469,7 @@ fig_xgb_import = optuna.visualization.matplotlib.plot_param_importances(study4)
 for bar in fig_xgb_import.patches:
     bar.set_color("#00708d")
 
+fig_xgb_import.figure.set_size_inches(4.3, 2.3)
 fig_xgb_import.grid(True, color="grey", linewidth=0.05)
 fig_xgb_import.set_facecolor("white")
 fig_xgb_import.get_children()[-4].set_text('')
@@ -2516,10 +2477,11 @@ fig_xgb_import.spines['top'].set_visible(True)
 fig_xgb_import.spines['right'].set_visible(True)
 fig_xgb_import.spines['left'].set_visible(True)
 fig_xgb_import.spines['bottom'].set_visible(True)
-fig_xgb_import.set_xlabel('Importância do Hiperparâmetro')
-fig_xgb_import.set_ylabel('Hiperparâmetro')
+fig_xgb_import.set_xlabel('Importância do Hiperparâmetro', fontsize=6)
+fig_xgb_import.tick_params(axis="both", labelsize=6)
+fig_xgb_import.set_ylabel('')
 h, l = fig_xgb_import.get_legend_handles_labels()
-fig_xgb_import.legend(h, ['RMSE'])
+fig_xgb_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
 ```
@@ -2531,6 +2493,7 @@ fig_xgb_hist = optuna.visualization.matplotlib.plot_optimization_history(study4)
 for collection in fig_xgb_hist.collections:
     collection.set_color("#00708d")
 
+fig_xgb_hist.figure.set_size_inches(4.3, 2.3)
 fig_xgb_hist.grid(True, color="grey", linewidth=0.05)
 fig_xgb_hist.set_facecolor("white")
 fig_xgb_hist.get_children()[-5].set_text('')
@@ -2538,10 +2501,11 @@ fig_xgb_hist.spines['top'].set_visible(True)
 fig_xgb_hist.spines['right'].set_visible(True)
 fig_xgb_hist.spines['left'].set_visible(True)
 fig_xgb_hist.spines['bottom'].set_visible(True)
-fig_xgb_hist.set_xlabel('Trial')
-fig_xgb_hist.set_ylabel('RMSE')
+fig_xgb_hist.set_xlabel('Trial', fontsize=6)
+fig_xgb_hist.set_ylabel('RMSE', fontsize=6)
+fig_xgb_hist.tick_params(labelsize=6)
 h, l = fig_xgb_hist.get_legend_handles_labels()
-fig_xgb_hist.legend(h, ['RMSE', 'Melhor trial'])
+fig_xgb_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
 ```
@@ -2553,29 +2517,34 @@ fig_xgb_contour = optuna.visualization.matplotlib.plot_contour(study4)
 plt.suptitle('')
 
 for i in range(fig_xgb_contour.shape[0]):
+
     for j in range(fig_xgb_contour.shape[1]):
-        ax = fig_xgb_contour[i, j]
-        if j == i:  # Diagonal plots
-            ax.grid(True, color='grey', linewidth=.05)
-            ax.spines['top'].set_visible(True)
-            ax.spines['right'].set_visible(True)
-            ax.spines['left'].set_visible(True)
-            ax.spines['bottom'].set_visible(True)
-            ax.set_facecolor('white')
-        else:
-            ax.get_children()[1].set_cmap('crest')
+      ax = fig_xgb_contour[i,j]
+      if j == i:
+        ax.grid(True, color='grey', linewidth=.05)
+        ax.spines['top'].set_visible(True)
+        ax.spines['right'].set_visible(True)
+        ax.spines['left'].set_visible(True)
+        ax.spines['bottom'].set_visible(True)
+        ax.set_facecolor('white')
+      else:
+        ax.get_children()[1].set_cmap('crest')
 
-        if j == 0:
-            ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right')
+      if j == 0:
+        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
-        # if i == fig_xgb_contour.shape[0] - 1:
-        #     ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right')
+      if i == fig_xgb_contour.shape[0] - 1:
+        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
 fig, ax = plt.gcf(), plt.gca()
-fig.axes[-1].set_ylabel("RMSE")
+
+fig.set_size_inches(4.3, 2.3)
+fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 plt.show()
-
 ```
 
 Resultados da tunagem do XGBoost.
@@ -2607,7 +2576,7 @@ Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tenta
 
 \vspace{12pt}
 
-O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972, enquanto o coeficiente de determinação $R^2$ alcançou $86,79%$, indicando que o modelo explica $86,79%$ da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram 1,373% distantes dos valores reais.
+O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972, enquanto o coeficiente de determinação $R^2$ alcançou $86,79\%$, indicando que o modelo explica $86,79\%$ da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram 1,373% distantes dos valores reais.
 
 \vspace{12pt}
 

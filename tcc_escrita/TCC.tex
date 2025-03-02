@@ -133,6 +133,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{dirtree}
 \usepackage{amsmath}
 \usepackage[explicit]{titlesec}
 \usepackage{setspace}
@@ -223,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, frame hidden, boxrule=0pt, enhanced, sharp corners, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, enhanced, sharp corners, colback={codebgcolor}, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -748,7 +749,10 @@ ser realizada no recurso especificado.
 \item
   POST: O método POST envia dados para serem processados para o recurso
   especificado. Esses dados podem ser, por exemplo, dados de um
-  formulário HTML.
+  formulário HTML\footnote{HTML (HyperText Markup Language) é a
+    linguagem de marcação utilizada para estruturar e exibir conteúdo na
+    web. Ele define elementos como títulos, parágrafos, links, imagens e
+    tabelas, sendo a base para o desenvolvimento de páginas da internet.}.
 \item
   PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma
   semelhante. No entanto, caso seja necessário atualizar um usuário
@@ -963,12 +967,86 @@ dados que estavam sendo coletados em \textbf{Python}.
 
 \vspace{12pt}
 
-Assim chega ao fim descrição das tecnologias utilizadas para a obtenção
-dos dados. Entretanto, a linguagem \textbf{Python}, em particular,
-continuou sendo empregada em outras etapas deste trabalho, como na
-modelagem dos valores de imóveis. Portanto, os próximos recursos
-apresentados serão aqueles utilizados especificamente para a modelagem e
-visualização dos resultados.
+Na sessão a seguir, apresenta-se um exemplo de como realizar web
+scraping em \textbf{R} e \textbf{Python}. Para isso, utilizam-se os
+pacotes mencionados para a linguagem \textbf{R} e, no caso de
+\textbf{Python}, dá-se preferência ao
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, a principal
+biblioteca empregada para esse fim. É importante ressaltar que os
+códigos desenvolvidos para a raspagem de dados podem deixar de funcionar
+ao longo do tempo devido a possíveis mudanças na estrutura dos sites.
+Assim, eventuais ajustes no código poderão ser necessários.
+
+\subsection{Exemplo de web scraping em
+Python}\label{exemplo-de-web-scraping-em-python}
+
+~~~Os exemplos de raspagem de dados em \textbf{R} e \textbf{Python}
+utilizarão o mesmo site. O objetivo é extrair informações sobre todos os
+pacotes de \textbf{R}, tanto os ordenados por data de publicação quanto
+os organizados por nome, disponíveis em:
+\url{https://cran.r-project.org/web/packages/index.html}. A partir
+desses dados, serão gerados dois arquivos \texttt{.csv} contendo essas
+informações.
+
+\vspace{12pt}
+
+Para instalar o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} e suas
+dependências, pode-se instalar diretamente utilizando o
+\href{https://pip.pypa.io/en/stable/}{\textbf{pip}}, que é o gerenciador
+de pacotes para \textbf{Python}. Portanto, para isso, basta executar em
+seu terminal o comando \texttt{pip\ install\ Scrapy}.
+
+\vspace{12pt}
+
+Após a instalação do
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, ficará
+disponível o uso de seu CLI\footnote{CLI (Command Line Interface) é uma
+  interface de linha de comando que permite a interação com um sistema
+  operacional ou software por meio de comandos digitados em um terminal,
+  sem o uso de interface gráfica.}. O CLI disponibilizará inúmeras
+funcionalidades para o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, tais como
+inspencionar o conteúdo da página para encontrar mais facilmente os
+seletores daquela página em específico e, o mais importante, iniciar um
+projeto \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}.
+
+\vspace{12pt}
+
+Antes de se iniciar a raspagem dos dados com o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, é necessário
+que se inicie um projeto usando o seu CLI. Para isso, é utilizado o
+comando
+\texttt{scrapy\ startproject\ \textless{}nome\_do\_projeto\textgreater{}}.
+Esse comando irá criar um diretório com todos os arquivos e
+configurações iniciais necessárias para se iniciar a extração de dados
+com o \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}. Por
+exemplo, suponha que o comando
+\texttt{scrapy\ startproject\ scraping\_examples} tenha sido executado.
+Após a sua execução, será criado o diretório com a seguinte estrutura:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{=latex\}}
+\NormalTok{\textbackslash{}begin\{verbatim\}}
+\NormalTok{.}
+\NormalTok{|{-}{-} scraping\_examples}
+\NormalTok{|   |{-}{-} \_\_init\_\_.py}
+\NormalTok{|   |{-}{-} items.py}
+\NormalTok{|   |{-}{-} middlewares.py}
+\NormalTok{|   |{-}{-} pipelines.py}
+\NormalTok{|   |{-}{-} \_\_pycache\_\_}
+\NormalTok{|   |   |{-}{-} \_\_init\_\_.cpython{-}310.pyc}
+\NormalTok{|   |   |{-}{-} settings.cpython{-}310.pyc}
+\NormalTok{|   |{-}{-} settings.py}
+\NormalTok{|   |{-}{-} spiders}
+\NormalTok{|       |{-}{-} \_\_init\_\_.py}
+\NormalTok{|       |{-}{-} \_\_pycache\_\_}
+\NormalTok{|           |{-}{-} \_\_init\_\_.cpython{-}310.pyc}
+\NormalTok{|{-}{-} scrapy.cfg}
+\NormalTok{\textbackslash{}end\{verbatim\}}
+\end{Highlighting}
+\end{Shaded}
 
 \section{Recursos utilizados para modelagem e visualização dos
 resultados}\label{recursos-utilizados-para-modelagem-e-visualizauxe7uxe3o-dos-resultados}
@@ -2731,7 +2809,7 @@ definido por:
 
 \[
 \mathbb{V} = \frac{1}{\|\boldsymbol{\Theta}\|} \int\left(\hat{y}\left(\boldsymbol{\theta}\right) - \hat{f}_{\emptyset}\right)^2 d \boldsymbol{\theta}\text{,}
-\] e`a fANOVA decompõe essa variância em contribuições de todos os
+\] e a fANOVA decompõe essa variância em contribuições de todos os
 conjuntos de hiperparâmetros:
 
 \[
@@ -3818,12 +3896,11 @@ O ajuste do algoritmo Random Forest é apresentado na figura
 Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
 previstos e observados. Em termos da transformação logarítmica
 realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972,
-enquanto o coeficiente de determinação \(R^2\) alcançou \(86,79%
-\), indicando que o modelo explica \(86,79%
-\) da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373,
-assim, em média, as predições realizadas pelo modelo Random Forest,
-considerando a transformação logarítmica, estiveram 1,373\% distantes
-dos valores reais.
+enquanto o coeficiente de determinação \(R^2\) alcançou \(86,79\%\),
+indicando que o modelo explica \(86,79\%\) da variação dos dados. Em
+relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições
+realizadas pelo modelo Random Forest, considerando a transformação
+logarítmica, estiveram 1,373\% distantes dos valores reais.
 
 \vspace{12pt}
 
