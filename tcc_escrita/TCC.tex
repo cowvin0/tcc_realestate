@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, enhanced, sharp corners, colback={codebgcolor}, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, breakable, sharp corners, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1015,38 +1015,171 @@ projeto \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}.
 
 Antes de se iniciar a raspagem dos dados com o
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, é necessário
-que se inicie um projeto usando o seu CLI. Para isso, é utilizado o
+iniciar um projeto utilizando o seu CLI. Para isso, basta executar o
 comando
 \texttt{scrapy\ startproject\ \textless{}nome\_do\_projeto\textgreater{}}.
-Esse comando irá criar um diretório com todos os arquivos e
-configurações iniciais necessárias para se iniciar a extração de dados
-com o \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}. Por
-exemplo, suponha que o comando
-\texttt{scrapy\ startproject\ scraping\_examples} tenha sido executado.
-Após a sua execução, será criado o diretório com a seguinte estrutura:
+Esse comando criará um diretório com todos os arquivos e configurações
+iniciais necessários para começar a extração de dados com o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}. Por exemplo,
+ao executar o comando \texttt{scrapy\ startproject\ scraping\_examples},
+será criada um diretório com a seguinte estrutura:
+
+\begin{verbatim}
+scraping_examples/
+|-- scraping_examples/
+|   |-- __init__.py
+|   |-- items.py                          # definição de tabelas
+|   |-- middlewares.py                    # middlewares do projeto
+|   |-- pipelines.py                      # pipelines do projeto
+|   |-- __pycache__/
+|   |   |-- __init__.cpython-310.pyc
+|   |   |-- settings.cpython-310.pyc
+|   |-- settings.py                       # configurações do projeto
+|   |-- spiders/
+|       |-- __init__.py
+|       |-- __pycache__/
+|           |-- __init__.cpython-310.pyc
+|-- scrapy.cfg                            # parâmetros de configuração
+\end{verbatim}
+
+Ao observar a estrutura do diretório, é possível identificar algumas
+funcionalidades essenciais já explicadas anteriormente. Por exemplo, o
+arquivo \texttt{middlewares.py} é utilizado para modificar como as
+requisições são feitas e como o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} lida com as
+respostas. O arquivo \texttt{settings.py} contém todas as configurações
+do projeto, como a ativação de \texttt{pipelines} e
+\texttt{middlewares}, além de permitir ajustes como o delay entre
+requisições e outras configurações avançadas. O arquivo
+\texttt{items.py} é onde são definidas as estruturas dos dados que serão
+coletados. O \texttt{pipelines.py}, como mencionado anteriormente, é
+responsável pelo processamento dos dados coletados. Por fim, o arquivo
+\texttt{scrapy.cfg} é um arquivo de configuração usado para ajustar
+parâmetros relacionados ao deploy e outras configurações do projeto.
+
+\vspace{12pt}
+
+Com a estrutura do projeto criada, é possível criar o primeiro spider do
+projeto. Para isso, é utilizado o comando
+\texttt{scrapy\ genspider\ \textless{}nome\_do\_spider\textgreater{}\ \textless{}website\textgreater{}}.
+Neste exemplo, serão raspados informações do site
+\url{https://cran.r-project.org/web/packages/index.html}. Ao executar o
+comando
+\texttt{scrapy\ genspider\ packagescraper\ https://cran.r-project.org/web/packages/index.html},
+será gerado um arquivo dentro do diretório spiders com o nome
+\texttt{packagescraper.py}, que terá a seguinte estrutura:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{\{=latex\}}
-\NormalTok{\textbackslash{}begin\{verbatim\}}
-\NormalTok{.}
-\NormalTok{|{-}{-} scraping\_examples}
-\NormalTok{|   |{-}{-} \_\_init\_\_.py}
-\NormalTok{|   |{-}{-} items.py}
-\NormalTok{|   |{-}{-} middlewares.py}
-\NormalTok{|   |{-}{-} pipelines.py}
-\NormalTok{|   |{-}{-} \_\_pycache\_\_}
-\NormalTok{|   |   |{-}{-} \_\_init\_\_.cpython{-}310.pyc}
-\NormalTok{|   |   |{-}{-} settings.cpython{-}310.pyc}
-\NormalTok{|   |{-}{-} settings.py}
-\NormalTok{|   |{-}{-} spiders}
-\NormalTok{|       |{-}{-} \_\_init\_\_.py}
-\NormalTok{|       |{-}{-} \_\_pycache\_\_}
-\NormalTok{|           |{-}{-} \_\_init\_\_.cpython{-}310.pyc}
-\NormalTok{|{-}{-} scrapy.cfg}
-\NormalTok{\textbackslash{}end\{verbatim\}}
+\ImportTok{import}\NormalTok{ scrapy}
+
+
+\KeywordTok{class}\NormalTok{ PackagescraperSpider(scrapy.Spider):}
+\NormalTok{    name }\OperatorTok{=} \StringTok{"packagescraper"}
+\NormalTok{    allowed\_domains }\OperatorTok{=}\NormalTok{ [}\StringTok{"cran.r{-}project.org"}\NormalTok{]}
+\NormalTok{    start\_urls }\OperatorTok{=}\NormalTok{ [}\StringTok{"https://cran.r{-}project.org/web/packages/index.html"}\NormalTok{]}
+
+    \KeywordTok{def}\NormalTok{ parse(}\VariableTok{self}\NormalTok{, response):}
+        \ControlFlowTok{pass}
 \end{Highlighting}
 \end{Shaded}
+
+A classe \texttt{PackagescraperSpider} foi criada a partir do comando
+executado anteriormente. Essa classe possui três atributos e um método.
+O atributo \texttt{name} nomeia o spider e vai ser utilizado
+posteriormente para inicializar a raspagem dos dados. O
+\texttt{allowed\_domains} é o atributo que indica para o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} que ele deve
+apenas raspar informações que estão naquele domínio, nesse caso,
+\texttt{cran.r-project.org}. O atributo \texttt{start\_urls} indica qual
+deve ser a primeira url a ser raspada. Por último, o método
+\texttt{parse} é executada depois que uma resposta foi obtida após a
+requisição no site alvo.
+
+\vspace{12pt}
+
+Para extrair dados do conteúdo HTML da página, será necessário utilizar
+os seletores \texttt{CSS} ou \texttt{XPath}. Nesse caso, será utilizado
+o seletor do \texttt{CSS}. De forma a facilitar a seleção de conteúdo da
+página, será utilizado uma das grandes ferramentas do
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, que é o
+\href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
+Shell}}. Essa ferramenta ajudará a selecionar as informações que
+necessárias e até mesmo a debugar o código. Para executar o
+\href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
+Shell}}, basta utilizar o comando \texttt{scrapy\ shell} no terminal.
+Após a sua execução, aparecerão algumas informações de logs e de
+configurações gerais que já estão sendo utilizadas no seu projeto.
+Agora, com o shell ativado, basta trazer todo o conteúdo HTML contido na
+página de interesse com o seguinte comando:
+\texttt{fetch("https://cran.r-project.org/web/packages/index.html")}.
+
+\begin{figure}
+
+\begin{minipage}{0.50\linewidth}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{includes/page_contents.png}}
+
+}
+
+\caption{\label{fig-page_contents}O HTML conterá todo conteúdo contido
+nessa página.}
+
+\end{figure}%
+
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{includes/page_content_devtools.png}}
+
+}
+
+\caption{\label{fig-page_contents_devtools}Exemplo do uso das
+ferramentas de desenvolvedor do Firefox para inspencionar conteúdo da
+página.}
+
+\end{figure}%
+
+\end{minipage}%
+
+\end{figure}%
+
+Com a execução do comando anterior, o conteúdo da página na
+Figura~\ref{fig-page_contents} será gerado e o conteúdo contido em seu
+HTML poderá ser extraído. Se o \texttt{fetch} deu certo, a saída do
+\texttt{response.status} no shell deverá ser 200. Para visualizar o
+conteúdo do HTML, basta executar \texttt{response.body}, como pode ser
+visto a seguir, mostrando apenas uma parte de seu conteúdo:
+
+\begin{verbatim}
+<!DOCTYPE html>
+<html>
+<head>
+<title>CRAN: Contributed Packages</title>
+<link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+</head>
+<body>
+<div class="container">
+<h1>Contributed Packages</h1>
+
+<h3 id="pkgs">Available Packages</h3>
+<p> Currently, the CRAN package repository features 22127 available packages. </p>
+...
+\end{verbatim}
+
+\subsection{Exemplo de web scraping em
+R}\label{exemplo-de-web-scraping-em-r}
 
 \section{Recursos utilizados para modelagem e visualização dos
 resultados}\label{recursos-utilizados-para-modelagem-e-visualizauxe7uxe3o-dos-resultados}

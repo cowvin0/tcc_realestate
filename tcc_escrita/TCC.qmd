@@ -344,28 +344,81 @@ Após a instalação do [**Scrapy**](https://docs.scrapy.org/en/latest), ficará
 
 \vspace{12pt}
 
-Antes de se iniciar a raspagem dos dados com o [**Scrapy**](https://docs.scrapy.org/en/latest), é necessário que se inicie um projeto usando o seu CLI. Para isso, é utilizado o comando `scrapy startproject <nome_do_projeto>`. Esse comando irá criar um diretório com todos os arquivos e configurações iniciais necessárias para se iniciar a extração de dados com o [**Scrapy**](https://docs.scrapy.org/en/latest). Por exemplo, suponha que o comando `scrapy startproject scraping_examples` tenha sido executado. Após a sua execução, será criado o diretório com a seguinte estrutura:
+Antes de se iniciar a raspagem dos dados com o [**Scrapy**](https://docs.scrapy.org/en/latest), é necessário iniciar um projeto utilizando o seu CLI. Para isso, basta executar o comando `scrapy startproject <nome_do_projeto>`. Esse comando criará um diretório com todos os arquivos e configurações iniciais necessários para começar a extração de dados com o [**Scrapy**](https://docs.scrapy.org/en/latest). Por exemplo, ao executar o comando `scrapy startproject scraping_examples`, será criada um diretório com a seguinte estrutura:
 
 ```
-{=latex}
-\begin{verbatim}
-.
-|-- scraping_examples
+scraping_examples/
+|-- scraping_examples/
 |   |-- __init__.py
-|   |-- items.py
-|   |-- middlewares.py
-|   |-- pipelines.py
-|   |-- __pycache__
+|   |-- items.py                          # definição de tabelas
+|   |-- middlewares.py                    # middlewares do projeto
+|   |-- pipelines.py                      # pipelines do projeto
+|   |-- __pycache__/
 |   |   |-- __init__.cpython-310.pyc
 |   |   |-- settings.cpython-310.pyc
-|   |-- settings.py
-|   |-- spiders
+|   |-- settings.py                       # configurações do projeto
+|   |-- spiders/
 |       |-- __init__.py
-|       |-- __pycache__
+|       |-- __pycache__/
 |           |-- __init__.cpython-310.pyc
-|-- scrapy.cfg
-\end{verbatim}
+|-- scrapy.cfg                            # parâmetros de configuração
 ```
+
+Ao observar a estrutura do diretório, é possível identificar algumas funcionalidades essenciais já explicadas anteriormente. Por exemplo, o arquivo `middlewares.py` é utilizado para modificar como as requisições são feitas e como o [**Scrapy**](https://docs.scrapy.org/en/latest) lida com as respostas. O arquivo `settings.py` contém todas as configurações do projeto, como a ativação de `pipelines` e `middlewares`, além de permitir ajustes como o delay entre requisições e outras configurações avançadas. O arquivo `items.py` é onde são definidas as estruturas dos dados que serão coletados. O `pipelines.py`, como mencionado anteriormente, é responsável pelo processamento dos dados coletados. Por fim, o arquivo `scrapy.cfg` é um arquivo de configuração usado para ajustar parâmetros relacionados ao deploy e outras configurações do projeto.
+
+\vspace{12pt}
+
+Com a estrutura do projeto criada, é possível criar o primeiro spider do projeto. Para isso, é utilizado o comando `scrapy genspider <nome_do_spider> <website>`. Neste exemplo, serão raspados informações do site <https://cran.r-project.org/web/packages/index.html>. Ao executar o comando `scrapy genspider packagescraper https://cran.r-project.org/web/packages/index.html`, será gerado um arquivo dentro do diretório spiders com o nome `packagescraper.py`, que terá a seguinte estrutura:
+
+```{python}
+#| echo: true
+#| eval: false
+
+import scrapy
+
+
+class PackagescraperSpider(scrapy.Spider):
+    name = "packagescraper"
+    allowed_domains = ["cran.r-project.org"]
+    start_urls = ["https://cran.r-project.org/web/packages/index.html"]
+
+    def parse(self, response):
+        pass
+```
+
+A classe `PackagescraperSpider` foi criada a partir do comando executado anteriormente. Essa classe possui três atributos e um método. O atributo `name` nomeia o spider e vai ser utilizado posteriormente para inicializar a raspagem dos dados. O `allowed_domains` é o atributo que indica para o [**Scrapy**](https://docs.scrapy.org/en/latest) que ele deve apenas raspar informações que estão naquele domínio, nesse caso, `cran.r-project.org`. O atributo `start_urls` indica qual deve ser a primeira url a ser raspada. Por último, o método `parse` é executada depois que uma resposta foi obtida após a requisição no site alvo.
+
+\vspace{12pt}
+
+Para extrair dados do conteúdo HTML da página, será necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor do `CSS`. De forma a facilitar a seleção de conteúdo da página, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), que é o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta ajudará a selecionar as informações que necessárias e até mesmo a debugar o código. Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html), basta utilizar o comando `scrapy shell` no terminal. Após a sua execução, aparecerão algumas informações de logs e de configurações gerais que já estão sendo utilizadas no seu projeto. Agora, com o shell ativado, basta trazer todo o conteúdo HTML contido na página de interesse com o seguinte comando: `fetch("https://cran.r-project.org/web/packages/index.html")`.
+
+::: {layout-ncol=2}
+![O HTML conterá todo conteúdo contido nessa página.](includes/page_contents.png){#fig-page_contents}
+
+![Exemplo do uso das ferramentas de desenvolvedor do Firefox para inspencionar conteúdo da página.](includes/page_content_devtools.png){#fig-page_contents_devtools}
+:::
+
+Com a execução do comando anterior, o conteúdo da página na @fig-page_contents será gerado e o conteúdo contido em seu HTML poderá ser extraído. Se o `fetch` deu certo, a saída do `response.status` no shell deverá ser 200. Para visualizar o conteúdo do HTML, basta executar `response.body`, como pode ser visto a seguir, mostrando apenas uma parte de seu conteúdo:
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+<title>CRAN: Contributed Packages</title>
+<link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+</head>
+<body>
+<div class="container">
+<h1>Contributed Packages</h1>
+
+<h3 id="pkgs">Available Packages</h3>
+<p> Currently, the CRAN package repository features 22127 available packages. </p>
+...
+```
+
+### Exemplo de web scraping em R
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
