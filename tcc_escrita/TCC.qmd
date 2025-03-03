@@ -445,7 +445,7 @@ Após inspencionar a página, percebe-se que possuem alguns elementos `<a>` no c
 
 \vspace{12pt}
 
-Com a execução do comando, tem-se uma string com nome 'available_packages_by_date.html'. É a partir dessa string que será feita a paginação. O `index.html` que está no atributo `start_urls` deverá ser substuído pela string obtida e seguir para a página de pacotes ordenados por data de publicação. Agora, com esse href, pode-se utilizar o shell e executar o `fetch` na url <https://cran.r-project.org/web/packages/available_packages_by_date.html> para carregar o conteúdo da página com a tabela de todos os pacotes ordenados por data.
+Com a execução do comando, é extraída uma string que servirá para fazer a paginação, com nome `'available_packages_by_date.html'`. É a partir dessa string que será feita a paginação. O `index.html` que está no atributo `start_urls` deverá ser substituído pela string obtida e seguir para a págian de pacotes ordenados por data de publicação. Agora, com esse href, pode-se utilizar o shell e executar o `fetch` na url <https://cran.r-project.org/web/packages/available_packages_by_date.html> para carregar o conteúdo da página com a tabela de todos os pacotes ordenados por data.
 
 \vspace{12pt}
 
@@ -2882,6 +2882,7 @@ Gráfico de dependência de valores SHAP para variáveis binárias.
 
 Para analisar as variáveis binárias, foram utilizados gráficos de dependência para cada uma delas, os quais podem ser visualizados na @fig-dependence_plot. Ao analisar os valores SHAP para os imóveis com e sem academia, observa-se que essa variável tende a aumentar a predição para imóveis que possuem academia. O mesmo padrão é identificado para imóveis com elevador, embora aqueles sem elevador também apresentem uma tendência de aumento na predição, o que pode ser explicado pela influência de outras características dos imóveis. Como já mencionado na análise da importância das variáveis, sauna e spa são características com baixa importância. No entanto, ao observar seus gráficos de dependência, é possível perceber que essas variáveis podem ser úteis na avaliação de imóveis que possuem essa característica e tem valores mais elevados. O mesmo comportamento é observado para varanda gourmet, playground e espaço gourmet.
 
+## Aplicação final
 
 # Conclusão
 

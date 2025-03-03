@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, breakable, boxrule=0pt, enhanced, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, colback={codebgcolor}, breakable, sharp corners, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1220,12 +1220,14 @@ os href, bastaria substituir o método \texttt{.get} por
 
 \vspace{12pt}
 
-Com a execução do comando, tem-se uma string com nome
-`available\_packages\_by\_date.html'. É a partir dessa string que será
-feita a paginação. O \texttt{index.html} que está no atributo
-\texttt{start\_urls} deverá ser substuído pela string obtida e seguir
-para a página de pacotes ordenados por data de publicação. Agora, com
-esse href, pode-se utilizar o shell e executar o \texttt{fetch} na url
+Com a execução do comando, é extraída uma string que servirá para fazer
+a paginação, com nome
+\texttt{\textquotesingle{}available\_packages\_by\_date.html\textquotesingle{}}.
+É a partir dessa string que será feita a paginação. O
+\texttt{index.html} que está no atributo \texttt{start\_urls} deverá ser
+substituído pela string obtida e seguir para a págian de pacotes
+ordenados por data de publicação. Agora, com esse href, pode-se utilizar
+o shell e executar o \texttt{fetch} na url
 \url{https://cran.r-project.org/web/packages/available_packages_by_date.html}
 para carregar o conteúdo da página com a tabela de todos os pacotes
 ordenados por data.
@@ -4576,6 +4578,8 @@ gráficos de dependência, é possível perceber que essas variáveis podem
 ser úteis na avaliação de imóveis que possuem essa característica e tem
 valores mais elevados. O mesmo comportamento é observado para varanda
 gourmet, playground e espaço gourmet.
+
+\section{Aplicação final}\label{aplicauxe7uxe3o-final}
 
 \chapter{Conclusão}\label{conclusuxe3o}
 
