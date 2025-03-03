@@ -327,12 +327,12 @@ O [**Playwright**](https://playwright.dev/python/) foi originalmente desenvolvid
 
 \vspace{12pt}
 
-Na sessão a seguir, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, utilizam-se os pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para esse fim. É importante ressaltar que os códigos desenvolvidos para a raspagem de dados podem deixar de funcionar ao longo do tempo devido a possíveis mudanças na estrutura dos sites. Assim, eventuais ajustes no código poderão ser necessários.
+Na sessão a seguir, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, utilizam-se os pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para esse fim. Além disso, essa sessão servirá também para mostrar a estruturar de um HTML e o funcionamento dos seletores para selecionar elementos de um HTML. É importante ressaltar que os códigos desenvolvidos para a raspagem de dados podem deixar de funcionar ao longo do tempo devido a possíveis mudanças na estrutura dos sites. Assim, eventuais ajustes no código poderão ser necessários.
 
 
 ### Exemplo de web scraping em Python
 
-\ \ \ Os exemplos de raspagem de dados em **R** e **Python** utilizarão o mesmo site. O objetivo é extrair informações sobre todos os pacotes de **R**, tanto os ordenados por data de publicação quanto os organizados por nome, disponíveis em: <https://cran.r-project.org/web/packages/index.html>. A partir desses dados, serão gerados dois arquivos `.csv` contendo essas informações.
+\ \ \ Os exemplos de raspagem de dados em **R** e **Python** utilizarão o mesmo site. O objetivo é extrair informações sobre todos os pacotes de **R** ordenados por data de publicação disponíveis em: <https://cran.r-project.org/web/packages/index.html>. A partir desses dados, será gerado um arquivo `.csv` contendo essas informações.
 
 \vspace{12pt}
 
@@ -392,33 +392,178 @@ A classe `PackagescraperSpider` foi criada a partir do comando executado anterio
 
 Para extrair dados do conteúdo HTML da página, será necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor do `CSS`. De forma a facilitar a seleção de conteúdo da página, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), que é o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta ajudará a selecionar as informações que necessárias e até mesmo a debugar o código. Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html), basta utilizar o comando `scrapy shell` no terminal. Após a sua execução, aparecerão algumas informações de logs e de configurações gerais que já estão sendo utilizadas no seu projeto. Agora, com o shell ativado, basta trazer todo o conteúdo HTML contido na página de interesse com o seguinte comando: `fetch("https://cran.r-project.org/web/packages/index.html")`.
 
-::: {layout-ncol=2}
-![O HTML conterá todo conteúdo contido nessa página.](includes/page_contents.png){#fig-page_contents}
+::: {#fig-pages_scrape layout-ncol=2}
+![](includes/page_content_new.png){#fig-page_contents}
 
-![Exemplo do uso das ferramentas de desenvolvedor do Firefox para inspencionar conteúdo da página.](includes/page_content_devtools.png){#fig-page_contents_devtools}
+![](includes/page_content_devtools_bigger.png){#fig-page_contents_devtools}
+
+A @fig-page_contents mostra a página que está sendo raspada, enquanto a @fig-page_contents_devtools mostra a mesma página mas com um exemplo do uso das ferramentas de desenvolvedor do Firefox.
 :::
 
-Com a execução do comando anterior, o conteúdo da página na @fig-page_contents será gerado e o conteúdo contido em seu HTML poderá ser extraído. Se o `fetch` deu certo, a saída do `response.status` no shell deverá ser 200. Para visualizar o conteúdo do HTML, basta executar `response.body`, como pode ser visto a seguir, mostrando apenas uma parte de seu conteúdo:
+Com a execução do comando anterior, o conteúdo da página na @fig-page_contents será gerado e o conteúdo contido em seu HTML poderá ser extraído. Se o `fetch` deu certo, após a execução do comando deverá aparecer um código 200, que é um código de status HTTP que indica que uma requisição foi bem sucedida. A saída a seguir exemplifica esse resultado:
 
+```bash
+In [1]: fetch("https://cran.r-project.org/web/packages/index.html")
+2025-03-03 08:04:24 [scrapy.core.engine] INFO: Spider opened
+2025-03-03 08:04:27 [scrapy.core.engine] DEBUG: Crawled (200) <GET
+https://cran.r-project.org/robots.txt> (referer: None)
+2025-03-03 08:04:28 [scrapy.core.engine] DEBUG: Crawled (200) <GET
+https://cran.r-project.org/web/packages/index.html> (referer: None)
 ```
+
+Após a execução do comando `fetch`, o conteúdo da página ficará salvo em um objeto `response`, que faz parte nativamente do shell. Por exemplo, caso se deseja obter o conteúdo contido no HTML da página, basta executar `response.body`. É a partir dessa resposta que o conteúdo da página poderá ser analisado e os seletores poderão finalmente ser configurados. No entanto, para facilitar ainda mais esse trabalho, alguns navegadores possuem ferramentas de desenvolvedor, que facilitam a inspeção da estrutura da página, como pode ser visto na @fig-page_contents_devtools.
+
+```HTML
+<!--PARTE DO CONTEÚDO DA PÁGINA-->
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>CRAN: Contributed Packages</title>
-<link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+    <title>CRAN: Contributed Packages</title>
+    <link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
+    <meta http-equiv="Content-Type"
+     content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,
+     initial-scale=1.0, user-scalable=yes"/>
 </head>
 <body>
-<div class="container">
-<h1>Contributed Packages</h1>
+    <div class="container">
+        <h1>Contributed Packages</h1>
 
-<h3 id="pkgs">Available Packages</h3>
-<p> Currently, the CRAN package repository features 22127 available packages. </p>
-...
+        <h3 id="pkgs">Available Packages</h3>
+        <p>
+            Currently, the CRAN package repository features
+            22127 available packages.
+        </p>
+        ...
+    </div>
+</body>
+</html>
 ```
 
+Após inspencionar a página, percebe-se que possuem alguns elementos `<a>` no corpo do HTML e que possuem um href relacionado a eles. Esses href serão necessários para fazer a paginação fazer a coleta dos pacotes ordenados por data de publicação. Para extrair esses href, basta executar em seu terminal o comando `response.css("a[target=_top] ::attr(href)").get()` que faz uso dos seletores `CSS`. Esse comando é usado para extrair apenas o primeiro href de elemento `<a>` que possuem o atributo target="_top". Caso fosse necessário extrair todos os href, bastaria substituir o método `.get` por `.getall()`.
+
+\vspace{12pt}
+
+Com a execução do comando, tem-se uma string com nome 'available_packages_by_date.html'. É a partir dessa string que será feita a paginação. O `index.html` que está no atributo `start_urls` deverá ser substuído pela string obtida e seguir para a página de pacotes ordenados por data de publicação. Agora, com esse href, pode-se utilizar o shell e executar o `fetch` na url <https://cran.r-project.org/web/packages/available_packages_by_date.html> para carregar o conteúdo da página com a tabela de todos os pacotes ordenados por data.
+
+\vspace{12pt}
+
+A nova página contém uma tabela geral de todos os pacotes ordenados por data e contendo a sua descrição. Cada data, nome de pacote e descrição do pacote estão contidos no elemento `<tr>` do HTML. Para selecionar todos os textos contidos nesse elemento, basta executar `response.css("tr ::text").getall()`. Após a sua execução, tem-se uma lista de strings com as informações de todos os pacotes. No entanto, nessa lista vem algumas strings vazias, que deverão ser removidas. O código a seguir mostrará todos os seletores que já foram utilizados no shell mas agora inclusos no spider para iniciar com o processo de raspagem dos dados:
+
+```{python}
+#| eval: false
+#| echo: true
+
+import scrapy
+
+
+class PackagescraperSpider(scrapy.Spider):
+    name = "packagescraper"
+    allowed_domains = ["cran.r-project.org"]
+    start_urls = ["https://cran.r-project.org/web/packages/index.html"]
+
+    def parse(self, response):
+        href = response.css("a[target=_top] ::attr(href)").get()
+        follow_url = (
+          self.start_urls[0].replace("index.html", "") + href
+        )
+
+        yield response.follow(
+            follow_url,
+            callback=self.parse_packages_info,
+            dont_filter=True
+        )
+
+    def parse_packages_info(self, response):
+        get_all_tr = response.css("tr ::text").getall()
+        packages_element = [
+          x.strip() for x in get_all_tr if x.strip() != ""
+        ][3:]
+
+        pub_date = packages_element[::3]
+        packs_name = packages_element[1::3]
+        desc_packs = packages_element[2::3]
+
+        for i in zip(pub_date, packs_name, desc_packs):
+            yield {
+                "publication_date": i[0],
+                "package_name": i[1],
+                "description_packs": i[2],
+            }
+```
+
+Esse código possui a mesma classe mostrado anteriormente no `packagescraper.py`. No entanto, agora ele contém os seletores que foram analisados pelo shell, um novo método e algumas outras alterações. Por exemplo, o método `parse(self, response)`, mostrada anteriormente, é a responsável por capturar o link que leva à tabela de pacotes. Esse link é capturado através do seletor definido anteriomente no shell. Em seguida, esse link é concatenado à url base para formar a url completa que será seguida pelo spider. O método `response.follow()` é utilizado para acessar essa nova página e chamar o método `parse_packages_info` para continuar o processo de raspagem.
+
+\vspace{12pt}
+
+Dentro do método `parse_packages_info`, todos os textos contidos nos elementos `<tr>` são coletados com `response.css("tr ::text").getall()`. Como essa extração pode incluir strings vazias, é aplicado um strip() em cada elemento da lista e removidos aqueles que resultam em uma string vazia. Além disso, os primeiros três elementos são ignorados, pois não contêm informações relevantes.
+
+\vspace{12pt}
+
+Após a limpeza, os dados são organizados em três listas: pub_date, packs_name e desc_packs. Cada uma delas recebe elementos específicos da lista filtrada, onde, `pub_date` contém as datas de publicação dos pacotes, `packs_name` contém os nomes dos pacotes e `desc_packs` contém as descrições dos pacotes.
+
+\vspace{12pt}
+
+Por fim, a função `zip(pub_date, packs_name, desc_packs)` permite iterar sobre as três listas simultaneamente, gerando um dicionário com as chaves `publication_date`, `package_name` e `description_packs`. Esse dicionário é então passado para o `yield`, permitindo que [**Scrapy**](https://docs.scrapy.org/en/latest) armazene os dados no formato desejado.
+
+\vspace{12pt}
+
+Com esse código, os dados coletados podem ser salvos em diferentes formatos, como `.json` ou `.csv`, ao executar o spider. Por exemplo, para salvar os dados como `.csv`, basta executar no terminal o comando `scrapy crawl -o packages.csv packagescraper`. Ao executar o comando, ficará salvo um arquico com nome `packages.csv`, o qual conterá todos os dados coletados do site alvo.
+
+\vspace{12pt}
+
+O exemplo dado aqui é bastante simples. No entanto, a depender das necessidades do projeto, deverão ser utilizadas outras ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest). O código completo da raspagem dos dados de imóveis podem ser acessados em <https://github.com/cowvin0/tcc_realestate/tree/main/scrapy_zap>. Esse código pode ser utilizado como material complementar ao que foi apresentado nesse texto, já que foram adicionadas mais funcionalidades devido a necessidade durante a coleta dos dados.
+
 ### Exemplo de web scraping em R
+
+\ \ \ Agora que já é conhecida a estrutura e já foi feita a inspeção do que se deseja coletar do site através das ferramentas de desenvolvedor do Firefox, o exemplo em **R**  será mais direto. Neste exemplo, foram utilizadas apenas o pacote [**rvest**](https://rvest.tidyverse.org/), [**dplyr**](https://dplyr.tidyverse.org/) para a criação da tabela com as informações coletadas e o [**purrr**](https://purrr.tidyverse.org/), que é um pacote de **R** para programação funcional. O código criado para extração pode ser visualizado abaixo:
+
+```r
+library(rvest)
+library(dplyr)
+library(purrr)
+
+base_url <- "https://cran.r-project.org/web/packages/"
+
+first_package_link <- read_html(paste0(base_url, "index.html")) |>
+    html_elements("a[target=_top]") |>
+    html_attr("href") |>
+    first()
+
+package_url <- paste0(base_url, first_package_link)
+package_page <- read_html(package_url)
+
+packages_info <- package_page |>
+    html_elements("tr") |>
+    html_text2() |>
+    tail(-1) |>
+    map(~ strsplit(.x, "\t")[[1]])
+
+packages_df <- tibble(
+    publication_date = map_chr(packages_info, 1),
+    package_name = map_chr(packages_info, 2),
+    description_packs = map_chr(packages_info, 3)
+)
+```
+
+Após carregar os pacotes necessários, o código define a url base do CRAN e acessa a página inicial que contém inúmeras informações sobre os pacotes de **R**. Em seguida, o código extrai o primeiro link do href presente na página e constrói a url completa para acessar a página com os pacotes ordenados por data de publicação.
+
+\vspace{12pt}
+
+Depois de carregar o conteúdo da página, o código busca as informações contidas nos elementos `<tr>` da tabela exibida no site. Os textos são extraídos e processados para remover o cabeçalho, e então são divididos em colunas separadas usando a função `strsplit()`, que vai separar as informações de data de publicação, nome do pacote e descrição do pacote.
+
+\vspace{12pt}
+
+Por fim, os dados são organizados em um `tibble`, onde cada linha contém a data de publicação, o nome do pacote e sua descrição. O uso das funções `map_chr` do pacote purrr garante que os valores sejam extraídos retornando vetores de caracteres com cada uma das informações.
+
+\vspace{12pt}
+
+Assim como no exemplo dado em **Python**, o projeto de raspagem com as necessidades e informações necessárias para serem coletadas durante a coleta dos dados. Ou seja, embora os exemplos dados acima tenham sido bastante simples, a depender do site, poderiam ser adicionadas outras funcionalidades como clicar em botões, descer página automaticamente para gerar o conteúdo e muitas outras coisas.
+
+\vspace{12pt}
+
+Portanto, chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados e os exemplos de raspagem em **R** e **Python**. No entanto, a linguagem Python, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Dessa forma, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
@@ -546,7 +691,7 @@ Neste exemplo, o código permite que o usuário selecione um valor em um menu su
 
 \vspace{12pt}
 
-Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**FastAPI**](https://fastapi.tiangolo.com/), uma ferramenta moderna e eficiente para a criação de APIs em **Python**. O [**FastAPI**](https://fastapi.tiangolo.com/) é conhecido por sua alta performance, graças ao uso de tipagem estática e a sua facilidade de suporte assíncrono, além de permitir a criação de APIs de maneira rápida e simples. Sua integração com bibliotecas como [**Pydantic**](https://docs.pydantic.dev/latest/) para validação de dados e [**SQLAlchemy**](https://www.sqlalchemy.org/) [@sqlalchemy] para interação e conexão com bancos de dados.
+Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**FastAPI**](https://fastapi.tiangolo.com/), uma ferramenta moderna e eficiente para a criação de APIs em **Python**. O [**FastAPI**](https://fastapi.tiangolo.com/) é conhecido por sua alta performance, graças ao uso de tipagem estática e a sua facilidade de suporte assíncrono, além de permitir a criação de APIs de maneira rápida e simples. Além disso, integra-se facilmente com bibliotecas como [**Pydantic**](https://docs.pydantic.dev/latest/) para validação de dados e [**SQLAlchemy**](https://www.sqlalchemy.org/) [@sqlalchemy] para interação e conexão com bancos de dados.
 
 \vspace{12pt}
 
