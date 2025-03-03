@@ -40,6 +40,6 @@ def toggle_theme(is_checked):
     return "light", dbc.themes.COSMO
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
-# server = app.server
+# if __name__ == "__main__":
+#     app.run(debug=True)
+server = app.server

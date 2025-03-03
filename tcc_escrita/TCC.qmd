@@ -10,6 +10,7 @@ template-partials:
 toc-title: \centering Sumário \thispagestyle{empty}
 format:
   pdf:
+    pdf-engine: lualatex
     papersize: A4
     keep-tex: true
     geometry:
@@ -244,7 +245,7 @@ O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste dos mo
 
 # Recursos Computacionais
 
-\ \ \ Nesta seção, serão apresentados os recursos computacionais utilizados no desenvolvimento deste trabalho. As ferramentas selecionadas incluem linguagens de programação amplamente conhecidas, como `Python` e `R`, e sistemas de publicação técnica, como o `Quarto`. Cada uma dessas tecnologias será descrita em relação ao seu papel na modelagem, coleta e manipulação de dados, bem como na criação da aplicação final. Portanto, a primeira etapa será descrever as tecnologias utilizadas para a coleta dos dados.
+\ \ \ Nesta seção, serão apresentados os recursos computacionais utilizados no desenvolvimento deste trabalho. As ferramentas selecionadas incluem linguagens de programação amplamente conhecidas, como **Python** e **R**, e sistemas de publicação técnica, como o `Quarto`. Cada uma dessas tecnologias será descrita em relação ao seu papel na modelagem, coleta e manipulação de dados, bem como na criação da aplicação final. Portanto, a primeira etapa será descrever as tecnologias utilizadas para a coleta dos dados.
 
 ## Recursos utilizados para a coleta de dados
 
@@ -258,7 +259,7 @@ O Web scraping é uma técnica utilizada para extrair informações de sites na 
 
 - HEAD: O HEAD é bastante semelhante o GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
 
-- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML.
+- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.].
 
 - PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma semelhante. No entanto, caso seja necessário atualizar um usuário diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas um único registro atualizado. Para o método POST, serão criados diversos registros para cada requisição realizada.
 
@@ -274,11 +275,11 @@ Toda raspagem inicia com a composição de uma requisição HTTP para adquirir r
 
 \vspace{12pt}
 
-Para realizar a raspagem de dados, foram utilizadas as linguagens de programação `R` [@r_language] e `Python` [@van1995python]. `R` é uma linguagem voltada para computação científica e visualização de dados, desenvolvida pelos professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do `R` foi lançada em 1993, e, em 1997, a linguagem tornou-se oficialmente parte do Projeto GNU. Em `R`, há diversos pacotes disponíveis para a realização de raspagem de dados. Neste trabalho, foi utilizado o pacote [**xml2**](https://xml2.r-lib.org/) [@xml2] e o [**rvest**](https://rvest.tidyverse.org/) [@rvest].
+Para realizar a raspagem de dados, foram utilizadas as linguagens de programação **R** [@r_language] e **Python** [@van1995python]. **R** é uma linguagem voltada para computação científica e visualização de dados, desenvolvida pelos professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do **R** foi lançada em 1993, e, em 1997, a linguagem tornou-se oficialmente parte do Projeto GNU. Em **R**, há diversos pacotes disponíveis para a realização de raspagem de dados. Neste trabalho, foi utilizado o pacote [**xml2**](https://xml2.r-lib.org/) [@xml2] e o [**rvest**](https://rvest.tidyverse.org/) [@rvest].
 
 \vspace{12pt}
 
-O pacote [**xml2**](https://xml2.r-lib.org/) foi inspirado no [**jQuery**](https://jquery.com/), uma biblioteca `JavaScript` projetada para facilitar tarefas como a manipulação de documentos HTML. Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e modificar os nós de documentos estruturados. Essas funcionalidades permitem, por exemplo, a extração de informações específicas de páginas web ou arquivos XML. Embora o [**xml2**](https://xml2.r-lib.org/) não possua suporte direto para compor requisições HTTP, ele se destaca por sua capacidade de interpretar a estrutura hierárquica de sites e organizar os dados extraídos de maneira estruturada e eficiente.
+O pacote [**xml2**](https://xml2.r-lib.org/) foi inspirado no [**jQuery**](https://jquery.com/), uma biblioteca **JavaScript** projetada para facilitar tarefas como a manipulação de documentos HTML. Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e modificar os nós de documentos estruturados. Essas funcionalidades permitem, por exemplo, a extração de informações específicas de páginas web ou arquivos XML. Embora o [**xml2**](https://xml2.r-lib.org/) não possua suporte direto para compor requisições HTTP, ele se destaca por sua capacidade de interpretar a estrutura hierárquica de sites e organizar os dados extraídos de maneira estruturada e eficiente.
 
 \vspace{12pt}
 
@@ -290,11 +291,11 @@ Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidade
 
 \vspace{12pt}
 
-Como mencionado anteriormente, `Python` também foi utilizado para realizar a raspagem de dados, embora tenha sido empregado em momentos subsequentes à utilização do `R`. `Python` [@van1995python] é uma linguagem de programação criada por Guido van Rossum, que iniciou seu desenvolvimento no final dos anos 1980 como sucessora da linguagem `ABC`. A primeira versão oficial do `Python` foi lançada em 1991. Trata-se de uma linguagem de alto nível, de propósito geral, que prioriza a simplicidade e a legibilidade do código, tornando-a amplamente adotada para diversas aplicações, incluindo análise de dados e automação de tarefas, além de ser amplamente utilizada para aprendizagem de máquina.
+Como mencionado anteriormente, **Python** também foi utilizado para realizar a raspagem de dados, embora tenha sido empregado em momentos subsequentes à utilização do **R**. **Python** [@van1995python] é uma linguagem de programação criada por Guido van Rossum, que iniciou seu desenvolvimento no final dos anos 1980 como sucessora da linguagem `ABC`. A primeira versão oficial do **Python** foi lançada em 1991. Trata-se de uma linguagem de alto nível, de propósito geral, que prioriza a simplicidade e a legibilidade do código, tornando-a amplamente adotada para diversas aplicações, incluindo análise de dados e automação de tarefas, além de ser amplamente utilizada para aprendizagem de máquina.
 
 \vspace{12pt}
 
-A linguagem de programação `Python` possui um ecossistema diversificado de bibliotecas para a realização de diversas tarefas, incluindo a raspagem de dados. Especificamente para essa finalidade, foi utilizada a biblioteca [**Scrapy**](https://docs.scrapy.org/en/latest) [@kouzis2016learning], um framework voltado para web scraping e crawling que permite extrair dados de páginas da web de forma automatizada.
+A linguagem de programação **Python** possui um ecossistema diversificado de bibliotecas para a realização de diversas tarefas, incluindo a raspagem de dados. Especificamente para essa finalidade, foi utilizada a biblioteca [**Scrapy**](https://docs.scrapy.org/en/latest) [@kouzis2016learning], um framework voltado para web scraping e crawling que permite extrair dados de páginas da web de forma automatizada.
 
 \vspace{12pt}
 
@@ -322,19 +323,110 @@ Embora o [**Scrapy**](https://docs.scrapy.org/en/latest) ofereça uma ampla gama
 
 \vspace{12pt}
 
-O [**Playwright**](https://playwright.dev/python/) foi originalmente desenvolvido para realizar testes em aplicações web e executar tarefas de automação. No entanto, aqui ele foi empregado para interagir com o conteúdo dinâmico de páginas, como carregar elementos gerados por `JavaScript`. Sua utilização neste trabalho teve o mesmo propósito que o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) desempenhou na raspagem de dados feita com `R`, permitindo capturar dados que não seriam acessíveis diretamente via requisições HTTP convencionais. Além disso, ele também permite simular navegadores para acompanhar em tempo real o que cada requisição está alterando. Por fim, ao coletar os dados de imóveis, foi necessário realizar também a geocodificação dos endereços. Para isso, foi utilizado o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) [@geocoder] da linguagem `R`, que também serviu para os dados que estavam sendo coletados em `Python`.
+O [**Playwright**](https://playwright.dev/python/) foi originalmente desenvolvido para realizar testes em aplicações web e executar tarefas de automação. No entanto, aqui ele foi empregado para interagir com o conteúdo dinâmico de páginas, como carregar elementos gerados por **JavaScript**. Sua utilização neste trabalho teve o mesmo propósito que o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) desempenhou na raspagem de dados feita com **R**, permitindo capturar dados que não seriam acessíveis diretamente via requisições HTTP convencionais. Além disso, ele também permite simular navegadores para acompanhar em tempo real o que cada requisição está alterando. Por fim, ao coletar os dados de imóveis, foi necessário realizar também a geocodificação dos endereços. Para isso, foi utilizado o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) [@geocoder] da linguagem **R**, que também serviu para os dados que estavam sendo coletados em **Python**.
 
 \vspace{12pt}
 
-Assim chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados. Entretanto, a linguagem `Python`, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Portanto, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
+Na sessão a seguir, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, utilizam-se os pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para esse fim. É importante ressaltar que os códigos desenvolvidos para a raspagem de dados podem deixar de funcionar ao longo do tempo devido a possíveis mudanças na estrutura dos sites. Assim, eventuais ajustes no código poderão ser necessários.
+
+
+### Exemplo de web scraping em Python
+
+\ \ \ Os exemplos de raspagem de dados em **R** e **Python** utilizarão o mesmo site. O objetivo é extrair informações sobre todos os pacotes de **R**, tanto os ordenados por data de publicação quanto os organizados por nome, disponíveis em: <https://cran.r-project.org/web/packages/index.html>. A partir desses dados, serão gerados dois arquivos `.csv` contendo essas informações.
+
+\vspace{12pt}
+
+Para instalar o [**Scrapy**](https://docs.scrapy.org/en/latest) e suas dependências, pode-se instalar diretamente utilizando o [**pip**](https://pip.pypa.io/en/stable/), que é o gerenciador de pacotes para **Python**. Portanto, para isso, basta executar em seu terminal o comando `pip install Scrapy`.
+
+\vspace{12pt}
+
+Após a instalação do [**Scrapy**](https://docs.scrapy.org/en/latest), ficará disponível o uso de seu CLI^[CLI (Command Line Interface) é uma interface de linha de comando que permite a interação com um sistema operacional ou software por meio de comandos digitados em um terminal, sem o uso de interface gráfica.]. O CLI disponibilizará inúmeras funcionalidades para o [**Scrapy**](https://docs.scrapy.org/en/latest), tais como inspencionar o conteúdo da página para encontrar mais facilmente os seletores daquela página em específico e, o mais importante, iniciar um projeto [**Scrapy**](https://docs.scrapy.org/en/latest).
+
+\vspace{12pt}
+
+Antes de se iniciar a raspagem dos dados com o [**Scrapy**](https://docs.scrapy.org/en/latest), é necessário iniciar um projeto utilizando o seu CLI. Para isso, basta executar o comando `scrapy startproject <nome_do_projeto>`. Esse comando criará um diretório com todos os arquivos e configurações iniciais necessários para começar a extração de dados com o [**Scrapy**](https://docs.scrapy.org/en/latest). Por exemplo, ao executar o comando `scrapy startproject scraping_examples`, será criada um diretório com a seguinte estrutura:
+
+```
+scraping_examples/
+|-- scraping_examples/
+|   |-- __init__.py
+|   |-- items.py                          # definição de tabelas
+|   |-- middlewares.py                    # middlewares do projeto
+|   |-- pipelines.py                      # pipelines do projeto
+|   |-- __pycache__/
+|   |   |-- __init__.cpython-310.pyc
+|   |   |-- settings.cpython-310.pyc
+|   |-- settings.py                       # configurações do projeto
+|   |-- spiders/
+|       |-- __init__.py
+|       |-- __pycache__/
+|           |-- __init__.cpython-310.pyc
+|-- scrapy.cfg                            # parâmetros de configuração
+```
+
+Ao observar a estrutura do diretório, é possível identificar algumas funcionalidades essenciais já explicadas anteriormente. Por exemplo, o arquivo `middlewares.py` é utilizado para modificar como as requisições são feitas e como o [**Scrapy**](https://docs.scrapy.org/en/latest) lida com as respostas. O arquivo `settings.py` contém todas as configurações do projeto, como a ativação de `pipelines` e `middlewares`, além de permitir ajustes como o delay entre requisições e outras configurações avançadas. O arquivo `items.py` é onde são definidas as estruturas dos dados que serão coletados. O `pipelines.py`, como mencionado anteriormente, é responsável pelo processamento dos dados coletados. Por fim, o arquivo `scrapy.cfg` é um arquivo de configuração usado para ajustar parâmetros relacionados ao deploy e outras configurações do projeto.
+
+\vspace{12pt}
+
+Com a estrutura do projeto criada, é possível criar o primeiro spider do projeto. Para isso, é utilizado o comando `scrapy genspider <nome_do_spider> <website>`. Neste exemplo, serão raspados informações do site <https://cran.r-project.org/web/packages/index.html>. Ao executar o comando `scrapy genspider packagescraper https://cran.r-project.org/web/packages/index.html`, será gerado um arquivo dentro do diretório spiders com o nome `packagescraper.py`, que terá a seguinte estrutura:
+
+```{python}
+#| echo: true
+#| eval: false
+
+import scrapy
+
+
+class PackagescraperSpider(scrapy.Spider):
+    name = "packagescraper"
+    allowed_domains = ["cran.r-project.org"]
+    start_urls = ["https://cran.r-project.org/web/packages/index.html"]
+
+    def parse(self, response):
+        pass
+```
+
+A classe `PackagescraperSpider` foi criada a partir do comando executado anteriormente. Essa classe possui três atributos e um método. O atributo `name` nomeia o spider e vai ser utilizado posteriormente para inicializar a raspagem dos dados. O `allowed_domains` é o atributo que indica para o [**Scrapy**](https://docs.scrapy.org/en/latest) que ele deve apenas raspar informações que estão naquele domínio, nesse caso, `cran.r-project.org`. O atributo `start_urls` indica qual deve ser a primeira url a ser raspada. Por último, o método `parse` é executada depois que uma resposta foi obtida após a requisição no site alvo.
+
+\vspace{12pt}
+
+Para extrair dados do conteúdo HTML da página, será necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor do `CSS`. De forma a facilitar a seleção de conteúdo da página, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), que é o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta ajudará a selecionar as informações que necessárias e até mesmo a debugar o código. Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html), basta utilizar o comando `scrapy shell` no terminal. Após a sua execução, aparecerão algumas informações de logs e de configurações gerais que já estão sendo utilizadas no seu projeto. Agora, com o shell ativado, basta trazer todo o conteúdo HTML contido na página de interesse com o seguinte comando: `fetch("https://cran.r-project.org/web/packages/index.html")`.
+
+::: {layout-ncol=2}
+![O HTML conterá todo conteúdo contido nessa página.](includes/page_contents.png){#fig-page_contents}
+
+![Exemplo do uso das ferramentas de desenvolvedor do Firefox para inspencionar conteúdo da página.](includes/page_content_devtools.png){#fig-page_contents_devtools}
+:::
+
+Com a execução do comando anterior, o conteúdo da página na @fig-page_contents será gerado e o conteúdo contido em seu HTML poderá ser extraído. Se o `fetch` deu certo, a saída do `response.status` no shell deverá ser 200. Para visualizar o conteúdo do HTML, basta executar `response.body`, como pode ser visto a seguir, mostrando apenas uma parte de seu conteúdo:
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+<title>CRAN: Contributed Packages</title>
+<link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+</head>
+<body>
+<div class="container">
+<h1>Contributed Packages</h1>
+
+<h3 id="pkgs">Available Packages</h3>
+<p> Currently, the CRAN package repository features 22127 available packages. </p>
+...
+```
+
+### Exemplo de web scraping em R
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
-\ \ \ Com os dados coletados, a etapa de modelagem dos valores de imóveis torna-se essencial para converter essas informações em entendimentos relevantes e aplicáveis. Essa etapa permite identificar padrões de comportamento entre as variáveis que influenciam os valores imobiliários, além de determinar quais fatores exercem maior impacto sobre esses valores. Para chegar a esses resultados, foram utilizadas bibliotecas desenvolvidas em `Python`, como [**scikit-learn**](https://scikit-learn.org/stable/) [@scikit-learn], [**pandas**](https://pandas.pydata.org/) [@reback2020pandas], empregada para a manipulação das bases de dados utilizadas neste trabalho, [**numpy**](https://numpy.org/) [@harris2020array], voltada para computação numérica, entre outras.
+\ \ \ Com os dados coletados, a etapa de modelagem dos valores de imóveis torna-se essencial para converter essas informações em entendimentos relevantes e aplicáveis. Essa etapa permite identificar padrões de comportamento entre as variáveis que influenciam os valores imobiliários, além de determinar quais fatores exercem maior impacto sobre esses valores. Para chegar a esses resultados, foram utilizadas bibliotecas desenvolvidas em **Python**, como [**scikit-learn**](https://scikit-learn.org/stable/) [@scikit-learn], [**pandas**](https://pandas.pydata.org/) [@reback2020pandas], empregada para a manipulação das bases de dados utilizadas neste trabalho, [**numpy**](https://numpy.org/) [@harris2020array], voltada para computação numérica, entre outras.
 
 \vspace{12pt}
 
-O [**scikit-learn**](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em `Python`. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [**scikit-learn**](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [**SciPy**](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em `Python`.
+O [**scikit-learn**](https://scikit-learn.org/stable/) é uma das bibliotecas de aprendizado de máquina mais populares em **Python**. Ela oferece uma extensa coleção de algoritmos para tarefas como classificação, regressão, clusterização, além de ferramentas para pré-processamento de dados, validação cruzada e seleção de modelos. O projeto teve início no Google Summer of Code como uma iniciativa do engenheiro francês David Cournapeau. O [**scikit-learn**](https://scikit-learn.org/stable/) foi criado como uma ferramenta baseada na biblioteca [**SciPy**](https://scipy.org/) [@2020SciPy-NMeth], que é voltada para computação científica e cálculo numérico em **Python**.
 
 \vspace{12pt}
 
@@ -398,11 +490,11 @@ Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e vi
 
 ## Recursos utilizados para a criação da aplicação final
 
-\ \ \ A aplicação final foi desenvolvida com o objetivo de realizar previsões de valores de imóveis e oferecer uma análise detalhada do mercado imobiliário da cidade de João Pessoa. Além de integrar a pipeline de machine learning criada durante a etapa de modelagem, a aplicação também dispõe de funcionalidades interativas que permitem aos usuários explorar os dados e visualizar os resultados de forma clara e intuitiva. Para alcançar esses objetivos, foram empregadas tecnologias para o desenvolvimento do front-end e do back-end, que foram desenvolvidos em `Python`.
+\ \ \ A aplicação final foi desenvolvida com o objetivo de realizar previsões de valores de imóveis e oferecer uma análise detalhada do mercado imobiliário da cidade de João Pessoa. Além de integrar a pipeline de machine learning criada durante a etapa de modelagem, a aplicação também dispõe de funcionalidades interativas que permitem aos usuários explorar os dados e visualizar os resultados de forma clara e intuitiva. Para alcançar esses objetivos, foram empregadas tecnologias para o desenvolvimento do front-end e do back-end, que foram desenvolvidos em **Python**.
 
 \vspace{12pt}
 
-O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em `Python`. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e `JavaScript` diretamente no ambiente `Python`. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`. A seguir, veja um exemplo de função `callback`:
+O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em **Python**. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e **JavaScript** diretamente no ambiente **Python**. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`. A seguir é apresentado um exemplo do uso da função `callback`:
 
 ```{python}
 #| eval: false
@@ -454,7 +546,7 @@ Neste exemplo, o código permite que o usuário selecione um valor em um menu su
 
 \vspace{12pt}
 
-Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**FastAPI**](https://fastapi.tiangolo.com/), uma ferramenta moderna e eficiente para a criação de APIs em `Python`. O [**FastAPI**](https://fastapi.tiangolo.com/) é conhecido por sua alta performance, graças ao uso de tipagem estática e a sua facilidade de suporte assíncrono, além de permitir a criação de APIs de maneira rápida e simples. Sua integração com bibliotecas como [**Pydantic**](https://docs.pydantic.dev/latest/) para validação de dados e [**SQLAlchemy**](https://www.sqlalchemy.org/) [@sqlalchemy] para interação e conexão com bancos de dados.
+Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**FastAPI**](https://fastapi.tiangolo.com/), uma ferramenta moderna e eficiente para a criação de APIs em **Python**. O [**FastAPI**](https://fastapi.tiangolo.com/) é conhecido por sua alta performance, graças ao uso de tipagem estática e a sua facilidade de suporte assíncrono, além de permitir a criação de APIs de maneira rápida e simples. Sua integração com bibliotecas como [**Pydantic**](https://docs.pydantic.dev/latest/) para validação de dados e [**SQLAlchemy**](https://www.sqlalchemy.org/) [@sqlalchemy] para interação e conexão com bancos de dados.
 
 \vspace{12pt}
 
@@ -470,16 +562,16 @@ Com as tecnologias mencionadas anteriormente e o modelo final obtido, foi possí
 
 \vspace{12pt}
 
-O [**Visual Studio Code (VSCode)**](https://code.visualstudio.com/) foi a principal ferramenta utilizada para a escrita do código neste trabalho. O [**VSCode**](https://code.visualstudio.com/) é um editor bastante leve e oferece suporte a diversas linguagens de programação e permite integração com inúmeras tecnologias por meio de suas extensões. Entre as extensões utilizadas, destaca-se o [**vscodevim**](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim), que incorpora os key mappings do editor de texto Vim, originalmente criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além disso, foram empregadas extensões específicas para as linguagens `Python` e `R`, tendo como principal objetivo uma melhor formatação de código, execução e identificação de possíveis erros.
+O [**Visual Studio Code (VSCode)**](https://code.visualstudio.com/) foi a principal ferramenta utilizada para a escrita do código neste trabalho. O [**VSCode**](https://code.visualstudio.com/) é um editor bastante leve e oferece suporte a diversas linguagens de programação e permite integração com inúmeras tecnologias por meio de suas extensões. Entre as extensões utilizadas, destaca-se o [**vscodevim**](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim), que incorpora os key mappings do editor de texto Vim, originalmente criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além disso, foram empregadas extensões específicas para as linguagens **Python** e **R**, tendo como principal objetivo uma melhor formatação de código, execução e identificação de possíveis erros.
 
 \vspace{12pt}
 
-Por exemplo, uma das extensões utilizadas para análise estática de código em `Python` foi o [**Pyright**](https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright), desenvolvido pela Microsoft. Essa ferramenta é projetada para detectar erros durante o desenvolvimento e verificar a tipagem de código em `Python`, contribuindo para a melhoria da qualidade e da manutenção do programa. Outra ferramenta empregada foi o [**Black Formatter**](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter), um formatador de código `Python`. Ele automatiza a padronização do estilo de código, garantindo consistência e legibilidade. Além disso, foi utilizado o [**Flake8**](https://marketplace.visualstudio.com/items?itemName=ms-python.flake8), que analisa o código em busca de erros de sintaxe, problemas de estilo com base no padrão [**PEP 8**](https://peps.python.org/pep-0008/), e outras questões, como redundâncias ou importações desnecessárias. Por fim, também foi utilizada uma extensão mais geral de suporte à linguagem `Python`, que oferece diversas funcionalidades, como correção de código por meio da extensão [**PythonDebugger**](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy), que utiliza a biblioteca debugpy para suporte ao processo de debugging.
+Por exemplo, uma das extensões utilizadas para análise estática de código em **Python** foi o [**Pyright**](https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright), desenvolvido pela Microsoft. Essa ferramenta é projetada para detectar erros durante o desenvolvimento e verificar a tipagem de código em **Python**, contribuindo para a melhoria da qualidade e da manutenção do programa. Outra ferramenta empregada foi o [**Black Formatter**](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter), um formatador de código **Python**. Ele automatiza a padronização do estilo de código, garantindo consistência e legibilidade. Além disso, foi utilizado o [**Flake8**](https://marketplace.visualstudio.com/items?itemName=ms-python.flake8), que analisa o código em busca de erros de sintaxe, problemas de estilo com base no padrão [**PEP 8**](https://peps.python.org/pep-0008/), e outras questões, como redundâncias ou importações desnecessárias. Por fim, também foi utilizada uma extensão mais geral de suporte à linguagem **Python**, que oferece diversas funcionalidades, como correção de código por meio da extensão [**PythonDebugger**](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy), que utiliza a biblioteca debugpy para suporte ao processo de debugging.
 
 
 \vspace{12pt}
 
-Para a elaboração deste documento, foi utilizado o [**Quarto**](https://quarto.org/) [@quarto], uma plataforma de publicação científica desenvolvida pela empresa Posit. O [**Quarto**](https://quarto.org/) é uma evolução do RMarkdown e se destaca por sua capacidade de criar documentos de alta qualidade que integram texto e código. Compatível com diversas linguagens de programação, como `R`, `Python`, e outras, essa ferramenta é extremamente versátil para análise de dados e geração de relatórios. Com o [**Quarto**](https://quarto.org/), é possível produzir relatórios, artigos, livros, apresentações e até sites. Ele é amplamente adotado na comunidade científica, especialmente entre usuários de `R`, e oferece suporte a Markdown e \LaTeX, o que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais. Além disso, os documentos gerados podem ser exportados para diversos formatos, como HTML, PDF, MS Word, entre outros. O [**Quarto**](https://quarto.org/) também foi utilizado através do [**VSCode**](https://code.visualstudio.com/), com a sua extensão disponível em <https://quarto.org/docs/tools/vscode.html>.
+Para a elaboração deste documento, foi utilizado o [**Quarto**](https://quarto.org/) [@quarto], uma plataforma de publicação científica desenvolvida pela empresa Posit. O [**Quarto**](https://quarto.org/) é uma evolução do RMarkdown e se destaca por sua capacidade de criar documentos de alta qualidade que integram texto e código. Compatível com diversas linguagens de programação, como **R**, **Python**, e outras, essa ferramenta é extremamente versátil para análise de dados e geração de relatórios. Com o [**Quarto**](https://quarto.org/), é possível produzir relatórios, artigos, livros, apresentações e até sites. Ele é amplamente adotado na comunidade científica, especialmente entre usuários de **R**, e oferece suporte a Markdown e \LaTeX, o que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e outros elementos visuais. Além disso, os documentos gerados podem ser exportados para diversos formatos, como HTML, PDF, MS Word, entre outros. O [**Quarto**](https://quarto.org/) também foi utilizado através do [**VSCode**](https://code.visualstudio.com/), com a sua extensão disponível em <https://quarto.org/docs/tools/vscode.html>.
 
 \vspace{12pt}
 
@@ -497,23 +589,7 @@ Os métodos baseados em árvore envolvem a estratificação ou segmentação do 
 
 \ \ \ Árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação. Elas servem de base para os modelos baseados em árvores empregados neste trabalho, focando particularmente nas árvores de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]. O processo de construção de uma árvore se baseia no particionamento recursivo do espaço dos preditores, onde cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal. Em cada nó, é definida uma condição e, caso essa condição seja satisfeita, o resultado será uma das folhas desse nó. Caso contrário, o processo segue para o próximo nó e verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja um exemplo na @fig-arvore.
 
-
-```{mermaid}
-%%| label: fig-arvore
-%%| fig-cap: Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos.
-%%| fig-width: 5.5
-
-graph TD
-    A[Condição 1] -->|Condição 1: Sim| B[Condição 2]
-    A -->|Condição 1: Não| C[Condição 3]
-    B -->|Condição 2: Sim| D[Folha 1]
-    B -->|Condição 2: Não| E[Folha 2]
-    C -->|Condição 3: Sim| F[Folha 3]
-    C -->|Condição 3: Não| G[Condição 4]
-    G -->|Condição 4: Sim| H[Folha 4]
-    G -->|Condição 4: Não| I[Folha 5]
-```
-
+![Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos](includes/mermaid-tree.png){#fig-arvore}
 
 \vspace{12pt}
 
@@ -917,7 +993,7 @@ em que $l$ é uma função de perda convexa diferenciável e o segundo termo $\O
 $$
 \Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}\text{,}
 $$
-em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em `Python` utilizam a regularização L2 como padrão, mas também permitem o uso da regularização L1.
+em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do quadrado dos pesos associados às folhas. $\gamma$ e $\lambda$ são os parâmetros de regularização, em que $\lambda$ penaliza os pesos das folhas e $\gamma$ penaliza a quantidade de folhas nas árvores. Assim, com a regularização aplicada a função objetivo, modelos e funções preditivas serão mais comuns pois simplificarão o modelo. As implementações do algoritmo de Extreme Gradient Boosting presentes em **Python** utilizam a regularização L2 como padrão, mas também permitem o uso da regularização L1.
 
 \vspace{12pt}
 
@@ -928,11 +1004,11 @@ Assim como o Gradient Boosting, as implementações existentes de Light Gradient
 
 ## Obtenção dos dados
 
-\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação `R` e `Python`. No `R`, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No `Python`, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e pode ser acessada através do domínio <https://scrapeops.io/> após a criação de uma conta no site.
+\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação **R** e **Python**. No **R**, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No **Python**, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e pode ser acessada através do domínio <https://scrapeops.io/> após a criação de uma conta no site.
 
 \vspace{12pt}
 
-Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem `R`. Dessa forma, tem-se as seguintes variáveis:
+Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem **R**. Dessa forma, tem-se as seguintes variáveis:
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
@@ -1043,7 +1119,7 @@ def plot_cv_indices(cv, X, ax, n_splits, lw=10):
             vmax=1.2,
         )
 
-    yticklabels = list(range(n_splits))
+    yticklabels = list(range(1, n_splits + 1))
     ax.set(
         yticks=np.arange(n_splits) + 0.5,
         yticklabels=yticklabels,
@@ -1052,7 +1128,10 @@ def plot_cv_indices(cv, X, ax, n_splits, lw=10):
         ylim=[n_splits + 0.2, -0.2],
         xlim=[0, 100],
     )
-    ax.set_title("K-Fold", fontsize=15)
+
+    ax.set_xlabel("Posição da observação", fontsize=6)
+    ax.set_ylabel("CV iteração", fontsize=6)
+    ax.tick_params(labelsize=6)
     return ax
 ```
 
@@ -1061,7 +1140,7 @@ def plot_cv_indices(cv, X, ax, n_splits, lw=10):
 #| label: fig-kfold
 #| fig-cap: Visualização de K-Fold com 20 folds.
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(3.5, 3.5))
 cmap_data = plt.cm.Paired
 cmap_cv = plt.cm.coolwarm
 rng = np.random.RandomState(1338)
@@ -1077,7 +1156,7 @@ A @fig-kfold ilustra exatamente o caso da validação cruzada por K-Fold. As div
 
 \vspace{12pt}
 
-Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/), ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em `Python`:
+Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/), ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em **Python**:
 
 ```{python}
 #| echo: true
@@ -1113,7 +1192,6 @@ A métrica utilizada para avaliar o desempenho dos modelos durante a validação
 
 Embora não tenha sido utilizada na validação cruzada, outra métrica considerada para a análise do desempenho dos modelos foi o MAPE (Erro Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o desvio médio entre os valores estimados e os valores observados, oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelas variáveis independentes. Neste caso, o $R^2$ avalia o quão bem as variáveis utilizadas para a contrução do modelo conseguem representar a variação no valor do imóvel. As métricas utilizadas são definidas da seguinte forma:
 
-
 ::: {layout-ncol=3}
 $$
 \text{RMSE} = \sqrt{\dfrac{1}{n} \sum_{i = 0}^n (y_i - \hat y_i)^2}
@@ -1126,7 +1204,9 @@ $$
 $$
 \text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|\text{,}
 $$
+
 :::
+
 em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
 
 ## Otimização de hiperparâmetros
@@ -1213,7 +1293,7 @@ Essa última expressão mostra que, para maximizar o Expected Improvement, é ne
 
 ### Otimização de hiperparâmetros com optuna
 
-\ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca [**Optuna**](https://optuna.org/) da linguagem de programação `Python`. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, seria necessário definir uma função objetivo da seguinte forma:
+\ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca [**Optuna**](https://optuna.org/) da linguagem de programação **Python**. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, é necessário definir uma função objetivo da seguinte forma:
 
 ```{python}
 #| echo: true
@@ -1305,7 +1385,7 @@ A variância de $\hat{y}$ em seu domínio $\boldsymbol{\Theta}$ é definido por:
 $$
 \mathbb{V} = \frac{1}{\|\boldsymbol{\Theta}\|} \int\left(\hat{y}\left(\boldsymbol{\theta}\right) - \hat{f}_{\emptyset}\right)^2 d \boldsymbol{\theta}\text{,}
 $$
-e`a fANOVA decompõe essa variância em contribuições de todos os conjuntos de hiperparâmetros:
+e a fANOVA decompõe essa variância em contribuições de todos os conjuntos de hiperparâmetros:
 
 $$
 \mathbb{V} = \sum_{U \subset N}\mathbb{V}_{U} \text{, em que } \mathbb{V}_U = \frac{1}{\|\boldsymbol{\Theta}_{U}\|} \int \hat{f}_U\left(\boldsymbol{\theta}_U\right)^2 d\boldsymbol{\theta}_U\text{.}
@@ -1372,7 +1452,7 @@ em que $N$ é o número de amostras utilizadas na simulação e $\hat{f}\left(x_
 
 \vspace{12pt}
 
-Em `Python`, a biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
+Em **Python**, a biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) disponibiliza a classe `PartialDependenceDisplay` para a criação de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o gráfico, é necessário ter um modelo previamente ajustado. O código a seguir demonstra sua utilização:
 
 ```{python}
 #| eval: false
@@ -1413,7 +1493,7 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 \vspace{12pt}
 
-Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em `Python`, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>.
+Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em **Python**, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>.
 
 
 ### Shapley Additive Explanations (SHAP)
@@ -1472,7 +1552,7 @@ Esse gráfico permite visualizar diretamente como as observações de uma variá
 
 \vspace{12pt}
 
-Para aplicar o método SHAP em `Python`, foi utilizada a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest/). Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest/) para gerar esses gráficos baseado no algoritmo Stacking:
+Para aplicar o método SHAP em **Python**, foi utilizada a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest/). Essa biblioteca calcula os valores de Shapley com base no modelo ajustado e no algoritmo de explicação escolhido, implementado na classe `shap.Explainer`. Esse algoritmo estima os valores de Shapley de maneira eficiente e adaptada ao modelo em análise. Após obter os valores de Shapley, é possível criar gráficos como os de resumo, dependência e importância. O gráfico de dependência pode ser gerado utilizando a função `shap.dependence_plot`, enquanto os gráficos de importância e resumo são criados com a função `shap.summary_plot`. Abaixo, é apresentado um exemplo de código que utiliza a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest/) para gerar esses gráficos baseado no algoritmo Stacking:
 
 ```{python}
 #| eval: false
@@ -1531,15 +1611,16 @@ g_missing = sns.displot(
     hue="Valores ausentes",
     weights="proportion",
     multiple="fill",
-    height=5,
+    height=3.5,
     aspect=1.1,
     palette='crest'
     )
 
 sns.move_legend(obj=g_missing, loc="upper center",
-                bbox_to_anchor=(.5, -.0001), ncol=2, title="")
+                bbox_to_anchor=(.5, -0.000000001), ncol=2, title="", fontsize=6)
 g_missing.set(xlabel="Proporção de valores ausentes (%)", ylabel="")
-g_missing.ax.set_xlabel("Proporção de valores ausentes (%)", fontsize=10)
+g_missing.ax.set_xlabel("Proporção de valores ausentes (%)", fontsize=6)
+g_missing.tick_params(labelsize=6)
 plt.show()
 ```
 
@@ -1549,9 +1630,8 @@ A primeira etapa da análise exploratória de dados foi identificar os dados fal
 
 Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na previsão de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
 
-\vspace{12pt}
 
-![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m2.png){#fig-mapa_valor}
+![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m2.svg){#fig-mapa_valor width=450 height=250}
 
 A partir da @fig-mapa_valor, tem-se o mapa da região de estudo, correspondente à cidade de João Pessoa. O mapa apresenta a variação da média do valor do $m^2$ dos imóveis, calculada com base nos bairros da cidade. Vale destacar que alguns bairros não possuíam dados disponíveis no momento da coleta de informações por raspagem dos sites de imóveis. Esses bairros estão representados pela cor cinza. Por outro lado, os bairros com dados disponíveis apresentam variações de cores que indicam diferentes faixas de valores do $m^2$. Tonalidades mais escuras representam bairros com valores médios mais altos para o $m^2$, enquanto tonalidades mais claras indicam valores médios menores.
 
@@ -1565,13 +1645,12 @@ A análise de alguns bairros se torna limitada devido à baixa quantidade de im�
 
 \vspace{12pt}
 
-A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
 
 ```{python}
 #| label: fig-violin
 #| fig-cap: Distribuição das variáveis numéricas.
 
-fig, axes = plt.subplots(2, 3, figsize=(20, 10))
+fig, axes = plt.subplots(2, 3, figsize=(5.7, 2.7))
 
 dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -1636,12 +1715,16 @@ sns.violinplot(
 
 axes_shape = axes.shape
 for i in range(axes_shape[0]):
-	for j in range(axes_shape[1]):
-		axes[i,j].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
-		axes[i,j].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
+    for j in range(axes_shape[1]):
+        axes[i, j].grid(True, which="major", axis="both", linestyle="-", color="lightgray", linewidth=0.8, alpha=0.9)
+        axes[i, j].grid(True, which="minor", axis="both", linestyle=":", color="lightgray", linewidth=0.5, alpha=0.8)
+        axes[i, j].set_xlabel(axes[i, j].get_xlabel(), fontsize=6)
+        axes[i, j].set_ylabel(axes[i, j].get_ylabel(), fontsize=6)
+        axes[i, j].tick_params(axis='both', labelsize=6)
 
+plt.subplots_adjust(hspace=0.45)
 
-l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.17), ncol=7)
+l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.4), ncol=7, fontsize=5.5)
 l.get_texts()[0].set_text('Apartamentos')
 l.get_texts()[1].set_text('Casas de condomínio')
 l.get_texts()[2].set_text('Casas')
@@ -1649,10 +1732,12 @@ l.get_texts()[3].set_text('Flats')
 l.get_texts()[4].set_text('Terrenos, lotes e condomínios')
 l.get_texts()[5].set_text('Terrenos e lotes comerciais')
 # l.get_texts()[6].set_text('Casas comerciais')
+# plt.savefig("includes/violin_plots.svg", format="svg", dpi=600)
 plt.show()
 ```
 
-\vspace{12pt}
+A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
+
 
 Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
 
@@ -1660,7 +1745,7 @@ Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplica
 #| label: fig-densitarg
 #| fig-cap: Comparação entre distribuição dos valores dos imóveis antes e depois da transformação logarítmica.
 
-fig, axes = plt.subplots(1, 2, figsize=(20, 10))
+fig, axes = plt.subplots(1, 2, figsize=(5.7, 2.7))
 
 sns.kdeplot(
   data=train_df,
@@ -1669,33 +1754,38 @@ sns.kdeplot(
   fill=True,
   alpha=.5,
   color="#00708d"
-  )
+)
 
-dens_plot = sns.kdeplot(
+sns.kdeplot(
   data=train_df.assign(Valor=lambda x: np.log1p(x.Valor)),
   x='Valor',
   ax=axes[1],
   fill=True,
   alpha=.5,
   color="#00708d"
-  )
+)
 
-axes[0].grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
-axes[0].grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
-axes[1].grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
-axes[1].grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
-axes[0].set_ylabel(ylabel='Densidade', fontsize=13)
-axes[1].set_ylabel(ylabel='Densidade', fontsize=13)
-axes[0].set_xlabel(xlabel='Valor', fontsize=13)
-axes[1].set_xlabel(xlabel='Valor', fontsize=13)
+for ax in axes:
+    ax.grid(True, which="major", axis="both", linestyle="-", color="gray", linewidth=0.8, alpha=0.9)
+    ax.grid(True, which="minor", axis="both", linestyle=":", color="gray", linewidth=0.5, alpha=0.8)
+    ax.set_ylabel('Densidade', fontsize=6)
+    ax.set_xlabel('Valor', fontsize=6)
+    ax.tick_params(labelsize=6)
+    # ax.ticklabel_format(fontsize=6)
+    ax.get_xaxis().get_offset_text().set_fontsize(6)
+    ax.get_yaxis().get_offset_text().set_fontsize(6)
+
+
+# plt.savefig("includes/density_plot_log.svg", format="svg", dpi=600)
 plt.show()
 ```
+
 
 ```{python}
 #| label: fig-corplot
 #| fig-cap: "Gráfico de correlação de Spearman das variáveis independentes."
 
-fig = plt.figure(figsize=(20, 10))
+fig = plt.figure(figsize=(5.7, 2.7))
 
 mat_plot = train_df[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
@@ -1707,10 +1797,10 @@ heatmap = sns.heatmap(
   mat_plot,
   cmap='crest',
   annot=True,
-  annot_kws={'size': 17}
+  annot_kws={'size': 6}
   )
-plt.tick_params(axis='both', which='major', labelsize=17)
-heatmap.figure.axes[-1].tick_params(labelsize=16)
+plt.tick_params(axis='both', which='major', labelsize=6)
+heatmap.figure.axes[-1].tick_params(labelsize=6)
 plt.xticks([])
 plt.show()
 ```
@@ -1943,18 +2033,6 @@ Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-l
 
 \ \ \ Para o modelo Random Forest, a função objetivo foi definido apenas para otimizar os hiperparâmetros de quantidade de árvores e de profundidade da árvore. O espaço de procura para a quantidade de árvores foi definido entre 1 a 1000 árvores. Já o hiperparâmetro de profundidade da árvore foi definido entre 20 a 1000. Além disso, foi utilizado aleatoriamente $m = \sqrt{p}$ das $p$ variáveis independentes como candidatas para a divisão.
 
-\vspace{12pt}
-
-A figura @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método fANOVA. Na figura @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a figura @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
-
-\vspace{12pt}
-
-A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores (max_depth). Em contraste, para o hiperparâmetro de número de árvores (n_estimators), o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado em @fig-rf_contour, onde valores menores para max_depth e maiores para n_estimators resultam em um modelo com menor erro de generalização.
-
-\vspace{12pt}
-
-Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import revela que o hiperparâmetro n_estimators possui uma maior contribuição na performance do modelo. A figura @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20. Após esse ponto, o otimizador não consegue encontrar valores de erro significativamente menores.
-
 ```{python}
 import optuna.visualization
 import joblib
@@ -1975,23 +2053,27 @@ plt.suptitle('')
 
 fig, ax = plt.gcf(), plt.gca()
 
+fig.set_size_inches(4.3, 2.3)
 fig.axes[-1].collections[1].set_cmap("crest")
-fig.axes[-1].set_ylabel("Tentativa")
+fig.axes[-1].set_ylabel("Tentativa", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 for ax in fig.axes[:-1]:
     for coll in ax.collections:
         coll.set_cmap("crest")
 
-fig_rf_slice[0].set_ylabel('RMSE')
-fig_rf_slice[0].set_title('RMSE')
+fig_rf_slice[0].set_ylabel('RMSE', fontsize=6)
+fig_rf_slice[0].set_title('RMSE', fontsize=6)
 for _ in fig_rf_slice:
   _.set_title('')
+  _.set_xlabel(_.get_xlabel(), fontsize=6)
   _.grid(True, color='grey', linewidth=.05)
   _.set_facecolor('white')
   _.spines['top'].set_visible(True)
   _.spines['right'].set_visible(True)
   _.spines['left'].set_visible(True)
   _.spines['bottom'].set_visible(True)
+  _.tick_params(axis="both", labelsize=6)
 
 plt.show()
 ```
@@ -2000,6 +2082,7 @@ plt.show()
 #| label: fig-rf_import
 
 fig_rf_import = optuna.visualization.matplotlib.plot_param_importances(study1)
+fig_rf_import.figure.set_size_inches(4.3, 2.3)
 
 for bar in fig_rf_import.patches:
     bar.set_color("#00708d")
@@ -2011,10 +2094,11 @@ fig_rf_import.spines['top'].set_visible(True)
 fig_rf_import.spines['right'].set_visible(True)
 fig_rf_import.spines['left'].set_visible(True)
 fig_rf_import.spines['bottom'].set_visible(True)
-fig_rf_import.set_xlabel('Importância do Hiperparâmetro')
-fig_rf_import.set_ylabel('Hiperparâmetro')
+fig_rf_import.set_xlabel('Importância do Hiperparâmetro', fontsize=6)
+fig_rf_import.tick_params(axis="both", labelsize=6)
+fig_rf_import.set_ylabel('')
 h, l = fig_rf_import.get_legend_handles_labels()
-fig_rf_import.legend(h, ['RMSE'])
+fig_rf_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
 ```
@@ -2023,6 +2107,7 @@ plt.show()
 #| label: fig-rf_history
 
 fig_rf_hist = optuna.visualization.matplotlib.plot_optimization_history(study1)
+fig_rf_hist.figure.set_size_inches(4.3, 2.3)
 
 for collection in fig_rf_hist.collections:
     collection.set_color("#00708d")
@@ -2034,10 +2119,11 @@ fig_rf_hist.spines['top'].set_visible(True)
 fig_rf_hist.spines['right'].set_visible(True)
 fig_rf_hist.spines['left'].set_visible(True)
 fig_rf_hist.spines['bottom'].set_visible(True)
-fig_rf_hist.set_xlabel('Trial')
-fig_rf_hist.set_ylabel('RMSE')
+fig_rf_hist.set_xlabel('Trial', fontsize=6)
+fig_rf_hist.set_ylabel('RMSE', fontsize=6)
+fig_rf_hist.tick_params(labelsize=6)
 h, l = fig_rf_hist.get_legend_handles_labels()
-fig_rf_hist.legend(h, ['RMSE', 'Melhor trial'])
+fig_rf_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
 ```
@@ -2049,8 +2135,14 @@ fig_rf_contour = optuna.visualization.matplotlib.plot_contour(study1)
 
 fig, ax = plt.gcf(), plt.gca()
 
-fig.axes[-1].set_ylabel("RMSE")
+fig.set_size_inches(4.3, 2.3)
+# fig.tick_params(labelsize=6)
+fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 fig_rf_contour.get_children()[1].set_cmap('crest')
+fig_rf_contour.tick_params(axis="both", labelsize=6)
+fig_rf_contour.set_xlabel(fig_rf_contour.get_xlabel(), fontsize=6)
+fig_rf_contour.set_ylabel(fig_rf_contour.get_ylabel(), fontsize=6)
 
 fig_rf_contour.get_children()[-4].set_text('')
 
@@ -2059,6 +2151,17 @@ plt.show()
 
 Resultados da tunagem da Random Forest.
 :::
+
+
+A figura @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método fANOVA. Na figura @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a figura @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
+
+\vspace{12pt}
+
+A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores (max_depth). Em contraste, para o hiperparâmetro de número de árvores (n_estimators), o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado em @fig-rf_contour, onde valores menores para max_depth e maiores para n_estimators resultam em um modelo com menor erro de generalização.
+
+\vspace{12pt}
+
+Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import revela que o hiperparâmetro n_estimators possui uma maior contribuição na performance do modelo. A figura @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20. Após esse ponto, o otimizador não consegue encontrar valores de erro significativamente menores.
 
 ::: {#tbl-params_rf}
 
@@ -2088,17 +2191,22 @@ plt.suptitle('')
 
 fig, ax = plt.gcf(), plt.gca()
 
+fig.set_size_inches(4.3, 2.3)
 fig.axes[-1].collections[1].set_cmap("crest")
-fig.axes[-1].set_ylabel("Tentativa")
+fig.axes[-1].set_ylabel("Tentativa", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 for ax in fig.axes[:-1]:
     for coll in ax.collections:
         coll.set_cmap("crest")
 
-fig_gdt_slice[0].set_ylabel('RMSE')
-fig_gdt_slice[0].set_title('RMSE')
+fig_gdt_slice[0].set_ylabel('RMSE', fontsize=6)
+fig_gdt_slice[0].tick_params(labelsize=6)
+fig_gdt_slice[0].set_title('RMSE', fontsize=6)
 for _ in fig_gdt_slice:
   _.set_title('')
+  _.tick_params(labelsize=6)
+  _.set_xlabel(_.get_xlabel(), fontsize=6)
   _.grid(True, color='grey', linewidth=.05)
   _.set_facecolor('white')
   _.spines['top'].set_visible(True)
@@ -2117,6 +2225,7 @@ fig_gdt_import = optuna.visualization.matplotlib.plot_param_importances(study2)
 for bar in fig_gdt_import.patches:
     bar.set_color("#00708d")
 
+fig_gdt_import.figure.set_size_inches(4.3, 2.3)
 fig_gdt_import.grid(True, color="grey", linewidth=0.05)
 fig_gdt_import.set_facecolor("white")
 fig_gdt_import.get_children()[-4].set_text('')
@@ -2124,10 +2233,11 @@ fig_gdt_import.spines['top'].set_visible(True)
 fig_gdt_import.spines['right'].set_visible(True)
 fig_gdt_import.spines['left'].set_visible(True)
 fig_gdt_import.spines['bottom'].set_visible(True)
-fig_gdt_import.set_xlabel('Importância do Hiperparâmetro')
-fig_gdt_import.set_ylabel('Hiperparâmetro')
+fig_gdt_import.set_xlabel('Importância do Hiperparâmetro', fontsize=6)
+fig_gdt_import.tick_params(axis="both", labelsize=6)
+fig_gdt_import.set_ylabel('')
 h, l = fig_gdt_import.get_legend_handles_labels()
-fig_gdt_import.legend(h, ['RMSE'])
+fig_gdt_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
 ```
@@ -2139,6 +2249,7 @@ fig_gdt_hist = optuna.visualization.matplotlib.plot_optimization_history(study2)
 for collection in fig_gdt_hist.collections:
     collection.set_color("#00708d")
 
+fig_gdt_hist.figure.set_size_inches(4.3, 2.3)
 fig_gdt_hist.grid(True, color="grey", linewidth=0.05)
 fig_gdt_hist.set_facecolor("white")
 fig_gdt_hist.get_children()[-5].set_text('')
@@ -2146,10 +2257,11 @@ fig_gdt_hist.spines['top'].set_visible(True)
 fig_gdt_hist.spines['right'].set_visible(True)
 fig_gdt_hist.spines['left'].set_visible(True)
 fig_gdt_hist.spines['bottom'].set_visible(True)
-fig_gdt_hist.set_xlabel('Trial')
-fig_gdt_hist.set_ylabel('RMSE')
+fig_gdt_hist.set_xlabel('Trial', fontsize=6)
+fig_gdt_hist.set_ylabel('RMSE', fontsize=6)
+fig_gdt_hist.tick_params(labelsize=6)
 h, l = fig_gdt_hist.get_legend_handles_labels()
-fig_gdt_hist.legend(h, ['RMSE', 'Melhor trial'])
+fig_gdt_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
 ```
@@ -2175,14 +2287,18 @@ for i in range(fig_gdt_contour.shape[0]):
         ax.get_children()[1].set_cmap('crest')
 
       if j == 0:
-        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=10)
+        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
       if i == fig_gdt_contour.shape[0] - 1:
-        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=10)
+        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
 fig, ax = plt.gcf(), plt.gca()
 
-fig.axes[-1].set_ylabel("RMSE")
+fig.set_size_inches(4.3, 2.3)
+fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 plt.show()
 ```
@@ -2216,17 +2332,22 @@ plt.suptitle('')
 
 fig, ax = plt.gcf(), plt.gca()
 
+fig.set_size_inches(4.3, 2.3)
 fig.axes[-1].collections[1].set_cmap("crest")
-fig.axes[-1].set_ylabel("Tentativa")
+fig.axes[-1].set_ylabel("Tentativa", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 for ax in fig.axes[:-1]:
     for coll in ax.collections:
         coll.set_cmap("crest")
 
-fig_lgbm_slice[0].set_ylabel('RMSE')
-fig_lgbm_slice[0].set_title('RMSE')
+fig_lgbm_slice[0].set_ylabel('RMSE', fontsize=6)
+fig_lgbm_slice[0].tick_params(labelsize=6)
+fig_lgbm_slice[0].set_title('RMSE', fontsize=6)
 for _ in fig_lgbm_slice:
   _.set_title('')
+  _.tick_params(labelsize=6)
+  _.set_xlabel(_.get_xlabel(), fontsize=6)
   _.grid(True, color='grey', linewidth=.05)
   _.set_facecolor('white')
   _.spines['top'].set_visible(True)
@@ -2245,6 +2366,7 @@ fig_lgbm_import = optuna.visualization.matplotlib.plot_param_importances(study3)
 for bar in fig_lgbm_import.patches:
     bar.set_color("#00708d")
 
+fig_lgbm_import.figure.set_size_inches(4.3, 2.3)
 fig_lgbm_import.grid(True, color="grey", linewidth=0.05)
 fig_lgbm_import.set_facecolor("white")
 fig_lgbm_import.get_children()[-4].set_text('')
@@ -2252,10 +2374,11 @@ fig_lgbm_import.spines['top'].set_visible(True)
 fig_lgbm_import.spines['right'].set_visible(True)
 fig_lgbm_import.spines['left'].set_visible(True)
 fig_lgbm_import.spines['bottom'].set_visible(True)
-fig_lgbm_import.set_xlabel('Importância do Hiperparâmetro')
-fig_lgbm_import.set_ylabel('Hiperparâmetro')
+fig_lgbm_import.set_xlabel('Importância do Hiperparâmetro', fontsize=6)
+fig_lgbm_import.tick_params(axis="both", labelsize=6)
+fig_lgbm_import.set_ylabel('')
 h, l = fig_lgbm_import.get_legend_handles_labels()
-fig_lgbm_import.legend(h, ['RMSE'])
+fig_lgbm_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
 ```
@@ -2267,6 +2390,7 @@ fig_lgbm_hist = optuna.visualization.matplotlib.plot_optimization_history(study3
 for collection in fig_lgbm_hist.collections:
     collection.set_color("#00708d")
 
+fig_lgbm_hist.figure.set_size_inches(4.3, 2.3)
 fig_lgbm_hist.grid(True, color="grey", linewidth=0.05)
 fig_lgbm_hist.set_facecolor("white")
 fig_lgbm_hist.get_children()[-5].set_text('')
@@ -2274,10 +2398,11 @@ fig_lgbm_hist.spines['top'].set_visible(True)
 fig_lgbm_hist.spines['right'].set_visible(True)
 fig_lgbm_hist.spines['left'].set_visible(True)
 fig_lgbm_hist.spines['bottom'].set_visible(True)
-fig_lgbm_hist.set_xlabel('Trial')
-fig_lgbm_hist.set_ylabel('RMSE')
+fig_lgbm_hist.set_xlabel('Trial', fontsize=6)
+fig_lgbm_hist.set_ylabel('RMSE', fontsize=6)
+fig_lgbm_hist.tick_params(labelsize=6)
 h, l = fig_lgbm_hist.get_legend_handles_labels()
-fig_lgbm_hist.legend(h, ['RMSE', 'Melhor trial'])
+fig_lgbm_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
 ```
@@ -2286,26 +2411,8 @@ plt.show()
 #| label: fig-lgbm_contour
 
 fig_lgbm_contour = optuna.visualization.matplotlib.plot_contour(study3)
+
 plt.suptitle('')
-
-# for i in range(fig_xgb_contour.shape[0]):
-#     for j in range(fig_xgb_contour.shape[1]):
-#         ax = fig_xgb_contour[i, j]
-#         if j == i:  # Diagonal plots
-#             ax.grid(True, color='grey', linewidth=.05)
-#             ax.spines['top'].set_visible(True)
-#             ax.spines['right'].set_visible(True)
-#             ax.spines['left'].set_visible(True)
-#             ax.spines['bottom'].set_visible(True)
-#             ax.set_facecolor('white')
-#         else:
-#             ax.get_children()[1].set_cmap('crest')
-
-#         if j == 0:
-#             ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right')
-
-#         # if i == fig_xgb_contour.shape[0] - 1:
-#         #     ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right')
 
 for i in range(fig_lgbm_contour.shape[0]):
 
@@ -2322,14 +2429,18 @@ for i in range(fig_lgbm_contour.shape[0]):
         ax.get_children()[1].set_cmap('crest')
 
       if j == 0:
-        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=10)
+        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
       if i == fig_lgbm_contour.shape[0] - 1:
-        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=10)
+        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
 fig, ax = plt.gcf(), plt.gca()
 
-fig.axes[-1].set_ylabel("RMSE")
+fig.set_size_inches(4.3, 2.3)
+fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 plt.show()
 ```
@@ -2377,17 +2488,22 @@ plt.suptitle('')
 
 fig, ax = plt.gcf(), plt.gca()
 
+fig.set_size_inches(4.3, 2.3)
 fig.axes[-1].collections[1].set_cmap("crest")
-fig.axes[-1].set_ylabel("Tentativa")
+fig.axes[-1].set_ylabel("Tentativa", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 for ax in fig.axes[:-1]:
     for coll in ax.collections:
         coll.set_cmap("crest")
 
-fig_xgb_slice[0].set_ylabel('RMSE')
-fig_xgb_slice[0].set_title('RMSE')
+fig_xgb_slice[0].set_ylabel('RMSE', fontsize=6)
+fig_xgb_slice[0].tick_params(labelsize=6)
+fig_xgb_slice[0].set_title('RMSE', fontsize=6)
 for _ in fig_xgb_slice:
   _.set_title('')
+  _.tick_params(labelsize=6)
+  _.set_xlabel(_.get_xlabel(), fontsize=6)
   _.grid(True, color='grey', linewidth=.05)
   _.set_facecolor('white')
   _.spines['top'].set_visible(True)
@@ -2406,6 +2522,7 @@ fig_xgb_import = optuna.visualization.matplotlib.plot_param_importances(study4)
 for bar in fig_xgb_import.patches:
     bar.set_color("#00708d")
 
+fig_xgb_import.figure.set_size_inches(4.3, 2.3)
 fig_xgb_import.grid(True, color="grey", linewidth=0.05)
 fig_xgb_import.set_facecolor("white")
 fig_xgb_import.get_children()[-4].set_text('')
@@ -2413,10 +2530,11 @@ fig_xgb_import.spines['top'].set_visible(True)
 fig_xgb_import.spines['right'].set_visible(True)
 fig_xgb_import.spines['left'].set_visible(True)
 fig_xgb_import.spines['bottom'].set_visible(True)
-fig_xgb_import.set_xlabel('Importância do Hiperparâmetro')
-fig_xgb_import.set_ylabel('Hiperparâmetro')
+fig_xgb_import.set_xlabel('Importância do Hiperparâmetro', fontsize=6)
+fig_xgb_import.tick_params(axis="both", labelsize=6)
+fig_xgb_import.set_ylabel('')
 h, l = fig_xgb_import.get_legend_handles_labels()
-fig_xgb_import.legend(h, ['RMSE'])
+fig_xgb_import.legend(h, ['RMSE'], fontsize=6)
 
 plt.show()
 ```
@@ -2428,6 +2546,7 @@ fig_xgb_hist = optuna.visualization.matplotlib.plot_optimization_history(study4)
 for collection in fig_xgb_hist.collections:
     collection.set_color("#00708d")
 
+fig_xgb_hist.figure.set_size_inches(4.3, 2.3)
 fig_xgb_hist.grid(True, color="grey", linewidth=0.05)
 fig_xgb_hist.set_facecolor("white")
 fig_xgb_hist.get_children()[-5].set_text('')
@@ -2435,10 +2554,11 @@ fig_xgb_hist.spines['top'].set_visible(True)
 fig_xgb_hist.spines['right'].set_visible(True)
 fig_xgb_hist.spines['left'].set_visible(True)
 fig_xgb_hist.spines['bottom'].set_visible(True)
-fig_xgb_hist.set_xlabel('Trial')
-fig_xgb_hist.set_ylabel('RMSE')
+fig_xgb_hist.set_xlabel('Trial', fontsize=6)
+fig_xgb_hist.set_ylabel('RMSE', fontsize=6)
+fig_xgb_hist.tick_params(labelsize=6)
 h, l = fig_xgb_hist.get_legend_handles_labels()
-fig_xgb_hist.legend(h, ['RMSE', 'Melhor trial'])
+fig_xgb_hist.legend(h, ['RMSE', 'Melhor trial'], fontsize=6)
 
 plt.show()
 ```
@@ -2450,29 +2570,34 @@ fig_xgb_contour = optuna.visualization.matplotlib.plot_contour(study4)
 plt.suptitle('')
 
 for i in range(fig_xgb_contour.shape[0]):
+
     for j in range(fig_xgb_contour.shape[1]):
-        ax = fig_xgb_contour[i, j]
-        if j == i:  # Diagonal plots
-            ax.grid(True, color='grey', linewidth=.05)
-            ax.spines['top'].set_visible(True)
-            ax.spines['right'].set_visible(True)
-            ax.spines['left'].set_visible(True)
-            ax.spines['bottom'].set_visible(True)
-            ax.set_facecolor('white')
-        else:
-            ax.get_children()[1].set_cmap('crest')
+      ax = fig_xgb_contour[i,j]
+      if j == i:
+        ax.grid(True, color='grey', linewidth=.05)
+        ax.spines['top'].set_visible(True)
+        ax.spines['right'].set_visible(True)
+        ax.spines['left'].set_visible(True)
+        ax.spines['bottom'].set_visible(True)
+        ax.set_facecolor('white')
+      else:
+        ax.get_children()[1].set_cmap('crest')
 
-        if j == 0:
-            ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right')
+      if j == 0:
+        ax.set_ylabel(ax.get_ylabel(), rotation=0, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
-        # if i == fig_xgb_contour.shape[0] - 1:
-        #     ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right')
+      if i == fig_xgb_contour.shape[0] - 1:
+        ax.set_xlabel(ax.get_xlabel(), rotation=45, ha='right', fontsize=6)
+        ax.tick_params(labelsize=6)
 
 fig, ax = plt.gcf(), plt.gca()
-fig.axes[-1].set_ylabel("RMSE")
+
+fig.set_size_inches(4.3, 2.3)
+fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+fig.axes[-1].tick_params(labelsize=6)
 
 plt.show()
-
 ```
 
 Resultados da tunagem do XGBoost.
@@ -2504,7 +2629,7 @@ Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tenta
 
 \vspace{12pt}
 
-O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972, enquanto o coeficiente de determinação $R^2$ alcançou $86,79%$, indicando que o modelo explica $86,79%$ da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram 1,373% distantes dos valores reais.
+O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972, enquanto o coeficiente de determinação $R^2$ alcançou $86,79\%$, indicando que o modelo explica $86,79\%$ da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram 1,373% distantes dos valores reais.
 
 \vspace{12pt}
 

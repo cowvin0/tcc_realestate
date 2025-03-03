@@ -133,6 +133,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{dirtree}
 \usepackage{amsmath}
 \usepackage[explicit]{titlesec}
 \usepackage{setspace}
@@ -223,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, enhanced, sharp corners, breakable, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, breakable, sharp corners, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -263,7 +264,7 @@
 \title{Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores
 Imobiliários no Mercado Imobiliário da Cidade de João Pessoa}
 \author{Gabriel de Jesus Pereira}
-\date{fevereiro, 2025}
+\date{março, 2025}
 
 \begin{document}
 \cleardoublepage
@@ -289,7 +290,7 @@ Pessoa \par}
 
 {\large Gabriel de Jesus Pereira \par}
 \vfill
-{\normalsize fevereiro, 2025 \par}
+{\normalsize março, 2025 \par}
 
 
 \noindent\rule{\textwidth}{0.5pt}
@@ -316,7 +317,7 @@ Pessoa \par}
 \vfill
 
 {\normalsize\bfseries João Pessoa \par}
-{\normalsize\bfseries fevereiro, 2025 \par}
+{\normalsize\bfseries março, 2025 \par}
 
 }
 \numberwithin{algorithm}{chapter}
@@ -706,8 +707,8 @@ desenvolvida.
 
 ~~~Nesta seção, serão apresentados os recursos computacionais utilizados
 no desenvolvimento deste trabalho. As ferramentas selecionadas incluem
-linguagens de programação amplamente conhecidas, como \texttt{Python} e
-\texttt{R}, e sistemas de publicação técnica, como o \texttt{Quarto}.
+linguagens de programação amplamente conhecidas, como \textbf{Python} e
+\textbf{R}, e sistemas de publicação técnica, como o \texttt{Quarto}.
 Cada uma dessas tecnologias será descrita em relação ao seu papel na
 modelagem, coleta e manipulação de dados, bem como na criação da
 aplicação final. Portanto, a primeira etapa será descrever as
@@ -748,7 +749,10 @@ ser realizada no recurso especificado.
 \item
   POST: O método POST envia dados para serem processados para o recurso
   especificado. Esses dados podem ser, por exemplo, dados de um
-  formulário HTML.
+  formulário HTML\footnote{HTML (HyperText Markup Language) é a
+    linguagem de marcação utilizada para estruturar e exibir conteúdo na
+    web. Ele define elementos como títulos, parágrafos, links, imagens e
+    tabelas, sendo a base para o desenvolvimento de páginas da internet.}.
 \item
   PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma
   semelhante. No entanto, caso seja necessário atualizar um usuário
@@ -784,13 +788,13 @@ organização dos dados de forma estruturada.
 \vspace{12pt}
 
 Para realizar a raspagem de dados, foram utilizadas as linguagens de
-programação \texttt{R} (R CORE TEAM, 2024) e \texttt{Python} (VAN
-ROSSUM; DRAKE JR, 1995). \texttt{R} é uma linguagem voltada para
+programação \textbf{R} (R CORE TEAM, 2024) e \textbf{Python} (VAN
+ROSSUM; DRAKE JR, 1995). \textbf{R} é uma linguagem voltada para
 computação científica e visualização de dados, desenvolvida pelos
 professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente
 para ensinar introdução à estatística na Universidade de Auckland. A
-primeira versão do \texttt{R} foi lançada em 1993, e, em 1997, a
-linguagem tornou-se oficialmente parte do Projeto GNU. Em \texttt{R}, há
+primeira versão do \textbf{R} foi lançada em 1993, e, em 1997, a
+linguagem tornou-se oficialmente parte do Projeto GNU. Em \textbf{R}, há
 diversos pacotes disponíveis para a realização de raspagem de dados.
 Neste trabalho, foi utilizado o pacote
 \href{https://xml2.r-lib.org/}{\textbf{xml2}} (WICKHAM; HESTER; OOMS,
@@ -801,7 +805,7 @@ Neste trabalho, foi utilizado o pacote
 
 O pacote \href{https://xml2.r-lib.org/}{\textbf{xml2}} foi inspirado no
 \href{https://jquery.com/}{\textbf{jQuery}}, uma biblioteca
-\texttt{JavaScript} projetada para facilitar tarefas como a manipulação
+\textbf{JavaScript} projetada para facilitar tarefas como a manipulação
 de documentos HTML. Ele é especialmente útil para lidar com arquivos
 HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e
 modificar os nós de documentos estruturados. Essas funcionalidades
@@ -848,13 +852,13 @@ foi o \href{https://httr.r-lib.org/}{\textbf{httr}} (WICKHAM, 2023).
 
 \vspace{12pt}
 
-Como mencionado anteriormente, \texttt{Python} também foi utilizado para
+Como mencionado anteriormente, \textbf{Python} também foi utilizado para
 realizar a raspagem de dados, embora tenha sido empregado em momentos
-subsequentes à utilização do \texttt{R}. \texttt{Python} (VAN ROSSUM;
+subsequentes à utilização do \textbf{R}. \textbf{Python} (VAN ROSSUM;
 DRAKE JR, 1995) é uma linguagem de programação criada por Guido van
 Rossum, que iniciou seu desenvolvimento no final dos anos 1980 como
 sucessora da linguagem \texttt{ABC}. A primeira versão oficial do
-\texttt{Python} foi lançada em 1991. Trata-se de uma linguagem de alto
+\textbf{Python} foi lançada em 1991. Trata-se de uma linguagem de alto
 nível, de propósito geral, que prioriza a simplicidade e a legibilidade
 do código, tornando-a amplamente adotada para diversas aplicações,
 incluindo análise de dados e automação de tarefas, além de ser
@@ -862,7 +866,7 @@ amplamente utilizada para aprendizagem de máquina.
 
 \vspace{12pt}
 
-A linguagem de programação \texttt{Python} possui um ecossistema
+A linguagem de programação \textbf{Python} possui um ecossistema
 diversificado de bibliotecas para a realização de diversas tarefas,
 incluindo a raspagem de dados. Especificamente para essa finalidade, foi
 utilizada a biblioteca
@@ -948,27 +952,234 @@ O \href{https://playwright.dev/python/}{\textbf{Playwright}} foi
 originalmente desenvolvido para realizar testes em aplicações web e
 executar tarefas de automação. No entanto, aqui ele foi empregado para
 interagir com o conteúdo dinâmico de páginas, como carregar elementos
-gerados por \texttt{JavaScript}. Sua utilização neste trabalho teve o
+gerados por \textbf{JavaScript}. Sua utilização neste trabalho teve o
 mesmo propósito que o pacote
 \href{https://cran.r-project.org/web/packages/selenium/index.html}{\textbf{selenium}}
-desempenhou na raspagem de dados feita com \texttt{R}, permitindo
+desempenhou na raspagem de dados feita com \textbf{R}, permitindo
 capturar dados que não seriam acessíveis diretamente via requisições
 HTTP convencionais. Além disso, ele também permite simular navegadores
 para acompanhar em tempo real o que cada requisição está alterando. Por
 fim, ao coletar os dados de imóveis, foi necessário realizar também a
 geocodificação dos endereços. Para isso, foi utilizado o pacote
 \href{https://jessecambon.github.io/tidygeocoder/}{\textbf{tidygeocoder}}
-(CAMBON et al., 2021) da linguagem \texttt{R}, que também serviu para os
-dados que estavam sendo coletados em \texttt{Python}.
+(CAMBON et al., 2021) da linguagem \textbf{R}, que também serviu para os
+dados que estavam sendo coletados em \textbf{Python}.
 
 \vspace{12pt}
 
-Assim chega ao fim descrição das tecnologias utilizadas para a obtenção
-dos dados. Entretanto, a linguagem \texttt{Python}, em particular,
-continuou sendo empregada em outras etapas deste trabalho, como na
-modelagem dos valores de imóveis. Portanto, os próximos recursos
-apresentados serão aqueles utilizados especificamente para a modelagem e
-visualização dos resultados.
+Na sessão a seguir, apresenta-se um exemplo de como realizar web
+scraping em \textbf{R} e \textbf{Python}. Para isso, utilizam-se os
+pacotes mencionados para a linguagem \textbf{R} e, no caso de
+\textbf{Python}, dá-se preferência ao
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, a principal
+biblioteca empregada para esse fim. É importante ressaltar que os
+códigos desenvolvidos para a raspagem de dados podem deixar de funcionar
+ao longo do tempo devido a possíveis mudanças na estrutura dos sites.
+Assim, eventuais ajustes no código poderão ser necessários.
+
+\subsection{Exemplo de web scraping em
+Python}\label{exemplo-de-web-scraping-em-python}
+
+~~~Os exemplos de raspagem de dados em \textbf{R} e \textbf{Python}
+utilizarão o mesmo site. O objetivo é extrair informações sobre todos os
+pacotes de \textbf{R}, tanto os ordenados por data de publicação quanto
+os organizados por nome, disponíveis em:
+\url{https://cran.r-project.org/web/packages/index.html}. A partir
+desses dados, serão gerados dois arquivos \texttt{.csv} contendo essas
+informações.
+
+\vspace{12pt}
+
+Para instalar o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} e suas
+dependências, pode-se instalar diretamente utilizando o
+\href{https://pip.pypa.io/en/stable/}{\textbf{pip}}, que é o gerenciador
+de pacotes para \textbf{Python}. Portanto, para isso, basta executar em
+seu terminal o comando \texttt{pip\ install\ Scrapy}.
+
+\vspace{12pt}
+
+Após a instalação do
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, ficará
+disponível o uso de seu CLI\footnote{CLI (Command Line Interface) é uma
+  interface de linha de comando que permite a interação com um sistema
+  operacional ou software por meio de comandos digitados em um terminal,
+  sem o uso de interface gráfica.}. O CLI disponibilizará inúmeras
+funcionalidades para o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, tais como
+inspencionar o conteúdo da página para encontrar mais facilmente os
+seletores daquela página em específico e, o mais importante, iniciar um
+projeto \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}.
+
+\vspace{12pt}
+
+Antes de se iniciar a raspagem dos dados com o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, é necessário
+iniciar um projeto utilizando o seu CLI. Para isso, basta executar o
+comando
+\texttt{scrapy\ startproject\ \textless{}nome\_do\_projeto\textgreater{}}.
+Esse comando criará um diretório com todos os arquivos e configurações
+iniciais necessários para começar a extração de dados com o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}. Por exemplo,
+ao executar o comando \texttt{scrapy\ startproject\ scraping\_examples},
+será criada um diretório com a seguinte estrutura:
+
+\begin{verbatim}
+scraping_examples/
+|-- scraping_examples/
+|   |-- __init__.py
+|   |-- items.py                          # definição de tabelas
+|   |-- middlewares.py                    # middlewares do projeto
+|   |-- pipelines.py                      # pipelines do projeto
+|   |-- __pycache__/
+|   |   |-- __init__.cpython-310.pyc
+|   |   |-- settings.cpython-310.pyc
+|   |-- settings.py                       # configurações do projeto
+|   |-- spiders/
+|       |-- __init__.py
+|       |-- __pycache__/
+|           |-- __init__.cpython-310.pyc
+|-- scrapy.cfg                            # parâmetros de configuração
+\end{verbatim}
+
+Ao observar a estrutura do diretório, é possível identificar algumas
+funcionalidades essenciais já explicadas anteriormente. Por exemplo, o
+arquivo \texttt{middlewares.py} é utilizado para modificar como as
+requisições são feitas e como o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} lida com as
+respostas. O arquivo \texttt{settings.py} contém todas as configurações
+do projeto, como a ativação de \texttt{pipelines} e
+\texttt{middlewares}, além de permitir ajustes como o delay entre
+requisições e outras configurações avançadas. O arquivo
+\texttt{items.py} é onde são definidas as estruturas dos dados que serão
+coletados. O \texttt{pipelines.py}, como mencionado anteriormente, é
+responsável pelo processamento dos dados coletados. Por fim, o arquivo
+\texttt{scrapy.cfg} é um arquivo de configuração usado para ajustar
+parâmetros relacionados ao deploy e outras configurações do projeto.
+
+\vspace{12pt}
+
+Com a estrutura do projeto criada, é possível criar o primeiro spider do
+projeto. Para isso, é utilizado o comando
+\texttt{scrapy\ genspider\ \textless{}nome\_do\_spider\textgreater{}\ \textless{}website\textgreater{}}.
+Neste exemplo, serão raspados informações do site
+\url{https://cran.r-project.org/web/packages/index.html}. Ao executar o
+comando
+\texttt{scrapy\ genspider\ packagescraper\ https://cran.r-project.org/web/packages/index.html},
+será gerado um arquivo dentro do diretório spiders com o nome
+\texttt{packagescraper.py}, que terá a seguinte estrutura:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ scrapy}
+
+
+\KeywordTok{class}\NormalTok{ PackagescraperSpider(scrapy.Spider):}
+\NormalTok{    name }\OperatorTok{=} \StringTok{"packagescraper"}
+\NormalTok{    allowed\_domains }\OperatorTok{=}\NormalTok{ [}\StringTok{"cran.r{-}project.org"}\NormalTok{]}
+\NormalTok{    start\_urls }\OperatorTok{=}\NormalTok{ [}\StringTok{"https://cran.r{-}project.org/web/packages/index.html"}\NormalTok{]}
+
+    \KeywordTok{def}\NormalTok{ parse(}\VariableTok{self}\NormalTok{, response):}
+        \ControlFlowTok{pass}
+\end{Highlighting}
+\end{Shaded}
+
+A classe \texttt{PackagescraperSpider} foi criada a partir do comando
+executado anteriormente. Essa classe possui três atributos e um método.
+O atributo \texttt{name} nomeia o spider e vai ser utilizado
+posteriormente para inicializar a raspagem dos dados. O
+\texttt{allowed\_domains} é o atributo que indica para o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} que ele deve
+apenas raspar informações que estão naquele domínio, nesse caso,
+\texttt{cran.r-project.org}. O atributo \texttt{start\_urls} indica qual
+deve ser a primeira url a ser raspada. Por último, o método
+\texttt{parse} é executada depois que uma resposta foi obtida após a
+requisição no site alvo.
+
+\vspace{12pt}
+
+Para extrair dados do conteúdo HTML da página, será necessário utilizar
+os seletores \texttt{CSS} ou \texttt{XPath}. Nesse caso, será utilizado
+o seletor do \texttt{CSS}. De forma a facilitar a seleção de conteúdo da
+página, será utilizado uma das grandes ferramentas do
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, que é o
+\href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
+Shell}}. Essa ferramenta ajudará a selecionar as informações que
+necessárias e até mesmo a debugar o código. Para executar o
+\href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
+Shell}}, basta utilizar o comando \texttt{scrapy\ shell} no terminal.
+Após a sua execução, aparecerão algumas informações de logs e de
+configurações gerais que já estão sendo utilizadas no seu projeto.
+Agora, com o shell ativado, basta trazer todo o conteúdo HTML contido na
+página de interesse com o seguinte comando:
+\texttt{fetch("https://cran.r-project.org/web/packages/index.html")}.
+
+\begin{figure}
+
+\begin{minipage}{0.50\linewidth}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{includes/page_contents.png}}
+
+}
+
+\caption{\label{fig-page_contents}O HTML conterá todo conteúdo contido
+nessa página.}
+
+\end{figure}%
+
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{includes/page_content_devtools.png}}
+
+}
+
+\caption{\label{fig-page_contents_devtools}Exemplo do uso das
+ferramentas de desenvolvedor do Firefox para inspencionar conteúdo da
+página.}
+
+\end{figure}%
+
+\end{minipage}%
+
+\end{figure}%
+
+Com a execução do comando anterior, o conteúdo da página na
+Figura~\ref{fig-page_contents} será gerado e o conteúdo contido em seu
+HTML poderá ser extraído. Se o \texttt{fetch} deu certo, a saída do
+\texttt{response.status} no shell deverá ser 200. Para visualizar o
+conteúdo do HTML, basta executar \texttt{response.body}, como pode ser
+visto a seguir, mostrando apenas uma parte de seu conteúdo:
+
+\begin{verbatim}
+<!DOCTYPE html>
+<html>
+<head>
+<title>CRAN: Contributed Packages</title>
+<link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+</head>
+<body>
+<div class="container">
+<h1>Contributed Packages</h1>
+
+<h3 id="pkgs">Available Packages</h3>
+<p> Currently, the CRAN package repository features 22127 available packages. </p>
+...
+\end{verbatim}
+
+\subsection{Exemplo de web scraping em
+R}\label{exemplo-de-web-scraping-em-r}
 
 \section{Recursos utilizados para modelagem e visualização dos
 resultados}\label{recursos-utilizados-para-modelagem-e-visualizauxe7uxe3o-dos-resultados}
@@ -979,7 +1190,7 @@ relevantes e aplicáveis. Essa etapa permite identificar padrões de
 comportamento entre as variáveis que influenciam os valores
 imobiliários, além de determinar quais fatores exercem maior impacto
 sobre esses valores. Para chegar a esses resultados, foram utilizadas
-bibliotecas desenvolvidas em \texttt{Python}, como
+bibliotecas desenvolvidas em \textbf{Python}, como
 \href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}
 (PEDREGOSA, F. et al., 2011),
 \href{https://pandas.pydata.org/}{\textbf{pandas}} (TEAM, 2020),
@@ -991,7 +1202,7 @@ trabalho, \href{https://numpy.org/}{\textbf{numpy}} (HARRIS et al.,
 
 O \href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}} é uma
 das bibliotecas de aprendizado de máquina mais populares em
-\texttt{Python}. Ela oferece uma extensa coleção de algoritmos para
+\textbf{Python}. Ela oferece uma extensa coleção de algoritmos para
 tarefas como classificação, regressão, clusterização, além de
 ferramentas para pré-processamento de dados, validação cruzada e seleção
 de modelos. O projeto teve início no Google Summer of Code como uma
@@ -1000,7 +1211,7 @@ iniciativa do engenheiro francês David Cournapeau. O
 criado como uma ferramenta baseada na biblioteca
 \href{https://scipy.org/}{\textbf{SciPy}} (VIRTANEN et al., 2020), que é
 voltada para computação científica e cálculo numérico em
-\texttt{Python}.
+\textbf{Python}.
 
 \vspace{12pt}
 
@@ -1140,24 +1351,24 @@ aplicação também dispõe de funcionalidades interativas que permitem aos
 usuários explorar os dados e visualizar os resultados de forma clara e
 intuitiva. Para alcançar esses objetivos, foram empregadas tecnologias
 para o desenvolvimento do front-end e do back-end, que foram
-desenvolvidos em \texttt{Python}.
+desenvolvidos em \textbf{Python}.
 
 \vspace{12pt}
 
 O front-end da aplicação foi desenvolvido utilizando a biblioteca
 \href{https://dash.plotly.com/}{\textbf{Dash}} (HOSSAIN, 2019), uma
-ferramenta voltada para a criação de aplicativos web em \texttt{Python}.
+ferramenta voltada para a criação de aplicativos web em \textbf{Python}.
 Desenvolvida pela \href{https://plotly.com/}{\textbf{Plotly}} (INC.,
 2015), a \href{https://dash.plotly.com/}{\textbf{Dash}} permite
 construir interfaces gráficas completas sem a necessidade de
 conhecimentos avançados em desenvolvimento web, integrando tecnologias
-como \texttt{HTML}, \texttt{CSS} e \texttt{JavaScript} diretamente no
-ambiente \texttt{Python}. Entre suas principais características,
+como \texttt{HTML}, \texttt{CSS} e \textbf{JavaScript} diretamente no
+ambiente \textbf{Python}. Entre suas principais características,
 destacam-se a facilidade de criar gráficos interativos, a integração com
 bibliotecas populares como \href{https://plotly.com/}{\textbf{Plotly}} e
 a capacidade de atualizar componentes de forma dinâmica por meio de
-funções suas funções \texttt{callback}. A seguir, veja um exemplo de
-função \texttt{callback}:
+funções suas funções \texttt{callback}. A seguir é apresentado um
+exemplo do uso da função \texttt{callback}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1228,7 +1439,7 @@ então retornado para ser exibido no componente \texttt{Graph}.
 Para o desenvolvimento do back-end da aplicação foi utilizado o
 framework \href{https://fastapi.tiangolo.com/}{\textbf{FastAPI}}, uma
 ferramenta moderna e eficiente para a criação de APIs em
-\texttt{Python}. O
+\textbf{Python}. O
 \href{https://fastapi.tiangolo.com/}{\textbf{FastAPI}} é conhecido por
 sua alta performance, graças ao uso de tipagem estática e a sua
 facilidade de suporte assíncrono, além de permitir a criação de APIs de
@@ -1293,20 +1504,20 @@ suas extensões. Entre as extensões utilizadas, destaca-se o
 que incorpora os key mappings do editor de texto Vim, originalmente
 criado por Bram Moolenaar e lançado em 2 de novembro de 1991. Além
 disso, foram empregadas extensões específicas para as linguagens
-\texttt{Python} e \texttt{R}, tendo como principal objetivo uma melhor
+\textbf{Python} e \textbf{R}, tendo como principal objetivo uma melhor
 formatação de código, execução e identificação de possíveis erros.
 
 \vspace{12pt}
 
 Por exemplo, uma das extensões utilizadas para análise estática de
-código em \texttt{Python} foi o
+código em \textbf{Python} foi o
 \href{https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright}{\textbf{Pyright}},
 desenvolvido pela Microsoft. Essa ferramenta é projetada para detectar
 erros durante o desenvolvimento e verificar a tipagem de código em
-\texttt{Python}, contribuindo para a melhoria da qualidade e da
+\textbf{Python}, contribuindo para a melhoria da qualidade e da
 manutenção do programa. Outra ferramenta empregada foi o
 \href{https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter}{\textbf{Black
-Formatter}}, um formatador de código \texttt{Python}. Ele automatiza a
+Formatter}}, um formatador de código \textbf{Python}. Ele automatiza a
 padronização do estilo de código, garantindo consistência e
 legibilidade. Além disso, foi utilizado o
 \href{https://marketplace.visualstudio.com/items?itemName=ms-python.flake8}{\textbf{Flake8}},
@@ -1314,7 +1525,7 @@ que analisa o código em busca de erros de sintaxe, problemas de estilo
 com base no padrão \href{https://peps.python.org/pep-0008/}{\textbf{PEP
 8}}, e outras questões, como redundâncias ou importações desnecessárias.
 Por fim, também foi utilizada uma extensão mais geral de suporte à
-linguagem \texttt{Python}, que oferece diversas funcionalidades, como
+linguagem \textbf{Python}, que oferece diversas funcionalidades, como
 correção de código por meio da extensão
 \href{https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy}{\textbf{PythonDebugger}},
 que utiliza a biblioteca debugpy para suporte ao processo de debugging.
@@ -1327,12 +1538,12 @@ uma plataforma de publicação científica desenvolvida pela empresa Posit.
 O \href{https://quarto.org/}{\textbf{Quarto}} é uma evolução do
 RMarkdown e se destaca por sua capacidade de criar documentos de alta
 qualidade que integram texto e código. Compatível com diversas
-linguagens de programação, como \texttt{R}, \texttt{Python}, e outras,
+linguagens de programação, como \textbf{R}, \textbf{Python}, e outras,
 essa ferramenta é extremamente versátil para análise de dados e geração
 de relatórios. Com o \href{https://quarto.org/}{\textbf{Quarto}}, é
 possível produzir relatórios, artigos, livros, apresentações e até
 sites. Ele é amplamente adotado na comunidade científica, especialmente
-entre usuários de \texttt{R}, e oferece suporte a Markdown e \LaTeX, o
+entre usuários de \textbf{R}, e oferece suporte a Markdown e \LaTeX, o
 que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e
 outros elementos visuais. Além disso, os documentos gerados podem ser
 exportados para diversos formatos, como HTML, PDF, MS Word, entre
@@ -1389,12 +1600,12 @@ um exemplo na Figura~\ref{fig-arvore}.
 
 \centering{
 
-\includegraphics[width=5.5in,height=3.47in]{TCC_files/figure-latex/mermaid-figure-1.png}
+\pandocbounded{\includegraphics[keepaspectratio]{includes/mermaid-tree.png}}
 
 }
 
 \caption{\label{fig-arvore}Exemplo de estrutura de árvore de regressão.
-A árvore tem cinco folhas e quatro nós internos.}
+A árvore tem cinco folhas e quatro nós internos}
 
 \end{figure}%
 
@@ -2053,7 +2264,7 @@ penaliza os pesos das folhas e \(\gamma\) penaliza a quantidade de
 folhas nas árvores. Assim, com a regularização aplicada a função
 objetivo, modelos e funções preditivas serão mais comuns pois
 simplificarão o modelo. As implementações do algoritmo de Extreme
-Gradient Boosting presentes em \texttt{Python} utilizam a regularização
+Gradient Boosting presentes em \textbf{Python} utilizam a regularização
 L2 como padrão, mas também permitem o uso da regularização L1.
 
 \vspace{12pt}
@@ -2075,12 +2286,12 @@ o custo computacional.
 
 ~~~Os dados foram obtidos por meio de web scraping, que é uma técnica
 para coleta automatizada de dados de páginas da internet. Para isso,
-foram utilizadas as linguagens de programação \texttt{R} e
-\texttt{Python}. No \texttt{R}, os pacotes
+foram utilizadas as linguagens de programação \textbf{R} e
+\textbf{Python}. No \textbf{R}, os pacotes
 \href{https://xml2.r-lib.org/}{\textbf{xml2}} e
 \href{https://rvest.tidyverse.org/}{\textbf{rvest}} foram utilizados
 para extrair dados de páginas estáticas de forma estruturada. No
-\texttt{Python}, as bibliotecas
+\textbf{Python}, as bibliotecas
 \href{https://scrapy.org/}{\textbf{Scrapy}} e
 \href{https://playwright.dev/python/}{\textbf{Playwright}}, desenvolvida
 pela Microsoft, foram empregadas, sendo esta última essencial para a
@@ -2108,7 +2319,7 @@ coordenadas geográficas, latitude e longitude, por exemplo, foram
 geradas por meio da geocodificação dos endereços de cada imóvel,
 utilizando o pacote
 \href{https://jessecambon.github.io/tidygeocoder/}{\textbf{tidygeocoder}}
-da linguagem \texttt{R}. Dessa forma, tem-se as seguintes variáveis:
+da linguagem \textbf{R}. Dessa forma, tem-se as seguintes variáveis:
 
 \begin{itemize}
 \item
@@ -2354,7 +2565,7 @@ divisões (folds) a serem realizadas, neste caso, 20. Após a execução da
 validação, a média das métricas retornadas pela função
 \texttt{cross\_val\_score} para cada fold foi calculada, como forma de
 se obter uma estimativa do desempenho do modelo. O código abaixo é um
-exemplo de como se utilizar a validação cruzada em \texttt{Python}:
+exemplo de como se utilizar a validação cruzada em \textbf{Python}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2589,11 +2800,11 @@ optuna}\label{otimizauxe7uxe3o-de-hiperparuxe2metros-com-optuna}
 
 ~~~Para otimizar os hiperparâmetros dos modelos foi utilizado a
 bilbioteca \href{https://optuna.org/}{\textbf{Optuna}} da linguagem de
-programação \texttt{Python}. Essa biblioteca implementa diversos métodos
+programação \textbf{Python}. Essa biblioteca implementa diversos métodos
 para otimização automatizada de hiperparâmetros. Para a sua utilização,
 é preciso definir inicialmente uma função objetivo. Por exemplo, para
-otimizar os hiperparâmetros de uma random forest, seria necessário
-definir uma função objetivo da seguinte forma:
+otimizar os hiperparâmetros de uma random forest, é necessário definir
+uma função objetivo da seguinte forma:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2731,7 +2942,7 @@ definido por:
 
 \[
 \mathbb{V} = \frac{1}{\|\boldsymbol{\Theta}\|} \int\left(\hat{y}\left(\boldsymbol{\theta}\right) - \hat{f}_{\emptyset}\right)^2 d \boldsymbol{\theta}\text{,}
-\] e`a fANOVA decompõe essa variância em contribuições de todos os
+\] e a fANOVA decompõe essa variância em contribuições de todos os
 conjuntos de hiperparâmetros:
 
 \[
@@ -2866,7 +3077,7 @@ modelo.
 
 \vspace{12pt}
 
-Em \texttt{Python}, a biblioteca
+Em \textbf{Python}, a biblioteca
 \href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}
 disponibiliza a classe \texttt{PartialDependenceDisplay} para a criação
 de gráficos de ICE e a inclusão opcional da linha de PDP. Para gerar o
@@ -2947,7 +3158,7 @@ exemplo, é o erro quadrático médio.
 
 Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos
 métodos fundamentais para a abordagem que será apresentada a seguir, o
-Shapley Additive Explanations (SHAP). Em \texttt{Python}, o LIME está
+Shapley Additive Explanations (SHAP). Em \textbf{Python}, o LIME está
 disponível por meio da biblioteca \texttt{lime}, cuja documentação pode
 ser acessada em
 \url{https://lime-ml.readthedocs.io/en/latest/lime.html}.
@@ -3057,7 +3268,7 @@ as variáveis binárias se comportam.
 
 \vspace{12pt}
 
-Para aplicar o método SHAP em \texttt{Python}, foi utilizada a
+Para aplicar o método SHAP em \textbf{Python}, foi utilizada a
 biblioteca \href{https://shap.readthedocs.io/en/latest/}{\textbf{SHAP}}.
 Essa biblioteca calcula os valores de Shapley com base no modelo
 ajustado e no algoritmo de explicação escolhido, implementado na classe
@@ -3167,13 +3378,11 @@ modelo, especialmente na previsão de categorias menos frequentes, como
 as casas comerciais, onde o modelo pode ter dificuldade em obter bons
 resultados.
 
-\vspace{12pt}
-
 \begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{includes/map_valor_m2.png}}
+\includegraphics[width=4.6875in,height=2.60417in]{TCC_files/mediabag/includes/map_valor_m2.pdf}
 
 }
 
@@ -3217,14 +3426,6 @@ circunstâncias.
 
 \vspace{12pt}
 
-A distribuição das variáveis foram análisadas em termos do tipo do
-imóvel a partir de um gráfico de violino. Pela Figura~\ref{fig-violin},
-é fácil perceber que a maioria das distribuições possuem assimetria
-negativa. Os apartamentos possuem caudas longas à direita, indicando
-presença de valores extremamente altos e que indicam que talvez seja
-necessário a aplicação de alguma transformação para a estabilização da
-variância.
-
 \begin{figure}
 
 \centering{
@@ -3237,7 +3438,13 @@ variância.
 
 \end{figure}%
 
-\vspace{12pt}
+A distribuição das variáveis foram análisadas em termos do tipo do
+imóvel a partir de um gráfico de violino. Pela Figura~\ref{fig-violin},
+é fácil perceber que a maioria das distribuições possuem assimetria
+negativa. Os apartamentos possuem caudas longas à direita, indicando
+presença de valores extremamente altos e que indicam que talvez seja
+necessário a aplicação de alguma transformação para a estabilização da
+variância.
 
 Para reduzir a assimetria da distribuição dos valores dos imóveis, foi
 aplicada uma transformação logarítmica. O gráfico de densidade à
@@ -3344,39 +3551,6 @@ da árvore foi definido entre 20 a 1000. Além disso, foi utilizado
 aleatoriamente \(m = \sqrt{p}\) das \(p\) variáveis independentes como
 candidatas para a divisão.
 
-\vspace{12pt}
-
-A figura Figura~\ref{fig-rf_slice} mostra a variação da estatística de
-erro em função dos valores de cada hiperparâmetro ao longo dos trials. O
-gráfico Figura~\ref{fig-rf_import} exibe a importância de cada
-hiperparâmetro, calculada pelo método fANOVA. Na figura
-Figura~\ref{fig-rf_history}, observa-se a variação do erro para cada
-trial, com a linha vermelha representando o menor valor obtido em cada
-etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
-área que mostra a interação entre os hiperparâmetros tunados em relação
-à estatística de erro.
-
-\vspace{12pt}
-
-A partir de Figura~\ref{fig-rf_slice}, é possível ver que o erro tende a
-ser menor para valores menores do hiperparâmetro de profundidade das
-árvores (max\_depth). Em contraste, para o hiperparâmetro de número de
-árvores (n\_estimators), o erro apresenta uma tendência de redução e
-estabilização à medida que o número de árvores aumenta. Esse
-comportamento também é observado em Figura~\ref{fig-rf_contour}, onde
-valores menores para max\_depth e maiores para n\_estimators resultam em
-um modelo com menor erro de generalização.
-
-\vspace{12pt}
-
-Além disso, o gráfico de importância dos hiperparâmetros em
-Figura~\ref{fig-rf_import} revela que o hiperparâmetro n\_estimators
-possui uma maior contribuição na performance do modelo. A figura
-Figura~\ref{fig-rf_history} ilustra o comportamento da métrica de erro
-para cada trial, mostrando que o método de otimização alcança um de seus
-melhores valores pouco antes do trial 20. Após esse ponto, o otimizador
-não consegue encontrar valores de erro significativamente menores.
-
 \begin{figure}
 
 \begin{minipage}{0.50\linewidth}
@@ -3430,6 +3604,37 @@ não consegue encontrar valores de erro significativamente menores.
 \caption{\label{fig-rf_param}Resultados da tunagem da Random Forest.}
 
 \end{figure}%
+
+A figura Figura~\ref{fig-rf_slice} mostra a variação da estatística de
+erro em função dos valores de cada hiperparâmetro ao longo dos trials. O
+gráfico Figura~\ref{fig-rf_import} exibe a importância de cada
+hiperparâmetro, calculada pelo método fANOVA. Na figura
+Figura~\ref{fig-rf_history}, observa-se a variação do erro para cada
+trial, com a linha vermelha representando o menor valor obtido em cada
+etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
+área que mostra a interação entre os hiperparâmetros tunados em relação
+à estatística de erro.
+
+\vspace{12pt}
+
+A partir de Figura~\ref{fig-rf_slice}, é possível ver que o erro tende a
+ser menor para valores menores do hiperparâmetro de profundidade das
+árvores (max\_depth). Em contraste, para o hiperparâmetro de número de
+árvores (n\_estimators), o erro apresenta uma tendência de redução e
+estabilização à medida que o número de árvores aumenta. Esse
+comportamento também é observado em Figura~\ref{fig-rf_contour}, onde
+valores menores para max\_depth e maiores para n\_estimators resultam em
+um modelo com menor erro de generalização.
+
+\vspace{12pt}
+
+Além disso, o gráfico de importância dos hiperparâmetros em
+Figura~\ref{fig-rf_import} revela que o hiperparâmetro n\_estimators
+possui uma maior contribuição na performance do modelo. A figura
+Figura~\ref{fig-rf_history} ilustra o comportamento da métrica de erro
+para cada trial, mostrando que o método de otimização alcança um de seus
+melhores valores pouco antes do trial 20. Após esse ponto, o otimizador
+não consegue encontrar valores de erro significativamente menores.
 
 \begin{longtable}[]{@{}cccc@{}}
 \caption{Melhores hiperparâmetros para Random
@@ -3824,12 +4029,11 @@ O ajuste do algoritmo Random Forest é apresentado na figura
 Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
 previstos e observados. Em termos da transformação logarítmica
 realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972,
-enquanto o coeficiente de determinação \(R^2\) alcançou \(86,79%
-\), indicando que o modelo explica \(86,79%
-\) da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373,
-assim, em média, as predições realizadas pelo modelo Random Forest,
-considerando a transformação logarítmica, estiveram 1,373\% distantes
-dos valores reais.
+enquanto o coeficiente de determinação \(R^2\) alcançou \(86,79\%\),
+indicando que o modelo explica \(86,79\%\) da variação dos dados. Em
+relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições
+realizadas pelo modelo Random Forest, considerando a transformação
+logarítmica, estiveram 1,373\% distantes dos valores reais.
 
 \vspace{12pt}
 
