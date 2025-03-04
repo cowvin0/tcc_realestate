@@ -28,10 +28,10 @@ def predict_house_price(data: ModelStructure):
     file_model = "app/api/model.pkl"
     model = joblib.load(file_model)
 
-    create_df = pd.DataFrame(body)
+    create_df = pd.DataFrame([body])
 
     predicted = model.predict(create_df)
-    return np.expm1(predicted)
+    return np.expm1(predicted)[0]
 
 
 @router.get("/return_data_db")

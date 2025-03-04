@@ -33,22 +33,22 @@ dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 #     .str.replace("condominio", "condomínio")
 # )
 
-df_realestate = pd.read_csv("data/cleaned/jp_limpo.csv").assign(
-    tipo=lambda x: x.tipo.str.capitalize()
+df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto.csv").assign(
+    Tipo=lambda x: x.Tipo.str.capitalize()
     .str.split("_")
     .str.join(" ")
     .str.replace("condominio", "condomínio")
 )
 
-center_lat = df_realestate["latitude"].mean()
-center_lon = df_realestate["longitude"].mean()
+center_lat = df_realestate["Latitude"].mean()
+center_lon = df_realestate["Longitude"].mean()
 
 
 fig_bar = px.bar(
-    df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
-    x="valor",
-    y="tipo",
-    labels={"tipo": "", "valor": "Valor Médio (R$)"},
+    df_realestate.groupby("Tipo")["Valor"].mean().sort_values().reset_index(),
+    x="Valor",
+    y="Tipo",
+    labels={"Tipo": "", "Valor": "Valor Médio (R$)"},
     text_auto=".2s",
     template="plotly_white",
 )
@@ -632,15 +632,15 @@ def make_barplot(filtered_data):
     df_filtered = pd.DataFrame(filtered_data)
 
     fig_bar = px.bar(
-        df_filtered.groupby("bairro")["valor"]
+        df_filtered.groupby("Bairro")["Valor"]
         .mean()
         .sort_values(ascending=False)
         .head(10)
         .sort_values()
         .reset_index(),
-        x="valor",
-        y="bairro",
-        labels={"tipo": "", "valor": "Valor Médio (R$)"},
+        x="Valor",
+        y="Bairro",
+        labels={"Tipo": "", "Valor": "Valor Médio (R$)"},
         text_auto=".2s",
         template="plotly_white",
     )
@@ -660,9 +660,9 @@ def make_barplot(filtered_data):
 def make_density_plot(filtered_data):
     df_filtered = pd.DataFrame(filtered_data)
 
-    types_imo = df_filtered.tipo.unique()
+    types_imo = df_filtered.Tipo.unique()
 
-    get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
+    get_groups = [df_filtered.query("Tipo == @i").Valor for i in types_imo]
 
     fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
 
@@ -715,7 +715,7 @@ def update_map(map_type, filtered_data, n_clicks):
         map_type = None
 
     if map_type == "heatmap":
-        data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
+        data = df_filtered[["Latitude", "Longitude", "Valor"]].values.tolist()
         heatmap_map = folium.Map([center_lat, center_lon], zoom_start=12)
         HeatMap(data, radius=13).add_to(heatmap_map)
         return html.Iframe(
@@ -725,19 +725,21 @@ def update_map(map_type, filtered_data, n_clicks):
     elif map_type == "markers":
         fig_map_marker = px.scatter_mapbox(
             df_filtered,
-            lat="latitude",
-            lon="longitude",
-            color="valor",
-            size="valor",
-            hover_name="tipo",
-            hover_data={"latitude": False, "longitude": False, "valor": ":.2f"},
+            lat="Latitude",
+            lon="Longitude",
+            color="Valor",
+            size="Valor",
+            hover_name="Tipo",
+            hover_data={"Latitude": False, "Longitude": False, "Valor": ":.2f"},
             color_continuous_scale="Viridis",
             size_max=15,
             zoom=12,
             mapbox_style="open-street-map",
             center={
-                "lat": df_filtered["latitude"].mean(),
-                "lon": df_filtered["longitude"].mean(),
+                "lat": center_lat,
+                "lon": center_lon,
+                # "lat": df_filtered["Latitude"].mean(),
+                # "lon": df_filtered["Longitude"].mean(),
             },
         )
 
@@ -927,7 +929,7 @@ def filter_data(selectedData):
         selected_types = {point["y"] for point in selectedData["points"]}
         print(f"Selected Types: {selected_types}")
 
-        filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
+        filtered_df = df_realestate[df_realestate["Tipo"].isin(selected_types)]
         return filtered_df.to_dict("records")
 
     return df_realestate.to_dict("records")

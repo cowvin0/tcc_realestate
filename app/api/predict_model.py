@@ -8,6 +8,7 @@ class ModelStructure(BaseModel):
     banheiro: int
     elevador: int
     espaco_gourmet: int
+    portaria_24_horas: int
     piscina: int
     playground: int
     quadra_de_esporte: int

@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, colback={codebgcolor}, sharp corners, enhanced, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, enhanced, breakable, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -4389,6 +4389,8 @@ respectivamente.}
 
 \end{figure}%
 
+\vspace{12pt}
+
 Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados
 melhores que os algoritmos de Random Forest e Gradient Boosting.
 Entretanto, obteve piores em relação às estatísticas de erro de RMSE e
@@ -4396,8 +4398,7 @@ Entretanto, obteve piores em relação às estatísticas de erro de RMSE e
 foi de \(87,03891\%\), indicando que o modelo consegue explicar
 \(87,03891\%\) dos dados. No entanto, obteve um MAPE pouco menor que o
 LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média
-\(1,357%
-\) distantes de seus valores reais.
+\(1,357\%\) distantes de seus valores reais.
 
 \begin{figure}
 
