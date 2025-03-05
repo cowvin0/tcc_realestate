@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, breakable, sharp corners, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, enhanced, breakable, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -967,62 +967,67 @@ dados que estavam sendo coletados em \textbf{Python}.
 
 \vspace{12pt}
 
-Na sessão a seguir, apresenta-se um exemplo de como realizar web
-scraping em \textbf{R} e \textbf{Python}. Para isso, utilizam-se os
+Na próxima sessão, apresenta-se um exemplo de como realizar web scraping
+em \textbf{R} e \textbf{Python}. Para isso, são utilizados alguns dos
 pacotes mencionados para a linguagem \textbf{R} e, no caso de
 \textbf{Python}, dá-se preferência ao
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, a principal
-biblioteca empregada para esse fim. É importante ressaltar que os
-códigos desenvolvidos para a raspagem de dados podem deixar de funcionar
-ao longo do tempo devido a possíveis mudanças na estrutura dos sites.
-Assim, eventuais ajustes no código poderão ser necessários.
+biblioteca empregada para a extração dos dados. Além disso, esta sessão
+também abordará a estruturar de um HTML e o funcionamento dos seletores
+para a extração de elementos.
+
+\vspace{12pt}
+
+É importante destacar que os códigos desenvolvidos para a raspagem de
+dados podem deixar de funcionar ao longo do tempo devido a possíveis
+mudanças na estrutura dos sites. Assim, eventuais ajustes no código
+poderão ser necessários.
 
 \subsection{Exemplo de web scraping em
 Python}\label{exemplo-de-web-scraping-em-python}
 
 ~~~Os exemplos de raspagem de dados em \textbf{R} e \textbf{Python}
 utilizarão o mesmo site. O objetivo é extrair informações sobre todos os
-pacotes de \textbf{R}, tanto os ordenados por data de publicação quanto
-os organizados por nome, disponíveis em:
+pacotes de \textbf{R}, ordenados por data de publicação, disponíveis em:
 \url{https://cran.r-project.org/web/packages/index.html}. A partir
-desses dados, serão gerados dois arquivos \texttt{.csv} contendo essas
-informações.
+desses dados, será gerado um arquivo \texttt{.csv} contendo as
+informações extraídas.
 
 \vspace{12pt}
 
 Para instalar o
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} e suas
-dependências, pode-se instalar diretamente utilizando o
-\href{https://pip.pypa.io/en/stable/}{\textbf{pip}}, que é o gerenciador
-de pacotes para \textbf{Python}. Portanto, para isso, basta executar em
-seu terminal o comando \texttt{pip\ install\ Scrapy}.
+dependências, pode-se utilizar o
+\href{https://pip.pypa.io/en/stable/}{\textbf{pip}}, o gerenciador de
+pacotes do \textbf{Python}. Para isso, basta executar o comando
+\texttt{pip\ install\ Scrapy} no terminal.
 
 \vspace{12pt}
 
 Após a instalação do
-\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, ficará
-disponível o uso de seu CLI\footnote{CLI (Command Line Interface) é uma
-  interface de linha de comando que permite a interação com um sistema
-  operacional ou software por meio de comandos digitados em um terminal,
-  sem o uso de interface gráfica.}. O CLI disponibilizará inúmeras
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, sua
+CLI\footnote{CLI (Command Line Interface) é uma interface de linha de
+  comando que permite a interação com um sistema operacional ou software
+  por meio de comandos digitados em um terminal, sem o uso de interface
+  gráfica.} ficará disponível. A CLI disponibiliza diversas
 funcionalidades para o
-\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, tais como
-inspencionar o conteúdo da página para encontrar mais facilmente os
-seletores daquela página em específico e, o mais importante, iniciar um
-projeto \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}.
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, como
+inspencionar o conteúdo de uma página para identificar seletores com
+mais facilidade e, o mais importante, iniciar um projeto
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}.
 
 \vspace{12pt}
 
-Antes de se iniciar a raspagem dos dados com o
+Antes de iniciar a raspagem dos dados com o
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, é necessário
-iniciar um projeto utilizando o seu CLI. Para isso, basta executar o
+iniciar um projeto utilizando sua CLI. Para isso, basta executar o
 comando
 \texttt{scrapy\ startproject\ \textless{}nome\_do\_projeto\textgreater{}}.
-Esse comando criará um diretório com todos os arquivos e configurações
-iniciais necessários para começar a extração de dados com o
+Esse comando gerará um diretório com todos os arquivos e configurações
+iniciais necessários para a extração de dados com o
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}. Por exemplo,
 ao executar o comando \texttt{scrapy\ startproject\ scraping\_examples},
-será criada um diretório com a seguinte estrutura:
+será criado um diretório com a seguinte estrutura:
 
 \begin{verbatim}
 scraping_examples/
@@ -1059,10 +1064,10 @@ parâmetros relacionados ao deploy e outras configurações do projeto.
 
 \vspace{12pt}
 
-Com a estrutura do projeto criada, é possível criar o primeiro spider do
-projeto. Para isso, é utilizado o comando
+Com a estrutura do projeto criada, o próximo passo é criar o primeiro
+spider do projeto. Para isso, utiliza-se o comando
 \texttt{scrapy\ genspider\ \textless{}nome\_do\_spider\textgreater{}\ \textless{}website\textgreater{}}.
-Neste exemplo, serão raspados informações do site
+Neste exemplo, serão extraídas informações do site
 \url{https://cran.r-project.org/web/packages/index.html}. Ao executar o
 comando
 \texttt{scrapy\ genspider\ packagescraper\ https://cran.r-project.org/web/packages/index.html},
@@ -1085,101 +1090,361 @@ será gerado um arquivo dentro do diretório spiders com o nome
 \end{Shaded}
 
 A classe \texttt{PackagescraperSpider} foi criada a partir do comando
-executado anteriormente. Essa classe possui três atributos e um método.
-O atributo \texttt{name} nomeia o spider e vai ser utilizado
-posteriormente para inicializar a raspagem dos dados. O
-\texttt{allowed\_domains} é o atributo que indica para o
-\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} que ele deve
-apenas raspar informações que estão naquele domínio, nesse caso,
-\texttt{cran.r-project.org}. O atributo \texttt{start\_urls} indica qual
-deve ser a primeira url a ser raspada. Por último, o método
-\texttt{parse} é executada depois que uma resposta foi obtida após a
-requisição no site alvo.
+executado anteriormente e possui três atributos e um método. O atributo
+\texttt{name} define nome do spider e será utilizado posteriormente para
+inicializar a raspagem dos dados. O \texttt{allowed\_domains} é o
+atributo que indica para o
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} os domínios
+que podem ser acessados, nesse caso, \texttt{cran.r-project.org}. O
+atributo \texttt{start\_urls} define a url inicial a ser acessada pelo
+spider. Por fim, o método \texttt{parse} é executado assim que uma
+resposta é obtida após a requisição ao site alvo, sendo responsável pelo
+processamento e extração dos dados desejados.
 
 \vspace{12pt}
 
-Para extrair dados do conteúdo HTML da página, será necessário utilizar
-os seletores \texttt{CSS} ou \texttt{XPath}. Nesse caso, será utilizado
-o seletor do \texttt{CSS}. De forma a facilitar a seleção de conteúdo da
-página, será utilizado uma das grandes ferramentas do
-\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, que é o
+Para extrair dados do conteúdo HTML da página, é necessário utilizar os
+seletores \texttt{CSS} ou \texttt{XPath}. Nesse caso, será utilizado o
+seletor \texttt{CSS}. Para facilitar a seleção do conteúdo desejado,
+será utilizado uma das grandes ferramentas do
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, o
 \href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
-Shell}}. Essa ferramenta ajudará a selecionar as informações que
-necessárias e até mesmo a debugar o código. Para executar o
+Shell}}. Essa ferramenta permite testar seletores, inspensionar
+elementos da página e até mesmo debugar o código.
+
+\vspace{12pt}
+
+Para executar o
 \href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
 Shell}}, basta utilizar o comando \texttt{scrapy\ shell} no terminal.
 Após a sua execução, aparecerão algumas informações de logs e de
-configurações gerais que já estão sendo utilizadas no seu projeto.
-Agora, com o shell ativado, basta trazer todo o conteúdo HTML contido na
-página de interesse com o seguinte comando:
+configurações iniciais que estão sendo utilizadas no projeto. Agora, com
+o shell ativado, é possível carregar o conteúdo HTML da página de
+interesse utilizando o comando:
 \texttt{fetch("https://cran.r-project.org/web/packages/index.html")}.
 
 \begin{figure}
 
 \begin{minipage}{0.50\linewidth}
 
-\begin{figure}[H]
-
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{includes/page_contents.png}}
+\pandocbounded{\includegraphics[keepaspectratio]{includes/page_content_new.png}}
 
 }
 
-\caption{\label{fig-page_contents}O HTML conterá todo conteúdo contido
-nessa página.}
-
-\end{figure}%
+\subcaption{\label{fig-page_contents}}
 
 \end{minipage}%
 %
 \begin{minipage}{0.50\linewidth}
 
-\begin{figure}[H]
-
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{includes/page_content_devtools.png}}
+\pandocbounded{\includegraphics[keepaspectratio]{includes/page_content_devtools_bigger.png}}
 
 }
 
-\caption{\label{fig-page_contents_devtools}Exemplo do uso das
-ferramentas de desenvolvedor do Firefox para inspencionar conteúdo da
-página.}
-
-\end{figure}%
+\subcaption{\label{fig-page_contents_devtools}}
 
 \end{minipage}%
 
+\caption{\label{fig-pages_scrape}A Figura~\ref{fig-page_contents} exibe
+a página que está sendo raspada, enquanto a
+Figura~\ref{fig-page_contents_devtools} mostra a mesma página com um
+exemplo do uso das ferramentas de desenvolvedor do Firefox.}
+
 \end{figure}%
 
-Com a execução do comando anterior, o conteúdo da página na
-Figura~\ref{fig-page_contents} será gerado e o conteúdo contido em seu
-HTML poderá ser extraído. Se o \texttt{fetch} deu certo, a saída do
-\texttt{response.status} no shell deverá ser 200. Para visualizar o
-conteúdo do HTML, basta executar \texttt{response.body}, como pode ser
-visto a seguir, mostrando apenas uma parte de seu conteúdo:
+Com a execução do comando anterior, o conteúdo da página mostrada na
+Figura~\ref{fig-page_contents} será carregado, permitindo a extração das
+informações contidas em seu HTML. Se o comando \texttt{fetch} obter
+êxito, a saída incluirá o código de status HTTP \texttt{200}, indicando
+que a requisição foi bem sucedida. Abaixo, segue um exemplo desse
+resultado:
 
-\begin{verbatim}
-<!DOCTYPE html>
-<html>
-<head>
-<title>CRAN: Contributed Packages</title>
-<link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
-</head>
-<body>
-<div class="container">
-<h1>Contributed Packages</h1>
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{In} \PreprocessorTok{[}\SpecialStringTok{1}\PreprocessorTok{]}\NormalTok{: fetch}\ErrorTok{(}\StringTok{"https://cran.r{-}project.org/web/packages/index.html"}\KeywordTok{)}
+\ExtensionTok{2025{-}03{-}03}\NormalTok{ 08:04:24 }\PreprocessorTok{[}\SpecialStringTok{scrapy.core.engine}\PreprocessorTok{]}\NormalTok{ INFO: Spider opened}
+\ExtensionTok{2025{-}03{-}03}\NormalTok{ 08:04:27 }\PreprocessorTok{[}\SpecialStringTok{scrapy.core.engine}\PreprocessorTok{]}\NormalTok{ DEBUG: Crawled }\ErrorTok{(}\ExtensionTok{200}\KeywordTok{)} \OperatorTok{\textless{}}\NormalTok{GET}
+\ExtensionTok{https://cran.r{-}project.org/robots.txt}\OperatorTok{\textgreater{}} \ErrorTok{(}\ExtensionTok{referer:}\NormalTok{ None}\KeywordTok{)}
+\ExtensionTok{2025{-}03{-}03}\NormalTok{ 08:04:28 }\PreprocessorTok{[}\SpecialStringTok{scrapy.core.engine}\PreprocessorTok{]}\NormalTok{ DEBUG: Crawled }\ErrorTok{(}\ExtensionTok{200}\KeywordTok{)} \OperatorTok{\textless{}}\NormalTok{GET}
+\ExtensionTok{https://cran.r{-}project.org/web/packages/index.html}\OperatorTok{\textgreater{}} \ErrorTok{(}\ExtensionTok{referer:}\NormalTok{ None}\KeywordTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-<h3 id="pkgs">Available Packages</h3>
-<p> Currently, the CRAN package repository features 22127 available packages. </p>
-...
-\end{verbatim}
+Após a execução do comando \texttt{fetch}, o conteúdo da página ficará
+armazenado no objeto \texttt{response}, que está disponível nativamente
+no shell. Por exemplo, para visualizar o HTML da página, basta executar
+\texttt{response.body}. A partir dessa resposta, é possível analisar a
+estrutura da página e configurar o seletor para extrair apenas os dados
+desejados. No entanto, para facilitar ainda mais esse trabalho,
+navegadores como Firefox oferecem ferramentas de desenvolvedor que
+permitem inspencionar a estrutura da página, como pode ser visto na
+Figura~\ref{fig-page_contents_devtools}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\textless{}!{-}{-}PARTE DO CONTEÚDO DA PÁGINA{-}{-}\textgreater{}}
+
+\DataTypeTok{\textless{}!DOCTYPE}\NormalTok{ html}\DataTypeTok{\textgreater{}}
+\DataTypeTok{\textless{}}\KeywordTok{html}\DataTypeTok{\textgreater{}}
+\DataTypeTok{\textless{}}\KeywordTok{head}\DataTypeTok{\textgreater{}}
+    \DataTypeTok{\textless{}}\KeywordTok{title}\DataTypeTok{\textgreater{}}\NormalTok{CRAN: Contributed Packages}\DataTypeTok{\textless{}/}\KeywordTok{title}\DataTypeTok{\textgreater{}}
+    \DataTypeTok{\textless{}}\KeywordTok{link}\OtherTok{ rel}\OperatorTok{=}\StringTok{"stylesheet"}\OtherTok{ type}\OperatorTok{=}\StringTok{"text/css"}\OtherTok{ href}\OperatorTok{=}\StringTok{"../CRAN\_web.css"}\DataTypeTok{/\textgreater{}}
+    \DataTypeTok{\textless{}}\KeywordTok{meta}\OtherTok{ http{-}equiv}\OperatorTok{=}\StringTok{"Content{-}Type"}
+\OtherTok{     content}\OperatorTok{=}\StringTok{"text/html; charset=utf{-}8"}\DataTypeTok{/\textgreater{}}
+    \DataTypeTok{\textless{}}\KeywordTok{meta}\OtherTok{ name}\OperatorTok{=}\StringTok{"viewport"}\OtherTok{ content}\OperatorTok{=}\StringTok{"width=device{-}width,}
+\StringTok{     initial{-}scale=1.0, user{-}scalable=yes"}\DataTypeTok{/\textgreater{}}
+\DataTypeTok{\textless{}/}\KeywordTok{head}\DataTypeTok{\textgreater{}}
+\DataTypeTok{\textless{}}\KeywordTok{body}\DataTypeTok{\textgreater{}}
+    \DataTypeTok{\textless{}}\KeywordTok{div}\OtherTok{ class}\OperatorTok{=}\StringTok{"container"}\DataTypeTok{\textgreater{}}
+        \DataTypeTok{\textless{}}\KeywordTok{h1}\DataTypeTok{\textgreater{}}\NormalTok{Contributed Packages}\DataTypeTok{\textless{}/}\KeywordTok{h1}\DataTypeTok{\textgreater{}}
+
+        \DataTypeTok{\textless{}}\KeywordTok{h3}\OtherTok{ id}\OperatorTok{=}\StringTok{"pkgs"}\DataTypeTok{\textgreater{}}\NormalTok{Available Packages}\DataTypeTok{\textless{}/}\KeywordTok{h3}\DataTypeTok{\textgreater{}}
+        \DataTypeTok{\textless{}}\KeywordTok{p}\DataTypeTok{\textgreater{}}
+\NormalTok{            Currently, the CRAN package repository features}
+\NormalTok{            22127 available packages.}
+        \DataTypeTok{\textless{}/}\KeywordTok{p}\DataTypeTok{\textgreater{}}
+\NormalTok{        ...}
+    \DataTypeTok{\textless{}/}\KeywordTok{div}\DataTypeTok{\textgreater{}}
+\DataTypeTok{\textless{}/}\KeywordTok{body}\DataTypeTok{\textgreater{}}
+\DataTypeTok{\textless{}/}\KeywordTok{html}\DataTypeTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+Após inspencionar a página, observa-se que existem elementos
+\texttt{\textless{}a\textgreater{}} no corpo do HTML, cada um com um
+atrituto \texttt{href} associado. Esses \texttt{href} serão necessários
+para realizar a paginação e coletar os pacotes ordenados por data de
+publicação. Para extrair os \texttt{href}, basta executar em no terminal
+o comando
+\texttt{response.css("a{[}target=\_top{]}\ ::attr(href)").get()}. Esse
+comando utiliza seletores \texttt{CSS} para extrair o primeiro
+\texttt{href} de um elemento \texttt{\textless{}a\textgreater{}} que
+possui o atributo \texttt{target="\_top"}. Se for necessário extrair
+todos os \texttt{href}, basta substituir o método \texttt{.get()} por
+\texttt{.getall()}, o que retornará todos os valores correspondentes.
+
+\vspace{12pt}
+
+Com a execução do comando, é extraída uma string que será usada para
+realizar a paginação, chamada
+\texttt{\textquotesingle{}available\_packages\_by\_date.html\textquotesingle{}}.
+O \texttt{\textquotesingle{}index.html\textquotesingle{}} que está na
+string do atributo\texttt{start\_urls} deverá ser substituído pela
+string obtida, direcionando para a página de pacotes ordenados por data
+de publicação. Agora, com esse \texttt{href}, é possível utilizar o
+shell e executar o comando \texttt{fetch} na url
+\url{https://cran.r-project.org/web/packages/available_packages_by_date.html}
+para carregar o conteúdo da página com a tabela de todos os pacotes
+ordenados por data.
+
+\vspace{12pt}
+
+A nova página contém uma tabela com todos os pacotes, ordenados por
+data, juntamente com suas descrições. Cada data, nome de pacote e
+descrição estão contidos dentro do elemento
+\texttt{\textless{}tr\textgreater{}} no HTML. Para selecionar todos os
+textos presentes nesse elemento, basta executar o comando
+\texttt{response.css("tr\ ::text").getall()}. Após a execução, será
+gerada uma lista de strings com as informações de todos os pacotes. No
+entanto, essa lista pode conter algumas strings vazias, que precisam ser
+removidas. O código a seguir apresenta todos os seletores utilizados até
+agora no shell, agora integrados ao spider, para dar início ao processo
+de raspagem dos dados:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ scrapy}
+
+
+\KeywordTok{class}\NormalTok{ PackagescraperSpider(scrapy.Spider):}
+\NormalTok{    name }\OperatorTok{=} \StringTok{"packagescraper"}
+\NormalTok{    allowed\_domains }\OperatorTok{=}\NormalTok{ [}\StringTok{"cran.r{-}project.org"}\NormalTok{]}
+\NormalTok{    start\_urls }\OperatorTok{=}\NormalTok{ [}\StringTok{"https://cran.r{-}project.org/web/packages/index.html"}\NormalTok{]}
+
+    \KeywordTok{def}\NormalTok{ parse(}\VariableTok{self}\NormalTok{, response):}
+\NormalTok{        href }\OperatorTok{=}\NormalTok{ response.css(}\StringTok{"a[target=\_top] ::attr(href)"}\NormalTok{).get()}
+\NormalTok{        follow\_url }\OperatorTok{=}\NormalTok{ (}
+          \VariableTok{self}\NormalTok{.start\_urls[}\DecValTok{0}\NormalTok{].replace(}\StringTok{"index.html"}\NormalTok{, }\StringTok{""}\NormalTok{) }\OperatorTok{+}\NormalTok{ href}
+\NormalTok{        )}
+
+        \ControlFlowTok{yield}\NormalTok{ response.follow(}
+\NormalTok{            follow\_url,}
+\NormalTok{            callback}\OperatorTok{=}\VariableTok{self}\NormalTok{.parse\_packages\_info,}
+\NormalTok{            dont\_filter}\OperatorTok{=}\VariableTok{True}
+\NormalTok{        )}
+
+    \KeywordTok{def}\NormalTok{ parse\_packages\_info(}\VariableTok{self}\NormalTok{, response):}
+\NormalTok{        get\_all\_tr }\OperatorTok{=}\NormalTok{ response.css(}\StringTok{"tr ::text"}\NormalTok{).getall()}
+\NormalTok{        packages\_element }\OperatorTok{=}\NormalTok{ [}
+\NormalTok{          x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ get\_all\_tr }\ControlFlowTok{if}\NormalTok{ x.strip() }\OperatorTok{!=} \StringTok{""}
+\NormalTok{        ][}\DecValTok{3}\NormalTok{:]}
+
+\NormalTok{        pub\_date }\OperatorTok{=}\NormalTok{ packages\_element[::}\DecValTok{3}\NormalTok{]}
+\NormalTok{        packs\_name }\OperatorTok{=}\NormalTok{ packages\_element[}\DecValTok{1}\NormalTok{::}\DecValTok{3}\NormalTok{]}
+\NormalTok{        desc\_packs }\OperatorTok{=}\NormalTok{ packages\_element[}\DecValTok{2}\NormalTok{::}\DecValTok{3}\NormalTok{]}
+
+        \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{zip}\NormalTok{(pub\_date, packs\_name, desc\_packs):}
+            \ControlFlowTok{yield}\NormalTok{ \{}
+                \StringTok{"publication\_date"}\NormalTok{: i[}\DecValTok{0}\NormalTok{],}
+                \StringTok{"package\_name"}\NormalTok{: i[}\DecValTok{1}\NormalTok{],}
+                \StringTok{"description\_packs"}\NormalTok{: i[}\DecValTok{2}\NormalTok{],}
+\NormalTok{            \}}
+\end{Highlighting}
+\end{Shaded}
+
+O código contém a mesma classe mostrada anteriormente no
+\texttt{packagescraper.py}, mas agora inclui os seletores analisados no
+shell e outras modificações. Por exemplo, o método
+\texttt{parse(self,\ response)}, apresentado anteriormente, é
+responsável por capturar o link que leva à tabela de pacotes. Esse link
+é extraído utilizando o seletor definido anteriomente no shell. Em
+seguida, esse link é concatenado à url base para formar a url completa
+que será seguida pelo spider. O método \texttt{response.follow()} é
+então usado para acessar a nova página e chamar o método
+\texttt{parse\_packages\_info}, que continuará o processo de raspagem.
+
+\vspace{12pt}
+
+Dentro do método \texttt{parse\_packages\_info}, todos os textos
+contidos nos elementos \texttt{\textless{}tr\textgreater{}} são
+coletados com \texttt{response.css("tr\ ::text").getall()}. Como essa
+extração pode incluir strings vazias, é aplicado um \texttt{.strip()} em
+cada elemento da lista e removidos aqueles que resultam em uma string
+vazia. Além disso, os primeiros três elementos são ignorados, pois não
+contêm informações relevantes, apenas o cabeçalho da tabela.
+
+\vspace{12pt}
+
+Após a limpeza, os dados são organizados em três listas:
+\texttt{pub\_date}, \texttt{packs\_name} e \texttt{desc\_packs}. Cada
+uma delas recebe elementos específicos da lista filtrada, onde,
+\texttt{pub\_date} contém as datas de publicação dos pacotes,
+\texttt{packs\_name} contém os nomes dos pacotes e \texttt{desc\_packs}
+contém as descrições dos pacotes.
+
+\vspace{12pt}
+
+Por fim, a função \texttt{zip(pub\_date,\ packs\_name,\ desc\_packs)}
+permite iterar sobre as três listas simultaneamente, gerando um
+dicionário com as chaves \texttt{publication\_date},
+\texttt{package\_name} e \texttt{description\_packs}. Esse dicionário é
+então passado para o \texttt{yield}, permitindo que
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} armazene os
+dados no formato desejado.
+
+\vspace{12pt}
+
+Com esse código, os dados coletados podem ser salvos em diferentes
+formatos, como \texttt{.json} ou \texttt{.csv}, ao executar o spider.
+Por exemplo, para salvar os dados como \texttt{.csv}, basta executar no
+terminal o comando
+\texttt{scrapy\ crawl\ -o\ packages.csv\ packagescraper}. Ao executar
+esse comando, será salvo um arquivo chamado \texttt{packages.csv},
+contendo todos os dados coletados do site alvo.
+
+\vspace{12pt}
+
+O exemplo apresentado aqui é bastante simples. No entanto, dependendo
+das necessidades do projeto, pode ser necessário utilizar outras
+ferramentas do
+\href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}. O código
+completo para a raspagem de dados de imóveis pode ser acessado em
+\url{https://github.com/cowvin0/tcc_realestate/tree/main/scrapy_zap}.
+Esse código pode servir como material complementar ao que foi
+apresentado neste texto, pois foram adicionadas mais funcionalidades
+durante a coleta dos dados, atendendo a necessidades específicas do
+projeto.
 
 \subsection{Exemplo de web scraping em
 R}\label{exemplo-de-web-scraping-em-r}
+
+~~~Agora que a estrutura do site é conhecida e a inspeção dos dados de
+interesse foi feita utilizando as ferramentas de desenvolvedor do
+Firefox, o exemplo em R será mais direto. Neste exemplo, utiliza-se o
+pacote \href{https://rvest.tidyverse.org/}{\textbf{rvest}},
+\href{https://dplyr.tidyverse.org/}{\textbf{dplyr}} para criar a tabela
+com as informações coletadas, e
+\href{https://purrr.tidyverse.org/}{\textbf{purrr}}, que é um pacote de
+\textbf{R} voltado para programação funcional. O código utilizado para a
+extração pode ser visualizado abaixo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rvest)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(purrr)}
+
+\NormalTok{base\_url }\OtherTok{\textless{}{-}} \StringTok{"https://cran.r{-}project.org/web/packages/"}
+
+\NormalTok{first\_package\_link }\OtherTok{\textless{}{-}} \FunctionTok{read\_html}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(base\_url, }\StringTok{"index.html"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{html\_elements}\NormalTok{(}\StringTok{"a[target=\_top]"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{html\_attr}\NormalTok{(}\StringTok{"href"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{first}\NormalTok{()}
+
+\NormalTok{package\_url }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(base\_url, first\_package\_link)}
+\NormalTok{package\_page }\OtherTok{\textless{}{-}} \FunctionTok{read\_html}\NormalTok{(package\_url)}
+
+\NormalTok{packages\_info }\OtherTok{\textless{}{-}}\NormalTok{ package\_page }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{html\_elements}\NormalTok{(}\StringTok{"tr"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{html\_text2}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{tail}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{map}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{strsplit}\NormalTok{(.x, }\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]])}
+
+\NormalTok{packages\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{publication\_date =} \FunctionTok{map\_chr}\NormalTok{(packages\_info, }\DecValTok{1}\NormalTok{),}
+    \AttributeTok{package\_name =} \FunctionTok{map\_chr}\NormalTok{(packages\_info, }\DecValTok{2}\NormalTok{),}
+    \AttributeTok{description\_packs =} \FunctionTok{map\_chr}\NormalTok{(packages\_info, }\DecValTok{3}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Após carregar os pacotes necessários, o código define a url base do CRAN
+e acessa a página inicial, que contém diversas informações sobre os
+pacotes de \textbf{R}. Em seguida, o código extrai o primeiro link do
+atributo \texttt{href} presente na página e constrói a url completa para
+acessar a página com os pacotes ordenados por data de publicação.
+
+\vspace{12pt}
+
+Depois de carregar o conteúdo da página, o código busca as informações
+contidas nos elementos \texttt{\textless{}tr\textgreater{}} da tabela
+exibida no site. Os textos são extraídos e processados para remover o
+cabeçalho. Em seguida, as informações são separadas em colunas distintas
+utilizando a função \texttt{strsplit()}, que divide em uma lista os
+dados de data de publicação, nome do pacote e descrição do pacote.
+
+\vspace{12pt}
+
+Por fim, os dados são organizados em um \texttt{tibble}, onde cada linha
+contém a data de publicação, o nome do pacote e sua descrição. O uso da
+função \texttt{map\_chr} do pacote
+\href{https://purrr.tidyverse.org/}{\textbf{purrr}} garante que os
+valores sejam extraídos retornando vetores de caracteres com cada uma
+das informações.
+
+\vspace{12pt}
+
+Assim como no exemplo apresentado em \textbf{Python}, o projeto de
+raspagem pode ser adaptado de acordo com as necessidades e as
+informações que precisam ser coletadas durante o processo. Ou seja,
+embora os exemplos fornecidos sejam simples, dependendo das
+características do site, outras funcionalidades podem ser adicionadas,
+como clicar em botões, rolar a página automaticamente para carregar
+conteúdos dinâmicos, entre outras ações.
+
+\vspace{12pt}
+
+Portanto, chega ao fim descrição das tecnologias utilizadas para a
+obtenção dos dados, com exemplos de raspagem em \textbf{R} e
+\textbf{Python}. No entanto, a linguagem \textbf{Python}, em particular,
+continuou sendo empregada em outras etapas deste trabalho, como na
+modelagem dos valores de imóveis. Dessa forma, os próximos recursos
+apresentados serão aqueles utilizados especificamente para a modelagem e
+visualização dos resultados.
 
 \section{Recursos utilizados para modelagem e visualização dos
 resultados}\label{recursos-utilizados-para-modelagem-e-visualizauxe7uxe3o-dos-resultados}
@@ -1443,7 +1708,8 @@ ferramenta moderna e eficiente para a criação de APIs em
 \href{https://fastapi.tiangolo.com/}{\textbf{FastAPI}} é conhecido por
 sua alta performance, graças ao uso de tipagem estática e a sua
 facilidade de suporte assíncrono, além de permitir a criação de APIs de
-maneira rápida e simples. Sua integração com bibliotecas como
+maneira rápida e simples. Além disso, integra-se facilmente com
+bibliotecas como
 \href{https://docs.pydantic.dev/latest/}{\textbf{Pydantic}} para
 validação de dados e
 \href{https://www.sqlalchemy.org/}{\textbf{SQLAlchemy}} (BAYER, 2012)
@@ -4123,6 +4389,8 @@ respectivamente.}
 
 \end{figure}%
 
+\vspace{12pt}
+
 Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados
 melhores que os algoritmos de Random Forest e Gradient Boosting.
 Entretanto, obteve piores em relação às estatísticas de erro de RMSE e
@@ -4130,8 +4398,7 @@ Entretanto, obteve piores em relação às estatísticas de erro de RMSE e
 foi de \(87,03891\%\), indicando que o modelo consegue explicar
 \(87,03891\%\) dos dados. No entanto, obteve um MAPE pouco menor que o
 LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média
-\(1,357%
-\) distantes de seus valores reais.
+\(1,357\%\) distantes de seus valores reais.
 
 \begin{figure}
 
@@ -4325,6 +4592,8 @@ gráficos de dependência, é possível perceber que essas variáveis podem
 ser úteis na avaliação de imóveis que possuem essa característica e tem
 valores mais elevados. O mesmo comportamento é observado para varanda
 gourmet, playground e espaço gourmet.
+
+\section{Aplicação final}\label{aplicauxe7uxe3o-final}
 
 \chapter{Conclusão}\label{conclusuxe3o}
 

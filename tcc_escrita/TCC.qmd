@@ -327,24 +327,28 @@ O [**Playwright**](https://playwright.dev/python/) foi originalmente desenvolvid
 
 \vspace{12pt}
 
-Na sessão a seguir, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, utilizam-se os pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para esse fim. É importante ressaltar que os códigos desenvolvidos para a raspagem de dados podem deixar de funcionar ao longo do tempo devido a possíveis mudanças na estrutura dos sites. Assim, eventuais ajustes no código poderão ser necessários.
+Na próxima sessão, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, são utilizados alguns dos pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para a extração dos dados. Além disso, esta sessão também abordará a estruturar de um HTML e o funcionamento dos seletores para a extração de elementos.
+
+\vspace{12pt}
+
+É importante destacar que os códigos desenvolvidos para a raspagem de dados podem deixar de funcionar ao longo do tempo devido a possíveis mudanças na estrutura dos sites. Assim, eventuais ajustes no código poderão ser necessários.
 
 
 ### Exemplo de web scraping em Python
 
-\ \ \ Os exemplos de raspagem de dados em **R** e **Python** utilizarão o mesmo site. O objetivo é extrair informações sobre todos os pacotes de **R**, tanto os ordenados por data de publicação quanto os organizados por nome, disponíveis em: <https://cran.r-project.org/web/packages/index.html>. A partir desses dados, serão gerados dois arquivos `.csv` contendo essas informações.
+\ \ \ Os exemplos de raspagem de dados em **R** e **Python** utilizarão o mesmo site. O objetivo é extrair informações sobre todos os pacotes de **R**, ordenados por data de publicação, disponíveis em: <https://cran.r-project.org/web/packages/index.html>. A partir desses dados, será gerado um arquivo `.csv` contendo as informações extraídas.
 
 \vspace{12pt}
 
-Para instalar o [**Scrapy**](https://docs.scrapy.org/en/latest) e suas dependências, pode-se instalar diretamente utilizando o [**pip**](https://pip.pypa.io/en/stable/), que é o gerenciador de pacotes para **Python**. Portanto, para isso, basta executar em seu terminal o comando `pip install Scrapy`.
+Para instalar o [**Scrapy**](https://docs.scrapy.org/en/latest) e suas dependências, pode-se utilizar o [**pip**](https://pip.pypa.io/en/stable/), o gerenciador de pacotes do **Python**. Para isso, basta executar o comando `pip install Scrapy` no terminal.
 
 \vspace{12pt}
 
-Após a instalação do [**Scrapy**](https://docs.scrapy.org/en/latest), ficará disponível o uso de seu CLI^[CLI (Command Line Interface) é uma interface de linha de comando que permite a interação com um sistema operacional ou software por meio de comandos digitados em um terminal, sem o uso de interface gráfica.]. O CLI disponibilizará inúmeras funcionalidades para o [**Scrapy**](https://docs.scrapy.org/en/latest), tais como inspencionar o conteúdo da página para encontrar mais facilmente os seletores daquela página em específico e, o mais importante, iniciar um projeto [**Scrapy**](https://docs.scrapy.org/en/latest).
+Após a instalação do [**Scrapy**](https://docs.scrapy.org/en/latest), sua CLI^[CLI (Command Line Interface) é uma interface de linha de comando que permite a interação com um sistema operacional ou software por meio de comandos digitados em um terminal, sem o uso de interface gráfica.] ficará disponível. A CLI disponibiliza diversas funcionalidades para o [**Scrapy**](https://docs.scrapy.org/en/latest), como inspencionar o conteúdo de uma página para identificar seletores com mais facilidade e, o mais importante, iniciar um projeto [**Scrapy**](https://docs.scrapy.org/en/latest).
 
 \vspace{12pt}
 
-Antes de se iniciar a raspagem dos dados com o [**Scrapy**](https://docs.scrapy.org/en/latest), é necessário iniciar um projeto utilizando o seu CLI. Para isso, basta executar o comando `scrapy startproject <nome_do_projeto>`. Esse comando criará um diretório com todos os arquivos e configurações iniciais necessários para começar a extração de dados com o [**Scrapy**](https://docs.scrapy.org/en/latest). Por exemplo, ao executar o comando `scrapy startproject scraping_examples`, será criada um diretório com a seguinte estrutura:
+Antes de iniciar a raspagem dos dados com o [**Scrapy**](https://docs.scrapy.org/en/latest), é necessário iniciar um projeto utilizando sua CLI. Para isso, basta executar o comando `scrapy startproject <nome_do_projeto>`. Esse comando gerará um diretório com todos os arquivos e configurações iniciais necessários para a extração de dados com o [**Scrapy**](https://docs.scrapy.org/en/latest). Por exemplo, ao executar o comando `scrapy startproject scraping_examples`, será criado um diretório com a seguinte estrutura:
 
 ```
 scraping_examples/
@@ -368,7 +372,7 @@ Ao observar a estrutura do diretório, é possível identificar algumas funciona
 
 \vspace{12pt}
 
-Com a estrutura do projeto criada, é possível criar o primeiro spider do projeto. Para isso, é utilizado o comando `scrapy genspider <nome_do_spider> <website>`. Neste exemplo, serão raspados informações do site <https://cran.r-project.org/web/packages/index.html>. Ao executar o comando `scrapy genspider packagescraper https://cran.r-project.org/web/packages/index.html`, será gerado um arquivo dentro do diretório spiders com o nome `packagescraper.py`, que terá a seguinte estrutura:
+Com a estrutura do projeto criada, o próximo passo é criar o primeiro spider do projeto. Para isso, utiliza-se o comando `scrapy genspider <nome_do_spider> <website>`. Neste exemplo, serão extraídas informações do site <https://cran.r-project.org/web/packages/index.html>. Ao executar o comando `scrapy genspider packagescraper https://cran.r-project.org/web/packages/index.html`, será gerado um arquivo dentro do diretório spiders com o nome `packagescraper.py`, que terá a seguinte estrutura:
 
 ```{python}
 #| echo: true
@@ -386,39 +390,188 @@ class PackagescraperSpider(scrapy.Spider):
         pass
 ```
 
-A classe `PackagescraperSpider` foi criada a partir do comando executado anteriormente. Essa classe possui três atributos e um método. O atributo `name` nomeia o spider e vai ser utilizado posteriormente para inicializar a raspagem dos dados. O `allowed_domains` é o atributo que indica para o [**Scrapy**](https://docs.scrapy.org/en/latest) que ele deve apenas raspar informações que estão naquele domínio, nesse caso, `cran.r-project.org`. O atributo `start_urls` indica qual deve ser a primeira url a ser raspada. Por último, o método `parse` é executada depois que uma resposta foi obtida após a requisição no site alvo.
+A classe `PackagescraperSpider` foi criada a partir do comando executado anteriormente e possui três atributos e um método. O atributo `name` define nome do spider e será utilizado posteriormente para inicializar a raspagem dos dados. O `allowed_domains` é o atributo que indica para o [**Scrapy**](https://docs.scrapy.org/en/latest) os domínios que podem ser acessados, nesse caso, `cran.r-project.org`. O atributo `start_urls` define a url inicial a ser acessada pelo spider. Por fim, o método `parse` é executado assim que uma resposta é obtida após a requisição ao site alvo, sendo responsável pelo processamento e extração dos dados desejados.
 
 \vspace{12pt}
 
-Para extrair dados do conteúdo HTML da página, será necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor do `CSS`. De forma a facilitar a seleção de conteúdo da página, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), que é o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta ajudará a selecionar as informações que necessárias e até mesmo a debugar o código. Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html), basta utilizar o comando `scrapy shell` no terminal. Após a sua execução, aparecerão algumas informações de logs e de configurações gerais que já estão sendo utilizadas no seu projeto. Agora, com o shell ativado, basta trazer todo o conteúdo HTML contido na página de interesse com o seguinte comando: `fetch("https://cran.r-project.org/web/packages/index.html")`.
+Para extrair dados do conteúdo HTML da página, é necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor `CSS`. Para facilitar a seleção do conteúdo desejado, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta permite testar seletores, inspensionar elementos da página e até mesmo debugar o código.
 
-::: {layout-ncol=2}
-![O HTML conterá todo conteúdo contido nessa página.](includes/page_contents.png){#fig-page_contents}
+\vspace{12pt}
 
-![Exemplo do uso das ferramentas de desenvolvedor do Firefox para inspencionar conteúdo da página.](includes/page_content_devtools.png){#fig-page_contents_devtools}
+Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html), basta utilizar o comando `scrapy shell` no terminal. Após a sua execução, aparecerão algumas informações de logs e de configurações iniciais que estão sendo utilizadas no projeto. Agora, com o shell ativado, é possível carregar o conteúdo HTML da página de interesse utilizando o comando: `fetch("https://cran.r-project.org/web/packages/index.html")`.
+
+::: {#fig-pages_scrape layout-ncol=2}
+![](includes/page_content_new.png){#fig-page_contents}
+
+![](includes/page_content_devtools_bigger.png){#fig-page_contents_devtools}
+
+A @fig-page_contents exibe a página que está sendo raspada, enquanto a @fig-page_contents_devtools mostra a mesma página com um exemplo do uso das ferramentas de desenvolvedor do Firefox.
 :::
 
-Com a execução do comando anterior, o conteúdo da página na @fig-page_contents será gerado e o conteúdo contido em seu HTML poderá ser extraído. Se o `fetch` deu certo, a saída do `response.status` no shell deverá ser 200. Para visualizar o conteúdo do HTML, basta executar `response.body`, como pode ser visto a seguir, mostrando apenas uma parte de seu conteúdo:
+Com a execução do comando anterior, o conteúdo da página mostrada na @fig-page_contents será carregado, permitindo a extração das informações contidas em seu HTML. Se o comando `fetch` obter êxito, a saída incluirá o código de status HTTP `200`, indicando que a requisição foi bem sucedida. Abaixo, segue um exemplo desse resultado:
 
+```bash
+In [1]: fetch("https://cran.r-project.org/web/packages/index.html")
+2025-03-03 08:04:24 [scrapy.core.engine] INFO: Spider opened
+2025-03-03 08:04:27 [scrapy.core.engine] DEBUG: Crawled (200) <GET
+https://cran.r-project.org/robots.txt> (referer: None)
+2025-03-03 08:04:28 [scrapy.core.engine] DEBUG: Crawled (200) <GET
+https://cran.r-project.org/web/packages/index.html> (referer: None)
 ```
+
+Após a execução do comando `fetch`, o conteúdo da página ficará armazenado no objeto `response`, que está disponível nativamente no shell. Por exemplo, para visualizar o HTML da página, basta executar `response.body`. A partir dessa resposta, é possível analisar a estrutura da página e configurar o seletor para extrair apenas os dados desejados. No entanto, para facilitar ainda mais esse trabalho, navegadores como Firefox oferecem ferramentas de desenvolvedor que permitem inspencionar a estrutura da página, como pode ser visto na @fig-page_contents_devtools.
+
+```HTML
+<!--PARTE DO CONTEÚDO DA PÁGINA-->
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>CRAN: Contributed Packages</title>
-<link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+    <title>CRAN: Contributed Packages</title>
+    <link rel="stylesheet" type="text/css" href="../CRAN_web.css"/>
+    <meta http-equiv="Content-Type"
+     content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,
+     initial-scale=1.0, user-scalable=yes"/>
 </head>
 <body>
-<div class="container">
-<h1>Contributed Packages</h1>
+    <div class="container">
+        <h1>Contributed Packages</h1>
 
-<h3 id="pkgs">Available Packages</h3>
-<p> Currently, the CRAN package repository features 22127 available packages. </p>
-...
+        <h3 id="pkgs">Available Packages</h3>
+        <p>
+            Currently, the CRAN package repository features
+            22127 available packages.
+        </p>
+        ...
+    </div>
+</body>
+</html>
 ```
 
+Após inspencionar a página, observa-se que existem elementos `<a>` no corpo do HTML, cada um com um atrituto `href` associado. Esses `href` serão necessários para realizar a paginação e coletar os pacotes ordenados por data de publicação. Para extrair os `href`, basta executar em no terminal o comando `response.css("a[target=_top] ::attr(href)").get()`. Esse comando utiliza seletores `CSS` para extrair o primeiro `href` de um elemento `<a>` que possui o atributo `target="_top"`. Se for necessário extrair todos os `href`, basta substituir o método `.get()` por `.getall()`, o que retornará todos os valores correspondentes.
+
+\vspace{12pt}
+
+Com a execução do comando, é extraída uma string que será usada para realizar a paginação, chamada `'available_packages_by_date.html'`. O `'index.html'` que está na string do atributo`start_urls` deverá ser substituído pela string obtida, direcionando para a página de pacotes ordenados por data de publicação. Agora, com esse `href`, é possível utilizar o shell e executar o comando `fetch` na url <https://cran.r-project.org/web/packages/available_packages_by_date.html> para carregar o conteúdo da página com a tabela de todos os pacotes ordenados por data.
+
+\vspace{12pt}
+
+A nova página contém uma tabela com todos os pacotes, ordenados por data, juntamente com suas descrições. Cada data, nome de pacote e descrição estão contidos dentro do elemento `<tr>` no HTML. Para selecionar todos os textos presentes nesse elemento, basta executar o comando `response.css("tr ::text").getall()`. Após a execução, será gerada uma lista de strings com as informações de todos os pacotes. No entanto, essa lista pode conter algumas strings vazias, que precisam ser removidas. O código a seguir apresenta todos os seletores utilizados até agora no shell, agora integrados ao spider, para dar início ao processo de raspagem dos dados:
+
+```{python}
+#| eval: false
+#| echo: true
+
+import scrapy
+
+
+class PackagescraperSpider(scrapy.Spider):
+    name = "packagescraper"
+    allowed_domains = ["cran.r-project.org"]
+    start_urls = ["https://cran.r-project.org/web/packages/index.html"]
+
+    def parse(self, response):
+        href = response.css("a[target=_top] ::attr(href)").get()
+        follow_url = (
+          self.start_urls[0].replace("index.html", "") + href
+        )
+
+        yield response.follow(
+            follow_url,
+            callback=self.parse_packages_info,
+            dont_filter=True
+        )
+
+    def parse_packages_info(self, response):
+        get_all_tr = response.css("tr ::text").getall()
+        packages_element = [
+          x for x in get_all_tr if x.strip() != ""
+        ][3:]
+
+        pub_date = packages_element[::3]
+        packs_name = packages_element[1::3]
+        desc_packs = packages_element[2::3]
+
+        for i in zip(pub_date, packs_name, desc_packs):
+            yield {
+                "publication_date": i[0],
+                "package_name": i[1],
+                "description_packs": i[2],
+            }
+```
+
+O código contém a mesma classe mostrada anteriormente no `packagescraper.py`, mas agora inclui os seletores analisados no shell e outras modificações. Por exemplo, o método `parse(self, response)`, apresentado anteriormente, é responsável por capturar o link que leva à tabela de pacotes. Esse link é extraído utilizando o seletor definido anteriomente no shell. Em seguida, esse link é concatenado à url base para formar a url completa que será seguida pelo spider. O método `response.follow()` é então usado para acessar a nova página e chamar o método `parse_packages_info`, que continuará o processo de raspagem.
+
+\vspace{12pt}
+
+Dentro do método `parse_packages_info`, todos os textos contidos nos elementos `<tr>` são coletados com `response.css("tr ::text").getall()`. Como essa extração pode incluir strings vazias, é aplicado um `.strip()` em cada elemento da lista e removidos aqueles que resultam em uma string vazia. Além disso, os primeiros três elementos são ignorados, pois não contêm informações relevantes, apenas o cabeçalho da tabela.
+
+\vspace{12pt}
+
+Após a limpeza, os dados são organizados em três listas: `pub_date`, `packs_name` e `desc_packs`. Cada uma delas recebe elementos específicos da lista filtrada, onde, `pub_date` contém as datas de publicação dos pacotes, `packs_name` contém os nomes dos pacotes e `desc_packs` contém as descrições dos pacotes.
+
+\vspace{12pt}
+
+Por fim, a função `zip(pub_date, packs_name, desc_packs)` permite iterar sobre as três listas simultaneamente, gerando um dicionário com as chaves `publication_date`, `package_name` e `description_packs`. Esse dicionário é então passado para o `yield`, permitindo que [**Scrapy**](https://docs.scrapy.org/en/latest) armazene os dados no formato desejado.
+
+\vspace{12pt}
+
+Com esse código, os dados coletados podem ser salvos em diferentes formatos, como `.json` ou `.csv`, ao executar o spider. Por exemplo, para salvar os dados como `.csv`, basta executar no terminal o comando `scrapy crawl -o packages.csv packagescraper`. Ao executar esse comando, será salvo um arquivo chamado `packages.csv`, contendo todos os dados coletados do site alvo.
+
+\vspace{12pt}
+
+O exemplo apresentado aqui é bastante simples. No entanto, dependendo das necessidades do projeto, pode ser necessário utilizar outras ferramentas do  [**Scrapy**](https://docs.scrapy.org/en/latest). O código completo para a raspagem de dados de imóveis pode ser acessado em <https://github.com/cowvin0/tcc_realestate/tree/main/scrapy_zap>. Esse código pode servir como material complementar ao que foi apresentado neste texto, pois foram adicionadas mais funcionalidades durante a coleta dos dados, atendendo a necessidades específicas do projeto.
+
 ### Exemplo de web scraping em R
+
+\ \ \ Agora que a estrutura do site é conhecida e a inspeção dos dados de interesse foi feita utilizando as ferramentas de desenvolvedor do Firefox, o exemplo em R será mais direto. Neste exemplo, utiliza-se o pacote [**rvest**](https://rvest.tidyverse.org/), [**dplyr**](https://dplyr.tidyverse.org/) para criar a tabela com as informações coletadas, e [**purrr**](https://purrr.tidyverse.org/), que é um pacote de **R** voltado para programação funcional. O código utilizado para a extração pode ser visualizado abaixo:
+
+```r
+library(rvest)
+library(dplyr)
+library(purrr)
+
+base_url <- "https://cran.r-project.org/web/packages/"
+
+first_package_link <- read_html(paste0(base_url, "index.html")) |>
+    html_elements("a[target=_top]") |>
+    html_attr("href") |>
+    first()
+
+package_url <- paste0(base_url, first_package_link)
+package_page <- read_html(package_url)
+
+packages_info <- package_page |>
+    html_elements("tr") |>
+    html_text2() |>
+    tail(-1) |>
+    map(~ strsplit(.x, "\t")[[1]])
+
+packages_df <- tibble(
+    publication_date = map_chr(packages_info, 1),
+    package_name = map_chr(packages_info, 2),
+    description_packs = map_chr(packages_info, 3)
+)
+```
+
+Após carregar os pacotes necessários, o código define a url base do CRAN e acessa a página inicial, que contém diversas informações sobre os pacotes de **R**. Em seguida, o código extrai o primeiro link do atributo `href` presente na página e constrói a url completa para acessar a página com os pacotes ordenados por data de publicação.
+
+\vspace{12pt}
+
+Depois de carregar o conteúdo da página, o código busca as informações contidas nos elementos `<tr>` da tabela exibida no site. Os textos são extraídos e processados para remover o cabeçalho. Em seguida, as informações são separadas em colunas distintas utilizando a função `strsplit()`, que divide em uma lista os dados de data de publicação, nome do pacote e descrição do pacote.
+
+\vspace{12pt}
+
+Por fim, os dados são organizados em um `tibble`, onde cada linha contém a data de publicação, o nome do pacote e sua descrição. O uso da função `map_chr` do pacote [**purrr**](https://purrr.tidyverse.org/) garante que os valores sejam extraídos retornando vetores de caracteres com cada uma das informações.
+
+\vspace{12pt}
+
+Assim como no exemplo apresentado em **Python**, o projeto de raspagem pode ser adaptado de acordo com as necessidades e as informações que precisam ser coletadas durante o processo. Ou seja, embora os exemplos fornecidos sejam simples, dependendo das características do site, outras funcionalidades podem ser adicionadas, como clicar em botões, rolar a página automaticamente para carregar conteúdos dinâmicos, entre outras ações.
+
+\vspace{12pt}
+
+Portanto, chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados, com exemplos de raspagem em **R** e **Python**. No entanto, a linguagem **Python**, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Dessa forma, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
@@ -546,7 +699,7 @@ Neste exemplo, o código permite que o usuário selecione um valor em um menu su
 
 \vspace{12pt}
 
-Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**FastAPI**](https://fastapi.tiangolo.com/), uma ferramenta moderna e eficiente para a criação de APIs em **Python**. O [**FastAPI**](https://fastapi.tiangolo.com/) é conhecido por sua alta performance, graças ao uso de tipagem estática e a sua facilidade de suporte assíncrono, além de permitir a criação de APIs de maneira rápida e simples. Sua integração com bibliotecas como [**Pydantic**](https://docs.pydantic.dev/latest/) para validação de dados e [**SQLAlchemy**](https://www.sqlalchemy.org/) [@sqlalchemy] para interação e conexão com bancos de dados.
+Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**FastAPI**](https://fastapi.tiangolo.com/), uma ferramenta moderna e eficiente para a criação de APIs em **Python**. O [**FastAPI**](https://fastapi.tiangolo.com/) é conhecido por sua alta performance, graças ao uso de tipagem estática e a sua facilidade de suporte assíncrono, além de permitir a criação de APIs de maneira rápida e simples. Além disso, integra-se facilmente com bibliotecas como [**Pydantic**](https://docs.pydantic.dev/latest/) para validação de dados e [**SQLAlchemy**](https://www.sqlalchemy.org/) [@sqlalchemy] para interação e conexão com bancos de dados.
 
 \vspace{12pt}
 
@@ -2657,7 +2810,9 @@ O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos ú
 Valores previstos em função dos observados do algoritmo Light Gradient Boosting e Extreme Gradient Boosting, respectivamente.
 :::
 
-Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest e Gradient Boosting. Entretanto, obteve piores em relação às estatísticas de erro de RMSE e $R^2$. O RMSE obtido pelo XGBoost foi de $0,28659$ e o seu $R^2$ foi de $87,03891\%$, indicando que o modelo consegue explicar $87,03891\%$ dos dados. No entanto, obteve um MAPE pouco menor que o LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média $1,357%$ distantes de seus valores reais.
+\vspace{12pt}
+
+Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest e Gradient Boosting. Entretanto, obteve piores em relação às estatísticas de erro de RMSE e $R^2$. O RMSE obtido pelo XGBoost foi de $0,28659$ e o seu $R^2$ foi de $87,03891\%$, indicando que o modelo consegue explicar $87,03891\%$ dos dados. No entanto, obteve um MAPE pouco menor que o LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média $1,357\%$ distantes de seus valores reais.
 
 
 ::: {#fig-preds_stacking}
@@ -2737,6 +2892,7 @@ Gráfico de dependência de valores SHAP para variáveis binárias.
 
 Para analisar as variáveis binárias, foram utilizados gráficos de dependência para cada uma delas, os quais podem ser visualizados na @fig-dependence_plot. Ao analisar os valores SHAP para os imóveis com e sem academia, observa-se que essa variável tende a aumentar a predição para imóveis que possuem academia. O mesmo padrão é identificado para imóveis com elevador, embora aqueles sem elevador também apresentem uma tendência de aumento na predição, o que pode ser explicado pela influência de outras características dos imóveis. Como já mencionado na análise da importância das variáveis, sauna e spa são características com baixa importância. No entanto, ao observar seus gráficos de dependência, é possível perceber que essas variáveis podem ser úteis na avaliação de imóveis que possuem essa característica e tem valores mais elevados. O mesmo comportamento é observado para varanda gourmet, playground e espaço gourmet.
 
+## Aplicação final
 
 # Conclusão
 
