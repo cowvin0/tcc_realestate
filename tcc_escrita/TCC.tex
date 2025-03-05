@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, breakable, enhanced, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, enhanced, colback={codebgcolor}, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1111,7 +1111,7 @@ será utilizado uma das grandes ferramentas do
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, o
 \href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
 Shell}}. Essa ferramenta permite testar seletores, inspensionar
-elementos da página e até mesmo debugar o código.
+elementos da página e até mesmo ajuda a debugar o código.
 
 \vspace{12pt}
 
@@ -1185,6 +1185,9 @@ navegadores como
 \href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}} oferecem
 ferramentas de desenvolvedor que permitem inspencionar a estrutura da
 página, como pode ser visto na Figura~\ref{fig-page_contents_devtools}.
+Para acessar essa ferramenta no
+\href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}}, basta
+utilizar o atalho \texttt{Ctrl+Shift+I}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1220,8 +1223,8 @@ Após inspencionar a página, observa-se que existem elementos
 \texttt{\textless{}a\textgreater{}} no corpo do HTML, cada um com um
 atrituto \texttt{href} associado. Esses \texttt{href} serão necessários
 para realizar a paginação e coletar os pacotes ordenados por data de
-publicação. Para extrair os \texttt{href}, basta executar em no terminal
-o comando
+publicação. Para extrair os \texttt{href}, basta executar no terminal o
+comando
 \texttt{response.css("a{[}target=\_top{]}\ ::attr(href)").get()}. Esse
 comando utiliza seletores \texttt{CSS} para extrair o primeiro
 \texttt{href} de um elemento \texttt{\textless{}a\textgreater{}} que

@@ -394,7 +394,7 @@ A classe `PackagescraperSpider` foi criada a partir do comando executado anterio
 
 \vspace{12pt}
 
-Para extrair dados do conteúdo HTML da página, é necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor `CSS`. Para facilitar a seleção do conteúdo desejado, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta permite testar seletores, inspensionar elementos da página e até mesmo debugar o código.
+Para extrair dados do conteúdo HTML da página, é necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor `CSS`. Para facilitar a seleção do conteúdo desejado, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta permite testar seletores, inspensionar elementos da página e até mesmo ajuda a debugar o código.
 
 \vspace{12pt}
 
@@ -419,7 +419,7 @@ https://cran.r-project.org/robots.txt> (referer: None)
 https://cran.r-project.org/web/packages/index.html> (referer: None)
 ```
 
-Após a execução do comando `fetch`, o conteúdo da página ficará armazenado no objeto `response`, que está disponível nativamente no shell. Por exemplo, para visualizar o HTML da página, basta executar `response.body`. A partir dessa resposta, é possível analisar a estrutura da página e configurar o seletor para extrair apenas os dados desejados. No entanto, para facilitar ainda mais esse trabalho, navegadores como [**Firefox**](https://www.mozilla.org/pt-BR/firefox/) oferecem ferramentas de desenvolvedor que permitem inspencionar a estrutura da página, como pode ser visto na @fig-page_contents_devtools.
+Após a execução do comando `fetch`, o conteúdo da página ficará armazenado no objeto `response`, que está disponível nativamente no shell. Por exemplo, para visualizar o HTML da página, basta executar `response.body`. A partir dessa resposta, é possível analisar a estrutura da página e configurar o seletor para extrair apenas os dados desejados. No entanto, para facilitar ainda mais esse trabalho, navegadores como [**Firefox**](https://www.mozilla.org/pt-BR/firefox/) oferecem ferramentas de desenvolvedor que permitem inspencionar a estrutura da página, como pode ser visto na @fig-page_contents_devtools. Para acessar essa ferramenta no [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), basta utilizar o atalho `Ctrl+Shift+I`.
 
 ```HTML
 <!--PARTE DO CONTEÚDO DA PÁGINA-->
@@ -449,7 +449,7 @@ Após a execução do comando `fetch`, o conteúdo da página ficará armazenado
 </html>
 ```
 
-Após inspencionar a página, observa-se que existem elementos `<a>` no corpo do HTML, cada um com um atrituto `href` associado. Esses `href` serão necessários para realizar a paginação e coletar os pacotes ordenados por data de publicação. Para extrair os `href`, basta executar em no terminal o comando `response.css("a[target=_top] ::attr(href)").get()`. Esse comando utiliza seletores `CSS` para extrair o primeiro `href` de um elemento `<a>` que possui o atributo `target="_top"`. Se for necessário extrair todos os `href`, basta substituir o método `.get()` por `.getall()`, o que retornará todos os valores correspondentes.
+Após inspencionar a página, observa-se que existem elementos `<a>` no corpo do HTML, cada um com um atrituto `href` associado. Esses `href` serão necessários para realizar a paginação e coletar os pacotes ordenados por data de publicação. Para extrair os `href`, basta executar no terminal o comando `response.css("a[target=_top] ::attr(href)").get()`. Esse comando utiliza seletores `CSS` para extrair o primeiro `href` de um elemento `<a>` que possui o atributo `target="_top"`. Se for necessário extrair todos os `href`, basta substituir o método `.get()` por `.getall()`, o que retornará todos os valores correspondentes.
 
 \vspace{12pt}
 
