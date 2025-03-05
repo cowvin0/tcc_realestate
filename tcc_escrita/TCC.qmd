@@ -287,7 +287,7 @@ Embora o pacote [**rvest**](https://rvest.tidyverse.org/) compartilhe algumas fu
 
 \vspace{12pt}
 
-Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, Firefox, entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html), foi o [**httr**](https://httr.r-lib.org/) [@httr].
+Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html), foi o [**httr**](https://httr.r-lib.org/) [@httr].
 
 \vspace{12pt}
 
@@ -419,7 +419,7 @@ https://cran.r-project.org/robots.txt> (referer: None)
 https://cran.r-project.org/web/packages/index.html> (referer: None)
 ```
 
-Após a execução do comando `fetch`, o conteúdo da página ficará armazenado no objeto `response`, que está disponível nativamente no shell. Por exemplo, para visualizar o HTML da página, basta executar `response.body`. A partir dessa resposta, é possível analisar a estrutura da página e configurar o seletor para extrair apenas os dados desejados. No entanto, para facilitar ainda mais esse trabalho, navegadores como Firefox oferecem ferramentas de desenvolvedor que permitem inspencionar a estrutura da página, como pode ser visto na @fig-page_contents_devtools.
+Após a execução do comando `fetch`, o conteúdo da página ficará armazenado no objeto `response`, que está disponível nativamente no shell. Por exemplo, para visualizar o HTML da página, basta executar `response.body`. A partir dessa resposta, é possível analisar a estrutura da página e configurar o seletor para extrair apenas os dados desejados. No entanto, para facilitar ainda mais esse trabalho, navegadores como [**Firefox**](https://www.mozilla.org/pt-BR/firefox/) oferecem ferramentas de desenvolvedor que permitem inspencionar a estrutura da página, como pode ser visto na @fig-page_contents_devtools.
 
 ```HTML
 <!--PARTE DO CONTEÚDO DA PÁGINA-->
@@ -525,7 +525,7 @@ O exemplo apresentado aqui é bastante simples. No entanto, dependendo das neces
 
 ### Exemplo de web scraping em R
 
-\ \ \ Agora que a estrutura do site é conhecida e a inspeção dos dados de interesse foi feita utilizando as ferramentas de desenvolvedor do Firefox, o exemplo em R será mais direto. Neste exemplo, utiliza-se o pacote [**rvest**](https://rvest.tidyverse.org/), [**dplyr**](https://dplyr.tidyverse.org/) para criar a tabela com as informações coletadas, e [**purrr**](https://purrr.tidyverse.org/), que é um pacote de **R** voltado para programação funcional. O código utilizado para a extração pode ser visualizado abaixo:
+\ \ \ Agora que a estrutura do site é conhecida e a inspeção dos dados de interesse foi feita utilizando as ferramentas de desenvolvedor do [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), o exemplo em R será mais direto. Neste exemplo, utiliza-se o pacote [**rvest**](https://rvest.tidyverse.org/), [**dplyr**](https://dplyr.tidyverse.org/) para criar a tabela com as informações coletadas, e [**purrr**](https://purrr.tidyverse.org/), que é um pacote de **R** voltado para programação funcional. O código utilizado para a extração pode ser visualizado abaixo:
 
 ```r
 library(rvest)
@@ -742,7 +742,7 @@ Os métodos baseados em árvore envolvem a estratificação ou segmentação do 
 
 \ \ \ Árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação. Elas servem de base para os modelos baseados em árvores empregados neste trabalho, focando particularmente nas árvores de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]. O processo de construção de uma árvore se baseia no particionamento recursivo do espaço dos preditores, onde cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal. Em cada nó, é definida uma condição e, caso essa condição seja satisfeita, o resultado será uma das folhas desse nó. Caso contrário, o processo segue para o próximo nó e verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja um exemplo na @fig-arvore.
 
-![Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos](includes/mermaid-tree.png){#fig-arvore}
+![Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos.](includes/mermaid-tree.png){#fig-arvore}
 
 \vspace{12pt}
 
