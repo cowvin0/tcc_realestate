@@ -140,7 +140,7 @@ layout = dbc.Container(
                                     dmc.Button(
                                         "Extraia os dados",
                                         id="download-btn",
-                                        variant="subtle",
+                                        # variant="subtle",
                                         leftIcon=DashIconify(
                                             icon="material-symbols-light:download-rounded",
                                             width=25,
@@ -912,9 +912,10 @@ def update_coordinates(clickData):
             fillColor="red",
             fillOpacity=0.8,
             children=dl.Tooltip(
+                f"Bairro: {get_bairro if get_bairro else 'Não identificado'}\n"
                 f"Latitude: {lat:.6f}, Longitude: {lon:.6f}\n"
                 f"Preço médio de aluguel: {aluguel_price_display}\n"
-                f"Área média de aluguel: {aluguel_area_display}"
+                f"Área média de aluguel: {aluguel_area_display}\n"
             ),
         )
 
