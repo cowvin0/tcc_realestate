@@ -898,9 +898,11 @@ def update_coordinates(clickData):
         )
 
         aluguel_price_display = (
-            f"R$ {aluguel_price:,.2f}" if aluguel_price is not None else ""
+            f"R$ {aluguel_price:,.2f}" if aluguel_price is not None else "N/A"
         )
-        aluguel_area_display = f"{aluguel_area} m²" if aluguel_area is not None else ""
+        aluguel_area_display = (
+            f"{aluguel_area} m²" if aluguel_area is not None else "N/A"
+        )
 
         marker = dl.CircleMarker(
             center=[lat, lon],
@@ -911,8 +913,8 @@ def update_coordinates(clickData):
             fillOpacity=0.8,
             children=dl.Tooltip(
                 f"Latitude: {lat:.6f}, Longitude: {lon:.6f}\n"
-                f"Preço aluguel: {aluguel_price_display}\n"
-                f"Área aluguel: {aluguel_area_display}"
+                f"Preço médio de aluguel: {aluguel_price_display}\n"
+                f"Área média de aluguel: {aluguel_area_display}"
             ),
         )
 
