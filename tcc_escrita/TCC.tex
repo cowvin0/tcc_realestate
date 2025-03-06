@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, enhanced, colback={codebgcolor}, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, colback={codebgcolor}, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1223,7 +1223,7 @@ Após inspencionar a página, observa-se que existem elementos
 \texttt{\textless{}a\textgreater{}} no corpo do HTML, cada um com um
 atrituto \texttt{href} associado. Esses \texttt{href} serão necessários
 para realizar a paginação e coletar os pacotes ordenados por data de
-publicação. Para extrair os \texttt{href}, basta executar no terminal o
+publicação. Para extrair os \texttt{href}, basta executar no shell o
 comando
 \texttt{response.css("a{[}target=\_top{]}\ ::attr(href)").get()}. Esse
 comando utiliza seletores \texttt{CSS} para extrair o primeiro
@@ -1238,7 +1238,7 @@ Com a execução do comando, é extraída uma string que será usada para
 realizar a paginação, chamada
 \texttt{\textquotesingle{}available\_packages\_by\_date.html\textquotesingle{}}.
 O \texttt{\textquotesingle{}index.html\textquotesingle{}} que está na
-string do atributo\texttt{start\_urls} deverá ser substituído pela
+string do atributo \texttt{start\_urls} deverá ser substituído pela
 string obtida, direcionando para a página de pacotes ordenados por data
 de publicação. Agora, com esse \texttt{href}, é possível utilizar o
 shell e executar o comando \texttt{fetch} na url

@@ -449,11 +449,11 @@ Após a execução do comando `fetch`, o conteúdo da página ficará armazenado
 </html>
 ```
 
-Após inspencionar a página, observa-se que existem elementos `<a>` no corpo do HTML, cada um com um atrituto `href` associado. Esses `href` serão necessários para realizar a paginação e coletar os pacotes ordenados por data de publicação. Para extrair os `href`, basta executar no terminal o comando `response.css("a[target=_top] ::attr(href)").get()`. Esse comando utiliza seletores `CSS` para extrair o primeiro `href` de um elemento `<a>` que possui o atributo `target="_top"`. Se for necessário extrair todos os `href`, basta substituir o método `.get()` por `.getall()`, o que retornará todos os valores correspondentes.
+Após inspencionar a página, observa-se que existem elementos `<a>` no corpo do HTML, cada um com um atrituto `href` associado. Esses `href` serão necessários para realizar a paginação e coletar os pacotes ordenados por data de publicação. Para extrair os `href`, basta executar no shell o comando `response.css("a[target=_top] ::attr(href)").get()`. Esse comando utiliza seletores `CSS` para extrair o primeiro `href` de um elemento `<a>` que possui o atributo `target="_top"`. Se for necessário extrair todos os `href`, basta substituir o método `.get()` por `.getall()`, o que retornará todos os valores correspondentes.
 
 \vspace{12pt}
 
-Com a execução do comando, é extraída uma string que será usada para realizar a paginação, chamada `'available_packages_by_date.html'`. O `'index.html'` que está na string do atributo`start_urls` deverá ser substituído pela string obtida, direcionando para a página de pacotes ordenados por data de publicação. Agora, com esse `href`, é possível utilizar o shell e executar o comando `fetch` na url <https://cran.r-project.org/web/packages/available_packages_by_date.html> para carregar o conteúdo da página com a tabela de todos os pacotes ordenados por data.
+Com a execução do comando, é extraída uma string que será usada para realizar a paginação, chamada `'available_packages_by_date.html'`. O `'index.html'` que está na string do atributo `start_urls` deverá ser substituído pela string obtida, direcionando para a página de pacotes ordenados por data de publicação. Agora, com esse `href`, é possível utilizar o shell e executar o comando `fetch` na url <https://cran.r-project.org/web/packages/available_packages_by_date.html> para carregar o conteúdo da página com a tabela de todos os pacotes ordenados por data.
 
 \vspace{12pt}
 
