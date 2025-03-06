@@ -13,6 +13,7 @@ import plotly.figure_factory as ff
 import httpx
 import asyncio
 
+from shapely.geometry import Point
 from dash_iconify import DashIconify
 from dash import html, Output, Input, dcc, callback, State
 from folium.plugins import HeatMap
@@ -39,6 +40,8 @@ df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto.csv").assign(
     .str.join(" ")
     .str.replace("condominio", "condomínio")
 )
+
+bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
 
 center_lat = df_realestate["Latitude"].mean()
 center_lon = df_realestate["Longitude"].mean()
@@ -738,8 +741,6 @@ def update_map(map_type, filtered_data, n_clicks):
             center={
                 "lat": center_lat,
                 "lon": center_lon,
-                # "lat": df_filtered["Latitude"].mean(),
-                # "lon": df_filtered["Longitude"].mean(),
             },
         )
 
@@ -867,12 +868,42 @@ def update_map(map_type, filtered_data, n_clicks):
         Output("input-lat", "value"),
         Output("input-lon", "value"),
         Output("stored-coordinates", "data"),
+        Output("input-price-alug", "value"),
+        Output("input-area-alug", "value"),
     ],
     [Input("map-id", "clickData")],
 )
 def update_coordinates(clickData):
     if clickData and "latlng" in clickData:
         lat, lon = clickData["latlng"]["lat"], clickData["latlng"]["lng"]
+        check_point = Point(lon, lat)
+
+        matching_bairros = bairro_geojson[bairro_geojson.contains(check_point)]
+
+        if matching_bairros.empty:
+            return [], lat, lon, clickData, "", ""
+
+        get_bairro = matching_bairros.nome.iloc[0]
+        filter_aluguel_data = df_realestate[df_realestate["Bairro"] == get_bairro]
+
+        aluguel_price = (
+            filter_aluguel_data["Valor de aluguel"].fillna(method="ffill").iloc[-1]
+            if not filter_aluguel_data.empty
+            else None
+        )
+        aluguel_area = (
+            filter_aluguel_data["Área de aluguel"].fillna(method="ffill").iloc[-1]
+            if not filter_aluguel_data.empty
+            else None
+        )
+
+        aluguel_price_display = (
+            f"R$ {aluguel_price:,.2f}" if aluguel_price is not None else "N/A"
+        )
+        aluguel_area_display = (
+            f"{aluguel_area} m²" if aluguel_area is not None else "N/A"
+        )
+
         marker = dl.CircleMarker(
             center=[lat, lon],
             radius=6,
@@ -880,10 +911,37 @@ def update_coordinates(clickData):
             fill=True,
             fillColor="red",
             fillOpacity=0.8,
-            children=dl.Tooltip(f"Latitude: {lat:.6f}, Longitude: {lon:.6f}"),
+            children=dl.Tooltip(
+                f"Latitude: {lat:.6f}, Longitude: {lon:.6f}\n"
+                f"Preço médio de aluguel: {aluguel_price_display}\n"
+                f"Área média de aluguel: {aluguel_area_display}"
+            ),
         )
-        return [marker], lat, lon, clickData
-    return [], "", "", None
+
+        return [marker], lat, lon, clickData, aluguel_price, aluguel_area
+
+    return [], "", "", None, "", ""
+
+
+# def update_coordinates(clickData):
+#     if clickData and "latlng" in clickData:
+#         lat, lon = clickData["latlng"]["lat"], clickData["latlng"]["lng"]
+#         check_point = Point(round(lat, 6), round(lon, 6))
+#         get_bairro = bairro_geojson[bairro_geojson.contains(check_point)].nome.iloc[0]
+#         filter_aluguel_data = df_realestate[df_realestate["Bairro"] == get_bairro]
+#         aluguel_price = filter_aluguel_data["Valor de aluguel"].fillna(method="ffill")
+#         aluguel_area = filter_aluguel_data["Área de aluguel"].fillna(method="ffill")
+#         marker = dl.CircleMarker(
+#             center=[lat, lon],
+#             radius=6,
+#             color="red",
+#             fill=True,
+#             fillColor="red",
+#             fillOpacity=0.8,
+#             children=dl.Tooltip(f"Latitude: {lat:.6f}, Longitude: {lon:.6f}"),
+#         )
+#         return [marker], lat, lon, clickData, aluguel_price, aluguel_area
+#     return [], "", "", None, "", ""
 
 
 @callback(

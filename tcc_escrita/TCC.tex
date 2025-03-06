@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, enhanced, breakable, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, colback={codebgcolor}, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -844,9 +844,10 @@ questão. Nesse contexto, foi utilizado o pacote
 experiência de um usuário real. Ele permite automatizar interações com a
 página, como clicar em botões, rolar a página automaticamente, lidar com
 autenticação, cookies e redirecionamentos, além de simular navegadores
-como Google Chrome, Firefox, entre outros. Por fim, um dos pacotes que
-também foi utilizado para fazer requisições HTTP, mas que não teve o
-mesmo objetivo do
+como Google Chrome,
+\href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}}, entre
+outros. Por fim, um dos pacotes que também foi utilizado para fazer
+requisições HTTP, mas que não teve o mesmo objetivo do
 \href{https://cran.r-project.org/web/packages/selenium/index.html}{\textbf{selenium}},
 foi o \href{https://httr.r-lib.org/}{\textbf{httr}} (WICKHAM, 2023).
 
@@ -1110,7 +1111,7 @@ será utilizado uma das grandes ferramentas do
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, o
 \href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
 Shell}}. Essa ferramenta permite testar seletores, inspensionar
-elementos da página e até mesmo debugar o código.
+elementos da página e até mesmo ajuda a debugar o código.
 
 \vspace{12pt}
 
@@ -1180,9 +1181,13 @@ no shell. Por exemplo, para visualizar o HTML da página, basta executar
 \texttt{response.body}. A partir dessa resposta, é possível analisar a
 estrutura da página e configurar o seletor para extrair apenas os dados
 desejados. No entanto, para facilitar ainda mais esse trabalho,
-navegadores como Firefox oferecem ferramentas de desenvolvedor que
-permitem inspencionar a estrutura da página, como pode ser visto na
-Figura~\ref{fig-page_contents_devtools}.
+navegadores como
+\href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}} oferecem
+ferramentas de desenvolvedor que permitem inspencionar a estrutura da
+página, como pode ser visto na Figura~\ref{fig-page_contents_devtools}.
+Para acessar essa ferramenta no
+\href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}}, basta
+utilizar o atalho \texttt{Ctrl+Shift+I}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1218,8 +1223,8 @@ Após inspencionar a página, observa-se que existem elementos
 \texttt{\textless{}a\textgreater{}} no corpo do HTML, cada um com um
 atrituto \texttt{href} associado. Esses \texttt{href} serão necessários
 para realizar a paginação e coletar os pacotes ordenados por data de
-publicação. Para extrair os \texttt{href}, basta executar em no terminal
-o comando
+publicação. Para extrair os \texttt{href}, basta executar no shell o
+comando
 \texttt{response.css("a{[}target=\_top{]}\ ::attr(href)").get()}. Esse
 comando utiliza seletores \texttt{CSS} para extrair o primeiro
 \texttt{href} de um elemento \texttt{\textless{}a\textgreater{}} que
@@ -1233,7 +1238,7 @@ Com a execução do comando, é extraída uma string que será usada para
 realizar a paginação, chamada
 \texttt{\textquotesingle{}available\_packages\_by\_date.html\textquotesingle{}}.
 O \texttt{\textquotesingle{}index.html\textquotesingle{}} que está na
-string do atributo\texttt{start\_urls} deverá ser substituído pela
+string do atributo \texttt{start\_urls} deverá ser substituído pela
 string obtida, direcionando para a página de pacotes ordenados por data
 de publicação. Agora, com esse \texttt{href}, é possível utilizar o
 shell e executar o comando \texttt{fetch} na url
@@ -1364,8 +1369,9 @@ R}\label{exemplo-de-web-scraping-em-r}
 
 ~~~Agora que a estrutura do site é conhecida e a inspeção dos dados de
 interesse foi feita utilizando as ferramentas de desenvolvedor do
-Firefox, o exemplo em R será mais direto. Neste exemplo, utiliza-se o
-pacote \href{https://rvest.tidyverse.org/}{\textbf{rvest}},
+\href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}}, o
+exemplo em R será mais direto. Neste exemplo, utiliza-se o pacote
+\href{https://rvest.tidyverse.org/}{\textbf{rvest}},
 \href{https://dplyr.tidyverse.org/}{\textbf{dplyr}} para criar a tabela
 com as informações coletadas, e
 \href{https://purrr.tidyverse.org/}{\textbf{purrr}}, que é um pacote de
@@ -1871,7 +1877,7 @@ um exemplo na Figura~\ref{fig-arvore}.
 }
 
 \caption{\label{fig-arvore}Exemplo de estrutura de árvore de regressão.
-A árvore tem cinco folhas e quatro nós internos}
+A árvore tem cinco folhas e quatro nós internos.}
 
 \end{figure}%
 
