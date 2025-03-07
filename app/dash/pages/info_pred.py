@@ -10,8 +10,7 @@ import plotly.express as px
 import dash_ag_grid as dag
 import folium
 import plotly.figure_factory as ff
-import httpx
-import asyncio
+import requests
 
 from shapely.geometry import Point
 from dash_iconify import DashIconify
@@ -21,37 +20,46 @@ from folium.plugins import HeatMap
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
 
-# async def fetch_data():
-#     async with httpx.AsyncClient() as client:
-#         response = await client.get("http://api/real_data/return_data_db")
-#         return response.json()
+def predict_house_price(payload):
+    url = "http://api:8050/real_data/predict"
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}
 
 
-# df_realestate = pd.DataFrame(asyncio.run(fetch_data())).assign(
+def fetch_data():
+    response = requests.get("http://api:8050/real_data/return_data_db")
+    return response.json()
+
+
+df_realestate = pd.DataFrame(fetch_data()).assign(
+    tipo=lambda x: x.tipo.str.capitalize()
+    .str.split("_")
+    .str.join(" ")
+    .str.replace("condominio", "condomínio")
+)
+
+# df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv").assign(
 #     tipo=lambda x: x.tipo.str.capitalize()
 #     .str.split("_")
 #     .str.join(" ")
 #     .str.replace("condominio", "condomínio")
 # )
 
-df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto.csv").assign(
-    Tipo=lambda x: x.Tipo.str.capitalize()
-    .str.split("_")
-    .str.join(" ")
-    .str.replace("condominio", "condomínio")
-)
-
 bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
 
-center_lat = df_realestate["Latitude"].mean()
-center_lon = df_realestate["Longitude"].mean()
+center_lat = df_realestate["latitude"].mean()
+center_lon = df_realestate["longitude"].mean()
 
 
 fig_bar = px.bar(
-    df_realestate.groupby("Tipo")["Valor"].mean().sort_values().reset_index(),
-    x="Valor",
-    y="Tipo",
-    labels={"Tipo": "", "Valor": "Valor Médio (R$)"},
+    df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
+    x="valor",
+    y="tipo",
+    labels={"tipo": "", "valor": "Valor Médio (R$)"},
     text_auto=".2s",
     template="plotly_white",
 )
@@ -203,6 +211,40 @@ layout = dbc.Container(
                                             html.H4(
                                                 "Preencha as informações do imóvel"
                                             ),
+                                            dmc.Select(
+                                                id="input-tipo",
+                                                data=[
+                                                    {
+                                                        "value": "apartamentos",
+                                                        "label": "Apartamento",
+                                                    },
+                                                    {"value": "casas", "label": "Casa"},
+                                                    {
+                                                        "value": "casas_de_condominio",
+                                                        "label": "Casa de condomínio",
+                                                    },
+                                                    {
+                                                        "value": "flats",
+                                                        "label": "Flats",
+                                                    },
+                                                    {
+                                                        "value": "terrenos_e_lotes_comerciais",
+                                                        "label": "Terreno/ Lote comercial",
+                                                    },
+                                                    {
+                                                        "value": "terrenos_lotes_e_condominio",
+                                                        "label": "Terreno/Lote condomínio",
+                                                    },
+                                                ],
+                                                clearable=True,
+                                                placeholder="Informe o tipo de imóvel",
+                                                icon=DashIconify(
+                                                    icon="ph:city",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
                                             dmc.NumberInput(
                                                 id="input-area",
                                                 placeholder="Deixe vazio ou insira o valor da área",
@@ -266,6 +308,25 @@ layout = dbc.Container(
                                                     width=20,
                                                 ),
                                                 thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-portaria",
+                                                data=[
+                                                    {"value": 1, "label": "Sim"},
+                                                    {"value": 0, "label": "Não"},
+                                                    {
+                                                        "value": None,
+                                                        "label": "Sem informação de portaria 24 horas",
+                                                    },
+                                                ],
+                                                clearable=True,
+                                                placeholder="Informe se o imóvel possui portaria 24 horas",
+                                                icon=DashIconify(
+                                                    icon="material-symbols-light:concierge-outline-rounded",
+                                                    width=20,
+                                                ),
                                                 w=390,
                                                 mb=10,
                                             ),
@@ -412,9 +473,6 @@ layout = dbc.Container(
                                                     },
                                                 ],
                                                 clearable=True,
-                                                # rightSection=DashIconify(
-                                                #     icon="radix-icons:chevron-down"
-                                                # ),
                                                 placeholder="Informe se o imóvel possui salão de festa",
                                                 icon=DashIconify(
                                                     icon="streamline:champagne-party-alcohol",
@@ -434,9 +492,6 @@ layout = dbc.Container(
                                                     },
                                                 ],
                                                 clearable=True,
-                                                # rightSection=DashIconify(
-                                                #     icon="radix-icons:chevron-down"
-                                                # ),
                                                 placeholder="Informe se o imóvel possui sauna",
                                                 icon=DashIconify(
                                                     icon="fluent-emoji-high-contrast:person-in-steamy-room",
@@ -456,9 +511,6 @@ layout = dbc.Container(
                                                     },
                                                 ],
                                                 clearable=True,
-                                                # rightSection=DashIconify(
-                                                #     icon="radix-icons:chevron-down"
-                                                # ),
                                                 placeholder="Informe se o imóvel possui spa",
                                                 icon=DashIconify(
                                                     icon="map:spa",
@@ -483,9 +535,6 @@ layout = dbc.Container(
                                                     icon="ic:outline-outdoor-grill",
                                                     width=20,
                                                 ),
-                                                # rightSection=DashIconify(
-                                                #     icon="radix-icons:chevron-down"
-                                                # ),
                                                 w=390,
                                                 mb=10,
                                             ),
@@ -505,9 +554,6 @@ layout = dbc.Container(
                                                     icon="material-symbols-light:service-toolbox-outline-sharp",
                                                     width=20,
                                                 ),
-                                                # rightSection=DashIconify(
-                                                #     icon="radix-icons:chevron-down"
-                                                # ),
                                                 w=390,
                                                 mb=10,
                                             ),
@@ -636,15 +682,15 @@ def make_barplot(filtered_data):
     df_filtered = pd.DataFrame(filtered_data)
 
     fig_bar = px.bar(
-        df_filtered.groupby("Bairro")["Valor"]
+        df_filtered.groupby("bairro")["valor"]
         .mean()
         .sort_values(ascending=False)
         .head(10)
         .sort_values()
         .reset_index(),
-        x="Valor",
-        y="Bairro",
-        labels={"Tipo": "", "Valor": "Valor Médio (R$)"},
+        x="valor",
+        y="bairro",
+        labels={"tipo": "", "valor": "Valor Médio (R$)"},
         text_auto=".2s",
         template="plotly_white",
     )
@@ -664,9 +710,9 @@ def make_barplot(filtered_data):
 def make_density_plot(filtered_data):
     df_filtered = pd.DataFrame(filtered_data)
 
-    types_imo = df_filtered.Tipo.unique()
+    types_imo = df_filtered.tipo.unique()
 
-    get_groups = [df_filtered.query("Tipo == @i").Valor for i in types_imo]
+    get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
 
     fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
 
@@ -719,7 +765,7 @@ def update_map(map_type, filtered_data, n_clicks):
         map_type = None
 
     if map_type == "heatmap":
-        data = df_filtered[["Latitude", "Longitude", "Valor"]].values.tolist()
+        data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
         heatmap_map = folium.Map([center_lat, center_lon], zoom_start=12)
         HeatMap(data, radius=13).add_to(heatmap_map)
         return html.Iframe(
@@ -729,12 +775,12 @@ def update_map(map_type, filtered_data, n_clicks):
     elif map_type == "markers":
         fig_map_marker = px.scatter_mapbox(
             df_filtered,
-            lat="Latitude",
-            lon="Longitude",
-            color="Valor",
-            size="Valor",
-            hover_name="Tipo",
-            hover_data={"Latitude": False, "Longitude": False, "Valor": ":.2f"},
+            lat="latitude",
+            lon="longitude",
+            color="valor",
+            size="valor",
+            hover_name="tipo",
+            hover_data={"latitude": False, "longitude": False, "valor": ":.2f"},
             color_continuous_scale="Viridis",
             size_max=15,
             zoom=12,
@@ -884,15 +930,15 @@ def update_coordinates(clickData):
 
         if not matching_bairros.empty:
             get_bairro = matching_bairros.nome.iloc[0]
-            filter_aluguel_data = df_realestate[df_realestate["Bairro"] == get_bairro]
+            filter_aluguel_data = df_realestate[df_realestate["bairro"] == get_bairro]
 
             aluguel_price = (
-                filter_aluguel_data["Valor de aluguel"].fillna(method="ffill").iloc[-1]
+                filter_aluguel_data["valor_aluguel"].fillna(method="ffill").iloc[-1]
                 if not filter_aluguel_data.empty
                 else None
             )
             aluguel_area = (
-                filter_aluguel_data["Área de aluguel"].fillna(method="ffill").iloc[-1]
+                filter_aluguel_data["area_aluguel"].fillna(method="ffill").iloc[-1]
                 if not filter_aluguel_data.empty
                 else None
             )
@@ -905,7 +951,7 @@ def update_coordinates(clickData):
             f"R$ {aluguel_price:,.2f}" if aluguel_price is not None else "N/A"
         )
         aluguel_area_display = (
-            f"{aluguel_area} m²" if aluguel_area is not None else "N/A"
+            f"{aluguel_area:,.2f} m²" if aluguel_area is not None else "N/A"
         )
 
         marker = dl.CircleMarker(
@@ -930,7 +976,14 @@ def update_coordinates(clickData):
             ),
         )
 
-        return [marker], lat, lon, clickData, aluguel_price, aluguel_area
+        return (
+            [marker],
+            lat,
+            lon,
+            clickData,
+            aluguel_price if aluguel_price is not None else "",
+            aluguel_area if aluguel_area is not None else "",
+        )
 
     return [], "", "", None, "", ""
 
@@ -978,14 +1031,14 @@ def filter_data(selectedData):
         selected_types = {point["y"] for point in selectedData["points"]}
         print(f"Selected Types: {selected_types}")
 
-        filtered_df = df_realestate[df_realestate["Tipo"].isin(selected_types)]
+        filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
         return filtered_df.to_dict("records")
 
     return df_realestate.to_dict("records")
 
 
 @callback(
-    Output("calculate-prediction", "n_clicks"),
+    Output("prediction-result", "children"),
     Input("calculate-prediction", "n_clicks"),
     State("input-area", "value"),
     State("input-price-alug", "value"),
@@ -1006,6 +1059,8 @@ def filter_data(selectedData):
     State("input-service", "value"),
     State("input-lat", "value"),
     State("input-lon", "value"),
+    State("input-tipo", "value"),
+    State("input-portaria", "value"),
 )
 def get_inputs_to_predict(
     n_clicks,
@@ -1028,25 +1083,32 @@ def get_inputs_to_predict(
     service,
     lat,
     lon,
+    tipo,
+    portaria,
 ):
     if n_clicks:
-        print("Área:", area)
-        print("Preço Médio Aluguel:", price_alug)
-        print("Área Média Aluguel:", area_alug)
-        print("Quartos:", bedrooms)
-        print("Banheiros:", bathrooms)
-        print("Vagas de Garagem:", parking)
-        print("Academia:", gym)
-        print("Elevador:", elevator)
-        print("Espaço Gourmet:", space_gourmet)
-        print("piscina:", pool)
-        print("Playground:", playground)
-        print("Quadra de esporte:", sport)
-        print("Salão de festa:", party)
-        print("Sauna:", sauna)
-        print("Spa:", spa)
-        print("Varanda gourmet:", gourmet_varan)
-        print("Área de serviço:", service)
-        print("Latitude:", lat)
-        print("Longitude:", lon)
-    return n_clicks
+        payload = {
+            "academia": gym,
+            "area": area,
+            "area_servico": service,
+            "banheiro": bathrooms,
+            "elevador": elevator,
+            "espaco_gourmet": space_gourmet,
+            "portaria_24_horas": portaria,
+            "piscina": pool,
+            "playground": playground,
+            "quadra_de_esporte": sport,
+            "quarto": bedrooms,
+            "salao_de_festa": party,
+            "sauna": sauna,
+            "spa": spa,
+            "tipo": tipo,
+            "vaga": parking,
+            "varanda_gourmet": gourmet_varan,
+            "latitude": lat if lat != "" else None,
+            "longitude": lon if lon != "" else None,
+            "area_aluguel": area_alug if area_alug != "" else None,
+            "valor_aluguel": price_alug if price_alug != "" else None,
+        }
+
+        return predict_house_price(payload)

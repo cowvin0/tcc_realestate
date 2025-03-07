@@ -21,7 +21,7 @@ load_dotenv()
 router = APIRouter(prefix="/real_data", tags=["Realestate"])
 
 
-@router.post("predict")
+@router.post("/predict")
 def predict_house_price(data: ModelStructure):
     body = data.model_dump()
 
