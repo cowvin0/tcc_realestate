@@ -2174,7 +2174,7 @@ Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-l
 |:-------------------------:|:-------:|:---------:|:-------:|
 |       Random Forest       | 0,28972 | $86,78792\%$ | 0,01373 |
 |     Gradient Boosting     | 0,28730 | $86,98259\%$ | 0,01377 |
-|  Light Gradient Boosting  | 0,28493 | $87,17132\%$ | 0,01346 |
+|  Light Gradient Boosting  | 0,28385 | $87,25794\%$ | 0,01340 |
 | Extreme Gradient Boosting | 0,28659 | $87,03891\%$ | 0,01340 |
 |          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
 
@@ -2192,7 +2192,7 @@ import joblib
 
 study1 = joblib.load('study_pkl/study_rf.pkl')
 study2 = joblib.load('study_pkl/study_gdt.pkl')
-study3 = joblib.load('study_pkl/study_lgbm.pkl')
+study3 = joblib.load('study_pkl/study_lgbm_new_var.pkl')
 study4 = joblib.load('study_pkl/study_xgb.pkl')
 ```
 
@@ -2473,7 +2473,7 @@ Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não
 
 ### Tunagem do LGBM
 
-\ \ \ Para a otimização do LGBM, foram considerados os mesmos hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com a tunagem do número de folhas das árvores. O espaço de busca para a quantidade de árvores foi definido entre 100 e 2000, para a taxa de aprendizado no mesmo intervalo usado no Gradient Boosting, para a profundidade das árvores e número de folhas o intervalo foi definido da mesma forma, entre 100 e 500
+\ \ \ Para a otimização do LGBM, foram considerados os mesmos hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com a tunagem do número de folhas das árvores. O espaço de busca para a quantidade de árvores foi definido entre 100 e 2000, para a taxa de aprendizado no mesmo intervalo usado no Gradient Boosting, para a profundidade das árvores e número de folhas o intervalo foi definido entre 100 e 600
 
 ::: {#fig-lgbm_param layout="[[1, 1, 1], [1]]"}
 
@@ -2613,7 +2613,7 @@ Analisando a relação entre o hiperparâmetro de profundidade e o número de fo
 
 | Tentativa |  RMSE  | n_estimators | num_leaves | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:----------:|:---------:|:-------------:|
-|     96    | 1,28722 |     1798     |     247    |    299    |     0,00903     |
+|     31    | 0,28546 |     1988     |     202    |    379    |     0,00985     |
 
 : Melhores hiperparâmetros para Light Gradient Boosting.
 
