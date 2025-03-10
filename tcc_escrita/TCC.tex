@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, boxrule=0pt, breakable, frame hidden, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, boxrule=0pt, enhanced, breakable, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2660,18 +2660,55 @@ as variáveis independentes e a variável dependente.
 
 \vspace{12pt}
 
-\textbf{(FALAR SOBRE A CORRELAÇÃO DE SPEARMAN E QUE AJUDOU A CRIAR NOVAS
-VARIÁVEIS A PARTIR DE SUAS CORRELAÇÕES.)}
+Nesta etapa, também foi analisada a correlação entre as variáveis
+dependentes utilizadas no modelo, o que possibilitou a criação de novas
+variáveis com base na interação entre aquelas que apresentavam alguma
+relação. Para isso, utilizou-se a correlação de Spearman (SPEARMAN,
+1961).
+
+\vspace{12pt}
+
+A correlação de Spearman é bastante semelhante à correlação de Pearson
+(COHEN et al., 2009). No entanto, diferencia-se por ser uma medida não
+paramétrica de correlação entre os postos das variáveis. Assim, o
+coeficiente de correlação de Spearman é definido como o coeficiente de
+correlação de Pearson aplicado às variáveis classificadas em postos:
+
+\[
+r_{s} = \rho_{rg_{X}, rg_{Y}} = \frac{cov\left(rg_{X}, rg_{Y}\right)}{\sigma_{rg_X}\sigma_{rg_Y}} \text{,}
+\] em que \(\rho\) representa o coeficiente de Pearson aplicado aos
+postos das variáveis, \(cov\left(rg_{X}, rg_{Y}\right)\) é a covariância
+entre os postos, e \(\sigma_{rg_X}\) e \(\sigma_{rg_Y}\) são os desvios
+padrão das variáveis em postos.
+
+\vspace{12pt}
+
+Portanto, essa etapa resultou na criação de três variáveis: a quantidade
+total de cômodos do imóvel, o produto entre as coordenadas geográficas e
+o preço médio do aluguel no bairro, a razão entre o número de quartos e
+a área do imóvel, e o produto entre o número de quartos do imóvel e a
+área média do aluguel no bairro. No entanto, a inclusão dessas variáveis
+não levou à remoção das variáveis originais utilizadas em sua
+construção, pois sua exclusão resultou em uma piora no desempenho do
+modelo.
+
+\vspace{12pt}
+
+Com um maior entendimento dos dados, o próximo passo foi a construção do
+modelo, incluindo as transformações aplicadas, o método de imputação de
+valores ausentes e o tratamento de variáveis nominais. A próxima seção
+detalhará os métodos utilizados nesse processo.
 
 \section{Construção do modelo}\label{construuxe7uxe3o-do-modelo}
 
 ~~~No conjunto de dados extraído, foram avaliados diferentes modelos
 para a previsão do valor do imóvel. O valor do imóvel foi explicado por
-variáveis consideradas relevantes para o estudo, como: valor médio do
+variáveis consideradas relevantes para o estudo, como: preço médio do
 aluguel no bairro, área, área média do aluguel no bairro, número de
 banheiros, vagas de estacionamento, número de quartos, latitude,
-longitude, tipo de imóvel e variáveis dicotômicas obtidas durante o
-processo de extração. As variáveis relacionadas ao valor do condomínio e
+longitude, tipo de imóvel, variáveis dicotômicas obtidas durante o
+processo de extração e variáveis criadas posteriormente ao processo de
+raspagem dos dados. As variáveis relacionadas ao valor do condomínio e
 IPTU foram excluídas do modelo devido à alta quantidade de valores
 ausentes.
 
@@ -4696,6 +4733,10 @@ imobili{á}rio de Jo{ã}o Pessoa-PB. 2014.
 CHEN, T.; GUESTRIN, C. Xgboost: A scalable tree boosting system.
 {[}S.l.{]}: {[}s.n.{]}, 2016. p. 785--794.
 
+\bibitem[\citeproctext]{ref-cohen2009pearson}
+COHEN, I. et al. Pearson correlation coefficient. \textbf{Noise
+reduction in speech processing}, 2009. p. 1--4.
+
 \bibitem[\citeproctext]{ref-evolucao_abecip}
 COSTA FARIAS, B. M. Da. A evolu{ç}{ã}o do mercado imobili{á}rio
 brasileiro e o conceito de Home Equity. 2010.
@@ -4800,6 +4841,10 @@ Theory of Games}, 1953. v. 2.
 SNOEK, J.; LAROCHELLE, H.; ADAMS, R. P. Practical bayesian optimization
 of machine learning algorithms. \textbf{Advances in neural information
 processing systems}, 2012. v. 25.
+
+\bibitem[\citeproctext]{ref-spearman1961proof}
+SPEARMAN, C. The proof and measurement of association between two
+things. 1961.
 
 \bibitem[\citeproctext]{ref-vstrumbelj2014explaining}
 ŠTRUMBELJ, E.; KONONENKO, I. Explaining prediction models and individual
