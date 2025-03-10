@@ -120,22 +120,6 @@ class BedAreaBedToi(BaseEstimator, TransformerMixin):
         else:
             return 0
 
-    @staticmethod
-    def house(area):
-        if area <= 70:
-            return "Pequeno"
-        elif 70 < area <= 150:
-            return "Médio"
-        else:
-            return "Grande"
-
-    @staticmethod
-    def vert_hori(specie):
-        if specie in ("apartamentos", "flat"):
-            return 1
-        else:
-            return 0
-
     def fit(self, X, y=None):
         return self
 
