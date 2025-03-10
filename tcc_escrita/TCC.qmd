@@ -327,7 +327,7 @@ O [**Playwright**](https://playwright.dev/python/) foi originalmente desenvolvid
 
 \vspace{12pt}
 
-Na próxima sessão, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, são utilizados alguns dos pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para a extração dos dados. Além disso, esta sessão também abordará a estruturar de um HTML e o funcionamento dos seletores para a extração de elementos.
+Na próxima seção, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, são utilizados alguns dos pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para a extração dos dados. Além disso, esta seção também abordará a estruturar de um HTML e o funcionamento dos seletores para a extração de elementos.
 
 \vspace{12pt}
 
@@ -1238,9 +1238,7 @@ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas
 
 ### Etapas de pré-processamento
 
-**(FALAR SOBRE O YEOJOHNSON NA VARIÁVEL COM INTERAÇÃO ENTRE AS COORDENADAS)**
-
-\ \ \ Após a organização e limpeza dos dados, foram realizadas transformações nas variáveis para aprimorar a capacidade preditiva dos modelos em relação aos valores dos imóveis. Além disso, foi aplicado um tratamento específico para lidar com valores ausentes em algumas variáveis do conjunto de dados. Esse tratamento foi restrito às variáveis com menos de 20% de valores ausentes, incluindo as variáveis de número de banheiros, quartos, vagas, valor médio do aluguel e área média do aluguel. Por outro lado, as variáveis de condomínio e IPTU apresentaram um elevado percentual de valores ausentes, com a variável de condomínio tendo quase 60% de observações ausentes e a variável IPTU mais de 80%. Devido a essa alta proporção de valores ausentes, essas variáveis foram excluídas das análises.
+\ \ \ Após a organização e limpeza dos dados, foram realizadas transformações nas variáveis para aprimorar a capacidade preditiva dos modelos em relação aos valores dos imóveis. Além disso, foi aplicado um tratamento específico para lidar com valores ausentes em algumas variáveis do conjunto de dados. Esse tratamento foi restrito às variáveis com menos de 20% de valores ausentes, incluindo as variáveis de número de banheiros, quartos, vagas, valor médio do aluguel e área média do aluguel. Por outro lado, as variáveis de condomínio e IPTU apresentaram um elevado percentual de valores ausentes, com a variável de condomínio tendo quase 60% de observações ausentes e a variável IPTU mais de 80%. Devido a essa alta proporção de valores ausentes, essas variáveis foram excluídas.
 
 \vspace{12pt}
 
@@ -1253,7 +1251,21 @@ em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou 
 
 \vspace{12pt}
 
-A transformação logarítmica $\log(1 + x)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Para as variáveis categóricas, utilizou-se a classe `sklearn.preprocessing.OneHotEncoder`, que converte as categorias em variáveis dicotômicas, criando uma nova coluna para cada categoria. Especificamente, a `OneHotEncoder` foi aplicada à variável que representa o tipo de imóvel, transformando cada categoria em uma variável binária.
+A transformação logarítmica $\log(1 + x)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Embora, a transformação $\log(1 + x)$ tenha sido aplicada para a maior parte das variáveis numéricas, ela não foi aplicada para uma única variável, a que representa o produto entre as coordenadas geográficas e o valor de aluguel, nessa foi aplicada a transformação de Yeo-Johnson [@yeo], que contém a vantagem de ser aplicável para dados que contém valores negativos e 0. A transformação de Yeo-Johnson é definida da seguinte forma:
+
+$$
+\psi(\lambda, x) = \begin{cases}
+    [(1 + x)^\lambda - 1] / \lambda  &  \lambda \neq 0, \; x \ge 0 \\
+    \ln(1 + x)                       &  \lambda = 0, \; x \ge 0 \\
+    [(1 - x)^{2 - \lambda} - 1] / (\lambda - 2) \quad & \lambda \neq 2, \; x < 0 \\
+    -\ln(1 - x)                     &   \lambda = 2, \; x < 0
+\end{cases} \text{,}
+$$
+em que $\lambda$ é estimado por máxima verossimilhança. Além disso, percebe-se que a transformação $\log(1 + x)$ é um caso particular da transformação de Yeo-Johnson quando $\lambda = 0$ e $x \ge 0$.
+
+\vspace{12pt}
+
+Para as variáveis categóricas, utilizou-se a classe `OneHotEncoder`, da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/), que converte as categorias em variáveis dicotômicas, criando uma nova coluna para cada categoria. Especificamente, a `OneHotEncoder` foi aplicada à variável que representa o tipo de imóvel, transformando cada categoria em uma variável binária.
 
 \vspace{12pt}
 
