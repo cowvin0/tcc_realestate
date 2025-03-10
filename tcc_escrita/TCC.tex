@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, colback={codebgcolor}, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, boxrule=0pt, breakable, frame hidden, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2658,6 +2658,11 @@ influenciar o seu valor. Para evidenciar esses comportamentos, foram
 criados gráficos e tabelas que permitiram caracterizar as relações entre
 as variáveis independentes e a variável dependente.
 
+\vspace{12pt}
+
+\textbf{(FALAR SOBRE A CORRELAÇÃO DE SPEARMAN E QUE AJUDOU A CRIAR NOVAS
+VARIÁVEIS A PARTIR DE SUAS CORRELAÇÕES.)}
+
 \section{Construção do modelo}\label{construuxe7uxe3o-do-modelo}
 
 ~~~No conjunto de dados extraído, foram avaliados diferentes modelos
@@ -2710,6 +2715,9 @@ algoritmo de Light Gradient Boosting.
 
 \subsection{Etapas de
 pré-processamento}\label{etapas-de-pruxe9-processamento}
+
+\textbf{(FALAR SOBRE O YEOJOHNSON NA VARIÁVEL COM INTERAÇÃO ENTRE AS
+COORDENADAS)}
 
 ~~~Após a organização e limpeza dos dados, foram realizadas
 transformações nas variáveis para aprimorar a capacidade preditiva dos
@@ -3764,10 +3772,21 @@ claras indicam o contrário. O valor do imóvel apresenta maior correlação
 com as variáveis de área do imóvel e número de vagas de estacionamento.
 Além disso, o valor do imóvel tem alta correlação com o valor médio do
 aluguel, número de quartos e banheiros, além de ser fortemente
-influenciado pela localização das propriedades. Algumas variáveis
-apresentam multicolinearidade entre si, mas os algoritmos utilizados
-selecionam aleatoriamente as variáveis para a modelagem, o que reduz o
-risco de selecionar variáveis redundantes.
+influenciado pela localização dos imóveis.
+
+\vspace{12pt}
+
+A partir do gráfico de correlação, foram criadas novas variáveis com
+base nas interações entre as mais correlacionadas. Dessa forma, foram
+adicionadas três novas variáveis. A primeira é o produto entre o número
+de quartos do imóvel e a área média do aluguel no bairro; a segunda
+representa a razão entre o número de quartos e a área do imóvel; e a
+terceira resulta do produto entre as coordenadas geográficas e o preço
+médio do aluguel no bairro. Além disso, foi considerada uma variável que
+representa a quantidade total de cômodos do imóvel. Para isso,
+somaram-se o número de quartos e banheiros, adicionando-se dois cômodos
+a mais para imóveis do tipo apartamento, casa, casa de condomínio e
+flat, assumindo a existência de sala e cozinha.
 
 \section{Tunagem dos modelos}\label{tunagem-dos-modelos}
 
@@ -3808,7 +3827,7 @@ Algoritmo & RMSE & \(R^2\) & MAPE \\
 \endlastfoot
 Random Forest & 0,28972 & \(86,78792\%\) & 0,01373 \\
 Gradient Boosting & 0,28730 & \(86,98259\%\) & 0,01377 \\
-Light Gradient Boosting & 0,28493 & \(87,17132\%\) & 0,01346 \\
+Light Gradient Boosting & 0,28385 & \(87,25794\%\) & 0,01340 \\
 Extreme Gradient Boosting & 0,28659 & \(87,03891\%\) & 0,01340 \\
 Stacking & 0,28473 & \(87,18793\%\) & 0,01357 \\
 \end{longtable}
@@ -4033,8 +4052,8 @@ hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com
 a tunagem do número de folhas das árvores. O espaço de busca para a
 quantidade de árvores foi definido entre 100 e 2000, para a taxa de
 aprendizado no mesmo intervalo usado no Gradient Boosting, para a
-profundidade das árvores e número de folhas o intervalo foi definido da
-mesma forma, entre 100 e 500
+profundidade das árvores e número de folhas o intervalo foi definido
+entre 100 e 600
 
 \begin{figure}
 
@@ -4154,7 +4173,7 @@ learning\_rate
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-96 & 1,28722 & 1798 & 247 & 299 & 0,00903 \\
+31 & 0,28546 & 1988 & 202 & 379 & 0,00985 \\
 \end{longtable}
 
 \subsection{Tunagem do XGBoost}\label{tunagem-do-xgboost}

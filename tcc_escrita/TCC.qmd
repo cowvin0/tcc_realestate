@@ -1199,6 +1199,10 @@ No entanto, com base nas observações realizadas durante o estudo, nem todas as
 
 \ \ \ A análise exploratória de dados é uma das primeiras etapas de qualquer estudo que utiliza a estatística como ferramenta principal, pois permite identificar padrões de comportamento nos dados e descobrir relações entre as variáveis estudadas. Assim, após a coleta e organização dos dados, a primeira etapa deste estudo consistiu em uma análise descritiva. Essa análise possibilitou identificar padrões entre os diferentes tipos de imóveis e como essas características podem influenciar o seu valor. Para evidenciar esses comportamentos, foram criados gráficos e tabelas que permitiram caracterizar as relações entre as variáveis independentes e a variável dependente.
 
+\vspace{12pt}
+
+**(FALAR SOBRE A CORRELAÇÃO DE SPEARMAN E QUE AJUDOU A CRIAR NOVAS VARIÁVEIS A PARTIR DE SUAS CORRELAÇÕES.)**
+
 ## Construção do modelo
 
 \ \ \ No conjunto de dados extraído, foram avaliados diferentes modelos para a previsão do valor do imóvel. O valor do imóvel foi explicado por variáveis consideradas relevantes para o estudo, como: valor médio do aluguel no bairro, área, área média do aluguel no bairro, número de banheiros, vagas de estacionamento, número de quartos, latitude, longitude, tipo de imóvel e variáveis dicotômicas obtidas durante o processo de extração. As variáveis relacionadas ao valor do condomínio e IPTU foram excluídas do modelo devido à alta quantidade de valores ausentes.
@@ -1216,6 +1220,8 @@ A estratificação foi baseada em intervalos criados a partir da variável que r
 Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Light Gradient Boosting.
 
 ### Etapas de pré-processamento
+
+**(FALAR SOBRE O YEOJOHNSON NA VARIÁVEL COM INTERAÇÃO ENTRE AS COORDENADAS)**
 
 \ \ \ Após a organização e limpeza dos dados, foram realizadas transformações nas variáveis para aprimorar a capacidade preditiva dos modelos em relação aos valores dos imóveis. Além disso, foi aplicado um tratamento específico para lidar com valores ausentes em algumas variáveis do conjunto de dados. Esse tratamento foi restrito às variáveis com menos de 20% de valores ausentes, incluindo as variáveis de número de banheiros, quartos, vagas, valor médio do aluguel e área média do aluguel. Por outro lado, as variáveis de condomínio e IPTU apresentaram um elevado percentual de valores ausentes, com a variável de condomínio tendo quase 60% de observações ausentes e a variável IPTU mais de 80%. Devido a essa alta proporção de valores ausentes, essas variáveis foram excluídas das análises.
 
@@ -1960,7 +1966,12 @@ plt.show()
 
 \vspace{12pt}
 
-A @fig-corplot apresenta a matriz de correlação entre as variáveis numéricas do conjunto de dados. As cores mais escuras indicam uma correlação mais forte entre as variáveis, enquanto as cores mais claras indicam o contrário. O valor do imóvel apresenta maior correlação com as variáveis de área do imóvel e número de vagas de estacionamento. Além disso, o valor do imóvel tem alta correlação com o valor médio do aluguel, número de quartos e banheiros, além de ser fortemente influenciado pela localização das propriedades. Algumas variáveis apresentam multicolinearidade entre si, mas os algoritmos utilizados selecionam aleatoriamente as variáveis para a modelagem, o que reduz o risco de selecionar variáveis redundantes.
+A @fig-corplot apresenta a matriz de correlação entre as variáveis numéricas do conjunto de dados. As cores mais escuras indicam uma correlação mais forte entre as variáveis, enquanto as cores mais claras indicam o contrário. O valor do imóvel apresenta maior correlação com as variáveis de área do imóvel e número de vagas de estacionamento. Além disso, o valor do imóvel tem alta correlação com o valor médio do aluguel, número de quartos e banheiros, além de ser fortemente influenciado pela localização dos imóveis.
+
+\vspace{12pt}
+
+A partir do gráfico de correlação, foram criadas novas variáveis com base nas interações entre as mais correlacionadas. Dessa forma, foram adicionadas três novas variáveis. A primeira é o produto entre o número de quartos do imóvel e a área média do aluguel no bairro; a segunda representa a razão entre o número de quartos e a área do imóvel; e a terceira resulta do produto entre as coordenadas geográficas e o preço médio do aluguel no bairro. Além disso, foi considerada uma variável que representa a quantidade total de cômodos do imóvel. Para isso, somaram-se o número de quartos e banheiros, adicionando-se dois cômodos a mais para imóveis do tipo apartamento, casa, casa de condomínio e flat, assumindo a existência de sala e cozinha.
+
 
 ```{python eval=FALSE}
 import io
@@ -2174,7 +2185,7 @@ Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-l
 |:-------------------------:|:-------:|:---------:|:-------:|
 |       Random Forest       | 0,28972 | $86,78792\%$ | 0,01373 |
 |     Gradient Boosting     | 0,28730 | $86,98259\%$ | 0,01377 |
-|  Light Gradient Boosting  | 0,28493 | $87,17132\%$ | 0,01346 |
+|  Light Gradient Boosting  | 0,28385 | $87,25794\%$ | 0,01340 |
 | Extreme Gradient Boosting | 0,28659 | $87,03891\%$ | 0,01340 |
 |          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
 
@@ -2192,7 +2203,7 @@ import joblib
 
 study1 = joblib.load('study_pkl/study_rf.pkl')
 study2 = joblib.load('study_pkl/study_gdt.pkl')
-study3 = joblib.load('study_pkl/study_lgbm.pkl')
+study3 = joblib.load('study_pkl/study_lgbm_new_var.pkl')
 study4 = joblib.load('study_pkl/study_xgb.pkl')
 ```
 
@@ -2473,7 +2484,7 @@ Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não
 
 ### Tunagem do LGBM
 
-\ \ \ Para a otimização do LGBM, foram considerados os mesmos hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com a tunagem do número de folhas das árvores. O espaço de busca para a quantidade de árvores foi definido entre 100 e 2000, para a taxa de aprendizado no mesmo intervalo usado no Gradient Boosting, para a profundidade das árvores e número de folhas o intervalo foi definido da mesma forma, entre 100 e 500
+\ \ \ Para a otimização do LGBM, foram considerados os mesmos hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com a tunagem do número de folhas das árvores. O espaço de busca para a quantidade de árvores foi definido entre 100 e 2000, para a taxa de aprendizado no mesmo intervalo usado no Gradient Boosting, para a profundidade das árvores e número de folhas o intervalo foi definido entre 100 e 600
 
 ::: {#fig-lgbm_param layout="[[1, 1, 1], [1]]"}
 
@@ -2613,7 +2624,7 @@ Analisando a relação entre o hiperparâmetro de profundidade e o número de fo
 
 | Tentativa |  RMSE  | n_estimators | num_leaves | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:----------:|:---------:|:-------------:|
-|     96    | 1,28722 |     1798     |     247    |    299    |     0,00903     |
+|     31    | 0,28546 |     1988     |     202    |    379    |     0,00985     |
 
 : Melhores hiperparâmetros para Light Gradient Boosting.
 

@@ -1,25 +1,26 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class ModelStructure(BaseModel):
-    academia: int
-    area: float
-    area_servico: float
-    banheiro: int
-    elevador: int
-    espaco_gourmet: int
-    portaria_24_horas: int
-    piscina: int
-    playground: int
-    quadra_de_esporte: int
-    quarto: int
-    salao_de_festa: int
-    sauna: int
-    spa: int
-    tipo: str
-    vaga: int
-    varanda_gourmet: int
-    latitude: float
-    longitude: float
-    area_aluguel: float
-    valor_aluguel: float
+    academia: Optional[int] = None
+    area: Optional[float] = None
+    area_servico: Optional[float] = None
+    banheiro: Optional[int] = None
+    elevador: Optional[int] = None
+    espaco_gourmet: Optional[int] = None
+    portaria_24_horas: Optional[int] = None
+    piscina: Optional[int] = None
+    playground: Optional[int] = None
+    quadra_de_esporte: Optional[int] = None
+    quarto: Optional[int] = None
+    salao_de_festa: Optional[int] = None
+    sauna: Optional[int] = None
+    spa: Optional[int] = None
+    tipo: Optional[str] = None
+    vaga: Optional[int] = None
+    varanda_gourmet: Optional[int] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    area_aluguel: Optional[float] = None
+    valor_aluguel: Optional[float] = None

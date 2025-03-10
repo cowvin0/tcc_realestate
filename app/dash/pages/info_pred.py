@@ -10,8 +10,7 @@ import plotly.express as px
 import dash_ag_grid as dag
 import folium
 import plotly.figure_factory as ff
-import httpx
-import asyncio
+import requests
 
 from shapely.geometry import Point
 from dash_iconify import DashIconify
@@ -21,37 +20,46 @@ from folium.plugins import HeatMap
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
 
-# async def fetch_data():
-#     async with httpx.AsyncClient() as client:
-#         response = await client.get("http://api/real_data/return_data_db")
-#         return response.json()
+def predict_house_price(payload):
+    url = "http://api:8050/real_data/predict"
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}
 
 
-# df_realestate = pd.DataFrame(asyncio.run(fetch_data())).assign(
+def fetch_data():
+    response = requests.get("http://api:8050/real_data/return_data_db")
+    return response.json()
+
+
+df_realestate = pd.DataFrame(fetch_data()).assign(
+    tipo=lambda x: x.tipo.str.capitalize()
+    .str.split("_")
+    .str.join(" ")
+    .str.replace("condominio", "condomínio")
+)
+
+# df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv").assign(
 #     tipo=lambda x: x.tipo.str.capitalize()
 #     .str.split("_")
 #     .str.join(" ")
 #     .str.replace("condominio", "condomínio")
 # )
 
-df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto.csv").assign(
-    Tipo=lambda x: x.Tipo.str.capitalize()
-    .str.split("_")
-    .str.join(" ")
-    .str.replace("condominio", "condomínio")
-)
-
 bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
 
-center_lat = df_realestate["Latitude"].mean()
-center_lon = df_realestate["Longitude"].mean()
+center_lat = df_realestate["latitude"].mean()
+center_lon = df_realestate["longitude"].mean()
 
 
 fig_bar = px.bar(
-    df_realestate.groupby("Tipo")["Valor"].mean().sort_values().reset_index(),
-    x="Valor",
-    y="Tipo",
-    labels={"Tipo": "", "Valor": "Valor Médio (R$)"},
+    df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
+    x="valor",
+    y="tipo",
+    labels={"tipo": "", "valor": "Valor Médio (R$)"},
     text_auto=".2s",
     template="plotly_white",
 )
@@ -140,7 +148,7 @@ layout = dbc.Container(
                                     dmc.Button(
                                         "Extraia os dados",
                                         id="download-btn",
-                                        variant="subtle",
+                                        # variant="subtle",
                                         leftIcon=DashIconify(
                                             icon="material-symbols-light:download-rounded",
                                             width=25,
@@ -155,7 +163,7 @@ layout = dbc.Container(
                                 id="offcanvas",
                                 title="Informações Adicionais",
                                 is_open=False,
-                                style={"width": ""},
+                                style={"width": "25%"},
                                 placement="end",
                                 children=[
                                     html.P(
@@ -203,9 +211,43 @@ layout = dbc.Container(
                                             html.H4(
                                                 "Preencha as informações do imóvel"
                                             ),
+                                            dmc.Select(
+                                                id="input-tipo",
+                                                data=[
+                                                    {
+                                                        "value": None,
+                                                        "label": "Apartamento",
+                                                    },
+                                                    {"value": "casas", "label": "Casa"},
+                                                    {
+                                                        "value": "casas_de_condominio",
+                                                        "label": "Casa de condomínio",
+                                                    },
+                                                    {
+                                                        "value": "flats",
+                                                        "label": "Flats",
+                                                    },
+                                                    {
+                                                        "value": "terrenos_e_lotes_comerciais",
+                                                        "label": "Terreno/ Lote comercial",
+                                                    },
+                                                    {
+                                                        "value": "terrenos_lotes_e_condominios",
+                                                        "label": "Terreno/Lote condomínio",
+                                                    },
+                                                ],
+                                                clearable=True,
+                                                placeholder="Informe o tipo de imóvel",
+                                                icon=DashIconify(
+                                                    icon="ph:city",
+                                                    width=20,
+                                                ),
+                                                w=390,
+                                                mb=10,
+                                            ),
                                             dmc.NumberInput(
                                                 id="input-area",
-                                                placeholder="Insira o valor da área",
+                                                placeholder="Deixe vazio ou insira o valor da área",
                                                 icon=DashIconify(
                                                     icon="gis:measure-area-alt",
                                                     width=20,
@@ -216,9 +258,9 @@ layout = dbc.Container(
                                             ),
                                             dmc.NumberInput(
                                                 id="input-price-alug",
-                                                placeholder="Insira o valor do preço médio de aluguel",
+                                                placeholder="Deixe vazio ou insira o valor do preço médio de aluguel",
                                                 icon=DashIconify(
-                                                    icon="gis:measure-area-alt",
+                                                    icon="material-symbols-light:house-outline",
                                                     width=20,
                                                 ),
                                                 thousandsSeparator=".",
@@ -227,9 +269,9 @@ layout = dbc.Container(
                                             ),
                                             dmc.NumberInput(
                                                 id="input-area-alug",
-                                                placeholder="Insira o valor da área média de aluguel",
+                                                placeholder="Deixe vazio ou insira o valor da área média de aluguel",
                                                 icon=DashIconify(
-                                                    icon="gis:measure-area-alt",
+                                                    icon="mingcute:text-area-line",
                                                     width=20,
                                                 ),
                                                 thousandsSeparator=".",
@@ -238,7 +280,7 @@ layout = dbc.Container(
                                             ),
                                             dmc.NumberInput(
                                                 id="input-bedrooms",
-                                                placeholder="Insira a quantidade de quartos",
+                                                placeholder="Deixe vazio ou insira a quantidade de quartos",
                                                 icon=DashIconify(
                                                     icon="game-icons:bed",
                                                     width=20,
@@ -249,7 +291,7 @@ layout = dbc.Container(
                                             ),
                                             dmc.NumberInput(
                                                 id="input-bathrooms",
-                                                placeholder="Insira a quantidade de banheiros",
+                                                placeholder="Deixe vazio ou insira a quantidade de banheiros",
                                                 icon=DashIconify(
                                                     icon="iconoir:bathroom",
                                                     width=20,
@@ -258,22 +300,31 @@ layout = dbc.Container(
                                                 w=390,
                                                 mb=10,
                                             ),
-                                            dmc.Select(
+                                            dmc.NumberInput(
                                                 id="input-parking",
+                                                placeholder="Deixe vazio ou insira a quantidade de vagas de garagem",
+                                                icon=DashIconify(
+                                                    icon="arcticons:car-parking",
+                                                    width=20,
+                                                ),
+                                                thousandsSeparator=".",
+                                                w=390,
+                                                mb=10,
+                                            ),
+                                            dmc.Select(
+                                                id="input-portaria",
                                                 data=[
                                                     {"value": 1, "label": "Sim"},
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação de portaria 24 horas",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
-                                                placeholder="Insira a quantidade de vagas de garagem",
+                                                clearable=True,
+                                                placeholder="Informe se o imóvel possui portaria 24 horas",
                                                 icon=DashIconify(
-                                                    icon="arcticons:car-parking",
+                                                    icon="material-symbols-light:concierge-outline-rounded",
                                                     width=20,
                                                 ),
                                                 w=390,
@@ -286,12 +337,10 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação de academia",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possuí academia",
                                                 icon=DashIconify(
                                                     icon="iconoir:gym",
@@ -307,12 +356,10 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação de elevador",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui elevador",
                                                 icon=DashIconify(
                                                     icon="material-symbols-light:elevator-outline-rounded",
@@ -327,12 +374,10 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação de espaço gourmet",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 id="input-gourmet",
                                                 placeholder="Informe se o imóvel possui espaço gourmet",
                                                 icon=DashIconify(
@@ -349,15 +394,13 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação de piscina",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui piscina",
                                                 icon=DashIconify(
-                                                    icon="lucide-lab:chairs-table-platter",
+                                                    icon="streamline:pool-ladder",
                                                     width=20,
                                                 ),
                                                 w=390,
@@ -370,15 +413,13 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação playground",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui playground",
                                                 icon=DashIconify(
-                                                    icon="lucide-lab:chairs-table-platter",
+                                                    icon="fluent-emoji-high-contrast:playground-slide",
                                                     width=20,
                                                 ),
                                                 w=390,
@@ -391,15 +432,13 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação quadra de esporte",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui quadra de esporte",
                                                 icon=DashIconify(
-                                                    icon="lucide-lab:chairs-table-platter",
+                                                    icon="icon-park-outline:sport",
                                                     width=20,
                                                 ),
                                                 w=390,
@@ -412,15 +451,13 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação salão de festa",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui salão de festa",
                                                 icon=DashIconify(
-                                                    icon="lucide-lab:chairs-table-platter",
+                                                    icon="streamline:champagne-party-alcohol",
                                                     width=20,
                                                 ),
                                                 w=390,
@@ -433,15 +470,13 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação de sauna",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui sauna",
                                                 icon=DashIconify(
-                                                    icon="lucide-lab:chairs-table-platter",
+                                                    icon="fluent-emoji-high-contrast:person-in-steamy-room",
                                                     width=20,
                                                 ),
                                                 w=390,
@@ -454,15 +489,13 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação de spa",
                                                     },
                                                 ],
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
-                                                ),
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui spa",
                                                 icon=DashIconify(
-                                                    icon="lucide-lab:chairs-table-platter",
+                                                    icon="map:spa",
                                                     width=20,
                                                 ),
                                                 w=390,
@@ -475,16 +508,14 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação varanda gourmet",
                                                     },
                                                 ],
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui varanda gourmet",
                                                 icon=DashIconify(
-                                                    icon="lucide-lab:chairs-table-platter",
+                                                    icon="ic:outline-outdoor-grill",
                                                     width=20,
-                                                ),
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
                                                 ),
                                                 w=390,
                                                 mb=10,
@@ -496,16 +527,14 @@ layout = dbc.Container(
                                                     {"value": 0, "label": "Não"},
                                                     {
                                                         "value": None,
-                                                        "label": "Sem informação",
+                                                        "label": "Sem informação de área de serviço",
                                                     },
                                                 ],
+                                                clearable=True,
                                                 placeholder="Informe se o imóvel possui área de serviço",
                                                 icon=DashIconify(
                                                     icon="material-symbols-light:service-toolbox-outline-sharp",
                                                     width=20,
-                                                ),
-                                                rightSection=DashIconify(
-                                                    icon="radix-icons:chevron-down"
                                                 ),
                                                 w=390,
                                                 mb=10,
@@ -635,15 +664,15 @@ def make_barplot(filtered_data):
     df_filtered = pd.DataFrame(filtered_data)
 
     fig_bar = px.bar(
-        df_filtered.groupby("Bairro")["Valor"]
+        df_filtered.groupby("bairro")["valor"]
         .mean()
         .sort_values(ascending=False)
         .head(10)
         .sort_values()
         .reset_index(),
-        x="Valor",
-        y="Bairro",
-        labels={"Tipo": "", "Valor": "Valor Médio (R$)"},
+        x="valor",
+        y="bairro",
+        labels={"tipo": "", "valor": "Valor Médio (R$)"},
         text_auto=".2s",
         template="plotly_white",
     )
@@ -663,9 +692,9 @@ def make_barplot(filtered_data):
 def make_density_plot(filtered_data):
     df_filtered = pd.DataFrame(filtered_data)
 
-    types_imo = df_filtered.Tipo.unique()
+    types_imo = df_filtered.tipo.unique()
 
-    get_groups = [df_filtered.query("Tipo == @i").Valor for i in types_imo]
+    get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
 
     fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
 
@@ -718,7 +747,7 @@ def update_map(map_type, filtered_data, n_clicks):
         map_type = None
 
     if map_type == "heatmap":
-        data = df_filtered[["Latitude", "Longitude", "Valor"]].values.tolist()
+        data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
         heatmap_map = folium.Map([center_lat, center_lon], zoom_start=12)
         HeatMap(data, radius=13).add_to(heatmap_map)
         return html.Iframe(
@@ -728,12 +757,12 @@ def update_map(map_type, filtered_data, n_clicks):
     elif map_type == "markers":
         fig_map_marker = px.scatter_mapbox(
             df_filtered,
-            lat="Latitude",
-            lon="Longitude",
-            color="Valor",
-            size="Valor",
-            hover_name="Tipo",
-            hover_data={"Latitude": False, "Longitude": False, "Valor": ":.2f"},
+            lat="latitude",
+            lon="longitude",
+            color="valor",
+            size="valor",
+            hover_name="tipo",
+            hover_data={"latitude": False, "longitude": False, "valor": ":.2f"},
             color_continuous_scale="Viridis",
             size_max=15,
             zoom=12,
@@ -857,6 +886,7 @@ def update_map(map_type, filtered_data, n_clicks):
             zoom=12,
             children=[
                 dl.TileLayer(),
+                dl.FullScreenControl(),
                 dl.LayerGroup(id="points-layer"),
             ],
         )
@@ -880,28 +910,30 @@ def update_coordinates(clickData):
 
         matching_bairros = bairro_geojson[bairro_geojson.contains(check_point)]
 
-        if matching_bairros.empty:
-            return [], lat, lon, clickData, "", ""
+        if not matching_bairros.empty:
+            get_bairro = matching_bairros.nome.iloc[0]
+            filter_aluguel_data = df_realestate[df_realestate["bairro"] == get_bairro]
 
-        get_bairro = matching_bairros.nome.iloc[0]
-        filter_aluguel_data = df_realestate[df_realestate["Bairro"] == get_bairro]
-
-        aluguel_price = (
-            filter_aluguel_data["Valor de aluguel"].fillna(method="ffill").iloc[-1]
-            if not filter_aluguel_data.empty
-            else None
-        )
-        aluguel_area = (
-            filter_aluguel_data["Área de aluguel"].fillna(method="ffill").iloc[-1]
-            if not filter_aluguel_data.empty
-            else None
-        )
+            aluguel_price = (
+                filter_aluguel_data["valor_aluguel"].fillna(method="ffill").iloc[-1]
+                if not filter_aluguel_data.empty
+                else None
+            )
+            aluguel_area = (
+                filter_aluguel_data["area_aluguel"].fillna(method="ffill").iloc[-1]
+                if not filter_aluguel_data.empty
+                else None
+            )
+        else:
+            get_bairro = "N/A"
+            aluguel_price = None
+            aluguel_area = None
 
         aluguel_price_display = (
             f"R$ {aluguel_price:,.2f}" if aluguel_price is not None else "N/A"
         )
         aluguel_area_display = (
-            f"{aluguel_area} m²" if aluguel_area is not None else "N/A"
+            f"{aluguel_area:,.2f} m²" if aluguel_area is not None else "N/A"
         )
 
         marker = dl.CircleMarker(
@@ -912,36 +944,30 @@ def update_coordinates(clickData):
             fillColor="red",
             fillOpacity=0.8,
             children=dl.Tooltip(
-                f"Latitude: {lat:.6f}, Longitude: {lon:.6f}\n"
-                f"Preço médio de aluguel: {aluguel_price_display}\n"
-                f"Área média de aluguel: {aluguel_area_display}"
+                html.Div(
+                    [
+                        f"Latitude: {lat:.6f}, Longitude: {lon:.6f}",
+                        html.Br(),
+                        f"Bairro: {get_bairro}",
+                        html.Br(),
+                        f"Preço aluguel: {aluguel_price_display}",
+                        html.Br(),
+                        f"Área aluguel: {aluguel_area_display}",
+                    ]
+                )
             ),
         )
 
-        return [marker], lat, lon, clickData, aluguel_price, aluguel_area
+        return (
+            [marker],
+            lat,
+            lon,
+            clickData,
+            aluguel_price if aluguel_price is not None else "",
+            aluguel_area if aluguel_area is not None else "",
+        )
 
     return [], "", "", None, "", ""
-
-
-# def update_coordinates(clickData):
-#     if clickData and "latlng" in clickData:
-#         lat, lon = clickData["latlng"]["lat"], clickData["latlng"]["lng"]
-#         check_point = Point(round(lat, 6), round(lon, 6))
-#         get_bairro = bairro_geojson[bairro_geojson.contains(check_point)].nome.iloc[0]
-#         filter_aluguel_data = df_realestate[df_realestate["Bairro"] == get_bairro]
-#         aluguel_price = filter_aluguel_data["Valor de aluguel"].fillna(method="ffill")
-#         aluguel_area = filter_aluguel_data["Área de aluguel"].fillna(method="ffill")
-#         marker = dl.CircleMarker(
-#             center=[lat, lon],
-#             radius=6,
-#             color="red",
-#             fill=True,
-#             fillColor="red",
-#             fillOpacity=0.8,
-#             children=dl.Tooltip(f"Latitude: {lat:.6f}, Longitude: {lon:.6f}"),
-#         )
-#         return [marker], lat, lon, clickData, aluguel_price, aluguel_area
-#     return [], "", "", None, "", ""
 
 
 @callback(
@@ -987,7 +1013,84 @@ def filter_data(selectedData):
         selected_types = {point["y"] for point in selectedData["points"]}
         print(f"Selected Types: {selected_types}")
 
-        filtered_df = df_realestate[df_realestate["Tipo"].isin(selected_types)]
+        filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
         return filtered_df.to_dict("records")
 
     return df_realestate.to_dict("records")
+
+
+@callback(
+    Output("prediction-result", "children"),
+    Input("calculate-prediction", "n_clicks"),
+    State("input-area", "value"),
+    State("input-price-alug", "value"),
+    State("input-area-alug", "value"),
+    State("input-bedrooms", "value"),
+    State("input-bathrooms", "value"),
+    State("input-parking", "value"),
+    State("input-gym", "value"),
+    State("input-elevator", "value"),
+    State("input-gourmet", "value"),
+    State("input-pool", "value"),
+    State("input-playground", "value"),
+    State("input-sport", "value"),
+    State("input-party", "value"),
+    State("input-sauna", "value"),
+    State("input-spa", "value"),
+    State("input-gourmet-varan", "value"),
+    State("input-service", "value"),
+    State("input-lat", "value"),
+    State("input-lon", "value"),
+    State("input-tipo", "value"),
+    State("input-portaria", "value"),
+)
+def get_inputs_to_predict(
+    n_clicks,
+    area,
+    price_alug,
+    area_alug,
+    bedrooms,
+    bathrooms,
+    parking,
+    gym,
+    elevator,
+    space_gourmet,
+    pool,
+    playground,
+    sport,
+    party,
+    sauna,
+    spa,
+    gourmet_varan,
+    service,
+    lat,
+    lon,
+    tipo,
+    portaria,
+):
+    if n_clicks:
+        payload = {
+            "academia": gym,
+            "area": area,
+            "area_servico": service,
+            "banheiro": bathrooms,
+            "elevador": elevator,
+            "espaco_gourmet": space_gourmet,
+            "portaria_24_horas": portaria,
+            "piscina": pool,
+            "playground": playground,
+            "quadra_de_esporte": sport,
+            "quarto": bedrooms,
+            "salao_de_festa": party,
+            "sauna": sauna,
+            "spa": spa,
+            "tipo": tipo if tipo is not None else "apartamentos",
+            "vaga": parking,
+            "varanda_gourmet": gourmet_varan,
+            "latitude": lat if lat != "" else None,
+            "longitude": lon if lon != "" else None,
+            "area_aluguel": area_alug if area_alug != "" else None,
+            "valor_aluguel": price_alug if price_alug != "" else None,
+        }
+
+        return predict_house_price(payload)
