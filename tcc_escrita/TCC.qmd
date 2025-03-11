@@ -1251,7 +1251,11 @@ em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou 
 
 \vspace{12pt}
 
-A transformação logarítmica $\log(1 + x)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Embora, a transformação $\log(1 + x)$ tenha sido aplicada para a maior parte das variáveis numéricas, ela não foi aplicada para uma única variável, a que representa o produto entre as coordenadas geográficas e o valor de aluguel, nessa foi aplicada a transformação de Yeo-Johnson [@yeo], que contém a vantagem de ser aplicável para dados que contém valores negativos e 0. A transformação de Yeo-Johnson é definida da seguinte forma:
+A transformação logarítmica $\log\left(1 + x\right)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Embora essa transformação tenha sido utilizada na maioria das variáveis numéricas, algumas exceções foram feitas. Em particular, a variável que representa o produto entre as coordenadas geográficas e o valor do aluguel foi transformada usando a técnica de Yeo-Johnson [@yeo], que apresenta a vantagem de ser aplicável a dados que incluem valores negativos e zero, como é o caso dessa variável. Além disso, as variáveis referentes ao preço e à área do aluguel não foram transformadas com $\log\left(1 + x\right)$. A decisão foi tomada com base nas métricas de avaliação do modelo, que indicaram uma queda de desempenho do modelo quando essas variáveis eram transformadas.
+
+\vspace{12pt}
+
+A transformação de Yeo-Johnson é definida da seguinte forma:
 
 $$
 \psi(\lambda, x) = \begin{cases}
