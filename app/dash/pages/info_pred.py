@@ -10,44 +10,45 @@ import plotly.express as px
 import dash_ag_grid as dag
 import folium
 import plotly.figure_factory as ff
-import requests
+
+# import requests
 
 from shapely.geometry import Point
 from dash_iconify import DashIconify
-from dash import html, Output, Input, dcc, callback, State
+from dash import html, Output, Input, dcc, callback, State, callback_context
 from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 
 
-def predict_house_price(payload):
-    url = "http://api:8050/real_data/predict"
-    try:
-        response = requests.post(url, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        return {"error": str(e)}
+# def predict_house_price(payload):
+#     url = "http://api:8050/real_data/predict"
+#     try:
+#         response = requests.post(url, json=payload)
+#         response.raise_for_status()
+#         return response.json()
+#     except requests.exceptions.RequestException as e:
+#         return {"error": str(e)}
 
 
-def fetch_data():
-    response = requests.get("http://api:8050/real_data/return_data_db")
-    return response.json()
+# def fetch_data():
+#     response = requests.get("http://api:8050/real_data/return_data_db")
+#     return response.json()
 
 
-df_realestate = pd.DataFrame(fetch_data()).assign(
-    tipo=lambda x: x.tipo.str.capitalize()
-    .str.split("_")
-    .str.join(" ")
-    .str.replace("condominio", "condomínio")
-)
-
-# df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv").assign(
+# df_realestate = pd.DataFrame(fetch_data()).assign(
 #     tipo=lambda x: x.tipo.str.capitalize()
 #     .str.split("_")
 #     .str.join(" ")
 #     .str.replace("condominio", "condomínio")
 # )
+
+df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv").assign(
+    tipo=lambda x: x.tipo.str.capitalize()
+    .str.split("_")
+    .str.join(" ")
+    .str.replace("condominio", "condomínio")
+)
 
 bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
 
@@ -55,21 +56,21 @@ center_lat = df_realestate["latitude"].mean()
 center_lon = df_realestate["longitude"].mean()
 
 
-fig_bar = px.bar(
-    df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
-    x="valor",
-    y="tipo",
-    labels={"tipo": "", "valor": "Valor Médio (R$)"},
-    text_auto=".2s",
-    template="plotly_white",
-)
+# fig_bar = px.bar(
+#     df_realestate.groupby("tipo")["valor"].mean().sort_values().reset_index(),
+#     x="valor",
+#     y="tipo",
+#     labels={"tipo": "", "valor": "Valor Médio (R$)"},
+#     text_auto=".2s",
+#     template="plotly_white",
+# )
 
-fig_bar.update_layout(
-    clickmode="event+select",
-    dragmode="select",
-    template="plotly_white",
-    margin=dict(l=0, r=0, t=0, b=0),
-)
+# fig_bar.update_layout(
+#     clickmode="event+select",
+#     dragmode="select",
+#     template="plotly_white",
+#     margin=dict(l=0, r=0, t=0, b=0),
+# )
 
 layout = dbc.Container(
     fluid=True,
@@ -81,7 +82,7 @@ layout = dbc.Container(
                         children=[
                             dcc.Graph(
                                 id="bar-graph",
-                                figure=fig_bar,
+                                # figure=fig_bar,
                                 style={"height": "400px", "width": "100%"},
                                 config={
                                     "displaylogo": False,
@@ -659,8 +660,38 @@ layout = dbc.Container(
 )
 
 
+@callback(
+    Output("bar-graph", "figure"),
+    Input("filtered-data", "data"),
+)
+def make_barplot_up_left(filtered_data):
+    # ctx = callback_context
+    # if "bar-graph.selectedData" in ctx.triggered[0]["prop_id"]:
+    #     df_filtered = df_realestate
+    # else:
+    df_filtered = pd.DataFrame(filtered_data)
+
+    fig_bar = px.bar(
+        df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
+        x="valor",
+        y="tipo",
+        labels={"tipo": "", "valor": "Valor Médio (R$)"},
+        text_auto=".2s",
+        template="plotly_white",
+    )
+
+    fig_bar.update_layout(
+        clickmode="event+select",
+        dragmode="select",
+        template="plotly_white",
+        margin=dict(l=0, r=0, t=0, b=0),
+    )
+
+    return fig_bar
+
+
 @callback(Output("bar-plot-most-expensive", "figure"), Input("filtered-data", "data"))
-def make_barplot(filtered_data):
+def make_barplot_bottom_right(filtered_data):
     df_filtered = pd.DataFrame(filtered_data)
 
     fig_bar = px.bar(
@@ -1007,16 +1038,40 @@ def toggle_prediction_form(n_clicks, is_visible):
     Input("bar-graph", "selectedData"),
 )
 def filter_data(selectedData):
-    print(f"selectedData: {selectedData}")
+    ctx = callback_context
+    if not ctx.triggered:
+        return df_realestate.to_dict("records")
 
-    if selectedData and "points" in selectedData:
-        selected_types = {point["y"] for point in selectedData["points"]}
-        print(f"Selected Types: {selected_types}")
+    triggered_input = ctx.triggered[0]["prop_id"]
 
-        filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
-        return filtered_df.to_dict("records")
+    if "bar-graph.selectedData" in triggered_input:
+        print(f"selectedData: {selectedData}")
+
+        if selectedData and "points" in selectedData:
+            selected_types = {point["y"] for point in selectedData["points"]}
+            print(f"Selected Types: {selected_types}")
+
+            filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
+            return filtered_df.to_dict("records")
 
     return df_realestate.to_dict("records")
+
+
+# @callback(
+#     Output("filtered-data", "data"),
+#     Input("bar-graph", "selectedData"),
+# )
+# def filter_data(selectedData):
+#     print(f"selectedData: {selectedData}")
+
+#     if selectedData and "points" in selectedData:
+#         selected_types = {point["y"] for point in selectedData["points"]}
+#         print(f"Selected Types: {selected_types}")
+
+#         filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
+#         return filtered_df.to_dict("records")
+
+#     return df_realestate.to_dict("records")
 
 
 @callback(
@@ -1093,4 +1148,5 @@ def get_inputs_to_predict(
             "valor_aluguel": price_alug if price_alug != "" else None,
         }
 
-        return predict_house_price(payload)
+        return ""
+        # return predict_house_price(payload)
