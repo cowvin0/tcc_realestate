@@ -1,3 +1,4 @@
+import itertools
 import folium.plugins
 import geopandas as gpd
 import pandas as pd
@@ -692,9 +693,18 @@ def make_barplot_up_left(filtered_data, _):
     return fig_bar
 
 
-@callback(Output("bar-plot-most-expensive", "figure"), Input("filtered-data", "data"))
-def make_barplot_bottom_right(filtered_data):
-    df_filtered = pd.DataFrame(filtered_data)
+@callback(
+    Output("bar-plot-most-expensive", "figure"),
+    Input("filtered-data", "data"),
+    Input("bar-plot-most-expensive", "selectedData"),
+)
+def make_barplot_bottom_right(filtered_data, _):
+    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
+
+    if "bar-plot-most-expensive.selectedData" in changed_inputs:
+        return no_update
+    else:
+        df_filtered = pd.DataFrame(filtered_data)
 
     fig_bar = px.bar(
         df_filtered.groupby("bairro")["valor"]
@@ -721,9 +731,19 @@ def make_barplot_bottom_right(filtered_data):
     return fig_bar
 
 
-@callback(Output("density-plot", "figure"), Input("filtered-data", "data"))
-def make_density_plot(filtered_data):
-    df_filtered = pd.DataFrame(filtered_data)
+@callback(
+    Output("density-plot", "figure"),
+    Input("filtered-data", "data"),
+    Input("density-plot", "selectedData"),
+)
+def make_density_plot(filtered_data, _):
+    # df_filtered = pd.DataFrame(filtered_data)
+    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
+
+    if "density-plot.selectedData" in changed_inputs:
+        return no_update
+    else:
+        df_filtered = pd.DataFrame(filtered_data)
 
     types_imo = df_filtered.tipo.unique()
 
@@ -1038,23 +1058,52 @@ def toggle_prediction_form(n_clicks, is_visible):
 @callback(
     Output("filtered-data", "data"),
     Input("bar-graph", "selectedData"),
+    Input("bar-plot-most-expensive", "selectedData"),
+    Input("density-plot", "selectedData"),
 )
-def filter_data(selectedData):
+def filter_data(
+    selectedData_bar_up_left, selectedData_bar_bottom_right, selectedData_density
+):
     ctx = callback_context
     if not ctx.triggered:
         return df_realestate.to_dict("records")
 
-    triggered_input = ctx.triggered[0]["prop_id"]
-    print("prop_id_filter_data", triggered_input)
+    changed_inputs = [x["prop_id"] for x in ctx.triggered]
 
-    if "bar-graph.selectedData" in triggered_input:
-        print(f"selectedData: {selectedData}")
+    if "bar-graph.selectedData" in changed_inputs:
+        print(f"selectedData: {selectedData_bar_up_left}")
 
-        if selectedData and "points" in selectedData:
-            selected_types = {point["y"] for point in selectedData["points"]}
+        if selectedData_bar_up_left and "points" in selectedData_bar_up_left:
+            selected_types = {
+                point["y"] for point in selectedData_bar_up_left["points"]
+            }
             print(f"Selected Types: {selected_types}")
 
             filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
+            return filtered_df.to_dict("records")
+    elif "bar-plot-most-expensive.selectedData" in changed_inputs:
+        print(f"selectedData: {selectedData_bar_bottom_right}")
+
+        if selectedData_bar_bottom_right and "points" in selectedData_bar_bottom_right:
+            selected_types = {
+                point["y"] for point in selectedData_bar_bottom_right["points"]
+            }
+            print(f"Selected Types: {selected_types}")
+
+            filtered_df = df_realestate[df_realestate["bairro"].isin(selected_types)]
+            return filtered_df.to_dict("records")
+    elif "density-plot.selectedData" in changed_inputs:
+        print(f"selectedData Density: {selectedData_density}")
+
+        if selectedData_density and "points" in selectedData_density:
+            selected_types = list(
+                itertools.chain.from_iterable(
+                    [point["pointNumbers"] for point in selectedData_density["points"]]
+                )
+            )
+            print(f"Selected Density: {selected_types}")
+
+            filtered_df = df_realestate.iloc[selected_types, :]
             return filtered_df.to_dict("records")
 
     return df_realestate.to_dict("records")
