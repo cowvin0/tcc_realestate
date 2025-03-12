@@ -15,7 +15,7 @@ import plotly.figure_factory as ff
 
 from shapely.geometry import Point
 from dash_iconify import DashIconify
-from dash import html, Output, Input, dcc, callback, State, callback_context
+from dash import html, Output, Input, dcc, callback, State, callback_context, no_update
 from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
@@ -663,13 +663,15 @@ layout = dbc.Container(
 @callback(
     Output("bar-graph", "figure"),
     Input("filtered-data", "data"),
+    Input("bar-graph", "selectedData"),
 )
-def make_barplot_up_left(filtered_data):
-    # ctx = callback_context
-    # if "bar-graph.selectedData" in ctx.triggered[0]["prop_id"]:
-    #     df_filtered = df_realestate
-    # else:
-    df_filtered = pd.DataFrame(filtered_data)
+def make_barplot_up_left(filtered_data, _):
+    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
+
+    if "bar-graph.selectedData" in changed_inputs:
+        return no_update
+    else:
+        df_filtered = pd.DataFrame(filtered_data)
 
     fig_bar = px.bar(
         df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
@@ -1043,6 +1045,7 @@ def filter_data(selectedData):
         return df_realestate.to_dict("records")
 
     triggered_input = ctx.triggered[0]["prop_id"]
+    print("prop_id_filter_data", triggered_input)
 
     if "bar-graph.selectedData" in triggered_input:
         print(f"selectedData: {selectedData}")
