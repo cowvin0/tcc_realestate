@@ -150,7 +150,6 @@ layout = dbc.Container(
                                     dmc.Button(
                                         "Extraia os dados",
                                         id="download-btn",
-                                        # variant="subtle",
                                         leftIcon=DashIconify(
                                             icon="material-symbols-light:download-rounded",
                                             width=25,
@@ -674,6 +673,10 @@ def make_barplot_up_left(filtered_data, _):
     else:
         df_filtered = pd.DataFrame(filtered_data)
 
+    print(
+        "Valor médio do imóvel: ",
+        df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
+    )
     fig_bar = px.bar(
         df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
         x="valor",
@@ -737,7 +740,6 @@ def make_barplot_bottom_right(filtered_data, _):
     Input("density-plot", "selectedData"),
 )
 def make_density_plot(filtered_data, _):
-    # df_filtered = pd.DataFrame(filtered_data)
     changed_inputs = [x["prop_id"] for x in callback_context.triggered]
 
     if "density-plot.selectedData" in changed_inputs:
@@ -1096,34 +1098,13 @@ def filter_data(
         print(f"selectedData Density: {selectedData_density}")
 
         if selectedData_density and "points" in selectedData_density:
-            selected_types = list(
-                itertools.chain.from_iterable(
-                    [point["pointNumbers"] for point in selectedData_density["points"]]
-                )
-            )
+            selected_types = {point["x"] for point in selectedData_density["points"]}
             print(f"Selected Density: {selected_types}")
 
-            filtered_df = df_realestate.iloc[selected_types, :]
+            filtered_df = df_realestate[df_realestate["valor"].isin(selected_types)]
             return filtered_df.to_dict("records")
 
     return df_realestate.to_dict("records")
-
-
-# @callback(
-#     Output("filtered-data", "data"),
-#     Input("bar-graph", "selectedData"),
-# )
-# def filter_data(selectedData):
-#     print(f"selectedData: {selectedData}")
-
-#     if selectedData and "points" in selectedData:
-#         selected_types = {point["y"] for point in selectedData["points"]}
-#         print(f"Selected Types: {selected_types}")
-
-#         filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
-#         return filtered_df.to_dict("records")
-
-#     return df_realestate.to_dict("records")
 
 
 @callback(
