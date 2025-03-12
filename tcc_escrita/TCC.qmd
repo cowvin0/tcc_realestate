@@ -2237,7 +2237,7 @@ import joblib
 study1 = joblib.load('study_pkl/study_rf.pkl')
 study2 = joblib.load('study_pkl/study_gdt.pkl')
 study3 = joblib.load('study_pkl/study_lgbm_new_var.pkl')
-study4 = joblib.load('study_pkl/study_xgb.pkl')
+study4 = joblib.load('study_pkl/study_xgb_new_var2.pkl')
 ```
 
 ::: {#fig-rf_param layout-ncol=2}
