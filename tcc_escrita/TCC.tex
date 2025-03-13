@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, colback={codebgcolor}, boxrule=0pt, enhanced, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, colback={codebgcolor}, frame hidden, sharp corners, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2786,15 +2786,22 @@ da classe \texttt{KNNImputer}.
 
 \vspace{12pt}
 
-A transformação logarítmica \(\log(1 + x)\) foi aplicada para
+A transformação logarítmica \(\log\left(1 + x\right)\) foi aplicada para
 estabilizar a variância e tornar a distribuição dos regressores mais
-simétrica. Embora, a transformação \(\log(1 + x)\) tenha sido aplicada
-para a maior parte das variáveis numéricas, ela não foi aplicada para
-uma única variável, a que representa o produto entre as coordenadas
-geográficas e o valor de aluguel, nessa foi aplicada a transformação de
-Yeo-Johnson (YEO; JOHNSON, 2000), que contém a vantagem de ser aplicável
-para dados que contém valores negativos e 0. A transformação de
-Yeo-Johnson é definida da seguinte forma:
+simétrica. Embora essa transformação tenha sido utilizada na maioria das
+variáveis numéricas, algumas exceções foram feitas. Em particular, a
+variável que representa o produto entre as coordenadas geográficas e o
+valor do aluguel foi transformada usando a técnica de Yeo-Johnson (YEO;
+JOHNSON, 2000), que apresenta a vantagem de ser aplicável a dados que
+incluem valores negativos e zero, como é o caso dessa variável. Além
+disso, as variáveis referentes ao preço e à área do aluguel não foram
+transformadas com \(\log\left(1 + x\right)\). A decisão foi tomada com
+base nas métricas de avaliação do modelo, que indicaram uma queda de
+desempenho do modelo quando essas variáveis eram transformadas.
+
+\vspace{12pt}
+
+A transformação de Yeo-Johnson é definida da seguinte forma:
 
 \[
 \psi(\lambda, x) = \begin{cases}
@@ -3884,7 +3891,7 @@ Algoritmo & RMSE & \(R^2\) & MAPE \\
 Random Forest & 0,28972 & \(86,78792\%\) & 0,01373 \\
 Gradient Boosting & 0,28730 & \(86,98259\%\) & 0,01377 \\
 Light Gradient Boosting & 0,28385 & \(87,25794\%\) & 0,01340 \\
-Extreme Gradient Boosting & 0,28659 & \(87,03891\%\) & 0,01340 \\
+Extreme Gradient Boosting & 0,28400 & \(87,24599\%\) & 0,01325 \\
 Stacking & 0,28473 & \(87,18793\%\) & 0,01357 \\
 \end{longtable}
 
@@ -4074,6 +4081,8 @@ de árvores tem a menor influência.
 Boosting.}
 
 \end{figure}%
+
+\vspace{12pt}
 
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient
 Boosting não apresentou melhorias significativas, como ilustrado na
@@ -4334,7 +4343,7 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-81 & 1,28752 & 788 & 8 & 0,07119 \\
+81 & 0,28528 & 788 & 8 & 0,07119 \\
 \end{longtable}
 
 A tabela Tabela~\ref{tbl-params_xgb} apresenta a tentativa em que a

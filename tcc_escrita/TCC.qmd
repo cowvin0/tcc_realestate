@@ -1251,7 +1251,11 @@ em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou 
 
 \vspace{12pt}
 
-A transformação logarítmica $\log(1 + x)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Embora, a transformação $\log(1 + x)$ tenha sido aplicada para a maior parte das variáveis numéricas, ela não foi aplicada para uma única variável, a que representa o produto entre as coordenadas geográficas e o valor de aluguel, nessa foi aplicada a transformação de Yeo-Johnson [@yeo], que contém a vantagem de ser aplicável para dados que contém valores negativos e 0. A transformação de Yeo-Johnson é definida da seguinte forma:
+A transformação logarítmica $\log\left(1 + x\right)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Embora essa transformação tenha sido utilizada na maioria das variáveis numéricas, algumas exceções foram feitas. Em particular, a variável que representa o produto entre as coordenadas geográficas e o valor do aluguel foi transformada usando a técnica de Yeo-Johnson [@yeo], que apresenta a vantagem de ser aplicável a dados que incluem valores negativos e zero, como é o caso dessa variável. Além disso, as variáveis referentes ao preço e à área do aluguel não foram transformadas com $\log\left(1 + x\right)$. A decisão foi tomada com base nas métricas de avaliação do modelo, que indicaram uma queda de desempenho do modelo quando essas variáveis eram transformadas.
+
+\vspace{12pt}
+
+A transformação de Yeo-Johnson é definida da seguinte forma:
 
 $$
 \psi(\lambda, x) = \begin{cases}
@@ -2215,7 +2219,7 @@ Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-l
 |       Random Forest       | 0,28972 | $86,78792\%$ | 0,01373 |
 |     Gradient Boosting     | 0,28730 | $86,98259\%$ | 0,01377 |
 |  Light Gradient Boosting  | 0,28385 | $87,25794\%$ | 0,01340 |
-| Extreme Gradient Boosting | 0,28659 | $87,03891\%$ | 0,01340 |
+| Extreme Gradient Boosting | 0,28400 | $87,24599\%$ | 0,01325 |
 |          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
 
 : Métricas obtidas de cada algoritmo.
@@ -2233,7 +2237,7 @@ import joblib
 study1 = joblib.load('study_pkl/study_rf.pkl')
 study2 = joblib.load('study_pkl/study_gdt.pkl')
 study3 = joblib.load('study_pkl/study_lgbm_new_var.pkl')
-study4 = joblib.load('study_pkl/study_xgb.pkl')
+study4 = joblib.load('study_pkl/study_xgb_new_var2.pkl')
 ```
 
 ::: {#fig-rf_param layout-ncol=2}
@@ -2498,6 +2502,8 @@ plt.show()
 
 Resultados da tunagem do Gradient Boosting.
 :::
+
+\vspace{12pt}
 
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não apresentou melhorias significativas, como ilustrado na @fig-gdt_history, onde a estatística de erro poucas vezes ficou abaixo de 1,3. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores. No entanto, também há uma preferência por uma menor quantidade de árvores quando a taxa de aprendizado diminui.
 
@@ -2800,7 +2806,7 @@ Resultados da tunagem do XGBoost.
 
 | Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:---------:|:-------------:|
-|     81    | 1,28752 |      788     |     8     |     0,07119    |
+|     81    | 0,28528 |      788     |     8     |     0,07119    |
 
 : Melhores hiperparâmetros para Extreme Gradient Boosting.
 
