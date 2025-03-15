@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, frame hidden, sharp corners, boxrule=0pt, enhanced, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, colback={codebgcolor}, frame hidden, sharp corners, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3891,7 +3891,7 @@ Algoritmo & RMSE & \(R^2\) & MAPE \\
 Random Forest & 0,28972 & \(86,78792\%\) & 0,01373 \\
 Gradient Boosting & 0,28730 & \(86,98259\%\) & 0,01377 \\
 Light Gradient Boosting & 0,28385 & \(87,25794\%\) & 0,01340 \\
-Extreme Gradient Boosting & 0,28659 & \(87,03891\%\) & 0,01340 \\
+Extreme Gradient Boosting & 0,28400 & \(87,24599\%\) & 0,01325 \\
 Stacking & 0,28473 & \(87,18793\%\) & 0,01357 \\
 \end{longtable}
 
@@ -4343,7 +4343,7 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-81 & 1,28752 & 788 & 8 & 0,07119 \\
+81 & 0,28528 & 788 & 8 & 0,07119 \\
 \end{longtable}
 
 A tabela Tabela~\ref{tbl-params_xgb} apresenta a tentativa em que a
