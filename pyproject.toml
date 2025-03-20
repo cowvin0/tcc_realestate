@@ -52,6 +52,7 @@ gunicorn = "^23.0.0"
 dash-mantine-components = "0.13.0a2"
 dash-iconify = "^0.1.2"
 dash-ag-grid = "^31.3.0"
+shap = "^0.47.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.4"
