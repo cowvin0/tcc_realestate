@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, sharp corners, breakable, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, frame hidden, colback={codebgcolor}, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3876,8 +3876,6 @@ métricas finais obtidas para cada algoritmo na base de treinamento, após
 o ajuste com os hiperparâmetros, pode ser visualizado na
 Tabela~\ref{tbl-metrics_models}.
 
-\textbf{(FALTA CORRIGIR O STACKING)}
-
 \begin{longtable}[]{@{}cccc@{}}
 \caption{Métricas obtidas de cada
 algoritmo.}\label{tbl-metrics_models}\tabularnewline
@@ -3895,7 +3893,7 @@ Random Forest & 0,28578 & \(87,10419\%\) & 0,01346 \\
 Gradient Boosting & 0,28297 & \(87,32712\%\) & 0,01333 \\
 Light Gradient Boosting & 0,28385 & \(87,25794\%\) & 0,01340 \\
 Extreme Gradient Boosting & 0,28400 & \(87,24599\%\) & 0,01325 \\
-Stacking & 0,28473 & \(87,18793\%\) & 0,01357 \\
+Stacking & 0,28382 & \(87,26007\%\) & 0,01340 \\
 \end{longtable}
 
 \subsection{Tunagem da Random Forest}\label{tunagem-da-random-forest}
@@ -4415,7 +4413,7 @@ Figura~\ref{fig-preds_gdt}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/rf_plot_predict.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/rf_plot_predict2.pdf}}
 
 }
 
@@ -4427,7 +4425,7 @@ Figura~\ref{fig-preds_gdt}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/gdt_plot_predict.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/gdt_plot_predict2.pdf}}
 
 }
 
@@ -4459,7 +4457,7 @@ relação ao final da distribuição.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/lgbm_plot_predict.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/lgbm_plot_predict2.pdf}}
 
 }
 
@@ -4471,7 +4469,7 @@ relação ao final da distribuição.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/xgb_plot_predict.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/xgb_plot_predict2.pdf}}
 
 }
 
@@ -4535,7 +4533,7 @@ algoritmo de Stacking.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/pdp_ice.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/pdp_ice2.pdf}}
 
 }
 

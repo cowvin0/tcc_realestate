@@ -2212,7 +2212,6 @@ img = Image.open(io.BytesIO(img_data))
 
 Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas finais obtidas para cada algoritmo na base de treinamento, após o ajuste com os hiperparâmetros, pode ser visualizado na @tbl-metrics_models.
 
-**(FALTA CORRIGIR O STACKING)**
 
 ::: {#tbl-metrics_models}
 
@@ -2222,7 +2221,7 @@ Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-l
 |     Gradient Boosting     | 0,28297 | $87,32712\%$ | 0,01333 |
 |  Light Gradient Boosting  | 0,28385 | $87,25794\%$ | 0,01340 |
 | Extreme Gradient Boosting | 0,28400 | $87,24599\%$ | 0,01325 |
-|          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
+|          Stacking         | 0,28382 | $87,26007\%$ | 0,01340 |
 
 : Métricas obtidas de cada algoritmo.
 
@@ -2838,9 +2837,9 @@ Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $
 
 ::: {#fig-preds1 layout-ncol=2}
 
-![](includes/rf_plot_predict.svg){#fig-preds_rf}
+![](includes/rf_plot_predict2.svg){#fig-preds_rf}
 
-![](includes/gdt_plot_predict.svg){#fig-preds_gdt}
+![](includes/gdt_plot_predict2.svg){#fig-preds_gdt}
 
 Valores previstos em função dos observados do algoritmo Random Forest e Gradient Boosting, respectivamente.
 :::
@@ -2851,9 +2850,9 @@ O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos ú
 
 ::: {#fig-preds2 layout-ncol=2}
 
-![](includes/lgbm_plot_predict.svg){#fig-preds_lgbm}
+![](includes/lgbm_plot_predict2.svg){#fig-preds_lgbm}
 
-![](includes/xgb_plot_predict.svg){#fig-preds_xgb}
+![](includes/xgb_plot_predict2.svg){#fig-preds_xgb}
 
 Valores previstos em função dos observados do algoritmo Light Gradient Boosting e Extreme Gradient Boosting, respectivamente.
 :::
@@ -2879,7 +2878,7 @@ Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando
 
 \ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Stacking.
 
-![Gráfico de ICE e PDP.](includes/pdp_ice.svg){#fig-ice_pdp}
+![Gráfico de ICE e PDP.](includes/pdp_ice2.svg){#fig-ice_pdp}
 
 \vspace{12pt}
 
