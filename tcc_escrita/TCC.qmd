@@ -2210,17 +2210,18 @@ img = Image.open(io.BytesIO(img_data))
 
 \vspace{12pt}
 
-Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas obtidas para cada algoritmo pode ser visualizado na @tbl-metrics_models.
+Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas finais obtidas para cada algoritmo na base de treinamento, após o ajuste com os hiperparâmetros, pode ser visualizado na @tbl-metrics_models.
+
 
 ::: {#tbl-metrics_models}
 
 |           Algoritmo          |   RMSE  |   $R^2$   |   MAPE  |
 |:-------------------------:|:-------:|:---------:|:-------:|
-|       Random Forest       | 0,28972 | $86,78792\%$ | 0,01373 |
-|     Gradient Boosting     | 0,28730 | $86,98259\%$ | 0,01377 |
+|       Random Forest       | 0,28578 | $87,10419\%$ | 0,01346 |
+|     Gradient Boosting     | 0,28297 | $87,32712\%$ | 0,01333 |
 |  Light Gradient Boosting  | 0,28385 | $87,25794\%$ | 0,01340 |
 | Extreme Gradient Boosting | 0,28400 | $87,24599\%$ | 0,01325 |
-|          Stacking         | 0,28473 | $87,18793\%$ | 0,01357 |
+|          Stacking         | 0,28382 | $87,26007\%$ | 0,01340 |
 
 : Métricas obtidas de cada algoritmo.
 
@@ -2234,8 +2235,8 @@ Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-l
 import optuna.visualization
 import joblib
 
-study1 = joblib.load('study_pkl/study_rf.pkl')
-study2 = joblib.load('study_pkl/study_gdt.pkl')
+study1 = joblib.load('study_pkl/study_rf_new_var.pkl')
+study2 = joblib.load('study_pkl/study_gdt_new_var2.pkl')
 study3 = joblib.load('study_pkl/study_lgbm_new_var.pkl')
 study4 = joblib.load('study_pkl/study_xgb_new_var2.pkl')
 ```
@@ -2354,29 +2355,23 @@ A figura @fig-rf_slice mostra a variação da estatística de erro em função d
 
 \vspace{12pt}
 
-A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores (max_depth). Em contraste, para o hiperparâmetro de número de árvores (n_estimators), o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado em @fig-rf_contour, onde valores menores para max_depth e maiores para n_estimators resultam em um modelo com menor erro de generalização.
+A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores `max_depth`. Em contraste, para o hiperparâmetro de número de árvores `n_estimators`, o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado em @fig-rf_contour, onde valores menores para `max_depth` e maiores para `n_estimators` resultam em um modelo com menor erro de generalização.
 
 \vspace{12pt}
 
-Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import revela que o hiperparâmetro n_estimators possui uma maior contribuição na performance do modelo. A figura @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20. Após esse ponto, o otimizador não consegue encontrar valores de erro significativamente menores.
+Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import revela que o hiperparâmetro `n_estimators` possui uma maior contribuição na performance do modelo. A figura @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20.
 
 ::: {#tbl-params_rf}
 
 | Tentativa |  RMSE  | n_estimators | max_depth |
 |:---------:|:------:|:------------:|:---------:|
-|     67    | 1,29682 |      650     |     22    |
+|     62    | 0,29084 |      653     |     21    |
 
 : Melhores hiperparâmetros para Random Forest.
 
 :::
 
 ### Tunagem do Gradient Boosting
-
-\ \ \ Para o algoritmo de Gradient Boosting, os hiperparâmetros ajustados foram a taxa de aprendizado, a quantidade de árvores e a profundidade das árvores. No Optuna, o espaço de busca definido na função objetivo para a taxa de aprendizado variou de $1 \cdot 10^{-5}$ a $1 \cdot 10^{-1}$; para a profundidade das árvores, de 3 a 500; e para a quantidade de árvores, de 50 a 1500. Assim como no Random Forest, foi utilizada  $m = \sqrt{p}$​ das $p$ variáveis independentes para realizar as divisões nas árvores.
-
-\vspace{12pt}
-
-A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import, indica que o hiperparâmetro com maior influência na variação da função objetivo — e, consequentemente, na performance do modelo — é a taxa de aprendizado. Em seguida, a profundidade das árvores é o segundo mais relevante, enquanto o número de árvores tem a menor influência.
 
 ::: {#fig-gdt_param layout="[[1, 1, 1], [1]]"}
 
@@ -2503,15 +2498,21 @@ plt.show()
 Resultados da tunagem do Gradient Boosting.
 :::
 
+\ \ \ Para o algoritmo de Gradient Boosting, os hiperparâmetros ajustados foram a taxa de aprendizado, a quantidade de árvores e a profundidade das árvores. No [**Optuna**](https://optuna.org/), o espaço de busca definido na função objetivo para a taxa de aprendizado variou de $1 \cdot 10^{-5}$ a $1 \cdot 10^{-1}$; para a profundidade das árvores, de 3 a 500; e para a quantidade de árvores, de 50 a 1500. Assim como no Random Forest, foi utilizada  $m = \sqrt{p}$​ das $p$ variáveis independentes para realizar as divisões nas árvores.
+
 \vspace{12pt}
 
-Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting não apresentou melhorias significativas, como ilustrado na @fig-gdt_history, onde a estatística de erro poucas vezes ficou abaixo de 1,3. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores. No entanto, também há uma preferência por uma menor quantidade de árvores quando a taxa de aprendizado diminui.
+A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import, indica que o hiperparâmetro com maior influência na variação da função objetivo — e, consequentemente, na performance do modelo — é a taxa de aprendizado. Em seguida, a profundidade das árvores é o segundo mais relevante, enquanto o número de árvores tem a menor influência.
+
+\vspace{12pt}
+
+Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting apresentou melhorias significativas, como ilustrado na @fig-gdt_history, em que a estatística de erro foi bastante estável para cada combinação de hiperpâmetros, além de em ter se mantido abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores. Em relação à importância dos hiperparâmetros, o que representou a maior variação foi a taxa de aprendizado.
 
 ::: {#tbl-params_gdt}
 
 | Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:---------:|:-------------:|
-|     50    | 1,28891 |     1500     |     6     |     0,08730    |
+|     57    | 0,28512 |     1404     |     7     |     0,09806    |
 
 : Melhores hiperparâmetros para Gradient Boosting.
 
@@ -2649,7 +2650,7 @@ Resultados da tunagem do LGBM.
 
 \vspace{12pt}
 
-As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um comportamento semelhante ao do Gradient Boosting, porém com maior estabilidade em cada tentativa e uma convergência mais rápida. Ao analisar a contribuição de cada hiperparâmetro para o desempenho do modelo na @fig-lgbm_import, observa-se que a quantidade de árvores é o hiperparâmetro de maior influência, seguido pela taxa de aprendizado, número de folhas e, por último, a profundidade da árvore.
+As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um comportamento semelhante ao do Gradient Boosting, porém com maior estabilidade em cada tentativa e uma convergência mais rápida. Ao analisar a contribuição de cada hiperparâmetro para o desempenho do modelo na @fig-lgbm_import, observa-se que a quantidade de árvores é a taxa de aprendizado é o hiperparâmetro de maior influência, seguido pela quantidade de árvores, profundidade da árvore e, por último, o número de folhas.
 
 \vspace{12pt}
 
@@ -2836,9 +2837,9 @@ Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $
 
 ::: {#fig-preds1 layout-ncol=2}
 
-![](includes/rf_plot_predict.svg){#fig-preds_rf}
+![](includes/rf_plot_predict2.svg){#fig-preds_rf}
 
-![](includes/gdt_plot_predict.svg){#fig-preds_gdt}
+![](includes/gdt_plot_predict2.svg){#fig-preds_gdt}
 
 Valores previstos em função dos observados do algoritmo Random Forest e Gradient Boosting, respectivamente.
 :::
@@ -2849,9 +2850,9 @@ O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos ú
 
 ::: {#fig-preds2 layout-ncol=2}
 
-![](includes/lgbm_plot_predict.svg){#fig-preds_lgbm}
+![](includes/lgbm_plot_predict2.svg){#fig-preds_lgbm}
 
-![](includes/xgb_plot_predict.svg){#fig-preds_xgb}
+![](includes/xgb_plot_predict2.svg){#fig-preds_xgb}
 
 Valores previstos em função dos observados do algoritmo Light Gradient Boosting e Extreme Gradient Boosting, respectivamente.
 :::
@@ -2877,7 +2878,7 @@ Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando
 
 \ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Stacking.
 
-![Gráfico de ICE e PDP.](includes/pdp_ice.svg){#fig-ice_pdp}
+![Gráfico de ICE e PDP.](includes/pdp_ice2.svg){#fig-ice_pdp}
 
 \vspace{12pt}
 

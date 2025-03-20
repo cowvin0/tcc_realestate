@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, colback={codebgcolor}, frame hidden, sharp corners, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, frame hidden, colback={codebgcolor}, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3872,7 +3872,8 @@ API, o hiperparâmetro que define a quantidade de árvores é denominado
 \texttt{learning\_rate}. Com a configuração da função objetivo na
 biblioteca \href{https://optuna.org/}{\textbf{Optuna}}, foi possível
 encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As
-métricas obtidas para cada algoritmo pode ser visualizado na
+métricas finais obtidas para cada algoritmo na base de treinamento, após
+o ajuste com os hiperparâmetros, pode ser visualizado na
 Tabela~\ref{tbl-metrics_models}.
 
 \begin{longtable}[]{@{}cccc@{}}
@@ -3888,11 +3889,11 @@ Algoritmo & RMSE & \(R^2\) & MAPE \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Random Forest & 0,28972 & \(86,78792\%\) & 0,01373 \\
-Gradient Boosting & 0,28730 & \(86,98259\%\) & 0,01377 \\
+Random Forest & 0,28578 & \(87,10419\%\) & 0,01346 \\
+Gradient Boosting & 0,28297 & \(87,32712\%\) & 0,01333 \\
 Light Gradient Boosting & 0,28385 & \(87,25794\%\) & 0,01340 \\
 Extreme Gradient Boosting & 0,28400 & \(87,24599\%\) & 0,01325 \\
-Stacking & 0,28473 & \(87,18793\%\) & 0,01357 \\
+Stacking & 0,28382 & \(87,26007\%\) & 0,01340 \\
 \end{longtable}
 
 \subsection{Tunagem da Random Forest}\label{tunagem-da-random-forest}
@@ -3973,22 +3974,22 @@ etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
 
 A partir de Figura~\ref{fig-rf_slice}, é possível ver que o erro tende a
 ser menor para valores menores do hiperparâmetro de profundidade das
-árvores (max\_depth). Em contraste, para o hiperparâmetro de número de
-árvores (n\_estimators), o erro apresenta uma tendência de redução e
-estabilização à medida que o número de árvores aumenta. Esse
-comportamento também é observado em Figura~\ref{fig-rf_contour}, onde
-valores menores para max\_depth e maiores para n\_estimators resultam em
-um modelo com menor erro de generalização.
+árvores \texttt{max\_depth}. Em contraste, para o hiperparâmetro de
+número de árvores \texttt{n\_estimators}, o erro apresenta uma tendência
+de redução e estabilização à medida que o número de árvores aumenta.
+Esse comportamento também é observado em Figura~\ref{fig-rf_contour},
+onde valores menores para \texttt{max\_depth} e maiores para
+\texttt{n\_estimators} resultam em um modelo com menor erro de
+generalização.
 
 \vspace{12pt}
 
 Além disso, o gráfico de importância dos hiperparâmetros em
-Figura~\ref{fig-rf_import} revela que o hiperparâmetro n\_estimators
-possui uma maior contribuição na performance do modelo. A figura
-Figura~\ref{fig-rf_history} ilustra o comportamento da métrica de erro
-para cada trial, mostrando que o método de otimização alcança um de seus
-melhores valores pouco antes do trial 20. Após esse ponto, o otimizador
-não consegue encontrar valores de erro significativamente menores.
+Figura~\ref{fig-rf_import} revela que o hiperparâmetro
+\texttt{n\_estimators} possui uma maior contribuição na performance do
+modelo. A figura Figura~\ref{fig-rf_history} ilustra o comportamento da
+métrica de erro para cada trial, mostrando que o método de otimização
+alcança um de seus melhores valores pouco antes do trial 20.
 
 \begin{longtable}[]{@{}cccc@{}}
 \caption{Melhores hiperparâmetros para Random
@@ -4003,29 +4004,11 @@ Tentativa & RMSE & n\_estimators & max\_depth \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-67 & 1,29682 & 650 & 22 \\
+62 & 0,29084 & 653 & 21 \\
 \end{longtable}
 
 \subsection{Tunagem do Gradient
 Boosting}\label{tunagem-do-gradient-boosting}
-
-~~~Para o algoritmo de Gradient Boosting, os hiperparâmetros ajustados
-foram a taxa de aprendizado, a quantidade de árvores e a profundidade
-das árvores. No Optuna, o espaço de busca definido na função objetivo
-para a taxa de aprendizado variou de \(1 \cdot 10^{-5}\) a
-\(1 \cdot 10^{-1}\); para a profundidade das árvores, de 3 a 500; e para
-a quantidade de árvores, de 50 a 1500. Assim como no Random Forest, foi
-utilizada \(m = \sqrt{p}\)\hspace{0pt} das \(p\) variáveis independentes
-para realizar as divisões nas árvores.
-
-\vspace{12pt}
-
-A análise da importância dos hiperparâmetros, apresentada na
-Figura~\ref{fig-gdt_import}, indica que o hiperparâmetro com maior
-influência na variação da função objetivo --- e, consequentemente, na
-performance do modelo --- é a taxa de aprendizado. Em seguida, a
-profundidade das árvores é o segundo mais relevante, enquanto o número
-de árvores tem a menor influência.
 
 \begin{figure}
 
@@ -4082,17 +4065,37 @@ Boosting.}
 
 \end{figure}%
 
+~~~Para o algoritmo de Gradient Boosting, os hiperparâmetros ajustados
+foram a taxa de aprendizado, a quantidade de árvores e a profundidade
+das árvores. No \href{https://optuna.org/}{\textbf{Optuna}}, o espaço de
+busca definido na função objetivo para a taxa de aprendizado variou de
+\(1 \cdot 10^{-5}\) a \(1 \cdot 10^{-1}\); para a profundidade das
+árvores, de 3 a 500; e para a quantidade de árvores, de 50 a 1500. Assim
+como no Random Forest, foi utilizada \(m = \sqrt{p}\)\hspace{0pt} das
+\(p\) variáveis independentes para realizar as divisões nas árvores.
+
+\vspace{12pt}
+
+A análise da importância dos hiperparâmetros, apresentada na
+Figura~\ref{fig-gdt_import}, indica que o hiperparâmetro com maior
+influência na variação da função objetivo --- e, consequentemente, na
+performance do modelo --- é a taxa de aprendizado. Em seguida, a
+profundidade das árvores é o segundo mais relevante, enquanto o número
+de árvores tem a menor influência.
+
 \vspace{12pt}
 
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient
-Boosting não apresentou melhorias significativas, como ilustrado na
-Figura~\ref{fig-gdt_history}, onde a estatística de erro poucas vezes
-ficou abaixo de 1,3. A relação entre os hiperparâmetros é bastante
-similar à obtida para o Random Forest. Na Figura~\ref{fig-gdt_contour},
-observa-se que o método de otimização TPE tende a selecionar valores
-menores para a profundidade das árvores e maiores para o número de
-árvores. No entanto, também há uma preferência por uma menor quantidade
-de árvores quando a taxa de aprendizado diminui.
+Boosting apresentou melhorias significativas, como ilustrado na
+Figura~\ref{fig-gdt_history}, em que a estatística de erro foi bastante
+estável para cada combinação de hiperpâmetros, além de em ter se mantido
+abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é
+bastante similar à obtida para o Random Forest. Na
+Figura~\ref{fig-gdt_contour}, observa-se que o método de otimização TPE
+tende a selecionar valores menores para a profundidade das árvores e
+maiores para o número de árvores. Em relação à importância dos
+hiperparâmetros, o que representou a maior variação foi a taxa de
+aprendizado.
 
 \begin{longtable}[]{@{}ccccc@{}}
 \caption{Melhores hiperparâmetros para Gradient
@@ -4107,7 +4110,7 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-50 & 1,28891 & 1500 & 6 & 0,08730 \\
+57 & 0,28512 & 1404 & 7 & 0,09806 \\
 \end{longtable}
 
 \subsection{Tunagem do LGBM}\label{tunagem-do-lgbm}
@@ -4181,8 +4184,9 @@ apresentaram um comportamento semelhante ao do Gradient Boosting, porém
 com maior estabilidade em cada tentativa e uma convergência mais rápida.
 Ao analisar a contribuição de cada hiperparâmetro para o desempenho do
 modelo na Figura~\ref{fig-lgbm_import}, observa-se que a quantidade de
-árvores é o hiperparâmetro de maior influência, seguido pela taxa de
-aprendizado, número de folhas e, por último, a profundidade da árvore.
+árvores é a taxa de aprendizado é o hiperparâmetro de maior influência,
+seguido pela quantidade de árvores, profundidade da árvore e, por
+último, o número de folhas.
 
 \vspace{12pt}
 
@@ -4409,7 +4413,7 @@ Figura~\ref{fig-preds_gdt}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/rf_plot_predict.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/rf_plot_predict2.pdf}}
 
 }
 
@@ -4421,7 +4425,7 @@ Figura~\ref{fig-preds_gdt}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/gdt_plot_predict.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/gdt_plot_predict2.pdf}}
 
 }
 
@@ -4453,7 +4457,7 @@ relação ao final da distribuição.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/lgbm_plot_predict.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/lgbm_plot_predict2.pdf}}
 
 }
 
@@ -4465,7 +4469,7 @@ relação ao final da distribuição.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/xgb_plot_predict.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/xgb_plot_predict2.pdf}}
 
 }
 
@@ -4529,7 +4533,7 @@ algoritmo de Stacking.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/pdp_ice.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/pdp_ice2.pdf}}
 
 }
 

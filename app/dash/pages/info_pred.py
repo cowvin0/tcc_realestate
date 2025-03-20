@@ -16,7 +16,17 @@ import plotly.figure_factory as ff
 
 from shapely.geometry import Point
 from dash_iconify import DashIconify
-from dash import html, Output, Input, dcc, callback, State, callback_context, no_update
+from dash import (
+    html,
+    Output,
+    Input,
+    dcc,
+    callback,
+    State,
+    callback_context,
+    no_update,
+    ctx,
+)
 from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
@@ -673,10 +683,6 @@ def make_barplot_up_left(filtered_data, _):
     else:
         df_filtered = pd.DataFrame(filtered_data)
 
-    print(
-        "Valor médio do imóvel: ",
-        df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
-    )
     fig_bar = px.bar(
         df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
         x="valor",
@@ -780,14 +786,26 @@ def download_csv(_):
 
 
 @callback(
+    Output("marker-map", "figure"),
+    Input("marker-map", "selectedData"),
+)
+def prevent_updating_marker_map(_):
+    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
+
+    if "marker-map.selectedData" in changed_inputs:
+        return no_update
+
+
+@callback(
     Output("map-container", "children"),
     [
         Input("map-select", "value"),
         Input("filtered-data", "data"),
         Input("predict-button", "n_clicks"),
+        Input("map-container", "children"),
     ],
 )
-def update_map(map_type, filtered_data, n_clicks):
+def update_map(map_type, filtered_data, n_clicks, map_children):
     df_filtered = pd.DataFrame(filtered_data)
 
     city_folder = f"app/dash/assets/geo_joao_pessoa/{map_type}.geojson"
@@ -800,6 +818,20 @@ def update_map(map_type, filtered_data, n_clicks):
 
     if n_clicks % 2 == 1:
         map_type = None
+
+    selected_data = None
+    if map_children and isinstance(map_children, dict):
+        children = map_children.get("props", {}).get("children", [])
+        if isinstance(children, list):
+            for child in children:
+                if (
+                    isinstance(child, dict)
+                    and child.get("props", {}).get("id") == "marker-map"
+                ):
+                    selected_data = child["props"].get("selectedData", None)
+
+    if selected_data and ctx.triggered_id == "map-container":
+        return no_update
 
     if map_type == "heatmap":
         data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
@@ -818,7 +850,6 @@ def update_map(map_type, filtered_data, n_clicks):
             size="valor",
             hover_name="tipo",
             hover_data={"latitude": False, "longitude": False, "valor": ":.2f"},
-            color_continuous_scale="Viridis",
             size_max=15,
             zoom=12,
             mapbox_style="open-street-map",
@@ -845,11 +876,14 @@ def update_map(map_type, filtered_data, n_clicks):
                 title_font=dict(size=12),
             ),
         )
+
         return dcc.Graph(
             figure=fig_map_marker,
+            id="marker-map",
             style={"width": "100%", "height": "400px"},
             config={"displaylogo": False},
         )
+
     elif map_type == "ciclo":
         geo_data = gpd.read_file(city_folder)
         for _, row in geo_data.astype({"ano_implantacao": int}).iterrows():
@@ -1062,9 +1096,13 @@ def toggle_prediction_form(n_clicks, is_visible):
     Input("bar-graph", "selectedData"),
     Input("bar-plot-most-expensive", "selectedData"),
     Input("density-plot", "selectedData"),
+    Input("marker-map", "selectedData"),
 )
 def filter_data(
-    selectedData_bar_up_left, selectedData_bar_bottom_right, selectedData_density
+    selectedData_bar_up_left,
+    selectedData_bar_bottom_right,
+    selectedData_density,
+    selectedData_marker_map,
 ):
     ctx = callback_context
     if not ctx.triggered:
@@ -1073,36 +1111,42 @@ def filter_data(
     changed_inputs = [x["prop_id"] for x in ctx.triggered]
 
     if "bar-graph.selectedData" in changed_inputs:
-        print(f"selectedData: {selectedData_bar_up_left}")
 
         if selectedData_bar_up_left and "points" in selectedData_bar_up_left:
             selected_types = {
                 point["y"] for point in selectedData_bar_up_left["points"]
             }
-            print(f"Selected Types: {selected_types}")
 
             filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
             return filtered_df.to_dict("records")
     elif "bar-plot-most-expensive.selectedData" in changed_inputs:
-        print(f"selectedData: {selectedData_bar_bottom_right}")
 
         if selectedData_bar_bottom_right and "points" in selectedData_bar_bottom_right:
             selected_types = {
                 point["y"] for point in selectedData_bar_bottom_right["points"]
             }
-            print(f"Selected Types: {selected_types}")
 
             filtered_df = df_realestate[df_realestate["bairro"].isin(selected_types)]
             return filtered_df.to_dict("records")
     elif "density-plot.selectedData" in changed_inputs:
-        print(f"selectedData Density: {selectedData_density}")
 
         if selectedData_density and "points" in selectedData_density:
             selected_types = {point["x"] for point in selectedData_density["points"]}
-            print(f"Selected Density: {selected_types}")
 
             filtered_df = df_realestate[df_realestate["valor"].isin(selected_types)]
             return filtered_df.to_dict("records")
+    elif "marker-map.selectedData" in changed_inputs:
+        selected_types = {"latitude": [], "longitude": []}
+        for point in selectedData_marker_map["points"]:
+            lat, lon = point["customdata"][:2]
+            selected_types["latitude"].append(lat)
+            selected_types["longitude"].append(lon)
+
+        filtered_df = df_realestate[
+            df_realestate["latitude"].isin(selected_types["latitude"])
+            & df_realestate["longitude"].isin(selected_types["longitude"])
+        ]
+        return filtered_df.to_dict("records")
 
     return df_realestate.to_dict("records")
 
