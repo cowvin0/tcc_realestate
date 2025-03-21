@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, frame hidden, colback={codebgcolor}, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, colback={codebgcolor}, boxrule=0pt, enhanced, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -4383,30 +4383,6 @@ gráfico que compara os valores estimados aos valores observados dos
 imóveis. Além disso, foram utilizadas métricas de erro, como MAPE,
 \(R^2\) e RMSE, para avaliar o desempenho dos modelos.
 
-\vspace{12pt}
-
-O ajuste do algoritmo Random Forest é apresentado na figura
-Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
-previstos e observados. Em termos da transformação logarítmica
-realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972,
-enquanto o coeficiente de determinação \(R^2\) alcançou \(86,79\%\),
-indicando que o modelo explica \(86,79\%\) da variação dos dados. Em
-relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições
-realizadas pelo modelo Random Forest, considerando a transformação
-logarítmica, estiveram 1,373\% distantes dos valores reais.
-
-\vspace{12pt}
-
-Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue
-explicar \(86,98\%\) dos dados, bastante semelhante à Random Forest, com
-uma diferença não tão significativa. Por outro lado, o RMSE do Gradient
-Boosting foi menor que a Random Forest, tendo sido de 0,28730.
-Observando o MAPE, não houve também muitas diferenças, embora o MAPE do
-Gradient Boosting tenha sido maior. O MAPE indica que as predições
-geradas pelo Gradient Boosting estão \(1,377\%\) distantes de seus
-valores observados. Seu ajuste pode ser observado na
-Figura~\ref{fig-preds_gdt}.
-
 \begin{figure}
 
 \begin{minipage}{0.50\linewidth}
@@ -4438,18 +4414,15 @@ algoritmo Random Forest e Gradient Boosting, respectivamente.}
 
 \end{figure}%
 
-\vspace{12pt}
-
-O Light Gradient Boosting conseguiu melhorias em relação aos resultados
-dos últimos dois algoritmos. Em relação ao seu \(R^2\), o modelo
-consegue explicar \(87,17\%\) dos dados. O seu RMSE ficou em \(0,28493\)
-e o MAPE em \(0,01346\). Dessa forma, as predições geradas pelo Light
-Gradient Boosting estão em média \(1,346\%\) distantes de seus valores
-reais. A melhora do ajuste do Light Gradient Boosting fica bastante
-perceptível observando a figura de seus valores estimados em função dos
-observados (Figura~\ref{fig-preds_lgbm}). As predições geradas pelos
-Gradient Boosting e Random Forest desviam bastante, principalmente em
-relação ao final da distribuição.
+O ajuste do algoritmo Random Forest é apresentado na figura
+Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
+previstos e observados. Em termos da transformação logarítmica
+realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972,
+enquanto o coeficiente de determinação \(R^2\) alcançou \(86,79\%\),
+indicando que o modelo explica \(86,79\%\) da variação dos dados. Em
+relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições
+realizadas pelo modelo Random Forest, considerando a transformação
+logarítmica, estiveram 1,373\% distantes dos valores reais.
 
 \begin{figure}
 
@@ -4485,6 +4458,42 @@ respectivamente.}
 
 \vspace{12pt}
 
+Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue
+explicar \(86,98\%\) dos dados, bastante semelhante à Random Forest, com
+uma diferença não tão significativa. Por outro lado, o RMSE do Gradient
+Boosting foi menor que a Random Forest, tendo sido de 0,28730.
+Observando o MAPE, não houve também muitas diferenças, embora o MAPE do
+Gradient Boosting tenha sido maior. O MAPE indica que as predições
+geradas pelo Gradient Boosting estão \(1,377\%\) distantes de seus
+valores observados. Seu ajuste pode ser observado na
+Figura~\ref{fig-preds_gdt}.
+
+\vspace{12pt}
+
+O Light Gradient Boosting conseguiu melhorias em relação aos resultados
+dos últimos dois algoritmos. Em relação ao seu \(R^2\), o modelo
+consegue explicar \(87,17\%\) dos dados. O seu RMSE ficou em \(0,28493\)
+e o MAPE em \(0,01346\). Dessa forma, as predições geradas pelo Light
+Gradient Boosting estão em média \(1,346\%\) distantes de seus valores
+reais. A melhora do ajuste do Light Gradient Boosting fica bastante
+perceptível observando a figura de seus valores estimados em função dos
+observados (Figura~\ref{fig-preds_lgbm}). As predições geradas pelos
+Gradient Boosting e Random Forest desviam bastante, principalmente em
+relação ao final da distribuição.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=4.16667in,height=\textheight,keepaspectratio]{TCC_files/mediabag/includes/stacking_plot_predict2.pdf}
+
+}
+
+\caption{\label{fig-preds_stacking}Valores previstos em função dos
+observados do algoritmo Stacking.}
+
+\end{figure}%
+
 Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados
 melhores que os algoritmos de Random Forest e Gradient Boosting.
 Entretanto, obteve piores em relação às estatísticas de erro de RMSE e
@@ -4493,19 +4502,6 @@ foi de \(87,03891\%\), indicando que o modelo consegue explicar
 \(87,03891\%\) dos dados. No entanto, obteve um MAPE pouco menor que o
 LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média
 \(1,357\%\) distantes de seus valores reais.
-
-\begin{figure}
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/stacking_plot_predict.pdf}}
-
-}
-
-\caption{\label{fig-preds_stacking}Valores previstos em função dos
-observados do algoritmo Stacking.}
-
-\end{figure}%
 
 \vspace{12pt}
 
@@ -4575,7 +4571,7 @@ no valor dos imóveis.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/shap_summary_plot.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/shap_summary_plot2.pdf}}
 
 }
 
@@ -4587,7 +4583,7 @@ no valor dos imóveis.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/shap_importance.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/shap_importance2.pdf}}
 
 }
 
@@ -4630,40 +4626,40 @@ complexa com o valor dos imóveis.
 \begin{figure}
 
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_academia.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_academia2.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_area_servico.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_area_servico2.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_elevador.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_elevador2.pdf}}\end{minipage}%
 \newline
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_espaco_gourmet.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_espaco_gourmet2.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_piscina.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_piscina2.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_playground.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_playground2.pdf}}\end{minipage}%
 \newline
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_portaria_24_horas.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_portaria_24_horas2.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_quadra_de_esporte.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_quadra_de_esporte2.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_salao_de_festa.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_salao_de_festa2.pdf}}\end{minipage}%
 \newline
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_sauna.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_sauna2.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_spa.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_spa2.pdf}}\end{minipage}%
 %
 \begin{minipage}{0.33\linewidth}
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_varanda_gourmet.pdf}}\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/dependence_plot_cat/dep_plot_varanda_gourmet2.pdf}}\end{minipage}%
 
 \caption{\label{fig-dependence_plot}Gráfico de dependência de valores
 SHAP para variáveis binárias.}

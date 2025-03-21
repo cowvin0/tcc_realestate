@@ -2827,14 +2827,6 @@ Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tenta
 
 \ \ \ Nesta seção, serão apresentados os resultados do ajuste de cada algoritmo utilizado: Random Forest, Gradient Boosting, LightGBM e Extreme Gradient Boosting. A análise do ajuste foi realizada com base no gráfico que compara os valores estimados aos valores observados dos imóveis. Além disso, foram utilizadas métricas de erro, como MAPE, $R^2$ e RMSE, para avaliar o desempenho dos modelos.
 
-\vspace{12pt}
-
-O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972, enquanto o coeficiente de determinação $R^2$ alcançou $86,79\%$, indicando que o modelo explica $86,79\%$ da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram 1,373% distantes dos valores reais.
-
-\vspace{12pt}
-
-Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $86,98\%$ dos dados, bastante semelhante à Random Forest, com uma diferença não tão significativa. Por outro lado, o RMSE do Gradient Boosting foi menor que a Random Forest, tendo sido de 0,28730. Observando o MAPE, não houve também muitas diferenças, embora o MAPE do Gradient Boosting tenha sido maior. O MAPE indica que as predições geradas pelo Gradient Boosting estão $1,377\%$ distantes de seus valores observados. Seu ajuste pode ser observado na @fig-preds_gdt.
-
 ::: {#fig-preds1 layout-ncol=2}
 
 ![](includes/rf_plot_predict2.svg){#fig-preds_rf}
@@ -2844,9 +2836,7 @@ Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $
 Valores previstos em função dos observados do algoritmo Random Forest e Gradient Boosting, respectivamente.
 :::
 
-\vspace{12pt}
-
-O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos últimos dois algoritmos. Em relação ao seu $R^2$, o modelo consegue explicar $87,17\%$ dos dados. O seu RMSE ficou em $0,28493$ e o MAPE em $0,01346$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão em média $1,346\%$ distantes de seus valores reais. A melhora do ajuste do Light Gradient Boosting fica bastante perceptível observando a figura de seus valores estimados em função dos observados (@fig-preds_lgbm). As predições geradas pelos Gradient Boosting e Random Forest desviam bastante, principalmente em relação ao final da distribuição.
+O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972, enquanto o coeficiente de determinação $R^2$ alcançou $86,79\%$, indicando que o modelo explica $86,79\%$ da variação dos dados. Em relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram 1,373% distantes dos valores reais.
 
 ::: {#fig-preds2 layout-ncol=2}
 
@@ -2859,15 +2849,20 @@ Valores previstos em função dos observados do algoritmo Light Gradient Boostin
 
 \vspace{12pt}
 
-Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest e Gradient Boosting. Entretanto, obteve piores em relação às estatísticas de erro de RMSE e $R^2$. O RMSE obtido pelo XGBoost foi de $0,28659$ e o seu $R^2$ foi de $87,03891\%$, indicando que o modelo consegue explicar $87,03891\%$ dos dados. No entanto, obteve um MAPE pouco menor que o LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média $1,357\%$ distantes de seus valores reais.
+Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue explicar $86,98\%$ dos dados, bastante semelhante à Random Forest, com uma diferença não tão significativa. Por outro lado, o RMSE do Gradient Boosting foi menor que a Random Forest, tendo sido de 0,28730. Observando o MAPE, não houve também muitas diferenças, embora o MAPE do Gradient Boosting tenha sido maior. O MAPE indica que as predições geradas pelo Gradient Boosting estão $1,377\%$ distantes de seus valores observados. Seu ajuste pode ser observado na @fig-preds_gdt.
 
+\vspace{12pt}
+
+O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos últimos dois algoritmos. Em relação ao seu $R^2$, o modelo consegue explicar $87,17\%$ dos dados. O seu RMSE ficou em $0,28493$ e o MAPE em $0,01346$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão em média $1,346\%$ distantes de seus valores reais. A melhora do ajuste do Light Gradient Boosting fica bastante perceptível observando a figura de seus valores estimados em função dos observados (@fig-preds_lgbm). As predições geradas pelos Gradient Boosting e Random Forest desviam bastante, principalmente em relação ao final da distribuição.
 
 ::: {#fig-preds_stacking}
 
-![](includes/stacking_plot_predict.svg)
+![](includes/stacking_plot_predict2.svg){height=200, width=400}
 
 Valores previstos em função dos observados do algoritmo Stacking.
 :::
+
+Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest e Gradient Boosting. Entretanto, obteve piores em relação às estatísticas de erro de RMSE e $R^2$. O RMSE obtido pelo XGBoost foi de $0,28659$ e o seu $R^2$ foi de $87,03891\%$, indicando que o modelo consegue explicar $87,03891\%$ dos dados. No entanto, obteve um MAPE pouco menor que o LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média $1,357\%$ distantes de seus valores reais.
 
 \vspace{12pt}
 
@@ -2891,9 +2886,9 @@ As previsões mostram um aumento claro com o tamanho da área, com o PDP apresen
 
 
 ::: {#fig-teste layout-ncol=2}
-![Gráfico de resumo dos valores SHAP.](includes/shap_summary_plot.svg){#fig-shap_summary}
+![Gráfico de resumo dos valores SHAP.](includes/shap_summary_plot2.svg){#fig-shap_summary}
 
-![Importância das variáveis.](includes/shap_importance.svg){#fig-shap_importance}
+![Importância das variáveis.](includes/shap_importance2.svg){#fig-shap_importance}
 
 Impacto e importância das variáveis na predição a partir do método SHAP.
 :::
@@ -2908,29 +2903,29 @@ Com a @fig-shap_summary, observa-se um resumo da análise dos valores Shapley. A
 
 ::: {#fig-dependence_plot layout-nrow=4, layout-ncol=3}
 
-![](includes/dependence_plot_cat/dep_plot_academia.svg)
+![](includes/dependence_plot_cat/dep_plot_academia2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_area_servico.svg)
+![](includes/dependence_plot_cat/dep_plot_area_servico2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_elevador.svg)
+![](includes/dependence_plot_cat/dep_plot_elevador2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_espaco_gourmet.svg)
+![](includes/dependence_plot_cat/dep_plot_espaco_gourmet2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_piscina.svg)
+![](includes/dependence_plot_cat/dep_plot_piscina2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_playground.svg)
+![](includes/dependence_plot_cat/dep_plot_playground2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_portaria_24_horas.svg)
+![](includes/dependence_plot_cat/dep_plot_portaria_24_horas2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_quadra_de_esporte.svg)
+![](includes/dependence_plot_cat/dep_plot_quadra_de_esporte2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_salao_de_festa.svg)
+![](includes/dependence_plot_cat/dep_plot_salao_de_festa2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_sauna.svg)
+![](includes/dependence_plot_cat/dep_plot_sauna2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_spa.svg)
+![](includes/dependence_plot_cat/dep_plot_spa2.svg)
 
-![](includes/dependence_plot_cat/dep_plot_varanda_gourmet.svg)
+![](includes/dependence_plot_cat/dep_plot_varanda_gourmet2.svg)
 
 Gráfico de dependência de valores SHAP para variáveis binárias.
 :::
