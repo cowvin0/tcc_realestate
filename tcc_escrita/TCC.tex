@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, colback={codebgcolor}, boxrule=0pt, enhanced, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, boxrule=0pt, colback={codebgcolor}, frame hidden, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -4353,24 +4353,24 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 A tabela Tabela~\ref{tbl-params_xgb} apresenta a tentativa em que a
 combinação de hiperparâmetros resultou no menor erro para o algoritmo de
 Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de
-número 81, com uma configuração de 788 árvores, profundidade máxima de 8
-e taxa de aprendizado de 0,07119.
+número 81, com uma configuração de 788 árvores, profundidade máxima
+igual a 8 e taxa de aprendizado de 0,07119.
 
 \vspace{12pt}
 
-Para o LGBM, a melhor combinação foi encontrada na tentativa 96, com
-1.798 árvores, 247 folhas, profundidade máxima de 299 e taxa de
-aprendizado de 0,00903, como apresentado na tabela
+Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com
+1.988 árvores, 202 folhas, profundidade máxima de 379 e taxa de
+aprendizado de 0,00985, como apresentado na tabela
 Tabela~\ref{tbl-params_lgbm}.
 
 \vspace{12pt}
 
 Por fim, para os algoritmos Gradient Boosting e Random Forest, as
-melhores tentativas foram as de números 50 e 67, respectivamente. No
-caso do Gradient Boosting, a configuração ideal foi composta por 1.500
-árvores, profundidade máxima de 6 e taxa de aprendizado de 0,08730. Já
-para o Random Forest, a melhor combinação consistiu em 650 árvores e
-profundidade máxima de 22. Os resultados estão na
+melhores tentativas foram as de números 57 e 62, respectivamente. No
+caso do Gradient Boosting, a configuração ideal foi composta por 1.404
+árvores, profundidade máxima de 7 e taxa de aprendizado de 0,09806. Já
+para o Random Forest, a melhor combinação consistiu em 653 árvores e
+profundidade máxima de 21. Os resultados estão na
 Tabela~\ref{tbl-params_gdt} e Tabela~\ref{tbl-params_rf},
 respectivamente.
 
@@ -4417,12 +4417,12 @@ algoritmo Random Forest e Gradient Boosting, respectivamente.}
 O ajuste do algoritmo Random Forest é apresentado na figura
 Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
 previstos e observados. Em termos da transformação logarítmica
-realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28972,
-enquanto o coeficiente de determinação \(R^2\) alcançou \(86,79\%\),
-indicando que o modelo explica \(86,79\%\) da variação dos dados. Em
-relação ao MAPE, o valor foi de 0,01373, assim, em média, as predições
-realizadas pelo modelo Random Forest, considerando a transformação
-logarítmica, estiveram 1,373\% distantes dos valores reais.
+realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28578,
+enquanto o coeficiente de determinação \(R^2\) alcançou \(87,10419\%\).
+Em relação ao MAPE, o valor foi de 0,01346, assim, em média, as
+predições realizadas pelo modelo Random Forest, considerando a
+transformação logarítmica, estiveram em média 1,346\% distantes dos
+valores reais.
 
 \begin{figure}
 
@@ -4458,17 +4458,18 @@ respectivamente.}
 
 \vspace{12pt}
 
-Em relação ao algoritmo de Gradient Boosting, o seu ajuste consegue
-explicar \(86,98\%\) dos dados, bastante semelhante à Random Forest, com
-uma diferença não tão significativa. Por outro lado, o RMSE do Gradient
-Boosting foi menor que a Random Forest, tendo sido de 0,28730.
-Observando o MAPE, não houve também muitas diferenças, embora o MAPE do
-Gradient Boosting tenha sido maior. O MAPE indica que as predições
-geradas pelo Gradient Boosting estão \(1,377\%\) distantes de seus
-valores observados. Seu ajuste pode ser observado na
-Figura~\ref{fig-preds_gdt}.
+Em relação ao algoritmo de Gradient Boosting, seu ajuste consegue
+explicar \(87,32712%
+\) da variável dependente, um valor superior ao obtido com o ajuste do
+algoritmo de Random Forest, embora a diferença não seja muito grande.
+Para o MAPE, o valor encontrado foi de \(0,01333\), indicando que os
+valores estimados dos imóveis estão, em média, \(1,333%
+\) dos seus valores observados. A relação entre os valores estimados e
+os observados pode ser visualizada na Figura~\ref{fig-preds_gdt}.
 
 \vspace{12pt}
+
+\textbf{(CORRIGIR ESSA PARTE - LGBM NÃO CONSEGUIU MELHORIAS)}
 
 O Light Gradient Boosting conseguiu melhorias em relação aos resultados
 dos últimos dois algoritmos. Em relação ao seu \(R^2\), o modelo
@@ -4506,11 +4507,11 @@ LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média
 \vspace{12pt}
 
 Utilizando os últimos modelos com seus hiperparâmetros otimizados e
-utilizando o Light Gradient Boosting como estimador final, as predições
-foram feitas com o Stacking. As predições geradas pelo Stacking,
-analisando as métricas de erro utilizadas, foram melhores até mesmo que
-o Light Gradient Boosting. O RMSE obtido para o Stacking foi de 0,28473
-e o modelo consegue explicar \(87,18793\%\). A única métrica que não foi
+utilizando o Random Forest como estimador final, as predições foram
+feitas com o Stacking. As estimações geradas pelo Stacking, analisando
+as métricas de erro utilizadas, foram melhores até mesmo que o Light
+Gradient Boosting. O RMSE obtido para o Stacking foi de 0,28473 e o
+modelo consegue explicar \(87,18793\%\). A única métrica que não foi
 melhor que do algoritmo LGBM foi o MAPE, que foi de \(1,357\%\), mas a
 diferença é pouca.
 
