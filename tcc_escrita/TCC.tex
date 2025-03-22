@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, frame hidden, breakable, colback={codebgcolor}, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, boxrule=0pt, enhanced, colback={codebgcolor}, frame hidden, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -536,7 +536,7 @@ cadernetas de poupança, a principal fonte de arrecadação para o setor. O
 saldo da poupança na época correspondia a US\$ 30 bilhões. Dos 40\%
 restantes, cerca de metate foi retirado pelos depositantes, uma vez que
 a população ficou sem dinheiro disponível para arcar com despesas
-correntes (ABECIP, 2015). Como consequência, o saldo das cadernetas de
+correntes (ABECIP, 2015).i Como consequência, o saldo das cadernetas de
 poupança foi drasticamente reduzido, atingindo aproximadamente US\$ 7 a
 US\$ 8 bilhões. Essa medida agravou intensamente a situação das
 instituições financeiras, que, de repente, ficaram sem passivo e ficaram
@@ -1071,8 +1071,10 @@ spider do projeto. Para isso, utiliza-se o comando
 Neste exemplo, serão extraídas informações do site
 \url{https://cran.r-project.org/web/packages/index.html}. Ao executar o
 comando
-\texttt{scrapy\ genspider\ packagescraper\ https://cran.r-project.org/web/packages/index.html},
-será gerado um arquivo dentro do diretório spiders com o nome
+\texttt{scrapy\ genspider\ packagescraper\ \textless{}url\textgreater{}},
+utilizando a url
+\url{https://cran.r-project.org/web/packages/index.html}, será gerado um
+arquivo dentro do diretório spiders com o nome
 \texttt{packagescraper.py}, que terá a seguinte estrutura:
 
 \begin{Shaded}
@@ -1606,10 +1608,14 @@ trabalho. Vale destacar que o
 desempenhando um papel relevante na aplicação, com sua pipeline sendo
 serializada no formato \texttt{.pkl} por meio da biblioteca
 \href{https://docs.python.org/3/library/pickle.html}{\textbf{pickle}}.
-Essa biblioteca permitiu a reutilização da pipeline no back-end da
-aplicação, garantindo a consistência, eficiência do processamento dos
-dados e predição do modelo para novos dados. Segue, então, a descrição
-das ferramentas empregadas na construção da aplicação final.
+Essa biblioteca permitiu a reutilização da pipeline no
+back-end\footnote{Back-end é a parte de um sistema ou aplicação
+  responsável pelo processamento de dados, lógica e comunicação com
+  bancos de dados e servidores, funcionando nos bastidores da interface
+  com o usuário.} da aplicação, garantindo a consistência, eficiência do
+processamento dos dados e predição do modelo para novos dados. Segue,
+então, a descrição das ferramentas empregadas na construção da aplicação
+final.
 
 \section{Recursos utilizados para a criação da aplicação
 final}\label{recursos-utilizados-para-a-criauxe7uxe3o-da-aplicauxe7uxe3o-final}
@@ -1621,8 +1627,10 @@ pipeline de machine learning criada durante a etapa de modelagem, a
 aplicação também dispõe de funcionalidades interativas que permitem aos
 usuários explorar os dados e visualizar os resultados de forma clara e
 intuitiva. Para alcançar esses objetivos, foram empregadas tecnologias
-para o desenvolvimento do front-end e do back-end, que foram
-desenvolvidos em \textbf{Python}.
+para o desenvolvimento do front-end\footnote{Front-end é a parte de um
+  sistema ou aplicação responsável pela interface gráfica e pela
+  interação com o usuário.} e do back-end, que foram desenvolvidos em
+\textbf{Python}.
 
 \vspace{12pt}
 
@@ -1736,6 +1744,31 @@ obstante, os mapas da cidade de João Pessoa, criados com a biblioteca
 \href{https://python-visualization.github.io/folium/latest/}{\textbf{Folium}}
 (PYTHON-VISUALIZATION, 2020), foram servidos pela API, que expôs seus
 arquivos HTML para consumo no front-end.
+
+\vspace{12pt}
+
+O \href{https://www.docker.com/}{\textbf{Docker}} foi utilizado para
+facilitar a execução e integração dos componentes da aplicação,
+permitindo a criação de ambientes isolados e consistentes para o
+front-end e o back-end. Por meio de containers, foi possível iniciar e
+conectar ambos os serviços de forma simplificada, garantindo que a
+aplicação funcionasse corretamente independentemente do ambiente em que
+fosse executada. Com o uso do
+\href{https://www.docker.com/}{\textbf{Docker}}, a configuração do
+ambiente tornou-se reprodutível, escalável e de fácil manutenção. Além
+disso, o banco de dados
+\href{https://www.postgresql.org/}{\textbf{PostgresSQL}} foi criado a
+partir do \href{https://www.docker.com/}{\textbf{Docker}}.
+
+\vspace{12pt}
+
+O \href{https://www.docker.com/}{\textbf{Docker}} é uma plataforma que
+permite empacotar aplicações e suas dependências em unidades chamadas
+containers, que podem ser executadas de maneira padronizada em qualquer
+sistema que possua o \href{https://www.docker.com/}{\textbf{Docker}}
+instalado. Isso elimina problemas comuns relacionados a diferenças de
+ambiente e facilita o processo de desenvolvimento, teste e implantação
+de aplicações.
 
 \vspace{12pt}
 
@@ -3087,8 +3120,8 @@ desempenho superior em relação ao limiar \(y^∗\).
 
 \vspace{12pt}
 
-Portanto, para o cálculo do EI utilizando as definições fornecidas pelo
-TPE e assumindo que \(y^∗>y\), adota-se a parametrização de
+Portanto, para o cálculo do EI utilizando as definições dadas pelo TPE e
+assumindo que \(y^∗>y\), adota-se a parametrização de
 \(p\left(\lambda,y\right)\) como
 \(p\left(y\right)p\left(\lambda∣y\right)\), com o objetivo de
 simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz
