@@ -178,7 +178,7 @@ O Plano Cruzado, implementado em 1986, converteu o valor das prestações pela m
 
 \vspace{12pt}
 
-No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de metate foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia]. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
+No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de metate foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia].i Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
 
 \vspace{12pt}
 
@@ -372,7 +372,7 @@ Ao observar a estrutura do diretório, é possível identificar algumas funciona
 
 \vspace{12pt}
 
-Com a estrutura do projeto criada, o próximo passo é criar o primeiro spider do projeto. Para isso, utiliza-se o comando `scrapy genspider <nome_do_spider> <website>`. Neste exemplo, serão extraídas informações do site <https://cran.r-project.org/web/packages/index.html>. Ao executar o comando `scrapy genspider packagescraper https://cran.r-project.org/web/packages/index.html`, será gerado um arquivo dentro do diretório spiders com o nome `packagescraper.py`, que terá a seguinte estrutura:
+Com a estrutura do projeto criada, o próximo passo é criar o primeiro spider do projeto. Para isso, utiliza-se o comando `scrapy genspider <nome_do_spider> <website>`. Neste exemplo, serão extraídas informações do site <https://cran.r-project.org/web/packages/index.html>. Ao executar o comando `scrapy genspider packagescraper <url>`, utilizando a url <https://cran.r-project.org/web/packages/index.html>, será gerado um arquivo dentro do diretório spiders com o nome `packagescraper.py`, que terá a seguinte estrutura:
 
 ```{python}
 #| echo: true
@@ -639,11 +639,11 @@ Vale ressaltar que algumas bibliotecas externas, baseadas na API do [**scikit-le
 
 \vspace{12pt}
 
-Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e visualização dos resultados. A seguir, serão descritas as tecnologias utilizadas no desenvolvimento da aplicação final deste trabalho. Vale destacar que o [**scikit-learn**](https://scikit-learn.org/stable/) continuou desempenhando um papel relevante na aplicação, com sua pipeline sendo serializada no formato `.pkl` por meio da biblioteca [**pickle**](https://docs.python.org/3/library/pickle.html). Essa biblioteca permitiu a reutilização da pipeline no back-end da aplicação, garantindo a consistência, eficiência do processamento dos dados e predição do modelo para novos dados. Segue, então, a descrição das ferramentas empregadas na construção da aplicação final.
+Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e visualização dos resultados. A seguir, serão descritas as tecnologias utilizadas no desenvolvimento da aplicação final deste trabalho. Vale destacar que o [**scikit-learn**](https://scikit-learn.org/stable/) continuou desempenhando um papel relevante na aplicação, com sua pipeline sendo serializada no formato `.pkl` por meio da biblioteca [**pickle**](https://docs.python.org/3/library/pickle.html). Essa biblioteca permitiu a reutilização da pipeline no back-end^[Back-end é a parte de um sistema ou aplicação responsável pelo processamento de dados, lógica e comunicação com bancos de dados e servidores, funcionando nos bastidores da interface com o usuário.] da aplicação, garantindo a consistência, eficiência do processamento dos dados e predição do modelo para novos dados. Segue, então, a descrição das ferramentas empregadas na construção da aplicação final.
 
 ## Recursos utilizados para a criação da aplicação final
 
-\ \ \ A aplicação final foi desenvolvida com o objetivo de realizar previsões de valores de imóveis e oferecer uma análise detalhada do mercado imobiliário da cidade de João Pessoa. Além de integrar a pipeline de machine learning criada durante a etapa de modelagem, a aplicação também dispõe de funcionalidades interativas que permitem aos usuários explorar os dados e visualizar os resultados de forma clara e intuitiva. Para alcançar esses objetivos, foram empregadas tecnologias para o desenvolvimento do front-end e do back-end, que foram desenvolvidos em **Python**.
+\ \ \ A aplicação final foi desenvolvida com o objetivo de realizar previsões de valores de imóveis e oferecer uma análise detalhada do mercado imobiliário da cidade de João Pessoa. Além de integrar a pipeline de machine learning criada durante a etapa de modelagem, a aplicação também dispõe de funcionalidades interativas que permitem aos usuários explorar os dados e visualizar os resultados de forma clara e intuitiva. Para alcançar esses objetivos, foram empregadas tecnologias para o desenvolvimento do front-end^[Front-end é a parte de um sistema ou aplicação responsável pela interface gráfica e pela interação com o usuário.] e do back-end, que foram desenvolvidos em **Python**.
 
 \vspace{12pt}
 
@@ -704,6 +704,14 @@ Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**F
 \vspace{12pt}
 
 No projeto, o [**SQLAlchemy**](https://www.sqlalchemy.org/) foi utilizado para gerenciar a conexão com o banco de dados, implementado com [**PostgresSQL**](https://www.postgresql.org/), um sistema de gerenciamento de banco de dados relacional amplamente reconhecido por sua robustez e alto desempenho. Isso permitiu que os dados fossem expostos na API e consumidos no front-end. Além disso, a API foi responsável por expor a pipeline do modelo, possibilitando a realização de previsões de valores imobiliários diretamente na aplicação. Não obstante, os mapas da cidade de João Pessoa, criados com a biblioteca [**Folium**](https://python-visualization.github.io/folium/latest/) [@folium], foram servidos pela API, que expôs seus arquivos HTML para consumo no front-end.
+
+\vspace{12pt}
+
+O [**Docker**](https://www.docker.com/) foi utilizado para facilitar a execução e integração dos componentes da aplicação, permitindo a criação de ambientes isolados e consistentes para o front-end e o back-end. Por meio de containers, foi possível iniciar e conectar ambos os serviços de forma simplificada, garantindo que a aplicação funcionasse corretamente independentemente do ambiente em que fosse executada. Com o uso do [**Docker**](https://www.docker.com/), a configuração do ambiente tornou-se reprodutível, escalável e de fácil manutenção. Além disso, o banco de dados [**PostgresSQL**](https://www.postgresql.org/) foi criado a partir do [**Docker**](https://www.docker.com/).
+
+\vspace{12pt}
+
+O [**Docker**](https://www.docker.com/) é uma plataforma que permite empacotar aplicações e suas dependências em unidades chamadas containers, que podem ser executadas de maneira padronizada em qualquer sistema que possua o [**Docker**](https://www.docker.com/) instalado. Isso elimina problemas comuns relacionados a diferenças de ambiente e facilita o processo de desenvolvimento, teste e implantação de aplicações.
 
 \vspace{12pt}
 
@@ -1034,8 +1042,6 @@ Fonte: @james2013introduction [p. 349].
 
 No algoritmo de Bagging, cada árvore é construída e ajustada utilizando amostras bootstrap, e ao final, um estimador agregado $\varphi_B$​ é formado a partir das $B$ árvores. O Boosting Trees funciona de maneira semelhante, mas sem o uso de amostras bootstrap. A ideia central do Boosting é corrigir os erros das árvores anteriores, ajustando as novas árvores aos resíduos gerados pelas predições anteriores, com o objetivo de aprimorar a precisão do modelo. Assim, as árvores no Boosting são construídas de forma sequencial, incorporando gradualmente as informações dos erros cometidos pelas árvores anteriores.
 
-<!-- A ideia principal é corrigir os erros das árvores anteriores, ajustando as novas árvores aos resíduos das anteriores, visando melhorar suas previsões. Assim, as árvores são construídas de forma sequencial, incorporando as informações das árvores anteriores. -->
-
 \vspace{12pt}
 
 No caso da regressão, o Boosting combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. A primeira árvore é construída utilizando o conjunto de dados original, e seus resíduos são calculados. Com a primeira árvore ajustada, a segunda árvore é ajustada aos resíduos resíduos da árvore anterior e, em seguida, é adicionada ao estimador para atualizar os resíduos. Dessa forma, os resíduos servem como informação crucial para construir novas árvores e corrigir os erros das árvores anteriores. Como cada nova árvore depende das árvores já construídas, árvores menores são suficientes [@james2013introduction].
@@ -1185,7 +1191,7 @@ Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as
 
 - Longitude: posição vertical, também medida em frações decimais de graus, assim como a latitude;
 
-- Tipo do imóvel: sete categorias foram consideradas: apartamentos, casas, casas comerciais, casas de condomínio, casas de vila, coberturas, e lotes comerciais e de condomínio;
+- Tipo do imóvel: sete categorias foram consideradas: apartamentos, casas, casas de condomínio, flats e terrenos de lotes comerciais e de condomínio;
 
 - Endereço: nome do endereço onde o imóvel está localizado;
 
@@ -1193,7 +1199,12 @@ Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as
 
 \vspace{12pt}
 
-No entanto, com base nas observações realizadas durante o estudo, nem todas as variáveis coletadas foram utilizadas na modelagem do valor dos imóveis. Algumas foram excluídas devido a uma quantidade excessiva de valores ausentes, enquanto outras se mostraram pouco significativas para explicar o valor do imóvel. Após o processo de coleta e limpeza dos dados, o banco de dados final conta com 31.782 observações.
+No entanto, com base nas observações realizadas durante o estudo, nem todas as variáveis coletadas foram utilizadas na modelagem do valor dos imóveis. Algumas foram excluídas devido a uma quantidade excessiva de valores ausentes, enquanto outras se mostraram pouco significativas para explicar o valor do imóvel. Após o processo de coleta e limpeza dos dados, o banco de dados final conta com 31.781 observações.
+
+\vspace{12pt}
+
+Além dos dados mencionados, foram também utilizados dados geográficos sobre a cidade de João Pessoa, incluindo informações sobre ciclovias, faixas exclusivas de ônibus, corredores de ônibus, área rural, bairros, escolas públicas, parques, praças e rios. No entanto, esses dados foram empregados exclusivamente na construção dos mapas na aplicação final. As informações foram obtidas no site <https://filipeia.joaopessoa.pb.gov.br/>.
+
 
 ## Análise exploratória de dados
 
@@ -1447,7 +1458,7 @@ Se, para o valor de $\lambda$, o modelo prevê um $y$ tal que $y > y^∗$, a dif
 
 \vspace{12pt}
 
-Portanto, para o cálculo do EI utilizando as definições fornecidas pelo TPE e assumindo que $y^∗>y$, adota-se a parametrização de $p\left(\lambda,y\right)$ como $p\left(y\right)p\left(\lambda∣y\right)$, com o objetivo de simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz a:
+Portanto, para o cálculo do EI utilizando as definições dadas pelo TPE e assumindo que $y^∗>y$, adota-se a parametrização de $p\left(\lambda,y\right)$ como $p\left(y\right)p\left(\lambda∣y\right)$, com o objetivo de simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz a:
 
 $$
 EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy\text{.}
@@ -2911,11 +2922,11 @@ A análise da importância das variáveis foi realizada por meio do método SHAP
 
 \vspace{12pt}
 
-Como pode ser observado na @fig-shap_importance, a variável com maior impacto na predição do modelo é a área do imóvel, responsável por alterar, em média, mais de 12 pontos percentuais na predição absoluta. Outras variáveis que se destacam entre as mais relevantes para a estimativa do valor dos imóveis incluem a quantidade de vagas de garagem, a razão entre o número de quartos e a área, a localização geográfica e o produto entre as coordenadas geográficas e o valor do aluguel.
+Como pode ser observado na @fig-shap_importance, a variável com maior impacto na predição do modelo é a área do imóvel, responsável por alterar, em média, mais de 12 pontos percentuais na predição absoluta. Outras variáveis que se destacam entre as mais relevantes para a estimativa do valor dos imóveis incluem a quantidade de vagas de garagem, a razão entre o número de quartos e a área, a localização geográfica e o produto entre as coordenadas geográficas e o valor do aluguel. Por último, as quarto variáveis com menor impacto na predição do modelo é a sauna, portaria 24 horas, quadra de esporte e spa.
 
 \vspace{12pt}
 
-Com a @fig-shap_summary, observa-se um resumo da análise dos valores Shapley. A variável área se destaca como a de maior impacto no modelo, especialmente para valores elevados, que aumentam significativamente as predições. As coordenadas geográficas indicam que valores mais altos tendem a elevar a predição do valor dos imóveis, refletindo a valorização de imóveis localizados mais próximos às regiões litorâneas de João Pessoa, como observado na @fig-ice_pdp. Por outro lado, a variável de área média de aluguel do bairro apresenta um padrão menos linear, com valores altos indicando uma redução na predição do modelo. Além disso, ao utilizar a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest) para gerar os gráficos apresentados na @fig-shap_importance e na @fig-shap_summary, há um limite de variáveis incluídas nos gráficos e as variáveis são ordenadas de acordo com seu impacto na predição do modelo. Dessa forma, variáveis como sauna, spa, portaria 24 horas e quadra de esporte acabam sendo excluídas dessas visualizações por serem as que apresentaram o menor impacto na predição do modelo.
+Com a @fig-shap_summary, observa-se um resumo da análise dos valores Shapley. A variável área se destaca como a de maior impacto no modelo, especialmente para valores elevados, que aumentam significativamente as predições. As coordenadas geográficas indicam que valores mais altos tendem a elevar a predição do valor dos imóveis, refletindo a valorização de imóveis localizados mais próximos às regiões litorâneas de João Pessoa, como observado na @fig-ice_pdp. Por outro lado, a variável de área média de aluguel do bairro apresenta um padrão menos linear, com valores altos indicando uma redução na predição do modelo.
 
 
 ::: {#fig-dependence_plot layout-nrow=4, layout-ncol=3}
@@ -2955,7 +2966,63 @@ Para a análise das variáveis binárias, foram utilizados gráficos de dependê
 
 Conforme já discutido na análise da importância das variáveis, sauna e spa apresentam baixa relevância no impacto da predição do modelo. Ainda assim, seus gráficos de dependência revelam que essas variáveis podem contribuir para aumentar as predições em casos específicos, especialmente em imóveis de maior valor que apresentam essas características. O mesmo comportamento é observado para as variáveis varanda gourmet, playground e espaço gourmet, indicando que, embora menos relevantes no modelo de forma geral, essas características podem ser úteis na valorização de determinados imóveis.
 
-## Aplicação final
+\vspace{12pt}
+
+Na seção a seguir, serão apresentados os resultados da aplicação final desenvolvida a partir dos dados coletados por meio da abordagem de web scraping, bem como o funcionamento prático do modelo final, o Gradient Boosting, utilizado para a avaliação de imóveis com base em determinadas características.
+
+## Aplicação web
+
+A aplicação final foi desenvolvida com o objetivo de ser simples e intuitiva, facilitando a análise e compreensão do comportamento do mercado imobiliário de João Pessoa. Nesta seção, serão apresentados os resultados da aplicação e suas funcionalidades. O código completo pode ser acessado através do seguinte link: <https://github.com/cowvin0/tcc_realestate/tree/main/app>.
+
+\vspace{12pt}
+
+A aplicação conta com uma página principal onde o usuário pode visualizar informações referentes aos imóveis coletados por meio do web scraping da cidade de João Pessoa. Nessa página, são apresentados quatro elementos gráficos. O primeiro é um gráfico de barras que exibe o valor médio dos imóveis por bairro. O segundo, também em barras, mostra o valor médio por tipo de imóvel. O terceiro é um histograma que representa a distribuição dos valores individuais dos imóveis, segmentados por tipo. Por fim, há um bloco com um mapa interativo da cidade de João Pessoa. Por padrão, é exibido um mapa de calor com a concentração de preços, mas o usuário pode alternar entre diferentes tipos de visualizações geográficas com informações detalhadas da cidade. A página inicial pode ser visualizada na @fig-app.
+
+
+![Página da aplicação com gráfico de barras do valor médio por tipo de imóvel, mapa de calor, histograma dos valores dos imóveis e gráfico do valor médio por bairro.](includes/screen_app.png){#fig-app width=450 height=250}
+
+Com os gráficos, além de obter uma visão descritiva e analisar o comportamento dos valores dos imóveis por bairro, o objetivo é também permitir a aplicação de filtros. É possível filtrar os imóveis por faixa de valor, bairros de interesse, tipos de imóvel e até mesmo por intervalos definidos a partir da distribuição exibida no gráfico de histograma.
+
+\vspace{12pt}
+
+Além dos gráficos, a aplicação oferece uma análise mais detalhada das características dos imóveis por meio de uma tabela, apresentada na @fig-table_app. Na figura, um retângulo vermelho destaca o ícone de uma planilha, que pode ser clicado para exibir a visualização da tabela. Abaixo dela, há um botão que permite o download dos dados em formato `.csv`.
+
+\vspace{12pt}
+
+Essa tabela reúne todas as variáveis utilizadas no modelo, além de incluir algumas variáveis que não foram incorporadas à modelagem, como o IPTU e o valor do condomínio, inicialmente excluídas da base de dados devido à alta proporção de valores ausentes.
+
+![Tabela dos dados utilizados para predição dos valores de imóveis.](includes/table-app.png){#fig-table_app width=450 height=250}
+
+A funcionalidade mais importante da aplicação pode ser acessada através do botão à direita do ícone da planilha, representado por um funil. Ao clicar nesse botão, um menu será exibido (@fig-menu_map), permitindo configurar o mapa e realizar previsões com o modelo final, o Gradient Boosting.
+
+\vspace{12pt}
+
+Na seção de configurações do mapa, o usuário pode selecionar o tipo de mapa desejado a partir de uma lista suspensa, que inclui todas as opções suportadas pela aplicação. Por padrão, o mapa de calor é selecionado. Uma das alternativas disponíveis é o mapa de pontos, que exibe a localização dos imóveis pontualmente, com suas cores variando conforme o valor dos imóveis, quanto mais clara a cor, mais alto o valor do imóvel. Além desses dois mapas, a aplicação permite a visualização de informações adicionais, como rios, ciclovias, comunidades, corredores de ônibus, faixas exclusivas para ônibus, parques, praças, área rural, comunidades e escolas públicas.
+
+![Controles para tipos de mapas.](includes/menu_map.png){#fig-menu_map width=450 height=250}
+
+Abaixo da lista que contem os tipos de mapas, está o botão para realizar as previsões com base nas características do imóvel passadas pelo usuário. Ao clicar nesse botão, aparecerão diversos blocos para preenchimento das informações do imóvel. Com as informações preenchidas, basta utilizar o botão abaixo de todos os blocos para realizar a previsão do imóvel.
+
+\vspace{12pt}
+
+O usuário deve, obrigatoriamente, informar o tipo de imóvel para realizar a previsão; caso contrário, a funcionalidade não será ativada. Após essa seleção, o usuário pode preencher as informações do imóvel. Algumas dessas informações precisam ser selecionadas diretamente no mapa, como as coordenadas geográficas, o valor médio do imóvel e a área média por bairro.
+
+\vspace{12pt}
+
+Quando o botão para acessar as informações do imóvel é pressionado, o mapa é automaticamente atualizado, removendo qualquer tipo previamente selecionado e exibindo apenas o mapa vazio. Com esse mapa vazio, o usuário deve clicar em uma localidade específica para coletar as informações necessárias, como mostrado na @fig-map_get_coord.
+
+::: {#fig-map_pred_coord layout-ncol=2}
+![](includes/map_pred.png){#fig-map_pred}
+
+![](includes/map_get_coord.png){#fig-map_get_coord}
+
+A @fig-map_pred exibe o menu com os blocos para preenchimento das informações de imóveis, enquanto a @fig-map_get_coord demonstra as informações coletadas ao clicar no bairro de Altiplano.
+:::
+
+Embora o usuário tenha a opção de selecionar as coordenadas e as informações de aluguel diretamente no mapa, também é possível inserir esses dados manualmente em seus respectivos blocos de informação. Além disso, como o KNN foi utilizado inicialmente como método de imputação para valores ausentes, o usuário não é obrigado a fornecer todos os dados, exceto o tipo de imóvel. Dessa forma, mesmo que algumas informações do imóvel estejam faltando, é possível realizar a previsão. Basta deixar um ou mais campos em branco, permitindo que o KNN estime as informações ausentes com base nas demais informações fornecidas.
+
+
+<!-- Embora o usuário tenha a opção de se selecionar as coordenadas diretamente e informações de aluguel diretamente pelo mapa, o usuário ainda terá a opção de passar diretamente os valores nos blocos dessas informações. Além disso, como inicialmente foi utilizado o KNN como método de imputação de valores ausentes, o usuário não é obrigado a passar nenhum dos outros valores além do tipo de imóvel. Dessa forma, caso não se tenha as informações completas do imóvel, é possível ainda assim realizar as previsões, basta deixar todos ou alguns dos blocos vazios. -->
 
 # Conclusão
 

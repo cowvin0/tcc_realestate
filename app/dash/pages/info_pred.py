@@ -54,11 +54,15 @@ dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
 #     .str.replace("condominio", "condomínio")
 # )
 
-df_realestate = pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv").assign(
-    tipo=lambda x: x.tipo.str.capitalize()
-    .str.split("_")
-    .str.join(" ")
-    .str.replace("condominio", "condomínio")
+df_realestate = (
+    pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv")
+    .assign(
+        tipo=lambda x: x.tipo.str.capitalize()
+        .str.split("_")
+        .str.join(" ")
+        .str.replace("condominio", "condomínio")
+    )
+    .drop(columns="qnt_beneficio")
 )
 
 bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
@@ -172,17 +176,33 @@ layout = dbc.Container(
                             ),
                             dbc.Offcanvas(
                                 id="offcanvas",
-                                title="Informações Adicionais",
+                                title=html.H5(
+                                    "Controles",
+                                    style={
+                                        "color": "#2780e3",
+                                        "fontSize": "2.5rem",
+                                    },
+                                ),
                                 is_open=False,
                                 style={"width": "25%"},
                                 placement="end",
                                 children=[
                                     html.P(
-                                        "Aqui você pode colocar informações adicionais, filtros, etc."
+                                        "Utilize os controles abaixo para ajustar os filtros do mapa e realizar previsões dos valores de imóveis.",
+                                        style={
+                                            "marginBottom": "1rem",
+                                            "fontSize": "1.2rem",
+                                        },
                                     ),
                                     html.Hr(),
                                     dmc.Select(
-                                        label="Tipo de Mapa",
+                                        label=html.H5(
+                                            "Tipos de mapa",
+                                            style={
+                                                "color": "#2780e3",
+                                                "fontSize": "1.5rem",
+                                            },
+                                        ),
                                         placeholder="Selecione o tipo de mapa",
                                         id="map-select",
                                         value="heatmap",
@@ -197,7 +217,7 @@ layout = dbc.Container(
                                                 "label": "Mapa de pontos",
                                             },
                                             {"value": "rios", "label": "Rios"},
-                                            {"value": "ciclo", "label": "Ciclo"},
+                                            {"value": "ciclo", "label": "Ciclovias"},
                                             {
                                                 "value": "escolas_publicas",
                                                 "label": "Escolas públicas",
@@ -207,6 +227,14 @@ layout = dbc.Container(
                                         ],
                                         w=200,
                                         mb=10,
+                                    ),
+                                    html.Hr(),
+                                    html.H5(
+                                        "Simule o valor do imóvel",
+                                        style={
+                                            "color": "#2380e3",
+                                            "fontSize": "1.5rem",
+                                        },
                                     ),
                                     dmc.Button(
                                         "Estimar valor de imóvel",
@@ -219,8 +247,12 @@ layout = dbc.Container(
                                         style={"display": "none"},
                                         children=[
                                             html.Hr(),
-                                            html.H4(
-                                                "Preencha as informações do imóvel"
+                                            html.H5(
+                                                "Preencha as informações do imóvel",
+                                                style={
+                                                    "color": "#2380e3",
+                                                    "fontSize": "1.5rem",
+                                                },
                                             ),
                                             dmc.Select(
                                                 id="input-tipo",
@@ -579,7 +611,7 @@ layout = dbc.Container(
                                             dmc.Button(
                                                 "Calcular Previsão",
                                                 id="calculate-prediction",
-                                                className="btn btn-success",
+                                                # className="btn btn-success",
                                             ),
                                             html.Div(
                                                 id="prediction-result",
@@ -724,7 +756,7 @@ def make_barplot_bottom_right(filtered_data, _):
         .reset_index(),
         x="valor",
         y="bairro",
-        labels={"tipo": "", "valor": "Valor Médio (R$)"},
+        labels={"tipo": "", "valor": "Valor Médio (R$)", "bairro": ""},
         text_auto=".2s",
         template="plotly_white",
     )
@@ -771,6 +803,7 @@ def make_density_plot(filtered_data, _):
         clickmode="event+select",
         dragmode="select",
         template="plotly_white",
+        yaxis=dict(tickformat=".1e"),
     )
 
     return fig
@@ -785,15 +818,15 @@ def download_csv(_):
     return dcc.send_data_frame(df_realestate.to_csv, "dados_imoveis.csv", index=False)
 
 
-@callback(
-    Output("marker-map", "figure"),
-    Input("marker-map", "selectedData"),
-)
-def prevent_updating_marker_map(_):
-    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
+# @callback(
+#     Output("marker-map", "figure"),
+#     Input("marker-map", "selectedData"),
+# )
+# def prevent_updating_marker_map(_):
+#     changed_inputs = [x["prop_id"] for x in callback_context.triggered]
 
-    if "marker-map.selectedData" in changed_inputs:
-        return no_update
+#     if "marker-map.selectedData" in changed_inputs:
+#         return no_update
 
 
 @callback(
@@ -802,10 +835,10 @@ def prevent_updating_marker_map(_):
         Input("map-select", "value"),
         Input("filtered-data", "data"),
         Input("predict-button", "n_clicks"),
-        Input("map-container", "children"),
+        # Input("map-container", "children"),
     ],
 )
-def update_map(map_type, filtered_data, n_clicks, map_children):
+def update_map(map_type, filtered_data, n_clicks):  # , map_children):
     df_filtered = pd.DataFrame(filtered_data)
 
     city_folder = f"app/dash/assets/geo_joao_pessoa/{map_type}.geojson"
@@ -819,19 +852,19 @@ def update_map(map_type, filtered_data, n_clicks, map_children):
     if n_clicks % 2 == 1:
         map_type = None
 
-    selected_data = None
-    if map_children and isinstance(map_children, dict):
-        children = map_children.get("props", {}).get("children", [])
-        if isinstance(children, list):
-            for child in children:
-                if (
-                    isinstance(child, dict)
-                    and child.get("props", {}).get("id") == "marker-map"
-                ):
-                    selected_data = child["props"].get("selectedData", None)
+    # selected_data = None
+    # if map_children and isinstance(map_children, dict):
+    #     children = map_children.get("props", {}).get("children", [])
+    #     if isinstance(children, list):
+    #         for child in children:
+    #             if (
+    #                 isinstance(child, dict)
+    #                 and child.get("props", {}).get("id") == "marker-map"
+    #             ):
+    #                 selected_data = child["props"].get("selectedData", None)
 
-    if selected_data and ctx.triggered_id == "map-container":
-        return no_update
+    # if selected_data and ctx.triggered_id == "map-container":
+    #     return no_update
 
     if map_type == "heatmap":
         data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
@@ -879,7 +912,7 @@ def update_map(map_type, filtered_data, n_clicks, map_children):
 
         return dcc.Graph(
             figure=fig_map_marker,
-            id="marker-map",
+            # id="marker-map",
             style={"width": "100%", "height": "400px"},
             config={"displaylogo": False},
         )
@@ -1096,13 +1129,13 @@ def toggle_prediction_form(n_clicks, is_visible):
     Input("bar-graph", "selectedData"),
     Input("bar-plot-most-expensive", "selectedData"),
     Input("density-plot", "selectedData"),
-    Input("marker-map", "selectedData"),
+    # Input("marker-map", "selectedData"),
 )
 def filter_data(
     selectedData_bar_up_left,
     selectedData_bar_bottom_right,
     selectedData_density,
-    selectedData_marker_map,
+    # selectedData_marker_map,
 ):
     ctx = callback_context
     if not ctx.triggered:
@@ -1135,18 +1168,18 @@ def filter_data(
 
             filtered_df = df_realestate[df_realestate["valor"].isin(selected_types)]
             return filtered_df.to_dict("records")
-    elif "marker-map.selectedData" in changed_inputs:
-        selected_types = {"latitude": [], "longitude": []}
-        for point in selectedData_marker_map["points"]:
-            lat, lon = point["customdata"][:2]
-            selected_types["latitude"].append(lat)
-            selected_types["longitude"].append(lon)
+    # elif "marker-map.selectedData" in changed_inputs:
+    #     selected_types = {"latitude": [], "longitude": []}
+    #     for point in selectedData_marker_map["points"]:
+    #         lat, lon = point["customdata"][:2]
+    #         selected_types["latitude"].append(lat)
+    #         selected_types["longitude"].append(lon)
 
-        filtered_df = df_realestate[
-            df_realestate["latitude"].isin(selected_types["latitude"])
-            & df_realestate["longitude"].isin(selected_types["longitude"])
-        ]
-        return filtered_df.to_dict("records")
+    #     filtered_df = df_realestate[
+    #         df_realestate["latitude"].isin(selected_types["latitude"])
+    #         & df_realestate["longitude"].isin(selected_types["longitude"])
+    #     ]
+    #     return filtered_df.to_dict("records")
 
     return df_realestate.to_dict("records")
 
