@@ -403,7 +403,7 @@ Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shel
 ::: {#fig-pages_scrape layout-ncol=2}
 ![](includes/page_content_new.png){#fig-page_contents}
 
-![](includes/page_content_devtools_bigger.png){#fig-page_contents_devtools}
+![](includes/dev_tools_white.png){#fig-page_contents_devtools}
 
 A @fig-page_contents exibe a página que está sendo raspada, enquanto a @fig-page_contents_devtools mostra a mesma página com um exemplo do uso das ferramentas de desenvolvedor do Firefox.
 :::
@@ -2860,7 +2860,7 @@ Valores previstos em função dos observados do algoritmo Light Gradient Boostin
 
 \vspace{12pt}
 
-Em relação ao algoritmo de Gradient Boosting, seu ajuste consegue explicar $87,32712%$ da variável dependente, um valor superior ao obtido com o ajuste do algoritmo de Random Forest, embora a diferença não seja muito grande. Para o MAPE, o valor encontrado foi de $0,01333$, indicando que os valores estimados dos imóveis estão, em média, $1,333%$ dos seus valores observados. A relação entre os valores estimados e os observados pode ser visualizada na @fig-preds_gdt.
+Em relação ao algoritmo de Gradient Boosting, seu ajuste consegue explicar $87,32712%$ da variável dependente, um valor superior ao obtido com o ajuste do algoritmo de Random Forest, embora a diferença não seja muito grande. Para o MAPE, o valor encontrado foi de $0,01333$, indicando que os valores estimados dos imóveis estão, em média, $1,333\%$ distantes dos seus valores observados. A relação entre os valores estimados e os observados pode ser visualizada na @fig-preds_gdt.
 
 \vspace{12pt}
 
@@ -3021,10 +3021,25 @@ A @fig-map_pred exibe o menu com os blocos para preenchimento das informações 
 
 Embora o usuário tenha a opção de selecionar as coordenadas e as informações de aluguel diretamente no mapa, também é possível inserir esses dados manualmente em seus respectivos blocos de informação. Além disso, como o KNN foi utilizado inicialmente como método de imputação para valores ausentes, o usuário não é obrigado a fornecer todos os dados, exceto o tipo de imóvel. Dessa forma, mesmo que algumas informações do imóvel estejam faltando, é possível realizar a previsão. Basta deixar um ou mais campos em branco, permitindo que o KNN estime as informações ausentes com base nas demais informações fornecidas.
 
-
-<!-- Embora o usuário tenha a opção de se selecionar as coordenadas diretamente e informações de aluguel diretamente pelo mapa, o usuário ainda terá a opção de passar diretamente os valores nos blocos dessas informações. Além disso, como inicialmente foi utilizado o KNN como método de imputação de valores ausentes, o usuário não é obrigado a passar nenhum dos outros valores além do tipo de imóvel. Dessa forma, caso não se tenha as informações completas do imóvel, é possível ainda assim realizar as previsões, basta deixar todos ou alguns dos blocos vazios. -->
-
 # Conclusão
+
+Neste trabalho, foi possível aplicar uma abordagem pouco usual para a solução de problemas relacionados à avaliação do preço de imóveis, principalmente pela dificuldades para se obter dados sobre imóveis, na cidade de João Pessoa. A partir da utilização de técnicas de web scraping, foi possível coletar uma base de dados abrangente diretamente de sites de anúncios imobiliários. Esse processo automatizado de extração de dados demonstrou-se fundamental, especialmente em contextos onde não há acesso a bases públicas organizadas, permitindo a construção de um conjunto rico de variáveis relevantes para a modelagem dos preços dos imóveis.
+
+\vspace{12pt}
+
+Com os dados devidamente tratados e organizados, foi aplicada uma abordagem de aprendizado de máquina, utilizando-se diferentes algoritmos, sendo o Gradient Boosting aquele que apresentou o melhor desempenho preditivo. O modelo final apresentou um RMSE de 0,28297, MAPE de $0,01333$ e $R^2$ de $87,32712\%$. Ou seja, obteve-se um modelo que consegue explicar $87,32712\%$ da variável dependente e os valores estimados estão, em média $1,333\%$ distantes de seus valores observados.
+
+\vspace{12pt}
+
+Além da modelagem, foi dada ênfase à interpretação do modelo por meio de técnicas como SHAP, ICE e PDP. A partir dos gráficos ICE combinados com a linha média do PDP, foi possível confirmar que imóveis localizados mais próximos às regiões litorâneas tendem a ter valores de predição mais elevados. O mesmo padrão de aumento nas predições foi observado para variáveis como área do imóvel, número de quartos, banheiros, vagas de garagem, número de cômodos e valor do aluguel. Ou seja, à medida que essas variáveis aumentam, maior o valor estimado pelo modelo. Por outro lado, a variável área de aluguel apresentou um comportamento com variações pouco expressivas nas predições, indicando um impacto mais limitado na resposta do modelo.
+
+\vspace{12pt}
+
+Pelo método SHAP, observou-se que a área do imóvel foi a variável com maior impacto na predição do modelo, sendo responsável por mais de 12% da importância absoluta na explicação das previsões. Outras variáveis de maior impacto nas predições foi a razão entre o número de quartos e a área total, as coordenadas geográficas e o produto entre essas coordenadas e o valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria 24 horas e quadra de esportes apresentaram menor impacto global nas predições. No entanto, gráficos de dependência dos valores SHAP revelaram que, embora com menor influência média, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, destacando sua importância em caso específicos do mercado imobiliário.
+
+\vspace{12pt}
+
+Por fim, com todos os dados coletados e o modelo final obtido, os resultados foram integrados em uma aplicação interativa desenvolvida com foco na análise do comportamento do mercado imobiliário de João Pessoa e na avaliação de imóveis. A aplicação permite a visualização de mapas, gráficos descritivos e a realização de previsões com base nas características informadas pelo usuário. Essa ferramenta apresenta uma abordagem ainda pouco comum na avaliação de imóveis, ao adotar métodos mais computacionais, automatizados e orientados por dados, contribuindo para enfrentar um dos principais desafios do setor imobiliário, que é a escassez de informações disponíveis.
 
 # \centering Referências {.unlisted .unnumbered}
 
