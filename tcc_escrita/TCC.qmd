@@ -1234,7 +1234,7 @@ A estratificação foi baseada em intervalos criados a partir da variável que r
 
 \vspace{12pt}
 
-Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Light Gradient Boosting.
+Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Random Forest.
 
 ### Etapas de pré-processamento
 
@@ -2853,9 +2853,7 @@ Em relação ao algoritmo de Gradient Boosting, seu ajuste consegue explicar $87
 
 \vspace{12pt}
 
-**(CORRIGIR ESSA PARTE - LGBM NÃO CONSEGUIU MELHORIAS)**
-
-O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos últimos dois algoritmos. Em relação ao seu $R^2$, o modelo consegue explicar $87,17\%$ dos dados. O seu RMSE ficou em $0,28493$ e o MAPE em $0,01346$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão em média $1,346\%$ distantes de seus valores reais. A melhora do ajuste do Light Gradient Boosting fica bastante perceptível observando a figura de seus valores estimados em função dos observados (@fig-preds_lgbm). As predições geradas pelos Gradient Boosting e Random Forest desviam bastante, principalmente em relação ao final da distribuição.
+O Light Gradient Boosting conseguiu melhorias em relação aos resultados obtidos da Random Forest, mas não em relação ao Gradient Boosting. Em relação ao seu $R^2$, o modelo consegue explicar $87,25794\%$ da variável dependente. O seu RMSE ficou em $0,28385$ e o MAPE em $0,01340$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão em média $1,340\%$ distantes de seus valores reais. O gráfico de seus valores estimados em função dos observados pode ser observado na @fig-preds_lgbm.
 
 ::: {#fig-preds_stacking}
 
@@ -2864,16 +2862,20 @@ O Light Gradient Boosting conseguiu melhorias em relação aos resultados dos ú
 Valores previstos em função dos observados do algoritmo Stacking.
 :::
 
-Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest e Gradient Boosting. Entretanto, obteve piores em relação às estatísticas de erro de RMSE e $R^2$. O RMSE obtido pelo XGBoost foi de $0,28659$ e o seu $R^2$ foi de $87,03891\%$, indicando que o modelo consegue explicar $87,03891\%$ dos dados. No entanto, obteve um MAPE pouco menor que o LGBM. As predições geradas pelo Extreme Gradient Boosting estão em média $1,357\%$ distantes de seus valores reais.
+Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest. Além disso, foi o modelo que obteve o melhor MAPE. O RMSE obtido pelo XGBoost foi de $0,28400$ e o seu $R^2$ foi de $87,24599\%$, indicando que o modelo consegue explicar $87,24599\%$ da variável dependente. As predições geradas pelo Extreme Gradient Boosting estão em média $1,325\%$ distantes de seus valores reais.
 
 \vspace{12pt}
 
-Utilizando os últimos modelos com seus hiperparâmetros otimizados e utilizando o Random Forest como estimador final, as predições foram feitas com o Stacking. As estimações geradas pelo Stacking, analisando as métricas de erro utilizadas, foram melhores até mesmo que o Light Gradient Boosting. O RMSE obtido para o Stacking foi de 0,28473 e o modelo consegue explicar $87,18793\%$. A única métrica que não foi melhor que do algoritmo LGBM foi o MAPE, que foi de $1,357\%$, mas a diferença é pouca.
+Utilizando os modelos finais com seus hiperparâmetros otimizados e adotando o Random Forest como estimador final, as predições foram realizadas por meio do Stacking. As estimativas geradas por esse método apresentaram um dos melhores desempenhos em termos das métricas de erro RMSE e $R^2$, ficando atrás apenas do Gradient Boosting, que foi o modelo com melhor desempenho nessas duas métricas. O RMSE obtido foi de $0,28382$, e o modelo foi capaz de explicar $87,26007\%$ da variância da variável dependente.
+
+\vspace{12pt}
+
+Embora o Extreme Gradient Boosting tenha alcançado o melhor MAPE em comparação aos demais algoritmos, a métrica utilizada para a escolha do modelo com melhor desempenho foi o RMSE, no qual o Gradient Boosting se destacou. Dessa forma, as análises a seguir serão baseadas nesse algoritmo, que também será utilizado para realizar as previsões na aplicação final.
 
 ## Impacto e importância das variáveis na predição
 
 
-\ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Stacking.
+\ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Gradient Boosting.
 
 ![Gráfico de ICE e PDP.](includes/pdp_ice2.svg){#fig-ice_pdp}
 
@@ -2884,7 +2886,15 @@ Para analisar a influência das variáveis na predição dos valores de imóveis
 
 \vspace{12pt}
 
-As previsões mostram um aumento claro com o tamanho da área, com o PDP apresentando uma tendência crescente consistente, alinhada à maioria das curvas ICE. Para a quantidade de banheiro, a relação é majoritariamente plana, com apenas pequenas variações. Um comportamento semelhante é observado para a quantidade de quartos, indicando uma influência limitada dessas variáveis no modelo. No caso do valor médio de aluguel, o PDP revela uma tendência ascendente bem definida, e as curvas ICE reforçam esse padrão, sugerindo que valores de aluguel mais altos estão fortemente associados a preços de imóveis mais elevados. Já a área média de aluguel apresenta um padrão mais uniforme, indicando uma contribuição menos significativa para explicar os preços dos imóveis. As curvas ICE para as coordenadas geográficas exibem um padrão mais complexo nas previsões. No entanto, é possível identificar um aumento nos valores previstos dos imóveis à medida que as coordenadas aumentam. Esse comportamento sugere que os imóveis localizados mais próximos da região litorânea de João Pessoa tendem a apresentar valores mais elevados. Por fim, a quantidade de vagas de garagem demonstra uma relação ascendente clara nas predições, evidenciando uma influência positiva dessa variável no valor dos imóveis.
+As previsões indicam um aumento claro nos valores estimados à medida que a área do imóvel cresce, com o PDP apresentando uma tendência crescente, em concordância com a maioria das curvas ICE. Para a quantidade de banheiros, observa-se uma relação majoritariamente estável, com apenas pequenas variações, comportamento semelhante ao verificado para o número de quartos, o que sugere uma influência limitada dessas variáveis no modelo. No entanto, embora essas relações sejam bastante estáveis, observa-se um aumento nas predições do modelo com o aumento da quantidade de banheiro e quartos
+
+\vspace{12pt}
+
+No caso do valor médio do aluguel, o PDP revela uma tendência crescente, reforçada pelas curvas ICE, indicando que aluguéis mais altos estão fortemente associados a imóveis de maior valor. Por outro lado, a área média de aluguel apresenta um padrão mais uniforme, sinalizando uma contribuição menos expressiva na explicação dos preços dos imóveis.
+
+\vspace{12pt}
+
+As curvas ICE para as coordenadas geográficas exibem um comportamento mais complexo, mas é possível identificar um aumento nos valores previstos à medida que as coordenadas aumentam. Esse padrão sugere que imóveis localizados mais próximos da região litorânea de João Pessoa tendem a ter preços mais elevados. Por fim, a quantidade de vagas de garagem apresenta uma relação claramente ascendente nas predições, evidenciando uma influência positiva dessa variável sobre o valor dos imóveis.
 
 
 ::: {#fig-teste layout-ncol=2}
@@ -2897,11 +2907,16 @@ Impacto e importância das variáveis na predição a partir do método SHAP.
 
 \vspace{12pt}
 
-A análise da importância das variáveis foi realizada utilizando o método SHAP. Diferentemente da importância de variáveis gerada por algoritmos baseados em árvores, que é calculada com base na redução da impureza ou no ganho de informação ao longo das divisões no modelo, o SHAP é baseado na magnitude dos valores de Shapley atribuídos a cada variável. Dessa forma, como pode ser observado na @fig-shap_importance, a variável com maior impacto na predição do modelo é a área, a qual altera, em média, mais de 25 pontos percentuais na predição absoluta dos imóveis. A quantidade de vagas de garagem, o valor médio do aluguel e a localização geográfica também se destacam entre as variáveis mais relevantes na predição do valor dos imóveis.
+A análise da importância das variáveis foi realizada por meio do método SHAP. Diferentemente das medidas tradicionais de importância geradas por algoritmos baseados em árvores, que se baseiam na redução da impureza ou no ganho de informação ao longo das divisões do modelo, o SHAP calcula a contribuição de cada variável com base na magnitude dos valores de Shapley atribuídos individualmente às predições.
 
 \vspace{12pt}
 
-Com a @fig-shap_summary, observa-se um resumo da análise dos valores Shapley. A variável área se destaca como a de maior impacto no modelo, especialmente para valores elevados, que aumentam significativamente as predições. As coordenadas geográficas indicam que valores mais altos tendem a elevar a predição do valor dos imóveis, refletindo a valorização de imóveis localizados mais próximos às regiões litorâneas de João Pessoa. Por outro lado, a variável de área média de aluguel apresenta um padrão menos linear, com valores baixos ainda gerando impacto positivo nas predições, evidenciando uma relação mais complexa com o valor dos imóveis.
+Como pode ser observado na @fig-shap_importance, a variável com maior impacto na predição do modelo é a área do imóvel, responsável por alterar, em média, mais de 12 pontos percentuais na predição absoluta. Outras variáveis que se destacam entre as mais relevantes para a estimativa do valor dos imóveis incluem a quantidade de vagas de garagem, a razão entre o número de quartos e a área, a localização geográfica e o produto entre as coordenadas geográficas e o valor do aluguel.
+
+\vspace{12pt}
+
+Com a @fig-shap_summary, observa-se um resumo da análise dos valores Shapley. A variável área se destaca como a de maior impacto no modelo, especialmente para valores elevados, que aumentam significativamente as predições. As coordenadas geográficas indicam que valores mais altos tendem a elevar a predição do valor dos imóveis, refletindo a valorização de imóveis localizados mais próximos às regiões litorâneas de João Pessoa, como observado na @fig-ice_pdp. Por outro lado, a variável de área média de aluguel do bairro apresenta um padrão menos linear, com valores altos indicando uma redução na predição do modelo. Além disso, ao utilizar a biblioteca [**SHAP**](https://shap.readthedocs.io/en/latest) para gerar os gráficos apresentados na @fig-shap_importance e na @fig-shap_summary, há um limite de variáveis incluídas nos gráficos e as variáveis são ordenadas de acordo com seu impacto na predição do modelo. Dessa forma, variáveis como sauna, spa, portaria 24 horas e quadra de esporte acabam sendo excluídas dessas visualizações por serem as que apresentaram o menor impacto na predição do modelo.
+
 
 ::: {#fig-dependence_plot layout-nrow=4, layout-ncol=3}
 
@@ -2934,7 +2949,11 @@ Gráfico de dependência de valores SHAP para variáveis binárias.
 
 \vspace{12pt}
 
-Para analisar as variáveis binárias, foram utilizados gráficos de dependência para cada uma delas, os quais podem ser visualizados na @fig-dependence_plot. Ao analisar os valores SHAP para os imóveis com e sem academia, observa-se que essa variável tende a aumentar a predição para imóveis que possuem academia. O mesmo padrão é identificado para imóveis com elevador, embora aqueles sem elevador também apresentem uma tendência de aumento na predição, o que pode ser explicado pela influência de outras características dos imóveis. Como já mencionado na análise da importância das variáveis, sauna e spa são características com baixa importância. No entanto, ao observar seus gráficos de dependência, é possível perceber que essas variáveis podem ser úteis na avaliação de imóveis que possuem essa característica e tem valores mais elevados. O mesmo comportamento é observado para varanda gourmet, playground e espaço gourmet.
+Para a análise das variáveis binárias, foram utilizados gráficos de dependência específicos para cada uma delas, os quais podem ser visualizados na @fig-dependence_plot. Ao observar os valores SHAP para imóveis com e sem academia, nota-se que a presença dessa característica tende a elevar a predição do valor do imóvel. Um padrão semelhante é identificado para imóveis com elevador. No entanto, mesmo imóveis sem elevador também apresentam uma tendência de aumento na predição, o que pode ser atribuído à interação com outras características relevantes do imóvel.
+
+\vspace{12pt}
+
+Conforme já discutido na análise da importância das variáveis, sauna e spa apresentam baixa relevância no impacto da predição do modelo. Ainda assim, seus gráficos de dependência revelam que essas variáveis podem contribuir para aumentar as predições em casos específicos, especialmente em imóveis de maior valor que apresentam essas características. O mesmo comportamento é observado para as variáveis varanda gourmet, playground e espaço gourmet, indicando que, embora menos relevantes no modelo de forma geral, essas características podem ser úteis na valorização de determinados imóveis.
 
 ## Aplicação final
 
