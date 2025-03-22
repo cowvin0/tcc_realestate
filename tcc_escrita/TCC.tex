@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, enhanced, frame hidden, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, boxrule=0pt, enhanced, breakable, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1144,7 +1144,7 @@ interesse utilizando o comando:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{includes/page_content_devtools_bigger.png}}
+\pandocbounded{\includegraphics[keepaspectratio]{includes/dev_tools_white.png}}
 
 }
 
@@ -4506,9 +4506,9 @@ explicar \(87,32712%
 \) da variável dependente, um valor superior ao obtido com o ajuste do
 algoritmo de Random Forest, embora a diferença não seja muito grande.
 Para o MAPE, o valor encontrado foi de \(0,01333\), indicando que os
-valores estimados dos imóveis estão, em média, \(1,333%
-\) dos seus valores observados. A relação entre os valores estimados e
-os observados pode ser visualizada na Figura~\ref{fig-preds_gdt}.
+valores estimados dos imóveis estão, em média, \(1,333\%\) distantes dos
+seus valores observados. A relação entre os valores estimados e os
+observados pode ser visualizada na Figura~\ref{fig-preds_gdt}.
 
 \vspace{12pt}
 
@@ -4936,6 +4936,69 @@ Basta deixar um ou mais campos em branco, permitindo que o KNN estime as
 informações ausentes com base nas demais informações fornecidas.
 
 \chapter{Conclusão}\label{conclusuxe3o}
+
+Neste trabalho, foi possível aplicar uma abordagem pouco usual para a
+solução de problemas relacionados à avaliação do preço de imóveis,
+principalmente pela dificuldades para se obter dados sobre imóveis, na
+cidade de João Pessoa. A partir da utilização de técnicas de web
+scraping, foi possível coletar uma base de dados abrangente diretamente
+de sites de anúncios imobiliários. Esse processo automatizado de
+extração de dados demonstrou-se fundamental, especialmente em contextos
+onde não há acesso a bases públicas organizadas, permitindo a construção
+de um conjunto rico de variáveis relevantes para a modelagem dos preços
+dos imóveis.
+
+\vspace{12pt}
+
+Com os dados devidamente tratados e organizados, foi aplicada uma
+abordagem de aprendizado de máquina, utilizando-se diferentes
+algoritmos, sendo o Gradient Boosting aquele que apresentou o melhor
+desempenho preditivo. O modelo final apresentou um RMSE de 0,28297, MAPE
+de \(0,01333\) e \(R^2\) de \(87,32712\%\). Ou seja, obteve-se um modelo
+que consegue explicar \(87,32712\%\) da variável dependente e os valores
+estimados estão, em média \(1,333\%\) distantes de seus valores
+observados.
+
+\vspace{12pt}
+
+Além da modelagem, foi dada ênfase à interpretação do modelo por meio de
+técnicas como SHAP, ICE e PDP. A partir dos gráficos ICE combinados com
+a linha média do PDP, foi possível confirmar que imóveis localizados
+mais próximos às regiões litorâneas tendem a ter valores de predição
+mais elevados. O mesmo padrão de aumento nas predições foi observado
+para variáveis como área do imóvel, número de quartos, banheiros, vagas
+de garagem, número de cômodos e valor do aluguel. Ou seja, à medida que
+essas variáveis aumentam, maior o valor estimado pelo modelo. Por outro
+lado, a variável área de aluguel apresentou um comportamento com
+variações pouco expressivas nas predições, indicando um impacto mais
+limitado na resposta do modelo.
+
+\vspace{12pt}
+
+Pelo método SHAP, observou-se que a área do imóvel foi a variável com
+maior impacto na predição do modelo, sendo responsável por mais de 12\%
+da importância absoluta na explicação das previsões. Outras variáveis de
+maior impacto nas predições foi a razão entre o número de quartos e a
+área total, as coordenadas geográficas e o produto entre essas
+coordenadas e o valor do aluguel. Por outro lado, variáveis como sauna,
+spa, portaria 24 horas e quadra de esportes apresentaram menor impacto
+global nas predições. No entanto, gráficos de dependência dos valores
+SHAP revelaram que, embora com menor influência média, variáveis como
+sauna e spa ainda são relevantes na predição de imóveis de alto padrão,
+destacando sua importância em caso específicos do mercado imobiliário.
+
+\vspace{12pt}
+
+Por fim, com todos os dados coletados e o modelo final obtido, os
+resultados foram integrados em uma aplicação interativa desenvolvida com
+foco na análise do comportamento do mercado imobiliário de João Pessoa e
+na avaliação de imóveis. A aplicação permite a visualização de mapas,
+gráficos descritivos e a realização de previsões com base nas
+características informadas pelo usuário. Essa ferramenta apresenta uma
+abordagem ainda pouco comum na avaliação de imóveis, ao adotar métodos
+mais computacionais, automatizados e orientados por dados, contribuindo
+para enfrentar um dos principais desafios do setor imobiliário, que é a
+escassez de informações disponíveis.
 
 \chapter*{\texorpdfstring{\centering Referências}{Referências}}\label{referuxeancias}
 
