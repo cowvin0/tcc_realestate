@@ -314,7 +314,7 @@ As middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest) são component
 
 \vspace{12pt}
 
-As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [**Scrapy**](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/>.
+As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [**Scrapy**](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/> e pode ser acessada após a criação de uma conta.
 
 \vspace{12pt}
 
@@ -1166,7 +1166,7 @@ Assim como o Gradient Boosting, as implementações existentes de Light Gradient
 
 ## Obtenção dos dados
 
-\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação **R** e **Python**. No **R**, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No **Python**, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta é disponibilizada gratuitamente e pode ser acessada através do domínio <https://scrapeops.io/> após a criação de uma conta no site.
+\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação **R** e **Python**. No **R**, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No **Python**, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps.
 
 \vspace{12pt}
 
@@ -1287,7 +1287,7 @@ Para as variáveis categóricas, utilizou-se a classe `OneHotEncoder`, da biblio
 
 \vspace{12pt}
 
-Após a aplicação da transformação logarítmica às variáveis numéricas, essas variáveis também foram padronizadas utilizando a classe `StandardScaler`, disponível no módulo `preprocessing` da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/). Essa classe ajusta os dados para que fiquem na mesma escala, padronizando-os de acordo com a fórmula:
+Após a aplicação da transformação logarítmica e de Yeo-Johnson às variáveis numéricas, essas variáveis também foram padronizadas utilizando a classe `StandardScaler`, disponível no módulo `preprocessing` da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/). As únicas variáveis que não foram padronizadas é o valor médio de área e aluguel no bairro, pelo mesmo motivo dado anteriormente. Essa classe ajusta os dados para que fiquem na mesma escala, padronizando-os de acordo com a fórmula:
 
 $$
 z = \frac{x - \mu}{\sigma}\text{,}
@@ -1296,7 +1296,7 @@ em que $\mu$ representa a média e $\sigma$ o desvio padrão. Essa padronizaçã
 
 ### Validação cruzada
 
-\ \ \ A técnica utilizada para otimizar e determinar os hiperparâmetros dos modelos, além de identificar os vizinhos mais próximos para a imputação de valores ausentes, foi a validação cruzada. A validação cruzada serve para estimar um erro de generalização médio da seguinte forma $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, em que $L$ é uma função perda e $\hat f$ é um estimador. Existem diversar técnicas de validação cruzada, a que foi utilizada nesse trabalho é a validação cruzada K-Fold.
+\ \ \ A técnica utilizada para otimizar e determinar os hiperparâmetros dos modelos, além de otimizar o hiperparâmetro de vizinhos mais próximos para a imputação de valores ausentes, foi a validação cruzada. A validação cruzada serve para estimar um erro de generalização médio da seguinte forma $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, em que $L$ é uma função perda e $\hat f$ é um estimador. Existem diversar técnicas de validação cruzada, a que foi utilizada nesse trabalho é a validação cruzada K-Fold.
 
 \vspace{12pt}
 

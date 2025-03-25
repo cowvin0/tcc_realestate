@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, sharp corners, colback={codebgcolor}, enhanced, breakable, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, colback={codebgcolor}, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -905,7 +905,8 @@ Uma API bastante interessante que possuí integração completa com o
 empregada neste trabalho foi o uso de uma API gratuita oferecida pelos
 desenvolvedores da ScrapeOps, que permite o rotacionamento automático de
 cabeçalhos, como o \texttt{User-Agent}. Essa API está disponível em
-\url{https://scrapeops.io/}.
+\url{https://scrapeops.io/} e pode ser acessada após a criação de uma
+conta.
 
 \vspace{12pt}
 
@@ -2591,9 +2592,7 @@ de rotacionamento de IPs e de modificação das informações do usuário que
 acessa o site, a fim de evitar bloqueios durante o processo de coleta de
 dados, garantindo assim a continuidade e eficácia da extração. A API
 utilizada para gerenciar a rotação de informações dos usuários que
-acessam o site foi desenvolvida pela empresa ScrapeOps. Essa ferramenta
-é disponibilizada gratuitamente e pode ser acessada através do domínio
-\url{https://scrapeops.io/} após a criação de uma conta no site.
+acessam o site foi desenvolvida pela empresa ScrapeOps.
 
 \vspace{12pt}
 
@@ -2853,13 +2852,15 @@ categoria em uma variável binária.
 
 \vspace{12pt}
 
-Após a aplicação da transformação logarítmica às variáveis numéricas,
-essas variáveis também foram padronizadas utilizando a classe
-\texttt{StandardScaler}, disponível no módulo \texttt{preprocessing} da
-biblioteca
-\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}. Essa
-classe ajusta os dados para que fiquem na mesma escala, padronizando-os
-de acordo com a fórmula:
+Após a aplicação da transformação logarítmica e de Yeo-Johnson às
+variáveis numéricas, essas variáveis também foram padronizadas
+utilizando a classe \texttt{StandardScaler}, disponível no módulo
+\texttt{preprocessing} da biblioteca
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}}. As
+únicas variáveis que não foram padronizadas é o valor médio de área e
+aluguel no bairro, pelo mesmo motivo dado anteriormente. Essa classe
+ajusta os dados para que fiquem na mesma escala, padronizando-os de
+acordo com a fórmula:
 
 \[
 z = \frac{x - \mu}{\sigma}\text{,}
@@ -2870,9 +2871,10 @@ aprendizado de máquina tratem as variáveis em escalas consistentes.
 \subsection{Validação cruzada}\label{validauxe7uxe3o-cruzada}
 
 ~~~A técnica utilizada para otimizar e determinar os hiperparâmetros dos
-modelos, além de identificar os vizinhos mais próximos para a imputação
-de valores ausentes, foi a validação cruzada. A validação cruzada serve
-para estimar um erro de generalização médio da seguinte forma
+modelos, além de otimizar o hiperparâmetro de vizinhos mais próximos
+para a imputação de valores ausentes, foi a validação cruzada. A
+validação cruzada serve para estimar um erro de generalização médio da
+seguinte forma
 \(Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]\), em que
 \(L\) é uma função perda e \(\hat f\) é um estimador. Existem diversar
 técnicas de validação cruzada, a que foi utilizada nesse trabalho é a
