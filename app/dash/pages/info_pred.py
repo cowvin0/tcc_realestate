@@ -216,6 +216,19 @@ layout = dbc.Container(
                                                 "value": "markers",
                                                 "label": "Mapa de pontos",
                                             },
+                                            {
+                                                "value": "faixas_exclusivas",
+                                                "label": "Faixas exclusivas",
+                                            },
+                                            {
+                                                "value": "corredores",
+                                                "label": "Corredores",
+                                            },
+                                            {
+                                                "value": "comunidades",
+                                                "label": "Comunidades",
+                                            },
+                                            {"value": "bairros", "label": "Bairros"},
                                             {"value": "rios", "label": "Rios"},
                                             {"value": "ciclo", "label": "Ciclovias"},
                                             {
@@ -884,17 +897,6 @@ def update_map(map_type, filtered_data, n_clicks):  # , map_children):
 
     if df_filtered.empty:
         return no_update
-        # return dl.Map(
-        #     # id="map-id",
-        #     style={"width": "100%", "height": "400px"},
-        #     center=[center_lat, center_lon],
-        #     zoom=12,
-        #     children=[
-        #         dl.TileLayer(),
-        #         # dl.FullScreenControl(),
-        #         dl.LayerGroup(id="points-layer"),
-        #     ],
-        # )
 
     city_folder = f"app/dash/assets/geo_joao_pessoa/{map_type}.geojson"
     m = folium.Map(
@@ -972,6 +974,36 @@ def update_map(map_type, filtered_data, n_clicks):  # , map_children):
             config={"displaylogo": False},
         )
 
+    elif map_type == "bairros":
+        geo_data = gpd.read_file(city_folder)
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Bairro:</b> {row['nome']}<br>
+            <b>Perímetro:</b> {row['perimetro']:.2f} m<br>
+            <b>Área:</b> {row['area']:.2f} m²<br>
+            <b>Hectares:</b> {row['hectares']:.2f} ha<br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["nome"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
+    elif map_type == "faixas_exclusivas":
+        geo_data = gpd.read_file(city_folder)
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Ano de implantação :</b> {row['ano_implantacao']} <br>
+            <b>Percurso :</b> {row['percurso']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["percurso"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
     elif map_type == "ciclo":
         geo_data = gpd.read_file(city_folder)
         for _, row in geo_data.astype({"ano_implantacao": int}).iterrows():
@@ -983,6 +1015,34 @@ def update_map(map_type, filtered_data, n_clicks):  # , map_children):
             folium.GeoJson(
                 row.geometry,
                 name=row["ano_implantacao"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
+    elif map_type == "comunidades":
+        geo_data = gpd.read_file(city_folder)
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Comunidade :</b> {row['comunidade']} <br>
+            <b>Área :</b> {row['area']:.2f} m²<br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["comunidade"],
+                popup=folium.Popup(popup_content, max_width=300),
+            ).add_to(m)
+        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
+    elif map_type == "corredores":
+        geo_data = gpd.read_file(city_folder)
+        for _, row in geo_data.iterrows():
+            popup_content = f"""
+            <b>Corredor :</b> {row['corredor']} <br>
+            <b>Descrição :</b> {row['descricao']} <br>
+            """
+            folium.GeoJson(
+                row.geometry,
+                name=row["descricao"],
                 popup=folium.Popup(popup_content, max_width=300),
             ).add_to(m)
         return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
