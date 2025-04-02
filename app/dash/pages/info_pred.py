@@ -702,6 +702,38 @@ layout = dbc.Container(
 )
 
 
+# @callback(
+#     Output("bar-graph", "figure"),
+#     Input("filtered-data", "data"),
+#     Input("bar-graph", "selectedData"),
+# )
+# def make_barplot_up_left(filtered_data, _):
+#     changed_inputs = [x["prop_id"] for x in callback_context.triggered]
+
+#     if "bar-graph.selectedData" in changed_inputs:
+#         return no_update
+#     else:
+#         df_filtered = pd.DataFrame(filtered_data)
+
+#     fig_bar = px.bar(
+#         df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
+#         x="valor",
+#         y="tipo",
+#         labels={"tipo": "", "valor": "Valor Médio (R$)"},
+#         text_auto=".2s",
+#         template="plotly_white",
+#     )
+
+#     fig_bar.update_layout(
+#         clickmode="event+select",
+#         dragmode="select",
+#         template="plotly_white",
+#         margin=dict(l=0, r=0, t=0, b=0),
+#     )
+
+#     return fig_bar
+
+
 @callback(
     Output("bar-graph", "figure"),
     Input("filtered-data", "data"),
@@ -712,8 +744,11 @@ def make_barplot_up_left(filtered_data, _):
 
     if "bar-graph.selectedData" in changed_inputs:
         return no_update
-    else:
-        df_filtered = pd.DataFrame(filtered_data)
+
+    df_filtered = pd.DataFrame(filtered_data)
+
+    if df_filtered.empty or "tipo" not in df_filtered.columns:
+        return no_update
 
     fig_bar = px.bar(
         df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
@@ -744,8 +779,11 @@ def make_barplot_bottom_right(filtered_data, _):
 
     if "bar-plot-most-expensive.selectedData" in changed_inputs:
         return no_update
-    else:
-        df_filtered = pd.DataFrame(filtered_data)
+
+    df_filtered = pd.DataFrame(filtered_data)
+
+    if df_filtered.empty or "bairro" not in df_filtered.columns:
+        return no_update
 
     fig_bar = px.bar(
         df_filtered.groupby("bairro")["valor"]
@@ -782,8 +820,11 @@ def make_density_plot(filtered_data, _):
 
     if "density-plot.selectedData" in changed_inputs:
         return no_update
-    else:
-        df_filtered = pd.DataFrame(filtered_data)
+
+    df_filtered = pd.DataFrame(filtered_data)
+
+    if df_filtered.empty or "tipo" not in df_filtered.columns:
+        return no_update
 
     types_imo = df_filtered.tipo.unique()
 
@@ -840,6 +881,20 @@ def download_csv(_):
 )
 def update_map(map_type, filtered_data, n_clicks):  # , map_children):
     df_filtered = pd.DataFrame(filtered_data)
+
+    if df_filtered.empty:
+        return no_update
+        # return dl.Map(
+        #     # id="map-id",
+        #     style={"width": "100%", "height": "400px"},
+        #     center=[center_lat, center_lon],
+        #     zoom=12,
+        #     children=[
+        #         dl.TileLayer(),
+        #         # dl.FullScreenControl(),
+        #         dl.LayerGroup(id="points-layer"),
+        #     ],
+        # )
 
     city_folder = f"app/dash/assets/geo_joao_pessoa/{map_type}.geojson"
     m = folium.Map(
@@ -1129,59 +1184,105 @@ def toggle_prediction_form(n_clicks, is_visible):
     Input("bar-graph", "selectedData"),
     Input("bar-plot-most-expensive", "selectedData"),
     Input("density-plot", "selectedData"),
-    # Input("marker-map", "selectedData"),
 )
 def filter_data(
     selectedData_bar_up_left,
     selectedData_bar_bottom_right,
     selectedData_density,
-    # selectedData_marker_map,
 ):
     ctx = callback_context
     if not ctx.triggered:
         return df_realestate.to_dict("records")
 
     changed_inputs = [x["prop_id"] for x in ctx.triggered]
+    filtered_df = df_realestate.copy()
 
     if "bar-graph.selectedData" in changed_inputs:
-
         if selectedData_bar_up_left and "points" in selectedData_bar_up_left:
             selected_types = {
                 point["y"] for point in selectedData_bar_up_left["points"]
             }
+            filtered_df = filtered_df[filtered_df["tipo"].isin(selected_types)]
 
-            filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
-            return filtered_df.to_dict("records")
     elif "bar-plot-most-expensive.selectedData" in changed_inputs:
-
         if selectedData_bar_bottom_right and "points" in selectedData_bar_bottom_right:
             selected_types = {
                 point["y"] for point in selectedData_bar_bottom_right["points"]
             }
+            filtered_df = filtered_df[filtered_df["bairro"].isin(selected_types)]
 
-            filtered_df = df_realestate[df_realestate["bairro"].isin(selected_types)]
-            return filtered_df.to_dict("records")
     elif "density-plot.selectedData" in changed_inputs:
-
         if selectedData_density and "points" in selectedData_density:
             selected_types = {point["x"] for point in selectedData_density["points"]}
+            filtered_df = filtered_df[filtered_df["valor"].isin(selected_types)]
 
-            filtered_df = df_realestate[df_realestate["valor"].isin(selected_types)]
-            return filtered_df.to_dict("records")
-    # elif "marker-map.selectedData" in changed_inputs:
-    #     selected_types = {"latitude": [], "longitude": []}
-    #     for point in selectedData_marker_map["points"]:
-    #         lat, lon = point["customdata"][:2]
-    #         selected_types["latitude"].append(lat)
-    #         selected_types["longitude"].append(lon)
+    # expected_columns = ["tipo", "bairro", "valor", "latitude", "longitude"]
+    # for col in expected_columns:
+    #     if col not in filtered_df:
+    #         filtered_df[col] = None
 
-    #     filtered_df = df_realestate[
-    #         df_realestate["latitude"].isin(selected_types["latitude"])
-    #         & df_realestate["longitude"].isin(selected_types["longitude"])
-    #     ]
-    #     return filtered_df.to_dict("records")
+    return filtered_df.to_dict("records")
 
-    return df_realestate.to_dict("records")
+
+# @callback(
+#     Output("filtered-data", "data"),
+#     Input("bar-graph", "selectedData"),
+#     Input("bar-plot-most-expensive", "selectedData"),
+#     Input("density-plot", "selectedData"),
+#     # Input("marker-map", "selectedData"),
+# )
+# def filter_data(
+#     selectedData_bar_up_left,
+#     selectedData_bar_bottom_right,
+#     selectedData_density,
+#     # selectedData_marker_map,
+# ):
+#     ctx = callback_context
+#     if not ctx.triggered:
+#         return df_realestate.to_dict("records")
+
+#     changed_inputs = [x["prop_id"] for x in ctx.triggered]
+
+#     if "bar-graph.selectedData" in changed_inputs:
+
+#         if selectedData_bar_up_left and "points" in selectedData_bar_up_left:
+#             selected_types = {
+#                 point["y"] for point in selectedData_bar_up_left["points"]
+#             }
+
+#             filtered_df = df_realestate[df_realestate["tipo"].isin(selected_types)]
+#             return filtered_df.to_dict("records")
+#     elif "bar-plot-most-expensive.selectedData" in changed_inputs:
+
+#         if selectedData_bar_bottom_right and "points" in selectedData_bar_bottom_right:
+#             selected_types = {
+#                 point["y"] for point in selectedData_bar_bottom_right["points"]
+#             }
+
+#             filtered_df = df_realestate[df_realestate["bairro"].isin(selected_types)]
+#             return filtered_df.to_dict("records")
+#     elif "density-plot.selectedData" in changed_inputs:
+
+#         if selectedData_density and "points" in selectedData_density:
+#             selected_types = {point["x"] for point in selectedData_density["points"]}
+
+#             filtered_df = df_realestate[df_realestate["valor"].isin(selected_types)]
+#             return filtered_df.to_dict("records")
+
+#     # elif "marker-map.selectedData" in changed_inputs:
+#     #     selected_types = {"latitude": [], "longitude": []}
+#     #     for point in selectedData_marker_map["points"]:
+#     #         lat, lon = point["customdata"][:2]
+#     #         selected_types["latitude"].append(lat)
+#     #         selected_types["longitude"].append(lon)
+
+#     #     filtered_df = df_realestate[
+#     #         df_realestate["latitude"].isin(selected_types["latitude"])
+#     #         & df_realestate["longitude"].isin(selected_types["longitude"])
+#     #     ]
+#     #     return filtered_df.to_dict("records")
+
+#     return df_realestate.to_dict("records")
 
 
 @callback(
