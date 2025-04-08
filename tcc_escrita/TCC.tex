@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, frame hidden, enhanced, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, colback={codebgcolor}, breakable, frame hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2130,14 +2130,14 @@ formando uma coleção de modelos \(\{f(x, \mathcal{L}^{(B)})\}\), onde
 amostras bootstrap para prever ou classificar uma variável dependente
 \(y\) com base em variáveis independentes \(\mathbf{x}\). Se a variável
 dependente \(y\) for numérica, a predição é obtida pela média das
-previsões dos modelos:
+estimações dos modelos:
 
 \[
 f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)\text{,}
 \] em que \(f_{B}\) representa a predição agregada. No caso em que \(y\)
 prediz uma classe, utiliza-se a votação majoritária. Ou seja, se
 estivermos classificando em classes \(j \in {1, \dots, J}\), então
-\(N_j = \#\{B; f(x, \mathcal{L}^{(b)}) = j\}\) representa o número de
+\(N_j = \#\{B; f(x, \mathcal{L}^{(B)}) = j\}\) representa o número de
 vezes que a classe \(j\) foi predita pelos estimadores. Assim:
 
 \[

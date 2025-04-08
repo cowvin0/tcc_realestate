@@ -893,12 +893,12 @@ Para a divisão dos nós no caso da regressão, foi utilizado o erro quadrático
 
 \vspace{12pt}
 
-@breiman1996bagging define formalmente o algoritmo de Bagging, que utiliza um conjunto de treinamento $\mathcal{L}$. A partir desse conjunto, são geradas amostras bootstrap $\mathcal{L}^{(B)}$ com $B$ réplicas, formando uma coleção de modelos $\{f(x, \mathcal{L}^{(B)})\}$, onde $f$ representa um modelo estatístico ou algoritmo treinado nas amostras bootstrap para prever ou classificar uma variável dependente $y$ com base em variáveis independentes $\mathbf{x}$. Se a variável dependente $y$ for numérica, a predição é obtida pela média das previsões dos modelos:
+@breiman1996bagging define formalmente o algoritmo de Bagging, que utiliza um conjunto de treinamento $\mathcal{L}$. A partir desse conjunto, são geradas amostras bootstrap $\mathcal{L}^{(B)}$ com $B$ réplicas, formando uma coleção de modelos $\{f(x, \mathcal{L}^{(B)})\}$, onde $f$ representa um modelo estatístico ou algoritmo treinado nas amostras bootstrap para prever ou classificar uma variável dependente $y$ com base em variáveis independentes $\mathbf{x}$. Se a variável dependente $y$ for numérica, a predição é obtida pela média das estimações dos modelos:
 
 $$
 f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)\text{,}
 $$
-em que $f_{B}$ representa a predição agregada. No caso em que $y$ prediz uma classe, utiliza-se a votação majoritária. Ou seja, se estivermos classificando em classes $j \in {1, \dots, J}$, então $N_j = \#\{B; f(x, \mathcal{L}^{(b)}) = j\}$ representa o número de vezes que a classe $j$ foi predita pelos estimadores. Assim:
+em que $f_{B}$ representa a predição agregada. No caso em que $y$ prediz uma classe, utiliza-se a votação majoritária. Ou seja, se estivermos classificando em classes $j \in {1, \dots, J}$, então $N_j = \#\{B; f(x, \mathcal{L}^{(B)}) = j\}$ representa o número de vezes que a classe $j$ foi predita pelos estimadores. Assim:
 
 $$
 f_{B}\left(x\right) = \arg \max_{j} N_j\text{.}
