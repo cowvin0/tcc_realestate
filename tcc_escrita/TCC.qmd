@@ -1055,7 +1055,7 @@ No algoritmo de Bagging, cada árvore é construída e ajustada utilizando amost
 
 \vspace{12pt}
 
-No caso da regressão, o Boosting combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. A primeira árvore é construída utilizando o conjunto de dados original, e seus resíduos são calculados. Com a primeira árvore ajustada, a segunda árvore é ajustada aos resíduos resíduos da árvore anterior e, em seguida, é adicionada ao estimador para atualizar os resíduos. Dessa forma, os resíduos servem como informação crucial para construir novas árvores e corrigir os erros das árvores anteriores. Como cada nova árvore depende das árvores já construídas, árvores menores são suficientes [@james2013introduction].
+No caso da regressão, o Boosting combina um grande número de árvores de decisão $\hat{f}^1, \dots, \hat{f}^B$. A primeira árvore é construída utilizando o conjunto de dados original, e seus resíduos são calculados. Com a primeira árvore ajustada, a segunda árvore é ajustada aos resíduos da árvore anterior e, em seguida, é adicionada ao estimador para atualizar os resíduos. Dessa forma, os resíduos servem como informação crucial para construir novas árvores e corrigir os erros das árvores anteriores. Como cada nova árvore depende das árvores já construídas, árvores menores são suficientes [@james2013introduction].
 
 \vspace{12pt}
 
@@ -1068,13 +1068,13 @@ O processo de aprendizado no método de Boosting é lenta, o que acaba gerando m
 
 \vspace{12pt}
 
-Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em $x$, utilizando o modelo $m$, aplicado ao conjunto de treinamento com a $i\text{-ésima}$ observação removida [@hastie2009elements]. Os pesos dos modelos são estimados por meio de uma regressão linear de mínimos quadrados, ajustando $y_i$ em relação a $\hat{f}^{-i}\left(x\right)$, para $m=1,\dots,M$. A estimativa dos pesos é obtida pela seguinte expressão:
+Matematicamente, o Stacking define predições $\hat{f}_m^{-i}\left(x\right)$ em $x$, utilizando o modelo $m$, aplicado ao conjunto de treinamento com a $i\text{-ésima}$ observação dos dados de treinamento removida [@hastie2009elements]. Os pesos dos modelos são estimados por meio de uma regressão linear de mínimos quadrados, ajustando $y_i$ em relação a $\hat{f}^{-i}\left(x\right)$, para $m=1,\dots,M$. A estimativa dos pesos é obtida pela seguinte expressão:
 
 $$
-\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m f^{-i}_m\left(x_i\right)\right]^2\text{.}
+\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m \hat{f}^{-i}_m\left(x_i\right)\right]^2\text{.}
 $$
 
-A previsão final é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Assim, em vez de escolher um único modelo, o método de Stacking combina os modelos utilizando pesos estimados, o que melhora a performance preditiva, mas pode comprometer a interpretabilidade.
+A estimação final é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Assim, em vez de escolher um único modelo, o método de Stacking combina os modelos utilizando pesos estimados, o que melhora a performance preditiva, mas pode comprometer a interpretabilidade. Além disso, com as validações cruzadas das predições $\hat{f}^{-i}_{m}\left(x\right)$, o Stacking evita dar um peso muito alto a modelos com alta complexidade.
 
 ### Gradient Boosting
 
