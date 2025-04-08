@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, boxrule=0pt, enhanced, sharp corners, breakable, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, frame hidden, enhanced, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2057,7 +2057,7 @@ de uma árvore de regressão:
     \vspace{3pt}
 
     \State \hspace{1em} Faça a média dos resultados para cada valor de \( \alpha \) e escolha \( \alpha \) que minimize o erro
-    \State \hspace{1em} médio.
+    \State \hspace{1em} quadrático médio.
 
 \vspace{3.7pt}
 
@@ -2075,7 +2075,7 @@ de uma árvore de regressão:
 
 No caso de uma árvore de decisão para classificação, a principal
 diferença está no critério de divisão dos nós e na poda da árvore. Para
-a classificação, a previsão em um nó \(j\), correspondente a uma região
+a classificação, a predição em um nó \(j\), correspondente a uma região
 \(R_j\) com \(N_j\) observações, será simplesmente a classe majoritária.
 Assim, tem-se:
 

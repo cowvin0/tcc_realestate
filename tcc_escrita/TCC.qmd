@@ -872,7 +872,7 @@ Fonte: @james2013introduction [p. 337].
 
 \vspace{12pt}
 
-No caso de uma árvore de decisão para classificação, a principal diferença está no critério de divisão dos nós e na poda da árvore. Para a classificação, a previsão em um nó $j$, correspondente a uma região $R_j$ com $N_j$ observações, será simplesmente a classe majoritária. Assim, tem-se:
+No caso de uma árvore de decisão para classificação, a principal diferença está no critério de divisão dos nós e na poda da árvore. Para a classificação, a predição em um nó $j$, correspondente a uma região $R_j$ com $N_j$ observações, será simplesmente a classe majoritária. Assim, tem-se:
 
 $$
 \hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)\text{,}
