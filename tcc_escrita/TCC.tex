@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, colback={codebgcolor}, breakable, frame hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, colback={codebgcolor}, breakable, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2190,11 +2190,14 @@ segundo termo da soma se torna menos significativo. Portanto, os
 benefícios da agregação proporcionados pelo algoritmo de Bagging são
 limitados pela correlação entre as árvores (HASTIE et al., 2009). Mesmo
 com o aumento do número de árvores no Bagging, a correlação entre elas
-impede que as previsões individuais sejam completamente independentes,
+impede que as estimações individuais sejam completamente independentes,
 resultando em menor diminuição da variância da média das previsões do
-que seria esperado se as árvores fossem totalmente independentes. Uma
-maneira de melhorar o algoritmo de Bagging é por meio do Random Forest,
-que será descrito a seguir.
+que seria esperado se as árvores fossem totalmente independentes. Ou
+seja, as árvores geradas pelo Bagging tendem a ser bastante semelhantes,
+uma vez que as variáveis independentes selecionadas para o
+particionamento são escolhidas com base na redução do quadrado dos
+resíduos em cada região. Uma maneira de melhorar o algoritmo de Bagging
+é por meio do Random Forest, que será descrito a seguir.
 
 \subsection{Random Forest}\label{random-forest}
 
@@ -2260,40 +2263,47 @@ seleção aleatória de variáveis independentes.
 
 \vspace{12pt}
 
-No algoritmo Random Forest, ao construir uma árvore a partir de amostras
-bootstrap, selecionam-se aleatoriamente \(m \leq p\) das \(p\) variáveis
-independentes como candidatas para a divisão, antes de cada ramificação
-(com \(m = p\) no caso do Bagging). Dessa forma, diferente do Bagging,
-aqui não se considera todas as \(p\) variáveis independentes para
-realizar a divisão e minimizar a impureza, mas apenas \(m\) dessas \(p\)
-variáveis. A escolha aleatória de apenas \(m\) covariáveis como
-candidatas para a divisão ajuda a solucionar um dos principais problemas
-do algoritmo de Bagging, que tende a gerar árvores de decisão
+No algoritmo Random Forest, ao construir cada árvore a partir de
+amostras bootstrap, selecionam-se aleatoriamente \(m \leq p\) das \(p\)
+variáveis independentes como candidatas para a divisão, antes de cada
+ramificação (sendo \(m = p\) no caso do Bagging). Assim, diferentemente
+do Bagging, o Random Forest não considera todas as \(p\) variáveis para
+escolher a divisão que minimiza a impureza, mas apenas uma amostra
+aleatória de \(m\) variáveis.
+
+\vspace{12pt}
+
+Essa seleção aleatória de variáveis independentes ajuda a resolver um
+dos principais problemas do Bagging, a tendência de gerar árvores muito
 semelhantes, resultando em previsões altamente correlacionadas. O Random
-Forest busca diminuir esse problema ao criar oportunidades para que
-diferentes preditores sejam considerados. Em média, uma fração
-\((p -m)/ p\) das divisões nem sequer incluirá o preditor mais forte
-como candidato, permitindo que outros preditores tenham a chance de
-serem selecionados (JAMES et al., 2013). Esse mecanismo reduz a
-correlação entre as árvores, o que, por sua vez, diminui a variabilidade
-das predições produzidas pelas árvores.
+Forest mitiga esse problema ao criar oportunidades para que diferentes
+preditores sejam considerados em cada divisão. Em média, uma fração
+\((p - m)/p\) das divisões sequer incluirá o preditor mais forte como
+candidato, o que aumenta a chance de seleção de outros preditores (JAMES
+et al., 2013). Esse mecanismo reduz a correlação entre as árvores,
+contribuindo para uma menor variabilidade nas previsões agregadas.
 
 \vspace{12pt}
 
 A quantidade de variáveis independentes \(m\) selecionadas
-aleatoriamente é um hiperparâmetro que pode ser estimado por meio de
-validação cruzada. Valores comuns para \(m\) são
-\(m=\sqrt{p}\)\hspace{0pt} com tamanho mínimo do nó igual a um para
-classificação, e \(m=p/3\)\hspace{0pt} com tamanho mínimo do nó igual a
-cinco para regressão (HASTIE et al., 2009). Quando o número de variáveis
-é grande, mas poucas são realmente relevantes, o algoritmo Random Forest
-pode ter um desempenho inferior com valores pequenos de \(m\), pois isso
-reduz as chances de selecionar as variáveis mais importantes. No
-entanto, usar um valor pequeno de \(m\) pode ser vantajoso quando há
-muitos preditores correlacionados. Além disso, assim como no Bagging, a
-Random Forest não sofre de sobreajuste com o aumento da quantidade de
-árvores \(B\). Portanto, é suficiente usar um \(B\) grande o bastante
-para que a taxa de erro se estabilize (JAMES et al., 2013).
+aleatoriamente é um hiperparâmetro que pode ser ajustado por meio de
+validação cruzada. Valores comumente utilizados são \(m = \sqrt{p}\) com
+quantidade mínimo de observações no nó igual a um, no caso de
+classificação, e \(m = p/3\) com tamanho mínimo de observações no nó
+igual a cinco, no caso de regressão (HASTIE et al., 2009).
+
+\vspace{12pt}
+
+Quando o número total de variáveis é grande, mas apenas algumas são
+realmente relevantes, o Random Forest pode apresentar desempenho
+inferior com valores muito pequenos de \(m\), pois isso reduz a
+probabilidade de que as variáveis mais importantes sejam selecionadas.
+Por outro lado, utilizar um valor pequeno de \(m\) pode ser vantajoso
+quando há muitos preditores altamente correlacionados. Além disso, assim
+como no Bagging, o Random Forest não sofre de sobreajuste com o aumento
+do número de árvores \(B\). Dessa forma, é suficiente utilizar um valor
+de \(B\) grande o bastante para que a taxa de erro se estabilize (JAMES
+et al., 2013).
 
 \subsection{Boosting Trees}\label{boosting-trees}
 
