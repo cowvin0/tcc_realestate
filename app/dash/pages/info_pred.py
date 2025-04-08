@@ -10,6 +10,8 @@ import dash_mantine_components as dmc
 import plotly.express as px
 import dash_ag_grid as dag
 import folium
+import json
+from plotly import graph_objects as go
 import plotly.figure_factory as ff
 
 # import requests
@@ -969,7 +971,7 @@ def update_map(map_type, filtered_data, n_clicks):  # , map_children):
 
         return dcc.Graph(
             figure=fig_map_marker,
-            # id="marker-map",
+            id="marker-map",
             style={"width": "100%", "height": "400px"},
             config={"displaylogo": False},
         )
@@ -1239,16 +1241,48 @@ def toggle_prediction_form(n_clicks, is_visible):
         return {"display": "none"}, False
 
 
+# @callback(
+#     Output("filtered-data", "data", allow_duplicate=True),
+#     Input("marker-map", "selectedData"),
+#     prevent_initial_call=True,
+# )
+# def filter_data_map(selectedData_marker_map):
+#     ctx = callback_context
+#     if not ctx.triggered:
+#         return df_realestate.to_dict("records")
+
+#     changed_inputs = [x["prop_id"] for x in ctx.triggered]
+#     filtered_df = df_realestate.copy()
+
+#     if "marker-map.selectedData" in changed_inputs:
+#         if selectedData_marker_map and "points" in selectedData_marker_map:
+#             selected_types = {"latitude": [], "longitude": []}
+#             for point in selectedData_marker_map["points"]:
+#                 lat, lon = point["customdata"][:2]
+#                 selected_types["latitude"].append(lat)
+#                 selected_types["longitude"].append(lon)
+
+#             filtered_df = df_realestate[
+#                 df_realestate["latitude"].isin(selected_types["latitude"])
+#                 & df_realestate["longitude"].isin(selected_types["longitude"])
+#             ]
+
+#     return filtered_df.to_dict("records")
+
+
 @callback(
     Output("filtered-data", "data"),
     Input("bar-graph", "selectedData"),
     Input("bar-plot-most-expensive", "selectedData"),
     Input("density-plot", "selectedData"),
+    Input("marker-map", "selectedData"),
+    prevent_initial_call=True,
 )
 def filter_data(
     selectedData_bar_up_left,
     selectedData_bar_bottom_right,
     selectedData_density,
+    selectedData_marker_map,
 ):
     ctx = callback_context
     if not ctx.triggered:
@@ -1276,10 +1310,18 @@ def filter_data(
             selected_types = {point["x"] for point in selectedData_density["points"]}
             filtered_df = filtered_df[filtered_df["valor"].isin(selected_types)]
 
-    # expected_columns = ["tipo", "bairro", "valor", "latitude", "longitude"]
-    # for col in expected_columns:
-    #     if col not in filtered_df:
-    #         filtered_df[col] = None
+    elif "marker-map.selectedData" in changed_inputs:
+        if selectedData_marker_map and "points" in selectedData_marker_map:
+            selected_types = {"latitude": [], "longitude": []}
+            for point in selectedData_marker_map["points"]:
+                lat, lon = point["customdata"][:2]
+                selected_types["latitude"].append(lat)
+                selected_types["longitude"].append(lon)
+
+            filtered_df = df_realestate[
+                df_realestate["latitude"].isin(selected_types["latitude"])
+                & df_realestate["longitude"].isin(selected_types["longitude"])
+            ]
 
     return filtered_df.to_dict("records")
 

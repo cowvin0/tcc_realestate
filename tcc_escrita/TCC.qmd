@@ -784,7 +784,7 @@ $$
 \sum_{x_i \in R_j} \left(y_i - \hat{c}_j\right) = 0\text{.}
 $$
 
-Expandindo o somatório e dividindo pelo número total de pontos $N_j$ na região $R_j$, concluí-se que o estimador de $c_j$, denotado por $\hat{c}_j$, é simplesmente a média dos valores observados $y_i$ dentro da região $R_j$:
+Expandindo o somatório e dividindo pelo número total de pontos $N_j$ na região $R_j$, concluí-se que o estimador de $c_j$, denotado por $\hat{c}_j$, é simplesmente a média dos valores observados $y_i$ na região $R_j$:
 
 $$
 \sum_{x_i \in R_j} y_i - \hat{c}_j N_j = 0 \Rightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i\text{.}
@@ -792,7 +792,7 @@ $${#eq-estimacjdev}
 
 \vspace{12pt}
 
-No entanto, @james2013introduction caracteriza como inviável considerar todas as possíveis partições do espaço das variáveis em $J$ caixas devido ao alto custo computacional. Dessa forma, a abordagem a ser adotada é uma divisão binária recursiva. O processo começa no topo da árvore de regressão, o ponto em que contém todas as observações, e continua sucessivamente dividindo o espaço dos preditores. As divisões são indicadas como dois novos ramos na árvore, como pode ser visto na [@fig-arvore].
+No entanto, @james2013introduction caracteriza como inviável considerar todas as possíveis partições do espaço das variáveis independentes em $J$ caixas devido ao alto custo computacional. Dessa forma, a abordagem a ser adotada é uma divisão binária recursiva. O processo começa no topo da árvore, o ponto em que contém todas as observações, e continua sucessivamente dividindo o espaço dos preditores. As divisões são indicadas como dois novos ramos na árvore, como pode ser visto na [@fig-arvore].
 
 \vspace{12pt}
 
@@ -810,7 +810,7 @@ em que $c_1$ e $c_2$ é a média da variável dependente para as observações n
 
 \vspace{12pt}
 
-O tamanho da árvore pode ser considerado um hiperparâmetro para regular a complexidade do modelo, pois uma árvore muito grande pode causar sobreajuste aos dados de treinamento, capturando não apenas os padrões relevantes, mas também o ruído. Como resultado, o modelo pode apresentar bom desempenho nos dados de treinamento, mas falhar ao lidar com novos dados devido à sua incapacidade de generalização. Por outro lado, uma árvore muito pequena pode não captar padrões, relações e estruturas importantes presentes nos dados. Dessa forma, a estratégia adotada para selecionar o tamanho da árvore consiste em crescer uma grande árvore $T_0$, interrompendo o processo de divisão apenas ao atingir um tamanho mínimo de nós. Posteriormente, a árvore $T_0$ é podada utilizando o critério de custo complexidade, que será definido a seguir.
+O tamanho da árvore pode ser considerado um hiperparâmetro para regular a complexidade do modelo, pois uma árvore muito grande pode causar sobreajuste aos dados de treinamento, capturando não apenas os padrões relevantes, mas também o ruído. Como resultado, o modelo pode apresentar bom desempenho nos dados de treinamento, mas falhar ao lidar com novos dados devido à sua incapacidade de generalização. Por outro lado, uma árvore muito pequena pode não captar padrões, relações e estruturas importantes presentes nos dados. Dessa forma, a estratégia adotada para selecionar o tamanho da árvore consiste em crescer uma grande árvore $T_0$, interrompendo o processo de divisão apenas ao atingir um tamanho mínimo de observações nos nós. Posteriormente, a árvore $T_0$ é podada utilizando o critério de custo de complexidade, que será definido a seguir.
 
 \vspace{12pt}
 
@@ -819,7 +819,7 @@ Para o processo de poda da árvore, definimos uma árvore qualquer $T$ que pode 
 $$
 Q_j\left(T\right) = \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)^2
 $$
-uma medida de impureza do nó pelo erro quadrático médio. Assim, define-se o critério de custo complexidade:
+uma medida de impureza do nó pelo erro quadrático médio. Assim, define-se o critério de custo de complexidade:
 
 $$
 C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|\text{,}
@@ -828,7 +828,9 @@ em que $|T|$ denota a quantidade total de folhas, e $\alpha \geq 0$ é um hiperp
 
 \vspace{12pt}
 
-A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco ou dez folds, sendo $\hat \alpha$ escolhido para minimizar a soma dos quadrados dos resíduos durante o processo de validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
+<!-- A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco ou dez folds, sendo $\hat \alpha$ escolhido para minimizar a soma dos quadrados dos resíduos durante o processo de validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão: -->
+
+A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco ou dez folds. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
 
 ::: {#algo-buildtree}
 
@@ -849,13 +851,13 @@ A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco o
 \State \textbf{3.} Use validação cruzada $K\text{-fold}$ para escolher \( \alpha \). Isto é, divida as observações de treinamento em $K$ folds. Para cada \( k = 1, \ldots, K \):
     \State \hspace{1em} (a) Repita os Passos 1 e 2 em todos os folds, exceto no $k\text{-ésimo}$ fold dos dados de
     \State \hspace{1em} treinamento.
-    \State \hspace{1em} (b) Avalie o erro quadrático médio da previsão no $k\text{-ésimo}$ fold deixado
+    \State \hspace{1em} (b) Avalie o erro quadrático médio da estimação no $k\text{-ésimo}$ fold deixado
     \State \hspace{1em} de fora, em função de \( \alpha \).
 
     \vspace{3pt}
 
     \State \hspace{1em} Faça a média dos resultados para cada valor de \( \alpha \) e escolha \( \alpha \) que minimize o erro
-    \State \hspace{1em} médio.
+    \State \hspace{1em} quadrático médio.
 
 \vspace{3.7pt}
 

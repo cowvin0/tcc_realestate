@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, colback={codebgcolor}, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, boxrule=0pt, enhanced, sharp corners, breakable, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -264,7 +264,7 @@
 \title{Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores
 Imobiliários no Mercado Imobiliário da Cidade de João Pessoa}
 \author{Gabriel de Jesus Pereira}
-\date{março, 2025}
+\date{abril, 2025}
 
 \begin{document}
 \cleardoublepage
@@ -290,7 +290,7 @@ Pessoa \par}
 
 {\large Gabriel de Jesus Pereira \par}
 \vfill
-{\normalsize março, 2025 \par}
+{\normalsize abril, 2025 \par}
 
 
 \noindent\rule{\textwidth}{0.5pt}
@@ -317,7 +317,7 @@ Pessoa \par}
 \vfill
 
 {\normalsize\bfseries João Pessoa \par}
-{\normalsize\bfseries março, 2025 \par}
+{\normalsize\bfseries abril, 2025 \par}
 
 }
 \numberwithin{algorithm}{chapter}
@@ -1944,8 +1944,8 @@ a seguinte igualdade:
 
 Expandindo o somatório e dividindo pelo número total de pontos \(N_j\)
 na região \(R_j\), concluí-se que o estimador de \(c_j\), denotado por
-\(\hat{c}_j\), é simplesmente a média dos valores observados \(y_i\)
-dentro da região \(R_j\):
+\(\hat{c}_j\), é simplesmente a média dos valores observados \(y_i\) na
+região \(R_j\):
 
 \begin{equation}\phantomsection\label{eq-estimacjdev}{
 \sum_{x_i \in R_j} y_i - \hat{c}_j N_j = 0 \Rightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i\text{.}
@@ -1954,10 +1954,10 @@ dentro da região \(R_j\):
 \vspace{12pt}
 
 No entanto, JAMES et al. (2013) caracteriza como inviável considerar
-todas as possíveis partições do espaço das variáveis em \(J\) caixas
-devido ao alto custo computacional. Dessa forma, a abordagem a ser
-adotada é uma divisão binária recursiva. O processo começa no topo da
-árvore de regressão, o ponto em que contém todas as observações, e
+todas as possíveis partições do espaço das variáveis independentes em
+\(J\) caixas devido ao alto custo computacional. Dessa forma, a
+abordagem a ser adotada é uma divisão binária recursiva. O processo
+começa no topo da árvore, o ponto em que contém todas as observações, e
 continua sucessivamente dividindo o espaço dos preditores. As divisões
 são indicadas como dois novos ramos na árvore, como pode ser visto na
 Figura~\ref{fig-arvore}.
@@ -1995,8 +1995,9 @@ dados devido à sua incapacidade de generalização. Por outro lado, uma
 importantes presentes nos dados. Dessa forma, a estratégia adotada para
 selecionar o tamanho da árvore consiste em crescer uma grande árvore
 \(T_0\), interrompendo o processo de divisão apenas ao atingir um
-tamanho mínimo de nós. Posteriormente, a árvore \(T_0\) é podada
-utilizando o critério de custo complexidade, que será definido a seguir.
+tamanho mínimo de observações nos nós. Posteriormente, a árvore \(T_0\)
+é podada utilizando o critério de custo de complexidade, que será
+definido a seguir.
 
 \vspace{12pt}
 
@@ -2008,7 +2009,7 @@ que pode ser obtida através do processo da poda de \(T_0\), de modo que
 \[
 Q_j\left(T\right) = \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)^2
 \] uma medida de impureza do nó pelo erro quadrático médio. Assim,
-define-se o critério de custo complexidade:
+define-se o critério de custo de complexidade:
 
 \[
 C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|\text{,}
@@ -2028,9 +2029,7 @@ para cada \(\alpha\), minimiza \(C_{\alpha}\left(T\right)\).
 \vspace{12pt}
 
 A estimação de \(\alpha\) pode ser realizada por validação cruzada com
-cinco ou dez folds, sendo \(\hat \alpha\) escolhido para minimizar a
-soma dos quadrados dos resíduos durante o processo de validação cruzada.
-Assim, a árvore final será \(T_{\hat \alpha}\). O
+cinco ou dez folds. Assim, a árvore final será \(T_{\hat \alpha}\). O
  Algoritmo~\ref{algo-buildtree}  exemplifica o processo de crescimento
 de uma árvore de regressão:
 
@@ -2052,7 +2051,7 @@ de uma árvore de regressão:
 \State \textbf{3.} Use validação cruzada $K\text{-fold}$ para escolher \( \alpha \). Isto é, divida as observações de treinamento em $K$ folds. Para cada \( k = 1, \ldots, K \):
     \State \hspace{1em} (a) Repita os Passos 1 e 2 em todos os folds, exceto no $k\text{-ésimo}$ fold dos dados de
     \State \hspace{1em} treinamento.
-    \State \hspace{1em} (b) Avalie o erro quadrático médio da previsão no $k\text{-ésimo}$ fold deixado
+    \State \hspace{1em} (b) Avalie o erro quadrático médio da estimação no $k\text{-ésimo}$ fold deixado
     \State \hspace{1em} de fora, em função de \( \alpha \).
 
     \vspace{3pt}
