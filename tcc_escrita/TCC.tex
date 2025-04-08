@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, boxrule=0pt, sharp corners, enhanced, breakable, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, sharp corners, colback={codebgcolor}, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2483,7 +2483,7 @@ $$
 
   \vspace{0.1em}
 
-  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)$
+  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J_m}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)$
 
 \vspace{1em}
 
@@ -2528,11 +2528,10 @@ cada região correspondente e é expresso:
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
 \] em que \(\gamma_{jm}\) representa a atualização da constante ótima
 para cada região, baseado na função perda \(L\), dada a aproximação
-\(f_{m-1}\left(x\right)\). O \(0 < \lambda \leq 1\), assim como no
-algoritmo de boosting, representa o hiperparâmetro shrinkage para
-controlar a taxa de aprendizado. Pequenos valores de \(\lambda\)
-necessitam maiores quantidades de iterações \(M\) para diminuir o risco
-de treinamento.
+\(f_{m-1}\left(x\right)\). O \(\lambda\), assim como no algoritmo de
+boosting, representa o hiperparâmetro shrinkage para controlar a taxa de
+aprendizado. Pequenos valores de \(\lambda\) necessitam maiores
+quantidades de iterações \(M\) para diminuir o risco de treinamento.
 
 \vspace{12pt}
 

@@ -1114,7 +1114,7 @@ $$
 
   \vspace{0.1em}
 
-  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)$
+  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J_m}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)$
 
 \vspace{1em}
 
@@ -1145,7 +1145,7 @@ que dão a direção de diminuição da função perda $L$ pela expressão do gr
 $$
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
 $$
-em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $0 < \lambda \leq 1$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
+em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $\lambda$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
 
 \vspace{12pt}
 
@@ -1168,7 +1168,6 @@ em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do q
 \vspace{12pt}
 
 Assim como o Gradient Boosting, as implementações existentes de Light Gradient Boosting também permite utilizar a regularização L1 ou L2, mas não utiliza nenhuma das duas por padrão. A principal diferença do Light Gradient Boosting está na forma de crescimento das árvores, primeiro é dividido a folha com a maior redução na função de erro. Além disso, tem um grande foco na velocidade e uma melhor eficiência no uso da memória atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que, em vez de avaliar cada ponto quando realiza a divisão, ele divide valores contínuos em intervalos, como em um histograma, o que reduz grandemente o custo computacional.
-
 
 # Metodologia
 
