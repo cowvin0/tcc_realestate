@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, colback={codebgcolor}, boxrule=0pt, enhanced, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, enhanced, sharp corners, colback={codebgcolor}, breakable, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3307,8 +3307,8 @@ seguinte forma:
 
 \vspace{12pt}
 
-Quando \(U = \emptyset\), tem-se a média da função
-\(\hat{f}_{\emptyset}\) em seu domínio. As funções unárias
+Quando \(U = \emptyset\), a constante \(\hat{f}_{\emptyset}\) é a média
+da função em seu domínio. As funções unárias
 \(\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)\) são chamadas
 de efeitos principais e capturam o efeito da variação do hiperparâmetro
 \(j\), fazendo a média sobre todas as configurações dos outros
