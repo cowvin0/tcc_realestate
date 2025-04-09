@@ -243,7 +243,7 @@ No Capítulo 4, é detalhado o processo de obtenção dos dados e a descrição 
 
 \vspace{12pt}
 
-O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste dos modelos, bem como os efeitos e a importância das variáveis na predição. Por fim, o Capítulo 6 discute os resultados obtidos ao longo do trabalho, destacando o desempenho dos modelos e as relações e impactos das variáveis na previsão dos valores dos imóveis. Além disso, são descritos o funcionamento e as funcionalidades da aplicação final desenvolvida.
+O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste dos modelos, bem como os efeitos e a importância das variáveis na predição. Por fim, o Capítulo 6 discute os resultados obtidos ao longo do trabalho, destacando o desempenho dos modelos e as relações e impactos das variáveis na predição dos valores dos imóveis. Além disso, são descritos o funcionamento e as funcionalidades da aplicação final desenvolvida.
 
 
 # Recursos Computacionais
@@ -962,7 +962,7 @@ $$
 
 \vspace{1em}
 
-\State \hspace{0.7em} Para a classificação é utilizado o voto majoritário. Assim, seja $\hat{C}_{b}\left(x\right)$ a previsão da classe da árvore de floresta aleatória $b$. Assim:
+\State \hspace{0.7em} Para a classificação é utilizado o voto majoritário. Assim, seja $\hat{C}_{b}\left(x\right)$ a predição da classe da árvore de floresta aleatória $b$. Assim:
 
 $$
 \hat{C}^{B}_{rf}\left(x\right) = \arg \max_c \sum^{B}_{b = 1}I\left(\hat{C}_b\left(x\right) = c\right)\text{,}
@@ -1243,7 +1243,7 @@ Com um maior entendimento dos dados, o próximo passo foi a construção do mode
 
 ## Construção do modelo
 
-\ \ \ No conjunto de dados extraído, foram avaliados diferentes modelos para a previsão do valor do imóvel. O valor do imóvel foi explicado por variáveis consideradas relevantes para o estudo, como: preço médio do aluguel no bairro, área, área média do aluguel no bairro, número de banheiros, vagas de estacionamento, número de quartos, latitude, longitude, tipo de imóvel, variáveis dicotômicas obtidas durante o processo de extração e variáveis criadas posteriormente ao processo de raspagem dos dados. As variáveis relacionadas ao valor do condomínio e IPTU foram excluídas do modelo devido à alta quantidade de valores ausentes.
+\ \ \ No conjunto de dados extraído, foram avaliados diferentes modelos para a estimação do valor do imóvel. O valor do imóvel foi explicado por variáveis consideradas relevantes para o estudo, como: preço médio do aluguel no bairro, área, área média do aluguel no bairro, número de banheiros, vagas de estacionamento, número de quartos, latitude, longitude, tipo de imóvel, variáveis dicotômicas obtidas durante o processo de extração e variáveis criadas posteriormente ao processo de raspagem dos dados. As variáveis relacionadas ao valor do condomínio e IPTU foram excluídas do modelo devido à alta quantidade de valores ausentes.
 
 \vspace{12pt}
 
@@ -1255,7 +1255,7 @@ A estratificação foi baseada em intervalos criados a partir da variável que r
 
 \vspace{12pt}
 
-Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na previsão do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Random Forest.
+Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na predição do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Random Forest.
 
 ### Etapas de pré-processamento
 
@@ -1841,7 +1841,7 @@ A primeira etapa da análise exploratória de dados foi identificar os dados fal
 
 \vspace{12pt}
 
-Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na previsão de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
+Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na predição de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
 
 
 ![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m2.svg){#fig-mapa_valor width=450 height=250}
@@ -3011,11 +3011,11 @@ Na seção de configurações do mapa, o usuário pode selecionar o tipo de mapa
 
 ![Controles para tipos de mapas.](includes/menu_map.png){#fig-menu_map width=450 height=250}
 
-Abaixo da lista que contem os tipos de mapas, está o botão para realizar as previsões com base nas características do imóvel passadas pelo usuário. Ao clicar nesse botão, aparecerão diversos blocos para preenchimento das informações do imóvel. Com as informações preenchidas, basta utilizar o botão abaixo de todos os blocos para realizar a previsão do imóvel.
+Abaixo da lista que contem os tipos de mapas, está o botão para realizar as previsões com base nas características do imóvel passadas pelo usuário. Ao clicar nesse botão, aparecerão diversos blocos para preenchimento das informações do imóvel. Com as informações preenchidas, basta utilizar o botão abaixo de todos os blocos para realizar a estimação do valor do imóvel.
 
 \vspace{12pt}
 
-O usuário deve, obrigatoriamente, informar o tipo de imóvel para realizar a previsão; caso contrário, a funcionalidade não será ativada. Após essa seleção, o usuário pode preencher as informações do imóvel. Algumas dessas informações precisam ser selecionadas diretamente no mapa, como as coordenadas geográficas, o valor médio do imóvel e a área média por bairro.
+O usuário deve, obrigatoriamente, informar o tipo de imóvel para realizar a predição; caso contrário, a funcionalidade não será ativada. Após essa seleção, o usuário pode preencher as informações do imóvel. Algumas dessas informações precisam ser selecionadas diretamente no mapa, como as coordenadas geográficas, o valor médio do imóvel e a área média por bairro.
 
 \vspace{12pt}
 
@@ -3029,7 +3029,7 @@ Quando o botão para acessar as informações do imóvel é pressionado, o mapa 
 A @fig-map_pred exibe o menu com os blocos para preenchimento das informações de imóveis, enquanto a @fig-map_get_coord demonstra as informações coletadas ao clicar no bairro de Altiplano.
 :::
 
-Embora o usuário tenha a opção de selecionar as coordenadas e as informações de aluguel diretamente no mapa, também é possível inserir esses dados manualmente em seus respectivos blocos de informação. Além disso, como o KNN foi utilizado inicialmente como método de imputação para valores ausentes, o usuário não é obrigado a fornecer todos os dados, exceto o tipo de imóvel. Dessa forma, mesmo que algumas informações do imóvel estejam faltando, é possível realizar a previsão. Basta deixar um ou mais campos em branco, permitindo que o KNN estime as informações ausentes com base nas demais informações fornecidas.
+Embora o usuário tenha a opção de selecionar as coordenadas e as informações de aluguel diretamente no mapa, também é possível inserir esses dados manualmente em seus respectivos blocos de informação. Além disso, como o KNN foi utilizado inicialmente como método de imputação para valores ausentes, o usuário não é obrigado a fornecer todos os dados, exceto o tipo de imóvel. Dessa forma, mesmo que algumas informações do imóvel estejam faltando, é possível realizar a predição. Basta deixar um ou mais campos em branco, permitindo que o KNN estime as informações ausentes com base nas demais informações fornecidas.
 
 # Conclusão
 
