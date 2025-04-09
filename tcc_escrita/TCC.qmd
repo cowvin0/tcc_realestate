@@ -1303,7 +1303,7 @@ em que $\mu$ representa a média e $\sigma$ o desvio padrão. Essa padronizaçã
 
 ### Validação cruzada
 
-\ \ \ A técnica utilizada para otimizar e determinar os hiperparâmetros dos modelos, além de otimizar o hiperparâmetro de vizinhos mais próximos para a imputação de valores ausentes, foi a validação cruzada. A validação cruzada serve para estimar um erro de generalização médio da seguinte forma $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, em que $L$ é uma função perda e $\hat f$ é um estimador. Existem diversar técnicas de validação cruzada, a que foi utilizada nesse trabalho é a validação cruzada K-Fold.
+\ \ \ A técnica utilizada para otimizar e determinar os hiperparâmetros dos modelos, além de servir para otimizar o hiperparâmetro de vizinhos mais próximos para a imputação de valores ausentes, foi a validação cruzada. A validação cruzada serve para estimar um erro de generalização médio da seguinte forma $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, em que $L$ é uma função perda e $\hat f$ é um estimador. Existem diversar técnicas de validação cruzada, a que foi utilizada nesse trabalho é a validação cruzada K-Fold.
 
 \vspace{12pt}
 
