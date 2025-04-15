@@ -46,7 +46,7 @@ lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
 toc: true
-title: Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores Imobiliários no Mercado Imobiliário da Cidade de João Pessoa
+title: Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores de Imóveis da Cidade de João Pessoa
 author: Gabriel de Jesus Pereira
 mermaid:
   theme: forest
