@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, colback={codebgcolor}, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, frame hidden, colback={codebgcolor}, boxrule=0pt, breakable, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -250,7 +250,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores Imobiliários no Mercado Imobiliário da Cidade de João Pessoa},
+  pdftitle={Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores de Imóveis da Cidade de João Pessoa},
   pdfauthor={Gabriel de Jesus Pereira},
   pdflang={pt-br},
   colorlinks=true,
@@ -262,9 +262,9 @@
 
 
 \title{Uso de Aprendizagem de Máquina na Modelagem Preditiva de Valores
-Imobiliários no Mercado Imobiliário da Cidade de João Pessoa}
+de Imóveis da Cidade de João Pessoa}
 \author{Gabriel de Jesus Pereira}
-\date{março, 2025}
+\date{abril, 2025}
 
 \begin{document}
 \cleardoublepage
@@ -283,14 +283,13 @@ Imobiliários no Mercado Imobiliário da Cidade de João Pessoa}
 \vfill
 
 {\large\bfseries Uso de Aprendizagem de Máquina na Modelagem Preditiva
-de Valores Imobiliários no Mercado Imobiliário da Cidade de João
-Pessoa \par}
+de Valores de Imóveis da Cidade de João Pessoa \par}
 
 \vfill
 
 {\large Gabriel de Jesus Pereira \par}
 \vfill
-{\normalsize março, 2025 \par}
+{\normalsize abril, 2025 \par}
 
 
 \noindent\rule{\textwidth}{0.5pt}
@@ -303,8 +302,7 @@ Pessoa \par}
 \vfill
 
 {\large\bfseries Uso de Aprendizagem de Máquina na Modelagem Preditiva
-de Valores Imobiliários no Mercado Imobiliário da Cidade de João
-Pessoa \par}
+de Valores de Imóveis da Cidade de João Pessoa \par}
 
 \vfill
 
@@ -317,7 +315,7 @@ Pessoa \par}
 \vfill
 
 {\normalsize\bfseries João Pessoa \par}
-{\normalsize\bfseries março, 2025 \par}
+{\normalsize\bfseries abril, 2025 \par}
 
 }
 \numberwithin{algorithm}{chapter}
@@ -683,7 +681,7 @@ O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste
 dos modelos, bem como os efeitos e a importância das variáveis na
 predição. Por fim, o Capítulo 6 discute os resultados obtidos ao longo
 do trabalho, destacando o desempenho dos modelos e as relações e
-impactos das variáveis na previsão dos valores dos imóveis. Além disso,
+impactos das variáveis na predição dos valores dos imóveis. Além disso,
 são descritos o funcionamento e as funcionalidades da aplicação final
 desenvolvida.
 
@@ -1944,8 +1942,8 @@ a seguinte igualdade:
 
 Expandindo o somatório e dividindo pelo número total de pontos \(N_j\)
 na região \(R_j\), concluí-se que o estimador de \(c_j\), denotado por
-\(\hat{c}_j\), é simplesmente a média dos valores observados \(y_i\)
-dentro da região \(R_j\):
+\(\hat{c}_j\), é simplesmente a média dos valores observados \(y_i\) na
+região \(R_j\):
 
 \begin{equation}\phantomsection\label{eq-estimacjdev}{
 \sum_{x_i \in R_j} y_i - \hat{c}_j N_j = 0 \Rightarrow \hat{c}_j = \frac{1}{N_{j}}\sum_{x_i \in R_j} y_i\text{.}
@@ -1954,10 +1952,10 @@ dentro da região \(R_j\):
 \vspace{12pt}
 
 No entanto, JAMES et al. (2013) caracteriza como inviável considerar
-todas as possíveis partições do espaço das variáveis em \(J\) caixas
-devido ao alto custo computacional. Dessa forma, a abordagem a ser
-adotada é uma divisão binária recursiva. O processo começa no topo da
-árvore de regressão, o ponto em que contém todas as observações, e
+todas as possíveis partições do espaço das variáveis independentes em
+\(J\) caixas devido ao alto custo computacional. Dessa forma, a
+abordagem a ser adotada é uma divisão binária recursiva. O processo
+começa no topo da árvore, o ponto em que contém todas as observações, e
 continua sucessivamente dividindo o espaço dos preditores. As divisões
 são indicadas como dois novos ramos na árvore, como pode ser visto na
 Figura~\ref{fig-arvore}.
@@ -1995,8 +1993,9 @@ dados devido à sua incapacidade de generalização. Por outro lado, uma
 importantes presentes nos dados. Dessa forma, a estratégia adotada para
 selecionar o tamanho da árvore consiste em crescer uma grande árvore
 \(T_0\), interrompendo o processo de divisão apenas ao atingir um
-tamanho mínimo de nós. Posteriormente, a árvore \(T_0\) é podada
-utilizando o critério de custo complexidade, que será definido a seguir.
+tamanho mínimo de observações nos nós. Posteriormente, a árvore \(T_0\)
+é podada utilizando o critério de custo de complexidade, que será
+definido a seguir.
 
 \vspace{12pt}
 
@@ -2008,7 +2007,7 @@ que pode ser obtida através do processo da poda de \(T_0\), de modo que
 \[
 Q_j\left(T\right) = \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)^2
 \] uma medida de impureza do nó pelo erro quadrático médio. Assim,
-define-se o critério de custo complexidade:
+define-se o critério de custo de complexidade:
 
 \[
 C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|\text{,}
@@ -2028,9 +2027,7 @@ para cada \(\alpha\), minimiza \(C_{\alpha}\left(T\right)\).
 \vspace{12pt}
 
 A estimação de \(\alpha\) pode ser realizada por validação cruzada com
-cinco ou dez folds, sendo \(\hat \alpha\) escolhido para minimizar a
-soma dos quadrados dos resíduos durante o processo de validação cruzada.
-Assim, a árvore final será \(T_{\hat \alpha}\). O
+cinco ou dez folds. Assim, a árvore final será \(T_{\hat \alpha}\). O
  Algoritmo~\ref{algo-buildtree}  exemplifica o processo de crescimento
 de uma árvore de regressão:
 
@@ -2052,13 +2049,13 @@ de uma árvore de regressão:
 \State \textbf{3.} Use validação cruzada $K\text{-fold}$ para escolher \( \alpha \). Isto é, divida as observações de treinamento em $K$ folds. Para cada \( k = 1, \ldots, K \):
     \State \hspace{1em} (a) Repita os Passos 1 e 2 em todos os folds, exceto no $k\text{-ésimo}$ fold dos dados de
     \State \hspace{1em} treinamento.
-    \State \hspace{1em} (b) Avalie o erro quadrático médio da previsão no $k\text{-ésimo}$ fold deixado
+    \State \hspace{1em} (b) Avalie o erro quadrático médio da estimação no $k\text{-ésimo}$ fold deixado
     \State \hspace{1em} de fora, em função de \( \alpha \).
 
     \vspace{3pt}
 
     \State \hspace{1em} Faça a média dos resultados para cada valor de \( \alpha \) e escolha \( \alpha \) que minimize o erro
-    \State \hspace{1em} médio.
+    \State \hspace{1em} quadrático médio.
 
 \vspace{3.7pt}
 
@@ -2076,7 +2073,7 @@ de uma árvore de regressão:
 
 No caso de uma árvore de decisão para classificação, a principal
 diferença está no critério de divisão dos nós e na poda da árvore. Para
-a classificação, a previsão em um nó \(j\), correspondente a uma região
+a classificação, a predição em um nó \(j\), correspondente a uma região
 \(R_j\) com \(N_j\) observações, será simplesmente a classe majoritária.
 Assim, tem-se:
 
@@ -2131,14 +2128,14 @@ formando uma coleção de modelos \(\{f(x, \mathcal{L}^{(B)})\}\), onde
 amostras bootstrap para prever ou classificar uma variável dependente
 \(y\) com base em variáveis independentes \(\mathbf{x}\). Se a variável
 dependente \(y\) for numérica, a predição é obtida pela média das
-previsões dos modelos:
+estimações dos modelos:
 
 \[
 f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)\text{,}
 \] em que \(f_{B}\) representa a predição agregada. No caso em que \(y\)
 prediz uma classe, utiliza-se a votação majoritária. Ou seja, se
 estivermos classificando em classes \(j \in {1, \dots, J}\), então
-\(N_j = \#\{B; f(x, \mathcal{L}^{(b)}) = j\}\) representa o número de
+\(N_j = \#\{B; f(x, \mathcal{L}^{(B)}) = j\}\) representa o número de
 vezes que a classe \(j\) foi predita pelos estimadores. Assim:
 
 \[
@@ -2191,11 +2188,14 @@ segundo termo da soma se torna menos significativo. Portanto, os
 benefícios da agregação proporcionados pelo algoritmo de Bagging são
 limitados pela correlação entre as árvores (HASTIE et al., 2009). Mesmo
 com o aumento do número de árvores no Bagging, a correlação entre elas
-impede que as previsões individuais sejam completamente independentes,
+impede que as estimações individuais sejam completamente independentes,
 resultando em menor diminuição da variância da média das previsões do
-que seria esperado se as árvores fossem totalmente independentes. Uma
-maneira de melhorar o algoritmo de Bagging é por meio do Random Forest,
-que será descrito a seguir.
+que seria esperado se as árvores fossem totalmente independentes. Ou
+seja, as árvores geradas pelo Bagging tendem a ser bastante semelhantes,
+uma vez que as variáveis independentes selecionadas para o
+particionamento são escolhidas com base na redução do quadrado dos
+resíduos em cada região. Uma maneira de melhorar o algoritmo de Bagging
+é por meio do Random Forest, que será descrito a seguir.
 
 \subsection{Random Forest}\label{random-forest}
 
@@ -2235,7 +2235,7 @@ $$
 
 \vspace{1em}
 
-\State \hspace{0.7em} Para a classificação é utilizado o voto majoritário. Assim, seja $\hat{C}_{b}\left(x\right)$ a previsão da classe da árvore de floresta aleatória $b$. Assim:
+\State \hspace{0.7em} Para a classificação é utilizado o voto majoritário. Assim, seja $\hat{C}_{b}\left(x\right)$ a predição da classe da árvore de floresta aleatória $b$. Assim:
 
 $$
 \hat{C}^{B}_{rf}\left(x\right) = \arg \max_c \sum^{B}_{b = 1}I\left(\hat{C}_b\left(x\right) = c\right)\text{,}
@@ -2261,40 +2261,47 @@ seleção aleatória de variáveis independentes.
 
 \vspace{12pt}
 
-No algoritmo Random Forest, ao construir uma árvore a partir de amostras
-bootstrap, selecionam-se aleatoriamente \(m \leq p\) das \(p\) variáveis
-independentes como candidatas para a divisão, antes de cada ramificação
-(com \(m = p\) no caso do Bagging). Dessa forma, diferente do Bagging,
-aqui não se considera todas as \(p\) variáveis independentes para
-realizar a divisão e minimizar a impureza, mas apenas \(m\) dessas \(p\)
-variáveis. A escolha aleatória de apenas \(m\) covariáveis como
-candidatas para a divisão ajuda a solucionar um dos principais problemas
-do algoritmo de Bagging, que tende a gerar árvores de decisão
+No algoritmo Random Forest, ao construir cada árvore a partir de
+amostras bootstrap, selecionam-se aleatoriamente \(m \leq p\) das \(p\)
+variáveis independentes como candidatas para a divisão, antes de cada
+ramificação (sendo \(m = p\) no caso do Bagging). Assim, diferentemente
+do Bagging, o Random Forest não considera todas as \(p\) variáveis para
+escolher a divisão que minimiza a impureza, mas apenas uma amostra
+aleatória de \(m\) variáveis.
+
+\vspace{12pt}
+
+Essa seleção aleatória de variáveis independentes ajuda a resolver um
+dos principais problemas do Bagging, a tendência de gerar árvores muito
 semelhantes, resultando em previsões altamente correlacionadas. O Random
-Forest busca diminuir esse problema ao criar oportunidades para que
-diferentes preditores sejam considerados. Em média, uma fração
-\((p -m)/ p\) das divisões nem sequer incluirá o preditor mais forte
-como candidato, permitindo que outros preditores tenham a chance de
-serem selecionados (JAMES et al., 2013). Esse mecanismo reduz a
-correlação entre as árvores, o que, por sua vez, diminui a variabilidade
-das predições produzidas pelas árvores.
+Forest mitiga esse problema ao criar oportunidades para que diferentes
+preditores sejam considerados em cada divisão. Em média, uma fração
+\((p - m)/p\) das divisões sequer incluirá o preditor mais forte como
+candidato, o que aumenta a chance de seleção de outros preditores (JAMES
+et al., 2013). Esse mecanismo reduz a correlação entre as árvores,
+contribuindo para uma menor variabilidade nas previsões agregadas.
 
 \vspace{12pt}
 
 A quantidade de variáveis independentes \(m\) selecionadas
-aleatoriamente é um hiperparâmetro que pode ser estimado por meio de
-validação cruzada. Valores comuns para \(m\) são
-\(m=\sqrt{p}\)\hspace{0pt} com tamanho mínimo do nó igual a um para
-classificação, e \(m=p/3\)\hspace{0pt} com tamanho mínimo do nó igual a
-cinco para regressão (HASTIE et al., 2009). Quando o número de variáveis
-é grande, mas poucas são realmente relevantes, o algoritmo Random Forest
-pode ter um desempenho inferior com valores pequenos de \(m\), pois isso
-reduz as chances de selecionar as variáveis mais importantes. No
-entanto, usar um valor pequeno de \(m\) pode ser vantajoso quando há
-muitos preditores correlacionados. Além disso, assim como no Bagging, a
-Random Forest não sofre de sobreajuste com o aumento da quantidade de
-árvores \(B\). Portanto, é suficiente usar um \(B\) grande o bastante
-para que a taxa de erro se estabilize (JAMES et al., 2013).
+aleatoriamente é um hiperparâmetro que pode ser ajustado por meio de
+validação cruzada. Valores comumente utilizados são \(m = \sqrt{p}\) com
+quantidade mínimo de observações no nó igual a um, no caso de
+classificação, e \(m = p/3\) com tamanho mínimo de observações no nó
+igual a cinco, no caso de regressão (HASTIE et al., 2009).
+
+\vspace{12pt}
+
+Quando o número total de variáveis é grande, mas apenas algumas são
+realmente relevantes, o Random Forest pode apresentar desempenho
+inferior com valores muito pequenos de \(m\), pois isso reduz a
+probabilidade de que as variáveis mais importantes sejam selecionadas.
+Por outro lado, utilizar um valor pequeno de \(m\) pode ser vantajoso
+quando há muitos preditores altamente correlacionados. Além disso, assim
+como no Bagging, o Random Forest não sofre de sobreajuste com o aumento
+do número de árvores \(B\). Dessa forma, é suficiente utilizar um valor
+de \(B\) grande o bastante para que a taxa de erro se estabilize (JAMES
+et al., 2013).
 
 \subsection{Boosting Trees}\label{boosting-trees}
 
@@ -2371,11 +2378,11 @@ No caso da regressão, o Boosting combina um grande número de árvores de
 decisão \(\hat{f}^1, \dots, \hat{f}^B\). A primeira árvore é construída
 utilizando o conjunto de dados original, e seus resíduos são calculados.
 Com a primeira árvore ajustada, a segunda árvore é ajustada aos resíduos
-resíduos da árvore anterior e, em seguida, é adicionada ao estimador
-para atualizar os resíduos. Dessa forma, os resíduos servem como
-informação crucial para construir novas árvores e corrigir os erros das
-árvores anteriores. Como cada nova árvore depende das árvores já
-construídas, árvores menores são suficientes (JAMES et al., 2013).
+da árvore anterior e, em seguida, é adicionada ao estimador para
+atualizar os resíduos. Dessa forma, os resíduos servem como informação
+crucial para construir novas árvores e corrigir os erros das árvores
+anteriores. Como cada nova árvore depende das árvores já construídas,
+árvores menores são suficientes (JAMES et al., 2013).
 
 \vspace{12pt}
 
@@ -2410,19 +2417,22 @@ a modelos com alta complexidade.
 Matematicamente, o Stacking define predições
 \(\hat{f}_m^{-i}\left(x\right)\) em \(x\), utilizando o modelo \(m\),
 aplicado ao conjunto de treinamento com a \(i\text{-ésima}\) observação
-removida (HASTIE et al., 2009). Os pesos dos modelos são estimados por
-meio de uma regressão linear de mínimos quadrados, ajustando \(y_i\) em
-relação a \(\hat{f}^{-i}\left(x\right)\), para \(m=1,\dots,M\). A
-estimativa dos pesos é obtida pela seguinte expressão:
+dos dados de treinamento removida (HASTIE et al., 2009). Os pesos dos
+modelos são estimados por meio de uma regressão linear de mínimos
+quadrados, ajustando \(y_i\) em relação a
+\(\hat{f}^{-i}\left(x\right)\), para \(m=1,\dots,M\). A estimativa dos
+pesos é obtida pela seguinte expressão:
 
 \[
-\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m f^{-i}_m\left(x_i\right)\right]^2\text{.}
+\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m \hat{f}^{-i}_m\left(x_i\right)\right]^2\text{.}
 \]
 
-A previsão final é \(\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)\).
+A estimação final é \(\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)\).
 Assim, em vez de escolher um único modelo, o método de Stacking combina
 os modelos utilizando pesos estimados, o que melhora a performance
-preditiva, mas pode comprometer a interpretabilidade.
+preditiva, mas pode comprometer a interpretabilidade. Além disso, com as
+validações cruzadas das predições \(\hat{f}^{-i}_{m}\left(x\right)\), o
+Stacking evita dar um peso muito alto a modelos com alta complexidade.
 
 \subsection{Gradient Boosting}\label{gradient-boosting}
 
@@ -2471,7 +2481,7 @@ $$
 
   \vspace{0.1em}
 
-  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)$
+  \State \hspace{2em} (d) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J_m}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)$
 
 \vspace{1em}
 
@@ -2516,11 +2526,10 @@ cada região correspondente e é expresso:
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
 \] em que \(\gamma_{jm}\) representa a atualização da constante ótima
 para cada região, baseado na função perda \(L\), dada a aproximação
-\(f_{m-1}\left(x\right)\). O \(0 < \lambda \leq 1\), assim como no
-algoritmo de boosting, representa o hiperparâmetro shrinkage para
-controlar a taxa de aprendizado. Pequenos valores de \(\lambda\)
-necessitam maiores quantidades de iterações \(M\) para diminuir o risco
-de treinamento.
+\(f_{m-1}\left(x\right)\). O \(\lambda\), assim como no algoritmo de
+boosting, representa o hiperparâmetro shrinkage para controlar a taxa de
+aprendizado. Pequenos valores de \(\lambda\) necessitam maiores
+quantidades de iterações \(M\) para diminuir o risco de treinamento.
 
 \vspace{12pt}
 
@@ -2728,7 +2737,7 @@ detalhará os métodos utilizados nesse processo.
 \section{Construção do modelo}\label{construuxe7uxe3o-do-modelo}
 
 ~~~No conjunto de dados extraído, foram avaliados diferentes modelos
-para a previsão do valor do imóvel. O valor do imóvel foi explicado por
+para a estimação do valor do imóvel. O valor do imóvel foi explicado por
 variáveis consideradas relevantes para o estudo, como: preço médio do
 aluguel no bairro, área, área média do aluguel no bairro, número de
 banheiros, vagas de estacionamento, número de quartos, latitude,
@@ -2770,7 +2779,7 @@ duas últimas foram empregadas especificamente na modelagem, enquanto a
 primeira também foi utilizada para criar pipelines de pré-processamento
 de dados, que organizam etapas sequenciais de preparação necessárias
 para o tratamento adequado dos dados. Assim, os quatro modelos aplicados
-na previsão do valor do imóvel foram: Random Forest, Gradient Boosting,
+na predição do valor do imóvel foram: Random Forest, Gradient Boosting,
 LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking,
 combinando os modelos previamente construídos para melhorar a
 performance preditiva. No Stacking, foi utilizado como preditor final o
@@ -2871,9 +2880,9 @@ aprendizado de máquina tratem as variáveis em escalas consistentes.
 \subsection{Validação cruzada}\label{validauxe7uxe3o-cruzada}
 
 ~~~A técnica utilizada para otimizar e determinar os hiperparâmetros dos
-modelos, além de otimizar o hiperparâmetro de vizinhos mais próximos
-para a imputação de valores ausentes, foi a validação cruzada. A
-validação cruzada serve para estimar um erro de generalização médio da
+modelos, além de servir para otimizar o hiperparâmetro de vizinhos mais
+próximos para a imputação de valores ausentes, foi a validação cruzada.
+A validação cruzada serve para estimar um erro de generalização médio da
 seguinte forma
 \(Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]\), em que
 \(L\) é uma função perda e \(\hat f\) é um estimador. Existem diversar
@@ -3158,7 +3167,7 @@ Finalmente, substituindo essa última expressão encontrada e
 \(p\left(\lambda\right)\) na Equação~\ref{eq-exp}, chega-se a:
 
 \[
-EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 + \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}\text{.}
+EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 - \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}\text{.}
 \]
 
 Essa última expressão mostra que, para maximizar o Expected Improvement,
@@ -3296,8 +3305,8 @@ seguinte forma:
 
 \vspace{12pt}
 
-Quando \(U = \emptyset\), tem-se a média da função
-\(\hat{f}_{\emptyset}\) em seu domínio. As funções unárias
+Quando \(U = \emptyset\), a constante \(\hat{f}_{\emptyset}\) é a média
+da função em seu domínio. As funções unárias
 \(\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)\) são chamadas
 de efeitos principais e capturam o efeito da variação do hiperparâmetro
 \(j\), fazendo a média sobre todas as configurações dos outros
@@ -3746,7 +3755,7 @@ são os apartamentos, que representam 81,36\% do total. Em seguida, vêm
 as casas, com 8,91\%, e os flats, com 5,72\%. Por fim, as casas
 comerciais são as menos representadas, com apenas 15 ocorrências. Esse
 desbalanceamento claro entre as classes pode dificultar o desempenho do
-modelo, especialmente na previsão de categorias menos frequentes, como
+modelo, especialmente na predição de categorias menos frequentes, como
 as casas comerciais, onde o modelo pode ter dificuldade em obter bons
 resultados.
 
@@ -4858,12 +4867,12 @@ as previsões com base nas características do imóvel passadas pelo
 usuário. Ao clicar nesse botão, aparecerão diversos blocos para
 preenchimento das informações do imóvel. Com as informações preenchidas,
 basta utilizar o botão abaixo de todos os blocos para realizar a
-previsão do imóvel.
+estimação do valor do imóvel.
 
 \vspace{12pt}
 
 O usuário deve, obrigatoriamente, informar o tipo de imóvel para
-realizar a previsão; caso contrário, a funcionalidade não será ativada.
+realizar a predição; caso contrário, a funcionalidade não será ativada.
 Após essa seleção, o usuário pode preencher as informações do imóvel.
 Algumas dessas informações precisam ser selecionadas diretamente no
 mapa, como as coordenadas geográficas, o valor médio do imóvel e a área
@@ -4917,7 +4926,7 @@ esses dados manualmente em seus respectivos blocos de informação. Além
 disso, como o KNN foi utilizado inicialmente como método de imputação
 para valores ausentes, o usuário não é obrigado a fornecer todos os
 dados, exceto o tipo de imóvel. Dessa forma, mesmo que algumas
-informações do imóvel estejam faltando, é possível realizar a previsão.
+informações do imóvel estejam faltando, é possível realizar a predição.
 Basta deixar um ou mais campos em branco, permitindo que o KNN estime as
 informações ausentes com base nas demais informações fornecidas.
 
