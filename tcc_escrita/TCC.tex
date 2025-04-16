@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, boxrule=0pt, breakable, frame hidden, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, boxrule=0pt, breakable, colback={codebgcolor}, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1635,9 +1635,9 @@ como \texttt{HTML}, \texttt{CSS} e \textbf{JavaScript} diretamente no
 ambiente \textbf{Python}. Entre suas principais características,
 destacam-se a facilidade de criar gráficos interativos, a integração com
 bibliotecas populares como \href{https://plotly.com/}{\textbf{Plotly}} e
-a capacidade de atualizar componentes de forma dinâmica por meio de
-funções suas funções \texttt{callback}. A seguir é apresentado um
-exemplo do uso da função \texttt{callback}:
+a capacidade de atualizar componentes de forma dinâmica por meio de suas
+funções \texttt{callback}. A seguir, é apresentado um exemplo do uso da
+função \texttt{callback}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1645,41 +1645,45 @@ exemplo do uso da função \texttt{callback}:
 \ImportTok{import}\NormalTok{ plotly.express }\ImportTok{as}\NormalTok{ px}
 \ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
 
-\NormalTok{df }\OperatorTok{=}\NormalTok{ pd.DataFrame(\{}
-    \StringTok{\textquotesingle{}Categoria\textquotesingle{}}\NormalTok{: [}\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}C\textquotesingle{}}\NormalTok{],}
-    \StringTok{\textquotesingle{}Valores\textquotesingle{}}\NormalTok{: [}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{]}
-\NormalTok{\})}
+\NormalTok{df }\OperatorTok{=}\NormalTok{ pd.DataFrame(}
+\NormalTok{    \{}
+        \StringTok{"Categoria"}\NormalTok{: [}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{],}
+        \StringTok{"Valores"}\NormalTok{: [}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{]}
+\NormalTok{    \}}
+\NormalTok{)}
 
 \NormalTok{app }\OperatorTok{=}\NormalTok{ Dash(}\VariableTok{\_\_name\_\_}\NormalTok{)}
 
-\NormalTok{app.layout }\OperatorTok{=}\NormalTok{ html.Div([}
-\NormalTok{    dcc.Dropdown(}
-        \BuiltInTok{id}\OperatorTok{=}\StringTok{\textquotesingle{}dropdown\textquotesingle{}}\NormalTok{,}
-\NormalTok{        options}\OperatorTok{=}\NormalTok{[}
-\NormalTok{          \{}\StringTok{\textquotesingle{}label\textquotesingle{}}\NormalTok{: cat, }\StringTok{\textquotesingle{}value\textquotesingle{}}\NormalTok{: cat\}}
-          \ControlFlowTok{for}\NormalTok{ cat }\KeywordTok{in}\NormalTok{ df[}\StringTok{\textquotesingle{}Categoria\textquotesingle{}}\NormalTok{]}
-\NormalTok{        ],}
-\NormalTok{        value}\OperatorTok{=}\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{,}
-\NormalTok{        clearable}\OperatorTok{=}\VariableTok{False}
-\NormalTok{    ),}
-\NormalTok{    dcc.Graph(}\BuiltInTok{id}\OperatorTok{=}\StringTok{\textquotesingle{}graph\textquotesingle{}}\NormalTok{)}
-\NormalTok{])}
-
-\AttributeTok{@app.callback}\NormalTok{(}
-\NormalTok{    Output(}\StringTok{\textquotesingle{}graph\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}figure\textquotesingle{}}\NormalTok{),}
-\NormalTok{    Input(}\StringTok{\textquotesingle{}dropdown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}value\textquotesingle{}}\NormalTok{)}
+\NormalTok{app.layout }\OperatorTok{=}\NormalTok{ html.Div(}
+\NormalTok{    [}
+\NormalTok{        dcc.Dropdown(}
+            \BuiltInTok{id}\OperatorTok{=}\StringTok{"dropdown"}\NormalTok{,}
+\NormalTok{            options}\OperatorTok{=}\NormalTok{[}
+\NormalTok{                \{}\StringTok{"label"}\NormalTok{: cat, }\StringTok{"value"}\NormalTok{: cat\}}
+                \ControlFlowTok{for}\NormalTok{ cat }\KeywordTok{in}\NormalTok{ df[}\StringTok{"Categoria"}\NormalTok{]}
+\NormalTok{            ],}
+\NormalTok{            value}\OperatorTok{=}\StringTok{"A"}\NormalTok{,}
+\NormalTok{            clearable}\OperatorTok{=}\VariableTok{False}\NormalTok{,}
+\NormalTok{        ),}
+\NormalTok{        dcc.Graph(}\BuiltInTok{id}\OperatorTok{=}\StringTok{"graph"}\NormalTok{),}
+\NormalTok{    ]}
 \NormalTok{)}
+
+
+\AttributeTok{@app.callback}\NormalTok{(Output(}\StringTok{"graph"}\NormalTok{, }\StringTok{"figure"}\NormalTok{), Input(}\StringTok{"dropdown"}\NormalTok{, }\StringTok{"value"}\NormalTok{))}
 \KeywordTok{def}\NormalTok{ update\_graph(selected\_category):}
-\NormalTok{    filtered\_df }\OperatorTok{=}\NormalTok{ df[df[}\StringTok{\textquotesingle{}Categoria\textquotesingle{}}\NormalTok{] }\OperatorTok{==}\NormalTok{ selected\_category]}
+\NormalTok{    filtered\_df }\OperatorTok{=}\NormalTok{ df[df[}\StringTok{"Categoria"}\NormalTok{] }\OperatorTok{==}\NormalTok{ selected\_category]}
 \NormalTok{    fig }\OperatorTok{=}\NormalTok{ px.bar(}
-\NormalTok{      filtered\_df,}
-\NormalTok{      x}\OperatorTok{=}\StringTok{\textquotesingle{}Categoria\textquotesingle{}}\NormalTok{,}
-\NormalTok{      y}\OperatorTok{=}\StringTok{\textquotesingle{}Valores\textquotesingle{}}\NormalTok{,}
-\NormalTok{      title}\OperatorTok{=}\SpecialStringTok{f\textquotesingle{}Valores da Categoria }\SpecialCharTok{\{}\NormalTok{selected\_category}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{        filtered\_df,}
+\NormalTok{        x}\OperatorTok{=}\StringTok{"Categoria"}\NormalTok{,}
+\NormalTok{        y}\OperatorTok{=}\StringTok{"Valores"}\NormalTok{,}
+\NormalTok{        title}\OperatorTok{=}\SpecialStringTok{f"Valores da Categoria }\SpecialCharTok{\{}\NormalTok{selected\_category}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{,}
+\NormalTok{    )}
 
     \ControlFlowTok{return}\NormalTok{ fig}
 
-\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{\textquotesingle{}\_\_main\_\_\textquotesingle{}}\NormalTok{:}
+
+\ControlFlowTok{if} \VariableTok{\_\_name\_\_} \OperatorTok{==} \StringTok{"\_\_main\_\_"}\NormalTok{:}
 \NormalTok{    app.run\_server(debug}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1730,10 +1734,11 @@ sua robustez e alto desempenho. Isso permitiu que os dados fossem
 expostos na API e consumidos no front-end. Além disso, a API foi
 responsável por expor a pipeline do modelo, possibilitando a realização
 de previsões de valores imobiliários diretamente na aplicação. Não
-obstante, os mapas da cidade de João Pessoa, criados com a biblioteca
+obstante, os mapas da cidade de João Pessoa contidos na aplicação, foram
+criados com a biblioteca
 \href{https://python-visualization.github.io/folium/latest/}{\textbf{Folium}}
-(PYTHON-VISUALIZATION, 2020), foram servidos pela API, que expôs seus
-arquivos HTML para consumo no front-end.
+(PYTHON-VISUALIZATION, 2020) e
+\href{https://www.dash-leaflet.com/}{\textbf{dash-leaflet}}.
 
 \vspace{12pt}
 
@@ -1823,7 +1828,9 @@ Por fim, também foi utilizada uma extensão mais geral de suporte à
 linguagem \textbf{Python}, que oferece diversas funcionalidades, como
 correção de código por meio da extensão
 \href{https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy}{\textbf{PythonDebugger}},
-que utiliza a biblioteca debugpy para suporte ao processo de debugging.
+que utiliza a biblioteca
+\href{https://pypi.org/project/debugpy/}{\textbf{debugpy}} para suporte
+ao processo de debugging.
 
 \vspace{12pt}
 
@@ -1863,8 +1870,7 @@ máquina utilizados neste trabalho. Alguns dos métodos utilizados podem
 fazer uso de diversos algoritmos ou modelos estatísticos. No entanto, o
 foco principal e o mais utilizado foram as árvores de decisão,
 especialmente em sua forma particular, as árvores de regressão. Assim,
-os algoritmos descritos são métodos baseados em árvores ou que fazem uso
-dela.
+os algoritmos descritos são métodos baseados em árvores.
 
 \vspace{12pt}
 

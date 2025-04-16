@@ -654,7 +654,7 @@ Conclui-se, assim, a apresentação das ferramentas empregadas na modelagem e vi
 
 \vspace{12pt}
 
-O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em **Python**. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e **JavaScript** diretamente no ambiente **Python**. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de funções suas funções `callback`. A seguir é apresentado um exemplo do uso da função `callback`:
+O front-end da aplicação foi desenvolvido utilizando a biblioteca [**Dash**](https://dash.plotly.com/) [@shammamah_hossain-proc-scipy-2019], uma ferramenta voltada para a criação de aplicativos web em **Python**. Desenvolvida pela [**Plotly**](https://plotly.com/) [@plotly], a [**Dash**](https://dash.plotly.com/) permite construir interfaces gráficas completas sem a necessidade de conhecimentos avançados em desenvolvimento web, integrando tecnologias como `HTML`, `CSS` e **JavaScript** diretamente no ambiente **Python**. Entre suas principais características, destacam-se a facilidade de criar gráficos interativos, a integração com bibliotecas populares como [**Plotly**](https://plotly.com/) e a capacidade de atualizar componentes de forma dinâmica por meio de suas funções `callback`. A seguir, é apresentado um exemplo do uso da função `callback`:
 
 ```{python}
 #| eval: false
@@ -664,41 +664,45 @@ from dash import Dash, dcc, html, Output, Input
 import plotly.express as px
 import pandas as pd
 
-df = pd.DataFrame({
-    'Categoria': ['A', 'B', 'C'],
-    'Valores': [10, 20, 30]
-})
+df = pd.DataFrame(
+    {
+        "Categoria": ["A", "B", "C"],
+        "Valores": [10, 20, 30]
+    }
+)
 
 app = Dash(__name__)
 
-app.layout = html.Div([
-    dcc.Dropdown(
-        id='dropdown',
-        options=[
-          {'label': cat, 'value': cat}
-          for cat in df['Categoria']
-        ],
-        value='A',
-        clearable=False
-    ),
-    dcc.Graph(id='graph')
-])
-
-@app.callback(
-    Output('graph', 'figure'),
-    Input('dropdown', 'value')
+app.layout = html.Div(
+    [
+        dcc.Dropdown(
+            id="dropdown",
+            options=[
+                {"label": cat, "value": cat}
+                for cat in df["Categoria"]
+            ],
+            value="A",
+            clearable=False,
+        ),
+        dcc.Graph(id="graph"),
+    ]
 )
+
+
+@app.callback(Output("graph", "figure"), Input("dropdown", "value"))
 def update_graph(selected_category):
-    filtered_df = df[df['Categoria'] == selected_category]
+    filtered_df = df[df["Categoria"] == selected_category]
     fig = px.bar(
-      filtered_df,
-      x='Categoria',
-      y='Valores',
-      title=f'Valores da Categoria {selected_category}')
+        filtered_df,
+        x="Categoria",
+        y="Valores",
+        title=f"Valores da Categoria {selected_category}",
+    )
 
     return fig
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run_server(debug=True)
 ```
 
@@ -710,7 +714,7 @@ Para o desenvolvimento do back-end da aplicação foi utilizado o framework [**F
 
 \vspace{12pt}
 
-No projeto, o [**SQLAlchemy**](https://www.sqlalchemy.org/) foi utilizado para gerenciar a conexão com o banco de dados, implementado com [**PostgresSQL**](https://www.postgresql.org/), um sistema de gerenciamento de banco de dados relacional amplamente reconhecido por sua robustez e alto desempenho. Isso permitiu que os dados fossem expostos na API e consumidos no front-end. Além disso, a API foi responsável por expor a pipeline do modelo, possibilitando a realização de previsões de valores imobiliários diretamente na aplicação. Não obstante, os mapas da cidade de João Pessoa, criados com a biblioteca [**Folium**](https://python-visualization.github.io/folium/latest/) [@folium], foram servidos pela API, que expôs seus arquivos HTML para consumo no front-end.
+No projeto, o [**SQLAlchemy**](https://www.sqlalchemy.org/) foi utilizado para gerenciar a conexão com o banco de dados, implementado com [**PostgresSQL**](https://www.postgresql.org/), um sistema de gerenciamento de banco de dados relacional amplamente reconhecido por sua robustez e alto desempenho. Isso permitiu que os dados fossem expostos na API e consumidos no front-end. Além disso, a API foi responsável por expor a pipeline do modelo, possibilitando a realização de previsões de valores imobiliários diretamente na aplicação. Não obstante, os mapas da cidade de João Pessoa contidos na aplicação, foram criados com a biblioteca [**Folium**](https://python-visualization.github.io/folium/latest/) [@folium] e [**dash-leaflet**](https://www.dash-leaflet.com/).
 
 \vspace{12pt}
 
@@ -734,7 +738,7 @@ O [**Visual Studio Code (VSCode)**](https://code.visualstudio.com/) foi a princi
 
 \vspace{12pt}
 
-Por exemplo, uma das extensões utilizadas para análise estática de código em **Python** foi o [**Pyright**](https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright), desenvolvido pela Microsoft. Essa ferramenta é projetada para detectar erros durante o desenvolvimento e verificar a tipagem de código em **Python**, contribuindo para a melhoria da qualidade e da manutenção do programa. Outra ferramenta empregada foi o [**Black Formatter**](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter), um formatador de código **Python**. Ele automatiza a padronização do estilo de código, garantindo consistência e legibilidade. Além disso, foi utilizado o [**Flake8**](https://marketplace.visualstudio.com/items?itemName=ms-python.flake8), que analisa o código em busca de erros de sintaxe, problemas de estilo com base no padrão [**PEP 8**](https://peps.python.org/pep-0008/), e outras questões, como redundâncias ou importações desnecessárias. Por fim, também foi utilizada uma extensão mais geral de suporte à linguagem **Python**, que oferece diversas funcionalidades, como correção de código por meio da extensão [**PythonDebugger**](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy), que utiliza a biblioteca debugpy para suporte ao processo de debugging.
+Por exemplo, uma das extensões utilizadas para análise estática de código em **Python** foi o [**Pyright**](https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright), desenvolvido pela Microsoft. Essa ferramenta é projetada para detectar erros durante o desenvolvimento e verificar a tipagem de código em **Python**, contribuindo para a melhoria da qualidade e da manutenção do programa. Outra ferramenta empregada foi o [**Black Formatter**](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter), um formatador de código **Python**. Ele automatiza a padronização do estilo de código, garantindo consistência e legibilidade. Além disso, foi utilizado o [**Flake8**](https://marketplace.visualstudio.com/items?itemName=ms-python.flake8), que analisa o código em busca de erros de sintaxe, problemas de estilo com base no padrão [**PEP 8**](https://peps.python.org/pep-0008/), e outras questões, como redundâncias ou importações desnecessárias. Por fim, também foi utilizada uma extensão mais geral de suporte à linguagem **Python**, que oferece diversas funcionalidades, como correção de código por meio da extensão [**PythonDebugger**](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy), que utiliza a biblioteca [**debugpy**](https://pypi.org/project/debugpy/) para suporte ao processo de debugging.
 
 
 \vspace{12pt}
@@ -747,7 +751,7 @@ No contexto deste trabalho, o [**Quarto**](https://quarto.org/) foi utilizado pa
 
 # Algoritmos de Aprendizado de Máquina
 
-\ \ \ Neste capítulo, serão descritos os algoritmos de aprendizado de máquina utilizados neste trabalho. Alguns dos métodos utilizados podem fazer uso de diversos algoritmos ou modelos estatísticos. No entanto, o foco principal e o mais utilizado foram as árvores de decisão, especialmente em sua forma particular, as árvores de regressão. Assim, os algoritmos descritos são métodos baseados em árvores ou que fazem uso dela.
+\ \ \ Neste capítulo, serão descritos os algoritmos de aprendizado de máquina utilizados neste trabalho. Alguns dos métodos utilizados podem fazer uso de diversos algoritmos ou modelos estatísticos. No entanto, o foco principal e o mais utilizado foram as árvores de decisão, especialmente em sua forma particular, as árvores de regressão. Assim, os algoritmos descritos são métodos baseados em árvores.
 
 \vspace{12pt}
 
