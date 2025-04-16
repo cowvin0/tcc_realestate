@@ -243,7 +243,7 @@ No Capítulo 4, é detalhado o processo de obtenção dos dados e a descrição 
 
 \vspace{12pt}
 
-O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste dos modelos, bem como os efeitos e a importância das variáveis na predição. Por fim, o Capítulo 6 discute os resultados obtidos ao longo do trabalho, destacando o desempenho dos modelos e as relações e impactos das variáveis na predição dos valores dos imóveis. Além disso, são descritos o funcionamento e as funcionalidades da aplicação final desenvolvida.
+O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste dos modelos, a aplicação final, bem como os efeitos e a importância das variáveis na predição. Por fim, o Capítulo 6 discute os resultados obtidos ao longo do trabalho, destacando o desempenho dos modelos, as funcionalidades da aplicação e as relações e impactos das variáveis na predição dos valores dos imóveis.
 
 
 # Recursos Computacionais
@@ -260,7 +260,7 @@ O Web scraping é uma técnica utilizada para extrair informações de sites na 
 
 - GET: O método GET serve para requisitar uma representação do recurso especificado. Ou seja, ele serve para visualizar dados de um site.
 
-- HEAD: O HEAD é bastante semelhante o GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
+- HEAD: O HEAD é bastante semelhante ao GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
 
 - POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.].
 
@@ -268,13 +268,13 @@ O Web scraping é uma técnica utilizada para extrair informações de sites na 
 
 - DELETE: Exclui o recurso.
 
-- TRACE: O método TRACE HTTP é usado para diagnóstico, depuração e solução de problemas. Ele simplesmente retorna um rastreamento de diagnóstico que registra dados do ciclo de forma que o cliente possa saber o que os servidores intermediários estão mudando em sua requisição.
+- TRACE: O método TRACE é usado para diagnóstico, depuração e solução de problemas. Ele simplesmente retorna um rastreamento de diagnóstico que registra dados do ciclo de forma que o cliente possa saber o que os servidores intermediários estão mudando em sua requisição.
 
 - OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são suportados e permitidos pelo servidor.
 
-- CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método HTTP CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
+- CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
 
-Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo site e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua com a reformatação e organização dos dados de forma estruturada.
+Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua com a reformatação e organização dos dados de forma estruturada.
 
 \vspace{12pt}
 
