@@ -292,7 +292,7 @@ Embora o pacote [**rvest**](https://rvest.tidyverse.org/) compartilhe algumas fu
 
 \vspace{12pt}
 
-Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html), foi o [**httr**](https://httr.r-lib.org/) [@httr].
+Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar a raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como [**Google Chrome**](https://www.google.com/chrome/dr/download/?brand=FHFK&ds_kid=43700077650614081&gclsrc=aw.ds&gad_source=1&gclid=Cj0KCQjwqv2_BhC0ARIsAFb5Ac8iSe-rhSTchZ2msE2z-JoowXEWygO93PuoGW7iiQS2AUY3cRexf14aAueTEALw_wcB), [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html), foi o [**httr**](https://httr.r-lib.org/) [@httr].
 
 \vspace{12pt}
 
@@ -316,7 +316,7 @@ As middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest) são component
 
 \vspace{12pt}
 
-As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [**Scrapy**](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/> e pode ser acessada após a criação de uma conta.
+As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante, que possui integração completa com o [**Scrapy**](https://docs.scrapy.org/en/latest) e foi empregada neste trabalho, é a API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/> e pode ser acessada após a criação de uma conta.
 
 \vspace{12pt}
 
@@ -395,7 +395,7 @@ class PackagescraperSpider(scrapy.Spider):
         pass
 ```
 
-A classe `PackagescraperSpider` foi criada a partir do comando executado anteriormente e possui três atributos e um método. O atributo `name` define nome do spider e será utilizado posteriormente para inicializar a raspagem dos dados. O `allowed_domains` é o atributo que indica para o [**Scrapy**](https://docs.scrapy.org/en/latest) os domínios que podem ser acessados, nesse caso, `cran.r-project.org`. O atributo `start_urls` define a url inicial a ser acessada pelo spider. Por fim, o método `parse` é executado assim que uma resposta é obtida após a requisição ao site alvo, sendo responsável pelo processamento e extração dos dados desejados.
+A classe `PackagescraperSpider` foi criada a partir do comando executado anteriormente e possui três atributos e um método. O atributo `name` define o nome do spider que será utilizado posteriormente para inicializar a raspagem dos dados. O `allowed_domains` é o atributo que indica para o [**Scrapy**](https://docs.scrapy.org/en/latest) os domínios que podem ser acessados, nesse caso, `cran.r-project.org`. O atributo `start_urls` define a url inicial a ser acessada pelo spider. Por fim, o método `parse` é executado assim que uma resposta é obtida após a requisição ao site alvo, sendo responsável pelo processamento e extração dos dados desejados.
 
 \vspace{12pt}
 
@@ -412,6 +412,8 @@ Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shel
 
 A @fig-page_contents exibe a página que está sendo raspada, enquanto a @fig-page_contents_devtools mostra a mesma página com um exemplo do uso das ferramentas de desenvolvedor do Firefox.
 :::
+
+\vspace{12pt}
 
 Com a execução do comando anterior, o conteúdo da página mostrada na @fig-page_contents será carregado, permitindo a extração das informações contidas em seu HTML. Se o comando `fetch` obter êxito, a saída incluirá o código de status HTTP `200`, indicando que a requisição foi bem sucedida. Abaixo, segue um exemplo desse resultado:
 
@@ -576,7 +578,7 @@ Assim como no exemplo apresentado em **Python**, o projeto de raspagem pode ser 
 
 \vspace{12pt}
 
-Portanto, chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados, com exemplos de raspagem em **R** e **Python**. No entanto, a linguagem **Python**, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Dessa forma, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
+Portanto, chega ao fim a descrição das tecnologias utilizadas para a obtenção dos dados, com exemplos de raspagem em **R** e **Python**. No entanto, a linguagem **Python**, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Dessa forma, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
