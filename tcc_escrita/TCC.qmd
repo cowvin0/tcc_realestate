@@ -181,7 +181,7 @@ O Plano Cruzado, implementado em 1986, converteu o valor das prestações pela m
 
 \vspace{12pt}
 
-No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de metate foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia].i Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
+No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de metate foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia]. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
 
 \vspace{12pt}
 
@@ -201,7 +201,7 @@ Os principais fundamentos do SFI são a securitização dos créditos imobiliár
 
 \vspace{12pt}
 
-O mercado imobiliário tem demonstrado grande potencial em diversas capitais brasileiras, com destaque para João Pessoa, capital da Paraíba, que se tornou um dos destinos mais procurados para se viver devido à sua elevada qualidade de vida. João Pessoa foi fundada no atual bairro do Varadouro, às margens do Rio Sanhauá, por Martim Leitão e colonos vindos de Pernambuco, no dia 4 de novembro de 1585. Ao longo de sua história, a cidade recebeu três nomes antes de adotar sua nomenclatura atual, Nossa Senhora das Neves (1585), Frederickstadt (1634-1654) e Parahyba, nome que permaneceu até 1930. Em julho desse ano, a cidade foi renomeada como João Pessoa, em homenagem ao governador do estado da época. Durante o período colonial, a cidade era dividida em Cidade Alta e Cidade Baixa, interligadas por ladeiras [@campos2014precificaccao].
+O mercado imobiliário tem demonstrado grande potencial em diversas capitais brasileiras, com destaque para João Pessoa, capital da Paraíba, que se tornou um dos destinos mais procurados para se viver devido à sua qualidade de vida. João Pessoa foi fundada no atual bairro do Varadouro, às margens do Rio Sanhauá, por Martim Leitão e colonos vindos de Pernambuco, no dia 4 de novembro de 1585. Ao longo de sua história, a cidade recebeu três nomes antes de adotar sua nomenclatura atual, Nossa Senhora das Neves (1585), Frederickstadt (1634-1654) e Parahyba, nome que permaneceu até 1930. Em julho desse ano, a cidade foi renomeada como João Pessoa, em homenagem ao governador do estado da época. Durante o período colonial, a cidade era dividida em Cidade Alta e Cidade Baixa, interligadas por ladeiras [@campos2014precificaccao].
 
 \vspace{12pt}
 
@@ -213,7 +213,7 @@ O crescimento do mercado imobiliário de João Pessoa trás consigo inúmeras ne
 
 \vspace{12pt}
 
-Diante do cenário e dos desafios apresentados, este trabalho tem como objetivo analisar e modelar os valores de diversos tipos de imóveis na cidade de João Pessoa. Além disso, por meio do estudo e dos dados utilizados em seu desenvolvimento, busca-se identificar os principais fatores que influenciam os preços dos imóveis e criar modelos preditivos capazes de auxiliar no processo de avaliação imobiliária, com potencial aplicação em atividades como o cálculo do ITBI. Além disso, o trabalho propõe analisar e descrever diferentes algoritmos de aprendizado de máquina, explorando suas características e desempenho no contexto proposto. Por fim, será desenvolvida uma aplicação computacional com múltiplas finalidades, visando servir como ferramenta para avaliação de imóveis e outros usos relacionados ao mercado imobiliário.
+Diante do cenário e dos desafios apresentados, este trabalho tem como objetivo analisar e modelar os valores de diversos tipos de imóveis na cidade de João Pessoa. Além disso, por meio do estudo e dos dados utilizados em seu desenvolvimento, busca-se identificar os principais fatores que influenciam os preços dos imóveis e criar modelos preditivos capazes de auxiliar no processo de avaliação imobiliária, com potencial aplicação em atividades como o cálculo do ITBI. Não obstante, o trabalho propõe analisar e descrever diferentes algoritmos de aprendizado de máquina, explorando suas características e desempenho no contexto proposto. Por fim, será desenvolvida uma aplicação computacional com múltiplas finalidades, visando servir como ferramenta para avaliação de imóveis e outros usos relacionados ao mercado imobiliário.
 
 ## Objetivos
 
@@ -227,11 +227,11 @@ Diante do cenário e dos desafios apresentados, este trabalho tem como objetivo 
 
 - Desenvolver uma aplicação prática e interativa que permita a entrada de características dos imóveis e forneça estimativas de seus valores com base nos modelos construídos.
 
-- Criar visualizações e relatórios que facilitem a interpretação dos resultados e apoiem a tomada de decisões no mercado imobiliário.
+- Criar visualizações que facilitem a interpretação dos resultados e apoiem a tomada de decisões no mercado imobiliário.
 
 ## Organização do Trabalho
 
-Este trabalho é composto por seis capítulos, incluindo este capítulo introdutório, que apresenta um panorama histórico do mercado imobiliário, a região de estudo e os objetivos finais da pesquisa. No Capítulo 2, são detalhadas as ferramentas computacionais utilizadas, as linguagens de programação empregadas, as bibliotecas adotadas e o processo de coleta de dados realizado por meio da técnica de raspagem de dados.
+\ \ \ Este trabalho é composto por seis capítulos, incluindo este capítulo introdutório, que apresenta um panorama histórico do mercado imobiliário, a região de estudo e os objetivos finais da pesquisa. No Capítulo 2, são detalhadas as ferramentas computacionais utilizadas, as linguagens de programação empregadas, as bibliotecas adotadas e o processo de coleta de dados realizado por meio da técnica de raspagem de dados.
 
 \vspace{12pt}
 
@@ -243,7 +243,7 @@ No Capítulo 4, é detalhado o processo de obtenção dos dados e a descrição 
 
 \vspace{12pt}
 
-O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste dos modelos, bem como os efeitos e a importância das variáveis na predição. Por fim, o Capítulo 6 discute os resultados obtidos ao longo do trabalho, destacando o desempenho dos modelos e as relações e impactos das variáveis na predição dos valores dos imóveis. Além disso, são descritos o funcionamento e as funcionalidades da aplicação final desenvolvida.
+O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste dos modelos, a aplicação final, bem como os efeitos e a importância das variáveis na predição. Por fim, o Capítulo 6 discute os resultados obtidos ao longo do trabalho, destacando o desempenho dos modelos, as funcionalidades da aplicação e as relações e impactos das variáveis na predição dos valores dos imóveis.
 
 
 # Recursos Computacionais
@@ -260,21 +260,23 @@ O Web scraping é uma técnica utilizada para extrair informações de sites na 
 
 - GET: O método GET serve para requisitar uma representação do recurso especificado. Ou seja, ele serve para visualizar dados de um site.
 
-- HEAD: O HEAD é bastante semelhante o GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
+- HEAD: O HEAD é bastante semelhante ao GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
 
-- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.].
+- POST: O método POST é utilizado para enviar dados ao servidor, geralmente com o objetivo de serem processados pelo recurso especificado. Um exemplo comum é o envio de informações por meio de formulários HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.], como dados de login ou de cadastro.
+
+<!-- - POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.]. -->
 
 - PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma semelhante. No entanto, caso seja necessário atualizar um usuário diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas um único registro atualizado. Para o método POST, serão criados diversos registros para cada requisição realizada.
 
 - DELETE: Exclui o recurso.
 
-- TRACE: O método TRACE HTTP é usado para diagnóstico, depuração e solução de problemas. Ele simplesmente retorna um rastreamento de diagnóstico que registra dados do ciclo de forma que o cliente possa saber o que os servidores intermediários estão mudando em sua requisição.
+- TRACE: O método TRACE é usado para diagnóstico, depuração e solução de problemas. Ele retorna um rastreamento de diagnóstico que registra dados do ciclo de forma que o cliente possa saber o que os servidores intermediários estão mudando em sua requisição.
 
 - OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são suportados e permitidos pelo servidor.
 
-- CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método HTTP CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
+- CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
 
-Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo site e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua com a reformatação e organização dos dados de forma estruturada.
+Toda raspagem de dados inicia com o envio de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição utiliza o método GET, embora também possa empregar POST, especialmente quando há necessidade de enviar dados ao servidor. Se a requisição for bem-sucedida, o servidor retorna o recurso solicitado, que pode estar em formatos como HTML, XML, JSON ou arquivos multimídia. Após o recebimento do conteúdo, o processo de extração prossegue com a transformação e organização dos dados de forma estruturada.
 
 \vspace{12pt}
 
@@ -282,7 +284,7 @@ Para realizar a raspagem de dados, foram utilizadas as linguagens de programaç�
 
 \vspace{12pt}
 
-O pacote [**xml2**](https://xml2.r-lib.org/) foi inspirado no [**jQuery**](https://jquery.com/), uma biblioteca **JavaScript** projetada para facilitar tarefas como a manipulação de documentos HTML. Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e modificar os nós de documentos estruturados. Essas funcionalidades permitem, por exemplo, a extração de informações específicas de páginas web ou arquivos XML. Embora o [**xml2**](https://xml2.r-lib.org/) não possua suporte direto para compor requisições HTTP, ele se destaca por sua capacidade de interpretar a estrutura hierárquica de sites e organizar os dados extraídos de maneira estruturada e eficiente.
+O pacote [**xml2**](https://xml2.r-lib.org/) foi inspirado no [**jQuery**](https://jquery.com/), uma biblioteca **JavaScript** projetada para facilitar tarefas como a manipulação de documentos HTML. Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e modificar os nós de documentos estruturados. Essas funcionalidades permitem, por exemplo, a extração de informações específicas de páginas web ou arquivos XML. Ainda que o [**xml2**](https://xml2.r-lib.org/) não possua suporte direto para compor requisições HTTP, ele se destaca por sua capacidade de interpretar a estrutura hierárquica de sites e organizar os dados extraídos de maneira estruturada e eficiente.
 
 \vspace{12pt}
 
@@ -290,7 +292,7 @@ Embora o pacote [**rvest**](https://rvest.tidyverse.org/) compartilhe algumas fu
 
 \vspace{12pt}
 
-Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como Google Chrome, [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html), foi o [**httr**](https://httr.r-lib.org/) [@httr].
+Apesar de os pacotes mencionados anteriormente oferecerem diversas possibilidades para realizar a raspagem de dados, muitas páginas possuem conteúdos dinâmicos que só podem ser acessados por meio de outros pacotes, capazes de carregar o restante do conteúdo da página em questão. Nesse contexto, foi utilizado o pacote [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html) [@selenium], que realiza requisições HTTP enquanto simula a experiência de um usuário real. Ele permite automatizar interações com a página, como clicar em botões, rolar a página automaticamente, lidar com autenticação, cookies e redirecionamentos, além de simular navegadores como [**Google Chrome**](https://www.google.com/chrome/dr/download/?brand=FHFK&ds_kid=43700077650614081&gclsrc=aw.ds&gad_source=1&gclid=Cj0KCQjwqv2_BhC0ARIsAFb5Ac8iSe-rhSTchZ2msE2z-JoowXEWygO93PuoGW7iiQS2AUY3cRexf14aAueTEALw_wcB), [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), entre outros. Por fim, um dos pacotes que também foi utilizado para fazer requisições HTTP, mas que não teve o mesmo objetivo do [**selenium**](https://cran.r-project.org/web/packages/selenium/index.html), foi o [**httr**](https://httr.r-lib.org/) [@httr].
 
 \vspace{12pt}
 
@@ -314,7 +316,7 @@ As middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest) são component
 
 \vspace{12pt}
 
-As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante que possuí integração completa com o [**Scrapy**](https://docs.scrapy.org/en/latest) e que foi empregada neste trabalho foi o uso de uma API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/> e pode ser acessada após a criação de uma conta.
+As middlewares de requisição são utilizadas, por exemplo, para adicionar cabeçalhos personalizados às requisições ou alterar o agente do usuário (`User-Agent`) para evitar bloqueios por parte dos servidores. Uma API bastante interessante, que possui integração completa com o [**Scrapy**](https://docs.scrapy.org/en/latest) e foi empregada neste trabalho, é a API gratuita oferecida pelos desenvolvedores da ScrapeOps, que permite o rotacionamento automático de cabeçalhos, como o `User-Agent`. Essa API está disponível em <https://scrapeops.io/> e pode ser acessada após a criação de uma conta.
 
 \vspace{12pt}
 
@@ -393,7 +395,7 @@ class PackagescraperSpider(scrapy.Spider):
         pass
 ```
 
-A classe `PackagescraperSpider` foi criada a partir do comando executado anteriormente e possui três atributos e um método. O atributo `name` define nome do spider e será utilizado posteriormente para inicializar a raspagem dos dados. O `allowed_domains` é o atributo que indica para o [**Scrapy**](https://docs.scrapy.org/en/latest) os domínios que podem ser acessados, nesse caso, `cran.r-project.org`. O atributo `start_urls` define a url inicial a ser acessada pelo spider. Por fim, o método `parse` é executado assim que uma resposta é obtida após a requisição ao site alvo, sendo responsável pelo processamento e extração dos dados desejados.
+A classe `PackagescraperSpider` foi criada a partir do comando executado anteriormente e possui três atributos e um método. O atributo `name` define o nome do spider que será utilizado posteriormente para inicializar a raspagem dos dados. O `allowed_domains` é o atributo que indica para o [**Scrapy**](https://docs.scrapy.org/en/latest) os domínios que podem ser acessados, nesse caso, `cran.r-project.org`. O atributo `start_urls` define a url inicial a ser acessada pelo spider. Por fim, o método `parse` é executado assim que uma resposta é obtida após a requisição ao site alvo, sendo responsável pelo processamento e extração dos dados desejados.
 
 \vspace{12pt}
 
@@ -410,6 +412,8 @@ Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shel
 
 A @fig-page_contents exibe a página que está sendo raspada, enquanto a @fig-page_contents_devtools mostra a mesma página com um exemplo do uso das ferramentas de desenvolvedor do Firefox.
 :::
+
+\vspace{12pt}
 
 Com a execução do comando anterior, o conteúdo da página mostrada na @fig-page_contents será carregado, permitindo a extração das informações contidas em seu HTML. Se o comando `fetch` obter êxito, a saída incluirá o código de status HTTP `200`, indicando que a requisição foi bem sucedida. Abaixo, segue um exemplo desse resultado:
 
@@ -574,7 +578,7 @@ Assim como no exemplo apresentado em **Python**, o projeto de raspagem pode ser 
 
 \vspace{12pt}
 
-Portanto, chega ao fim descrição das tecnologias utilizadas para a obtenção dos dados, com exemplos de raspagem em **R** e **Python**. No entanto, a linguagem **Python**, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Dessa forma, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
+Portanto, chega ao fim a descrição das tecnologias utilizadas para a obtenção dos dados, com exemplos de raspagem em **R** e **Python**. No entanto, a linguagem **Python**, em particular, continuou sendo empregada em outras etapas deste trabalho, como na modelagem dos valores de imóveis. Dessa forma, os próximos recursos apresentados serão aqueles utilizados especificamente para a modelagem e visualização dos resultados.
 
 ## Recursos utilizados para modelagem e visualização dos resultados
 
@@ -586,7 +590,7 @@ O [**scikit-learn**](https://scikit-learn.org/stable/) é uma das bibliotecas de
 
 \vspace{12pt}
 
-Uma das funcionalidades mais úteis do [**scikit-learn**](https://scikit-learn.org/stable/) é o uso de pipelines para transformar dados. As pipelines permitem combinar etapas de pré-processamento e ajuste de modelos em um único fluxo organizado. Isso não apenas simplifica o código, mas também assegura que as transformações aplicadas aos dados de treinamento sejam automaticamente replicadas nos dados de teste ou em novos dados. Além de serem úteis para tarefas mais simples, como normalização de variáveis, as pipelines permitem a inclusão de etapas personalizadas para lidar com cenários mais complexos, como tratamentos avançados de dados ou integração com ferramentas externas.
+Uma das funcionalidades mais úteis do [**scikit-learn**](https://scikit-learn.org/stable/) é o uso de pipelines para transformar dados. As pipelines permitem combinar etapas de pré-processamento e ajuste de modelos em um único fluxo organizado. Isso não apenas simplifica o código, mas também assegura que as transformações aplicadas aos dados de treinamento sejam automaticamente replicadas nos dados de teste ou em novos dados. Além de serem úteis para tarefas mais simples, como normalização de variáveis, as pipelines também permitem a inclusão de etapas personalizadas para lidar com cenários mais complexos, como tratamentos avançados de dados ou integração com ferramentas externas.
 
 \vspace{12pt}
 
@@ -634,7 +638,7 @@ Além das funcionalidades de otimização, o [**Optuna**](https://optuna.org/) t
 
 \vspace{12pt}
 
-Vale destacar que bibliotecas como o [**Matplotlib**](https://matplotlib.org/) e o [**seaborn**](https://seaborn.pydata.org/) [@Waskom2021] desempenharam um papel fundamental na geração dos gráficos e na visualização dos dados apresentados neste trabalho. Essas ferramentas foram indispensáveis para a análise exploratória e a apresentação dos resultados de forma clara e compreensível. Além dessas bibliotecas, também foram utilizados recursos voltados para a análise do impacto e das relações entre as variáveis e as previsões realizadas pelos modelos. Nesse contexto, destacam-se o [**SHAP**](https://shap.readthedocs.io/en/latest) [@NIPS2017_7062], que fornece explicações interpretáveis para os modelos de aprendizado de máquina, e o próprio [**scikit-learn**](https://scikit-learn.org/stable/), que foi essencial para a criação dos gráficos de ICE (Individual Conditional Expectation). Esses métodos serão detalhados na seção de metodologia deste trabalho.
+Vale destacar que bibliotecas como o [**Matplotlib**](https://matplotlib.org/) e o [**seaborn**](https://seaborn.pydata.org/) [@Waskom2021] desempenharam um papel fundamental na geração dos gráficos e na visualização dos dados apresentados neste trabalho. Essas ferramentas foram indispensáveis para a análise exploratória e a apresentação dos resultados de forma clara e compreensível. Além dessas bibliotecas, também foram utilizados recursos voltados para a análise do impacto e das relações entre as variáveis e as previsões geradas pelos modelos. Nesse contexto, destacam-se o [**SHAP**](https://shap.readthedocs.io/en/latest) [@NIPS2017_7062], que fornece explicações interpretáveis para os modelos de aprendizado de máquina, e o próprio [**scikit-learn**](https://scikit-learn.org/stable/), que foi essencial para a criação dos gráficos de ICE (Individual Conditional Expectation). Esses métodos serão detalhados na seção de metodologia deste trabalho.
 
 \vspace{12pt}
 
