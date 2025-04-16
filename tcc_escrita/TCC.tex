@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, enhanced, sharp corners, colback={codebgcolor}, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, boxrule=0pt, breakable, frame hidden, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1486,9 +1486,9 @@ organizado. Isso não apenas simplifica o código, mas também assegura que
 as transformações aplicadas aos dados de treinamento sejam
 automaticamente replicadas nos dados de teste ou em novos dados. Além de
 serem úteis para tarefas mais simples, como normalização de variáveis,
-as pipelines permitem a inclusão de etapas personalizadas para lidar com
-cenários mais complexos, como tratamentos avançados de dados ou
-integração com ferramentas externas.
+as pipelines também permitem a inclusão de etapas personalizadas para
+lidar com cenários mais complexos, como tratamentos avançados de dados
+ou integração com ferramentas externas.
 
 \vspace{12pt}
 
@@ -1564,7 +1564,7 @@ visualização dos dados apresentados neste trabalho. Essas ferramentas
 foram indispensáveis para a análise exploratória e a apresentação dos
 resultados de forma clara e compreensível. Além dessas bibliotecas,
 também foram utilizados recursos voltados para a análise do impacto e
-das relações entre as variáveis e as previsões realizadas pelos modelos.
+das relações entre as variáveis e as previsões geradas pelos modelos.
 Nesse contexto, destacam-se o
 \href{https://shap.readthedocs.io/en/latest}{\textbf{SHAP}} (LUNDBERG;
 LEE, 2017), que fornece explicações interpretáveis para os modelos de
