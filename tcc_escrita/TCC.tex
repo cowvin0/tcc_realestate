@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, enhanced, sharp corners, breakable, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, enhanced, boxrule=0pt, sharp corners, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -728,12 +728,17 @@ ser realizada no recurso especificado.
   retornado. Ele retorna todos os cabeçalhos associados a um recurso em
   uma determinada URL.
 \item
-  POST: O método POST envia dados para serem processados para o recurso
-  especificado. Esses dados podem ser, por exemplo, dados de um
-  formulário HTML\footnote{HTML (HyperText Markup Language) é a
+  POST: O método POST é utilizado para enviar dados ao servidor,
+  geralmente com o objetivo de serem processados pelo recurso
+  especificado. Um exemplo comum é o envio de informações por meio de
+  formulários HTML\footnote{HTML (HyperText Markup Language) é a
     linguagem de marcação utilizada para estruturar e exibir conteúdo na
     web. Ele define elementos como títulos, parágrafos, links, imagens e
-    tabelas, sendo a base para o desenvolvimento de páginas da internet.}.
+    tabelas, sendo a base para o desenvolvimento de páginas da internet.},
+  como dados de login ou de cadastro.
+\end{itemize}
+
+\begin{itemize}
 \item
   PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma
   semelhante. No entanto, caso seja necessário atualizar um usuário
@@ -744,9 +749,9 @@ ser realizada no recurso especificado.
   DELETE: Exclui o recurso.
 \item
   TRACE: O método TRACE é usado para diagnóstico, depuração e solução de
-  problemas. Ele simplesmente retorna um rastreamento de diagnóstico que
-  registra dados do ciclo de forma que o cliente possa saber o que os
-  servidores intermediários estão mudando em sua requisição.
+  problemas. Ele retorna um rastreamento de diagnóstico que registra
+  dados do ciclo de forma que o cliente possa saber o que os servidores
+  intermediários estão mudando em sua requisição.
 \item
   OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são
   suportados e permitidos pelo servidor.
@@ -756,13 +761,13 @@ ser realizada no recurso especificado.
   proxy, que um cliente deve acessar para sair da rede local.
 \end{itemize}
 
-Toda raspagem inicia com a composição de uma requisição HTTP para
-adquirir recursos de um site. Geralmente, essa requisição é formatada
-numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST.
-Quando a requisição é recebida e processado com sucesso, o recurso
-requisitado é salvo e enviado de volta em diversos formatos de arquivos
-como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo
-do site, o processo de extração continua com a reformatação e
+Toda raspagem de dados inicia com o envio de uma requisição HTTP para
+adquirir recursos de um site. Geralmente, essa requisição utiliza o
+método GET, embora também possa empregar POST, especialmente quando há
+necessidade de enviar dados ao servidor. Se a requisição for
+bem-sucedida, o servidor retorna o recurso solicitado, que pode estar em
+formatos como HTML, XML, JSON ou arquivos multimídia. Após o recebimento
+do conteúdo, o processo de extração prossegue com a transformação e
 organização dos dados de forma estruturada.
 
 \vspace{12pt}
@@ -790,7 +795,7 @@ de documentos HTML. Ele é especialmente útil para lidar com arquivos
 HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e
 modificar os nós de documentos estruturados. Essas funcionalidades
 permitem, por exemplo, a extração de informações específicas de páginas
-web ou arquivos XML. Embora o
+web ou arquivos XML. Ainda que o
 \href{https://xml2.r-lib.org/}{\textbf{xml2}} não possua suporte direto
 para compor requisições HTTP, ele se destaca por sua capacidade de
 interpretar a estrutura hierárquica de sites e organizar os dados

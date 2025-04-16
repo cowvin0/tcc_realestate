@@ -262,19 +262,21 @@ O Web scraping é uma técnica utilizada para extrair informações de sites na 
 
 - HEAD: O HEAD é bastante semelhante ao GET, mas ele retorna apenas metadados sobre um recurso no servidor, sem que o recurso seja retornado. Ele retorna todos os cabeçalhos associados a um recurso em uma determinada URL.
 
-- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.].
+- POST: O método POST é utilizado para enviar dados ao servidor, geralmente com o objetivo de serem processados pelo recurso especificado. Um exemplo comum é o envio de informações por meio de formulários HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.], como dados de login ou de cadastro.
+
+<!-- - POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.]. -->
 
 - PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma semelhante. No entanto, caso seja necessário atualizar um usuário diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas um único registro atualizado. Para o método POST, serão criados diversos registros para cada requisição realizada.
 
 - DELETE: Exclui o recurso.
 
-- TRACE: O método TRACE é usado para diagnóstico, depuração e solução de problemas. Ele simplesmente retorna um rastreamento de diagnóstico que registra dados do ciclo de forma que o cliente possa saber o que os servidores intermediários estão mudando em sua requisição.
+- TRACE: O método TRACE é usado para diagnóstico, depuração e solução de problemas. Ele retorna um rastreamento de diagnóstico que registra dados do ciclo de forma que o cliente possa saber o que os servidores intermediários estão mudando em sua requisição.
 
 - OPTIONS: O método OPTIONS retorna uma lista de quais métodos HTTP são suportados e permitidos pelo servidor.
 
 - CONNECT: O CONNECT é usado para criar uma conexão com um recurso do lado do servidor. O alvo mais comum do método CONNECT é um servidor proxy, que um cliente deve acessar para sair da rede local.
 
-Toda raspagem inicia com a composição de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição é formatada numa consulta GET ou em uma mensagem HTTP contendo uma consulta POST. Quando a requisição é recebida e processado com sucesso, o recurso requisitado é salvo e enviado de volta em diversos formatos de arquivos como, HTML, XML, JSON ou dados multímidia. Após o download do conteúdo do site, o processo de extração continua com a reformatação e organização dos dados de forma estruturada.
+Toda raspagem de dados inicia com o envio de uma requisição HTTP para adquirir recursos de um site. Geralmente, essa requisição utiliza o método GET, embora também possa empregar POST, especialmente quando há necessidade de enviar dados ao servidor. Se a requisição for bem-sucedida, o servidor retorna o recurso solicitado, que pode estar em formatos como HTML, XML, JSON ou arquivos multimídia. Após o recebimento do conteúdo, o processo de extração prossegue com a transformação e organização dos dados de forma estruturada.
 
 \vspace{12pt}
 
@@ -282,7 +284,7 @@ Para realizar a raspagem de dados, foram utilizadas as linguagens de programaç�
 
 \vspace{12pt}
 
-O pacote [**xml2**](https://xml2.r-lib.org/) foi inspirado no [**jQuery**](https://jquery.com/), uma biblioteca **JavaScript** projetada para facilitar tarefas como a manipulação de documentos HTML. Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e modificar os nós de documentos estruturados. Essas funcionalidades permitem, por exemplo, a extração de informações específicas de páginas web ou arquivos XML. Embora o [**xml2**](https://xml2.r-lib.org/) não possua suporte direto para compor requisições HTTP, ele se destaca por sua capacidade de interpretar a estrutura hierárquica de sites e organizar os dados extraídos de maneira estruturada e eficiente.
+O pacote [**xml2**](https://xml2.r-lib.org/) foi inspirado no [**jQuery**](https://jquery.com/), uma biblioteca **JavaScript** projetada para facilitar tarefas como a manipulação de documentos HTML. Ele é especialmente útil para lidar com arquivos HTML e XML, oferecendo ferramentas eficientes para acessar, navegar e modificar os nós de documentos estruturados. Essas funcionalidades permitem, por exemplo, a extração de informações específicas de páginas web ou arquivos XML. Ainda que o [**xml2**](https://xml2.r-lib.org/) não possua suporte direto para compor requisições HTTP, ele se destaca por sua capacidade de interpretar a estrutura hierárquica de sites e organizar os dados extraídos de maneira estruturada e eficiente.
 
 \vspace{12pt}
 
