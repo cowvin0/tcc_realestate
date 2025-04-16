@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, colback={codebgcolor}, sharp corners, breakable, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, colback={codebgcolor}, boxrule=0pt, breakable, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2095,8 +2095,8 @@ Assim, tem-se:
 \hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)\text{,}
 \] como sendo a proporção de observações da classe \(k\) no nó \(j\).
 Dessa forma, as observações no nó \(j\) são classificadas na classe
-\(k\left(j\right) = \arg \max_{k} \hat{p}_{jk}\), que é a classe
-majoritária no nó \(j\).
+\(k\left(j\right) = \arg \max_{k} \hat{p}_{jk}\), correspondente à
+classe majoritária nesse nó.
 
 \vspace{12pt}
 
@@ -2171,9 +2171,9 @@ predições das \(B\) árvores, a variância é reduzida.
 \vspace{12pt}
 
 Para mitigar a falta de interpretabilidade do método Bagging aplicado a
-árvores de regressão, pode-se usar a medida de impureza baseada no erro
-quadrático médio como uma métrica de importância das variáveis
-independentes. Um valor elevado na redução total média do erro
+árvores de regressão, pode-se utilizar a medida de impureza baseada no
+erro quadrático médio como uma métrica para avaliar a importância das
+variáveis independentes. Um valor elevado na redução total média do erro
 quadrático médio, calculado com base nas divisões realizadas por um
 determinado preditor em todas as \(B\) árvores, indica que o preditor é
 importante.
@@ -2266,12 +2266,12 @@ $$
 
 \end{algo}%
 
-~~~O algoritmo Random Forest é uma técnica derivada do método de
-Bagging, mas com modificações específicas na construção das árvores. O
-objetivo é melhorar a redução da variância ao diminuir a correlação
-entre as árvores, sem aumentar significativamente a variabilidade. Isso
-é alcançado durante o processo de crescimento das árvores por meio da
-seleção aleatória de variáveis independentes.
+~~~O algoritmo Random Forest é uma técnica derivada do método Bagging,
+mas com modificações específicas na construção das árvores. O objetivo é
+reduzir a variância ao diminuir a correlação entre as árvores, sem
+aumentar significativamente a variabilidade. Isso é alcançado durante o
+processo de crescimento das árvores por meio da seleção aleatória de um
+subconjunto de variáveis independentes antes de cada divisão.
 
 \vspace{12pt}
 
