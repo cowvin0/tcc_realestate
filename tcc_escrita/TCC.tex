@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, boxrule=0pt, breakable, colback={codebgcolor}, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, colback={codebgcolor}, boxrule=0pt, breakable, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1886,8 +1886,8 @@ método de gradient boosting.
 
 ~~~Árvores de decisão podem ser utilizadas tanto para regressão quanto
 para classificação. Elas servem de base para os modelos baseados em
-árvores empregados neste trabalho, focando particularmente nas árvores
-de regressão\footnote{Uma árvore de regressão é um caso específico da
+árvores empregados neste trabalho, com foco especial nas árvores de
+regressão\footnote{Uma árvore de regressão é um caso específico da
   árvore de decisão, mas para regressão.}. O processo de construção de
 uma árvore se baseia no particionamento recursivo do espaço dos
 preditores, onde cada particionamento é chamado de nó e o resultado
@@ -1942,7 +1942,7 @@ Como as regiões são disjuntas, \(x_i\) não pode estar simultaneamente em
 duas regiões. Assim, para um ponto específico \(x_i\), apenas um dos
 casos da função indicadora será diferente de 0. Portanto,
 \(f\left(x_i\right) = c_j\). Agora, derivando
-\(\sum_{x_i \in R_j}\left(yi - c_j\right)^2\) em relação a \(c_j\)
+\(\sum_{x_i \in R_j}\left(y_i - c_j\right)^2\) em relação a \(c_j\)
 
 \begin{equation}\phantomsection\label{eq-partialdev}{
 \frac{\partial}{\partial{c_j}}\sum_{x_i \in R_j} \left(y_i - c_j\right)^2 = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)
@@ -2023,7 +2023,7 @@ Q_j\left(T\right) = \frac{1}{N_j} \sum_{x_i \in R_j}\left(y_i - \hat{c}_j\right)
 define-se o critério de custo de complexidade:
 
 \[
-C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|\text{,}
+C_{\alpha}\left(T\right) = \sum_{j = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|\text{,}
 \] em que \(|T|\) denota a quantidade total de folhas, e
 \(\alpha \geq 0\) é um hiperparâmetro que equilibra o tamanho da árvore
 e a adequação aos dados. A ideia é encontrar, para cada \(\alpha\), a
@@ -2034,8 +2034,9 @@ e a adequação aos dados. A ideia é encontrar, para cada \(\alpha\), a
 \(T_{\alpha}\) envolve colapsar sucessivamente o nó interno que provoca
 o menor aumento em \(\sum_j N_j Q_j\left(T\right)\), continuando o
 processo até produzir uma árvore com um único nó. Esse processo gera uma
-sequência de subárvores, na qual existe uma única subárvore menor que,
-para cada \(\alpha\), minimiza \(C_{\alpha}\left(T\right)\).
+sequência de subárvores, dentre as quais existe, para cada valor de
+\(\alpha\), uma única subárvore que minimiza
+\(C_{\alpha}\left(T\right)\).
 
 \vspace{12pt}
 
@@ -2059,7 +2060,7 @@ de uma árvore de regressão:
 
 \vspace{3.7pt}
 
-\State \textbf{3.} Use validação cruzada $K\text{-fold}$ para escolher \( \alpha \). Isto é, divida as observações de treinamento em $K$ folds. Para cada \( k = 1, \ldots, K \):
+\State \textbf{3.} Use validação cruzada $K\text{-Fold}$ para escolher \( \alpha \). Isto é, divida as observações de treinamento em $K$ folds. Para cada \( k = 1, \ldots, K \):
     \State \hspace{1em} (a) Repita os Passos 1 e 2 em todos os folds, exceto no $k\text{-ésimo}$ fold dos dados de
     \State \hspace{1em} treinamento.
     \State \hspace{1em} (b) Avalie o erro quadrático médio da estimação no $k\text{-ésimo}$ fold deixado
@@ -2068,7 +2069,7 @@ de uma árvore de regressão:
     \vspace{3pt}
 
     \State \hspace{1em} Faça a média dos resultados para cada valor de \( \alpha \) e escolha \( \alpha \) que minimize o erro
-    \State \hspace{1em} quadrático médio.
+    \State \hspace{1em} médio.
 
 \vspace{3.7pt}
 
@@ -2094,8 +2095,8 @@ Assim, tem-se:
 \hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)\text{,}
 \] como sendo a proporção de observações da classe \(k\) no nó \(j\).
 Dessa forma, as observações no nó \(j\) são classificadas na classe
-\(k\left(j\right) = \arg \max_{k} \hat{p}_{jk}\), que é a moda no nó
-\(j\).
+\(k\left(j\right) = \arg \max_{k} \hat{p}_{jk}\), correspondente à
+classe majoritária nesse nó.
 
 \vspace{12pt}
 
@@ -2170,9 +2171,9 @@ predições das \(B\) árvores, a variância é reduzida.
 \vspace{12pt}
 
 Para mitigar a falta de interpretabilidade do método Bagging aplicado a
-árvores de regressão, pode-se usar a medida de impureza baseada no erro
-quadrático médio como uma métrica de importância das variáveis
-independentes. Um valor elevado na redução total média do erro
+árvores de regressão, pode-se utilizar a medida de impureza baseada no
+erro quadrático médio como uma métrica para avaliar a importância das
+variáveis independentes. Um valor elevado na redução total média do erro
 quadrático médio, calculado com base nas divisões realizadas por um
 determinado preditor em todas as \(B\) árvores, indica que o preditor é
 importante.
@@ -2265,12 +2266,12 @@ $$
 
 \end{algo}%
 
-~~~O algoritmo Random Forest é uma técnica derivada do método de
-Bagging, mas com modificações específicas na construção das árvores. O
-objetivo é melhorar a redução da variância ao diminuir a correlação
-entre as árvores, sem aumentar significativamente a variabilidade. Isso
-é alcançado durante o processo de crescimento das árvores por meio da
-seleção aleatória de variáveis independentes.
+~~~O algoritmo Random Forest é uma técnica derivada do método Bagging,
+mas com modificações específicas na construção das árvores. O objetivo é
+reduzir a variância ao diminuir a correlação entre as árvores, sem
+aumentar significativamente a variabilidade. Isso é alcançado durante o
+processo de crescimento das árvores por meio da seleção aleatória de um
+subconjunto de variáveis independentes antes de cada divisão.
 
 \vspace{12pt}
 

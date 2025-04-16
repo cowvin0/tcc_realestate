@@ -759,7 +759,7 @@ Os métodos baseados em árvore envolvem a estratificação ou segmentação do 
 
 ## Árvores de decisão
 
-\ \ \ Árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação. Elas servem de base para os modelos baseados em árvores empregados neste trabalho, focando particularmente nas árvores de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]. O processo de construção de uma árvore se baseia no particionamento recursivo do espaço dos preditores, onde cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal. Em cada nó, é definida uma condição e, caso essa condição seja satisfeita, o resultado será uma das folhas desse nó. Caso contrário, o processo segue para o próximo nó e verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja um exemplo na @fig-arvore.
+\ \ \ Árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação. Elas servem de base para os modelos baseados em árvores empregados neste trabalho, com foco especial nas árvores de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]. O processo de construção de uma árvore se baseia no particionamento recursivo do espaço dos preditores, onde cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal. Em cada nó, é definida uma condição e, caso essa condição seja satisfeita, o resultado será uma das folhas desse nó. Caso contrário, o processo segue para o próximo nó e verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja um exemplo na @fig-arvore.
 
 ![Exemplo de estrutura de árvore de regressão. A árvore tem cinco folhas e quatro nós internos.](includes/mermaid-tree.png){#fig-arvore}
 
@@ -781,7 +781,7 @@ I_{R_j}(x_i) =
 \end{cases}\text{.}
 $$
 
-Como as regiões são disjuntas, $x_i$ não pode estar simultaneamente em duas regiões. Assim, para um ponto específico $x_i$, apenas um dos casos da função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Agora, derivando $\sum_{x_i \in R_j}\left(yi - c_j\right)^2$ em relação a $c_j$
+Como as regiões são disjuntas, $x_i$ não pode estar simultaneamente em duas regiões. Assim, para um ponto específico $x_i$, apenas um dos casos da função indicadora será diferente de 0. Portanto, $f\left(x_i\right) = c_j$. Agora, derivando $\sum_{x_i \in R_j}\left(y_i - c_j\right)^2$ em relação a $c_j$
 
 $$
 \frac{\partial}{\partial{c_j}}\sum_{x_i \in R_j} \left(y_i - c_j\right)^2 = -2\sum_{x_i \in R_j} \left(y_i - c_j\right)
@@ -830,13 +830,11 @@ $$
 uma medida de impureza do nó pelo erro quadrático médio. Assim, define-se o critério de custo de complexidade:
 
 $$
-C_{\alpha}\left(T\right) = \sum_{m = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|\text{,}
+C_{\alpha}\left(T\right) = \sum_{j = 1}^{|T|}N_jQ_j\left(T\right) + \alpha |T|\text{,}
 $$
-em que $|T|$ denota a quantidade total de folhas, e $\alpha \geq 0$ é um hiperparâmetro que equilibra o tamanho da árvore e a adequação aos dados. A ideia é encontrar, para cada $\alpha$, a árvore $T_{\alpha} \subset T_0$ que minimiza $C_{\alpha}\left(T\right)$. Valores grandes de $\alpha$ resultam em árvores menores, enquanto valores menores resultam em árvores maiores, e $\alpha = 0$ resulta na própria árvore $T_0$. A busca por $T_{\alpha}$ envolve colapsar sucessivamente o nó interno que provoca o menor aumento em $\sum_j N_j Q_j\left(T\right)$, continuando o processo até produzir uma árvore com um único nó. Esse processo gera uma sequência de subárvores, na qual existe uma única subárvore menor que, para cada $\alpha$, minimiza $C_{\alpha}\left(T\right)$.
+em que $|T|$ denota a quantidade total de folhas, e $\alpha \geq 0$ é um hiperparâmetro que equilibra o tamanho da árvore e a adequação aos dados. A ideia é encontrar, para cada $\alpha$, a árvore $T_{\alpha} \subset T_0$ que minimiza $C_{\alpha}\left(T\right)$. Valores grandes de $\alpha$ resultam em árvores menores, enquanto valores menores resultam em árvores maiores, e $\alpha = 0$ resulta na própria árvore $T_0$. A busca por $T_{\alpha}$ envolve colapsar sucessivamente o nó interno que provoca o menor aumento em $\sum_j N_j Q_j\left(T\right)$, continuando o processo até produzir uma árvore com um único nó. Esse processo gera uma sequência de subárvores, dentre as quais existe, para cada valor de $\alpha$, uma única subárvore que minimiza $C_{\alpha}\left(T\right)$.
 
 \vspace{12pt}
-
-<!-- A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco ou dez folds, sendo $\hat \alpha$ escolhido para minimizar a soma dos quadrados dos resíduos durante o processo de validação cruzada. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão: -->
 
 A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco ou dez folds. Assim, a árvore final será $T_{\hat \alpha}$. O @algo-buildtree exemplifica o processo de crescimento de uma árvore de regressão:
 
@@ -856,7 +854,7 @@ A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco o
 
 \vspace{3.7pt}
 
-\State \textbf{3.} Use validação cruzada $K\text{-fold}$ para escolher \( \alpha \). Isto é, divida as observações de treinamento em $K$ folds. Para cada \( k = 1, \ldots, K \):
+\State \textbf{3.} Use validação cruzada $K\text{-Fold}$ para escolher \( \alpha \). Isto é, divida as observações de treinamento em $K$ folds. Para cada \( k = 1, \ldots, K \):
     \State \hspace{1em} (a) Repita os Passos 1 e 2 em todos os folds, exceto no $k\text{-ésimo}$ fold dos dados de
     \State \hspace{1em} treinamento.
     \State \hspace{1em} (b) Avalie o erro quadrático médio da estimação no $k\text{-ésimo}$ fold deixado
@@ -865,7 +863,7 @@ A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco o
     \vspace{3pt}
 
     \State \hspace{1em} Faça a média dos resultados para cada valor de \( \alpha \) e escolha \( \alpha \) que minimize o erro
-    \State \hspace{1em} quadrático médio.
+    \State \hspace{1em} médio.
 
 \vspace{3.7pt}
 
@@ -885,7 +883,7 @@ No caso de uma árvore de decisão para classificação, a principal diferença 
 $$
 \hat{p}_{jk} = \frac{1}{N_j}\sum_{x_i \in R_j} I\left(y_i = k\right)\text{,}
 $$
-como sendo a proporção de observações da classe $k$ no nó $j$. Dessa forma, as observações no nó $j$ são classificadas na classe $k\left(j\right) = \arg \max_{k} \hat{p}_{jk}$, que é a moda no nó $j$.
+como sendo a proporção de observações da classe $k$ no nó $j$. Dessa forma, as observações no nó $j$ são classificadas na classe $k\left(j\right) = \arg \max_{k} \hat{p}_{jk}$, correspondente à classe majoritária nesse nó.
 
 \vspace{12pt}
 
@@ -919,7 +917,7 @@ Embora a técnica de Bagging possa melhorar o desempenho de uma árvore de regre
 
 \vspace{12pt}
 
-Para mitigar a falta de interpretabilidade do método Bagging aplicado a árvores de regressão, pode-se usar a medida de impureza baseada no erro quadrático médio como uma métrica de importância das variáveis independentes. Um valor elevado na redução total média do erro quadrático médio, calculado com base nas divisões realizadas por um determinado preditor em todas as $B$ árvores, indica que o preditor é importante.
+Para mitigar a falta de interpretabilidade do método Bagging aplicado a árvores de regressão, pode-se utilizar a medida de impureza baseada no erro quadrático médio como uma métrica para avaliar a importância das variáveis independentes. Um valor elevado na redução total média do erro quadrático médio, calculado com base nas divisões realizadas por um determinado preditor em todas as $B$ árvores, indica que o preditor é importante.
 
 \vspace{12pt}
 
@@ -986,7 +984,9 @@ Fonte: @hastie2009elements [p. 588].
 
 :::
 
-\ \ \ O algoritmo Random Forest é uma técnica derivada do método de Bagging, mas com modificações específicas na construção das árvores. O objetivo é melhorar a redução da variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de variáveis independentes.
+\ \ \ O algoritmo Random Forest é uma técnica derivada do método Bagging, mas com modificações específicas na construção das árvores. O objetivo é reduzir a variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de um subconjunto de variáveis independentes antes de cada divisão.
+
+<!-- \ \ \ O algoritmo Random Forest é uma técnica derivada do método de Bagging, mas com modificações específicas na construção das árvores. O objetivo é melhorar a redução da variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de variáveis independentes. -->
 
 \vspace{12pt}
 
