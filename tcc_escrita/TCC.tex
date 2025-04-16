@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, boxrule=0pt, breakable, frame hidden, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, sharp corners, frame hidden, colback={codebgcolor}, enhanced, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1635,9 +1635,9 @@ como \texttt{HTML}, \texttt{CSS} e \textbf{JavaScript} diretamente no
 ambiente \textbf{Python}. Entre suas principais características,
 destacam-se a facilidade de criar gráficos interativos, a integração com
 bibliotecas populares como \href{https://plotly.com/}{\textbf{Plotly}} e
-a capacidade de atualizar componentes de forma dinâmica por meio de
-funções suas funções \texttt{callback}. A seguir é apresentado um
-exemplo do uso da função \texttt{callback}:
+a capacidade de atualizar componentes de forma dinâmica por meio de suas
+funções \texttt{callback}. A seguir é apresentado um exemplo do uso da
+função \texttt{callback}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
