@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, frame hidden, colback={codebgcolor}, enhanced, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, boxrule=0pt, breakable, colback={codebgcolor}, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1828,7 +1828,9 @@ Por fim, também foi utilizada uma extensão mais geral de suporte à
 linguagem \textbf{Python}, que oferece diversas funcionalidades, como
 correção de código por meio da extensão
 \href{https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy}{\textbf{PythonDebugger}},
-que utiliza a biblioteca debugpy para suporte ao processo de debugging.
+que utiliza a biblioteca
+\href{https://pypi.org/project/debugpy/}{\textbf{debugpy}} para suporte
+ao processo de debugging.
 
 \vspace{12pt}
 
@@ -1868,8 +1870,7 @@ máquina utilizados neste trabalho. Alguns dos métodos utilizados podem
 fazer uso de diversos algoritmos ou modelos estatísticos. No entanto, o
 foco principal e o mais utilizado foram as árvores de decisão,
 especialmente em sua forma particular, as árvores de regressão. Assim,
-os algoritmos descritos são métodos baseados em árvores ou que fazem uso
-dela.
+os algoritmos descritos são métodos baseados em árvores.
 
 \vspace{12pt}
 
