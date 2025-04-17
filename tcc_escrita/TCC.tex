@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, breakable, colback={codebgcolor}, sharp corners, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, boxrule=0pt, colback={codebgcolor}, frame hidden, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3073,14 +3073,14 @@ hiperparâmetros \(\lambda\) e a métrica de desempenho \(c\) (BERGSTRA;
 YAMINS; COX, 2013). A partir dessa função, estima-se, para cada conjunto
 de hiperparâmetros \(\lambda\), a performance esperada
 \(\hat{c}\left(\lambda\right)\) e a incerteza associada à predição
-\(\hat{\sigma}\left(\lambda\right)\). Com essas estimativas, a
-distribuição preditiva derivada da função probabilística permite a
-aplicação de uma função de aquisição. Essa função orienta a escolha dos
-próximos pontos a serem avaliados, equilibrando exploitation (explorar
-regiões próximas às melhores observações anteriores) e exploration
-(investigar áreas ainda não exploradas)\footnote{Exploitation refere-se
-  à busca por soluções promissoras com base em dados prévios, enquanto
-  exploration visa descobrir novas regiões potencialmente vantajosas}.
+\(\hat{\sigma}\left(\lambda\right)\). Depois de obter a distribuição
+preditiva da função probabilística, uma função de aquisição determina o
+uso de diferentes pontos. Essa função orienta a escolha dos próximos
+pontos a serem avaliados, equilibrando exploitation (explorar regiões
+próximas às melhores observações anteriores) e exploration (investigar
+áreas ainda não exploradas)\footnote{Exploitation refere-se à busca por
+  soluções promissoras com base em dados prévios, enquanto exploration
+  visa descobrir novas regiões potencialmente vantajosas}
 
 \vspace{12pt}
 
