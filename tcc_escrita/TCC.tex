@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, breakable, colback={codebgcolor}, enhanced, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, breakable, colback={codebgcolor}, boxrule=0pt, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2623,8 +2623,8 @@ Assim, utilizando as ferramentas e técnicas de web scraping, foram
 coletadas as variáveis que poderiam fazer sentido para a modelagem,
 priorizando aquelas com menor chance de gerar problemas durante o
 tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao
-todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15
-qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem
+todo, foram extraídas 25 variáveis, das quais 11 são quantitativas e 14
+qualitativas nominais, sendo 12 de caráter dicotômico. No entanto, nem
 todas as variáveis foram obtidas diretamente por web scraping. As
 coordenadas geográficas, latitude e longitude, por exemplo, foram
 geradas por meio da geocodificação dos endereços de cada imóvel,
@@ -2710,10 +2710,10 @@ as variáveis independentes e a variável dependente.
 \vspace{12pt}
 
 Nesta etapa, também foi analisada a correlação entre as variáveis
-dependentes utilizadas no modelo, o que possibilitou a criação de novas
-variáveis com base na interação entre aquelas que apresentavam alguma
-relação. Para isso, utilizou-se a correlação de Spearman (SPEARMAN,
-1961).
+independentes utilizadas no modelo, o que possibilitou a criação de
+novas variáveis com base na interação entre aquelas que apresentavam
+alguma relação. Para isso, utilizou-se a correlação de Spearman
+(SPEARMAN, 1961).
 
 \vspace{12pt}
 

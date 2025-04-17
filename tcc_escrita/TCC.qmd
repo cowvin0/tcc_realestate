@@ -1185,7 +1185,7 @@ Assim como o Gradient Boosting, as implementações existentes de Light Gradient
 
 \vspace{12pt}
 
-Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem **R**. Dessa forma, tem-se as seguintes variáveis:
+Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 11 são quantitativas e 14 qualitativas nominais, sendo 12 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem **R**. Dessa forma, tem-se as seguintes variáveis:
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
@@ -1230,7 +1230,7 @@ Além dos dados mencionados, foram também utilizados dados geográficos sobre a
 
 \vspace{12pt}
 
-Nesta etapa, também foi analisada a correlação entre as variáveis dependentes utilizadas no modelo, o que possibilitou a criação de novas variáveis com base na interação entre aquelas que apresentavam alguma relação. Para isso, utilizou-se a correlação de Spearman [@spearman1961proof].
+Nesta etapa, também foi analisada a correlação entre as variáveis independentes utilizadas no modelo, o que possibilitou a criação de novas variáveis com base na interação entre aquelas que apresentavam alguma relação. Para isso, utilizou-se a correlação de Spearman [@spearman1961proof].
 
 \vspace{12pt}
 
