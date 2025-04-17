@@ -2935,7 +2935,7 @@ Para analisar a influência das variáveis na predição dos valores de imóveis
 
 \vspace{12pt}
 
-As previsões indicam um aumento claro nos valores estimados à medida que a área do imóvel cresce, com o PDP apresentando uma tendência crescente, em concordância com a maioria das curvas ICE. Para a quantidade de banheiros, observa-se uma relação majoritariamente estável, com apenas pequenas variações, comportamento semelhante ao verificado para o número de quartos, o que sugere uma influência limitada dessas variáveis no modelo. No entanto, embora essas relações sejam bastante estáveis, observa-se um aumento nas predições do modelo com o aumento da quantidade de banheiro e quartos
+As previsões indicam um aumento claro nos valores estimados à medida que a área do imóvel cresce, com o PDP apresentando uma tendência crescente, em concordância com as curvas ICE. Para a quantidade de banheiros, observa-se uma relação majoritariamente estável, com apenas pequenas variações, comportamento semelhante ao verificado para o número de quartos, o que pode sugerir uma influência limitada dessas variáveis no modelo. No entanto, embora essas relações sejam bastante estáveis, observa-se um aumento nas predições do modelo à medida que cresce a quantidade de banheiros e quartos.
 
 \vspace{12pt}
 
@@ -2943,7 +2943,7 @@ No caso do valor médio do aluguel, o PDP revela uma tendência crescente, refor
 
 \vspace{12pt}
 
-As curvas ICE para as coordenadas geográficas exibem um comportamento mais complexo, mas é possível identificar um aumento nos valores previstos à medida que as coordenadas aumentam. Esse padrão sugere que imóveis localizados mais próximos da região litorânea de João Pessoa tendem a ter preços mais elevados. Por fim, a quantidade de vagas de garagem apresenta uma relação claramente ascendente nas predições, evidenciando uma influência positiva dessa variável sobre o valor dos imóveis.
+As curvas ICE para as coordenadas geográficas exibem um comportamento mais complexo, mas é possível identificar um aumento nos valores previstos à medida que as coordenadas aumentam. Esse padrão sugere que imóveis localizados mais próximos da região litorânea de João Pessoa tendem a ter preços mais elevados. Por fim, a quantidade de vagas de garagem apresenta uma relação claramente ascendente nas predições.
 
 
 ::: {#fig-teste layout-ncol=2}
@@ -2956,11 +2956,11 @@ Impacto e importância das variáveis na predição a partir do método SHAP.
 
 \vspace{12pt}
 
-A análise da importância das variáveis foi realizada por meio do método SHAP. Diferentemente das medidas tradicionais de importância geradas por algoritmos baseados em árvores, que se baseiam na redução da impureza ou no ganho de informação ao longo das divisões do modelo, o SHAP calcula a contribuição de cada variável com base na magnitude dos valores de Shapley atribuídos individualmente às predições.
+A análise da importância das variáveis foi realizada por meio do método SHAP. Diferentemente das medidas tradicionais de importância geradas por algoritmos baseados em árvores, que se baseiam na redução da impureza, o SHAP calcula a contribuição de cada variável com base na magnitude dos valores de Shapley atribuídos individualmente às predições.
 
 \vspace{12pt}
 
-Como pode ser observado na @fig-shap_importance, a variável com maior impacto na predição do modelo é a área do imóvel, responsável por alterar, em média, mais de 12 pontos percentuais na predição absoluta. Outras variáveis que se destacam entre as mais relevantes para a estimativa do valor dos imóveis incluem a quantidade de vagas de garagem, a razão entre o número de quartos e a área, a localização geográfica e o produto entre as coordenadas geográficas e o valor do aluguel. Por último, as quarto variáveis com menor impacto na predição do modelo é a sauna, portaria 24 horas, quadra de esporte e spa.
+Como pode ser observado na @fig-shap_importance, a variável com maior impacto na predição do modelo é a área do imóvel, responsável por alterar, em média, mais de 12 pontos percentuais na predição absoluta. Outras variáveis que se destacam entre as mais relevantes para a estimativa do valor dos imóveis incluem a quantidade de vagas de garagem, a razão entre o número de quartos e a área, a localização geográfica e o produto entre as coordenadas geográficas e o valor do aluguel. Por último, as quatro variáveis com menor impacto na predição do modelo são sauna, portaria 24 horas, quadra de esporte e spa.
 
 \vspace{12pt}
 
@@ -3010,7 +3010,7 @@ Na seção a seguir, serão apresentados os resultados da aplicação final dese
 
 ## Aplicação web
 
-A aplicação final foi desenvolvida com o objetivo de ser simples e intuitiva, facilitando a análise e compreensão do comportamento do mercado imobiliário de João Pessoa. Nesta seção, serão apresentados os resultados da aplicação e suas funcionalidades. O código completo pode ser acessado através do seguinte link: <https://github.com/cowvin0/tcc_realestate/tree/main/app>.
+\ \ \ A aplicação final foi desenvolvida com o objetivo de ser simples e intuitiva, facilitando a análise e compreensão do comportamento do mercado imobiliário de João Pessoa. Nesta seção, serão apresentados os resultados da aplicação e suas funcionalidades. O código completo pode ser acessado através do seguinte link: <https://github.com/cowvin0/tcc_realestate/tree/main/app>.
 
 \vspace{12pt}
 
@@ -3035,7 +3035,7 @@ A funcionalidade mais importante da aplicação pode ser acessada através do bo
 
 \vspace{12pt}
 
-Na seção de configurações do mapa, o usuário pode selecionar o tipo de mapa desejado a partir de uma lista suspensa, que inclui todas as opções suportadas pela aplicação. Por padrão, o mapa de calor é selecionado. Uma das alternativas disponíveis é o mapa de pontos, que exibe a localização dos imóveis pontualmente, com suas cores variando conforme o valor dos imóveis, quanto mais clara a cor, mais alto o valor do imóvel. Além desses dois mapas, a aplicação permite a visualização de informações adicionais, como rios, ciclovias, comunidades, corredores de ônibus, faixas exclusivas para ônibus, parques, praças, área rural, comunidades e escolas públicas.
+Na seção de configurações do mapa, o usuário pode selecionar o tipo de mapa desejado a partir de uma lista suspensa, que inclui todas as opções suportadas pela aplicação. Por padrão, o mapa de calor é selecionado. Uma das alternativas disponíveis é o mapa de pontos, que exibe a localização dos imóveis pontualmente, com suas cores variando conforme o valor dos imóveis, quanto mais clara a cor, mais alto o valor do imóvel. Além desses dois mapas, a aplicação permite a visualização de informações adicionais, como rios, ciclovias, bairros, comunidades, corredores de ônibus, faixas exclusivas para ônibus, parques, praças, área rural, comunidades e escolas públicas.
 
 ![Controles para tipos de mapas.](includes/menu_map.png){#fig-menu_map width=450 height=250}
 
