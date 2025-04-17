@@ -1591,7 +1591,7 @@ Matematicamente, o fANOVA decompõe uma função $\hat y: \Theta_{1} \times \dot
 $$
 \hat{y} = \sum_{U \subseteq N} \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\text{,}
 $$
-em que $\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}$, é o vetor correspondente a uma configuração parcial dos hiperparâmetros para o subconjunto $U = \{u_{1}, \dots, u_{m}\} \subseteq N$, que representa um subconjunto dos índices dos hiperparâmetros. Além disso, as componentes de $\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)$ são definidas da seguinte forma:
+em que $\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}$, é o vetor correspondente a uma configuração parcial dos hiperparâmetros para o subconjunto $U = \{u_{1}, \dots, u_{m}\} \subseteq N$, que representa um subconjunto dos índices dos hiperparâmetros. Além disso, as componentes $\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)$ são definidas da seguinte forma:
 
 $$
 \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=
@@ -1711,7 +1711,9 @@ No exemplo acima, o método `.from_estimator` é usado para criar o gráfico dir
 
 \vspace{12pt}
 
-Formalmente, para a construção da explicação gerada pelo LIME, a explicação é definida como um modelo $g \in G$, onde $G$ representa uma classe de potenciais modelos interpretáveis, como regressão linear ou árvores de decisão. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore.
+Formalmente, para a construção da explicação gerada pelo LIME, define-se a explicação como um modelo $g \in G$, onde $G$ representa uma classe de modelos potencialmente interpretáveis, como regressão linear ou árvores de decisão. O processo começa com a geração de um novo conjunto de dados composto por amostras perturbadas da instância original — pequenas variações nos dados de entrada — e as respectivas predições do modelo complexo. Sobre esse novo conjunto, ajusta-se o modelo explicativo $g$, cuja finalidade é aproximar localmente o comportamento do modelo original. Como nem todos os modelos $g \in G$ são simples o suficiente para serem interpretáveis, define-se uma medida de complexidade $\Omega\left(g\right)$. Por exemplo, para uma árvore de decisão, $\Omega\left(g\right)$ pode ser representada pela profundidade da árvore.
+
+<!-- Formalmente, para a construção da explicação gerada pelo LIME, a explicação é definida como um modelo $g \in G$, onde $G$ representa uma classe de potenciais modelos interpretáveis, como regressão linear ou árvores de decisão. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore. -->
 
 <!-- O domínio de $g$ é dado por $\{0, 1\}^{d^{'}}$, ou seja, o modelo explicativo $g$ opera sobre a presença ou ausência de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore. -->
 
@@ -1750,20 +1752,20 @@ No entanto, a @eq-shapley apresenta crescimento exponencial em termos de complex
 $$
 \hat{\phi}_{i}\left(x\right) = \frac{1}{n!} \sum_{O \in \pi \left(n \right)} \left( \Delta_{{Pre}^{i} \left(O\right) \cup \{i\}} - \Delta_{{Pre}^{i} \left(O\right)} \right), \ i = 1, \dots, n\text{,}
 $$
-em que $\pi\left(n\right)$ é o conjunto de todas as permutações ordenadas dos índices das variáveis $\{1, 2, \dots, n\}$ e ${Pre}^{i}\left(O\right)$ representa o conjunto de índices das variáveis que precedem $i$ na permutação $O \in \pi \left(n\right)$ [@vstrumbelj2014explaining].
+em que $\pi\left(n\right)$ é o conjunto de todas as permutações ordenadas dos índices das variáveis $\{1, 2, \dots, n\}$ e ${Pre}^{i}\left(O\right)$ representa o conjunto de índices das variáveis que precedem a variável $i$ na ordem $O \in \pi \left(n\right)$ [@vstrumbelj2014explaining].
 
 \vspace{12pt}
 
-O SHAP estabelece uma conexão entre os valores de Shapley e o método LIME, previamente definido. O modelo explicativo do SHAP, denotado por $g$, é uma função linear de variáveis binárias, construído a partir dos valores de Shapley, conforme define a expressão a seguir:
+O SHAP estabelece uma conexão entre os valores de Shapley e o método LIME, previamente definido. O modelo explicativo do SHAP, denotado por $g$, é uma função linear, construído a partir dos valores de Shapley, conforme define a expressão a seguir:
 
 $$
-g\left(z^{'}\right) = \phi_0 + \sum_{j = 1}^{M} \phi_{j} z_{j}^{'}\text{,}
+g\left(\mathbf{z^{'}}\right) = \phi_0 + \sum_{j = 1}^{M} \phi_{j} z_{j}^{'}\text{,}
 $$
-em que $g$ é o modelo explicativo, $z^{'} \in \{0, 1\}^{M}$ é o vetor de coalizão, representando a presença $\left(z^{'}_j = 1\right)$ ou ausência $\left(z^{'}_j = 0\right)$ de cada covariável e $\phi_j$ denota os valores Shapley.
+em que $g$ é o modelo explicativo, $\mathbf{z^{'}} = \left(z_{1}^{'}, \cdots, z^{'}_{M}\right)^T \in \{0, 1\}^{M}$ é o vetor de coalizão, representando a presença $\left(z^{'}_j = 1\right)$ ou ausência $\left(z^{'}_j = 0\right)$ de cada covariável, $M$ é o tamanho máximo da coalizão e $\phi_j$ denota os valores Shapley.
 
 \vspace{12pt}
 
-A partir do método SHAP, é possível ter diversas visualizações que ajudam a entender como as predições do modelo se comportam. Neste trabalho foi utilizado o gráfico de importância das variáveis, resumo dos valores shapley e o de dependência. Os métodos serão descritos a seguir tendo como referência o livro de @molnar2020interpretable.
+A partir do método SHAP, é possível ter diversas visualizações que ajudam a entender como as predições do modelo se comportam. Neste trabalho, foi utilizado o gráfico de importância das variáveis, resumo dos valores shapley e o de dependência. Os métodos serão descritos a seguir tendo como referência o livro de @molnar2020interpretable.
 
 \vspace{12pt}
 
