@@ -1864,7 +1864,7 @@ A primeira etapa da análise exploratória de dados foi identificar os dados fal
 
 \vspace{12pt}
 
-Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados são os apartamentos, que representam 81,36% do total. Em seguida, vêm as casas, com 8,91%, e os flats, com 5,72%. Por fim, as casas comerciais são as menos representadas, com apenas 15 ocorrências. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na predição de categorias menos frequentes, como as casas comerciais, onde o modelo pode ter dificuldade em obter bons resultados.
+Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados de treinamento são os apartamentos, que representam 81,12% do total. Em seguida, vêm as casas, com 8,96%, e os flats, com 5,79%. As casas de condomínio são uma das menos representadas, com apenas 2,06%. Os terrenos de condomínio e comerciais, somados, representam 2,06% do total. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na predição de categorias menos frequentes, como as casas de condomínios e terrenos, onde o modelo pode ter dificuldade em obter bons resultados.
 
 
 ![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m2.svg){#fig-mapa_valor width=450 height=250}

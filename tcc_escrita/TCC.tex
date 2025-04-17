@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, boxrule=0pt, frame hidden, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3771,13 +3771,14 @@ ausentes foram tratadas por meio de imputação.
 Uma das dificuldades que podem surgir durante a modelagem é o
 desbalanceamento das classes, ou seja, a diferença na quantidade de cada
 tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados
-são os apartamentos, que representam 81,36\% do total. Em seguida, vêm
-as casas, com 8,91\%, e os flats, com 5,72\%. Por fim, as casas
-comerciais são as menos representadas, com apenas 15 ocorrências. Esse
-desbalanceamento claro entre as classes pode dificultar o desempenho do
-modelo, especialmente na predição de categorias menos frequentes, como
-as casas comerciais, onde o modelo pode ter dificuldade em obter bons
-resultados.
+de treinamento são os apartamentos, que representam 81,12\% do total. Em
+seguida, vêm as casas, com 8,96\%, e os flats, com 5,79\%. As casas de
+condomínio são uma das menos representadas, com apenas 2,06\%. Os
+terrenos de condomínio e comerciais, somados, representam 2,06\% do
+total. Esse desbalanceamento claro entre as classes pode dificultar o
+desempenho do modelo, especialmente na predição de categorias menos
+frequentes, como as casas de condomínios e terrenos, onde o modelo pode
+ter dificuldade em obter bons resultados.
 
 \begin{figure}
 
