@@ -1972,10 +1972,11 @@ l.get_texts()[5].set_text('Terrenos e lotes comerciais')
 plt.show()
 ```
 
-A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que talvez seja necessário a aplicação de alguma transformação para a estabilização da variância.
+A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. Os apartamentos possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que a necessidade da aplicação de alguma transformação para a estabilização da variância.
 
+\vspace{12pt}
 
-Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica. O gráfico de densidade à esquerda na @fig-densitarg mostra os dados originais da distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada, comprimindo os valores mais altos. Isso tende a aproximar a distribuição de uma forma mais simétrica, facilitando a modelagem e análise estatística.
+Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica $\log\left(1 + x\right)$. O gráfico de densidade à esquerda na @fig-densitarg mostra a distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada da distribuição é reduzida. Isso tende a aproximar a distribuição de uma distribuição normal, facilitando a modelagem e análise estatística.
 
 ```{python}
 #| label: fig-densitarg
