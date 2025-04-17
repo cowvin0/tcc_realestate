@@ -1711,7 +1711,9 @@ No exemplo acima, o método `.from_estimator` é usado para criar o gráfico dir
 
 \vspace{12pt}
 
-Formalmente, para a construção da explicação gerada pelo LIME, a explicação é definida como um modelo $g \in G$, onde $G$ representa uma classe de potenciais modelos interpretáveis, como regressão linear ou árvores de decisão. O domínio de $g$ é dado por ${0, 1}^{d^{'}}$, ou seja, o modelo explicativo $g$ opera sobre a presença ou ausência de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore, enquanto que, para modelos lineares, $\Omega\left(g\right)$ pode ser o número de pesos diferentes de zero.
+Formalmente, para a construção da explicação gerada pelo LIME, a explicação é definida como um modelo $g \in G$, onde $G$ representa uma classe de potenciais modelos interpretáveis, como regressão linear ou árvores de decisão. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore.
+
+<!-- O domínio de $g$ é dado por $\{0, 1\}^{d^{'}}$, ou seja, o modelo explicativo $g$ opera sobre a presença ou ausência de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore. -->
 
 \vspace{12pt}
 
