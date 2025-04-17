@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, boxrule=0pt, frame hidden, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, sharp corners, frame hidden, colback={codebgcolor}, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3771,13 +3771,14 @@ ausentes foram tratadas por meio de imputação.
 Uma das dificuldades que podem surgir durante a modelagem é o
 desbalanceamento das classes, ou seja, a diferença na quantidade de cada
 tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados
-são os apartamentos, que representam 81,36\% do total. Em seguida, vêm
-as casas, com 8,91\%, e os flats, com 5,72\%. Por fim, as casas
-comerciais são as menos representadas, com apenas 15 ocorrências. Esse
-desbalanceamento claro entre as classes pode dificultar o desempenho do
-modelo, especialmente na predição de categorias menos frequentes, como
-as casas comerciais, onde o modelo pode ter dificuldade em obter bons
-resultados.
+de treinamento são os apartamentos, que representam 81,12\% do total. Em
+seguida, vêm as casas, com 8,96\%, e os flats, com 5,79\%. As casas de
+condomínio são uma das menos representadas, com apenas 2,06\%. Os
+terrenos de condomínio e comerciais, somados, representam 2,06\% do
+total. Esse desbalanceamento claro entre as classes pode dificultar o
+desempenho do modelo, especialmente na predição de categorias menos
+frequentes, como as casas de condomínios e terrenos, onde o modelo pode
+ter dificuldade em obter bons resultados.
 
 \begin{figure}
 
@@ -3843,19 +3844,20 @@ A distribuição das variáveis foram análisadas em termos do tipo do
 imóvel a partir de um gráfico de violino. Pela Figura~\ref{fig-violin},
 é fácil perceber que a maioria das distribuições possuem assimetria
 negativa. Os apartamentos possuem caudas longas à direita, indicando
-presença de valores extremamente altos e que indicam que talvez seja
-necessário a aplicação de alguma transformação para a estabilização da
-variância.
+presença de valores extremamente altos e que indicam que a necessidade
+da aplicação de alguma transformação para a estabilização da variância.
+
+\vspace{12pt}
 
 Para reduzir a assimetria da distribuição dos valores dos imóveis, foi
-aplicada uma transformação logarítmica. O gráfico de densidade à
-esquerda na Figura~\ref{fig-densitarg} mostra os dados originais da
+aplicada uma transformação logarítmica \(\log\left(1 + x\right)\). O
+gráfico de densidade à esquerda na Figura~\ref{fig-densitarg} mostra a
 distribuição do valor dos imóveis. Há uma tendência dos valores ficarem
 mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam
 valores excepcionalmente altos, o que acaba gerando uma distribuição
 assimétrica positiva. Com a aplicação da transformação logarítmica, a
-assimetria é suavizada, comprimindo os valores mais altos. Isso tende a
-aproximar a distribuição de uma forma mais simétrica, facilitando a
+assimetria é suavizada da distribuição é reduzida. Isso tende a
+aproximar a distribuição de uma distribuição normal, facilitando a
 modelagem e análise estatística.
 
 \begin{figure}
@@ -4018,15 +4020,14 @@ candidatas para a divisão.
 
 \end{figure}%
 
-A figura Figura~\ref{fig-rf_slice} mostra a variação da estatística de
-erro em função dos valores de cada hiperparâmetro ao longo dos trials. O
-gráfico Figura~\ref{fig-rf_import} exibe a importância de cada
-hiperparâmetro, calculada pelo método fANOVA. Na figura
-Figura~\ref{fig-rf_history}, observa-se a variação do erro para cada
-trial, com a linha vermelha representando o menor valor obtido em cada
-etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
-área que mostra a interação entre os hiperparâmetros tunados em relação
-à estatística de erro.
+A Figura~\ref{fig-rf_slice} mostra a variação da estatística de erro em
+função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico
+Figura~\ref{fig-rf_import} exibe a importância de cada hiperparâmetro,
+calculada pelo método fANOVA. Na Figura~\ref{fig-rf_history}, observa-se
+a variação do erro para cada trial, com a linha vermelha representando o
+menor valor obtido em cada etapa. Por fim, a Figura~\ref{fig-rf_contour}
+é um gráfico de área que mostra a interação entre os hiperparâmetros
+tunados em relação à estatística de erro.
 
 \vspace{12pt}
 
@@ -4042,12 +4043,12 @@ generalização.
 
 \vspace{12pt}
 
-Além disso, o gráfico de importância dos hiperparâmetros em
+Além disso, o gráfico de importância dos hiperparâmetros na
 Figura~\ref{fig-rf_import} revela que o hiperparâmetro
 \texttt{n\_estimators} possui uma maior contribuição na performance do
-modelo. A figura Figura~\ref{fig-rf_history} ilustra o comportamento da
-métrica de erro para cada trial, mostrando que o método de otimização
-alcança um de seus melhores valores pouco antes do trial 20.
+modelo. A Figura~\ref{fig-rf_history} ilustra o comportamento da métrica
+de erro para cada trial, mostrando que o método de otimização alcança um
+de seus melhores valores pouco antes do trial 20.
 
 \begin{longtable}[]{@{}cccc@{}}
 \caption{Melhores hiperparâmetros para Random
@@ -4146,14 +4147,12 @@ de árvores tem a menor influência.
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient
 Boosting apresentou melhorias significativas, como ilustrado na
 Figura~\ref{fig-gdt_history}, em que a estatística de erro foi bastante
-estável para cada combinação de hiperpâmetros, além de em ter se mantido
+estável para cada combinação de hiperpâmetros, além de ter se mantido
 abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é
 bastante similar à obtida para o Random Forest. Na
 Figura~\ref{fig-gdt_contour}, observa-se que o método de otimização TPE
 tende a selecionar valores menores para a profundidade das árvores e
-maiores para o número de árvores. Em relação à importância dos
-hiperparâmetros, o que representou a maior variação foi a taxa de
-aprendizado.
+maiores para o número de árvores.
 
 \begin{longtable}[]{@{}ccccc@{}}
 \caption{Melhores hiperparâmetros para Gradient
@@ -4175,11 +4174,11 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 
 ~~~Para a otimização do LGBM, foram considerados os mesmos
 hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com
-a tunagem do número de folhas das árvores. O espaço de busca para a
-quantidade de árvores foi definido entre 100 e 2000, para a taxa de
-aprendizado no mesmo intervalo usado no Gradient Boosting, para a
-profundidade das árvores e número de folhas o intervalo foi definido
-entre 100 e 600
+a tunagem da quantidade máxima do número de folhas das árvores. O espaço
+de busca para a quantidade de árvores foi definido entre 100 e 2000,
+para a taxa de aprendizado no mesmo intervalo usado no Gradient
+Boosting, para a profundidade das árvores e número de folhas o intervalo
+foi definido entre 100 e 600
 
 \begin{figure}
 
@@ -4239,23 +4238,20 @@ entre 100 e 600
 
 As trials de otimização do modelo LGBM (Figura~\ref{fig-lgbm_history})
 apresentaram um comportamento semelhante ao do Gradient Boosting, porém
-com maior estabilidade em cada tentativa e uma convergência mais rápida.
-Ao analisar a contribuição de cada hiperparâmetro para o desempenho do
-modelo na Figura~\ref{fig-lgbm_import}, observa-se que a quantidade de
-árvores é a taxa de aprendizado é o hiperparâmetro de maior influência,
-seguido pela quantidade de árvores, profundidade da árvore e, por
-último, o número de folhas.
+com menor estabilidade em cada tentativa. Ao analisar a contribuição de
+cada hiperparâmetro para o desempenho do modelo na
+Figura~\ref{fig-lgbm_import}, observa-se que a taxa de aprendizado e a
+quantidade de árvores são os hiperparâmetros de maior influência,
+seguido pela profundidade da árvore e, por último, o número de folhas.
 
 \vspace{12pt}
 
-Analisando a relação entre o hiperparâmetro de profundidade e o número
-de folhas em função da estatística de erro na
-Figura~\ref{fig-lgbm_contour}, observa-se que uma maior quantidade de
-folhas e uma menor profundidade das árvores resultam em um modelo com
-erro menor. Esse mesmo comportamento é observado para os outros
-hiperparâmetros, uma quantidade maior de folhas combinada com uma taxa
-de aprendizado crescente também produz um modelo com menor erro, assim
-como um número maior de árvores.
+Analisando a relação entre o hiperparâmetro de profundidade da árvore e
+o número de folhas em função da estatística de erro na
+Figura~\ref{fig-lgbm_contour}, observa-se que uma menor quantidade de
+folhas e uma maior profundidade das árvores resultam em um modelo com
+menor erro. Para uma maior quantidade de árvores e uma taxa de
+aprendizado tendendo a 0,01, a estatística de erro apresenta diminuição.
 
 \begin{longtable}[]{@{}
   >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1549}}
@@ -4318,11 +4314,11 @@ e 1000.
 A partir da Figura~\ref{fig-xgb_import}, o hiperparâmetro que
 representou a maior variação na função objetivo, e portanto a maior
 importância para a performance do modelo, foi a taxa de aprendizagem. A
-profundidade da árvore representou 22\% da variação e por último vem a
+profundidade da árvore representou 35\% da variação e por último vem a
 quantidade de árvores. Observando a Figura~\ref{fig-xgb_history}, é
 possível ver que o algoritmo de XGBoost foi aquele que apresentou a
-menor variação entre os trials, com um único trial com erro acima de
-2,0.
+menor variação entre as trials, com uma única trial com erro acima de
+1,0.
 
 \vspace{12pt}
 
@@ -4330,8 +4326,8 @@ O algoritmo de otimização TPE apresentou uma maior frequência de procura
 do hiperparâmetro de taxa de aprendizagem para valores menores, como
 pode ser visto na Figura~\ref{fig-xgb_slice}. O mesmo acontece para o
 hiperparâmetro de profundidade de árvores, há uma repetição maior para
-valores menores, indicando que o a estatística de erro tendeu a ter
-valores menores para essa região. Para a quantidade de árvores esse
+valores menores, indicando que a estatística de erro tendeu a ter
+valores menores para essa região. Para a quantidade de árvores, esse
 padrão foi diferente, uma quantidade maior de árvores faz com que o
 modelo tenha um melhor ajuste. Essas relações também podem ser
 observadas a partir da Figura~\ref{fig-xgb_contour}, menores taxas de
@@ -4408,17 +4404,17 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 81 & 0,28528 & 788 & 8 & 0,07119 \\
 \end{longtable}
 
-A tabela Tabela~\ref{tbl-params_xgb} apresenta a tentativa em que a
-combinação de hiperparâmetros resultou no menor erro para o algoritmo de
-Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de
-número 81, com uma configuração de 788 árvores, profundidade máxima
-igual a 8 e taxa de aprendizado de 0,07119.
+A Tabela~\ref{tbl-params_xgb} apresenta a tentativa em que a combinação
+de hiperparâmetros resultou no menor erro para o algoritmo de Extreme
+Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81,
+com uma configuração de 788 árvores, profundidade máxima igual a 8 e
+taxa de aprendizado de 0,07119.
 
 \vspace{12pt}
 
 Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com
-1.988 árvores, 202 folhas, profundidade máxima de 379 e taxa de
-aprendizado de 0,00985, como apresentado na tabela
+1.988 árvores, quantidade máxima 202 folhas, profundidade máxima de 379
+e taxa de aprendizado de 0,00985, como apresentado na
 Tabela~\ref{tbl-params_lgbm}.
 
 \vspace{12pt}
@@ -4472,7 +4468,7 @@ algoritmo Random Forest e Gradient Boosting, respectivamente.}
 
 \end{figure}%
 
-O ajuste do algoritmo Random Forest é apresentado na figura
+O ajuste do algoritmo Random Forest é apresentado na
 Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
 previstos e observados. Em termos da transformação logarítmica
 realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28578,
@@ -4516,25 +4512,25 @@ respectivamente.}
 
 \vspace{12pt}
 
-Em relação ao algoritmo de Gradient Boosting, seu ajuste consegue
-explicar \(87,32712%
-\) da variável dependente, um valor superior ao obtido com o ajuste do
-algoritmo de Random Forest, embora a diferença não seja muito grande.
-Para o MAPE, o valor encontrado foi de \(0,01333\), indicando que os
-valores estimados dos imóveis estão, em média, \(1,333\%\) distantes dos
-seus valores observados. A relação entre os valores estimados e os
-observados pode ser visualizada na Figura~\ref{fig-preds_gdt}.
+Em relação ao algoritmo de Gradient Boosting, o modelo consegue explicar
+\(87,32712\%\) da variação da variável dependente, um valor superior ao
+obtido com o ajuste do algoritmo de Random Forest, embora a diferença
+não seja significante. Para o MAPE, o valor encontrado foi de
+\(0,01333\), indicando que os valores estimados dos imóveis estão, em
+média, \(1,333\%\) distantes dos seus valores observados. O seu RMSE foi
+de 0,28297. A relação entre os valores estimados e os observados pode
+ser visualizada na Figura~\ref{fig-preds_gdt}.
 
 \vspace{12pt}
 
 O Light Gradient Boosting conseguiu melhorias em relação aos resultados
 obtidos da Random Forest, mas não em relação ao Gradient Boosting. Em
 relação ao seu \(R^2\), o modelo consegue explicar \(87,25794\%\) da
-variável dependente. O seu RMSE ficou em \(0,28385\) e o MAPE em
-\(0,01340\). Dessa forma, as predições geradas pelo Light Gradient
-Boosting estão em média \(1,340\%\) distantes de seus valores reais. O
-gráfico de seus valores estimados em função dos observados pode ser
-observado na Figura~\ref{fig-preds_lgbm}.
+variância da variável dependente. O seu RMSE ficou em \(0,28385\) e o
+MAPE em \(0,01340\). Dessa forma, as predições geradas pelo Light
+Gradient Boosting estão, em média, \(1,340\%\) distantes de seus valores
+reais. O gráfico de seus valores estimados em função dos observados pode
+ser observado na Figura~\ref{fig-preds_lgbm}.
 
 \begin{figure}
 
@@ -4551,11 +4547,11 @@ observados do algoritmo Stacking.}
 
 Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados
 melhores que os algoritmos de Random Forest. Além disso, foi o modelo
-que obteve o melhor MAPE. O RMSE obtido pelo XGBoost foi de \(0,28400\)
-e o seu \(R^2\) foi de \(87,24599\%\), indicando que o modelo consegue
-explicar \(87,24599\%\) da variável dependente. As predições geradas
-pelo Extreme Gradient Boosting estão em média \(1,325\%\) distantes de
-seus valores reais.
+que obteve o melhor MAPE. O RMSE obtido pelo XGBoost foi de \(0,2840\) e
+o seu \(R^2\) foi de \(87,24599\%\), indicando que o modelo consegue
+explicar \(87,24599\%\) da variação da variável dependente. As predições
+geradas pelo Extreme Gradient Boosting estão, em média, \(1,325\%\)
+distantes de seus valores reais.
 
 \vspace{12pt}
 
