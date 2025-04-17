@@ -2396,7 +2396,7 @@ Resultados da tunagem da Random Forest.
 :::
 
 
-A figura @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método fANOVA. Na figura @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a figura @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
+A figura @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método fANOVA. Na @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a figura @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
 
 \vspace{12pt}
 
@@ -2881,7 +2881,7 @@ Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tenta
 Valores previstos em função dos observados do algoritmo Random Forest e Gradient Boosting, respectivamente.
 :::
 
-O ajuste do algoritmo Random Forest é apresentado na figura @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28578, enquanto o coeficiente de determinação $R^2$ alcançou $87,10419\%$. Em relação ao MAPE, o valor foi de 0,01346, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram em média 1,346% distantes dos valores reais.
+O ajuste do algoritmo Random Forest é apresentado na @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28578, enquanto o coeficiente de determinação $R^2$ alcançou $87,10419\%$. Em relação ao MAPE, o valor foi de 0,01346, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram em média 1,346% distantes dos valores reais.
 
 ::: {#fig-preds2 layout-ncol=2}
 

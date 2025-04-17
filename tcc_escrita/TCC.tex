@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, colback={codebgcolor}, sharp corners, enhanced, breakable, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, sharp corners, colback={codebgcolor}, enhanced, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -4023,7 +4023,7 @@ candidatas para a divisão.
 A figura Figura~\ref{fig-rf_slice} mostra a variação da estatística de
 erro em função dos valores de cada hiperparâmetro ao longo dos trials. O
 gráfico Figura~\ref{fig-rf_import} exibe a importância de cada
-hiperparâmetro, calculada pelo método fANOVA. Na figura
+hiperparâmetro, calculada pelo método fANOVA. Na
 Figura~\ref{fig-rf_history}, observa-se a variação do erro para cada
 trial, com a linha vermelha representando o menor valor obtido em cada
 etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
@@ -4474,7 +4474,7 @@ algoritmo Random Forest e Gradient Boosting, respectivamente.}
 
 \end{figure}%
 
-O ajuste do algoritmo Random Forest é apresentado na figura
+O ajuste do algoritmo Random Forest é apresentado na
 Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
 previstos e observados. Em termos da transformação logarítmica
 realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28578,
