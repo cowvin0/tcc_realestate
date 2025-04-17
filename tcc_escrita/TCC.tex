@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, breakable, colback={codebgcolor}, boxrule=0pt, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, breakable, colback={codebgcolor}, sharp corners, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2775,10 +2775,10 @@ a proporção das classes definidas.
 
 A estratificação foi baseada em intervalos criados a partir da variável
 que representa o valor dos imóveis. Foram definidos cinco intervalos: o
-primeiro abrange valores entre o mínimo e 200.000; o segundo, entre
-200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto, entre
-600.000 e 800.000; e o último intervalo cobre os valores de 800.000 até
-o máximo da variável. Dessa forma, 20\% do conjunto de dados foi
+primeiro abrange valores entre o mínimo de 43.914 e 200.000; o segundo,
+entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto,
+entre 600.000 e 800.000; e a quinta, valores acima de R\$ 800.000 até o
+máximo de R\$ 7.000.000. Dessa forma, 20\% do conjunto de dados foi
 reservado para o teste, enquanto os 80\% restantes foram utilizados para
 o treinamento do modelo.
 
@@ -2920,7 +2920,7 @@ CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i
 \] em que \(N\) representa o número total de observações, \(L\) é a
 função de perda, \(y_i\) é o valor observado, \(x_i\) é a entrada
 correspondente, \(\hat{f}^{-k(i)}\) é o modelo ajustado sem o
-\(k\)-ésimo subconjunto, e
+\(k\)-ésimo fold ao qual a observação \(i\) pertence, e
 \(k: \{1, \dots, N\} \mapsto \{1, \dots, K\}\) indica a partição à qual
 a observação \(i\) foi alocada por meio de randomização.
 
@@ -2975,15 +2975,16 @@ exemplo de como se utilizar a validação cruzada em \textbf{Python}:
 \NormalTok{kf }\OperatorTok{=}\NormalTok{ KFold(n\_splits}\OperatorTok{=}\DecValTok{20}\NormalTok{)}
 
 \NormalTok{scores }\OperatorTok{=}\NormalTok{ cross\_val\_score(}
-\NormalTok{  estimator}\OperatorTok{=}\NormalTok{model,}
-\NormalTok{  X}\OperatorTok{=}\NormalTok{X, y}\OperatorTok{=}\NormalTok{y,}
-\NormalTok{  scoring}\OperatorTok{=}\StringTok{\textquotesingle{}neg\_mean\_squared\_error\textquotesingle{}}\NormalTok{,}
-\NormalTok{  cv}\OperatorTok{=}\NormalTok{kf)}
+\NormalTok{    X}\OperatorTok{=}\NormalTok{X, y}\OperatorTok{=}\NormalTok{y,}
+\NormalTok{    estimator}\OperatorTok{=}\NormalTok{model,}
+\NormalTok{    scoring}\OperatorTok{=}\StringTok{"neg\_mean\_squared\_error"}\NormalTok{,}
+\NormalTok{    cv}\OperatorTok{=}\NormalTok{kf}
+\NormalTok{)}
 
-\NormalTok{mse\_scores }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{ scores}
+\NormalTok{mse\_scores }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{scores}
 \NormalTok{mean\_mse }\OperatorTok{=}\NormalTok{ mse\_scores.mean()}
 
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Média de acurácia: }\SpecialCharTok{\{}\NormalTok{mean\_mse}\SpecialCharTok{:.4f\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Média de acurácia: }\SpecialCharTok{\{}\NormalTok{mean\_mse}\SpecialCharTok{:.4f\}}\SpecialStringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3003,11 +3004,9 @@ Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o
 desvio médio entre os valores estimados e os valores observados,
 oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o
 coeficiente de determinação (\(R^2\)), que indica a proporção da
-variância da variável dependente explicada pelas variáveis
-independentes. Neste caso, o \(R^2\) avalia o quão bem as variáveis
-utilizadas para a contrução do modelo conseguem representar a variação
-no valor do imóvel. As métricas utilizadas são definidas da seguinte
-forma:
+variância da variável dependente explicada pelo modelo, com base nas
+variáveis independentes utilizadas em sua construção. As métricas
+utilizadas são definidas da seguinte forma:
 
 \begin{figure}
 

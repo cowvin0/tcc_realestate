@@ -1259,7 +1259,7 @@ Após a seleção das variáveis, o conjunto de dados foi dividido em conjuntos 
 
 \vspace{12pt}
 
-A estratificação foi baseada em intervalos criados a partir da variável que representa o valor dos imóveis. Foram definidos cinco intervalos: o primeiro abrange valores entre o mínimo e 200.000; o segundo, entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto, entre 600.000 e 800.000; e o último intervalo cobre os valores de 800.000 até o máximo da variável. Dessa forma, 20% do conjunto de dados foi reservado para o teste, enquanto os 80% restantes foram utilizados para o treinamento do modelo.
+A estratificação foi baseada em intervalos criados a partir da variável que representa o valor dos imóveis. Foram definidos cinco intervalos: o primeiro abrange valores entre o mínimo de 43.914 e 200.000; o segundo, entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto, entre 600.000 e 800.000; e a quinta, valores acima de R$ 800.000 até o máximo de R$ 7.000.000. Dessa forma, 20% do conjunto de dados foi reservado para o teste, enquanto os 80% restantes foram utilizados para o treinamento do modelo.
 
 \vspace{12pt}
 
@@ -1320,7 +1320,7 @@ A validação cruzada K-Fold é uma técnica que utiliza parte dos dados para aj
 $$
 CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)\text{,}
 $$
-em que $N$ representa o número total de observações, $L$ é a função de perda, $y_i$ é o valor observado, $x_i$ é a entrada correspondente, $\hat{f}^{-k(i)}$ é o modelo ajustado sem o $k$-ésimo subconjunto, e $k: \{1, \dots, N\} \mapsto \{1, \dots, K\}$ indica a partição à qual a observação $i$ foi alocada por meio de randomização.
+em que $N$ representa o número total de observações, $L$ é a função de perda, $y_i$ é o valor observado, $x_i$ é a entrada correspondente, $\hat{f}^{-k(i)}$ é o modelo ajustado sem o $k$-ésimo fold ao qual a observação $i$ pertence, e $k: \{1, \dots, N\} \mapsto \{1, \dots, K\}$ indica a partição à qual a observação $i$ foi alocada por meio de randomização.
 
 ```{python}
 def plot_cv_indices(cv, X, ax, n_splits, lw=10):
@@ -1394,15 +1394,16 @@ model = RandomForestClassifier()
 kf = KFold(n_splits=20)
 
 scores = cross_val_score(
-  estimator=model,
-  X=X, y=y,
-  scoring='neg_mean_squared_error',
-  cv=kf)
+    X=X, y=y,
+    estimator=model,
+    scoring="neg_mean_squared_error",
+    cv=kf
+)
 
-mse_scores = - scores
+mse_scores = -scores
 mean_mse = mse_scores.mean()
 
-print(f'Média de acurácia: {mean_mse:.4f}')
+print(f"Média de acurácia: {mean_mse:.4f}")
 ```
 
 \vspace{12pt}
@@ -1411,7 +1412,11 @@ A métrica utilizada para avaliar o desempenho dos modelos durante a validação
 
 \vspace{12pt}
 
-Embora não tenha sido utilizada na validação cruzada, outra métrica considerada para a análise do desempenho dos modelos foi o MAPE (Erro Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o desvio médio entre os valores estimados e os valores observados, oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelas variáveis independentes. Neste caso, o $R^2$ avalia o quão bem as variáveis utilizadas para a contrução do modelo conseguem representar a variação no valor do imóvel. As métricas utilizadas são definidas da seguinte forma:
+Embora não tenha sido utilizada na validação cruzada, outra métrica considerada para a análise do desempenho dos modelos foi o MAPE (Erro Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o desvio médio entre os valores estimados e os valores observados, oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelo modelo, com base nas variáveis independentes utilizadas em sua construção. As métricas utilizadas são definidas da seguinte forma:
+
+<!-- Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelo modelo, com base nas variáveis independentes utilizadas para sua construção. As métricas utilizadas são definidas da seguinte forma: -->
+
+<!-- Neste caso, o $R^2$ avalia o quão bem as variáveis utilizadas para a construção do modelo conseguem representar a variação no valor do imóvel. As métricas utilizadas são definidas da seguinte forma: -->
 
 ::: {layout-ncol=3}
 $$
@@ -1425,9 +1430,7 @@ $$
 $$
 \text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|\text{,}
 $$
-
 :::
-
 em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
 
 ## Otimização de hiperparâmetros
