@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, frame hidden, enhanced, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, enhanced, breakable, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3322,16 +3322,16 @@ são definidas da seguinte forma:
 
 \vspace{12pt}
 
-Quando \(U = \emptyset\), a constante \(\hat{f}_{\emptyset}\) é a média
-da função em seu domínio. As funções unárias
-\(\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)\) são chamadas
-de efeitos principais e capturam o efeito da variação do hiperparâmetro
-\(j\), fazendo a média sobre todas as configurações dos outros
-hiperparâmetros. Quando \(|U| > 1\), as funções
-\(\hat{f}_{U}\left(\boldsymbol{\theta}_U\right)\) capturam exatamente os
-efeitos de interação entre todos os hiperparâmetros em \(U\) (excluindo
-todos os efeitos principais de ordem inferior e efeitos de interação de
-\(W \subsetneq U\)).
+Quando \(U = \emptyset\), a constante
+\(\hat{f}_{\emptyset}\)\hspace{0pt} corresponde à média global da função
+\(\hat y\)\hspace{0pt} em todo o seu domínio. As funções unárias
+\(\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)\), conhecidas
+como efeitos principais, quantificam o impacto do hiperparâmetro \(j\)
+sobre a função \(\hat y\)\hspace{0pt}, considerando a média do
+desempenho em todas as possíveis combinações dos demais hiperparâmetros.
+Já quando \(|U| > 1\), as funções
+\(\hat{f}_{U}\left(\boldsymbol{\theta}_U\right)\) representam efeitos de
+interação entre os hiperparâmetros do subconjunto \(U\).
 
 \vspace{12pt}
 
