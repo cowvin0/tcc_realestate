@@ -1588,8 +1588,6 @@ O método fANOVA utiliza uma Random Forest para estimar a função objetivo com 
 
 Matematicamente, o fANOVA decompõe uma função $\hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}$ em componentes aditivas que dependem apenas de subconjuntos dos hiperparâmetros. Denota-se por $N=\{1,\cdots,n\}$ o conjunto de todos os hiperparâmetros de um algoritmo $A$. Assim, tem-se a seguinte definição:
 
-<!-- Matematicamente, o fANOVA decompõe uma função $\hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}$ em componentes aditivos que dependem apenas de subconjuntos de suas instâncias $N$ que representa o conjunto $\{1,\dots,n\}$ de todos os hiperparâmetros de um algoritmo $A$. Assim, define-se: -->
-
 $$
 \hat{y} = \sum_{U \subseteq N} \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\text{,}
 $$
@@ -1606,7 +1604,11 @@ em que $\hat{a}_{U}\left(\boldsymbol{\theta}_U\right) = \frac{1}{\|\boldsymbol{\
 
 \vspace{12pt}
 
-Quando $U = \emptyset$, a constante $\hat{f}_{\emptyset}$ é a média da função em seu domínio. As funções unárias $\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)$ são chamadas de efeitos principais e capturam o efeito da variação do hiperparâmetro $j$, fazendo a média sobre todas as configurações dos outros hiperparâmetros. Quando $|U| > 1$, as funções $\hat{f}_{U}\left(\boldsymbol{\theta}_U\right)$ capturam exatamente os efeitos de interação entre todos os hiperparâmetros em $U$ (excluindo todos os efeitos principais de ordem inferior e efeitos de interação de $W \subsetneq U$).
+Quando $U = \emptyset$, a constante $\hat{f}_{\emptyset}$​ corresponde à média global da função $\hat y$​ em todo o seu domínio. As funções unárias $\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)$, conhecidas como efeitos principais, quantificam o impacto do hiperparâmetro $j$ sobre a função $\hat y$​, considerando a média do desempenho em todas as possíveis combinações dos demais hiperparâmetros. Já quando $|U| > 1$, as funções $\hat{f}_{U}\left(\boldsymbol{\theta}_U\right)$ representam efeitos de interação entre os hiperparâmetros do subconjunto $U$.
+
+<!-- , capturando variações na função que não podem ser explicadas apenas pelos efeitos principais ou interações de ordem inferior, (isto é, subconjuntos $W \subsetneq U$). -->
+
+<!-- Quando $U = \emptyset$, a constante $\hat{f}_{\emptyset}$ é a média da função em seu domínio. As funções unárias $\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)$ são chamadas de efeitos principais e capturam o efeito da variação do hiperparâmetro $j$, fazendo a média sobre todas as configurações dos outros hiperparâmetros. Quando $|U| > 1$, as funções $\hat{f}_{U}\left(\boldsymbol{\theta}_U\right)$ capturam exatamente os efeitos de interação entre todos os hiperparâmetros em $U$ (excluindo todos os efeitos principais de ordem inferior e efeitos de interação de $W \subsetneq U$). -->
 
 \vspace{12pt}
 
