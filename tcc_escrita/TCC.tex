@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, boxrule=0pt, colback={codebgcolor}, enhanced, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, enhanced, breakable, sharp corners, frame hidden, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3306,8 +3306,8 @@ definição:
 é o vetor correspondente a uma configuração parcial dos hiperparâmetros
 para o subconjunto \(U = \{u_{1}, \dots, u_{m}\} \subseteq N\), que
 representa um subconjunto dos índices dos hiperparâmetros. Além disso,
-as componentes de \(\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\)
-são definidas da seguinte forma:
+as componentes \(\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\) são
+definidas da seguinte forma:
 
 \[
 \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=
@@ -3519,14 +3519,19 @@ modelos complexos.
 
 \vspace{12pt}
 
-Formalmente, para a construção da explicação gerada pelo LIME, a
-explicação é definida como um modelo \(g \in G\), onde \(G\) representa
-uma classe de potenciais modelos interpretáveis, como regressão linear
-ou árvores de decisão. Como nem todos os modelos \(g \in G\) podem ser
-simples o suficiente para serem interpretados, define-se uma medida de
-complexidade \(\Omega\left(g\right)\) para a explicação gerada por
-\(g \in G\). Por exemplo, para uma árvore de regressão,
-\(\Omega\left(g\right)\) pode ser a profundidade da árvore.
+Formalmente, para a construção da explicação gerada pelo LIME, define-se
+a explicação como um modelo \(g \in G\), onde \(G\) representa uma
+classe de modelos potencialmente interpretáveis, como regressão linear
+ou árvores de decisão. O processo começa com a geração de um novo
+conjunto de dados composto por amostras perturbadas da instância
+original --- pequenas variações nos dados de entrada --- e as
+respectivas predições do modelo complexo. Sobre esse novo conjunto,
+ajusta-se o modelo explicativo \(g\), cuja finalidade é aproximar
+localmente o comportamento do modelo original. Como nem todos os modelos
+\(g \in G\) são simples o suficiente para serem interpretáveis,
+define-se uma medida de complexidade \(\Omega\left(g\right)\). Por
+exemplo, para uma árvore de decisão, \(\Omega\left(g\right)\) pode ser
+representada pela profundidade da árvore.
 
 \vspace{12pt}
 

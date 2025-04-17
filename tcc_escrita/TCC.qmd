@@ -1591,7 +1591,7 @@ Matematicamente, o fANOVA decompõe uma função $\hat y: \Theta_{1} \times \dot
 $$
 \hat{y} = \sum_{U \subseteq N} \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\text{,}
 $$
-em que $\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}$, é o vetor correspondente a uma configuração parcial dos hiperparâmetros para o subconjunto $U = \{u_{1}, \dots, u_{m}\} \subseteq N$, que representa um subconjunto dos índices dos hiperparâmetros. Além disso, as componentes de $\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)$ são definidas da seguinte forma:
+em que $\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}$, é o vetor correspondente a uma configuração parcial dos hiperparâmetros para o subconjunto $U = \{u_{1}, \dots, u_{m}\} \subseteq N$, que representa um subconjunto dos índices dos hiperparâmetros. Além disso, as componentes $\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)$ são definidas da seguinte forma:
 
 $$
 \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=
@@ -1711,7 +1711,9 @@ No exemplo acima, o método `.from_estimator` é usado para criar o gráfico dir
 
 \vspace{12pt}
 
-Formalmente, para a construção da explicação gerada pelo LIME, a explicação é definida como um modelo $g \in G$, onde $G$ representa uma classe de potenciais modelos interpretáveis, como regressão linear ou árvores de decisão. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore.
+Formalmente, para a construção da explicação gerada pelo LIME, define-se a explicação como um modelo $g \in G$, onde $G$ representa uma classe de modelos potencialmente interpretáveis, como regressão linear ou árvores de decisão. O processo começa com a geração de um novo conjunto de dados composto por amostras perturbadas da instância original — pequenas variações nos dados de entrada — e as respectivas predições do modelo complexo. Sobre esse novo conjunto, ajusta-se o modelo explicativo $g$, cuja finalidade é aproximar localmente o comportamento do modelo original. Como nem todos os modelos $g \in G$ são simples o suficiente para serem interpretáveis, define-se uma medida de complexidade $\Omega\left(g\right)$. Por exemplo, para uma árvore de decisão, $\Omega\left(g\right)$ pode ser representada pela profundidade da árvore.
+
+<!-- Formalmente, para a construção da explicação gerada pelo LIME, a explicação é definida como um modelo $g \in G$, onde $G$ representa uma classe de potenciais modelos interpretáveis, como regressão linear ou árvores de decisão. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore. -->
 
 <!-- O domínio de $g$ é dado por $\{0, 1\}^{d^{'}}$, ou seja, o modelo explicativo $g$ opera sobre a presença ou ausência de componentes interpretáveis. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore. -->
 
