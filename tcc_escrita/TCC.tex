@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, boxrule=0pt, colback={codebgcolor}, frame hidden, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, frame hidden, enhanced, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3094,21 +3094,22 @@ inexploradas.
 \subsection{Tree-Structured Parzen
 Estimator}\label{tree-structured-parzen-estimator}
 
-~~~A função probabilística utilizada para a otimização bayesiana neste
-trabalho foi a Tree-Structured Parzen Estimator (TPE). O TPE define duas
-funções de densidade, \(l\left(\lambda\right)\) e
-\(g\left(\lambda\right)\), que são empregadas para modelar a
-distribuição das variáveis no domínio dos hiperparâmetros \(\lambda\)
-(YANG; SHAMI, 2020). Essas densidades são utilizadas para estimar a
-probabilidade condicional \(p\left(\lambda | y\right)\) de observar uma
-combinação de hiperparâmetros \(\lambda\), dado um valor de métrica de
-desempenho \(y\). A definição é dada por:
+~~~A função probabilística adotada para a otimização bayesiana neste
+trabalho foi o método Tree-Structured Parzen Estimator (TPE). O TPE
+define duas funções de densidade, \(l\left(\lambda\right)\) e
+\(g\left(\lambda\right)\), que são utilizadas para modelar a
+distribuição dos hiperparâmetros \(\lambda\) no espaço de busca (YANG;
+SHAMI, 2020). Essas densidades permitem estimar a probabilidade
+condicional \(p\left(\lambda | y\right)\), que representa a
+probabilidade de uma determinada configuração de hiperparâmetros
+\(\lambda\) ocorrer, dado um valor da métrica de desempenho \(y\). A
+definição é dada por:
 
 \begin{equation}\phantomsection\label{eq-tpe}{
 P(\lambda|y) =
 \begin{cases}
-    l(\lambda) & \text{if } y < y^* \\
-    g(\lambda) & \text{if } y \ge y^*
+    l(\lambda)\text{, } & \text{se } y < y^* \\
+    g(\lambda)\text{, } & \text{se } y \ge y^*
 \end{cases}\text{,}
 }\end{equation} em que \(l\left(\lambda\right)\) representa a densidade
 associada aos valores de \(y\) menores que o limiar \(y^*\) e
@@ -3142,8 +3143,9 @@ Portanto, para o cálculo do EI utilizando as definições dadas pelo TPE e
 assumindo que \(y^∗>y\), adota-se a parametrização de
 \(p\left(\lambda,y\right)\) como
 \(p\left(y\right)p\left(\lambda∣y\right)\), com o objetivo de
-simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz
-a:
+simplificar os cálculos da distribuição marginal
+\(p\left(\lambda\right)\). Assim, a expressão do EI, para o TPE, se
+reduz a:
 
 \begin{equation}\phantomsection\label{eq-exp}{
 EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy\text{.}
@@ -3292,18 +3294,20 @@ hiperparâmetros têm maior impacto no desempenho do modelo.
 
 Matematicamente, o fANOVA decompõe uma função
 \(\hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}\)
-em componentes aditivos que dependem apenas de subconjuntos de suas
-instâncias \(N\). Assim, define-se:
+em componentes aditivas que dependem apenas de subconjuntos dos
+hiperparâmetros. Denota-se por \(N=\{1,\cdots,n\}\) o conjunto de todos
+os hiperparâmetros de um algoritmo \(A\). Assim, tem-se a seguinte
+definição:
 
 \[
 \hat{y} = \sum_{U \subseteq N} \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\text{,}
 \] em que
 \(\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}\),
 é o vetor correspondente a uma configuração parcial dos hiperparâmetros
-para o subconjunto \(U = \{u_{1}, \dots, u_{m}\}\), que representa um
-subconjunto dos índices dos hiperparâmetros. Além disso, as componentes
-de \(\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\) são definidas da
-seguinte forma:
+para o subconjunto \(U = \{u_{1}, \dots, u_{m}\} \subseteq N\), que
+representa um subconjunto dos índices dos hiperparâmetros. Além disso,
+as componentes de \(\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\)
+são definidas da seguinte forma:
 
 \[
 \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=
