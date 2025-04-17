@@ -1185,7 +1185,7 @@ Assim como o Gradient Boosting, as implementações existentes de Light Gradient
 
 \vspace{12pt}
 
-Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15 qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem **R**. Dessa forma, tem-se as seguintes variáveis:
+Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 11 são quantitativas e 14 qualitativas nominais, sendo 12 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem **R**. Dessa forma, tem-se as seguintes variáveis:
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
@@ -1230,7 +1230,7 @@ Além dos dados mencionados, foram também utilizados dados geográficos sobre a
 
 \vspace{12pt}
 
-Nesta etapa, também foi analisada a correlação entre as variáveis dependentes utilizadas no modelo, o que possibilitou a criação de novas variáveis com base na interação entre aquelas que apresentavam alguma relação. Para isso, utilizou-se a correlação de Spearman [@spearman1961proof].
+Nesta etapa, também foi analisada a correlação entre as variáveis independentes utilizadas no modelo, o que possibilitou a criação de novas variáveis com base na interação entre aquelas que apresentavam alguma relação. Para isso, utilizou-se a correlação de Spearman [@spearman1961proof].
 
 \vspace{12pt}
 
@@ -1259,7 +1259,7 @@ Após a seleção das variáveis, o conjunto de dados foi dividido em conjuntos 
 
 \vspace{12pt}
 
-A estratificação foi baseada em intervalos criados a partir da variável que representa o valor dos imóveis. Foram definidos cinco intervalos: o primeiro abrange valores entre o mínimo e 200.000; o segundo, entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto, entre 600.000 e 800.000; e o último intervalo cobre os valores de 800.000 até o máximo da variável. Dessa forma, 20% do conjunto de dados foi reservado para o teste, enquanto os 80% restantes foram utilizados para o treinamento do modelo.
+A estratificação foi baseada em intervalos criados a partir da variável que representa o valor dos imóveis. Foram definidos cinco intervalos: o primeiro abrange valores entre o mínimo de 43.914 e 200.000; o segundo, entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto, entre 600.000 e 800.000; e a quinta, valores acima de R$ 800.000 até o máximo de R$ 7.000.000. Dessa forma, 20% do conjunto de dados foi reservado para o teste, enquanto os 80% restantes foram utilizados para o treinamento do modelo.
 
 \vspace{12pt}
 
@@ -1320,7 +1320,7 @@ A validação cruzada K-Fold é uma técnica que utiliza parte dos dados para aj
 $$
 CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)\text{,}
 $$
-em que $N$ representa o número total de observações, $L$ é a função de perda, $y_i$ é o valor observado, $x_i$ é a entrada correspondente, $\hat{f}^{-k(i)}$ é o modelo ajustado sem o $k$-ésimo subconjunto, e $k: \{1, \dots, N\} \mapsto \{1, \dots, K\}$ indica a partição à qual a observação $i$ foi alocada por meio de randomização.
+em que $N$ representa o número total de observações, $L$ é a função de perda, $y_i$ é o valor observado, $x_i$ é a entrada correspondente, $\hat{f}^{-k(i)}$ é o modelo ajustado sem o $k$-ésimo fold ao qual a observação $i$ pertence, e $k: \{1, \dots, N\} \mapsto \{1, \dots, K\}$ indica a partição à qual a observação $i$ foi alocada por meio de randomização.
 
 ```{python}
 def plot_cv_indices(cv, X, ax, n_splits, lw=10):
@@ -1394,15 +1394,16 @@ model = RandomForestClassifier()
 kf = KFold(n_splits=20)
 
 scores = cross_val_score(
-  estimator=model,
-  X=X, y=y,
-  scoring='neg_mean_squared_error',
-  cv=kf)
+    X=X, y=y,
+    estimator=model,
+    scoring="neg_mean_squared_error",
+    cv=kf
+)
 
-mse_scores = - scores
+mse_scores = -scores
 mean_mse = mse_scores.mean()
 
-print(f'Média de acurácia: {mean_mse:.4f}')
+print(f"Média de acurácia: {mean_mse:.4f}")
 ```
 
 \vspace{12pt}
@@ -1411,7 +1412,11 @@ A métrica utilizada para avaliar o desempenho dos modelos durante a validação
 
 \vspace{12pt}
 
-Embora não tenha sido utilizada na validação cruzada, outra métrica considerada para a análise do desempenho dos modelos foi o MAPE (Erro Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o desvio médio entre os valores estimados e os valores observados, oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelas variáveis independentes. Neste caso, o $R^2$ avalia o quão bem as variáveis utilizadas para a contrução do modelo conseguem representar a variação no valor do imóvel. As métricas utilizadas são definidas da seguinte forma:
+Embora não tenha sido utilizada na validação cruzada, outra métrica considerada para a análise do desempenho dos modelos foi o MAPE (Erro Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o desvio médio entre os valores estimados e os valores observados, oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelo modelo, com base nas variáveis independentes utilizadas em sua construção. As métricas utilizadas são definidas da seguinte forma:
+
+<!-- Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelo modelo, com base nas variáveis independentes utilizadas para sua construção. As métricas utilizadas são definidas da seguinte forma: -->
+
+<!-- Neste caso, o $R^2$ avalia o quão bem as variáveis utilizadas para a construção do modelo conseguem representar a variação no valor do imóvel. As métricas utilizadas são definidas da seguinte forma: -->
 
 ::: {layout-ncol=3}
 $$
@@ -1425,9 +1430,7 @@ $$
 $$
 \text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|\text{,}
 $$
-
 :::
-
 em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
 
 ## Otimização de hiperparâmetros
@@ -1444,7 +1447,9 @@ A otimização bayesiana não se refere a um algoritmo específico, mas sim a um
 
 \vspace{12pt}
 
-Diferentemente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana ajusta suas tentativas futuras com base nos resultados obtidos anteriormente [@yang2020hyperparameter]. Para definir os pontos de avaliação futuros, utiliza-se uma função probabilística $P\left(c | \lambda \right)$, que modela a relação entre os hiperparâmetros $\lambda$ e a métrica de desempenho $c$ [@bergstra2013making]. A partir dessa função, estima-se, para cada conjunto de hiperparâmetros $\lambda$, a performance esperada $\hat{c}\left(\lambda\right)$ e a incerteza associada à predição $\hat{\sigma}\left(\lambda\right)$. Com essas estimativas, a distribuição preditiva derivada da função probabilística permite a aplicação de uma função de aquisição. Essa função orienta a escolha dos próximos pontos a serem avaliados, equilibrando exploitation (explorar regiões próximas às melhores observações anteriores) e exploration (investigar áreas ainda não exploradas)^[Exploitation refere-se à busca por soluções promissoras com base em dados prévios, enquanto exploration visa descobrir novas regiões potencialmente vantajosas].
+Diferentemente de outros algoritmos de otimização de hiperparâmetros, a otimização bayesiana ajusta suas tentativas futuras com base nos resultados obtidos anteriormente [@yang2020hyperparameter]. Para definir os pontos de avaliação futuros, utiliza-se uma função probabilística $P\left(c | \lambda \right)$, que modela a relação entre os hiperparâmetros $\lambda$ e a métrica de desempenho $c$ [@bergstra2013making]. A partir dessa função, estima-se, para cada conjunto de hiperparâmetros $\lambda$, a performance esperada $\hat{c}\left(\lambda\right)$ e a incerteza associada à predição $\hat{\sigma}\left(\lambda\right)$. Depois de obter a distribuição preditiva da função probabilística, uma função de aquisição determina o uso de diferentes pontos. Essa função orienta a escolha dos próximos pontos a serem avaliados, equilibrando exploitation (explorar regiões próximas às melhores observações anteriores) e exploration (investigar áreas ainda não exploradas)^[Exploitation refere-se à busca por soluções promissoras com base em dados prévios, enquanto exploration visa descobrir novas regiões potencialmente vantajosas]
+
+<!-- Com essas estimativas, a distribuição preditiva derivada da função probabilística permite a aplicação de uma função de aquisição. Essa função orienta a escolha dos próximos pontos a serem avaliados, equilibrando exploitation (explorar regiões próximas às melhores observações anteriores) e exploration (investigar áreas ainda não exploradas)^[Exploitation refere-se à busca por soluções promissoras com base em dados prévios, enquanto exploration visa descobrir novas regiões potencialmente vantajosas]. -->
 
 \vspace{12pt}
 
@@ -1452,14 +1457,16 @@ Portanto, os algoritmos de otimização bayesiana são regidos pela relação $\
 
 ### Tree-Structured Parzen Estimator
 
-\ \ \ A função probabilística utilizada para a otimização bayesiana neste trabalho foi a Tree-Structured Parzen Estimator (TPE). O TPE define duas funções de densidade, $l\left(\lambda\right)$ e $g\left(\lambda\right)$, que são empregadas para modelar a distribuição das variáveis no domínio dos hiperparâmetros $\lambda$ [@yang2020hyperparameter]. Essas densidades são utilizadas para estimar a probabilidade condicional $p\left(\lambda | y\right)$ de observar uma combinação de hiperparâmetros $\lambda$, dado um valor de métrica de desempenho $y$. A definição é dada por:
+\ \ \ A função probabilística adotada para a otimização bayesiana neste trabalho foi o método Tree-Structured Parzen Estimator (TPE). O TPE define duas funções de densidade, $l\left(\lambda\right)$ e $g\left(\lambda\right)$, que são utilizadas para modelar a distribuição dos hiperparâmetros $\lambda$ no espaço de busca [@yang2020hyperparameter]. Essas densidades permitem estimar a probabilidade condicional $p\left(\lambda | y\right)$, que representa a probabilidade de uma determinada configuração de hiperparâmetros $\lambda$ ocorrer, dado um valor da métrica de desempenho $y$. A definição é dada por:
+
+<!-- \ \ \ A função probabilística utilizada para a otimização bayesiana neste trabalho foi a Tree-Structured Parzen Estimator (TPE). O TPE define duas funções de densidade, $l\left(\lambda\right)$ e $g\left(\lambda\right)$, que são empregadas para modelar a distribuição dos hiperparâmetros no espaço de busca $\lambda$ [@yang2020hyperparameter]. Essas densidades são utilizadas para estimar a probabilidade condicional $p\left(\lambda | y\right)$ de observar uma combinação de hiperparâmetros $\lambda$, dado um valor de métrica de desempenho $y$. A definição é dada por: -->
 
 
 $$
 P(\lambda|y) =
 \begin{cases}
-    l(\lambda) & \text{if } y < y^* \\
-    g(\lambda) & \text{if } y \ge y^*
+    l(\lambda)\text{, } & \text{se } y < y^* \\
+    g(\lambda)\text{, } & \text{se } y \ge y^*
 \end{cases}\text{,}
 $${#eq-tpe}
 em que $l\left(\lambda\right)$ representa a densidade associada aos valores de $y$ menores que o limiar $y^*$ e $g\left(\lambda\right)$ é a densidade associada aos valores de $y$ iguais ou superiores a $y^*$ [@bergstra2011algorithms]. No algoritmo de TPE, o valor de $y^*$ é definido como sendo um quantil $\gamma$ dos valores observados de $y$, de forma que $p\left(y < y^*\right) = \gamma$.
@@ -1476,7 +1483,7 @@ Se, para o valor de $\lambda$, o modelo prevê um $y$ tal que $y > y^∗$, a dif
 
 \vspace{12pt}
 
-Portanto, para o cálculo do EI utilizando as definições dadas pelo TPE e assumindo que $y^∗>y$, adota-se a parametrização de $p\left(\lambda,y\right)$ como $p\left(y\right)p\left(\lambda∣y\right)$, com o objetivo de simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz a:
+Portanto, para o cálculo do EI utilizando as definições dadas pelo TPE e assumindo que $y^∗>y$, adota-se a parametrização de $p\left(\lambda,y\right)$ como $p\left(y\right)p\left(\lambda∣y\right)$, com o objetivo de simplificar os cálculos da distribuição marginal $p\left(\lambda\right)$. Assim, a expressão do EI, para o TPE, se reduz a:
 
 $$
 EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy\text{.}
@@ -1579,12 +1586,14 @@ O método fANOVA utiliza uma Random Forest para estimar a função objetivo com 
 
 \vspace{12pt}
 
-Matematicamente, o fANOVA decompõe uma função $\hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}$ em componentes aditivos que dependem apenas de subconjuntos de suas instâncias $N$. Assim, define-se:
+Matematicamente, o fANOVA decompõe uma função $\hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}$ em componentes aditivas que dependem apenas de subconjuntos dos hiperparâmetros. Denota-se por $N=\{1,\cdots,n\}$ o conjunto de todos os hiperparâmetros de um algoritmo $A$. Assim, tem-se a seguinte definição:
+
+<!-- Matematicamente, o fANOVA decompõe uma função $\hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}$ em componentes aditivos que dependem apenas de subconjuntos de suas instâncias $N$ que representa o conjunto $\{1,\dots,n\}$ de todos os hiperparâmetros de um algoritmo $A$. Assim, define-se: -->
 
 $$
 \hat{y} = \sum_{U \subseteq N} \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\text{,}
 $$
-em que $\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}$, é o vetor correspondente a uma configuração parcial dos hiperparâmetros para o subconjunto $U = \{u_{1}, \dots, u_{m}\}$, que representa um subconjunto dos índices dos hiperparâmetros. Além disso, as componentes de $\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)$ são definidas da seguinte forma:
+em que $\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}$, é o vetor correspondente a uma configuração parcial dos hiperparâmetros para o subconjunto $U = \{u_{1}, \dots, u_{m}\} \subseteq N$, que representa um subconjunto dos índices dos hiperparâmetros. Além disso, as componentes de $\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)$ são definidas da seguinte forma:
 
 $$
 \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=

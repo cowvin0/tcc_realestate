@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, breakable, colback={codebgcolor}, enhanced, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, frame hidden, enhanced, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2623,8 +2623,8 @@ Assim, utilizando as ferramentas e técnicas de web scraping, foram
 coletadas as variáveis que poderiam fazer sentido para a modelagem,
 priorizando aquelas com menor chance de gerar problemas durante o
 tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao
-todo, foram extraídas 25 variáveis, das quais 10 são quantitativas e 15
-qualitativas nominais, sendo 13 de caráter dicotômico. No entanto, nem
+todo, foram extraídas 25 variáveis, das quais 11 são quantitativas e 14
+qualitativas nominais, sendo 12 de caráter dicotômico. No entanto, nem
 todas as variáveis foram obtidas diretamente por web scraping. As
 coordenadas geográficas, latitude e longitude, por exemplo, foram
 geradas por meio da geocodificação dos endereços de cada imóvel,
@@ -2710,10 +2710,10 @@ as variáveis independentes e a variável dependente.
 \vspace{12pt}
 
 Nesta etapa, também foi analisada a correlação entre as variáveis
-dependentes utilizadas no modelo, o que possibilitou a criação de novas
-variáveis com base na interação entre aquelas que apresentavam alguma
-relação. Para isso, utilizou-se a correlação de Spearman (SPEARMAN,
-1961).
+independentes utilizadas no modelo, o que possibilitou a criação de
+novas variáveis com base na interação entre aquelas que apresentavam
+alguma relação. Para isso, utilizou-se a correlação de Spearman
+(SPEARMAN, 1961).
 
 \vspace{12pt}
 
@@ -2775,10 +2775,10 @@ a proporção das classes definidas.
 
 A estratificação foi baseada em intervalos criados a partir da variável
 que representa o valor dos imóveis. Foram definidos cinco intervalos: o
-primeiro abrange valores entre o mínimo e 200.000; o segundo, entre
-200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto, entre
-600.000 e 800.000; e o último intervalo cobre os valores de 800.000 até
-o máximo da variável. Dessa forma, 20\% do conjunto de dados foi
+primeiro abrange valores entre o mínimo de 43.914 e 200.000; o segundo,
+entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto,
+entre 600.000 e 800.000; e a quinta, valores acima de R\$ 800.000 até o
+máximo de R\$ 7.000.000. Dessa forma, 20\% do conjunto de dados foi
 reservado para o teste, enquanto os 80\% restantes foram utilizados para
 o treinamento do modelo.
 
@@ -2920,7 +2920,7 @@ CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i
 \] em que \(N\) representa o número total de observações, \(L\) é a
 função de perda, \(y_i\) é o valor observado, \(x_i\) é a entrada
 correspondente, \(\hat{f}^{-k(i)}\) é o modelo ajustado sem o
-\(k\)-ésimo subconjunto, e
+\(k\)-ésimo fold ao qual a observação \(i\) pertence, e
 \(k: \{1, \dots, N\} \mapsto \{1, \dots, K\}\) indica a partição à qual
 a observação \(i\) foi alocada por meio de randomização.
 
@@ -2975,15 +2975,16 @@ exemplo de como se utilizar a validação cruzada em \textbf{Python}:
 \NormalTok{kf }\OperatorTok{=}\NormalTok{ KFold(n\_splits}\OperatorTok{=}\DecValTok{20}\NormalTok{)}
 
 \NormalTok{scores }\OperatorTok{=}\NormalTok{ cross\_val\_score(}
-\NormalTok{  estimator}\OperatorTok{=}\NormalTok{model,}
-\NormalTok{  X}\OperatorTok{=}\NormalTok{X, y}\OperatorTok{=}\NormalTok{y,}
-\NormalTok{  scoring}\OperatorTok{=}\StringTok{\textquotesingle{}neg\_mean\_squared\_error\textquotesingle{}}\NormalTok{,}
-\NormalTok{  cv}\OperatorTok{=}\NormalTok{kf)}
+\NormalTok{    X}\OperatorTok{=}\NormalTok{X, y}\OperatorTok{=}\NormalTok{y,}
+\NormalTok{    estimator}\OperatorTok{=}\NormalTok{model,}
+\NormalTok{    scoring}\OperatorTok{=}\StringTok{"neg\_mean\_squared\_error"}\NormalTok{,}
+\NormalTok{    cv}\OperatorTok{=}\NormalTok{kf}
+\NormalTok{)}
 
-\NormalTok{mse\_scores }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{ scores}
+\NormalTok{mse\_scores }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{scores}
 \NormalTok{mean\_mse }\OperatorTok{=}\NormalTok{ mse\_scores.mean()}
 
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Média de acurácia: }\SpecialCharTok{\{}\NormalTok{mean\_mse}\SpecialCharTok{:.4f\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Média de acurácia: }\SpecialCharTok{\{}\NormalTok{mean\_mse}\SpecialCharTok{:.4f\}}\SpecialStringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3003,11 +3004,9 @@ Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o
 desvio médio entre os valores estimados e os valores observados,
 oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o
 coeficiente de determinação (\(R^2\)), que indica a proporção da
-variância da variável dependente explicada pelas variáveis
-independentes. Neste caso, o \(R^2\) avalia o quão bem as variáveis
-utilizadas para a contrução do modelo conseguem representar a variação
-no valor do imóvel. As métricas utilizadas são definidas da seguinte
-forma:
+variância da variável dependente explicada pelo modelo, com base nas
+variáveis independentes utilizadas em sua construção. As métricas
+utilizadas são definidas da seguinte forma:
 
 \begin{figure}
 
@@ -3074,14 +3073,14 @@ hiperparâmetros \(\lambda\) e a métrica de desempenho \(c\) (BERGSTRA;
 YAMINS; COX, 2013). A partir dessa função, estima-se, para cada conjunto
 de hiperparâmetros \(\lambda\), a performance esperada
 \(\hat{c}\left(\lambda\right)\) e a incerteza associada à predição
-\(\hat{\sigma}\left(\lambda\right)\). Com essas estimativas, a
-distribuição preditiva derivada da função probabilística permite a
-aplicação de uma função de aquisição. Essa função orienta a escolha dos
-próximos pontos a serem avaliados, equilibrando exploitation (explorar
-regiões próximas às melhores observações anteriores) e exploration
-(investigar áreas ainda não exploradas)\footnote{Exploitation refere-se
-  à busca por soluções promissoras com base em dados prévios, enquanto
-  exploration visa descobrir novas regiões potencialmente vantajosas}.
+\(\hat{\sigma}\left(\lambda\right)\). Depois de obter a distribuição
+preditiva da função probabilística, uma função de aquisição determina o
+uso de diferentes pontos. Essa função orienta a escolha dos próximos
+pontos a serem avaliados, equilibrando exploitation (explorar regiões
+próximas às melhores observações anteriores) e exploration (investigar
+áreas ainda não exploradas)\footnote{Exploitation refere-se à busca por
+  soluções promissoras com base em dados prévios, enquanto exploration
+  visa descobrir novas regiões potencialmente vantajosas}
 
 \vspace{12pt}
 
@@ -3095,21 +3094,22 @@ inexploradas.
 \subsection{Tree-Structured Parzen
 Estimator}\label{tree-structured-parzen-estimator}
 
-~~~A função probabilística utilizada para a otimização bayesiana neste
-trabalho foi a Tree-Structured Parzen Estimator (TPE). O TPE define duas
-funções de densidade, \(l\left(\lambda\right)\) e
-\(g\left(\lambda\right)\), que são empregadas para modelar a
-distribuição das variáveis no domínio dos hiperparâmetros \(\lambda\)
-(YANG; SHAMI, 2020). Essas densidades são utilizadas para estimar a
-probabilidade condicional \(p\left(\lambda | y\right)\) de observar uma
-combinação de hiperparâmetros \(\lambda\), dado um valor de métrica de
-desempenho \(y\). A definição é dada por:
+~~~A função probabilística adotada para a otimização bayesiana neste
+trabalho foi o método Tree-Structured Parzen Estimator (TPE). O TPE
+define duas funções de densidade, \(l\left(\lambda\right)\) e
+\(g\left(\lambda\right)\), que são utilizadas para modelar a
+distribuição dos hiperparâmetros \(\lambda\) no espaço de busca (YANG;
+SHAMI, 2020). Essas densidades permitem estimar a probabilidade
+condicional \(p\left(\lambda | y\right)\), que representa a
+probabilidade de uma determinada configuração de hiperparâmetros
+\(\lambda\) ocorrer, dado um valor da métrica de desempenho \(y\). A
+definição é dada por:
 
 \begin{equation}\phantomsection\label{eq-tpe}{
 P(\lambda|y) =
 \begin{cases}
-    l(\lambda) & \text{if } y < y^* \\
-    g(\lambda) & \text{if } y \ge y^*
+    l(\lambda)\text{, } & \text{se } y < y^* \\
+    g(\lambda)\text{, } & \text{se } y \ge y^*
 \end{cases}\text{,}
 }\end{equation} em que \(l\left(\lambda\right)\) representa a densidade
 associada aos valores de \(y\) menores que o limiar \(y^*\) e
@@ -3143,8 +3143,9 @@ Portanto, para o cálculo do EI utilizando as definições dadas pelo TPE e
 assumindo que \(y^∗>y\), adota-se a parametrização de
 \(p\left(\lambda,y\right)\) como
 \(p\left(y\right)p\left(\lambda∣y\right)\), com o objetivo de
-simplificar os cálculos. Assim, a expressão do EI, para o TPE, se reduz
-a:
+simplificar os cálculos da distribuição marginal
+\(p\left(\lambda\right)\). Assim, a expressão do EI, para o TPE, se
+reduz a:
 
 \begin{equation}\phantomsection\label{eq-exp}{
 EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{y^*} \left(y^* - y\right)p\left(y | \lambda\right) dy = \int_{-\infty}^{y^*} \left(y^* - y\right)\frac{p\left(\lambda | y\right) p\left(y \right)}{p\left(\lambda\right)} dy\text{.}
@@ -3293,18 +3294,20 @@ hiperparâmetros têm maior impacto no desempenho do modelo.
 
 Matematicamente, o fANOVA decompõe uma função
 \(\hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}\)
-em componentes aditivos que dependem apenas de subconjuntos de suas
-instâncias \(N\). Assim, define-se:
+em componentes aditivas que dependem apenas de subconjuntos dos
+hiperparâmetros. Denota-se por \(N=\{1,\cdots,n\}\) o conjunto de todos
+os hiperparâmetros de um algoritmo \(A\). Assim, tem-se a seguinte
+definição:
 
 \[
 \hat{y} = \sum_{U \subseteq N} \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\text{,}
 \] em que
 \(\boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}\),
 é o vetor correspondente a uma configuração parcial dos hiperparâmetros
-para o subconjunto \(U = \{u_{1}, \dots, u_{m}\}\), que representa um
-subconjunto dos índices dos hiperparâmetros. Além disso, as componentes
-de \(\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\) são definidas da
-seguinte forma:
+para o subconjunto \(U = \{u_{1}, \dots, u_{m}\} \subseteq N\), que
+representa um subconjunto dos índices dos hiperparâmetros. Além disso,
+as componentes de \(\hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\)
+são definidas da seguinte forma:
 
 \[
 \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=
