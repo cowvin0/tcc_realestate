@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, sharp corners, colback={codebgcolor}, enhanced, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, boxrule=0pt, colback={codebgcolor}, breakable, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -4020,15 +4020,14 @@ candidatas para a divisão.
 
 \end{figure}%
 
-A figura Figura~\ref{fig-rf_slice} mostra a variação da estatística de
-erro em função dos valores de cada hiperparâmetro ao longo dos trials. O
-gráfico Figura~\ref{fig-rf_import} exibe a importância de cada
-hiperparâmetro, calculada pelo método fANOVA. Na
-Figura~\ref{fig-rf_history}, observa-se a variação do erro para cada
-trial, com a linha vermelha representando o menor valor obtido em cada
-etapa. Por fim, a figura Figura~\ref{fig-rf_contour} é um gráfico de
-área que mostra a interação entre os hiperparâmetros tunados em relação
-à estatística de erro.
+A Figura~\ref{fig-rf_slice} mostra a variação da estatística de erro em
+função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico
+Figura~\ref{fig-rf_import} exibe a importância de cada hiperparâmetro,
+calculada pelo método fANOVA. Na Figura~\ref{fig-rf_history}, observa-se
+a variação do erro para cada trial, com a linha vermelha representando o
+menor valor obtido em cada etapa. Por fim, a Figura~\ref{fig-rf_contour}
+é um gráfico de área que mostra a interação entre os hiperparâmetros
+tunados em relação à estatística de erro.
 
 \vspace{12pt}
 
@@ -4044,12 +4043,12 @@ generalização.
 
 \vspace{12pt}
 
-Além disso, o gráfico de importância dos hiperparâmetros em
+Além disso, o gráfico de importância dos hiperparâmetros na
 Figura~\ref{fig-rf_import} revela que o hiperparâmetro
 \texttt{n\_estimators} possui uma maior contribuição na performance do
-modelo. A figura Figura~\ref{fig-rf_history} ilustra o comportamento da
-métrica de erro para cada trial, mostrando que o método de otimização
-alcança um de seus melhores valores pouco antes do trial 20.
+modelo. A Figura~\ref{fig-rf_history} ilustra o comportamento da métrica
+de erro para cada trial, mostrando que o método de otimização alcança um
+de seus melhores valores pouco antes do trial 20.
 
 \begin{longtable}[]{@{}cccc@{}}
 \caption{Melhores hiperparâmetros para Random
@@ -4148,14 +4147,12 @@ de árvores tem a menor influência.
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient
 Boosting apresentou melhorias significativas, como ilustrado na
 Figura~\ref{fig-gdt_history}, em que a estatística de erro foi bastante
-estável para cada combinação de hiperpâmetros, além de em ter se mantido
+estável para cada combinação de hiperpâmetros, além de ter se mantido
 abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é
 bastante similar à obtida para o Random Forest. Na
 Figura~\ref{fig-gdt_contour}, observa-se que o método de otimização TPE
 tende a selecionar valores menores para a profundidade das árvores e
-maiores para o número de árvores. Em relação à importância dos
-hiperparâmetros, o que representou a maior variação foi a taxa de
-aprendizado.
+maiores para o número de árvores.
 
 \begin{longtable}[]{@{}ccccc@{}}
 \caption{Melhores hiperparâmetros para Gradient
@@ -4177,11 +4174,11 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 
 ~~~Para a otimização do LGBM, foram considerados os mesmos
 hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com
-a tunagem do número de folhas das árvores. O espaço de busca para a
-quantidade de árvores foi definido entre 100 e 2000, para a taxa de
-aprendizado no mesmo intervalo usado no Gradient Boosting, para a
-profundidade das árvores e número de folhas o intervalo foi definido
-entre 100 e 600
+a tunagem da quantidade máxima do número de folhas das árvores. O espaço
+de busca para a quantidade de árvores foi definido entre 100 e 2000,
+para a taxa de aprendizado no mesmo intervalo usado no Gradient
+Boosting, para a profundidade das árvores e número de folhas o intervalo
+foi definido entre 100 e 600
 
 \begin{figure}
 
@@ -4241,23 +4238,20 @@ entre 100 e 600
 
 As trials de otimização do modelo LGBM (Figura~\ref{fig-lgbm_history})
 apresentaram um comportamento semelhante ao do Gradient Boosting, porém
-com maior estabilidade em cada tentativa e uma convergência mais rápida.
-Ao analisar a contribuição de cada hiperparâmetro para o desempenho do
-modelo na Figura~\ref{fig-lgbm_import}, observa-se que a quantidade de
-árvores é a taxa de aprendizado é o hiperparâmetro de maior influência,
-seguido pela quantidade de árvores, profundidade da árvore e, por
-último, o número de folhas.
+com menor estabilidade em cada tentativa. Ao analisar a contribuição de
+cada hiperparâmetro para o desempenho do modelo na
+Figura~\ref{fig-lgbm_import}, observa-se que a taxa de aprendizado e a
+quantidade de árvores são os hiperparâmetros de maior influência,
+seguido pela profundidade da árvore e, por último, o número de folhas.
 
 \vspace{12pt}
 
-Analisando a relação entre o hiperparâmetro de profundidade e o número
-de folhas em função da estatística de erro na
-Figura~\ref{fig-lgbm_contour}, observa-se que uma maior quantidade de
-folhas e uma menor profundidade das árvores resultam em um modelo com
-erro menor. Esse mesmo comportamento é observado para os outros
-hiperparâmetros, uma quantidade maior de folhas combinada com uma taxa
-de aprendizado crescente também produz um modelo com menor erro, assim
-como um número maior de árvores.
+Analisando a relação entre o hiperparâmetro de profundidade da árvore e
+o número de folhas em função da estatística de erro na
+Figura~\ref{fig-lgbm_contour}, observa-se que uma menor quantidade de
+folhas e uma maior profundidade das árvores resultam em um modelo com
+menor erro. Para uma maior quantidade de árvores e uma taxa de
+aprendizado tendendo a 0,01, a estatística de erro apresenta diminuição.
 
 \begin{longtable}[]{@{}
   >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1549}}

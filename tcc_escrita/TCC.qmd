@@ -2396,7 +2396,7 @@ Resultados da tunagem da Random Forest.
 :::
 
 
-A figura @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método fANOVA. Na @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a figura @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
+A @fig-rf_slice mostra a variação da estatística de erro em função dos valores de cada hiperparâmetro ao longo dos trials. O gráfico @fig-rf_import exibe a importância de cada hiperparâmetro, calculada pelo método fANOVA. Na @fig-rf_history, observa-se a variação do erro para cada trial, com a linha vermelha representando o menor valor obtido em cada etapa. Por fim, a @fig-rf_contour é um gráfico de área que mostra a interação entre os hiperparâmetros tunados em relação à estatística de erro.
 
 \vspace{12pt}
 
@@ -2404,7 +2404,7 @@ A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para va
 
 \vspace{12pt}
 
-Além disso, o gráfico de importância dos hiperparâmetros em @fig-rf_import revela que o hiperparâmetro `n_estimators` possui uma maior contribuição na performance do modelo. A figura @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20.
+Além disso, o gráfico de importância dos hiperparâmetros na @fig-rf_import revela que o hiperparâmetro `n_estimators` possui uma maior contribuição na performance do modelo. A @fig-rf_history ilustra o comportamento da métrica de erro para cada trial, mostrando que o método de otimização alcança um de seus melhores valores pouco antes do trial 20.
 
 ::: {#tbl-params_rf}
 
@@ -2551,7 +2551,9 @@ A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import,
 
 \vspace{12pt}
 
-Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting apresentou melhorias significativas, como ilustrado na @fig-gdt_history, em que a estatística de erro foi bastante estável para cada combinação de hiperpâmetros, além de em ter se mantido abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores. Em relação à importância dos hiperparâmetros, o que representou a maior variação foi a taxa de aprendizado.
+Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting apresentou melhorias significativas, como ilustrado na @fig-gdt_history, em que a estatística de erro foi bastante estável para cada combinação de hiperpâmetros, além de ter se mantido abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores.
+
+<!-- Em relação à importância dos hiperparâmetros, o que representou a maior variação foi a taxa de aprendizado. -->
 
 ::: {#tbl-params_gdt}
 
@@ -2565,7 +2567,7 @@ Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting apre
 
 ### Tunagem do LGBM
 
-\ \ \ Para a otimização do LGBM, foram considerados os mesmos hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com a tunagem do número de folhas das árvores. O espaço de busca para a quantidade de árvores foi definido entre 100 e 2000, para a taxa de aprendizado no mesmo intervalo usado no Gradient Boosting, para a profundidade das árvores e número de folhas o intervalo foi definido entre 100 e 600
+\ \ \ Para a otimização do LGBM, foram considerados os mesmos hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com a tunagem da quantidade máxima do número de folhas das árvores. O espaço de busca para a quantidade de árvores foi definido entre 100 e 2000, para a taxa de aprendizado no mesmo intervalo usado no Gradient Boosting, para a profundidade das árvores e número de folhas o intervalo foi definido entre 100 e 600
 
 ::: {#fig-lgbm_param layout="[[1, 1, 1], [1]]"}
 
@@ -2695,11 +2697,13 @@ Resultados da tunagem do LGBM.
 
 \vspace{12pt}
 
-As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um comportamento semelhante ao do Gradient Boosting, porém com maior estabilidade em cada tentativa e uma convergência mais rápida. Ao analisar a contribuição de cada hiperparâmetro para o desempenho do modelo na @fig-lgbm_import, observa-se que a quantidade de árvores é a taxa de aprendizado é o hiperparâmetro de maior influência, seguido pela quantidade de árvores, profundidade da árvore e, por último, o número de folhas.
+As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um comportamento semelhante ao do Gradient Boosting, porém com menor estabilidade em cada tentativa. Ao analisar a contribuição de cada hiperparâmetro para o desempenho do modelo na @fig-lgbm_import, observa-se que a taxa de aprendizado e a quantidade de árvores são os hiperparâmetros de maior influência, seguido pela profundidade da árvore e, por último, o número de folhas.
 
 \vspace{12pt}
 
-Analisando a relação entre o hiperparâmetro de profundidade e o número de folhas em função da estatística de erro na @fig-lgbm_contour, observa-se que uma maior quantidade de folhas e uma menor profundidade das árvores resultam em um modelo com erro menor. Esse mesmo comportamento é observado para os outros hiperparâmetros, uma quantidade maior de folhas combinada com uma taxa de aprendizado crescente também produz um modelo com menor erro, assim como um número maior de árvores.
+Analisando a relação entre o hiperparâmetro de profundidade da árvore e o número de folhas em função da estatística de erro na @fig-lgbm_contour, observa-se que uma menor quantidade de folhas e uma maior profundidade das árvores resultam em um modelo com menor erro. Para uma maior quantidade de árvores e uma taxa de aprendizado tendendo a 0,01, a estatística de erro apresenta diminuição.
+
+<!-- Esse mesmo comportamento é observado para os outros hiperparâmetros, uma quantidade maior de folhas combinada com uma taxa de aprendizado crescente também produz um modelo com menor erro, assim como um número maior de árvores. -->
 
 ::: {#tbl-params_lgbm}
 
