@@ -3010,7 +3010,7 @@ Na seção a seguir, serão apresentados os resultados da aplicação final dese
 
 ## Aplicação web
 
-A aplicação final foi desenvolvida com o objetivo de ser simples e intuitiva, facilitando a análise e compreensão do comportamento do mercado imobiliário de João Pessoa. Nesta seção, serão apresentados os resultados da aplicação e suas funcionalidades. O código completo pode ser acessado através do seguinte link: <https://github.com/cowvin0/tcc_realestate/tree/main/app>.
+\ \ \ A aplicação final foi desenvolvida com o objetivo de ser simples e intuitiva, facilitando a análise e compreensão do comportamento do mercado imobiliário de João Pessoa. Nesta seção, serão apresentados os resultados da aplicação e suas funcionalidades. O código completo pode ser acessado através do seguinte link: <https://github.com/cowvin0/tcc_realestate/tree/main/app>.
 
 \vspace{12pt}
 
@@ -3035,7 +3035,7 @@ A funcionalidade mais importante da aplicação pode ser acessada através do bo
 
 \vspace{12pt}
 
-Na seção de configurações do mapa, o usuário pode selecionar o tipo de mapa desejado a partir de uma lista suspensa, que inclui todas as opções suportadas pela aplicação. Por padrão, o mapa de calor é selecionado. Uma das alternativas disponíveis é o mapa de pontos, que exibe a localização dos imóveis pontualmente, com suas cores variando conforme o valor dos imóveis, quanto mais clara a cor, mais alto o valor do imóvel. Além desses dois mapas, a aplicação permite a visualização de informações adicionais, como rios, ciclovias, comunidades, corredores de ônibus, faixas exclusivas para ônibus, parques, praças, área rural, comunidades e escolas públicas.
+Na seção de configurações do mapa, o usuário pode selecionar o tipo de mapa desejado a partir de uma lista suspensa, que inclui todas as opções suportadas pela aplicação. Por padrão, o mapa de calor é selecionado. Uma das alternativas disponíveis é o mapa de pontos, que exibe a localização dos imóveis pontualmente, com suas cores variando conforme o valor dos imóveis, quanto mais clara a cor, mais alto o valor do imóvel. Além desses dois mapas, a aplicação permite a visualização de informações adicionais, como rios, ciclovias, bairros, comunidades, corredores de ônibus, faixas exclusivas para ônibus, parques, praças, área rural, comunidades e escolas públicas.
 
 ![Controles para tipos de mapas.](includes/menu_map.png){#fig-menu_map width=450 height=250}
 
