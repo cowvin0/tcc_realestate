@@ -2721,11 +2721,11 @@ Analisando a relação entre o hiperparâmetro de profundidade da árvore e o n�
 
 \vspace{12pt}
 
-A partir da @fig-xgb_import, o hiperparâmetro que representou a maior variação na função objetivo, e portanto a maior importância para a performance do modelo, foi a taxa de aprendizagem. A profundidade da árvore representou 22% da variação e por último vem a quantidade de árvores. Observando a @fig-xgb_history, é possível ver que o algoritmo de XGBoost foi aquele que apresentou a menor variação entre os trials, com um único trial com erro acima de 2,0.
+A partir da @fig-xgb_import, o hiperparâmetro que representou a maior variação na função objetivo, e portanto a maior importância para a performance do modelo, foi a taxa de aprendizagem. A profundidade da árvore representou 35% da variação e por último vem a quantidade de árvores. Observando a @fig-xgb_history, é possível ver que o algoritmo de XGBoost foi aquele que apresentou a menor variação entre as trials, com uma única trial com erro acima de 1,0.
 
 \vspace{12pt}
 
-O algoritmo de otimização TPE apresentou uma maior frequência de procura do hiperparâmetro de taxa de aprendizagem para valores menores, como pode ser visto na @fig-xgb_slice. O mesmo acontece para o hiperparâmetro de profundidade de árvores, há uma repetição maior para valores menores, indicando que o a estatística de erro tendeu a ter valores menores para essa região. Para a quantidade de árvores esse padrão foi diferente, uma quantidade maior de árvores faz com que o modelo tenha um melhor ajuste. Essas relações também podem ser observadas a partir da @fig-xgb_contour, menores taxas de aprendizado, combinado com uma menor profundidade de árvore e maior quantidade de árvores apresentam menor valor na função objetivo.
+O algoritmo de otimização TPE apresentou uma maior frequência de procura do hiperparâmetro de taxa de aprendizagem para valores menores, como pode ser visto na @fig-xgb_slice. O mesmo acontece para o hiperparâmetro de profundidade de árvores, há uma repetição maior para valores menores, indicando que a estatística de erro tendeu a ter valores menores para essa região. Para a quantidade de árvores, esse padrão foi diferente, uma quantidade maior de árvores faz com que o modelo tenha um melhor ajuste. Essas relações também podem ser observadas a partir da @fig-xgb_contour, menores taxas de aprendizado, combinado com uma menor profundidade de árvore e maior quantidade de árvores apresentam menor valor na função objetivo.
 
 ::: {#fig-xgb_param layout="[[1, 1, 1], [1]]"}
 
@@ -2862,11 +2862,11 @@ Resultados da tunagem do XGBoost.
 
 :::
 
-A tabela @tbl-params_xgb apresenta a tentativa em que a combinação de hiperparâmetros resultou no menor erro para o algoritmo de Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81, com uma configuração de 788 árvores, profundidade máxima igual a 8 e taxa de aprendizado de 0,07119.
+A @tbl-params_xgb apresenta a tentativa em que a combinação de hiperparâmetros resultou no menor erro para o algoritmo de Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81, com uma configuração de 788 árvores, profundidade máxima igual a 8 e taxa de aprendizado de 0,07119.
 
 \vspace{12pt}
 
-Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com 1.988 árvores, 202 folhas, profundidade máxima de 379 e taxa de aprendizado de 0,00985, como apresentado na tabela @tbl-params_lgbm.
+Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com 1.988 árvores, quantidade máxima 202 folhas, profundidade máxima de 379 e taxa de aprendizado de 0,00985, como apresentado na @tbl-params_lgbm.
 
 \vspace{12pt}
 
@@ -2898,11 +2898,11 @@ Valores previstos em função dos observados do algoritmo Light Gradient Boostin
 
 \vspace{12pt}
 
-Em relação ao algoritmo de Gradient Boosting, seu ajuste consegue explicar $87,32712%$ da variável dependente, um valor superior ao obtido com o ajuste do algoritmo de Random Forest, embora a diferença não seja muito grande. Para o MAPE, o valor encontrado foi de $0,01333$, indicando que os valores estimados dos imóveis estão, em média, $1,333\%$ distantes dos seus valores observados. A relação entre os valores estimados e os observados pode ser visualizada na @fig-preds_gdt.
+Em relação ao algoritmo de Gradient Boosting, o modelo consegue explicar $87,32712\%$ da variação da variável dependente, um valor superior ao obtido com o ajuste do algoritmo de Random Forest, embora a diferença não seja significante. Para o MAPE, o valor encontrado foi de $0,01333$, indicando que os valores estimados dos imóveis estão, em média, $1,333\%$ distantes dos seus valores observados. O seu RMSE foi de 0,28297. A relação entre os valores estimados e os observados pode ser visualizada na @fig-preds_gdt.
 
 \vspace{12pt}
 
-O Light Gradient Boosting conseguiu melhorias em relação aos resultados obtidos da Random Forest, mas não em relação ao Gradient Boosting. Em relação ao seu $R^2$, o modelo consegue explicar $87,25794\%$ da variável dependente. O seu RMSE ficou em $0,28385$ e o MAPE em $0,01340$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão em média $1,340\%$ distantes de seus valores reais. O gráfico de seus valores estimados em função dos observados pode ser observado na @fig-preds_lgbm.
+O Light Gradient Boosting conseguiu melhorias em relação aos resultados obtidos da Random Forest, mas não em relação ao Gradient Boosting. Em relação ao seu $R^2$, o modelo consegue explicar $87,25794\%$ da variância da variável dependente. O seu RMSE ficou em $0,28385$ e o MAPE em $0,01340$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão, em média, $1,340\%$ distantes de seus valores reais. O gráfico de seus valores estimados em função dos observados pode ser observado na @fig-preds_lgbm.
 
 ::: {#fig-preds_stacking}
 
@@ -2911,7 +2911,7 @@ O Light Gradient Boosting conseguiu melhorias em relação aos resultados obtido
 Valores previstos em função dos observados do algoritmo Stacking.
 :::
 
-Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest. Além disso, foi o modelo que obteve o melhor MAPE. O RMSE obtido pelo XGBoost foi de $0,28400$ e o seu $R^2$ foi de $87,24599\%$, indicando que o modelo consegue explicar $87,24599\%$ da variável dependente. As predições geradas pelo Extreme Gradient Boosting estão em média $1,325\%$ distantes de seus valores reais.
+Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest. Além disso, foi o modelo que obteve o melhor MAPE. O RMSE obtido pelo XGBoost foi de $0,2840$ e o seu $R^2$ foi de $87,24599\%$, indicando que o modelo consegue explicar $87,24599\%$ da variação da variável dependente. As predições geradas pelo Extreme Gradient Boosting estão, em média, $1,325\%$ distantes de seus valores reais.
 
 \vspace{12pt}
 
