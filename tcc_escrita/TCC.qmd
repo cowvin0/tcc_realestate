@@ -1074,7 +1074,7 @@ O processo de aprendizado no método de Boosting é lenta, o que acaba gerando m
 
 ### Stacked generalization
 
-\ \ \ A Stacked Generalization, ou Stacking, é um método de ensemble que consiste em treinar um modelo gerado a partir da combinação da predição de vários outros modelos, visando melhorar a precisão das predições. Esse método pode ser aplicado a qualquer modelo estatístico ou algoritmo de aprendizado de máquina. A ideia principal é atribuir pesos às predições, de modo a dar maior importância aos modelos que produzem melhores resultados, ao mesmo tempo em que se evita atribuir altos pesos a modelos com alta complexidade.
+\ \ \ O Stacked Generalization, ou Stacking, é um método de ensemble que consiste em treinar um modelo gerado a partir da combinação da predição de vários outros modelos, visando melhorar a precisão das predições. Esse método pode ser aplicado a qualquer modelo estatístico ou algoritmo de aprendizado de máquina. A ideia principal é atribuir pesos às predições, de modo a dar maior importância aos modelos que produzem melhores resultados, ao mesmo tempo em que se evita atribuir altos pesos a modelos com alta complexidade.
 
 \vspace{12pt}
 
@@ -1084,11 +1084,19 @@ $$
 \hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m \hat{f}^{-i}_m\left(x_i\right)\right]^2\text{.}
 $$
 
-A estimação final é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Assim, em vez de escolher um único modelo, o método de Stacking combina os modelos utilizando pesos estimados, o que melhora a performance preditiva, mas pode comprometer a interpretabilidade. Além disso, com as validações cruzadas das predições $\hat{f}^{-i}_{m}\left(x\right)$, o Stacking evita dar um peso muito alto a modelos com alta complexidade.
+A estimação final é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Assim, em vez de escolher um único modelo, o método de Stacking combina os modelos utilizando pesos estimados, o que melhora a performance preditiva, mas pode comprometer a interpretabilidade. Além disso, ao utilizar validação cruzada baseada no método leave-one-out para as predições $\hat{f}^{-i}_{m}\left(x\right)$, o Stacking evita atribuir pesos excessivos a modelos de alta complexidade, reduzindo o risco de sobreajuste.
+
+<!-- Além disso, com as validações cruzadas, baseado no método leave-one-out,  das predições $\hat{f}^{-i}_{m}\left(x\right)$, o Stacking evita dar um peso muito alto a modelos com alta complexidade. -->
 
 ### Gradient Boosting
 
-\ \ \ O algoritmo de Gradient Boosting é semelhante ao de Boosting, mas com diferenças mínimas. Ele constrói modelos aditivos ajustando sequencialmente funções bases aos pseudos-resíduos, que correspondem aos gradientes da função perda do modelo atual [@friedman2002stochastic]. Esses gradientes indicam a direção na qual a função perda diminui. Neste trabalho, foram utilizadas diferentes implementações de Gradient Boosting. No entanto, todas empregam o Gradient Boosting com árvores de regressão, com algumas modificações para a construção das árvores ou para melhorar a eficiência do algoritmo existente. Assim, o algoritmo a ser explicado será o Gradient Tree Boosting. O @algo-gradboos demonstra a sua construção.
+\ \ \ O algoritmo de Gradient Boosting é semelhante ao Boosting, mas com algumas diferenças. Ele constrói modelos aditivos ajustando sequencialmente funções base aos pseudos-resíduos em cada iteração, que, por sua vez, correspondem aos gradientes da função de perda [@friedman2002stochastic]. Esses podem gradientes indicam a direção na qual a função perda diminui mais rapidamente, orientando o ajuste dos modelos seguintes.
+
+\vspace{12pt}
+
+Neste trabalho, foram utilizadas diferentes implementações do Gradient Boosting. Todas elas, no entanto, empregam o método com árvores de regressão como funções base, variando apenas em aspectos como a construção das árvores ou otimizações voltadas à eficiência computacional. Sendo assim, o algoritmo apresentado a seguir corresponde ao Gradient Tree Boosting, cuja formulação é detalhada no @algo-gradboos.
+
+<!-- \ \ \ O algoritmo de Gradient Boosting é semelhante ao de Boosting, mas com diferenças mínimas. Ele constrói modelos aditivos ajustando sequencialmente funções bases aos pseudos-resíduos a cada iteração, que correspondem aos gradientes da função perda [@friedman2002stochastic]. Esses gradientes indicam a direção na qual a função perda diminui. Neste trabalho, foram utilizadas diferentes implementações de Gradient Boosting. No entanto, todas empregam o Gradient Boosting com árvores de regressão, com algumas modificações para a construção das árvores ou para melhorar a eficiência do algoritmo existente. Assim, o algoritmo a ser explicado será o Gradient Tree Boosting. O @algo-gradboos demonstra a sua construção. -->
 
 ::: {#algo-gradboos}
 
@@ -1142,20 +1150,30 @@ Fonte: @hastie2009elements [p. 361].
 O Gradient Boosting aplicado para árvores de regressão, tem que cada função base é uma árvore de regressão com $J_m$ folhas. Dessa forma, cada árvore de regressão tem a seguinte forma aditiva:
 
 $$
-h_m\left(x;\{b_j, R_j\}^J_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)\text{,}
+h\left(x;\{R_{jm}\}^{J_{m}}_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)\text{,}
 $${#eq-treebost}
-em que $\{R_{jm}\}^{J_m}_{1}$ são as regiões disjuntas que, coletivamente, cobrem o espaço de todos os valores conjuntos das variáveis preditoras. Essas regiões são representadas pelas folhas de sua correspondente árvore. Como as regiões são disjuntas, a @eq-treebost se reduz simplesmente a $h_m\left(x\right) = b_{jm}\text{ para } x \in  R_{jm}$. Por mínimos quadrados, $b_{jm}$ é simplesmente a média dos pseudo-resíduos $r_{im}$
+em que $\{R_{jm}\}^{J_m}_{1}$ representa as regiões disjuntas que, em conjunto, cobrem todo o espaço das variáveis preditoras. Essas regiões correspondem às folhas da respectiva árvore de regressão.
 
+\vspace{12pt}
+
+Como as regiões são disjuntas, a partir da @eq-treebost e utilizando o método de mínimos quadrados, a estimativa de $b_{jm}$ — a predição associada à região $R_{jm}$​ — será simplesmente a média dos pseudo-resíduos $r_{im}$:
 
 $$
 \hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}\text{,}
 $$
-que dão a direção de diminuição da função perda $L$ pela expressão do gradiente da linha 2(a), no @algo-gradboos. Assim, cada árvore de regressão é ajustada aos $r_{im}$ de forma a minimizar o erro das árvores anteriores. $N_{jm}$ denota a quantidade de pontos na região $R_{jm}$. Por fim, o estimador é separadamente atualizado em cada região correspondente e é expresso:
+onde $N_{jm}$ denota o número de observações na região $R_{jm}$. Os pseudo-resíduos $r_{im}$​ representam os gradientes da função de perda $L$, conforme expressos na linha 2(a) do @algo-gradboos, e indicam a direção de maior diminuição de $L$.
+
+\vspace{12pt}
+
+Assim, cada árvore de regressão é ajustada aos novos pseudo-resíduos, com o objetivo de minimizar o erro residual acumulado pelas árvores anteriores. O estimador é, então, atualizado separadamente em cada região $R_{jm}$​, conforme descrito a seguir:
+
+<!-- Assim, cada árvore de regressão é ajustada nos novos pseudos-resíduos​, buscando minimizar o erro das árvores anteriores. O estimador é, então, atualizado separadamente em cada região, conforme descrito a seguir: -->
 
 $$
-f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
+f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J_m}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
 $$
-em que $\gamma_{jm}$ representa a atualização da constante ótima para cada região, baseado na função perda $L$, dada a aproximação $f_{m-1}\left(x\right)$. O $\lambda$, assim como no algoritmo de boosting, representa o hiperparâmetro shrinkage para controlar a taxa de aprendizado. Pequenos valores de $\lambda$ necessitam maiores quantidades de iterações $M$ para diminuir o risco de treinamento.
+em que $\gamma_{jm} = \arg \min_{\gamma} \sum_{x_i \in R_{jm}} L\left(y_i, f_{m - 1}\left(x_i\right) + \gamma\right)$ representa a constante ótima para cada região. O parâmetro $\lambda$, assim como no algoritmo de boosting, é o hiperparâmetro de shrinkage, utilizado para controlar a taxa de aprendizado. Valores menores de $\lambda$ exigem um número maior de iterações $M$.
+
 
 \vspace{12pt}
 
