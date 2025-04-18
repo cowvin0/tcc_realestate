@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, frame hidden, boxrule=0pt, breakable, enhanced, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -496,7 +496,8 @@ para mim. Ao meu amigo Daniel, sou especialmente grato pelas longas
 conversas, pelos conselhos e pelas oportunidades durante a graduação.
 Sem você, eu não teria conquistado meu primeiro PIBIC.
 
-clearpage \endgroup
+\clearpage
+\endgroup
 
 \chapter*{\centering Resumo}
 \thispagestyle{empty}

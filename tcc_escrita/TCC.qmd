@@ -200,7 +200,7 @@ Agradeço também ao amigo Jeferson, membro do grupo de estudos GEAFS, pela opor
 
 Agradeço com carinho aos meus amigos da graduação Paulo Ricardo Seganfredo Campana, Rafhael, Daniel, Jéssika e Nielson, cuja companhia nas conversas, brincadeiras e dias de jogos tornou essa jornada mais leve e divertida. Expresso um agradecimento especial ao meu amigo Paulo pelas conversas sobre programação, pelos estudos em conjunto e pela constante troca de conhecimentos, que foram extremamente enriquecedores para mim. Ao meu amigo Daniel, sou especialmente grato pelas longas conversas, pelos conselhos e pelas oportunidades durante a graduação. Sem você, eu não teria conquistado meu primeiro PIBIC.
 
-clearpage
+\clearpage
 \endgroup
 
 \chapter*{\centering Resumo}
