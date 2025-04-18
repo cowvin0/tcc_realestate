@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, colback={codebgcolor}, breakable, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, boxrule=0pt, frame hidden, breakable, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -323,12 +323,6 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
 
 \floatname{algorithm}{Algoritmo}
 
-\renewcommand*\contentsname{\centering Sumário \thispagestyle{empty}}
-{
-\hypersetup{linkcolor=}
-\setcounter{tocdepth}{2}
-\tableofcontents
-}
 
 \pagenumbering{arabic}
 \pagestyle{fancy}
@@ -346,29 +340,56 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
   \renewcommand{\headrulewidth}{0pt}
 }
 
-\thispagestyle{empty}
-
 \newpage
-
-\bgroup
-\hypersetup{linkcolor = black}
-
-\cleardoublepage
-\renewcommand{\listfigurename}{\centering{Lista de Figuras}}
-\listoffigures
 \thispagestyle{empty}
 
-\cleardoublepage
-\renewcommand{\listtablename}{\centering{Lista de Tabelas}}
-\listoftables
-\thispagestyle{empty}
+\begin{center}
+  \includegraphics[width=0.2\textwidth]{includes/logode.png} \\
+  UNIVERSIDADE FEDERAL DA PARAÍBA \\
+  DEPARTAMENTO DE ESTATÍSTICA \\
+\end{center}
 
-\cleardoublepage
-\renewcommand{\listalgorithmname}{\centering{Lista de Algoritmos}}
-\listofalgorithms
-\thispagestyle{empty}
+\vspace{1cm}
 
-\egroup
+\noindent \hspace{0.8cm}
+
+\begin{minipage}{0.9\textwidth}
+  \setlength{\parindent}{0.4cm}
+  Trabalho de Conclusão de Curso de Estatística intitulado \textbf{Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa} de autoria de Gabriel de Jesus Pereira, aprovado pela banca examinadora constituída pelos seguintes professores:
+\end{minipage}
+
+\vfill
+
+\begin{center}
+  \noindent\rule{14cm}{0.4pt} \\
+  Prof. Dr. Pedro Rafael Diniz Marinho \\
+  (Professor Orientador) \\
+  Universidade Federal da Paraíba
+
+  \vfill
+
+  \noindent\rule{14cm}{0.4pt} \\
+  Prof. Dr. Eufrásio de Andrade Lima Neto \\
+  (Professor Examinador) \\
+  Universidade Federal da Paraíba
+
+  \vfill
+
+  \noindent\rule{14cm}{0.4pt} \\
+  Prof. Dr. Luiz Medeiros de Araujo Lima Filho \\
+  (Professor Examinador) \\
+  Universidade Federal da Paraíba
+
+  \vfill
+
+  João Pessoa, 2 de maio de 2025
+
+  \vfill
+
+  \small Departamento de Estatística, Universidade Federal da Paraíba \\
+  \small Cidade Universitária, s/n, CEP 58051-900, João Pessoa - PB, Brasil \\
+  \small Fone: +55 (83) 3216-7785
+\end{center}
 
 \chapter*{\centering Agradecimentos}
 \thispagestyle{empty}
@@ -412,6 +433,35 @@ dados para o mercado imobiliário local.
 \begin{flushleft}
 \textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa.
 \end{flushleft}
+
+\thispagestyle{empty}
+
+\newpage
+
+\bgroup
+\hypersetup{linkcolor = black}
+
+\cleardoublepage
+\renewcommand{\listfigurename}{\centering{Lista de Figuras}}
+\listoffigures
+\thispagestyle{empty}
+
+\cleardoublepage
+\renewcommand{\listtablename}{\centering{Lista de Tabelas}}
+\listoftables
+\thispagestyle{empty}
+
+\cleardoublepage
+\renewcommand{\listalgorithmname}{\centering{Lista de Algoritmos}}
+\listofalgorithms
+\thispagestyle{empty}
+
+\cleardoublepage
+\renewcommand{\contentsname}{\centering{Sumário}}
+\tableofcontents
+\thispagestyle{empty}
+
+\egroup
 
 \chapter{Introdução}\label{introduuxe7uxe3o}
 
