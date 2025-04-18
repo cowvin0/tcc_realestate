@@ -46,7 +46,7 @@ lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
 # toc: true
-title: Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa.
+title: Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa
 author: Gabriel de Jesus Pereira
 mermaid:
   theme: forest
@@ -286,7 +286,7 @@ Atualmente, a cidade é detentora de um território de 211.475 $km^2$ e possui u
 
 \vspace{12pt}
 
-O crescimento do mercado imobiliário de João Pessoa trás consigo inúmeras necessidades de melhor precificação de imóveis. Avaliar corretamente o valor de um imóvel é crucial para uma série de finalidades, como a negociação justa entre compradores e vendedores e a determinação de valores tributários, como, por exemplo, o Imposto de Transmissão de Bens Imóveis (ITBI). Assim, a determinação do valor de um imóvel continua sendo um desafio, muitas vezes dependente de avaliações subjetivas ou métodos tradicionais que nem sempre refletem a complexidade dos fatores envolvidos.
+O crescimento do mercado imobiliário de João Pessoa traz consigo inúmeras necessidades de melhor precificação de imóveis. Avaliar corretamente o valor de um imóvel é crucial para uma série de finalidades, como a negociação justa entre compradores e vendedores e a determinação de valores tributários, como, por exemplo, o Imposto de Transmissão de Bens Imóveis (ITBI). Assim, a determinação do valor de um imóvel continua sendo um desafio, muitas vezes dependente de avaliações subjetivas ou métodos tradicionais que nem sempre refletem a complexidade dos fatores envolvidos.
 
 \vspace{12pt}
 
@@ -409,11 +409,11 @@ O [**Playwright**](https://playwright.dev/python/) foi originalmente desenvolvid
 
 \vspace{12pt}
 
-Na próxima seção, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, são utilizados alguns dos pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para a extração dos dados. Além disso, esta seção também abordará a estruturar de um HTML e o funcionamento dos seletores para a extração de elementos.
+Na próxima seção, apresenta-se um exemplo de como realizar web scraping em **R** e **Python**. Para isso, são utilizados alguns dos pacotes mencionados para a linguagem **R** e, no caso de **Python**, dá-se preferência ao [**Scrapy**](https://docs.scrapy.org/en/latest), a principal biblioteca empregada para a extração dos dados. Além disso, esta seção também abordará a estrutura de um HTML e o funcionamento dos seletores para a extração de elementos.
 
 \vspace{12pt}
 
-É importante destacar que os códigos desenvolvidos para a raspagem de dados podem deixar de funcionar ao longo do tempo devido a possíveis mudanças na estrutura dos sites. Assim, eventuais ajustes no código poderão ser necessários.
+É importante destacar que os códigos desenvolvidos para a raspagem de dados podem deixar de funcionar com o tempo devido a possíveis mudanças na estrutura dos sites. Assim, eventuais ajustes no código poderão ser necessários.
 
 
 ### Exemplo de web scraping em Python
@@ -426,7 +426,7 @@ Para instalar o [**Scrapy**](https://docs.scrapy.org/en/latest) e suas dependên
 
 \vspace{12pt}
 
-Após a instalação do [**Scrapy**](https://docs.scrapy.org/en/latest), sua CLI^[CLI (Command Line Interface) é uma interface de linha de comando que permite a interação com um sistema operacional ou software por meio de comandos digitados em um terminal, sem o uso de interface gráfica.] ficará disponível. A CLI disponibiliza diversas funcionalidades para o [**Scrapy**](https://docs.scrapy.org/en/latest), como inspencionar o conteúdo de uma página para identificar seletores com mais facilidade e, o mais importante, iniciar um projeto [**Scrapy**](https://docs.scrapy.org/en/latest).
+Após a instalação do [**Scrapy**](https://docs.scrapy.org/en/latest), sua CLI^[CLI (Command Line Interface) é uma interface de linha de comando que permite a interação com um sistema operacional ou software por meio de comandos digitados em um terminal, sem o uso de interface gráfica.] ficará disponível. A CLI disponibiliza diversas funcionalidades para o [**Scrapy**](https://docs.scrapy.org/en/latest), como inspecionar o conteúdo de uma página para identificar seletores com mais facilidade e, o mais importante, iniciar um projeto [**Scrapy**](https://docs.scrapy.org/en/latest).
 
 \vspace{12pt}
 
@@ -476,7 +476,7 @@ A classe `PackagescraperSpider` foi criada a partir do comando executado anterio
 
 \vspace{12pt}
 
-Para extrair dados do conteúdo HTML da página, é necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor `CSS`. Para facilitar a seleção do conteúdo desejado, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta permite testar seletores, inspensionar elementos da página e até mesmo ajuda a debugar o código.
+Para extrair dados do conteúdo HTML da página, é necessário utilizar os seletores `CSS` ou `XPath`. Nesse caso, será utilizado o seletor `CSS`. Para facilitar a seleção do conteúdo desejado, será utilizado uma das grandes ferramentas do [**Scrapy**](https://docs.scrapy.org/en/latest), o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html). Essa ferramenta permite testar seletores, inspecionar elementos da página e até mesmo ajuda a debugar o código.
 
 \vspace{12pt}
 
@@ -503,7 +503,7 @@ https://cran.r-project.org/robots.txt> (referer: None)
 https://cran.r-project.org/web/packages/index.html> (referer: None)
 ```
 
-Após a execução do comando `fetch`, o conteúdo da página ficará armazenado no objeto `response`, que está disponível nativamente no shell. Por exemplo, para visualizar o HTML da página, basta executar `response.body`. A partir dessa resposta, é possível analisar a estrutura da página e configurar o seletor para extrair apenas os dados desejados. No entanto, para facilitar ainda mais esse trabalho, navegadores como [**Firefox**](https://www.mozilla.org/pt-BR/firefox/) oferecem ferramentas de desenvolvedor que permitem inspencionar a estrutura da página, como pode ser visto na @fig-page_contents_devtools. Para acessar essa ferramenta no [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), basta utilizar o atalho `Ctrl+Shift+I`.
+Após a execução do comando `fetch`, o conteúdo da página ficará armazenado no objeto `response`, que está disponível nativamente no shell. Por exemplo, para visualizar o HTML da página, basta executar `response.body`. A partir dessa resposta, é possível analisar a estrutura da página e configurar o seletor para extrair apenas os dados desejados. No entanto, para facilitar ainda mais esse trabalho, navegadores como [**Firefox**](https://www.mozilla.org/pt-BR/firefox/) oferecem ferramentas de desenvolvedor que permitem inspecionar a estrutura da página, como pode ser visto na @fig-page_contents_devtools. Para acessar essa ferramenta no [**Firefox**](https://www.mozilla.org/pt-BR/firefox/), basta utilizar o atalho `Ctrl+Shift+I`.
 
 ```HTML
 <!--PARTE DO CONTEÚDO DA PÁGINA-->
@@ -533,7 +533,7 @@ Após a execução do comando `fetch`, o conteúdo da página ficará armazenado
 </html>
 ```
 
-Após inspencionar a página, observa-se que existem elementos `<a>` no corpo do HTML, cada um com um atrituto `href` associado. Esses `href` serão necessários para realizar a paginação e coletar os pacotes ordenados por data de publicação. Para extrair os `href`, basta executar no shell o comando `response.css("a[target=_top] ::attr(href)").get()`. Esse comando utiliza seletores `CSS` para extrair o primeiro `href` de um elemento `<a>` que possui o atributo `target="_top"`. Se for necessário extrair todos os `href`, basta substituir o método `.get()` por `.getall()`, o que retornará todos os valores correspondentes.
+Após inspecionar a página, observa-se que existem elementos `<a>` no corpo do HTML, cada um com um atributo `href` associado. Os `href` serão necessários para realizar a paginação e coletar os pacotes ordenados por data de publicação. Para extrair os `href`, basta executar no shell o comando `response.css("a[target=_top] ::attr(href)").get()`. Esse comando utiliza seletores `CSS` para extrair o primeiro `href` de um elemento `<a>` que possui o atributo `target="_top"`. Se for necessário extrair todos os `href`, basta substituir o método `.get()` por `.getall()`, o que retornará todos os valores correspondentes.
 
 \vspace{12pt}
 
@@ -1152,7 +1152,7 @@ No caso da regressão, o Boosting combina um grande número de árvores de decis
 
 \vspace{12pt}
 
-O processo de aprendizado no método de Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$, ajusta-se um modelo aditivo, pois cada árvore contém apenas um nó.
+O processo de aprendizado no método de Boosting é mais lento, o que geralmente resulta em modelos mais precisos, embora mais custosos computacionalmente. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$, ajusta-se um modelo aditivo, pois cada árvore contém apenas um nó.
 
 <!-- @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. -->
 

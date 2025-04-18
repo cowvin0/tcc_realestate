@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, breakable, frame hidden, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, colback={codebgcolor}, enhanced, breakable, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -250,7 +250,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa.},
+  pdftitle={Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa},
   pdfauthor={Gabriel de Jesus Pereira},
   pdflang={pt-br},
   colorlinks=true,
@@ -262,7 +262,7 @@
 
 
 \title{Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores
-de Imóveis na Cidade de João Pessoa.}
+de Imóveis na Cidade de João Pessoa}
 \author{Gabriel de Jesus Pereira}
 \date{abril, 2025}
 
@@ -283,7 +283,7 @@ de Imóveis na Cidade de João Pessoa.}
 \vfill
 
 {\large\bfseries Uso de Aprendizado de Máquina na Modelagem Preditiva
-dos Valores de Imóveis na Cidade de João Pessoa. \par}
+dos Valores de Imóveis na Cidade de João Pessoa \par}
 
 \vfill
 
@@ -302,7 +302,7 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
 \vfill
 
 {\large\bfseries Uso de Aprendizado de Máquina na Modelagem Preditiva
-dos Valores de Imóveis na Cidade de João Pessoa. \par}
+dos Valores de Imóveis na Cidade de João Pessoa \par}
 
 \vfill
 
@@ -650,7 +650,7 @@ quadrado residencial atingindo R\$ 6.867 no mês de novembro.
 
 \vspace{12pt}
 
-O crescimento do mercado imobiliário de João Pessoa trás consigo
+O crescimento do mercado imobiliário de João Pessoa traz consigo
 inúmeras necessidades de melhor precificação de imóveis. Avaliar
 corretamente o valor de um imóvel é crucial para uma série de
 finalidades, como a negociação justa entre compradores e vendedores e a
@@ -1014,15 +1014,15 @@ pacotes mencionados para a linguagem \textbf{R} e, no caso de
 \textbf{Python}, dá-se preferência ao
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, a principal
 biblioteca empregada para a extração dos dados. Além disso, esta seção
-também abordará a estruturar de um HTML e o funcionamento dos seletores
+também abordará a estrutura de um HTML e o funcionamento dos seletores
 para a extração de elementos.
 
 \vspace{12pt}
 
 É importante destacar que os códigos desenvolvidos para a raspagem de
-dados podem deixar de funcionar ao longo do tempo devido a possíveis
-mudanças na estrutura dos sites. Assim, eventuais ajustes no código
-poderão ser necessários.
+dados podem deixar de funcionar com o tempo devido a possíveis mudanças
+na estrutura dos sites. Assim, eventuais ajustes no código poderão ser
+necessários.
 
 \subsection{Exemplo de web scraping em
 Python}\label{exemplo-de-web-scraping-em-python}
@@ -1053,8 +1053,8 @@ CLI\footnote{CLI (Command Line Interface) é uma interface de linha de
   gráfica.} ficará disponível. A CLI disponibiliza diversas
 funcionalidades para o
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, como
-inspencionar o conteúdo de uma página para identificar seletores com
-mais facilidade e, o mais importante, iniciar um projeto
+inspecionar o conteúdo de uma página para identificar seletores com mais
+facilidade e, o mais importante, iniciar um projeto
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}.
 
 \vspace{12pt}
@@ -1152,8 +1152,8 @@ seletor \texttt{CSS}. Para facilitar a seleção do conteúdo desejado,
 será utilizado uma das grandes ferramentas do
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, o
 \href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
-Shell}}. Essa ferramenta permite testar seletores, inspensionar
-elementos da página e até mesmo ajuda a debugar o código.
+Shell}}. Essa ferramenta permite testar seletores, inspecionar elementos
+da página e até mesmo ajuda a debugar o código.
 
 \vspace{12pt}
 
@@ -1227,7 +1227,7 @@ estrutura da página e configurar o seletor para extrair apenas os dados
 desejados. No entanto, para facilitar ainda mais esse trabalho,
 navegadores como
 \href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}} oferecem
-ferramentas de desenvolvedor que permitem inspencionar a estrutura da
+ferramentas de desenvolvedor que permitem inspecionar a estrutura da
 página, como pode ser visto na Figura~\ref{fig-page_contents_devtools}.
 Para acessar essa ferramenta no
 \href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}}, basta
@@ -1263,9 +1263,9 @@ utilizar o atalho \texttt{Ctrl+Shift+I}.
 \end{Highlighting}
 \end{Shaded}
 
-Após inspencionar a página, observa-se que existem elementos
+Após inspecionar a página, observa-se que existem elementos
 \texttt{\textless{}a\textgreater{}} no corpo do HTML, cada um com um
-atrituto \texttt{href} associado. Esses \texttt{href} serão necessários
+atributo \texttt{href} associado. Os \texttt{href} serão necessários
 para realizar a paginação e coletar os pacotes ordenados por data de
 publicação. Para extrair os \texttt{href}, basta executar no shell o
 comando
@@ -2454,10 +2454,11 @@ anteriores. Como cada nova árvore depende das árvores já construídas,
 
 \vspace{12pt}
 
-O processo de aprendizado no método de Boosting é lenta, o que acaba
-gerando melhores resultados. Esse processo de aprendizado pode ser
-controlado por um hiperparâmetro \(\lambda\) chamado de shrinkage, ou
-taxa de aprendizado, permitindo que mais árvores, com formas diferentes,
+O processo de aprendizado no método de Boosting é mais lento, o que
+geralmente resulta em modelos mais precisos, embora mais custosos
+computacionalmente. Esse processo de aprendizado pode ser controlado por
+um hiperparâmetro \(\lambda\) chamado de shrinkage, ou taxa de
+aprendizado, permitindo que mais árvores, com formas diferentes,
 corrijam os erros das árvores passadas. No entanto, um valor muito
 pequeno para \(\lambda\) requer uma quantidade muito maior \(B\) de
 árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer
