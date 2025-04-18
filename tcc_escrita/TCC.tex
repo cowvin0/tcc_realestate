@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, sharp corners, frame hidden, colback={codebgcolor}, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, frame hidden, enhanced, breakable, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2275,12 +2275,12 @@ subconjunto de variáveis independentes antes de cada divisão.
 
 \vspace{12pt}
 
-No algoritmo Random Forest, ao construir cada árvore a partir de
-amostras bootstrap, selecionam-se aleatoriamente \(m \leq p\) das \(p\)
-variáveis independentes como candidatas para a divisão, antes de cada
-ramificação (sendo \(m = p\) no caso do Bagging). Assim, diferentemente
-do Bagging, o Random Forest não considera todas as \(p\) variáveis para
-escolher a divisão que minimiza a impureza, mas apenas uma amostra
+No algoritmo Random Forest, ao construir uma árvore a partir de amostras
+bootstrap, selecionam-se aleatoriamente \(m \leq p\) das \(p\) variáveis
+independentes como candidatas para a divisão, antes de cada ramificação
+(sendo \(m = p\) no caso do Bagging). Assim, diferentemente do Bagging,
+o Random Forest não considera todas as \(p\) variáveis ao escolher a
+divisão que minimiza o erro das regiões, mas apenas uma amostra
 aleatória de \(m\) variáveis.
 
 \vspace{12pt}
@@ -2298,10 +2298,10 @@ contribuindo para uma menor variabilidade nas previsões agregadas.
 \vspace{12pt}
 
 A quantidade de variáveis independentes \(m\) selecionadas
-aleatoriamente é um hiperparâmetro que pode ser ajustado por meio de
+aleatoriamente é um hiperparâmetro que pode ser estimado por meio de
 validação cruzada. Valores comumente utilizados são \(m = \sqrt{p}\) com
-quantidade mínimo de observações no nó igual a um, no caso de
-classificação, e \(m = p/3\) com tamanho mínimo de observações no nó
+quantidade mínima de observações no nó igual a um, no caso de
+classificação, e \(m = p/3\) com quantidade mínima de observações no nó
 igual a cinco, no caso de regressão (HASTIE et al., 2009).
 
 \vspace{12pt}
@@ -2381,10 +2381,9 @@ amostras bootstrap, e ao final, um estimador agregado
 Boosting Trees funciona de maneira semelhante, mas sem o uso de amostras
 bootstrap. A ideia central do Boosting é corrigir os erros das árvores
 anteriores, ajustando as novas árvores aos resíduos gerados pelas
-predições anteriores, com o objetivo de aprimorar a precisão do modelo.
-Assim, as árvores no Boosting são construídas de forma sequencial,
-incorporando gradualmente as informações dos erros cometidos pelas
-árvores anteriores.
+predições anteriores. Assim, as árvores no Boosting são construídas de
+forma sequencial, incorporando gradualmente as informações dos erros
+cometidos pelas árvores anteriores.
 
 \vspace{12pt}
 
@@ -2410,10 +2409,8 @@ pequeno para \(\lambda\) requer uma quantidade muito maior \(B\) de
 de sobreajuste se a quantidade de árvores é muito grande. Além disso, a
 quantidade de divisões \(d\) em cada árvore, que controla a complexidade
 do boosting, pode ser considerado também um hiperparâmetro. Para
-\(d = 1\) é ajustado um modelo aditivo, já que cada termo involve apenas
-uma variável. JAMES et al. (2013) define \(d\) como a profundidade de
-interação que controla a ondem de interação do modelo boosting, já que
-\(d\) divisões podem envolver no máximo \(d\) variáveis.
+\(d = 1\), ajusta-se um modelo aditivo, pois cada árvore contém apenas
+um nó.
 
 \subsection{Stacked generalization}\label{stacked-generalization}
 
@@ -4947,7 +4944,7 @@ informações ausentes com base nas demais informações fornecidas.
 
 Neste trabalho, foi possível aplicar uma abordagem pouco usual para a
 solução de problemas relacionados à avaliação do preço de imóveis,
-principalmente pela dificuldades para se obter dados sobre imóveis, na
+principalmente pela dificuldade para se obter dados sobre imóveis, na
 cidade de João Pessoa. A partir da utilização de técnicas de web
 scraping, foi possível coletar uma base de dados abrangente diretamente
 de sites de anúncios imobiliários. Esse processo automatizado de
@@ -4963,9 +4960,9 @@ abordagem de aprendizado de máquina, utilizando-se diferentes
 algoritmos, sendo o Gradient Boosting aquele que apresentou o melhor
 desempenho preditivo. O modelo final apresentou um RMSE de 0,28297, MAPE
 de \(0,01333\) e \(R^2\) de \(87,32712\%\). Ou seja, obteve-se um modelo
-que consegue explicar \(87,32712\%\) da variável dependente e os valores
-estimados estão, em média \(1,333\%\) distantes de seus valores
-observados.
+que consegue explicar \(87,32712\%\) da variância da variável dependente
+e os valores estimados estão, em média, \(1,333\%\) distantes de seus
+valores observados.
 
 \vspace{12pt}
 
@@ -4974,8 +4971,8 @@ técnicas como SHAP, ICE e PDP. A partir dos gráficos ICE combinados com
 a linha média do PDP, foi possível confirmar que imóveis localizados
 mais próximos às regiões litorâneas tendem a ter valores de predição
 mais elevados. O mesmo padrão de aumento nas predições foi observado
-para variáveis como área do imóvel, número de quartos, banheiros, vagas
-de garagem, número de cômodos e valor do aluguel. Ou seja, à medida que
+para variáveis como área do imóvel, quartos, banheiros, vagas de
+garagem, quantidade de cômodos e valor do aluguel. Ou seja, à medida que
 essas variáveis aumentam, maior o valor estimado pelo modelo. Por outro
 lado, a variável área de aluguel apresentou um comportamento com
 variações pouco expressivas nas predições, indicando um impacto mais
@@ -4984,16 +4981,17 @@ limitado na resposta do modelo.
 \vspace{12pt}
 
 Pelo método SHAP, observou-se que a área do imóvel foi a variável com
-maior impacto na predição do modelo, sendo responsável por mais de 12\%
-da importância absoluta na explicação das previsões. Outras variáveis de
-maior impacto nas predições foi a razão entre o número de quartos e a
-área total, as coordenadas geográficas e o produto entre essas
-coordenadas e o valor do aluguel. Por outro lado, variáveis como sauna,
-spa, portaria 24 horas e quadra de esportes apresentaram menor impacto
-global nas predições. No entanto, gráficos de dependência dos valores
-SHAP revelaram que, embora com menor influência média, variáveis como
+maior impacto na predição do modelo, sendo responsável por alterar, em
+média, mais de 12\% na predição absoluta das previsões. Outras variáveis
+de maior impacto nas predições foi a razão entre o número de quartos e a
+área, as coordenadas geográficas e o produto entre essas coordenadas e o
+valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria 24
+horas e quadra de esportes apresentaram menor impacto global nas
+predições. No entanto, os gráficos de dependência dos valores SHAP
+revelaram que, embora tenham menor influência média, variáveis como
 sauna e spa ainda são relevantes na predição de imóveis de alto padrão,
-destacando sua importância em caso específicos do mercado imobiliário.
+evidenciando sua importância em casos específicos envolvendo imóveis de
+categorias mais elevadas.
 
 \vspace{12pt}
 

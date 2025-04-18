@@ -990,7 +990,7 @@ Fonte: @hastie2009elements [p. 588].
 
 \vspace{12pt}
 
-No algoritmo Random Forest, ao construir cada árvore a partir de amostras bootstrap, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão, antes de cada ramificação (sendo $m = p$ no caso do Bagging). Assim, diferentemente do Bagging, o Random Forest não considera todas as $p$ variáveis para escolher a divisão que minimiza a impureza, mas apenas uma amostra aleatória de $m$ variáveis.
+No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão, antes de cada ramificação (sendo $m = p$ no caso do Bagging). Assim, diferentemente do Bagging, o Random Forest não considera todas as $p$ variáveis ao escolher a divisão que minimiza o erro das regiões, mas apenas uma amostra aleatória de $m$ variáveis.
 
 \vspace{12pt}
 
@@ -998,7 +998,7 @@ Essa seleção aleatória de variáveis independentes ajuda a resolver um dos pr
 
 \vspace{12pt}
 
-A quantidade de variáveis independentes $m$ selecionadas aleatoriamente é um hiperparâmetro que pode ser ajustado por meio de validação cruzada. Valores comumente utilizados são $m = \sqrt{p}$ com quantidade mínimo de observações no nó igual a um, no caso de classificação, e $m = p/3$ com tamanho mínimo de observações no nó igual a cinco, no caso de regressão [@hastie2009elements].
+A quantidade de variáveis independentes $m$ selecionadas aleatoriamente é um hiperparâmetro que pode ser estimado por meio de validação cruzada. Valores comumente utilizados são $m = \sqrt{p}$ com quantidade mínima de observações no nó igual a um, no caso de classificação, e $m = p/3$ com quantidade mínima de observações no nó igual a cinco, no caso de regressão [@hastie2009elements].
 
 \vspace{12pt}
 
@@ -1059,7 +1059,7 @@ Fonte: @james2013introduction [p. 349].
 
 :::
 
-No algoritmo de Bagging, cada árvore é construída e ajustada utilizando amostras bootstrap, e ao final, um estimador agregado $\varphi_B$​ é formado a partir das $B$ árvores. O Boosting Trees funciona de maneira semelhante, mas sem o uso de amostras bootstrap. A ideia central do Boosting é corrigir os erros das árvores anteriores, ajustando as novas árvores aos resíduos gerados pelas predições anteriores, com o objetivo de aprimorar a precisão do modelo. Assim, as árvores no Boosting são construídas de forma sequencial, incorporando gradualmente as informações dos erros cometidos pelas árvores anteriores.
+No algoritmo de Bagging, cada árvore é construída e ajustada utilizando amostras bootstrap, e ao final, um estimador agregado $\varphi_B$​ é formado a partir das $B$ árvores. O Boosting Trees funciona de maneira semelhante, mas sem o uso de amostras bootstrap. A ideia central do Boosting é corrigir os erros das árvores anteriores, ajustando as novas árvores aos resíduos gerados pelas predições anteriores. Assim, as árvores no Boosting são construídas de forma sequencial, incorporando gradualmente as informações dos erros cometidos pelas árvores anteriores.
 
 \vspace{12pt}
 
@@ -1067,7 +1067,9 @@ No caso da regressão, o Boosting combina um grande número de árvores de decis
 
 \vspace{12pt}
 
-O processo de aprendizado no método de Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$ é ajustado um modelo aditivo, já que cada termo involve apenas uma variável. @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis.
+O processo de aprendizado no método de Boosting é lenta, o que acaba gerando melhores resultados. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$, ajusta-se um modelo aditivo, pois cada árvore contém apenas um nó.
+
+<!-- @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. -->
 
 
 ### Stacked generalization
@@ -3061,19 +3063,21 @@ Embora o usuário tenha a opção de selecionar as coordenadas e as informaçõe
 
 # Conclusão
 
-Neste trabalho, foi possível aplicar uma abordagem pouco usual para a solução de problemas relacionados à avaliação do preço de imóveis, principalmente pela dificuldades para se obter dados sobre imóveis, na cidade de João Pessoa. A partir da utilização de técnicas de web scraping, foi possível coletar uma base de dados abrangente diretamente de sites de anúncios imobiliários. Esse processo automatizado de extração de dados demonstrou-se fundamental, especialmente em contextos onde não há acesso a bases públicas organizadas, permitindo a construção de um conjunto rico de variáveis relevantes para a modelagem dos preços dos imóveis.
+Neste trabalho, foi possível aplicar uma abordagem pouco usual para a solução de problemas relacionados à avaliação do preço de imóveis, principalmente pela dificuldade para se obter dados sobre imóveis, na cidade de João Pessoa. A partir da utilização de técnicas de web scraping, foi possível coletar uma base de dados abrangente diretamente de sites de anúncios imobiliários. Esse processo automatizado de extração de dados demonstrou-se fundamental, especialmente em contextos onde não há acesso a bases públicas organizadas, permitindo a construção de um conjunto rico de variáveis relevantes para a modelagem dos preços dos imóveis.
 
 \vspace{12pt}
 
-Com os dados devidamente tratados e organizados, foi aplicada uma abordagem de aprendizado de máquina, utilizando-se diferentes algoritmos, sendo o Gradient Boosting aquele que apresentou o melhor desempenho preditivo. O modelo final apresentou um RMSE de 0,28297, MAPE de $0,01333$ e $R^2$ de $87,32712\%$. Ou seja, obteve-se um modelo que consegue explicar $87,32712\%$ da variável dependente e os valores estimados estão, em média $1,333\%$ distantes de seus valores observados.
+Com os dados devidamente tratados e organizados, foi aplicada uma abordagem de aprendizado de máquina, utilizando-se diferentes algoritmos, sendo o Gradient Boosting aquele que apresentou o melhor desempenho preditivo. O modelo final apresentou um RMSE de 0,28297, MAPE de $0,01333$ e $R^2$ de $87,32712\%$. Ou seja, obteve-se um modelo que consegue explicar $87,32712\%$ da variância da variável dependente e os valores estimados estão, em média, $1,333\%$ distantes de seus valores observados.
 
 \vspace{12pt}
 
-Além da modelagem, foi dada ênfase à interpretação do modelo por meio de técnicas como SHAP, ICE e PDP. A partir dos gráficos ICE combinados com a linha média do PDP, foi possível confirmar que imóveis localizados mais próximos às regiões litorâneas tendem a ter valores de predição mais elevados. O mesmo padrão de aumento nas predições foi observado para variáveis como área do imóvel, número de quartos, banheiros, vagas de garagem, número de cômodos e valor do aluguel. Ou seja, à medida que essas variáveis aumentam, maior o valor estimado pelo modelo. Por outro lado, a variável área de aluguel apresentou um comportamento com variações pouco expressivas nas predições, indicando um impacto mais limitado na resposta do modelo.
+Além da modelagem, foi dada ênfase à interpretação do modelo por meio de técnicas como SHAP, ICE e PDP. A partir dos gráficos ICE combinados com a linha média do PDP, foi possível confirmar que imóveis localizados mais próximos às regiões litorâneas tendem a ter valores de predição mais elevados. O mesmo padrão de aumento nas predições foi observado para variáveis como área do imóvel, quartos, banheiros, vagas de garagem, quantidade de cômodos e valor do aluguel. Ou seja, à medida que essas variáveis aumentam, maior o valor estimado pelo modelo. Por outro lado, a variável área de aluguel apresentou um comportamento com variações pouco expressivas nas predições, indicando um impacto mais limitado na resposta do modelo.
 
 \vspace{12pt}
 
-Pelo método SHAP, observou-se que a área do imóvel foi a variável com maior impacto na predição do modelo, sendo responsável por mais de 12% da importância absoluta na explicação das previsões. Outras variáveis de maior impacto nas predições foi a razão entre o número de quartos e a área total, as coordenadas geográficas e o produto entre essas coordenadas e o valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria 24 horas e quadra de esportes apresentaram menor impacto global nas predições. No entanto, gráficos de dependência dos valores SHAP revelaram que, embora com menor influência média, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, destacando sua importância em caso específicos do mercado imobiliário.
+Pelo método SHAP, observou-se que a área do imóvel foi a variável com maior impacto na predição do modelo, sendo responsável por alterar, em média, mais de 12% na predição absoluta das previsões. Outras variáveis de maior impacto nas predições foi a razão entre o número de quartos e a área, as coordenadas geográficas e o produto entre essas coordenadas e o valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria 24 horas e quadra de esportes apresentaram menor impacto global nas predições. No entanto, os gráficos de dependência dos valores SHAP revelaram que, embora tenham menor influência média, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, evidenciando sua importância em casos específicos envolvendo imóveis de categorias mais elevadas.
+
+<!-- No entanto, gráficos de dependência dos valores SHAP revelaram que, embora com menor influência, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, destacando sua importância em caso específicos na predição de imóveis de padrões mais elevados. -->
 
 \vspace{12pt}
 
