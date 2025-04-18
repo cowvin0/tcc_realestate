@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, enhanced, colback={codebgcolor}, breakable, frame hidden, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, colback={codebgcolor}, sharp corners, breakable, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2396,7 +2396,7 @@ meio do algoritmo Random Forest, que será apresentado a seguir.
     \State \hspace{3.6em} repetindo recursivamente os seguintes passos para cada folha da árvore,
     \State \hspace{3.6em} \vspace{0.5em} até que o tamanho mínimo do nó \( n_{min} \) seja atingido:
     \State \hspace{4em} \vspace{0.1em} i. Selecione \( m \) variáveis aleatoriamente entre as \( p \) variáveis.
-    \State \hspace{4em} \vspace{0.1em} ii. Escolha a melhor variável entre as \( m \).
+    \State \hspace{4em} \vspace{0.1em} ii. Escolha a melhor variável para divisão entre as \( m \).
     \State \hspace{4em} \vspace{0.1em} iii. Divida o nó em dois subnós.
 
 \vspace{0.8em}
@@ -2442,11 +2442,10 @@ subconjunto de variáveis independentes antes de cada divisão.
 
 No algoritmo Random Forest, ao construir uma árvore a partir de amostras
 bootstrap, selecionam-se aleatoriamente \(m \leq p\) das \(p\) variáveis
-independentes como candidatas para a divisão, antes de cada ramificação
-(sendo \(m = p\) no caso do Bagging). Assim, diferentemente do Bagging,
-o Random Forest não considera todas as \(p\) variáveis ao escolher a
-divisão que minimiza o erro das regiões, mas apenas uma amostra
-aleatória de \(m\) variáveis.
+independentes como candidatas para a divisão (sendo \(m = p\) no caso do
+Bagging). Assim, diferentemente do Bagging, o Random Forest não
+considera todas as \(p\) variáveis ao escolher a divisão que minimiza o
+erro das regiões, mas apenas uma amostra aleatória de \(m\) variáveis.
 
 \vspace{12pt}
 
@@ -2564,8 +2563,8 @@ anteriores. Como cada nova árvore depende das árvores já construídas,
 
 \vspace{12pt}
 
-O processo de aprendizado no método de Boosting é mais lento, o que
-geralmente resulta em modelos mais precisos, embora mais custosos
+O processo de aprendizado do Boosting é mais lento, o que geralmente
+resulta em modelos mais precisos, embora mais custosos
 computacionalmente. Esse processo de aprendizado pode ser controlado por
 um hiperparâmetro \(\lambda\) chamado de shrinkage, ou taxa de
 aprendizado, permitindo que mais árvores, com formas diferentes,
@@ -2690,16 +2689,15 @@ cada árvore de regressão tem a seguinte forma aditiva:
 \begin{equation}\phantomsection\label{eq-treebost}{
 h\left(x;\{R_{jm}\}^{J_{m}}_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)\text{,}
 }\end{equation} em que \(\{R_{jm}\}^{J_m}_{1}\) representa as regiões
-disjuntas que, em conjunto, cobrem todo o espaço das variáveis
-preditoras. Essas regiões correspondem às folhas da respectiva árvore de
-regressão.
+disjuntas que, em conjunto, cobrem o espaço das variáveis preditoras.
+Essas regiões correspondem às folhas da respectiva árvore de regressão.
 
 \vspace{12pt}
 
-Como as regiões são disjuntas, a partir da Equação~\ref{eq-treebost} e
-utilizando o método de mínimos quadrados, a estimativa de \(b_{jm}\) ---
-a predição associada à região \(R_{jm}\)\hspace{0pt} --- será
-simplesmente a média dos pseudo-resíduos \(r_{im}\):
+Como as regiões são disjuntas, a partir da Equação~\ref{eq-treebost}, a
+estimativa de \(b_{jm}\) --- a predição associada à região
+\(R_{jm}\)\hspace{0pt} --- será simplesmente a média dos pseudo-resíduos
+\(r_{im}\):
 
 \[
 \hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}\text{,}
