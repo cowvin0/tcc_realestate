@@ -131,21 +131,18 @@ test_df = test_df.rename(columns=rename)
 \begin{center}
   \noindent\rule{14cm}{0.4pt} \\
   Prof. Dr. Pedro Rafael Diniz Marinho \\
-  (Professor Orientador) \\
   Universidade Federal da Paraíba
 
   \vfill
 
   \noindent\rule{14cm}{0.4pt} \\
   Prof. Dr. Eufrásio de Andrade Lima Neto \\
-  (Professor Examinador) \\
   Universidade Federal da Paraíba
 
   \vfill
 
   \noindent\rule{14cm}{0.4pt} \\
   Prof. Dr. Luiz Medeiros de Araujo Lima Filho \\
-  (Professor Examinador) \\
   Universidade Federal da Paraíba
 
   \vfill
@@ -159,10 +156,34 @@ test_df = test_df.rename(columns=rename)
   \small Fone: +55 (83) 3216-7785
 \end{center}
 
+\chapter*{\centering Dedicatória}
+\thispagestyle{empty}
 
 \chapter*{\centering Agradecimentos}
 \thispagestyle{empty}
 
+<!--
+\ \ \ Aos meus pais, Simone Evangelista Pereira e Antônio Francisco Pereira, e à minha segunda mãe, minha avó, Célia Evangelista São Pedro, agradeço profundamente por todo o incentivo aos estudos, pelos momentos de felicidade compartilhados, conselhos e, sobretudo, por nunca medirem esforços para proporcionar o melhor a mim e ao meu irmão.
+
+\vspace{12pt}
+
+Agradeço ao meu irmão, Bruno de Jesus Pereira — meu melhor amigo — pela amizade incondicional. Sou grato por sempre me convidar para passar o tempo juntos, pelas risadas, pelos momentos de diversão e pela tranquilidade que isso trouxe ao meu dia a dia. Agradeço também pelo incentivo durante a graduação, pelas horas em que nos divertimos jogando — mesmo que por pouco tempo —, pelas conversas sobre teorias de jogos e pelas conversas sobre filmes, que tornaram essa jornada muito mais leve e especial.
+
+\vspace{12pt}
+
+À Ataline Soares Batista, agradeço por ser a melhor pessoa que poderia estar ao meu lado — desde o ensino médio e, hoje, como minha noiva. Obrigado por tornar meus dias mais leves, pelos momentos de diversão e descontração. Ter você ao meu lado me fez uma pessoa melhor em todos os aspectos da vida: mais feliz, mais criativo e com ainda mais vontade de seguir em frente. Você é meu maior incentivo em muitas das escolhas que faço ou desejo fazer. Sou grato pelas longas conversas, pelas brincadeiras, pelos assuntos sobre cultura, livros e filmes de guerra. Obrigado por todos esses sete anos incríveis ao seu lado. Eu te amo.
+
+\vspace{12pt}
+
+Ao meu orientador, Pedro Rafael Diniz Marinho, agradeço por me acompanhar desde o início da graduação, sempre demonstrando genuíno interesse em ensinar e compartilhando materiais que enriqueceram meu aprendizado. Sou profundamente grato pelos conselhos valiosos, que me ajudaram a tomar decisões mais acertadas em diversos aspectos da minha vida e contribuíram significativamente para meu crescimento pessoal. Agradeço, ainda, pela dedicação a este trabalho, pela constante disposição em esclarecer dúvidas, indicar caminhos e, assim, contribuir para que eu me tornasse um estatístico melhor. Muito obrigado, especialmente, por ter me ensinado a programar.
+
+\vspace{12pt}
+
+<!-- Ao professor Jonas Otaviano Praça de Souza, muito obrigado por ter me aceitado como seu PIBIC, -->
+
+<!-- \vspace{12pt}
+
+Aos meus amigos de graduação, Paulo, Rafhael, Daniel, Jéssika e Nielson... -->
 
 \chapter*{\centering Resumo}
 \thispagestyle{empty}
@@ -200,7 +221,9 @@ test_df = test_df.rename(columns=rename)
 
 \cleardoublepage
 \renewcommand{\contentsname}{\centering{Sumário}}
+\pagenumbering{gobble}
 \tableofcontents
+\pagenumbering{arabic}
 \thispagestyle{empty}
 
 \egroup

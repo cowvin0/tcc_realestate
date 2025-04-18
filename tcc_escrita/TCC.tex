@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, sharp corners, boxrule=0pt, frame hidden, breakable, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, breakable, frame hidden, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -289,7 +289,7 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
 
 {\large Gabriel de Jesus Pereira \par}
 \vfill
-{\normalsize abril, 2025 \par}
+{\normalsize maio, 2025 \par}
 
 
 \noindent\rule{\textwidth}{0.5pt}
@@ -315,7 +315,7 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
 \vfill
 
 {\normalsize\bfseries João Pessoa \par}
-{\normalsize\bfseries abril, 2025 \par}
+{\normalsize\bfseries maio, 2025 \par}
 
 }
 \numberwithin{algorithm}{chapter}
@@ -363,21 +363,18 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
 \begin{center}
   \noindent\rule{14cm}{0.4pt} \\
   Prof. Dr. Pedro Rafael Diniz Marinho \\
-  (Professor Orientador) \\
   Universidade Federal da Paraíba
 
   \vfill
 
   \noindent\rule{14cm}{0.4pt} \\
   Prof. Dr. Eufrásio de Andrade Lima Neto \\
-  (Professor Examinador) \\
   Universidade Federal da Paraíba
 
   \vfill
 
   \noindent\rule{14cm}{0.4pt} \\
   Prof. Dr. Luiz Medeiros de Araujo Lima Filho \\
-  (Professor Examinador) \\
   Universidade Federal da Paraíba
 
   \vfill
@@ -390,6 +387,9 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
   \small Cidade Universitária, s/n, CEP 58051-900, João Pessoa - PB, Brasil \\
   \small Fone: +55 (83) 3216-7785
 \end{center}
+
+\chapter*{\centering Dedicatória}
+\thispagestyle{empty}
 
 \chapter*{\centering Agradecimentos}
 \thispagestyle{empty}
@@ -458,7 +458,9 @@ dados para o mercado imobiliário local.
 
 \cleardoublepage
 \renewcommand{\contentsname}{\centering{Sumário}}
+\pagenumbering{gobble}
 \tableofcontents
+\pagenumbering{arabic}
 \thispagestyle{empty}
 
 \egroup
