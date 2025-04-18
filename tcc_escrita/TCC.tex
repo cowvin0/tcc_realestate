@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, sharp corners, enhanced, breakable, colback={codebgcolor}, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, breakable, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2452,9 +2452,10 @@ sobreajuste.
 ~~~O algoritmo de Gradient Boosting é semelhante ao Boosting, mas com
 algumas diferenças. Ele constrói modelos aditivos ajustando
 sequencialmente funções base aos pseudos-resíduos em cada iteração, que,
-por sua vez, correspondem aos gradientes da função de perda (FRIEDMAN,
-2002). Esses podem gradientes indicam a direção na qual a função perda
-diminui mais rapidamente, orientando o ajuste dos modelos seguintes.
+por sua vez, correspondem a direção contrária dos gradientes da função
+de perda (FRIEDMAN, 2002). Esses pseudos-resíduos indicam a direção na
+qual a função de perda está sendo minimizada, orientando o ajuste dos
+modelos seguintes.
 
 \vspace{12pt}
 
@@ -2537,26 +2538,26 @@ simplesmente a média dos pseudo-resíduos \(r_{im}\):
 \[
 \hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}\text{,}
 \] onde \(N_{jm}\) denota o número de observações na região \(R_{jm}\).
-Os pseudo-resíduos \(r_{im}\)\hspace{0pt} representam os gradientes da
-função de perda \(L\), conforme expressos na linha 2(a) do
- Algoritmo~\ref{algo-gradboos} , e indicam a direção de maior diminuição
-de \(L\).
+Os pseudo-resíduos \(r_{im}\)\hspace{0pt} representam a direção
+contrária dos gradientes da função perda \(L\), conforme expressos na
+linha 2(a) do  Algoritmo~\ref{algo-gradboos} , e indicam a direção de
+minimização de \(L\).
 
 \vspace{12pt}
 
 Assim, cada árvore de regressão é ajustada aos novos pseudo-resíduos,
-com o objetivo de minimizar o erro residual acumulado pelas árvores
-anteriores. O estimador é, então, atualizado separadamente em cada
-região \(R_{jm}\)\hspace{0pt}, conforme descrito a seguir:
+com o objetivo de minimizar o erro das árvores anteriores. O estimador
+é, então, atualizado separadamente em cada região
+\(R_{jm}\)\hspace{0pt}, conforme descrito a seguir:
 
 \[
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J_m}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
 \] em que
 \(\gamma_{jm} = \arg \min_{\gamma} \sum_{x_i \in R_{jm}} L\left(y_i, f_{m - 1}\left(x_i\right) + \gamma\right)\)
-representa a constante ótima para cada região. O parâmetro \(\lambda\),
-assim como no algoritmo de boosting, é o hiperparâmetro de shrinkage,
-utilizado para controlar a taxa de aprendizado. Valores menores de
-\(\lambda\) exigem um número maior de iterações \(M\).
+representa uma constante ótima para cada região. O parâmetro
+\(\lambda\), assim como no algoritmo de boosting, é o hiperparâmetro de
+shrinkage, utilizado para controlar a taxa de aprendizado. Valores
+menores de \(\lambda\) exigem um número maior de iterações \(M\).
 
 \vspace{12pt}
 
@@ -2564,22 +2565,21 @@ As outras implementações de Gradient Boosting aplicadas à árvores de
 decisão tem seus próprios motivos de existência. Esses motivos incluem a
 busca por maior eficiência computacional, adição de recursos e até mesmo
 maior flexibilidade. As duas outras implementações utilizadas foram o
-Extreme Gradient Boosting e Light Gradient Boosting.
+Extreme Gradient Boosting (XGBoost) e Light Gradient Boosting
+(LightGBM).
 
 \vspace{12pt}
 
-O Extreme Gradient Boosting é uma implementação altamente eficiente do
-algoritmo e flexível de Gradient Boosting aplicado à árvores de decisão.
-Além disso, é adicionado um novo recurso, técnicas de regularização para
-diminuir o sobreajuste do modelo. A função objetivo agora passa a ser
-definida da seguinte forma:
+O Extreme Gradient Boosting é uma implementação altamente eficiente e
+flexível do algoritmo de Gradient Boosting aplicado a árvores de
+decisão. Um de seus principais diferenciais é a incorporação de técnicas
+de regularização, que ajudam a reduzir o sobreajuste e a melhorar a
+generalização do modelo.
 
-\[
-\mathcal{L}\left(\phi\right) = \sum_{i}l\left(\hat{y}_{i}, y_{i}\right) + \sum_{k}\Omega\left(f_{k}\right)\text{,}
-\] em que \(l\) é uma função de perda convexa diferenciável e o segundo
-termo \(\Omega\) penaliza a complexidade de cada função de árvore de
-decisão. O termo de regularização adicional ajuda a suavizar os pesos
-finais para evitar o sobreajuste. \(\Omega\) é definido como:
+\vspace{12pt}
+
+A regularização é feita por meio de um termo adicional que penaliza a
+complexidade das árvores, definido como:
 
 \[
 \Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}\text{,}
@@ -2587,24 +2587,21 @@ finais para evitar o sobreajuste. \(\Omega\) é definido como:
 a soma do quadrado dos pesos associados às folhas. \(\gamma\) e
 \(\lambda\) são os parâmetros de regularização, em que \(\lambda\)
 penaliza os pesos das folhas e \(\gamma\) penaliza a quantidade de
-folhas nas árvores. Assim, com a regularização aplicada a função
-objetivo, modelos e funções preditivas serão mais comuns pois
-simplificarão o modelo. As implementações do algoritmo de Extreme
-Gradient Boosting presentes em \textbf{Python} utilizam a regularização
-L2 como padrão, mas também permitem o uso da regularização L1.
+folhas nas árvores. As implementações do Extreme Gradient Boosting em
+\textbf{Python}, por padrão, utilizam a regularização L2, mas também
+permitem a aplicação da regularização L1.
 
 \vspace{12pt}
 
-Assim como o Gradient Boosting, as implementações existentes de Light
-Gradient Boosting também permite utilizar a regularização L1 ou L2, mas
-não utiliza nenhuma das duas por padrão. A principal diferença do Light
-Gradient Boosting está na forma de crescimento das árvores, primeiro é
-dividido a folha com a maior redução na função de erro. Além disso, tem
-um grande foco na velocidade e uma melhor eficiência no uso da memória
-atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que, em
-vez de avaliar cada ponto quando realiza a divisão, ele divide valores
-contínuos em intervalos, como em um histograma, o que reduz grandemente
-o custo computacional.
+Assim como o XGBoost, as implementações existentes do LightGBM também
+permitem o uso de regularização L1 ou L2, embora nenhuma delas seja
+utilizada por padrão. O LightGBM tem como foco a alta velocidade de
+treinamento e a eficiência no uso da memória, graças ao algoritmo
+baseado em histogramas (Histogram-Based Algorithm). Nesse método, os
+valores contínuos das variáveis são agrupados em intervalos discretos
+--- como em um histograma --- o que evita a avaliação de cada ponto
+individualmente durante as divisões das árvores, reduzindo
+significativamente o custo computacional.
 
 \chapter{Metodologia}\label{metodologia}
 
