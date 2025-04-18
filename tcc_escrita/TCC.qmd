@@ -7,7 +7,7 @@ nocite: |
   @evolucao_abecip
 template-partials:
   - includes/before-body.tex
-toc-title: \centering Sumário \thispagestyle{empty}
+# toc-title: \centering Sumário \thispagestyle{empty}
 format:
   pdf:
     pdf-engine: lualatex
@@ -45,7 +45,7 @@ whitespace: small
 lang: pt-br
 bibliography: includes/bib.bib
 csl: includes/ufpe-abnt.csl
-toc: true
+# toc: true
 title: Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa.
 author: Gabriel de Jesus Pereira
 mermaid:
@@ -109,6 +109,94 @@ train_df = train_df.rename(columns=rename)
 test_df = test_df.rename(columns=rename)
 ```
 
+\newpage
+\thispagestyle{empty}
+
+\begin{center}
+  \includegraphics[width=0.2\textwidth]{includes/logode.png} \\
+  UNIVERSIDADE FEDERAL DA PARAÍBA \\
+  DEPARTAMENTO DE ESTATÍSTICA \\
+\end{center}
+
+\vspace{1cm}
+\noindent
+\hspace{0.8cm}
+\begin{minipage}{0.9\textwidth}
+  \setlength{\parindent}{0.4cm}
+  Trabalho de Conclusão de Curso de Estatística intitulado \textbf{Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa} de autoria de Gabriel de Jesus Pereira, aprovado pela banca examinadora constituída pelos seguintes professores:
+\end{minipage}
+
+\vfill
+
+\begin{center}
+  \noindent\rule{14cm}{0.4pt} \\
+  Prof. Dr. Pedro Rafael Diniz Marinho \\
+  Universidade Federal da Paraíba
+
+  \vfill
+
+  \noindent\rule{14cm}{0.4pt} \\
+  Prof. Dr. Eufrásio de Andrade Lima Neto \\
+  Universidade Federal da Paraíba
+
+  \vfill
+
+  \noindent\rule{14cm}{0.4pt} \\
+  Prof. Dr. Luiz Medeiros de Araujo Lima Filho \\
+  Universidade Federal da Paraíba
+
+  \vfill
+
+  João Pessoa, 2 de maio de 2025
+
+  \vfill
+
+  \small Departamento de Estatística, Universidade Federal da Paraíba \\
+  \small Cidade Universitária, s/n, CEP 58051-900, João Pessoa - PB, Brasil \\
+  \small Fone: +55 (83) 3216-7785
+\end{center}
+
+\chapter*{\centering Dedicatória}
+\thispagestyle{empty}
+
+\chapter*{\centering Agradecimentos}
+\thispagestyle{empty}
+
+<!--
+\ \ \ Aos meus pais, Simone Evangelista Pereira e Antônio Francisco Pereira, e à minha segunda mãe, minha avó, Célia Evangelista São Pedro, agradeço profundamente por todo o incentivo aos estudos, pelos momentos de felicidade compartilhados, conselhos e, sobretudo, por nunca medirem esforços para proporcionar o melhor a mim e ao meu irmão.
+
+\vspace{12pt}
+
+Agradeço ao meu irmão, Bruno de Jesus Pereira — meu melhor amigo — pela amizade incondicional. Sou grato por sempre me convidar para passar o tempo juntos, pelas risadas, pelos momentos de diversão e pela tranquilidade que isso trouxe ao meu dia a dia. Agradeço também pelo incentivo durante a graduação, pelas horas em que nos divertimos jogando — mesmo que por pouco tempo —, pelas conversas sobre teorias de jogos e pelas conversas sobre filmes, que tornaram essa jornada muito mais leve e especial.
+
+\vspace{12pt}
+
+À Ataline Soares Batista, agradeço por ser a melhor pessoa que poderia estar ao meu lado — desde o ensino médio e, hoje, como minha noiva. Obrigado por tornar meus dias mais leves, pelos momentos de diversão e descontração. Ter você ao meu lado me fez uma pessoa melhor em todos os aspectos da vida: mais feliz, mais criativo e com ainda mais vontade de seguir em frente. Você é meu maior incentivo em muitas das escolhas que faço ou desejo fazer. Sou grato pelas longas conversas, pelas brincadeiras, pelos assuntos sobre cultura, livros e filmes de guerra. Obrigado por todos esses sete anos incríveis ao seu lado. Eu te amo.
+
+\vspace{12pt}
+
+Ao meu orientador, Pedro Rafael Diniz Marinho, agradeço por me acompanhar desde o início da graduação, sempre demonstrando genuíno interesse em ensinar e compartilhando materiais que enriqueceram meu aprendizado. Sou profundamente grato pelos conselhos valiosos, que me ajudaram a tomar decisões mais acertadas em diversos aspectos da minha vida e contribuíram significativamente para meu crescimento pessoal. Agradeço, ainda, pela dedicação a este trabalho, pela constante disposição em esclarecer dúvidas, indicar caminhos e, assim, contribuir para que eu me tornasse um estatístico melhor. Muito obrigado, especialmente, por ter me ensinado a programar.
+
+\vspace{12pt}
+
+<!-- Ao professor Jonas Otaviano Praça de Souza, muito obrigado por ter me aceitado como seu PIBIC, -->
+
+<!-- \vspace{12pt}
+
+Aos meus amigos de graduação, Paulo, Rafhael, Daniel, Jéssika e Nielson... -->
+
+\chapter*{\centering Resumo}
+\thispagestyle{empty}
+
+\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, a cidade apresentou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem estatística para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 87,32712%, MAPE de 1,333% e RMSE de 0,28297. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguida pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
+
+
+```{=Latex}
+\begin{flushleft}
+\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa.
+\end{flushleft}
+```
+
 \thispagestyle{empty}
 
 \newpage
@@ -131,25 +219,14 @@ test_df = test_df.rename(columns=rename)
 \listofalgorithms
 \thispagestyle{empty}
 
+\cleardoublepage
+\renewcommand{\contentsname}{\centering{Sumário}}
+\pagenumbering{gobble}
+\tableofcontents
+\pagenumbering{arabic}
+\thispagestyle{empty}
+
 \egroup
-
-\chapter*{\centering Agradecimentos}
-\thispagestyle{empty}
-
-
-\chapter*{\centering Resumo}
-\thispagestyle{empty}
-
-\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, a cidade apresentou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem estatística para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 87,32712%, MAPE de 1,333% e RMSE de 0,28297. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguida pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
-
-
-<!-- \ \ \ A história do Brasil, assim como a de muitos outros países, foi marcada por uma predominância rural durante grande parte de sua trajetória, com apenas 31% da população vivendo em áreas urbanas em 1940. Contudo, esse cenário mudou rapidamente e, em 1970, mais da metade da população já residia em cidades [@wagner1980urbanization]. O processo de urbanização acelerado e desordenado resultou no crescimento desorganizado das grandes metrópoles, agravando problemas urbanos como o déficit habitacional. Com o aumento das áreas urbanizadas, a demanda por habitação tornou-se cada vez maior, levando à criação de medidas para mitigar esse déficit. Nesse contexto, a Lei nº 4.380, de 21 de agosto de 1964, instituiu pela primeira vez no país um mecanismo de crédito habitacional, sendo fundamental para articular a oferta e a demanda de recursos destinados ao setor habitacional. Essa legislação resultou na criação do Sistema Financeiro de Habitação (SFH), que trouxe inovações como a correção monetária, o Banco Nacional da Habitação (BNH) e as Sociedades de Crédito Imobiliário (SCI). Apesar dos avanços do SFH, o aumento da inflação na década de 1980 impactou seu funcionamento, agravado por medidas governamentais para conter a inflação. Como evolução desse sistema, foi criado o Sistema de Financiamento Imobiliário (SFI), que não substituiu o SFH, mas introduziu um modelo moderno de financiamento habitacional, fundamentado na securitização de créditos imobiliários, maior segurança jurídica dos contratos e captação de recursos diretamente no mercado por meio de operações realizadas por entidades autorizadas. A dinâmica do tempo e a modernização do mercado imobiliário trouxe impacto significativo para diversas cidades brasileiras, incluindo João Pessoa, capital da Paraíba, que se tornou um dos destinos mais procurados para viver e visitar. A cidade destacou-se como uma das capitais com maior valorização acumulada de imóveis residenciais nos últimos 12 meses, até novembro de 2024, apresentando uma variação de 16,13%. O crescimento do mercado imobiliário em João Pessoa tem gerado novas demandas, incluindo a necessidade de métodos mais precisos para precificação de imóveis. Dessa forma, este trabalho teve como objetivo desenvolver uma modelagem estatística para precificação de valores imobiliários na cidade de João Pessoa, utilizando dados coletados por meio de raspagem de sites especializados. Além da modelagem, buscou-se também analisar o impacto das variáveis utilizadas na estimativa dos preços dos imóveis, empregando técnicas de aprendizagem de máquina como base metodológica. O modelo final foi construído utilizando o algoritmo Stacking e apresentou resultados satisfatórios, com um $R^2$ de 87,19%, erro percentual absoluto médio (MAPE) de 1,357% e raiz do erro quadrático médio (RMSE) de 0,28473. A análise das variáveis revelou que a área do imóvel foi o fator mais determinante na precificação, seguida pela quantidade de vagas de garagem, valor médio de aluguel do bairro, coordenadas geográficas, número de quartos e banheiros, e área média de aluguel do bairro. Por fim, foi desenvolvida uma aplicação prática para facilitar a precificação e a análise de imóveis em João Pessoa, contribuindo para maior precisão no processo de avaliação imobiliária. -->
-
-```{=Latex}
-\begin{flushleft}
-\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa.
-\end{flushleft}
-```
 
 # Introdução
 
@@ -895,16 +972,16 @@ Para a divisão dos nós no caso da regressão, foi utilizado o erro quadrático
 
 ### Bagging
 
-\ \ \ O algoritmo de Bootstrap Aggregation, ou Bagging, foi introduzido por @breiman1996bagging. Sua ideia principal é gerar um estimador agregado a partir de múltiplas versões de um preditor, que são criadas por meio de amostras bootstrap do conjunto de treinamento, utilizadas como novos conjuntos de treinamento. O Bagging pode ser empregado para melhorar a estabilidade e a precisão de modelos ou algoritmos de aprendizado de máquina, além de reduzir a variância e evitar o sobreajuste. Por exemplo, o Bagging pode ser utilizado para melhorar o desempenho da árvore de regressão descrita anteriormente.
+\ \ \ O algoritmo de Bootstrap Aggregation, ou Bagging, foi introduzido por @breiman1996bagging. Sua ideia principal é gerar um estimador agregado a partir de múltiplas versões de um preditor, que são criadas por meio de amostras bootstrap do conjunto de treinamento, utilizadas como novos conjuntos de treinamento. O Bagging pode ser empregado para melhorar a estabilidade e a predição de modelos ou algoritmos de aprendizado de máquina, além de reduzir a variância e evitar o sobreajuste. Por exemplo, o Bagging pode ser utilizado para melhorar o desempenho da árvore de regressão descrita anteriormente.
 
 \vspace{12pt}
 
-@breiman1996bagging define formalmente o algoritmo de Bagging, que utiliza um conjunto de treinamento $\mathcal{L}$. A partir desse conjunto, são geradas amostras bootstrap $\mathcal{L}^{(B)}$ com $B$ réplicas, formando uma coleção de modelos $\{f(x, \mathcal{L}^{(B)})\}$, onde $f$ representa um modelo estatístico ou algoritmo treinado nas amostras bootstrap para prever ou classificar uma variável dependente $y$ com base em variáveis independentes $\mathbf{x}$. Se a variável dependente $y$ for numérica, a predição é obtida pela média das estimações dos modelos:
+@breiman1996bagging define formalmente o algoritmo de Bagging, que utiliza um conjunto de treinamento $\mathcal{L}$. A partir desse conjunto, são geradas amostras bootstrap $\mathcal{L}^{(B)}$ com $B$ réplicas, formando uma coleção de modelos $\{f(x, \mathcal{L}^{(B)})\}$, onde $f$ representa um modelo estatístico ou algoritmo treinado nas amostras bootstrap para prever ou classificar uma variável dependente $y$ com base em variáveis independentes. Se a variável dependente $y$ for numérica, a predição é obtida pela média das estimações dos modelos:
 
 $$
 f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)\text{,}
 $$
-em que $f_{B}$ representa a predição agregada. No caso em que $y$ prediz uma classe, utiliza-se a votação majoritária. Ou seja, se estivermos classificando em classes $j \in {1, \dots, J}$, então $N_j = \#\{B; f(x, \mathcal{L}^{(B)}) = j\}$ representa o número de vezes que a classe $j$ foi predita pelos estimadores. Assim:
+em que $f_{B}$ representa a predição agregada. No caso em que $y$ prediz uma classe, utiliza-se a votação majoritária. Ou seja, se estivermos classificando em classes $j \in \{1, \dots, J\}$, então $N_j = \#\{B; f(x, \mathcal{L}^{(B)}) = j\}$ representa o número de vezes que a classe $j$ foi predita pelos estimadores. Assim:
 
 $$
 f_{B}\left(x\right) = \arg \max_{j} N_j\text{.}
@@ -921,13 +998,21 @@ Para mitigar a falta de interpretabilidade do método Bagging aplicado a árvore
 
 \vspace{12pt}
 
-As árvores construídas pelo algoritmo de árvore de decisão se beneficiam da proposta de agregação do Bagging, mas esse benefício é limitado devido à correlação existente entre as árvores. Se as árvores forem variáveis aleatórias independentes e identicamente distribuídas, cada uma com variância $\sigma^2$, a variância da média das previsões das $B$ árvores será $\frac{1}{B} \sigma^2$. No entanto, se as árvores forem apenas identicamente distribuídas, mas não necessariamente independentes, e apresentarem uma correlação positiva $\rho$, a esperança da média das $B$ árvores será a mesma que a esperança de uma árvore individual. Portanto, o viés do agregado das árvores é o mesmo das árvores individuais, e a melhoria é alcançada apenas pela redução da variância. A variância da média das previsões será dada por:
+As árvores construídas pelo algoritmo de árvore de decisão se beneficiam da estratégia de agregação do Bagging, principalmente por meio da redução da variância das previsões. No entanto, esse benefício é limitado pela correlação existente entre as árvores geradas. Se essas árvores forem variáveis aleatórias independentes e identicamente distribuídas (i.i.d.), cada uma com variância $\sigma^2$, a variância da média das previsões das $B$ árvores será $\frac{1}{B} \sigma^2$.
+
+\vspace{12pt}
+
+Contudo, se as árvores forem apenas identicamente distribuídas (i.d.), mas não independentes, apresentando uma correlação positiva $\rho$, a variância da média das previsões passa a ser dada por:
 
 $$
 \rho \sigma^2 + \frac{1 - \rho}{B}\sigma^2\text{.}
 $${#eq-cor}
 
-Isso significa que, à medida que o número de árvores $B$ aumenta, o segundo termo da soma se torna menos significativo. Portanto, os benefícios da agregação proporcionados pelo algoritmo de Bagging são limitados pela correlação entre as árvores [@hastie2009elements]. Mesmo com o aumento do número de árvores no Bagging, a correlação entre elas impede que as estimações individuais sejam completamente independentes, resultando em menor diminuição da variância da média das previsões do que seria esperado se as árvores fossem totalmente independentes. Ou seja, as árvores geradas pelo Bagging tendem a ser bastante semelhantes, uma vez que as variáveis independentes selecionadas para o particionamento são escolhidas com base na redução do quadrado dos resíduos em cada região. Uma maneira de melhorar o algoritmo de Bagging é por meio do Random Forest, que será descrito a seguir.
+Nesse caso, à medida que o número de árvores $B$ tende ao infinito, o segundo termo da expressão se aproxima de zero, mas o primeiro termo permanece constante. Isso demonstra que os ganhos proporcionados pelo Bagging são limitados pela correlação entre as árvores [@hastie2009elements].
+
+\vspace{12pt}
+
+Essa correlação ocorre porque as árvores geradas pelo Bagging tendem a ser bastante semelhantes. As variáveis selecionadas para as divisões são escolhidas com base na maior redução do erro nas regiões, e, frequentemente, as mesmas variáveis são as que mais contribuem para essa redução, sendo repetidamente escolhidas. Uma forma de reduzir essa correlação — e, com isso, melhorar o desempenho do Bagging — é por meio do algoritmo Random Forest, que será apresentado a seguir.
 
 ### Random Forest
 
