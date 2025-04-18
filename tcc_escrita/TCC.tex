@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, colback={codebgcolor}, sharp corners, breakable, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, boxrule=0pt, enhanced, breakable, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -495,6 +495,14 @@ constante troca de conhecimentos, que foram extremamente enriquecedores
 para mim. Ao meu amigo Daniel, sou especialmente grato pelas longas
 conversas, pelos conselhos e pelas oportunidades durante a graduação.
 Sem você, eu não teria conquistado meu primeiro PIBIC.
+
+\vspace{12pt}
+
+Agradeço aos professores Eufrásio de Andrade Lima Neto, Luiz Medeiros de
+Araújo Lima Filho e Tarciana Liberal Pereira de Araújo por aceitarem
+compor a banca avaliadora. Meu agradecimento especial ao professor Pedro
+Rafael Diniz Marinho, por sua orientação dedicada e constante desde o
+início da graduação.
 
 \clearpage
 \endgroup
@@ -2949,12 +2957,12 @@ a proporção das classes definidas.
 
 A estratificação foi baseada em intervalos criados a partir da variável
 que representa o valor dos imóveis. Foram definidos cinco intervalos: o
-primeiro abrange valores entre o mínimo de 43.914 e 200.000; o segundo,
-entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto,
-entre 600.000 e 800.000; e a quinta, valores acima de R\$ 800.000 até o
-máximo de R\$ 7.000.000. Dessa forma, 20\% do conjunto de dados foi
-reservado para o teste, enquanto os 80\% restantes foram utilizados para
-o treinamento do modelo.
+primeiro abrange valores entre o mínimo de R\$ 43.914 e R\$ 200.000; o
+segundo, entre R\$ 200.000 e R\$ 400.000; o terceiro, entre R\$ 400.000
+e R\$ 600.000; o quarto, entre R\$ 600.000 e R\$ 800.000; e a quinta,
+valores acima de R\$ 800.000 até o máximo de R\$ 7.000.000. Dessa forma,
+20\% do conjunto de dados foi reservado para o teste, enquanto os 80\%
+restantes foram utilizados para o treinamento do modelo.
 
 \vspace{12pt}
 
@@ -4017,7 +4025,7 @@ circunstâncias.
 A distribuição das variáveis foram análisadas em termos do tipo do
 imóvel a partir de um gráfico de violino. Pela Figura~\ref{fig-violin},
 é fácil perceber que a maioria das distribuições possuem assimetria
-negativa. Os apartamentos possuem caudas longas à direita, indicando
+negativa. As distribuições possuem caudas longas à direita, indicando
 presença de valores extremamente altos e que indicam que a necessidade
 da aplicação de alguma transformação para a estabilização da variância.
 
@@ -4347,12 +4355,12 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 \subsection{Tunagem do LGBM}\label{tunagem-do-lgbm}
 
 ~~~Para a otimização do LGBM, foram considerados os mesmos
-hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com
-a tunagem da quantidade máxima do número de folhas das árvores. O espaço
-de busca para a quantidade de árvores foi definido entre 100 e 2000,
-para a taxa de aprendizado no mesmo intervalo usado no Gradient
-Boosting, para a profundidade das árvores e número de folhas o intervalo
-foi definido entre 100 e 600
+hiperparâmetros utilizados no algoritmo Gradient Boosting, com a adição
+do ajuste do número máximo de folhas por árvore. O espaço de busca para
+o número de árvores foi definido entre 100 e 2000; para a taxa de
+aprendizado, utilizou-se o mesmo intervalo adotado no Gradient Boosting;
+para o número total de folhas, o intervalo foi de 100 a 600; e, por fim,
+para a profundidade das árvores, o intervalo adotado foi de 100 a 500.
 
 \begin{figure}
 
@@ -4416,7 +4424,8 @@ com menor estabilidade em cada tentativa. Ao analisar a contribuição de
 cada hiperparâmetro para o desempenho do modelo na
 Figura~\ref{fig-lgbm_import}, observa-se que a taxa de aprendizado e a
 quantidade de árvores são os hiperparâmetros de maior influência,
-seguido pela profundidade da árvore e, por último, o número de folhas.
+seguido pela quantidade total de folhas e, por último, a profundidade
+máxima da árvore.
 
 \vspace{12pt}
 
@@ -4488,11 +4497,12 @@ e 1000.
 A partir da Figura~\ref{fig-xgb_import}, o hiperparâmetro que
 representou a maior variação na função objetivo, e portanto a maior
 importância para a performance do modelo, foi a taxa de aprendizagem. A
-profundidade da árvore representou 35\% da variação e por último vem a
-quantidade de árvores. Observando a Figura~\ref{fig-xgb_history}, é
-possível ver que o algoritmo de XGBoost foi aquele que apresentou a
-menor variação entre as trials, com uma única trial com erro acima de
-1,0.
+profundidade da árvore permanece como o segundo hiperparâmetro mais
+relevante, seguida pela quantidade de árvores, que ocupa a última
+posição em termos de importância. Observando a
+Figura~\ref{fig-xgb_history}, é possível ver que o algoritmo de XGBoost
+foi aquele que apresentou a menor variação entre as trials, com uma
+única trial com erro acima de 1,0.
 
 \vspace{12pt}
 
