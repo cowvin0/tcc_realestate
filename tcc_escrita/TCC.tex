@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, breakable, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, colback={codebgcolor}, breakable, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2127,7 +2127,7 @@ BREIMAN (1996). Sua ideia principal é gerar um estimador agregado a
 partir de múltiplas versões de um preditor, que são criadas por meio de
 amostras bootstrap do conjunto de treinamento, utilizadas como novos
 conjuntos de treinamento. O Bagging pode ser empregado para melhorar a
-estabilidade e a precisão de modelos ou algoritmos de aprendizado de
+estabilidade e a predição de modelos ou algoritmos de aprendizado de
 máquina, além de reduzir a variância e evitar o sobreajuste. Por
 exemplo, o Bagging pode ser utilizado para melhorar o desempenho da
 árvore de regressão descrita anteriormente.
@@ -2140,15 +2140,15 @@ geradas amostras bootstrap \(\mathcal{L}^{(B)}\) com \(B\) réplicas,
 formando uma coleção de modelos \(\{f(x, \mathcal{L}^{(B)})\}\), onde
 \(f\) representa um modelo estatístico ou algoritmo treinado nas
 amostras bootstrap para prever ou classificar uma variável dependente
-\(y\) com base em variáveis independentes \(\mathbf{x}\). Se a variável
-dependente \(y\) for numérica, a predição é obtida pela média das
-estimações dos modelos:
+\(y\) com base em variáveis independentes. Se a variável dependente
+\(y\) for numérica, a predição é obtida pela média das estimações dos
+modelos:
 
 \[
 f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)\text{,}
 \] em que \(f_{B}\) representa a predição agregada. No caso em que \(y\)
 prediz uma classe, utiliza-se a votação majoritária. Ou seja, se
-estivermos classificando em classes \(j \in {1, \dots, J}\), então
+estivermos classificando em classes \(j \in \{1, \dots, J\}\), então
 \(N_j = \#\{B; f(x, \mathcal{L}^{(B)}) = j\}\) representa o número de
 vezes que a classe \(j\) foi predita pelos estimadores. Assim:
 
@@ -2181,35 +2181,38 @@ importante.
 \vspace{12pt}
 
 As árvores construídas pelo algoritmo de árvore de decisão se beneficiam
-da proposta de agregação do Bagging, mas esse benefício é limitado
-devido à correlação existente entre as árvores. Se as árvores forem
-variáveis aleatórias independentes e identicamente distribuídas, cada
-uma com variância \(\sigma^2\), a variância da média das previsões das
-\(B\) árvores será \(\frac{1}{B} \sigma^2\). No entanto, se as árvores
-forem apenas identicamente distribuídas, mas não necessariamente
-independentes, e apresentarem uma correlação positiva \(\rho\), a
-esperança da média das \(B\) árvores será a mesma que a esperança de uma
-árvore individual. Portanto, o viés do agregado das árvores é o mesmo
-das árvores individuais, e a melhoria é alcançada apenas pela redução da
-variância. A variância da média das previsões será dada por:
+da estratégia de agregação do Bagging, principalmente por meio da
+redução da variância das previsões. No entanto, esse benefício é
+limitado pela correlação existente entre as árvores geradas. Se essas
+árvores forem variáveis aleatórias independentes e identicamente
+distribuídas (i.i.d.), cada uma com variância \(\sigma^2\), a variância
+da média das previsões das \(B\) árvores será \(\frac{1}{B} \sigma^2\).
+
+\vspace{12pt}
+
+Contudo, se as árvores forem apenas identicamente distribuídas (i.d.),
+mas não independentes, apresentando uma correlação positiva \(\rho\), a
+variância da média das previsões passa a ser dada por:
 
 \begin{equation}\phantomsection\label{eq-cor}{
 \rho \sigma^2 + \frac{1 - \rho}{B}\sigma^2\text{.}
 }\end{equation}
 
-Isso significa que, à medida que o número de árvores \(B\) aumenta, o
-segundo termo da soma se torna menos significativo. Portanto, os
-benefícios da agregação proporcionados pelo algoritmo de Bagging são
-limitados pela correlação entre as árvores (HASTIE et al., 2009). Mesmo
-com o aumento do número de árvores no Bagging, a correlação entre elas
-impede que as estimações individuais sejam completamente independentes,
-resultando em menor diminuição da variância da média das previsões do
-que seria esperado se as árvores fossem totalmente independentes. Ou
-seja, as árvores geradas pelo Bagging tendem a ser bastante semelhantes,
-uma vez que as variáveis independentes selecionadas para o
-particionamento são escolhidas com base na redução do quadrado dos
-resíduos em cada região. Uma maneira de melhorar o algoritmo de Bagging
-é por meio do Random Forest, que será descrito a seguir.
+Nesse caso, à medida que o número de árvores \(B\) tende ao infinito, o
+segundo termo da expressão se aproxima de zero, mas o primeiro termo
+permanece constante. Isso demonstra que os ganhos proporcionados pelo
+Bagging são limitados pela correlação entre as árvores (HASTIE et al.,
+2009).
+
+\vspace{12pt}
+
+Essa correlação ocorre porque as árvores geradas pelo Bagging tendem a
+ser bastante semelhantes. As variáveis selecionadas para as divisões são
+escolhidas com base na maior redução do erro nas regiões, e,
+frequentemente, as mesmas variáveis são as que mais contribuem para essa
+redução, sendo repetidamente escolhidas. Uma forma de reduzir essa
+correlação --- e, com isso, melhorar o desempenho do Bagging --- é por
+meio do algoritmo Random Forest, que será apresentado a seguir.
 
 \subsection{Random Forest}\label{random-forest}
 
