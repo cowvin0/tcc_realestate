@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, breakable, frame hidden, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -250,7 +250,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa.},
+  pdftitle={Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa},
   pdfauthor={Gabriel de Jesus Pereira},
   pdflang={pt-br},
   colorlinks=true,
@@ -262,7 +262,7 @@
 
 
 \title{Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores
-de Imóveis na Cidade de João Pessoa.}
+de Imóveis na Cidade de João Pessoa}
 \author{Gabriel de Jesus Pereira}
 \date{abril, 2025}
 
@@ -283,7 +283,7 @@ de Imóveis na Cidade de João Pessoa.}
 \vfill
 
 {\large\bfseries Uso de Aprendizado de Máquina na Modelagem Preditiva
-dos Valores de Imóveis na Cidade de João Pessoa. \par}
+dos Valores de Imóveis na Cidade de João Pessoa \par}
 
 \vfill
 
@@ -302,7 +302,7 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
 \vfill
 
 {\large\bfseries Uso de Aprendizado de Máquina na Modelagem Preditiva
-dos Valores de Imóveis na Cidade de João Pessoa. \par}
+dos Valores de Imóveis na Cidade de João Pessoa \par}
 
 \vfill
 
@@ -391,8 +391,113 @@ dos Valores de Imóveis na Cidade de João Pessoa. \par}
 \chapter*{\centering Dedicatória}
 \thispagestyle{empty}
 
+\vfill
+
+\hfill \parbox{8cm}{\hspace{0.4cm} Dedico este trabalho à minha família, aos meus pais, à minha avó, ao meu irmão e à minha noiva. Agradeço por cada conselho, pelo incentivo constante e por sempre serem as pessoas mais especiais da minha vida. Aos meus pais, agradeço por serem tão presentes, por nunca medirem esforços para oferecer o melhor a mim e ao meu irmão. Vocês são o meu maior orgulho. Sem o apoio e amor de vocês, nada disso teria sido possível.}
+
+\vfill
+
+\begingroup
+\pagestyle{empty}
 \chapter*{\centering Agradecimentos}
 \thispagestyle{empty}
+
+~~~Aos meus pais, Simone Evangelista Pereira e Antônio Francisco
+Pereira, e à minha segunda mãe, minha avó Célia Evangelista São Pedro,
+agradeço profundamente por todo o incentivo aos estudos, pelos momentos
+de alegria compartilhados, pelos conselhos e, sobretudo, por nunca
+medirem esforços para oferecer o melhor a mim e ao meu irmão. Agradeço,
+em especial, à minha avó por todas as oportunidades de vida que me
+proporcionou, por despertar em mim o amor pela música e por cada
+brincadeira e conselho que marcaram a minha infância.
+
+\vspace{12pt}
+
+Agradeço ao meu irmão, Bruno de Jesus Pereira --- meu melhor amigo ---
+pela amizade incondicional. Sou grato por sempre me convidar para passar
+o tempo juntos, pelas risadas, pelos momentos de diversão e pela
+tranquilidade que isso trouxe ao meu dia a dia. Agradeço também pelo
+incentivo durante a graduação, pelas horas em que nos divertimos jogando
+--- mesmo que por pouco tempo ---, pelas conversas sobre teorias de
+jogos e pelas conversas sobre filmes, que tornaram essa jornada muito
+mais leve e especial.
+
+\vspace{12pt}
+
+À Ataline Soares Batista, agradeço por ser a melhor pessoa que poderia
+estar ao meu lado --- desde o ensino médio e, hoje, como minha noiva.
+Obrigado por tornar meus dias mais leves, pelos momentos de diversão e
+descontração. Ter você ao meu lado me fez uma pessoa melhor em todos os
+aspectos da vida: mais feliz, mais criativo e com ainda mais vontade de
+seguir em frente. Você é meu maior incentivo em muitas das escolhas que
+faço ou desejo fazer. Sou grato pelas longas conversas, pelas
+brincadeiras, pelos assuntos sobre cultura, livros e filmes de guerra.
+Obrigado por todos esses sete anos incríveis ao seu lado. Eu te amo.
+
+\vspace{12pt}
+
+Ao meu orientador, Pedro Rafael Diniz Marinho, agradeço por me
+acompanhar desde o início da graduação, sempre demonstrando grande
+interesse em ensinar e compartilhando materiais que enriqueceram meu
+aprendizado. Sou profundamente grato pelos conselhos valiosos, que me
+ajudaram a tomar decisões mais acertadas em diversos aspectos da minha
+vida e contribuíram significativamente para meu crescimento pessoal.
+Agradeço, ainda, pela dedicação a este trabalho, pela constante
+disposição em esclarecer dúvidas, indicar caminhos e, assim, contribuir
+para que eu me tornasse um estatístico melhor. Obrigado por tudo,
+professor!
+
+\vspace{12pt}
+
+Ao professor Jonas Otaviano Praça de Souza, meu sincero agradecimento
+por ter me aceitado como bolsista PIBIC em duas ocasiões. Sou muito
+grato por todas as oportunidades que me foram oferecidas ao longo da
+graduação, desde o momento em que ingressei na universidade. Agradeço
+por me inserir em um grupo de estudos tão incrível como o GEAFS, onde
+tive a chance de conviver com pessoas que contribuíram imensamente para
+o meu aprendizado, além de conhecer mais de perto o processo de pesquisa
+e o ambiente acadêmico. Muito obrigado, também, por me proporcionar
+oportunidades de aplicar, na prática, os conhecimentos adquiridos ao
+longo do curso.
+
+\vspace{12pt}
+
+Agradeço imensamente a todos os professores do departamento pelas aulas
+ao longo da graduação. Um agradecimento especial aos professores Cláudio
+Javier Tablada, Rodrigo Bernardo da Silva e Tarciana Liberal Pereira de
+Araújo, por todas as aulas de Probabilidade e por contribuírem de forma
+significativa para a minha formação. Meu muito obrigado ao professor
+Pedro Rafael Diniz Marinho, pelas valiosas recomendações de materiais de
+programação, pelas conversas sempre enriquecedoras sobre programação e
+estatística, e por constantemente alimentar minha curiosidade e meu
+desejo de aprender mais. Agradeço também às professoras Juliana e
+Tatiene. À professora Juliana, por ter me ensinado Regressão com tanta
+clareza e por nunca deixar dúvidas quando precisei aplicar os conteúdos.
+À professora Tatiene, por oferecer uma base sólida em todas as
+disciplinas que cursei com ela, fazendo com que eu realmente aprendesse
+o conteúdo de forma profunda e não tivesse mais dúvidas.
+
+\vspace{12pt}
+
+Agradeço também ao amigo Jeferson, membro do grupo de estudos GEAFS,
+pela oportunidade de desenvolver meu primeiro artigo e por me ajudar a
+compreender melhor o funcionamento do processo de pesquisa --- desde a
+formulação das perguntas até a etapa de análise.
+
+\vspace{12pt}
+
+Agradeço com carinho aos meus amigos da graduação Paulo Ricardo
+Seganfredo Campana, Rafhael, Daniel, Jéssika e Nielson, cuja companhia
+nas conversas, brincadeiras e dias de jogos tornou essa jornada mais
+leve e divertida. Expresso um agradecimento especial ao meu amigo Paulo
+pelas conversas sobre programação, pelos estudos em conjunto e pela
+constante troca de conhecimentos, que foram extremamente enriquecedores
+para mim. Ao meu amigo Daniel, sou especialmente grato pelas longas
+conversas, pelos conselhos e pelas oportunidades durante a graduação.
+Sem você, eu não teria conquistado meu primeiro PIBIC.
+
+\clearpage
+\endgroup
 
 \chapter*{\centering Resumo}
 \thispagestyle{empty}
@@ -650,7 +755,7 @@ quadrado residencial atingindo R\$ 6.867 no mês de novembro.
 
 \vspace{12pt}
 
-O crescimento do mercado imobiliário de João Pessoa trás consigo
+O crescimento do mercado imobiliário de João Pessoa traz consigo
 inúmeras necessidades de melhor precificação de imóveis. Avaliar
 corretamente o valor de um imóvel é crucial para uma série de
 finalidades, como a negociação justa entre compradores e vendedores e a
@@ -788,9 +893,14 @@ ser realizada no recurso especificado.
     web. Ele define elementos como títulos, parágrafos, links, imagens e
     tabelas, sendo a base para o desenvolvimento de páginas da internet.},
   como dados de login ou de cadastro.
-\end{itemize}
-
-\begin{itemize}
+\item
+  POST: O método POST envia dados para serem processados para o recurso
+  especificado. Esses dados podem ser, por exemplo, dados de um
+  formulário HTML\footnote{HTML (HyperText Markup Language) é a
+    linguagem de marcação utilizada para estruturar e exibir conteúdo na
+    web. Ele define elementos como títulos, parágrafos, links, imagens e
+    tabelas, sendo a base para o desenvolvimento de páginas da internet.}.
+  --\textgreater{}
 \item
   PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma
   semelhante. No entanto, caso seja necessário atualizar um usuário
@@ -1014,15 +1124,15 @@ pacotes mencionados para a linguagem \textbf{R} e, no caso de
 \textbf{Python}, dá-se preferência ao
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, a principal
 biblioteca empregada para a extração dos dados. Além disso, esta seção
-também abordará a estruturar de um HTML e o funcionamento dos seletores
+também abordará a estrutura de um HTML e o funcionamento dos seletores
 para a extração de elementos.
 
 \vspace{12pt}
 
 É importante destacar que os códigos desenvolvidos para a raspagem de
-dados podem deixar de funcionar ao longo do tempo devido a possíveis
-mudanças na estrutura dos sites. Assim, eventuais ajustes no código
-poderão ser necessários.
+dados podem deixar de funcionar com o tempo devido a possíveis mudanças
+na estrutura dos sites. Assim, eventuais ajustes no código poderão ser
+necessários.
 
 \subsection{Exemplo de web scraping em
 Python}\label{exemplo-de-web-scraping-em-python}
@@ -1053,8 +1163,8 @@ CLI\footnote{CLI (Command Line Interface) é uma interface de linha de
   gráfica.} ficará disponível. A CLI disponibiliza diversas
 funcionalidades para o
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, como
-inspencionar o conteúdo de uma página para identificar seletores com
-mais facilidade e, o mais importante, iniciar um projeto
+inspecionar o conteúdo de uma página para identificar seletores com mais
+facilidade e, o mais importante, iniciar um projeto
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}.
 
 \vspace{12pt}
@@ -1152,8 +1262,8 @@ seletor \texttt{CSS}. Para facilitar a seleção do conteúdo desejado,
 será utilizado uma das grandes ferramentas do
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}}, o
 \href{https://docs.scrapy.org/en/latest/topics/shell.html}{\textbf{Scrapy
-Shell}}. Essa ferramenta permite testar seletores, inspensionar
-elementos da página e até mesmo ajuda a debugar o código.
+Shell}}. Essa ferramenta permite testar seletores, inspecionar elementos
+da página e até mesmo ajuda a debugar o código.
 
 \vspace{12pt}
 
@@ -1227,7 +1337,7 @@ estrutura da página e configurar o seletor para extrair apenas os dados
 desejados. No entanto, para facilitar ainda mais esse trabalho,
 navegadores como
 \href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}} oferecem
-ferramentas de desenvolvedor que permitem inspencionar a estrutura da
+ferramentas de desenvolvedor que permitem inspecionar a estrutura da
 página, como pode ser visto na Figura~\ref{fig-page_contents_devtools}.
 Para acessar essa ferramenta no
 \href{https://www.mozilla.org/pt-BR/firefox/}{\textbf{Firefox}}, basta
@@ -1263,9 +1373,9 @@ utilizar o atalho \texttt{Ctrl+Shift+I}.
 \end{Highlighting}
 \end{Shaded}
 
-Após inspencionar a página, observa-se que existem elementos
+Após inspecionar a página, observa-se que existem elementos
 \texttt{\textless{}a\textgreater{}} no corpo do HTML, cada um com um
-atrituto \texttt{href} associado. Esses \texttt{href} serão necessários
+atributo \texttt{href} associado. Os \texttt{href} serão necessários
 para realizar a paginação e coletar os pacotes ordenados por data de
 publicação. Para extrair os \texttt{href}, basta executar no shell o
 comando
@@ -2454,10 +2564,11 @@ anteriores. Como cada nova árvore depende das árvores já construídas,
 
 \vspace{12pt}
 
-O processo de aprendizado no método de Boosting é lenta, o que acaba
-gerando melhores resultados. Esse processo de aprendizado pode ser
-controlado por um hiperparâmetro \(\lambda\) chamado de shrinkage, ou
-taxa de aprendizado, permitindo que mais árvores, com formas diferentes,
+O processo de aprendizado no método de Boosting é mais lento, o que
+geralmente resulta em modelos mais precisos, embora mais custosos
+computacionalmente. Esse processo de aprendizado pode ser controlado por
+um hiperparâmetro \(\lambda\) chamado de shrinkage, ou taxa de
+aprendizado, permitindo que mais árvores, com formas diferentes,
 corrijam os erros das árvores passadas. No entanto, um valor muito
 pequeno para \(\lambda\) requer uma quantidade muito maior \(B\) de
 árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer
