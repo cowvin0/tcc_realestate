@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, enhanced, colback={codebgcolor}, breakable, frame hidden, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -3203,9 +3203,9 @@ R^2 = 1 - \dfrac{SS_{\text{resíduos}}}{SS_{\text{total}}}
 
 \end{figure}%
 
-em que \(SS_{\text{resíduos}}\) e \(SS_{\text{total}}\) representam,
-respectivamente, a soma dos quadrados dos resíduos e a soma dos
-quadrados totais.
+\noindent em que \(SS_{\text{resíduos}}\) e \(SS_{\text{total}}\)
+representam, respectivamente, a soma dos quadrados dos resíduos e a soma
+dos quadrados totais.
 
 \section{Otimização de
 hiperparâmetros}\label{otimizauxe7uxe3o-de-hiperparuxe2metros}

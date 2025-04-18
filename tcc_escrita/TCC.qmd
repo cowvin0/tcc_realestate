@@ -1555,7 +1555,10 @@ $$
 \text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|\text{,}
 $$
 :::
-em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
+
+\noindent em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
+
+<!-- em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais. -->
 
 ## Otimização de hiperparâmetros
 
