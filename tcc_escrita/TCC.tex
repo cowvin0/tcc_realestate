@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, sharp corners, colback={codebgcolor}, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, enhanced, breakable, sharp corners, boxrule=0pt, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -590,7 +590,7 @@ população brasileira já residia em regiões urbanas.
 \vspace{12pt}
 
 No Brasil, o processo de urbanização ocorreu de forma tardia e
-desordenada, quando comparado com os países pioneiros da Revolução
+desordenada, quando comparada com os países pioneiros da Revolução
 Industrial, que tiveram todo um planejamento para suportar a grande
 transição demográfica que a população estava passando naquele momento.
 Um dos principais fatores que impulsionaram essa rápida urbanização, no
@@ -1054,7 +1054,7 @@ pronto para análise ou armazenamento.
 
 \vspace{12pt}
 
-As middlewares no
+Os middlewares no
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} são
 componentes intermediárias que permitem modificar e processar
 requisições e respostas em tempo de execução. Elas são fundamentais para
