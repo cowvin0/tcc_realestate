@@ -1197,7 +1197,7 @@ A estimação final é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Assim,
 
 ### Gradient Boosting
 
-\ \ \ O algoritmo de Gradient Boosting é semelhante ao Boosting, mas com algumas diferenças. Ele constrói modelos aditivos ajustando sequencialmente funções base aos pseudos-resíduos em cada iteração, que, por sua vez, correspondem a direção contrária dos gradientes da função de perda [@friedman2002stochastic]. Esses pseudos-resíduos indicam a direção na qual a função de perda está sendo minimizada, orientando o ajuste dos modelos seguintes.
+\ \ \ O algoritmo de Gradient Boosting é semelhante ao Boosting. Ele constrói modelos aditivos ajustando sequencialmente funções base aos pseudos-resíduos em cada iteração, que, por sua vez, correspondem a direção contrária dos gradientes da função de perda [@friedman2002stochastic]. Esses pseudos-resíduos indicam a direção na qual a função de perda está sendo minimizada, orientando o ajuste dos modelos seguintes.
 
 \vspace{12pt}
 
@@ -2103,7 +2103,7 @@ l.get_texts()[5].set_text('Terrenos e lotes comerciais')
 plt.show()
 ```
 
-A distribuição das variáveis foi analisada em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. As distribuições possuem caudas longas à direita, indicando presença de valores extremamente altos, indicando a necessidade da aplicação de alguma transformação para a estabilização da variância.
+A distribuição das variáveis foi analisada em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa, com caudas longas à direita, indicando a presença de valores extremamente altos e a necessidade da aplicação de alguma transformação para a estabilização da variância.
 
 \vspace{12pt}
 
