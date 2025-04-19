@@ -280,7 +280,7 @@ O Plano Cruzado, implementado em 1986, converteu o valor das prestações pela m
 
 \vspace{12pt}
 
-No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de metate foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia]. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
+No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia]. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
 
 \vspace{12pt}
 
@@ -363,7 +363,7 @@ O Web scraping é uma técnica utilizada para extrair informações de sites na 
 
 - POST: O método POST é utilizado para enviar dados ao servidor, geralmente com o objetivo de serem processados pelo recurso especificado. Um exemplo comum é o envio de informações por meio de formulários HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.], como dados de login ou de cadastro.
 
-- POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.]. -->
+<!-- - POST: O método POST envia dados para serem processados para o recurso especificado. Esses dados podem ser, por exemplo, dados de um formulário HTML^[HTML (HyperText Markup Language) é a linguagem de marcação utilizada para estruturar e exibir conteúdo na web. Ele define elementos como títulos, parágrafos, links, imagens e tabelas, sendo a base para o desenvolvimento de páginas da internet.]. -->
 
 - PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma semelhante. No entanto, caso seja necessário atualizar um usuário diversas vezes, o método PUT vai sobrescrever os dados e ficará apenas um único registro atualizado. Para o método POST, serão criados diversos registros para cada requisição realizada.
 
@@ -407,7 +407,7 @@ O [**Scrapy**](https://docs.scrapy.org/en/latest) é uma ferramenta robusta e co
 
 \vspace{12pt}
 
-O framework também possui seletores `XPath` e `CSS`, que facilitam a localização e extração de informações específicas de páginas HTML. Uma funcionalidade especialmente interessante é sua capacidade de lidar com redirecionamentos de IP, permitindo superação de restrições impostas por alguns sites durante o processo de raspagem. Além disso, o [**Scrapy**](https://docs.scrapy.org/en/latest) permite a criação de `pipelines`, que são etapas de processamento dos dados em tempo de execução. Essas `pipelines` são extremamente úteis para transformar, limpar e organizar as informações antes de serem salvas, garantindo que os dados extraídos já estejam em um formato estruturado e pronto para análise ou armazenamento.
+O framework também possui seletores `XPath` e `CSS`, que facilitam a localização e extração de informações específicas de páginas HTML. Uma funcionalidade especialmente interessante é sua capacidade de lidar com redirecionamentos de IP, permitindo superação de restrições impostas por alguns sites durante o processo de raspagem. Além disso, o [**Scrapy**](https://docs.scrapy.org/en/latest) permite a criação de `pipelines`, que são etapas de processamento dos dados em tempo de execução. As `pipelines` são extremamente úteis para transformar, limpar e organizar as informações antes de serem salvas, garantindo que os dados extraídos já estejam em um formato estruturado e pronto para análise ou armazenamento.
 
 \vspace{12pt}
 
@@ -419,7 +419,7 @@ As middlewares de requisição são utilizadas, por exemplo, para adicionar cabe
 
 \vspace{12pt}
 
-Por outro lado, as middlewares de download têm a função de gerenciar o processo de download das páginas. Elas podem ser configuradas para evitar redirecionamentos indesejados, implementar atrasos entre requisições para evitar sobrecarregar os servidores e diminuir as chances de ser bloqueado. Essas middlewares tornam o [**Scrapy**](https://docs.scrapy.org/en/latest) altamente flexível, permitindo ajustes específicos para atender às necessidades do projeto.
+Por outro lado, as middlewares de download têm a função de gerenciar o processo de download das páginas. Elas podem ser configuradas para evitar redirecionamentos indesejados, implementar atrasos entre requisições para evitar sobrecarregar os servidores e diminuir as chances de ser bloqueado. As middlewares tornam o [**Scrapy**](https://docs.scrapy.org/en/latest) altamente flexível, permitindo ajustes específicos para atender às necessidades do projeto.
 
 \vspace{12pt}
 
@@ -607,7 +607,7 @@ class PackagescraperSpider(scrapy.Spider):
             }
 ```
 
-O código contém a mesma classe mostrada anteriormente no `packagescraper.py`, mas agora inclui os seletores analisados no shell e outras modificações. Por exemplo, o método `parse(self, response)`, apresentado anteriormente, é responsável por capturar o link que leva à tabela de pacotes. Esse link é extraído utilizando o seletor definido anteriomente no shell. Em seguida, esse link é concatenado à url base para formar a url completa que será seguida pelo spider. O método `response.follow()` é então usado para acessar a nova página e chamar o método `parse_packages_info`, que continuará o processo de raspagem.
+O código contém a mesma classe mostrada anteriormente no `packagescraper.py`, mas agora inclui os seletores analisados no shell e outras modificações. Por exemplo, o método `parse(self, response)`, apresentado anteriormente, é responsável por capturar o link que leva à tabela de pacotes. Esse link é extraído utilizando o seletor definido anteriormente no shell. Em seguida, esse link é concatenado à url base para formar a url completa que será seguida pelo spider. O método `response.follow()` é então usado para acessar a nova página e chamar o método `parse_packages_info`, que continuará o processo de raspagem.
 
 \vspace{12pt}
 
@@ -673,7 +673,7 @@ Por fim, os dados são organizados em um `tibble`, onde cada linha contém a dat
 
 \vspace{12pt}
 
-Assim como no exemplo apresentado em **Python**, o projeto de raspagem pode ser adaptado de acordo com as necessidades e as informações que precisam ser coletadas durante o processo. Ou seja, embora os exemplos fornecidos sejam simples, dependendo das características do site, outras funcionalidades podem ser adicionadas, como clicar em botões, rolar a página automaticamente para carregar conteúdos dinâmicos, entre outras ações.
+Assim como no exemplo apresentado em **Python**, o projeto de raspagem pode ser adaptado de acordo com as necessidades e as informações que precisam ser coletadas. Ou seja, embora os exemplos fornecidos sejam simples, dependendo das características do site, outras funcionalidades podem ser adicionadas, como clicar em botões, rolar a página automaticamente para carregar conteúdos dinâmicos, entre outras ações.
 
 \vspace{12pt}
 
@@ -825,11 +825,11 @@ O [**Docker**](https://www.docker.com/) é uma plataforma que permite empacotar 
 
 \vspace{12pt}
 
-Com as tecnologias mencionadas anteriormente e o modelo final obtido, foi possível criar uma aplicação capaz de realizar previsões para os imóveis da cidade de João Pessoa, além de proporcionar uma análise de seu setor imobiliário. No entanto, o desenvolvimento de todo o código da aplicação exigiu o uso de ferramentas que facilitassem sua escrita, desenvolvimento e organização. Assim, a seguir serão apresentadas as ferramentas utilizadas tanto para a implementação do código deste trabalho quanto para a elaboração do documento final de texto que o descreve.
+Com as tecnologias mencionadas anteriormente e o modelo final obtido, foi possível criar uma aplicação capaz de realizar previsões para os imóveis da cidade de João Pessoa, além de proporcionar uma análise de seu setor imobiliário. No entanto, o desenvolvimento de todo o código da aplicação exigiu o uso de ferramentas que facilitassem sua escrita, desenvolvimento e organização. Assim, a seguir serão apresentadas as ferramentas utilizadas tanto para a implementação do código deste trabalho quanto para a elaboração do documento final que o descreve.
 
 ## Recursos utilizados para escrita de código e de documento
 
-\ \ \ O desenvolvimento deste trabalho foi realizado em um computador equipado com processador AMD Ryzen 7 5800H (16 núcleos), 8 GB de memória RAM, placa de vídeo GeForce GTX 1650 e um SSD NVMe de 256 GB, operando sob o sistema Pop!_OS 22.04 LTS. Embora a máquina ofereça um desempenho geral satisfatório, a quantidade limitada de memória RAM apresentou desafios em tarefas mais intensivas, como a otimização de hiperparâmetros dos modelos. Essas tarefas frequentemente demandavam até dois dias para sua conclusão e, em alguns casos, falhavam próximo ao término devido ao alto consumo computacional. Dessa forma, a escolha das ferramentas utilizadas para a escrita do código foram as que impactassem o mínimo possível no desempenho do sistema.
+\ \ \ O desenvolvimento deste trabalho foi realizado em um computador equipado com processador AMD Ryzen 7 5800H (16 núcleos), 8 GB de memória RAM, placa de vídeo GeForce GTX 1650 e um SSD NVMe de 256 GB, operando sob o sistema Pop!_OS 22.04 LTS. Embora a máquina ofereça um desempenho geral satisfatório, a quantidade limitada de memória RAM apresentou desafios em tarefas mais intensivas, como a otimização de hiperparâmetros dos modelos. Essas tarefas frequentemente demandavam até dois dias para sua conclusão e, em alguns casos, falhavam próximo ao término devido ao alto consumo computacional. Dessa forma, a escolha das ferramentas utilizadas para a escrita do código foi as que impactassem o mínimo possível no desempenho do sistema.
 
 \vspace{12pt}
 
@@ -949,7 +949,7 @@ A estimação de $\alpha$ pode ser realizada por validação cruzada com cinco o
 
 \vspace{3.7pt}
 
-\State \textbf{2.} Aplique o critério custo de complexidade à árvore grande \( T_0 \) para obter uma sequência de melhores subárvores \( T_\alpha \), em função de \( \alpha \).
+\State \textbf{2.} Aplique o critério de custo de complexidade à árvore grande \( T_0 \) para obter uma sequência de melhores subárvores \( T_\alpha \), em função de \( \alpha \).
 
 \vspace{3.7pt}
 
@@ -1114,7 +1114,7 @@ Quando o número total de variáveis é grande, mas apenas algumas são realment
 
 ### Boosting Trees
 
-\ \ \ O Boosting, assim como o Bagging, é um método destinado a melhorar o desempenho de modelos ou algoritmos. No entanto, neste trabalho, o Boosting foi aplicado apenas às árvores de regressão. Portanto, a explicação do Boosting será restrito ao caso de Boosting Trees. Seu algoritmo pode ser observado no @algo-boos.
+\ \ \ O Boosting, assim como o Bagging, é um método destinado a melhorar o desempenho de modelos ou algoritmos. No entanto, neste trabalho, o Boosting foi aplicado apenas às árvores de regressão. Portanto, a explicação do Boosting será restrita ao caso de Boosting Trees. Seu algoritmo pode ser observado no @algo-boos.
 
 \vspace{12pt}
 
@@ -1174,7 +1174,7 @@ No caso da regressão, o Boosting combina um grande número de árvores de decis
 
 \vspace{12pt}
 
-O processo de aprendizado do Boosting é mais lento, o que geralmente resulta em modelos mais precisos, embora mais custosos computacionalmente. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerado também um hiperparâmetro. Para $d = 1$, ajusta-se um modelo aditivo, pois cada árvore contém apenas um nó.
+O processo de aprendizado do Boosting é mais lento, o que geralmente resulta em modelos mais precisos, embora mais custosos computacionalmente. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerada também um hiperparâmetro. Para $d = 1$, ajusta-se um modelo aditivo, pois cada árvore contém apenas um nó.
 
 <!-- @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. -->
 
@@ -1282,7 +1282,7 @@ em que $\gamma_{jm} = \arg \min_{\gamma} \sum_{x_i \in R_{jm}} L\left(y_i, f_{m 
 
 \vspace{12pt}
 
-As outras implementações de Gradient Boosting aplicadas à árvores de decisão tem seus próprios motivos de existência. Esses motivos incluem a busca por maior eficiência computacional, adição de recursos e até mesmo maior flexibilidade. As duas outras implementações utilizadas foram o Extreme Gradient Boosting (XGBoost) e Light Gradient Boosting (LightGBM).
+As outras implementações de Gradient Boosting aplicadas a árvores de decisão tem seus próprios motivos de existência. Esses motivos incluem a busca por maior eficiência computacional, adição de recursos e até mesmo maior flexibilidade. As duas outras implementações utilizadas foram o Extreme Gradient Boosting (XGBoost) e Light Gradient Boosting (LightGBM).
 
 \vspace{12pt}
 
@@ -1301,7 +1301,7 @@ em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do q
 
 \vspace{12pt}
 
-Assim como o XGBoost, as implementações existentes do LightGBM também permitem o uso de regularização L1 ou L2, embora nenhuma delas seja utilizada por padrão. O LightGBM tem como foco a alta velocidade de treinamento e a eficiência no uso da memória, graças ao algoritmo baseado em histogramas (Histogram-Based Algorithm). Nesse método, os valores contínuos das variáveis são agrupados em intervalos discretos — como em um histograma — o que evita a avaliação de cada ponto individualmente durante as divisões das árvores, reduzindo significativamente o custo computacional.
+Assim como o XGBoost, as implementações existentes do LightGBM também permitem o uso de regularização L1 ou L2, embora nenhuma das implementações a utilize por padrão. O LightGBM tem como foco a alta velocidade de treinamento e a eficiência no uso da memória, graças ao algoritmo baseado em histogramas (Histogram-Based Algorithm). Nesse método, os valores contínuos das variáveis são agrupados em intervalos discretos — como em um histograma — o que evita a avaliação de cada ponto individualmente durante as divisões das árvores, reduzindo significativamente o custo computacional.
 
 <!-- Assim como o XGBoost, as implementações existentes de Light Gradient Boosting também permite utilizar a regularização L1 ou L2, mas não utiliza nenhuma das duas por padrão. A principal diferença do Light Gradient Boosting está na forma de crescimento das árvores, primeiro é dividido a folha com a maior redução na função de erro. Além disso, tem um grande foco na velocidade e uma melhor eficiência no uso da memória atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que, em vez de avaliar cada ponto quando realiza a divisão, ele divide valores contínuos em intervalos, como em um histograma, o que reduz grandemente o custo computacional. -->
 
@@ -1408,7 +1408,7 @@ em que $N_k(x)$ representa o conjunto de $k$ vizinhos mais próximos de $x$, ou 
 
 \vspace{12pt}
 
-A transformação logarítmica $\log\left(1 + x\right)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Embora essa transformação tenha sido utilizada na maioria das variáveis numéricas, algumas exceções foram feitas. Em particular, a variável que representa o produto entre as coordenadas geográficas e o valor do aluguel foi transformada usando a técnica de Yeo-Johnson [@yeo], que apresenta a vantagem de ser aplicável a dados que incluem valores negativos e zero, como é o caso dessa variável. Além disso, as variáveis referentes ao preço e à área do aluguel não foram transformadas com $\log\left(1 + x\right)$. A decisão foi tomada com base nas métricas de avaliação do modelo, que indicaram uma queda de desempenho do modelo quando essas variáveis eram transformadas.
+A transformação logarítmica $\log\left(1 + x\right)$ foi aplicada para estabilizar a variância e tornar a distribuição dos regressores mais simétrica. Embora essa transformação tenha sido utilizada na maioria das variáveis numéricas, algumas exceções foram feitas. Em particular, a variável que representa o produto entre as coordenadas geográficas e o valor do aluguel foi transformada usando a técnica de Yeo-Johnson [@yeo], que apresenta a vantagem de ser aplicável a dados que incluem valores negativos e zero. Além disso, as variáveis referentes ao preço e à área do aluguel não foram transformadas com $\log\left(1 + x\right)$. A decisão foi tomada com base nas métricas de avaliação do modelo, que indicaram uma queda de desempenho do modelo quando essas variáveis eram transformadas.
 
 \vspace{12pt}
 
@@ -2103,7 +2103,7 @@ l.get_texts()[5].set_text('Terrenos e lotes comerciais')
 plt.show()
 ```
 
-A distribuição das variáveis foram análisadas em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. As distribuições possuem caudas longas à direita, indicando presença de valores extremamente altos e que indicam que a necessidade da aplicação de alguma transformação para a estabilização da variância.
+A distribuição das variáveis foi analisada em termos do tipo do imóvel a partir de um gráfico de violino. Pela @fig-violin, é fácil perceber que a maioria das distribuições possuem assimetria negativa. As distribuições possuem caudas longas à direita, indicando presença de valores extremamente altos, indicando a necessidade da aplicação de alguma transformação para a estabilização da variância.
 
 \vspace{12pt}
 
@@ -2545,7 +2545,7 @@ A @fig-rf_slice mostra a variação da estatística de erro em função dos valo
 
 \vspace{12pt}
 
-A partir de @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores `max_depth`. Em contraste, para o hiperparâmetro de número de árvores `n_estimators`, o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado em @fig-rf_contour, onde valores menores para `max_depth` e maiores para `n_estimators` resultam em um modelo com menor erro de generalização.
+A partir da @fig-rf_slice, é possível ver que o erro tende a ser menor para valores menores do hiperparâmetro de profundidade das árvores `max_depth`. Em contraste, para o hiperparâmetro de número de árvores, `n_estimators`, o erro apresenta uma tendência de redução e estabilização à medida que o número de árvores aumenta. Esse comportamento também é observado na @fig-rf_contour, onde valores menores para `max_depth` e maiores para `n_estimators` resultam em um modelo com menor erro de generalização.
 
 \vspace{12pt}
 
@@ -2696,7 +2696,7 @@ A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import,
 
 \vspace{12pt}
 
-Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting apresentou melhorias significativas, como ilustrado na @fig-gdt_history, em que a estatística de erro foi bastante estável para cada combinação de hiperpâmetros, além de ter se mantido abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores.
+Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting apresentou melhorias significativas, como ilustrado na @fig-gdt_history, em que a estatística de erro foi bastante estável para cada combinação de hiperparâmetros, além de ter se mantido abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é bastante similar à obtida para o Random Forest. Na @fig-gdt_contour, observa-se que o método de otimização TPE tende a selecionar valores menores para a profundidade das árvores e maiores para o número de árvores.
 
 <!-- Em relação à importância dos hiperparâmetros, o que representou a maior variação foi a taxa de aprendizado. -->
 
@@ -2864,7 +2864,7 @@ Analisando a relação entre o hiperparâmetro de profundidade da árvore e o n�
 
 ### Tunagem do XGBoost
 
-\ \ \ Para o algoritmo Extreme Gradient Boosting, os hiperparâmetros selecionados para a tunagem foi a taxa de aprendizagem, profundidade da árvore e quantidade máxima de árvores. Na configuração da função objetivo para a tunagem dos hiperparâmetros pelo optuna, a taxa de aprendizagem variou entre $1 \cdot 10^{-7}$ e $0.5$, a profundidade da árvore variou entre 3 e 50 e a quantidade de árvores variou entre 50 e 1000.
+\ \ \ Para o algoritmo Extreme Gradient Boosting, os hiperparâmetros selecionados para a tunagem foram a taxa de aprendizagem, profundidade da árvore e quantidade máxima de árvores. Na configuração da função objetivo para a tunagem dos hiperparâmetros pelo optuna, a taxa de aprendizagem variou entre $1 \cdot 10^{-7}$ e $0.5$, a profundidade da árvore variou entre 3 e 50 e a quantidade de árvores variou entre 50 e 1000.
 
 \vspace{12pt}
 
@@ -2872,7 +2872,7 @@ A partir da @fig-xgb_import, o hiperparâmetro que representou a maior variaçã
 
 \vspace{12pt}
 
-O algoritmo de otimização TPE apresentou uma maior frequência de procura do hiperparâmetro de taxa de aprendizagem para valores menores, como pode ser visto na @fig-xgb_slice. O mesmo acontece para o hiperparâmetro de profundidade de árvores, há uma repetição maior para valores menores, indicando que a estatística de erro tendeu a ter valores menores para essa região. Para a quantidade de árvores, esse padrão foi diferente, uma quantidade maior de árvores faz com que o modelo tenha um melhor ajuste. Essas relações também podem ser observadas a partir da @fig-xgb_contour, menores taxas de aprendizado, combinado com uma menor profundidade de árvore e maior quantidade de árvores apresentam menor valor na função objetivo.
+O algoritmo de otimização TPE apresentou uma maior frequência de procura do hiperparâmetro de taxa de aprendizagem para valores menores, como pode ser visto na @fig-xgb_slice. O mesmo acontece para o hiperparâmetro de profundidade de árvores, há uma repetição maior para valores menores, indicando que a estatística de erro tendeu a ter valores menores para essa região. Para a quantidade de árvores, esse padrão foi diferente, uma quantidade maior de árvores faz com que o modelo tenha um melhor ajuste. Essas relações também podem ser observadas a partir da @fig-xgb_contour, menores taxas de aprendizado, combinadas com uma menor profundidade de árvore e maior quantidade de árvores apresentam menor valor na função objetivo.
 
 ::: {#fig-xgb_param layout="[[1, 1, 1], [1]]"}
 
@@ -3013,7 +3013,7 @@ A @tbl-params_xgb apresenta a tentativa em que a combinação de hiperparâmetro
 
 \vspace{12pt}
 
-Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com 1.988 árvores, quantidade máxima 202 folhas, profundidade máxima de 379 e taxa de aprendizado de 0,00985, como apresentado na @tbl-params_lgbm.
+Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com 1.988 árvores, quantidade máxima de 202 folhas, profundidade máxima de 379 e taxa de aprendizado de 0,00985, como apresentado na @tbl-params_lgbm.
 
 \vspace{12pt}
 
@@ -3182,7 +3182,7 @@ A funcionalidade mais importante da aplicação pode ser acessada através do bo
 
 \vspace{12pt}
 
-Na seção de configurações do mapa, o usuário pode selecionar o tipo de mapa desejado a partir de uma lista suspensa, que inclui todas as opções suportadas pela aplicação. Por padrão, o mapa de calor é selecionado. Uma das alternativas disponíveis é o mapa de pontos, que exibe a localização dos imóveis pontualmente, com suas cores variando conforme o valor dos imóveis, quanto mais clara a cor, mais alto o valor do imóvel. Além desses dois mapas, a aplicação permite a visualização de informações adicionais, como rios, ciclovias, bairros, comunidades, corredores de ônibus, faixas exclusivas para ônibus, parques, praças, área rural, comunidades e escolas públicas.
+Na seção de configurações do mapa, o usuário pode selecionar o tipo de mapa desejado a partir de uma lista suspensa, que inclui todas as opções suportadas pela aplicação. Por padrão, o mapa de calor é selecionado. Uma das alternativas disponíveis é o mapa de pontos, que exibe a localização dos imóveis pontualmente, com suas cores variando conforme o valor dos imóveis, quanto mais clara a cor, mais alto o valor do imóvel. Além desses dois mapas, a aplicação permite a visualização de informações adicionais, como rios, ciclovias, bairros, corredores de ônibus, faixas exclusivas para ônibus, parques, praças, área rural, comunidades e escolas públicas.
 
 ![Controles para tipos de mapas.](includes/menu_map.png){#fig-menu_map width=450 height=250}
 
@@ -3220,7 +3220,7 @@ Além da modelagem, foi dada ênfase à interpretação do modelo por meio de t�
 
 \vspace{12pt}
 
-Pelo método SHAP, observou-se que a área do imóvel foi a variável com maior impacto na predição do modelo, sendo responsável por alterar, em média, mais de 12% na predição absoluta das previsões. Outras variáveis de maior impacto nas predições foi a razão entre o número de quartos e a área, as coordenadas geográficas e o produto entre essas coordenadas e o valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria 24 horas e quadra de esportes apresentaram menor impacto global nas predições. No entanto, os gráficos de dependência dos valores SHAP revelaram que, embora tenham menor influência média, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, evidenciando sua importância em casos específicos envolvendo imóveis de categorias mais elevadas.
+Pelo método SHAP, observou-se que a área do imóvel foi a variável com maior impacto na predição do modelo, sendo responsável por alterar, em média, mais de 12% na predição absoluta das previsões. Outras variáveis de maior impacto nas predições foram a razão entre o número de quartos e a área, as coordenadas geográficas e o produto entre essas coordenadas e o valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria 24 horas e quadra de esportes apresentaram menor impacto nas predições. No entanto, os gráficos de dependência dos valores SHAP revelaram que, embora tenham menor influência, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, evidenciando sua importância em casos específicos envolvendo imóveis de categorias mais elevadas.
 
 <!-- No entanto, gráficos de dependência dos valores SHAP revelaram que, embora com menor influência, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, destacando sua importância em caso específicos na predição de imóveis de padrões mais elevados. -->
 
