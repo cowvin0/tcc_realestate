@@ -1,4 +1,3 @@
-import itertools
 import folium.plugins
 import geopandas as gpd
 import pandas as pd
@@ -10,10 +9,9 @@ import dash_mantine_components as dmc
 import plotly.express as px
 import dash_ag_grid as dag
 import folium
-from plotly import graph_objects as go
 import plotly.figure_factory as ff
 
-# import requests
+import requests
 
 from shapely.geometry import Point
 from dash_iconify import DashIconify
@@ -31,41 +29,41 @@ from dash import (
 )
 from folium.plugins import HeatMap
 
-dash.register_page(__name__, name="Análise de imóveis", path="/realestate")
+dash.register_page(__name__, name="Análise de imóveis", path="/")
 
 
-# def predict_house_price(payload):
-#     url = "http://api:8050/real_data/predict"
-#     try:
-#         response = requests.post(url, json=payload)
-#         response.raise_for_status()
-#         return response.json()
-#     except requests.exceptions.RequestException as e:
-#         return {"error": str(e)}
+def predict_house_price(payload):
+    url = "http://api:8050/real_data/predict"
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}
 
 
-# def fetch_data():
-#     response = requests.get("http://api:8050/real_data/return_data_db")
-#     return response.json()
+def fetch_data():
+    response = requests.get("http://api:8050/real_data/return_data_db")
+    return response.json()
 
 
-# df_realestate = pd.DataFrame(fetch_data()).assign(
-#     tipo=lambda x: x.tipo.str.capitalize()
-#     .str.split("_")
-#     .str.join(" ")
-#     .str.replace("condominio", "condomínio")
-# )
-
-df_realestate = (
-    pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv")
-    .assign(
-        tipo=lambda x: x.tipo.str.capitalize()
-        .str.split("_")
-        .str.join(" ")
-        .str.replace("condominio", "condomínio")
-    )
-    .drop(columns="qnt_beneficio")
+df_realestate = pd.DataFrame(fetch_data()).assign(
+    tipo=lambda x: x.tipo.str.capitalize()
+    .str.split("_")
+    .str.join(" ")
+    .str.replace("condominio", "condomínio")
 )
+
+# df_realestate = (
+#     pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv")
+#     .assign(
+#         tipo=lambda x: x.tipo.str.capitalize()
+#         .str.split("_")
+#         .str.join(" ")
+#         .str.replace("condominio", "condomínio")
+#     )
+#     .drop(columns="qnt_beneficio")
+# )
 
 bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
 
@@ -826,9 +824,18 @@ def make_density_plot(filtered_data, _):
 
     types_imo = df_filtered.tipo.unique()
 
-    get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
+    get_groups = []
+    valid_labels = []
+    for tipo in types_imo:
+        values = df_filtered.query("tipo == @tipo").valor
+        if len(values) >= 2 and values.std() > 0:
+            get_groups.append(values)
+            valid_labels.append(tipo)
 
-    fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
+    if not get_groups:
+        return no_update
+
+    fig = ff.create_distplot(get_groups, valid_labels, bin_size=10000, show_rug=False)
 
     fig.update_layout(
         legend=dict(
@@ -846,6 +853,46 @@ def make_density_plot(filtered_data, _):
     )
 
     return fig
+
+
+# @callback(
+#     Output("density-plot", "figure"),
+#     Input("filtered-data", "data"),
+#     Input("density-plot", "selectedData"),
+# )
+# def make_density_plot(filtered_data, _):
+#     changed_inputs = [x["prop_id"] for x in callback_context.triggered]
+
+#     if "density-plot.selectedData" in changed_inputs:
+#         return no_update
+
+#     df_filtered = pd.DataFrame(filtered_data)
+
+#     if df_filtered.empty or "tipo" not in df_filtered.columns:
+#         return no_update
+
+#     types_imo = df_filtered.tipo.unique()
+
+#     get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
+
+#     fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
+
+#     fig.update_layout(
+#         legend=dict(
+#             orientation="h",
+#             yanchor="top",
+#             y=-0.2,
+#             xanchor="center",
+#             x=0.5,
+#         ),
+#         margin=dict(l=0, r=0, t=0, b=0),
+#         clickmode="event+select",
+#         dragmode="select",
+#         template="plotly_white",
+#         yaxis=dict(tickformat=".1e"),
+#     )
+
+#     return fig
 
 
 @callback(
@@ -904,7 +951,16 @@ def update_map(map_type, filtered_data, n_clicks, _i):
             color="valor",
             size="valor",
             hover_name="tipo",
-            hover_data={"latitude": False, "longitude": False, "valor": ":.2f"},
+            hover_data={
+                "latitude": False,
+                "longitude": False,
+                "bairro": True,
+                "valor": ":.2f",
+                "area": ":.2f",
+                "vaga": ":.2f",
+                "banheiro": ":.2f",
+                "quarto": ":.2f",
+            },
             size_max=15,
             zoom=12,
             mapbox_style="open-street-map",
@@ -1245,6 +1301,7 @@ def filter_data(
             filtered_df = filtered_df[filtered_df["valor"].isin(selected_types)]
 
     elif '{"index":1,"type":"marker-map"}.selectedData' in changed_inputs:
+        print(selectedData_marker_map)
         if selectedData_marker_map[0] and "points" in selectedData_marker_map[0]:
             selected_types = {"latitude": [], "longitude": []}
             for point in selectedData_marker_map[0]["points"]:
@@ -1334,5 +1391,4 @@ def get_inputs_to_predict(
             "valor_aluguel": price_alug if price_alug != "" else None,
         }
 
-        return ""
-        # return predict_house_price(payload)
+        return predict_house_price(payload)

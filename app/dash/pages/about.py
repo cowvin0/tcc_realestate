@@ -1,8 +1,8 @@
-import dash
+# import dash
 
-from dash import html
+# from dash import html
 
-dash.register_page(__name__, name="Sobre", path="/")
+# dash.register_page(__name__, name="Sobre", path="/")
 
 
-layout = html.Div()
+# layout = html.Div()

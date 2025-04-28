@@ -7,7 +7,6 @@ nocite: |
   @evolucao_abecip
 template-partials:
   - includes/before-body.tex
-# toc-title: \centering Sumário \thispagestyle{empty}
 format:
   pdf:
     pdf-engine: lualatex
@@ -280,7 +279,7 @@ O Plano Cruzado, implementado em 1986, converteu o valor das prestações pela m
 
 \vspace{12pt}
 
-No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia]. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
+No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de 50% foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia]. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
 
 \vspace{12pt}
 
@@ -829,7 +828,7 @@ Com as tecnologias mencionadas anteriormente e o modelo final obtido, foi possí
 
 ## Recursos utilizados para escrita de código e de documento
 
-\ \ \ O desenvolvimento deste trabalho foi realizado em um computador equipado com processador AMD Ryzen 7 5800H (16 núcleos), 8 GB de memória RAM, placa de vídeo GeForce GTX 1650 e um SSD NVMe de 256 GB, operando sob o sistema Pop!_OS 22.04 LTS. Embora a máquina ofereça um desempenho geral satisfatório, a quantidade limitada de memória RAM apresentou desafios em tarefas mais intensivas, como a otimização de hiperparâmetros dos modelos. Essas tarefas frequentemente demandavam até dois dias para sua conclusão e, em alguns casos, falhavam próximo ao término devido ao alto consumo computacional. Dessa forma, a escolha das ferramentas utilizadas para a escrita do código foi as que impactassem o mínimo possível no desempenho do sistema.
+\ \ \ O desenvolvimento deste trabalho foi realizado em um computador equipado com processador AMD Ryzen 7 5800H (16 núcleos), 8 GB de memória RAM, placa de vídeo GeForce GTX 1650 e um SSD NVMe de 256 GB, operando sob o sistema Pop!_OS 22.04 LTS. Embora a máquina ofereça um desempenho geral satisfatório, a quantidade limitada de memória RAM apresentou desafios em tarefas mais intensivas, como a otimização de hiperparâmetros dos modelos. Essas tarefas frequentemente demandavam até dois dias para sua conclusão e, em alguns casos, falhavam próximo ao término devido ao alto consumo computacional. Dessa forma, a escolha das ferramentas utilizadas para a escrita do código foram as que impactassem o mínimo possível no desempenho do sistema.
 
 \vspace{12pt}
 
@@ -2692,7 +2691,7 @@ Resultados da tunagem do Gradient Boosting.
 
 \vspace{12pt}
 
-A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import, indica que o hiperparâmetro com maior influência na variação da função objetivo — e, consequentemente, na performance do modelo — é a taxa de aprendizado. Em seguida, a profundidade das árvores é o segundo mais relevante, enquanto o número de árvores tem a menor influência.
+A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import, indica que o hiperparâmetro com maior influência na variação da função objetivo — e, consequentemente, na performance do modelo — é a taxa de aprendizado. Em seguida, a profundidade das árvores é a segunda mais relevante, enquanto o número de árvores tem a menor influência.
 
 \vspace{12pt}
 
@@ -2844,7 +2843,7 @@ Resultados da tunagem do LGBM.
 
 \vspace{12pt}
 
-As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um comportamento semelhante ao do Gradient Boosting, porém com menor estabilidade em cada tentativa. Ao analisar a contribuição de cada hiperparâmetro para o desempenho do modelo na @fig-lgbm_import, observa-se que a taxa de aprendizado e a quantidade de árvores são os hiperparâmetros de maior influência, seguido pela quantidade total de folhas e, por último, a profundidade máxima da árvore.
+As trials de otimização do modelo LGBM (@fig-lgbm_history) apresentaram um comportamento semelhante ao do Gradient Boosting, porém com menor estabilidade em cada tentativa. Ao analisar a contribuição de cada hiperparâmetro para o desempenho do modelo na @fig-lgbm_import, observa-se que a taxa de aprendizado e a quantidade de árvores são os hiperparâmetros de maior influência, seguidos pela quantidade total de folhas e, por último, a profundidade máxima da árvore.
 
 \vspace{12pt}
 

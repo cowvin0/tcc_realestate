@@ -1,0 +1,739 @@
+---
+title: "Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa"
+crossref:
+  custom:
+    - kind: float
+      key: algo
+      reference-prefix: "Algoritmo"
+      caption-prefix: "Algoritmo"
+      latex-env: algo
+      latex-list-of-description: Algoritmo
+institute: "Universidade Federal da Paraíba"
+author: "Aluno: Gabriel de Jesus Pereira <br> Orientador: Pedro Rafael Diniz Marinho"
+bibliography: ../includes/bib.bib
+embed-resources: true
+format:
+  revealjs:
+    #theme: [solarized, custom.scss]
+    theme: solarized
+    width: 1920
+    height: 1280
+    logo: ../includes/logode.png
+    footer: 'Departamento de Estatística - UFPB'
+    transition: slide
+    background-transition: fade
+    preview-links: auto
+    slide-number: true
+    scrollable: true
+    controls: true
+    code-tools: true
+    auto-stretch: true
+    code-link: true
+execute:
+  refresh: true
+  warning: false
+  error: false
+  eval: true
+  echo: false
+editor:
+  markdown:
+    wrap: 72
+lang: pt
+---
+
+# Introdução
+
+## Formulação do mercado imobiliário brasileiro
+
+- Urbanização no Brasil: de 31% em 1940 para 85,1% em 2014
+
+- Êxodo rural, industrialização e crescimento desordenado das metrópoles
+
+  + Início da industrialização no Governo de Getúlio Vargas (década de 1930)
+  + Governo de Juscelino Kubitschek implementou o Plano de Metas (década de 1950)
+    + Incluia investimentos estatais em agricultura, saúde, educação, energia, transporte, mineração e construção civil.
+
+- Criação do Sistema Financeiro da Habitação (SFH) – Lei nº 4.380/1964
+
+  + Implementou a correção monetária
+  + Criação do Banco Nacional da Habitação (BNH)
+    + Visava incentivar o mercado imobiliário, atrair o setor privado e regulamentar o financiamento do SFH, incluindo garantias, prazos e taxas [@assumpccao2011credito]
+  + Criação das Sociedades de Crédito Imobiliário (SCI)
+    + Subordinadas ao BNH, atuavam como agentes financeiros exclusivos no financiamento de construção, venda ou aquisição de bens destinados a habitação
+  + O FGTS foi criado nesse período e, junto com a caderneta de poupança, tornou-se a principal fonte de financiamento habitacional no Brasil
+
+## Crises econômicas e impacto no setor habitacional
+
+- A partir de 1980, o SFH passou a ser impactado pelo aumento da inflação e pelas medidas adotadas pelos governos para contê-la
+
+- Em 1985, as prestações foram reajustadas em 112%, enquanto os saldos devedores subiram 246% com a inflação acumulada
+
+- O Plano Cruzado (1986) converteu o valor das prestações com base na média dos 12 meses anteriores e congelou os reajustes pelos 12 meses seguintes
+  + A medida atingiu todos os contratos, reduzindo as prestações em cerca de 40%, mas, a longo prazo, os deixou mais caros
+
+- Em 1987 e 1989, as prestações foram congeladas temporariamente pelo Plano Bresser e pelo Plano Verão, respectivamente
+
+- O Plano Collor I (1990), foi o que mais prejudicou o SFH
+  + Bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança. Dos 40% restantes, cerca da metade foi sacada pelos depositantes, reduzindo o saldo das cadernetas de US$ 30 bilhões para aproximadamente entre US$ 7 e US$ 8 bilhões.
+
+- A crise econômica entre as décadas de 1980 e 1990 elevou a inadimplência no SFH de 9% em 1994 para 30% em 2005.
+
+## Modernização do sistema habitacional
+
+- A partir da experiência com o SFH, o Sistema de Financiamento Imobiliário (SFI) foi criado em 1997, pela Lei nº 9.514, para modernizar o modelo de financiamento habitacional no Brasil
+
+\vfill
+
+- O SFI capta recursos diretamente do mercado por meio de operações realizadas por instituições financeiras autorizadas, como bancos, sociedades de crédito e companhias hipotecárias.
+  + As entidades autorizadas podem aplicar os recursos por meio de novos instrumentos introduzidos pelo SFI, como o Certificado de Recebíveis Imobiliários (CRI), a Letra de Crédito Imobiliário (LCI) e a Cédula de Crédito Imobiliário (CCI).
+
+\vfill
+
+- A segurança dos contratos passou a ser garantida pela introdução da alienação fidunciária
+
+\vfill
+
+- Com a securitização dos créditos imobiliários e o fortalecimento da segurança jurídica dos contratos como principais fundamentos, o SFI representou a modernização efetiva do mercado imobiliário brasileiro.
+
+## Possibilidades e desafios
+
+- Possibilidades
+  + Valorização do mercado imobiliário de João Pessoa
+    + Destaque nacional em 2024, com valorização acumulada de 16,13% até novembro
+      + Atratividade da cidade: qualidade de vida, turismo, investimentos urbanos
+  + Aplicação de modelos preditivos
+    + Apoio a decisões no mercado: compradores, vendedores, investidores, setor público
+    + Utilização para estimativas tributárias, como ITBI
+    + Potencial uso por imobiliárias e plataformas online para precificação automática
+
+  + Visualizações interativas e mapas
+    + Compreensão geográfica das dinâmicas de preço por bairro
+
+- Desafios
+  + Escassez e descentralização dos dados
+    + Falta de bases públicas atualizadas e padronizadas sobre imóveis
+    + Necessidade de utilizar web scraping para coleta em sites especializados
+
+  + Dados com informações incompletas ou inconsistentes
+    + Ausência de variáveis relevantes: idade do imóvel, padrão construtivo, estado de conservação
+    + Variações na estrutura dos sites ao longo do tempo
+
+## Objetivo
+
+- **Objetivo Geral**
+  + Realizar a análise e modelagem dos valores dos imóveis em João Pessoa, utilizando técnicas de aprendizado de máquina para compreender os fatores que mais influenciam essas estimativas
+
+- **Objetivos Específicos**
+  + Desenvolver modelos preditivos de valor de imóveis com base em dados coletados via web scraping
+  + Construir uma aplicação interativa para estimar preços com base nas características informadas pelo usuário
+  + Criar visualizações que facilitem a interpretação dos resultados e auxiliem na tomada de decisões
+  + Avaliar o impacto e a importância das variáveis por meio de técnicas interpretáveis (SHAP, ICE, PDP)
+  + Comparar o desempenho de diferentes algoritmos de aprendizado de máquina aplicados ao problema
+
+# Algoritmos de Aprendizado de Máquina
+
+## Árvores de decisão
+
+<br>
+
+::: columns
+::: {.column width="50%"}
+
+- As árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação
+
+- Uma das grandes vantagens é a interpretabilidade do modelo, em que é possível visualizar claramente as regras de decisão geradas
+
+- O processo de construção das árvores se baseia no particionamento recursivo do espaço dos preditores.
+ + Cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal.
+
+- O espaço dos preditores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_{1}, R_{2}, \cdots, R_{J}$.
+  + As regiões têm formato de caixa.
+
+:::
+
+::: {.column width="50%"}
+![Exemplo de estrutura de árvore de decisão. A árvore tem cinco folhas e quatro nós internos.](../../../../Documents/mermaid-tree.png){width="70%"}
+:::
+:::
+
+- A variável resposta é modelada como sendo uma constante $c_j$ em cada região $R_j$:
+
+::: {layout-ncol=2}
+$$
+f\left(x\right) = \sum^{J}_{j=1}c_jI\left(x \in R_j \right),
+$$
+
+$$
+I_{R_j}(x) =
+\begin{cases}
+    1,& \text{se } x \in R_j \\
+    0,& \text{se } x \notin R_j
+\end{cases}\text{.}
+$$
+:::
+
+## Árvores de decisão
+
+O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados:
+
+$$
+\sum_{x_i \in R_{j}} \left[y_i - f\left(x_i\right)\right]^2 \text{.}
+$${#eq-minimo_q}
+
+Como $f\left(x_i\right)$ está sendo avaliado em um ponto específico $x_i$ e as regiões são disjuntas, tem-se que $f\left(x_i\right) = c_j$. Dessa forma, a @eq-minimo_q se reduz a:
+
+$$
+\sum_{x_i \in R_j}\left[y_i - c_j\right]^2
+$$
+
+Derivando em relação a $c_j$ e igualando a zero:
+
+$$
+\frac{\partial}{\partial c_j} \sum_{x_i \in R_j}\left(y_i - c_j\right)^2 = -2 \sum_{x_i \in R_j}\left(y_i - c_j\right) = 0
+$$
+
+Assim, chega-se ao estimador para $c_j$:
+
+$$
+\hat{c}_j = \frac{1}{N_j}\sum_{x_i \in R_j} y_i
+$$
+
+Ou seja, a predição será a média das observações da resposta que estão contidas em $R_j$.
+
+## Árvores de decisão
+
+- Considerar todas as possíveis partições do espaço dos preditores é inviável devido ao alto custo computacional.
+
+- Dessa forma, utiliza-se a abordagem de divisão binária recursiva.
+
+- O processo inicia com a escolha de uma variável independente $X_j$ e um ponto de corte $s$ que proporcione a maior redução possível na soma dos quadrados dos resíduos. Isso define dois subconjuntos:
+
+$$
+R_{1}\left(j, s\right) = \{X|X_j \leq s\} \text{ e } R_{2}\left(j, s\right) = \{X|X_j > s\} \text{, }
+$$
+
+- O objetivo é minimizar:
+
+$$
+\min_{j, s}\left[\min_{c_1} \sum_{x_i \in R_1\left(j, s\right)} \left(y_i - c_{1}\right)^2 + \min_{c_2} \sum_{x_i \in R_2\left(j, s\right)} \left(y_i - c_{2}\right)^2\right]\text{,}
+$$
+em que $c_1$ e $c_2$ são as médias das respostas nas regiões $R_1(j, s)$ e $R_2(j, s)$, respectivamente.
+
+- Após encontrar a melhor divisão, os dados são particionados nas duas regiões e o processo é repetido de forma recursiva para todas as sub-regiões.
+
+## Árvores de decisão
+
+- O tamanho da árvore atua como um controle da complexidade do modelo:
+  + Árvores muito grandes tendem ao sobreajuste, com bom desempenho no treino, mas fraca generalização.
+  + Árvores muito pequenas podem levar ao subajuste, por não capturarem padrões relevantes nos próprios dados de treino.
+
+- Para lidar com isso, adota-se a estratégia de crescer inicialmente uma árvore grande $T_0$, interrompendo as divisões apenas quando um número mínimo de observações por nó for alcançado.
+
+- Em seguida, realiza-se a poda da árvore com base no critério de custo-complexidade.
+
+- Para o processo de poda, define-se uma árvore qualquer $T \subset T_{0}$ obtida a partir da poda de $T_{0}$, isto é, colapsando o seus nós internos. Assim, define-se o critério de custo-complexidade:
+
+$$
+C_{\alpha}\left(T\right) = \sum^{|T|}_{j=1}N_jQ_j\left(T\right) + \alpha|T|
+$$
+em que $|T|$ é o número de folhas da árvore, $Q\left(T\right)$ é a impureza do nó terminal $j$, $\alpha$ é o parâmetro que equilibra o tamanho da árvore e a adequação aos dados.
+
+
+- O objetivo é encontrar, para cada valor de $\alpha$, a subárvore $T_\alpha \subset T_0$ que minimiza $C_{\alpha}(T)$.
+  + Quando $\alpha = 0$, resulta na própria árvore $T_{0}$ e valores grandes de $\alpha$ resultam em árvores menores
+
+## Árvores de decisão
+
+- A busca pela subárvore $T_{\alpha}$ é feita por meio do colapso sucessivo dos nós internos que causam o menor aumento em $\sum_{j} N_j Q_j\left(T\right)$, até restar uma árvore com um único nó.
+
+- Esse processo gera uma sequência de subárvores, dentre as quais existe, para cada valor de $\alpha$, uma única subárvore que minimiza $C_{\alpha}\left(T\right)$.
+
+- A estimação de $\alpha$ pode ser feita por validação cruzada, resultando na árvore final $T_{\hat{\alpha}}$.
+
+- No caso da regressão, $Q_j\left(T\right)$ pode representar o erro quadrático médio; já na classificação, utilizam-se métricas como o índice de Gini ou a entropia cruzada.
+
+- Para classificação, a predição no nó terminal $j$ corresponde à classe majoritária, cuja proporção é dada por:
+
+$$
+\hat p_{jk} = \frac{1}{N_j} \sum_{x_i \in R_j}I\left(y_i = k\right)\text{, }
+$$
+
+- Assim, a classe atribuída ao nó terminal $j$ será:
+
+$$
+k\left(j\right) = \arg \max_{k} \hat{p}_{jk}
+$$
+
+## Métodos Ensemble
+
+<br>
+
+- Os métodos ensemble consistem em combinar múltiplos estimadores base para construir um modelo preditivo mais robusto e preciso.
+
+\vfill
+
+- Segundo @hastie2009elements, o aprendizado em conjunto envolve duas etapas principais:
+  + Desenvolver uma população de estimadores base a partir dos dados de treinamento.
+  + Combinar esses estimadores para formar um único modelo preditivo.
+
+\vfill
+
+- Essa abordagem é especialmente útil para melhorar o desempenho de modelos simples, como árvores de decisão, ao combiná-las em conjunto.
+
+\vfill
+
+- Entre os principais métodos ensemble, destacam-se: Bagging, Random Forest, Boosting, Gradient Boosting e Stacking.
+
+## Bagging
+
+- O algoritmo Bagging (Bootstrap Aggregating) foi introduzido por @breiman1996bagging.
+
+- Sua ideia central é gerar um estimador agregado a partir de múltiplas versões de um preditor, treinadas com amostras bootstrap do conjunto de treinamento.
+
+- O principal objetivo do Bagging é reduzir a variância de modelos, como as árvores de decisão, que tendem a variar muito quando treinadas isoladamente.
+
+- Ao combinar diversas árvores treinadas em subconjuntos distintos, o Bagging melhora a estabilidade e o desempenho preditivo do modelo final.
+
+- No caso de regressão, a predição do Bagging é obtida pela média das predições individuais de cada árvore.
+
+- Formalmente, seja $\mathcal{L}$ o conjunto de treinamento. A partir dele, geram-se $B$ amostras bootstrap $\mathcal{L}^{(b)}$, cada uma usada para treinar uma árvore de regressão $f(x, \mathcal{L}^{(b)})$.
+
+- A predição final agregada é dada por:
+
+$$
+f_{B}\left(x\right) = \frac{1}{B} \sum_{b = 1}^B f \left(x, \mathcal{L}^{\left(B\right)}\right)\text{,}
+$$
+
+onde $f_B(x)$ representa a predição média das $B$ árvores.
+
+## Bagging
+
+- Embora o Bagging reduza a variância e melhore o desempenho preditivo de árvores de regressão, isso ocorre à custa de menor interpretabilidade.
+
+- Uma alternativa é estimar a importância dos preditores com base na redução média do erro (ex.: erro quadrático médio) provocada por cada variável ao longo das $B$ árvores. Um valor elevado na redução total média do erro quadrático médio, calculado com base nas divisões realizadas por um determinado preditor em todas as 𝐵 árvores, indica que o preditor é importante.
+
+- No entanto, as árvores geradas pelo Bagging tendem a ser muito semelhantes, o que limita seus ganhos:
+  + Se forem independentes e identicamente distribuídas (i.i.d.), a variância da média das predições é $\frac{1}{B}\sigma^2$.
+  + Se houver correlação positiva $\rho$ entre as árvores, a variância se torna:
+$$
+\rho\sigma^2 + \frac{1 - \rho}{B}\sigma^2
+$$
+  + Mesmo com $B \to \infty$, o termo $\rho \sigma^2$ permanece, limitando a redução de variância.
+
+- Essa correlação ocorre porque as mesmas variáveis tendem a ser escolhidas repetidamente nas divisões, por causarem maior redução no erro.
+
+## Random Forest
+
+<br>
+
+- O algoritmo Random Forest é uma extensão do Bagging aplicado a árvores de decisão, com uma modificação: reduzir a correlação entre as árvores.
+
+\vfill
+
+- Isso é feito por meio da seleção aleatória de $m$ preditores, dentre os $p$ disponíveis, como candidatos para cada divisão.
+    + Quando $m = p$, o algoritmo se comporta como o Bagging.
+
+\vfill
+
+- Essa aleatoriedade procura resolver o problema do Bagging, que tende a gerar árvores muito semelhantes.
+
+\vfill
+
+- Em média, uma fração $1 - m/p$ das divisões sequer incluirá o preditor mais forte como candidato, o que aumenta a chance de seleção de outros preditores.
+
+\vfill
+
+- Assim como o Bagging, o Random Forest não sofre de sobreajuste com o aumento do número de árvores $B$, bastando escolher um valor suficientemente grande para estabilizar o erro.
+
+## Boosting
+
+- No Boosting, não é necessário utilizar amostras bootstrap.
+
+- Assim como outros métodos ensemble, o Boosting pode ser aplicado a diferentes modelos, mas é mais conhecido pelo uso com árvores de regressão.
+
+- Diferente do Bagging, que constrói as árvores de forma paralela, o Boosting as constrói sequencialmente.
+
+- O objetivo é incorporar informações e corrigir os erros cometidos pelas árvores anteriores.
+
+- O processo começa ajustando uma árvore aos valores observados da variável dependente; em seguida:
+  + Calculam-se os resíduos da árvore anterior.
+  + A nova árvore é ajustada para predizer esses resíduos.
+  + A predição é então adicionada ao estimador atual para atualizar os resíduos.
+
+- Como cada árvore depende das anteriores, árvores menores são suficientes [@james2013introduction].
+
+-  O aprendizado no Boosting é mais lento, mas tende a gerar modelos mais precisos.
+  + O processo é controlado por um hiperparâmetro $\lambda$, chamado taxa de aprendizado.
+    + Valores pequenos de $\lambda$ exigem um número maior de árvores $B$, mas melhoram a generalização.
+    + Diferente do Bagging e Random Forest, o Boosting pode sofrer sobreajuste se $B$ for excessivamente grande.
+
+- A profundidade das árvores, controlada pelo número de divisões $d$, também pode ser considerado um hiperparâmetro para ajuste:
+  + Para $d = 1$, ajusta-se um modelo aditivo, pois cada árvore contém apenas um nó.
+
+## Gradient Boosting
+
+## Stacked generalization
+
+- O Stacked Generalization (Stacking) é um método ensemble que combina as predições de vários modelos para treinar um novo estimador, com o objetivo de melhorar a precisão das predições.
+
+- A ideia central é atribuir pesos às predições dos modelos, dando mais importância àqueles com melhor desempenho, enquanto se evita atribuir altos pesos a modelos excessivamente complexos.
+
+- Matematicamente, o Stacking ajusta o modelo $m = 1, \cdots, M$ ao conjunto de treinamento com a $i$-ésima observação removida, definindo predições $\hat f_{m}^{-i}\left(x\right)$.
+
+- Os pesos são estimados por mínimos quadrados, resolvendo:
+
+$$
+\hat{w}^{st} = \arg \min_{w} \sum^{N}_{i = 1} \left[y_i - \sum^{M}_{m = 1} w_m \hat{f}^{-i}_m\left(x_i\right)\right]^2\text{.}
+$$
+
+- A predição final é dada por:
+
+$$
+\sum_{m}\hat{w}^{\text{st}}_{m}\hat{f}_{m}\left(x\right)
+$$
+
+- O uso da  validação cruzada leave-one-out na construção das predições $\hat{f}^{-i}_{m}\left(x\right)$ reduz o risco de sobreajuste, impedindo que modelos muito complexos tenham pesos muito altos.
+
+# Metodologia
+
+## Obtenção dos dados
+
+::: columns
+::: {.column width="50%"}
+- A obtenção de dados para o mercado imobiliário representa um desafio, devido à escassez de bases públicas organizadas.
+
+- Como alternativa, optou-se pela extração direta de informações de sites especializados utilizando a técnica conhecida como web scraping, com a coleta realizada em dois momentos distintos.
+
+- Em particular, as informações foram coletadas do Zap Imóveis.
+:::
+
+::: {.column width="50%"}
+![](Zap_im%C3%B3veis_2021.svg.png){width="80%"}
+:::
+:::
+
+- O Zap Imóveis é uma das principais plataformas online de compra, venda e aluguel de imóveis no Brasil. Fundado em março de 2000, inicialmente recebeu o nome de Planeta Imóvel.
+
+- Possui uma base extensa de anúncios em diferentes cidades, incluindo João Pessoa, abrangendo imóveis novos e usados, residenciais e comerciais.
+
+- Sua ampla cobertura e variedade de informações o tornam uma fonte relevante para estudos de mercado e análise imobiliária.
+
+- Entre as informações disponíveis para coleta, destacam-se o preço do imóvel, a área, o número de quartos, o número de vagas de garagem, o endereço, o tipo de imóvel, o valor do condomínio e características adicionais, como piscina, academia, spa, entre outras.
+
+## Web scraping
+
+- O web scraping é uma técnica utilizada para extrair informações de sites da internet, armazenando-as em arquivos ou sistemas de banco de dados para fins de análise, desenvolvimento de aplicações ou acesso a informações de difícil obtenção.
+
+- A coleta dos dados é realizada por meio do Hypertext Transfer Protocol (HTTP),
+  + O HTTP é o protocolo que gerencia a comunicação cliente-servidor na internet, baseado em requisições que especificam ações sobre recursos definidos.
+
+- Os métodos mais utilizados em web scraping são o GET e o POST:
+  + O método GET requisita uma representação do recurso especificado, sendo utilizado principalmente para visualizar dados.
+  + O método POST é usado para enviar dados ao servidor, geralmente para serem processados, como no envio de informações via formulários HTML (ex.: login ou cadastro).
+
+- O processo de web scraping normalmente se inicia com uma requisição GET para obter o conteúdo de uma página web.
+  + A resposta, geralmente em HTML, é então analisada para extrair os dados de interesse.
+
+## Principais desafios do web scraping
+
+- Mudanças na estrutura dos sites:
+  + Pequenas alterações no código HTML ou na organização das páginas podem quebrar os scripts de extração, exigindo manutenções frequentes.
+
+- Conteúdo dinâmico:
+  + Muitos sites modernos utilizam **JavaScript** para carregar informações de forma assíncrona, o que dificulta a captura dos dados apenas com requisições HTTP básicas, tornando necessária a utilização de ferramentas como (Selenium ou Playwright).
+
+- Limitações de acesso e bloqueios:
+  + Sites podem impor restrições, como o bloqueio de IPs, o que exige a utilização de técnicas de rotacionamento de IP para contornar essas limitações.
+
+- Aspectos éticos e legais:
+  + Nem todos os sites autorizam o scraping de seus dados. É fundamental respeitar políticas de uso, robots.txt, e considerar as implicações legais, especialmente em relação a direitos autorais e proteção de dados.
+
+## Ferramentas utilizadas para web scraping em R
+
+- `rvest`
+  +
+
+- `xml2`
+  +
+
+- `httr`
+  +
+
+## Ferramentas utilizadas para web scraping em Python
+
+- `Scrapy`
+  +
+
+- `Playwright`
+  +
+
+## Dados obtidos a partir do web scraping
+
+- Entre os dados obtidos, destacam-se:
+  + Preço de venda: valor anunciado para o imóvel.
+  + Área privativa: metragem em metros quadrados.
+  + Número de quartos, suítes e banheiros: características estruturais importantes para avaliação.
+  + Número de vagas de garagem: relevante para a valorização do imóvel.
+  + Endereço e bairro: localizações aproximadas, utilizadas posteriormente para inferência geográfica.
+  + Tipo de imóvel: apartamento, casa, cobertura, entre outros.
+  + Valor do condomínio: custo adicional mensal associado ao imóvel, quando disponível.
+  + Características adicionais: presença de piscina, academia, spa, varanda, entre outros itens que podem influenciar o preço.
+  + Descrição textual: informações complementares fornecidas nos anúncios.
+  + Data de coleta: para registro do momento da extração, importante para controle temporal dos dados.
+
+## Dados utilizados para criação de aplicação web
+
+::: columns
+::: {.column width="60%"}
+- O Filipeia - Mapas da Cidade é uma plataforma online que disponibiliza dados geográficos e cartográficos sobre a cidade de João Pessoa.
+
+- Criado com o objetivo de apoiar pesquisadores, profissionais e a população em geral, o site reúne mapas atualizados dos bairros, ruas, equipamentos públicos e outras divisões territoriais do município.
+
+- Entre os dados disponíveis na plataforma e que foram utilizados no projeto, destacam-se: ciclovias, faixas exclusivas de ônibus, corredores de transporte público, áreas rurais, limites de bairros, além da localização de parques, praças e rios.
+:::
+
+::: {.column width="40%"}
+![](filipeiaLogo.png)
+:::
+:::
+
+::: columns
+::: {.column width="40%"}
+![](inep.jpg)
+:::
+
+::: {.column width="60%"}
+- As informações sobre escolas públicas foram obtidas junto ao Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (INEP).
+
+- A partir dos dados do INEP, foi possível incorporar à aplicação a localização das escolas públicas de João Pessoa, enriquecendo a análise espacial e oferecendo mais uma camada de informação relevante para o projeto.
+:::
+:::
+
+# Construção do modelo
+
+## Divisão entre Treinamento e Teste e Escolha das Variáveis Preditivas
+
+- Para avaliar o desempenho dos modelos, o conjunto de dados foi dividido em conjuntos de treinamento e teste da seguinte forma:
+  + A fim de manter a proporção dos intervalos de preços dos imóveis em ambos os conjuntos, a divisão foi realizada por meio da estratificação da variável dependente em cinco faixas: primeiro intervalo: de R$ 43.914 até R$ 200.000; segundo intervalo: de R$ 200.000 até R$ 400.000; terceiro intervalo: de R$ 400.000 até R$ 600.000; quarto intervalo: de R$ 600.000 até R$ 800.000; quinto intervalo: acima de R$ 800.000 até o máximo de R$ 7.000.000.
+  + Dessa forma, 20% dos dados foram reservados para o conjunto de teste e 80% para o treinamento dos modelos.
+- Para o ajuste dos modelos, foram selecionadas variáveis consideradas relevantes para o estudo:
+  + Preço e área média do aluguel no bairro;
+  + Área do imóvel, medida em $m^2$;
+  + Número de quartos, banheiros e vagas de garagem;
+  + Tipo de imóvel, podendo ser: apartamento, casa, casa de condomínio, flat, terreno comercial ou terreno de condomínio;
+  + Características adicionais do imóvel: área de serviço, academia, elevador, espaço gourmet, piscina, playground, portaria 24 horas, quadra de esportes, salão de festas, sauna, spa e varanda gourmet.
+
+## Divisão entre Treinamento e Teste e Escolha das Variáveis Preditivas
+
+- Além das variáveis coletadas por meio de web scraping, foram criadas novas variáveis derivadas de combinações entre variáveis que apresentavam correlação relevante:
+  + Quantidade total de cômodos do imóvel;
+  + Produto entre as coordenadas geográficas (latitude e longitude) e o preço médio do aluguel no bairro;
+  + Razão entre o número de quartos e a área do imóvel;
+  + Produto entre o número de quartos e a área média do aluguel no bairro.
+- A análise de correlação entre as variáveis foi realizada utilizando o coeficiente de Spearman [@spearman1961proof]:
+  + A correlação de Spearman é uma medida não paramétrica, aplicada aos postos das variáveis, e é definida pela expressão:
+$$
+r_{s} = \rho_{rg_{X}, rg_{Y}} = \frac{cov\left(rg_{X}, rg_{Y}\right)}{\sigma_{rg_X}\sigma_{rg_Y}} \text{,}
+$$
+  + em que:
+    + $\rho$ é o coeficiente de Pearson aplicado aos postos das variáveis,
+    + $cov\left(rg_{X}, rg_{Y}\right)$ é a covariância entre os postos,
+    + $\sigma_{rg_X}$ e $\sigma_{rg_Y}$ são os desvios padrão dos postos de $X$ e $Y$.
+
+## Etapas de pré-processamento
+
+- **Método de imputação de valores ausentes:**
+
+  + Foi utilizado o KNNImputer, que estima valores ausentes com base na média dos $k$ vizinhos mais próximos no espaço dos dados observados. O método é expresso pela seguinte fórmula:
+$$
+\hat{y} = \frac{1}{k}\sum_{x_i \in N_k\left(x\right)}y_i\text{,}
+$$
+  + em que $\hat{y}$ é o valor imputado, $k$ é o número de vizinhos considerados, $N_k\left(x\right)$ representa o conjunto dos $k$ vizinhos mais próximos de $x$.
+  + A imputação funciona da seguinte maneira:
+    + Para cada observação com valores ausentes, o algoritmo identifica as $k$ observações mais próximas, considerando apenas as variáveis com valores disponíveis;
+      + Para fazer a identificação dos $k$ vizinhos mais próximos, foi utilizado a distância euclidiana:
+      $$
+      d\left(x, x^{'}\right) = \sqrt{\sum_{j \in S}\left(x_j - x^{'}_j\right)^2}
+      $$
+        + em que $x$ e $x^{'}$ são duas observações e $S$ representa o conjunto de variáveis disponíveis (não ausentes) nas duas observações.
+    + Em seguida, calcula a média dos valores observados dos $k$ vizinhos para estimar o valor ausente;
+
+## Etapas de pré-processamento
+
+- **Transformação das variáveis numéricas:**
+  + Para estabilizar a variância e tornar a distribuição das variáveis independentes mais próximas de uma normal, foram aplicadas duas transformações:
+    + Foi aplicada a transformação de $\log\left(1+x\right)$ nas variáveis na maioria das variáveis numéricas, com exceção da variável do produto entre as coordenadas geográficas e o valor do aluguel
+    + A variável do produto entre as coordenadas geográficas e o valor do aluguel foi transformada com a transformação de Yeo-Johnson [@yeo], definida da seguinte forma:
+    $$
+    \psi(\lambda, x) = \begin{cases}
+        [(1 + x)^\lambda - 1] / \lambda  &  \lambda \neq 0, \; x \ge 0 \\
+        \ln(1 + x)                       &  \lambda = 0, \; x \ge 0 \\
+        [(1 - x)^{2 - \lambda} - 1] / (\lambda - 2) \quad & \lambda \neq 2, \; x < 0 \\
+        -\ln(1 - x)                     &   \lambda = 2, \; x < 0
+    \end{cases} \text{,}
+    $$
+      + em que $\lambda$ é estimado por máxima verossimilhança. A transformação $\log(1 + x)$ é um caso particular da transformação de Yeo-Johnson quando $\lambda = 0$ e $x \ge 0$.
+  + As variáveis de preço e área média de aluguel não foram transformadas, pois apresentavam piora na performance dos modelos quando eram transformadas.
+
+## Etapas de pré-processamento
+
+- **Transformação de variáveis categóricas:**
+  + Para a variável tipo de imóvel, foi aplicada a técnica de codificação one-hot: cada categoria foi transformada em uma nova coluna binária.
+    + Por exemplo, o tipo "casa" originou uma nova coluna, onde o valor 1 indica que o imóvel é uma casa, e 0 indica outra categoria.
+- **Padronização das variáveis numéricas:**
+  + As variáveis numéricas, com exceção das variáveis de valor e área média do aluguel, foram padronizadas utilizando a seguinte fórmula:
+$$
+z = \frac{x - \mu}{\sigma}
+$$
+  + em que:
+    + $\mu$ representa a média da variável;
+    + $\sigma$ representa o desvio padrão da variável.
+
+## Métricas para avaliação dos modelos
+
+<br>
+
+Para avaliar o desempenho dos modelos, foram utilizadas três métricas principais:
+
+::: {layout-ncol=3}
+$$
+\text{RMSE} = \sqrt{\dfrac{1}{n} \sum_{i = 0}^n (y_i - \hat y_i)^2}
+$$
+
+$$
+R^2 = 1 - \dfrac{SS_{\text{resíduos}}}{SS_{\text{total}}}
+$$
+
+$$
+\text{MAPE} = \frac{1}{n} \sum_{i=0}^n \left|1 - \frac{y_i}{\hat y_i}\right|\text{,}
+$$
+:::
+
+<br>
+
+- RMSE (Root Mean Squared Error):
+  + Mede a raiz quadrada do erro quadrático médio. Penaliza mais fortemente grandes desvios e é útil para identificar a magnitude típica dos erros do modelo.
+
+- $R^2$ (Coeficiente de Determinação):
+  + Representa a proporção da variabilidade da variável dependente que é explicada pelo modelo. Um valor próximo de 1 indica boa capacidade de explicação.
+
+- MAPE (Mean Absolute Percentage Error):
+  + Mede o erro percentual absoluto médio entre as previsões e os valores observados. É útil para interpretar o erro de forma relativa ao valor real.
+
+## Validação cruzada e otimização de hiperparâmetros
+
+::: {columns}
+::: {.column width="50%"}
+
+![](cv_test_imagem.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+- Para estimar o erro dos modelos e auxiliar na otimização do número de vizinhos mais próximos, bem como dos demais hiperparâmetros, foi utilizada a técnica de validação cruzada K-Fold.
+
+- O K-Fold busca estimar o erro de generalização, definido como $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, por meio do seguinte processo:
+  +  Em cada iteração $1, \cdots, K$, o conjunto de dados é particionado em $K-1$ folds para treinamento, reservando o fold restante para teste do modelo e cálculo da métrica de erro.
+:::
+:::
+
+- Ao final das $K$ iterações, o erro de generalização pelo K-Fold é calculado como a média dos erros obtidos nas predições feitas por modelos treinados sem o fold correspondente a cada observação:
+$$
+CV\left(\hat f\right) = \frac{1}{N}\sum_{i = 1}^N L\left(y_i, \hat{f}^{-k\left(i\right)}\left(x_i\right)\right)\text{.}
+$$
+em que $N$ é o número de observações, $L$ é a função de perda, $\hat{f}^{-k(i)}$ é o modelo treinado sem o fold de $x_i$, e $k(i)$ indica o fold ao qual a observação pertence.
+
+## Validação cruzada e otimização de hiperparâmetros
+
+- A otimização dos hiperparâmetros foi realizada por meio da otimização bayesiana.
+
+- Nesse método, as próximas tentativas são ajustadas com base nos resultados anteriores, utilizando uma função probabilística $P\left(c \mid \lambda\right)$, que modela a relação entre os hiperparâmetros $\lambda$ e o desempenho $c$.
+    + A partir dessa função, estimam-se a performance esperada $\hat{c}(\lambda)$ e a incerteza associada $\hat{\sigma}(\lambda)$ para cada configuração $\lambda$.
+
+- A escolha dos próximos pontos é feita por uma função de aquisição, que equilibra a exploração de regiões ainda não exploradas e próximas aos melhores resultados obtidos.
+
+- Neste trabalho, utilizou-se o modelo Tree-Structured Parzen Estimator (TPE) para a função probabilística:
+    + O TPE constrói duas funções de densidade, $l(\lambda)$ e $g(\lambda)$, que modelam a distribuição dos hiperparâmetros com base na métrica de desempenho $y$.
+    + A probabilidade condicional $P(\lambda \mid y)$ é definida como:
+    $$
+    P(\lambda|y) =
+    \begin{cases}
+        l(\lambda)\text{, } & \text{se } y < y^* \\
+        g(\lambda)\text{, } & \text{se } y \ge y^*
+    \end{cases}\text{,}
+    $$
+em que $y^*$ é um limiar e é definido como sendo um quantil dos valores observados de y, de forma que:
+$$
+p\left(y < y^{*}\right) = \gamma
+$$
+
+## Validação cruzada e otimização de hiperparâmetros
+
+- No algoritmo TPE, a função de aquisição utilizada é o Expected Improvement (EI), que representa a expectativa de melhoria em relação a um limiar $y^{*}$, dado um modelo $M$ que mapeia $f: \Lambda \rightarrow \mathbb{R}^N$. Formalmente, o EI é definido por:
+
+$$
+EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{\infty} \max\left(y^* - y, 0\right)p_{M}\left(y|\lambda\right)dy\text{.}
+$$
+
+-  Após a otimização específica para o algoritmo TPE, o Expected Improvement pode ser expresso como:
+
+$$
+EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 - \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}\text{.}
+$$
+
+- A partir da expressão anterior, observa-se que maximizar o Expected Improvement no TPE é equivalente a maximizar a razão $l\left(\lambda\right)/g\left(\lambda\right)$.
+
+## Importância dos hiperparâmetros
+
+# Interpretação dos algoritmos de aprendizagem de máquina
+
+## Individual Conditional Expectation (ICE)
+
+- O ICE (Individual Conditional Expectation) é um método que permite analisar o efeito isolado de uma covariável sobre a predição, mantendo as demais variáveis constantes.
+
+- No ICE, é considerado um grid ${x_{S_i}, x_{C_i}}_{i=1}^{N}$ de valores no domínio da variável de interesse $x_S$, enquanto as demais covariáveis $x_C$ permanecem fixas.
+
+- A partir das predições $\hat{f}$ geradas ao longo dessa variação, constrói-se um gráfico que apresenta:
+  + No eixo das ordenadas: os valores estimados ($\hat{f}$),
+  + No eixo das abscissas: os valores do grid da variável $x_S$.
+
+- Para facilitar a interpretação, os valores foram centralizados utilizando o valor mínimo $x^{*}$ de $x_S$, feito da seguinte forma:
+
+$$
+\hat{f}_{cent}^{\left(i\right)} = \hat{f}^{\left(i\right)} - \mathbf{1} \hat{f}\left(x^*, \mathbf x_{C_i}\right)\text{,}
+$$
+em que $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​ é o modelo ajustado, e $\mathbf 1$ é um vetor de uns.
+
+- Também foi utilizada a linha do Partial Dependence Plot (PDP), que corresponde à média de todas as curvas individuais geradas pelo ICE.
+
+<!-- ## Local interpretable model-agnostic explanations (LIME) -->
+
+## Shapley Additive Explanations (SHAP)
+
+-  O SHAP (Shapley Additive Explanations) é um método que busca explicar as predições individuais de um modelo, atribuindo a cada variável uma contribuição para o valor predito​
+
+- Baseia-se nos valores de Shapley da teoria dos jogos de coalizão, introduzidos por @shapley1953value, que representam a contribuição média de cada variável considerando as possíveis combinações (coalizões) de variáveis​.
+
+- Fórmula dos Valores de Shapley:
+  + Os valores de Shapley são dados por:
+$$
+\phi_i\left(x\right) = \sum_{Q \subseteq S | \{i\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)\text{,}
+$$
+  + em $Q$ é um subconjunto de variáveis, $S$ o conjunto completo, e o $\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)$ corresponde à contribuição marginal da variável $i$ ao ser adicionada ao subconjunto $Q$.
+- Modelo Aditivo:
+  + O SHAP representa a explicação como um modelo linear aditivo:
+$$
+g\left(\mathbf{z^{'}}\right) = \phi_0 + \sum_{j = 1}^{M} \phi_{j} z_{j}^{'}\text{,}
+$$
+em que $z'_j$ representa o vetor de coalizão, indicando a presença ou ausência da variável $j$.
+
+
+# Resultados
+
+## Análise exploratória
+
+![](valores_ausentes.png)
+
+# Referências
+
+::: {#refs}
+:::

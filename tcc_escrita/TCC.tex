@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, enhanced, breakable, sharp corners, boxrule=0pt, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, colback={codebgcolor}, enhanced, frame hidden, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -1953,8 +1953,8 @@ desafios em tarefas mais intensivas, como a otimização de
 hiperparâmetros dos modelos. Essas tarefas frequentemente demandavam até
 dois dias para sua conclusão e, em alguns casos, falhavam próximo ao
 término devido ao alto consumo computacional. Dessa forma, a escolha das
-ferramentas utilizadas para a escrita do código foi as que impactassem o
-mínimo possível no desempenho do sistema.
+ferramentas utilizadas para a escrita do código foram as que impactassem
+o mínimo possível no desempenho do sistema.
 
 \vspace{12pt}
 
@@ -4314,7 +4314,7 @@ A análise da importância dos hiperparâmetros, apresentada na
 Figura~\ref{fig-gdt_import}, indica que o hiperparâmetro com maior
 influência na variação da função objetivo --- e, consequentemente, na
 performance do modelo --- é a taxa de aprendizado. Em seguida, a
-profundidade das árvores é o segundo mais relevante, enquanto o número
+profundidade das árvores é a segunda mais relevante, enquanto o número
 de árvores tem a menor influência.
 
 \vspace{12pt}
@@ -4417,7 +4417,7 @@ com menor estabilidade em cada tentativa. Ao analisar a contribuição de
 cada hiperparâmetro para o desempenho do modelo na
 Figura~\ref{fig-lgbm_import}, observa-se que a taxa de aprendizado e a
 quantidade de árvores são os hiperparâmetros de maior influência,
-seguido pela quantidade total de folhas e, por último, a profundidade
+seguidos pela quantidade total de folhas e, por último, a profundidade
 máxima da árvore.
 
 \vspace{12pt}

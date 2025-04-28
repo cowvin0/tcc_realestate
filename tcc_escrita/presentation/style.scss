@@ -1,0 +1,67 @@
+/*-- scss:defaults --*/
+
+/*-- $theme-light: #ffdc6b; --*/
+$theme-light: #64f597;
+/*-- $theme-yellow: #FFE0A8AA; --*/
+$theme-yellow: #ffffff;
+$theme-orange: #D97146;
+$theme-red: #ec407a;
+$theme-grey: #515966;
+$theme-lightgrey: #90A1B8;
+
+$body-bg: $theme-light;
+$body-color: $theme-grey;
+$link-color: $theme-red;
+
+$code-block-font-size: 1em;
+
+/*-- scss:rules --*/
+
+.orange {
+  color: $theme-orange;
+  font-weight: bold;
+}
+
+.red {
+  color: $theme-red;
+  font-weight: bold;
+}
+
+.reveal pre code {
+  max-height: 1000px;
+}
+
+.reveal div.sourceCode pre code {
+    background-color: $theme-yellow;
+}
+
+.reveal .title {
+  background-color: $body-color;
+  color: $theme-yellow;
+}
+
+.reveal .footer {
+  color: $theme-grey;
+}
+
+.textcenter {
+  text-align: center;
+}
+
+.flow {
+  background-image: url(https://img.freepik.com/fotos-gratis/fundo-de-papel-de-parede-colorido-desfocado-vivido_58702-4377.jpg?w=996&t=st=1672615020~exp=1672615620~hmac=211dfb66381a6b15ca8ba1724bd24e2d006d6194fc1eda0901e900393d21a31f);
+  background-attachment: fixed;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+	animation: animate 10s linear infinite;
+	font-weight: 900;
+}
+
+@keyframes animate {
+	0% {
+		background-position: left 0px top 10px;
+	}
+	40% {
+		background-position: left 800px top 10px;
+	}
+}
