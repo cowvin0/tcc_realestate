@@ -224,7 +224,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, enhanced, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, colback={codebgcolor}, enhanced, frame hidden, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -496,6 +496,14 @@ para mim. Ao meu amigo Daniel, sou especialmente grato pelas longas
 conversas, pelos conselhos e pelas oportunidades durante a graduação.
 Sem você, eu não teria conquistado meu primeiro PIBIC.
 
+\vspace{12pt}
+
+Agradeço aos professores Eufrásio de Andrade Lima Neto, Luiz Medeiros de
+Araújo Lima Filho e Tarciana Liberal Pereira de Araújo por aceitarem
+compor a banca avaliadora. Meu agradecimento especial ao professor Pedro
+Rafael Diniz Marinho, por sua orientação dedicada e constante desde o
+início da graduação.
+
 \clearpage
 \endgroup
 
@@ -582,7 +590,7 @@ população brasileira já residia em regiões urbanas.
 \vspace{12pt}
 
 No Brasil, o processo de urbanização ocorreu de forma tardia e
-desordenada, quando comparado com os países pioneiros da Revolução
+desordenada, quando comparada com os países pioneiros da Revolução
 Industrial, que tiveram todo um planejamento para suportar a grande
 transição demográfica que a população estava passando naquele momento.
 Um dos principais fatores que impulsionaram essa rápida urbanização, no
@@ -673,8 +681,8 @@ No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor
 I, de 1990, que bloqueou todos os ativos financeiros e 60\% do saldo das
 cadernetas de poupança, a principal fonte de arrecadação para o setor. O
 saldo da poupança na época correspondia a US\$ 30 bilhões. Dos 40\%
-restantes, cerca de metate foi retirado pelos depositantes, uma vez que
-a população ficou sem dinheiro disponível para arcar com despesas
+restantes, cerca de foi retirado pelos depositantes, uma vez que a
+população ficou sem dinheiro disponível para arcar com despesas
 correntes (ABECIP, 2015). Como consequência, o saldo das cadernetas de
 poupança foi drasticamente reduzido, atingindo aproximadamente US\$ 7 a
 US\$ 8 bilhões. Essa medida agravou intensamente a situação das
@@ -893,14 +901,9 @@ ser realizada no recurso especificado.
     web. Ele define elementos como títulos, parágrafos, links, imagens e
     tabelas, sendo a base para o desenvolvimento de páginas da internet.},
   como dados de login ou de cadastro.
-\item
-  POST: O método POST envia dados para serem processados para o recurso
-  especificado. Esses dados podem ser, por exemplo, dados de um
-  formulário HTML\footnote{HTML (HyperText Markup Language) é a
-    linguagem de marcação utilizada para estruturar e exibir conteúdo na
-    web. Ele define elementos como títulos, parágrafos, links, imagens e
-    tabelas, sendo a base para o desenvolvimento de páginas da internet.}.
-  --\textgreater{}
+\end{itemize}
+
+\begin{itemize}
 \item
   PUT: O PUT é bastante semelhante ao POST, ele envia os dados de forma
   semelhante. No entanto, caso seja necessário atualizar um usuário
@@ -1044,14 +1047,14 @@ lidar com redirecionamentos de IP, permitindo superação de restrições
 impostas por alguns sites durante o processo de raspagem. Além disso, o
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} permite a
 criação de \texttt{pipelines}, que são etapas de processamento dos dados
-em tempo de execução. Essas \texttt{pipelines} são extremamente úteis
-para transformar, limpar e organizar as informações antes de serem
-salvas, garantindo que os dados extraídos já estejam em um formato
-estruturado e pronto para análise ou armazenamento.
+em tempo de execução. As \texttt{pipelines} são extremamente úteis para
+transformar, limpar e organizar as informações antes de serem salvas,
+garantindo que os dados extraídos já estejam em um formato estruturado e
+pronto para análise ou armazenamento.
 
 \vspace{12pt}
 
-As middlewares no
+Os middlewares no
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} são
 componentes intermediárias que permitem modificar e processar
 requisições e respostas em tempo de execução. Elas são fundamentais para
@@ -1079,7 +1082,7 @@ Por outro lado, as middlewares de download têm a função de gerenciar o
 processo de download das páginas. Elas podem ser configuradas para
 evitar redirecionamentos indesejados, implementar atrasos entre
 requisições para evitar sobrecarregar os servidores e diminuir as
-chances de ser bloqueado. Essas middlewares tornam o
+chances de ser bloqueado. As middlewares tornam o
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} altamente
 flexível, permitindo ajustes específicos para atender às necessidades do
 projeto.
@@ -1460,7 +1463,7 @@ O código contém a mesma classe mostrada anteriormente no
 shell e outras modificações. Por exemplo, o método
 \texttt{parse(self,\ response)}, apresentado anteriormente, é
 responsável por capturar o link que leva à tabela de pacotes. Esse link
-é extraído utilizando o seletor definido anteriomente no shell. Em
+é extraído utilizando o seletor definido anteriormente no shell. Em
 seguida, esse link é concatenado à url base para formar a url completa
 que será seguida pelo spider. O método \texttt{response.follow()} é
 então usado para acessar a nova página e chamar o método
@@ -1590,11 +1593,11 @@ das informações.
 
 Assim como no exemplo apresentado em \textbf{Python}, o projeto de
 raspagem pode ser adaptado de acordo com as necessidades e as
-informações que precisam ser coletadas durante o processo. Ou seja,
-embora os exemplos fornecidos sejam simples, dependendo das
-características do site, outras funcionalidades podem ser adicionadas,
-como clicar em botões, rolar a página automaticamente para carregar
-conteúdos dinâmicos, entre outras ações.
+informações que precisam ser coletadas. Ou seja, embora os exemplos
+fornecidos sejam simples, dependendo das características do site, outras
+funcionalidades podem ser adicionadas, como clicar em botões, rolar a
+página automaticamente para carregar conteúdos dinâmicos, entre outras
+ações.
 
 \vspace{12pt}
 
@@ -1936,8 +1939,7 @@ seu setor imobiliário. No entanto, o desenvolvimento de todo o código da
 aplicação exigiu o uso de ferramentas que facilitassem sua escrita,
 desenvolvimento e organização. Assim, a seguir serão apresentadas as
 ferramentas utilizadas tanto para a implementação do código deste
-trabalho quanto para a elaboração do documento final de texto que o
-descreve.
+trabalho quanto para a elaboração do documento final que o descreve.
 
 \section{Recursos utilizados para escrita de código e de
 documento}\label{recursos-utilizados-para-escrita-de-cuxf3digo-e-de-documento}
@@ -2218,7 +2220,7 @@ de uma árvore de regressão:
 
 \vspace{3.7pt}
 
-\State \textbf{2.} Aplique o critério custo de complexidade à árvore grande \( T_0 \) para obter uma sequência de melhores subárvores \( T_\alpha \), em função de \( \alpha \).
+\State \textbf{2.} Aplique o critério de custo de complexidade à árvore grande \( T_0 \) para obter uma sequência de melhores subárvores \( T_\alpha \), em função de \( \alpha \).
 
 \vspace{3.7pt}
 
@@ -2396,7 +2398,7 @@ meio do algoritmo Random Forest, que será apresentado a seguir.
     \State \hspace{3.6em} repetindo recursivamente os seguintes passos para cada folha da árvore,
     \State \hspace{3.6em} \vspace{0.5em} até que o tamanho mínimo do nó \( n_{min} \) seja atingido:
     \State \hspace{4em} \vspace{0.1em} i. Selecione \( m \) variáveis aleatoriamente entre as \( p \) variáveis.
-    \State \hspace{4em} \vspace{0.1em} ii. Escolha a melhor variável entre as \( m \).
+    \State \hspace{4em} \vspace{0.1em} ii. Escolha a melhor variável para divisão entre as \( m \).
     \State \hspace{4em} \vspace{0.1em} iii. Divida o nó em dois subnós.
 
 \vspace{0.8em}
@@ -2442,11 +2444,10 @@ subconjunto de variáveis independentes antes de cada divisão.
 
 No algoritmo Random Forest, ao construir uma árvore a partir de amostras
 bootstrap, selecionam-se aleatoriamente \(m \leq p\) das \(p\) variáveis
-independentes como candidatas para a divisão, antes de cada ramificação
-(sendo \(m = p\) no caso do Bagging). Assim, diferentemente do Bagging,
-o Random Forest não considera todas as \(p\) variáveis ao escolher a
-divisão que minimiza o erro das regiões, mas apenas uma amostra
-aleatória de \(m\) variáveis.
+independentes como candidatas para a divisão (sendo \(m = p\) no caso do
+Bagging). Assim, diferentemente do Bagging, o Random Forest não
+considera todas as \(p\) variáveis ao escolher a divisão que minimiza o
+erro das regiões, mas apenas uma amostra aleatória de \(m\) variáveis.
 
 \vspace{12pt}
 
@@ -2487,7 +2488,7 @@ et al., 2013).
 ~~~O Boosting, assim como o Bagging, é um método destinado a melhorar o
 desempenho de modelos ou algoritmos. No entanto, neste trabalho, o
 Boosting foi aplicado apenas às árvores de regressão. Portanto, a
-explicação do Boosting será restrito ao caso de Boosting Trees. Seu
+explicação do Boosting será restrita ao caso de Boosting Trees. Seu
 algoritmo pode ser observado no  Algoritmo~\ref{algo-boos} .
 
 \vspace{12pt}
@@ -2564,8 +2565,8 @@ anteriores. Como cada nova árvore depende das árvores já construídas,
 
 \vspace{12pt}
 
-O processo de aprendizado no método de Boosting é mais lento, o que
-geralmente resulta em modelos mais precisos, embora mais custosos
+O processo de aprendizado do Boosting é mais lento, o que geralmente
+resulta em modelos mais precisos, embora mais custosos
 computacionalmente. Esse processo de aprendizado pode ser controlado por
 um hiperparâmetro \(\lambda\) chamado de shrinkage, ou taxa de
 aprendizado, permitindo que mais árvores, com formas diferentes,
@@ -2574,7 +2575,7 @@ pequeno para \(\lambda\) requer uma quantidade muito maior \(B\) de
 árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer
 de sobreajuste se a quantidade de árvores é muito grande. Além disso, a
 quantidade de divisões \(d\) em cada árvore, que controla a complexidade
-do boosting, pode ser considerado também um hiperparâmetro. Para
+do boosting, pode ser considerada também um hiperparâmetro. Para
 \(d = 1\), ajusta-se um modelo aditivo, pois cada árvore contém apenas
 um nó.
 
@@ -2615,13 +2616,12 @@ sobreajuste.
 
 \subsection{Gradient Boosting}\label{gradient-boosting}
 
-~~~O algoritmo de Gradient Boosting é semelhante ao Boosting, mas com
-algumas diferenças. Ele constrói modelos aditivos ajustando
-sequencialmente funções base aos pseudos-resíduos em cada iteração, que,
-por sua vez, correspondem a direção contrária dos gradientes da função
-de perda (FRIEDMAN, 2002). Esses pseudos-resíduos indicam a direção na
-qual a função de perda está sendo minimizada, orientando o ajuste dos
-modelos seguintes.
+~~~O algoritmo de Gradient Boosting é semelhante ao Boosting. Ele
+constrói modelos aditivos ajustando sequencialmente funções base aos
+pseudos-resíduos em cada iteração, que, por sua vez, correspondem a
+direção contrária dos gradientes da função de perda (FRIEDMAN, 2002).
+Esses pseudos-resíduos indicam a direção na qual a função de perda está
+sendo minimizada, orientando o ajuste dos modelos seguintes.
 
 \vspace{12pt}
 
@@ -2690,16 +2690,15 @@ cada árvore de regressão tem a seguinte forma aditiva:
 \begin{equation}\phantomsection\label{eq-treebost}{
 h\left(x;\{R_{jm}\}^{J_{m}}_{1}\right) = \sum^{J_m}_{j = 1} b_{jm} I\left(x \in R_{jm}\right)\text{,}
 }\end{equation} em que \(\{R_{jm}\}^{J_m}_{1}\) representa as regiões
-disjuntas que, em conjunto, cobrem todo o espaço das variáveis
-preditoras. Essas regiões correspondem às folhas da respectiva árvore de
-regressão.
+disjuntas que, em conjunto, cobrem o espaço das variáveis preditoras.
+Essas regiões correspondem às folhas da respectiva árvore de regressão.
 
 \vspace{12pt}
 
-Como as regiões são disjuntas, a partir da Equação~\ref{eq-treebost} e
-utilizando o método de mínimos quadrados, a estimativa de \(b_{jm}\) ---
-a predição associada à região \(R_{jm}\)\hspace{0pt} --- será
-simplesmente a média dos pseudo-resíduos \(r_{im}\):
+Como as regiões são disjuntas, a partir da Equação~\ref{eq-treebost}, a
+estimativa de \(b_{jm}\) --- a predição associada à região
+\(R_{jm}\)\hspace{0pt} --- será simplesmente a média dos pseudo-resíduos
+\(r_{im}\):
 
 \[
 \hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}\text{,}
@@ -2727,7 +2726,7 @@ menores de \(\lambda\) exigem um número maior de iterações \(M\).
 
 \vspace{12pt}
 
-As outras implementações de Gradient Boosting aplicadas à árvores de
+As outras implementações de Gradient Boosting aplicadas a árvores de
 decisão tem seus próprios motivos de existência. Esses motivos incluem a
 busca por maior eficiência computacional, adição de recursos e até mesmo
 maior flexibilidade. As duas outras implementações utilizadas foram o
@@ -2760,13 +2759,13 @@ permitem a aplicação da regularização L1.
 \vspace{12pt}
 
 Assim como o XGBoost, as implementações existentes do LightGBM também
-permitem o uso de regularização L1 ou L2, embora nenhuma delas seja
-utilizada por padrão. O LightGBM tem como foco a alta velocidade de
-treinamento e a eficiência no uso da memória, graças ao algoritmo
-baseado em histogramas (Histogram-Based Algorithm). Nesse método, os
-valores contínuos das variáveis são agrupados em intervalos discretos
---- como em um histograma --- o que evita a avaliação de cada ponto
-individualmente durante as divisões das árvores, reduzindo
+permitem o uso de regularização L1 ou L2, embora nenhuma das
+implementações a utilize por padrão. O LightGBM tem como foco a alta
+velocidade de treinamento e a eficiência no uso da memória, graças ao
+algoritmo baseado em histogramas (Histogram-Based Algorithm). Nesse
+método, os valores contínuos das variáveis são agrupados em intervalos
+discretos --- como em um histograma --- o que evita a avaliação de cada
+ponto individualmente durante as divisões das árvores, reduzindo
 significativamente o custo computacional.
 
 \chapter{Metodologia}\label{metodologia}
@@ -2951,12 +2950,12 @@ a proporção das classes definidas.
 
 A estratificação foi baseada em intervalos criados a partir da variável
 que representa o valor dos imóveis. Foram definidos cinco intervalos: o
-primeiro abrange valores entre o mínimo de 43.914 e 200.000; o segundo,
-entre 200.000 e 400.000; o terceiro, entre 400.000 e 600.000; o quarto,
-entre 600.000 e 800.000; e a quinta, valores acima de R\$ 800.000 até o
-máximo de R\$ 7.000.000. Dessa forma, 20\% do conjunto de dados foi
-reservado para o teste, enquanto os 80\% restantes foram utilizados para
-o treinamento do modelo.
+primeiro abrange valores entre o mínimo de R\$ 43.914 e R\$ 200.000; o
+segundo, entre R\$ 200.000 e R\$ 400.000; o terceiro, entre R\$ 400.000
+e R\$ 600.000; o quarto, entre R\$ 600.000 e R\$ 800.000; e a quinta,
+valores acima de R\$ 800.000 até o máximo de R\$ 7.000.000. Dessa forma,
+20\% do conjunto de dados foi reservado para o teste, enquanto os 80\%
+restantes foram utilizados para o treinamento do modelo.
 
 \vspace{12pt}
 
@@ -3018,11 +3017,11 @@ variáveis numéricas, algumas exceções foram feitas. Em particular, a
 variável que representa o produto entre as coordenadas geográficas e o
 valor do aluguel foi transformada usando a técnica de Yeo-Johnson (YEO;
 JOHNSON, 2000), que apresenta a vantagem de ser aplicável a dados que
-incluem valores negativos e zero, como é o caso dessa variável. Além
-disso, as variáveis referentes ao preço e à área do aluguel não foram
-transformadas com \(\log\left(1 + x\right)\). A decisão foi tomada com
-base nas métricas de avaliação do modelo, que indicaram uma queda de
-desempenho do modelo quando essas variáveis eram transformadas.
+incluem valores negativos e zero. Além disso, as variáveis referentes ao
+preço e à área do aluguel não foram transformadas com
+\(\log\left(1 + x\right)\). A decisão foi tomada com base nas métricas
+de avaliação do modelo, que indicaram uma queda de desempenho do modelo
+quando essas variáveis eram transformadas.
 
 \vspace{12pt}
 
@@ -3203,9 +3202,9 @@ R^2 = 1 - \dfrac{SS_{\text{resíduos}}}{SS_{\text{total}}}
 
 \end{figure}%
 
-em que \(SS_{\text{resíduos}}\) e \(SS_{\text{total}}\) representam,
-respectivamente, a soma dos quadrados dos resíduos e a soma dos
-quadrados totais.
+\noindent em que \(SS_{\text{resíduos}}\) e \(SS_{\text{total}}\)
+representam, respectivamente, a soma dos quadrados dos resíduos e a soma
+dos quadrados totais.
 
 \section{Otimização de
 hiperparâmetros}\label{otimizauxe7uxe3o-de-hiperparuxe2metros}
@@ -4016,12 +4015,12 @@ circunstâncias.
 
 \end{figure}%
 
-A distribuição das variáveis foram análisadas em termos do tipo do
-imóvel a partir de um gráfico de violino. Pela Figura~\ref{fig-violin},
-é fácil perceber que a maioria das distribuições possuem assimetria
-negativa. Os apartamentos possuem caudas longas à direita, indicando
-presença de valores extremamente altos e que indicam que a necessidade
-da aplicação de alguma transformação para a estabilização da variância.
+A distribuição das variáveis foi analisada em termos do tipo do imóvel a
+partir de um gráfico de violino. Pela Figura~\ref{fig-violin}, é fácil
+perceber que a maioria das distribuições possuem assimetria negativa,
+com caudas longas à direita, indicando a presença de valores
+extremamente altos e a necessidade da aplicação de alguma transformação
+para a estabilização da variância.
 
 \vspace{12pt}
 
@@ -4207,15 +4206,15 @@ tunados em relação à estatística de erro.
 
 \vspace{12pt}
 
-A partir de Figura~\ref{fig-rf_slice}, é possível ver que o erro tende a
+A partir da Figura~\ref{fig-rf_slice}, é possível ver que o erro tende a
 ser menor para valores menores do hiperparâmetro de profundidade das
 árvores \texttt{max\_depth}. Em contraste, para o hiperparâmetro de
-número de árvores \texttt{n\_estimators}, o erro apresenta uma tendência
-de redução e estabilização à medida que o número de árvores aumenta.
-Esse comportamento também é observado em Figura~\ref{fig-rf_contour},
-onde valores menores para \texttt{max\_depth} e maiores para
-\texttt{n\_estimators} resultam em um modelo com menor erro de
-generalização.
+número de árvores, \texttt{n\_estimators}, o erro apresenta uma
+tendência de redução e estabilização à medida que o número de árvores
+aumenta. Esse comportamento também é observado na
+Figura~\ref{fig-rf_contour}, onde valores menores para
+\texttt{max\_depth} e maiores para \texttt{n\_estimators} resultam em um
+modelo com menor erro de generalização.
 
 \vspace{12pt}
 
@@ -4315,7 +4314,7 @@ A análise da importância dos hiperparâmetros, apresentada na
 Figura~\ref{fig-gdt_import}, indica que o hiperparâmetro com maior
 influência na variação da função objetivo --- e, consequentemente, na
 performance do modelo --- é a taxa de aprendizado. Em seguida, a
-profundidade das árvores é o segundo mais relevante, enquanto o número
+profundidade das árvores é a segunda mais relevante, enquanto o número
 de árvores tem a menor influência.
 
 \vspace{12pt}
@@ -4323,7 +4322,7 @@ de árvores tem a menor influência.
 Diferentemente do modelo de Random Forest, o algoritmo de Gradient
 Boosting apresentou melhorias significativas, como ilustrado na
 Figura~\ref{fig-gdt_history}, em que a estatística de erro foi bastante
-estável para cada combinação de hiperpâmetros, além de ter se mantido
+estável para cada combinação de hiperparâmetros, além de ter se mantido
 abaixo de 0,29 por muitas vezes. A relação entre os hiperparâmetros é
 bastante similar à obtida para o Random Forest. Na
 Figura~\ref{fig-gdt_contour}, observa-se que o método de otimização TPE
@@ -4349,12 +4348,12 @@ Tentativa & RMSE & n\_estimators & max\_depth & learning\_rate \\
 \subsection{Tunagem do LGBM}\label{tunagem-do-lgbm}
 
 ~~~Para a otimização do LGBM, foram considerados os mesmos
-hiperparâmetros do algoritmo de Gradient Boosting, mas agora também com
-a tunagem da quantidade máxima do número de folhas das árvores. O espaço
-de busca para a quantidade de árvores foi definido entre 100 e 2000,
-para a taxa de aprendizado no mesmo intervalo usado no Gradient
-Boosting, para a profundidade das árvores e número de folhas o intervalo
-foi definido entre 100 e 600
+hiperparâmetros utilizados no algoritmo Gradient Boosting, com a adição
+do ajuste do número máximo de folhas por árvore. O espaço de busca para
+o número de árvores foi definido entre 100 e 2000; para a taxa de
+aprendizado, utilizou-se o mesmo intervalo adotado no Gradient Boosting;
+para o número total de folhas, o intervalo foi de 100 a 600; e, por fim,
+para a profundidade das árvores, o intervalo adotado foi de 100 a 500.
 
 \begin{figure}
 
@@ -4418,7 +4417,8 @@ com menor estabilidade em cada tentativa. Ao analisar a contribuição de
 cada hiperparâmetro para o desempenho do modelo na
 Figura~\ref{fig-lgbm_import}, observa-se que a taxa de aprendizado e a
 quantidade de árvores são os hiperparâmetros de maior influência,
-seguido pela profundidade da árvore e, por último, o número de folhas.
+seguidos pela quantidade total de folhas e, por último, a profundidade
+máxima da árvore.
 
 \vspace{12pt}
 
@@ -4478,8 +4478,8 @@ learning\_rate
 \subsection{Tunagem do XGBoost}\label{tunagem-do-xgboost}
 
 ~~~Para o algoritmo Extreme Gradient Boosting, os hiperparâmetros
-selecionados para a tunagem foi a taxa de aprendizagem, profundidade da
-árvore e quantidade máxima de árvores. Na configuração da função
+selecionados para a tunagem foram a taxa de aprendizagem, profundidade
+da árvore e quantidade máxima de árvores. Na configuração da função
 objetivo para a tunagem dos hiperparâmetros pelo optuna, a taxa de
 aprendizagem variou entre \(1 \cdot 10^{-7}\) e \(0.5\), a profundidade
 da árvore variou entre 3 e 50 e a quantidade de árvores variou entre 50
@@ -4490,11 +4490,12 @@ e 1000.
 A partir da Figura~\ref{fig-xgb_import}, o hiperparâmetro que
 representou a maior variação na função objetivo, e portanto a maior
 importância para a performance do modelo, foi a taxa de aprendizagem. A
-profundidade da árvore representou 35\% da variação e por último vem a
-quantidade de árvores. Observando a Figura~\ref{fig-xgb_history}, é
-possível ver que o algoritmo de XGBoost foi aquele que apresentou a
-menor variação entre as trials, com uma única trial com erro acima de
-1,0.
+profundidade da árvore permanece como o segundo hiperparâmetro mais
+relevante, seguida pela quantidade de árvores, que ocupa a última
+posição em termos de importância. Observando a
+Figura~\ref{fig-xgb_history}, é possível ver que o algoritmo de XGBoost
+foi aquele que apresentou a menor variação entre as trials, com uma
+única trial com erro acima de 1,0.
 
 \vspace{12pt}
 
@@ -4507,7 +4508,7 @@ valores menores para essa região. Para a quantidade de árvores, esse
 padrão foi diferente, uma quantidade maior de árvores faz com que o
 modelo tenha um melhor ajuste. Essas relações também podem ser
 observadas a partir da Figura~\ref{fig-xgb_contour}, menores taxas de
-aprendizado, combinado com uma menor profundidade de árvore e maior
+aprendizado, combinadas com uma menor profundidade de árvore e maior
 quantidade de árvores apresentam menor valor na função objetivo.
 
 \begin{figure}
@@ -4589,8 +4590,8 @@ taxa de aprendizado de 0,07119.
 \vspace{12pt}
 
 Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com
-1.988 árvores, quantidade máxima 202 folhas, profundidade máxima de 379
-e taxa de aprendizado de 0,00985, como apresentado na
+1.988 árvores, quantidade máxima de 202 folhas, profundidade máxima de
+379 e taxa de aprendizado de 0,00985, como apresentado na
 Tabela~\ref{tbl-params_lgbm}.
 
 \vspace{12pt}
@@ -5035,9 +5036,9 @@ Uma das alternativas disponíveis é o mapa de pontos, que exibe a
 localização dos imóveis pontualmente, com suas cores variando conforme o
 valor dos imóveis, quanto mais clara a cor, mais alto o valor do imóvel.
 Além desses dois mapas, a aplicação permite a visualização de
-informações adicionais, como rios, ciclovias, bairros, comunidades,
-corredores de ônibus, faixas exclusivas para ônibus, parques, praças,
-área rural, comunidades e escolas públicas.
+informações adicionais, como rios, ciclovias, bairros, corredores de
+ônibus, faixas exclusivas para ônibus, parques, praças, área rural,
+comunidades e escolas públicas.
 
 \begin{figure}
 
@@ -5162,15 +5163,15 @@ limitado na resposta do modelo.
 Pelo método SHAP, observou-se que a área do imóvel foi a variável com
 maior impacto na predição do modelo, sendo responsável por alterar, em
 média, mais de 12\% na predição absoluta das previsões. Outras variáveis
-de maior impacto nas predições foi a razão entre o número de quartos e a
-área, as coordenadas geográficas e o produto entre essas coordenadas e o
-valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria 24
-horas e quadra de esportes apresentaram menor impacto global nas
-predições. No entanto, os gráficos de dependência dos valores SHAP
-revelaram que, embora tenham menor influência média, variáveis como
-sauna e spa ainda são relevantes na predição de imóveis de alto padrão,
-evidenciando sua importância em casos específicos envolvendo imóveis de
-categorias mais elevadas.
+de maior impacto nas predições foram a razão entre o número de quartos e
+a área, as coordenadas geográficas e o produto entre essas coordenadas e
+o valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria
+24 horas e quadra de esportes apresentaram menor impacto nas predições.
+No entanto, os gráficos de dependência dos valores SHAP revelaram que,
+embora tenham menor influência, variáveis como sauna e spa ainda são
+relevantes na predição de imóveis de alto padrão, evidenciando sua
+importância em casos específicos envolvendo imóveis de categorias mais
+elevadas.
 
 \vspace{12pt}
 
