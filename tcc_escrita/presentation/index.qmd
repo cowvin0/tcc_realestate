@@ -45,6 +45,8 @@ lang: pt
 
 ## Formulação do mercado imobiliário brasileiro
 
+<br>
+
 - Urbanização no Brasil: de 31% em 1940 para 85,1% em 2014
 
 - Êxodo rural, industrialização e crescimento desordenado das metrópoles
@@ -64,6 +66,8 @@ lang: pt
 
 ## Crises econômicas e impacto no setor habitacional
 
+<br>
+
 - A partir de 1980, o SFH passou a ser impactado pelo aumento da inflação e pelas medidas adotadas pelos governos para contê-la
 
 - Em 1985, as prestações foram reajustadas em 112%, enquanto os saldos devedores subiram 246% com a inflação acumulada
@@ -79,6 +83,8 @@ lang: pt
 - A crise econômica entre as décadas de 1980 e 1990 elevou a inadimplência no SFH de 9% em 1994 para 30% em 2005.
 
 ## Modernização do sistema habitacional
+
+<br>
 
 - A partir da experiência com o SFH, o Sistema de Financiamento Imobiliário (SFI) foi criado em 1997, pela Lei nº 9.514, para modernizar o modelo de financiamento habitacional no Brasil
 
@@ -97,6 +103,8 @@ lang: pt
 
 ## Possibilidades e desafios
 
+<br>
+
 - Possibilidades
   + Valorização do mercado imobiliário de João Pessoa
     + Destaque nacional em 2024, com valorização acumulada de 16,13% até novembro
@@ -112,13 +120,14 @@ lang: pt
 - Desafios
   + Escassez e descentralização dos dados
     + Falta de bases públicas atualizadas e padronizadas sobre imóveis
-    + Necessidade de utilizar web scraping para coleta em sites especializados
+    + Necessidade de utilizar abordagens pouco usuais para coleta de dados
 
   + Dados com informações incompletas ou inconsistentes
-    + Ausência de variáveis relevantes: idade do imóvel, padrão construtivo, estado de conservação
-    + Variações na estrutura dos sites ao longo do tempo
+    + Ausência de variáveis relevantes: idade do imóvel, estado de conservação
 
 ## Objetivo
+
+<br>
 
 - **Objetivo Geral**
   + Realizar a análise e modelagem dos valores dos imóveis em João Pessoa, utilizando técnicas de aprendizado de máquina para compreender os fatores que mais influenciam essas estimativas
@@ -132,14 +141,14 @@ lang: pt
 
 # Algoritmos de Aprendizado de Máquina
 
-## Árvores de decisão
+## Árvores de regressão
 
 <br>
 
 ::: columns
 ::: {.column width="50%"}
 
-- As árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação
+<!-- - As árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação -->
 
 - Uma das grandes vantagens é a interpretabilidade do modelo, em que é possível visualizar claramente as regras de decisão geradas
 
@@ -147,7 +156,7 @@ lang: pt
  + Cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal.
 
 - O espaço dos preditores é dividido em $J$ regiões distintas e disjuntas denotadas por $R_{1}, R_{2}, \cdots, R_{J}$.
-  + As regiões têm formato de caixa.
+  <!-- + As regiões têm formato de caixa. -->
 
 :::
 
@@ -172,7 +181,9 @@ I_{R_j}(x) =
 $$
 :::
 
-## Árvores de decisão
+## Árvores de regressão
+
+<br>
 
 O estimador para a constante $c_j$ é encontrado pelo método de mínimos quadrados:
 
@@ -183,24 +194,26 @@ $${#eq-minimo_q}
 Como $f\left(x_i\right)$ está sendo avaliado em um ponto específico $x_i$ e as regiões são disjuntas, tem-se que $f\left(x_i\right) = c_j$. Dessa forma, a @eq-minimo_q se reduz a:
 
 $$
-\sum_{x_i \in R_j}\left[y_i - c_j\right]^2
+\sum_{x_i \in R_j}\left[y_i - c_j\right]^2\text{.}
 $$
 
 Derivando em relação a $c_j$ e igualando a zero:
 
 $$
-\frac{\partial}{\partial c_j} \sum_{x_i \in R_j}\left(y_i - c_j\right)^2 = -2 \sum_{x_i \in R_j}\left(y_i - c_j\right) = 0
+\frac{\partial}{\partial c_j} \sum_{x_i \in R_j}\left(y_i - c_j\right)^2 = -2 \sum_{x_i \in R_j}\left(y_i - c_j\right) = 0\text{.}
 $$
 
 Assim, chega-se ao estimador para $c_j$:
 
 $$
-\hat{c}_j = \frac{1}{N_j}\sum_{x_i \in R_j} y_i
+\hat{c}_j = \frac{1}{N_j}\sum_{x_i \in R_j} y_i\text{.}
 $$
 
-Ou seja, a predição será a média das observações da resposta que estão contidas em $R_j$.
+<!-- Ou seja, a predição será a média das observações da resposta que estão contidas em $R_j$. -->
 
-## Árvores de decisão
+## Árvores de regressão
+
+<br>
 
 - Considerar todas as possíveis partições do espaço dos preditores é inviável devido ao alto custo computacional.
 
@@ -209,7 +222,7 @@ Ou seja, a predição será a média das observações da resposta que estão co
 - O processo inicia com a escolha de uma variável independente $X_j$ e um ponto de corte $s$ que proporcione a maior redução possível na soma dos quadrados dos resíduos. Isso define dois subconjuntos:
 
 $$
-R_{1}\left(j, s\right) = \{X|X_j \leq s\} \text{ e } R_{2}\left(j, s\right) = \{X|X_j > s\} \text{, }
+R_{1}\left(j, s\right) = \{X|X_j \leq s\} \text{ e } R_{2}\left(j, s\right) = \{X|X_j > s\} \text{.}
 $$
 
 - O objetivo é minimizar:
@@ -221,7 +234,9 @@ em que $c_1$ e $c_2$ são as médias das respostas nas regiões $R_1(j, s)$ e $R
 
 - Após encontrar a melhor divisão, os dados são particionados nas duas regiões e o processo é repetido de forma recursiva para todas as sub-regiões.
 
-## Árvores de decisão
+## Árvores de regressão
+
+<br>
 
 - O tamanho da árvore atua como um controle da complexidade do modelo:
   + Árvores muito grandes tendem ao sobreajuste, com bom desempenho no treino, mas fraca generalização.
@@ -234,15 +249,17 @@ em que $c_1$ e $c_2$ são as médias das respostas nas regiões $R_1(j, s)$ e $R
 - Para o processo de poda, define-se uma árvore qualquer $T \subset T_{0}$ obtida a partir da poda de $T_{0}$, isto é, colapsando o seus nós internos. Assim, define-se o critério de custo-complexidade:
 
 $$
-C_{\alpha}\left(T\right) = \sum^{|T|}_{j=1}N_jQ_j\left(T\right) + \alpha|T|
+C_{\alpha}\left(T\right) = \sum^{|T|}_{j=1}N_jQ_j\left(T\right) + \alpha|T|\text{,}
 $$
-em que $|T|$ é o número de folhas da árvore, $Q\left(T\right)$ é a impureza do nó terminal $j$, $\alpha$ é o parâmetro que equilibra o tamanho da árvore e a adequação aos dados.
+em que $|T|$ é o número de folhas da árvore, $Q_{j}\left(T\right)$ é a impureza do nó terminal $j$, $\alpha$ é o parâmetro que equilibra o tamanho da árvore e a adequação aos dados.
 
 
 - O objetivo é encontrar, para cada valor de $\alpha$, a subárvore $T_\alpha \subset T_0$ que minimiza $C_{\alpha}(T)$.
   + Quando $\alpha = 0$, resulta na própria árvore $T_{0}$ e valores grandes de $\alpha$ resultam em árvores menores
 
-## Árvores de decisão
+## Árvores de regressão
+
+<br>
 
 - A busca pela subárvore $T_{\alpha}$ é feita por meio do colapso sucessivo dos nós internos que causam o menor aumento em $\sum_{j} N_j Q_j\left(T\right)$, até restar uma árvore com um único nó.
 
@@ -250,19 +267,7 @@ em que $|T|$ é o número de folhas da árvore, $Q\left(T\right)$ é a impureza 
 
 - A estimação de $\alpha$ pode ser feita por validação cruzada, resultando na árvore final $T_{\hat{\alpha}}$.
 
-- No caso da regressão, $Q_j\left(T\right)$ pode representar o erro quadrático médio; já na classificação, utilizam-se métricas como o índice de Gini ou a entropia cruzada.
-
-- Para classificação, a predição no nó terminal $j$ corresponde à classe majoritária, cuja proporção é dada por:
-
-$$
-\hat p_{jk} = \frac{1}{N_j} \sum_{x_i \in R_j}I\left(y_i = k\right)\text{, }
-$$
-
-- Assim, a classe atribuída ao nó terminal $j$ será:
-
-$$
-k\left(j\right) = \arg \max_{k} \hat{p}_{jk}
-$$
+- No caso da regressão, $Q_j\left(T\right)$ pode representar o erro quadrático médio.
 
 ## Métodos Ensemble
 
@@ -278,7 +283,7 @@ $$
 
 \vfill
 
-- Essa abordagem é especialmente útil para melhorar o desempenho de modelos simples, como árvores de decisão, ao combiná-las em conjunto.
+- Essa abordagem é especialmente útil para melhorar o desempenho de modelos simples, como árvores de regressão, ao combiná-las em conjunto.
 
 \vfill
 
@@ -286,11 +291,13 @@ $$
 
 ## Bagging
 
+<br>
+
 - O algoritmo Bagging (Bootstrap Aggregating) foi introduzido por @breiman1996bagging.
 
 - Sua ideia central é gerar um estimador agregado a partir de múltiplas versões de um preditor, treinadas com amostras bootstrap do conjunto de treinamento.
 
-- O principal objetivo do Bagging é reduzir a variância de modelos, como as árvores de decisão, que tendem a variar muito quando treinadas isoladamente.
+- O principal objetivo do Bagging é reduzir a variância de modelos, como as árvores de regressão, que tendem a variar muito quando treinadas isoladamente.
 
 - Ao combinar diversas árvores treinadas em subconjuntos distintos, o Bagging melhora a estabilidade e o desempenho preditivo do modelo final.
 
@@ -308,13 +315,15 @@ onde $f_B(x)$ representa a predição média das $B$ árvores.
 
 ## Bagging
 
+<br>
+
 - Embora o Bagging reduza a variância e melhore o desempenho preditivo de árvores de regressão, isso ocorre à custa de menor interpretabilidade.
 
-- Uma alternativa é estimar a importância dos preditores com base na redução média do erro (ex.: erro quadrático médio) provocada por cada variável ao longo das $B$ árvores. Um valor elevado na redução total média do erro quadrático médio, calculado com base nas divisões realizadas por um determinado preditor em todas as 𝐵 árvores, indica que o preditor é importante.
+<!-- - Uma alternativa é estimar a importância dos preditores com base na redução média do erro (ex.: erro quadrático médio) provocada por cada variável ao longo das $B$ árvores. Um valor elevado na redução total média do erro quadrático médio, calculado com base nas divisões realizadas por um determinado preditor em todas as 𝐵 árvores, indica que o preditor é importante. -->
 
 - No entanto, as árvores geradas pelo Bagging tendem a ser muito semelhantes, o que limita seus ganhos:
   + Se forem independentes e identicamente distribuídas (i.i.d.), a variância da média das predições é $\frac{1}{B}\sigma^2$.
-  + Se houver correlação positiva $\rho$ entre as árvores, a variância se torna:
+  + No entanto, se as árvores forem apenas identicamente distribuídas (i.d), com correlação $\rho$, mas não independentes
 $$
 \rho\sigma^2 + \frac{1 - \rho}{B}\sigma^2
 $$
@@ -326,7 +335,7 @@ $$
 
 <br>
 
-- O algoritmo Random Forest é uma extensão do Bagging aplicado a árvores de decisão, com uma modificação: reduzir a correlação entre as árvores.
+- O algoritmo Random Forest é uma extensão do Bagging aplicado a árvores de regressão, com uma modificação: reduzir a correlação entre as árvores.
 
 \vfill
 
@@ -345,34 +354,103 @@ $$
 
 - Assim como o Bagging, o Random Forest não sofre de sobreajuste com o aumento do número de árvores $B$, bastando escolher um valor suficientemente grande para estabilizar o erro.
 
-## Boosting
+## {background-iframe="https://pedro-rafael.shinyapps.io/shiny_apps/#section-bagging-vs-random-forest"}
 
-- No Boosting, não é necessário utilizar amostras bootstrap.
 
-- Assim como outros métodos ensemble, o Boosting pode ser aplicado a diferentes modelos, mas é mais conhecido pelo uso com árvores de regressão.
+## Boosting Trees
 
-- Diferente do Bagging, que constrói as árvores de forma paralela, o Boosting as constrói sequencialmente.
+<br>
+
+- No Boosting, não é necessário utilizar amostras bootstrap. Além disso, diferente do Bagging e Random Forest que constroem as árvores de forma paralela, o Boosting as constrói sequencialmente.
 
 - O objetivo é incorporar informações e corrigir os erros cometidos pelas árvores anteriores.
 
-- O processo começa ajustando uma árvore aos valores observados da variável dependente; em seguida:
-  + Calculam-se os resíduos da árvore anterior.
-  + A nova árvore é ajustada para predizer esses resíduos.
-  + A predição é então adicionada ao estimador atual para atualizar os resíduos.
+- **Passo 1 - Inicialização: **
+   + Defina: $\hat{f}\left(x\right) = 0 \text{ e } r_i = y_i$ para todo $i$ no conjunto de treinamento
+- **Passo 2 - Criação de $B$ árvores (para $b=1$ até $B$):**
+  + Ajuste uma árvore $\hat{f}^{b}$ com $d$ divisões aos resíduos $\left(X, r\right)$
+  + Atualize $\hat{f}$ e os resíduos $r_i$ adicionando uma versão com o hiperparâmetro de taxa de aprendizado $\lambda$:
+  $$
+  \hat{f}\left(x\right) \gets \hat{f}\left(x\right) + \lambda \hat{f}^b\left(x\right) \text{, } r_i \gets r_i - \lambda\hat{f}^b\left(x_i\right)
+  $$
+- **Passo 3 - Retorno do modelo final**
+  $$
+  \hat{f}\left(x\right) = \sum^{B}_{b=1}\lambda\hat{f}^{b}\left(x\right)
+  $$
 
-- Como cada árvore depende das anteriores, árvores menores são suficientes [@james2013introduction].
+## Boosting Trees
 
--  O aprendizado no Boosting é mais lento, mas tende a gerar modelos mais precisos.
-  + O processo é controlado por um hiperparâmetro $\lambda$, chamado taxa de aprendizado.
-    + Valores pequenos de $\lambda$ exigem um número maior de árvores $B$, mas melhoram a generalização.
-    + Diferente do Bagging e Random Forest, o Boosting pode sofrer sobreajuste se $B$ for excessivamente grande.
+<br>
 
-- A profundidade das árvores, controlada pelo número de divisões $d$, também pode ser considerado um hiperparâmetro para ajuste:
-  + Para $d = 1$, ajusta-se um modelo aditivo, pois cada árvore contém apenas um nó.
+- Os hiperparâmetros $\lambda$ (taxa de aprendizado), $B$ (número de árvores) e $d$ (número de divisões por árvore) podem ser ajustados por meio de validação cruzada.
 
-## Gradient Boosting
+- O processo de aprendizado do Boosting é mais lento, o que geralmente resulta em
+modelos mais precisos, embora mais custosos computacionalmente.
+
+- O processo de aprendizado é controlado pelo hiperparâmetro $\lambda$. Valores menores de $\lambda$ exigem um número maior de árvores $B$ e, diferentemente do Bagging e da Random Forest, o Boosting pode sofrer sobreajuste caso sejam adicionadas muitas árvores ao modelo.
+
+- É comum utilizar árvores com menor profundidade ($d$), já que cada nova árvore depende das árvores já construídas [@james2013introduction].
+
+## Gradient Tree Boosting
+
+<br>
+
+- A ideia central é construir um conjunto de árvores de regressão baseado no gradiente da função de perda $L\left(y_i, f\left(x\right)\right)$, minimizando-a de forma sequencial.
+
+**Passo 1 - Inicialização: ** O algoritmo inicia ajustando uma árvore aos dados observados:
+
+- O algoritmo inicia ajustante uma árvore aos dados observados, sendo as variáveis independentes representadas por $\gamma$ nesse primeiro passo:
+
+$$
+f_0\left(x\right) = \arg \min_{\gamma} \sum_{i = 1}^N L\left(y_i, \gamma \right)
+$$
+
+**Passo 2 — Iterações (para $m = 1$ até $M$):**
+
+- Para cada iteração $m$, o algoritmo realiza os seguintes passos:
+  - a) Para cada observação $i = 1, 2, \dots, N$, calcula-se o gradiente negativo da função de perda (pseudo-resíduo):
+  $$
+  {r}_{im} = -\left[\frac{\partial L\left(y_i, f\left(x_i \right)\right)}{\partial f\left(x_i\right)}\right]_{f = f_{m - 1}}
+  $$
+    + O $r_{im}$ indica a direção de maior redução da função de perda.
+
+## Gradient Tree Boosting
+
+<br>
+
+**Cont. (Passo 2)**
+
+  - b) Ajusta uma árvore aos pseudo-resíduos:
+    + Uma árvore de regressão é ajustada aos valores $r_{im}$, resultando em regiões terminais $R_{jm}$, com $j = 1, 2, \dots, J_m$.
+  - c) Cálculo do valor terminal $\gamma_{jm}$:
+    + Para cada região terminal $R_{jm}$​, busca-se o valor $\gamma_{jm}$​ que minimiza a função de perda ao atualizar as predições do modelo anterior:
+  $$
+  \gamma_{jm} = \arg \min_{\gamma} \sum_{x_i \in R_{jm}} L\left(y_i, f_{m - 1}\left(x_i\right) + \gamma\right)
+  $$
+      + **Observação:** no caso de $L\left(y_i, f\left(x\right)\right)$ ser o erro quadrático médio, $\gamma_{jm}$ corresponde à média dos pseudo-resíduos na região $R_{jm}$.
+
+  - b) Atualize $f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J_m}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)$, em que $\lambda$ é a taxa de aprendizado.
+
+- **Passo 3: ** Retorne $\hat{f}\left(x\right) = f_M\left(x\right)$.
+
+## Outras implementações de Gradient Boosting
+
+- Algumas implementações de Gradient Boosting, como o **XGBoost** e o **LightGBM**, utilizados neste trabalho, têm como foco principal a redução do custo computacional e a incorporação de técnicas de regularização para melhorar o desempenho e a generalização dos modelos.
+
+- Para tornar o algoritmo mais eficiente, destaca-se o Histogram-Based Algorithm, que busca os pontos de corte com menor custo computacional. Esse método discretiza os valores contínuos das variáveis em intervalo, semelhantes aos de um histograma, permitindo que as divisões nas árvores sejam feitas com base nesses intervalos, em vez de avaliar cada ponto individualmente. Essa abordagem reduz significativamente o custo computacional.
+
+- Além da maior eficiência computacional, técnicas de regularização L1 ou L2 podem ser incorporadas, a partir da seguinte função:
+$$
+\mathcal{L}\left(\phi\right) = \sum_{i}L\left(y_{i}, f\left(x_i\right)\right) + \sum_{m}\Omega\left(f_{m}\left(x\right)\right)\text{, onde }\Omega\left(f\right) = \gamma T + \frac{1}{2}\lambda\|\omega\|^{2}
+$$
+  + Em que:
+    + $T$ representa a quantidade de folhas da árvore;
+    + $\|\omega\|^{2}$ é a soma dos quadrados dos pesos atribuídos às folhas;
+    + $\gamma$ e $\lambda$ são parâmetros de regularização.
+  + **Observação: ** $\frac{1}{2}\sum_{m}\lambda \|\omega\|^2$ representa a regularização L2, enquanto $\gamma$ atua como uma penalização pela complexidade da árvore.
 
 ## Stacked generalization
+
 
 - O Stacked Generalization (Stacking) é um método ensemble que combina as predições de vários modelos para treinar um novo estimador, com o objetivo de melhorar a precisão das predições.
 
@@ -396,7 +474,47 @@ $$
 
 # Metodologia
 
+## Ferramentas computacionais
+
+::: r-stack
+![](R_logo.svg){.fragment width="400" height="400"}
+
+![](tidygeocoder_hex.png){.fragment width="400" height="400"}
+
+![](logo.png){.fragment width="400" height="400"}
+
+![](Selenium.svg){.fragment width="600" height="600"}
+
+![](python_logo.svg){.fragment width="900" height="900"}
+
+![](numpy_logo.svg){.fragment width="900" height="800"}
+
+![](pandas_logo.svg){.fragment width="900" height="900"}
+
+![](seaborn_logo.svg){.fragment width="400" height="400"}
+
+![](Matplotlib_icon.svg){.fragment width="400" height="400"}
+
+![](optuna-logo.png){.fragment width="700" height="400"}
+
+![](Scikit_learn_logo_small.svg){.fragment width="400" height="400"}
+
+![](Scrapy--Streamline-Simple-Icons.svg){.fragment width="550" height="550"}
+
+![](Playwright_Logo.svg){.fragment width="700" height="700"}
+
+![](scrapeops-logo.svg){.fragment width="500" height="500"}
+
+![](plotly_logo.png){.fragment width="700" height="300"}
+
+![](Postgresql_elephant.svg){.fragment width="500" height="500"}
+
+![](docker-logo-blue.svg){.fragment width="700" height="700"}
+:::
+
 ## Obtenção dos dados
+
+<br>
 
 ::: columns
 ::: {.column width="50%"}
@@ -408,7 +526,7 @@ $$
 :::
 
 ::: {.column width="50%"}
-![](Zap_im%C3%B3veis_2021.svg.png){width="80%"}
+![Zap Imóveis, plataforma de oferta de imóveis.](Zap_im%C3%B3veis_2021.svg.png){#fig-zap width="80%" fig-align="center"}
 :::
 :::
 
@@ -421,6 +539,8 @@ $$
 - Entre as informações disponíveis para coleta, destacam-se o preço do imóvel, a área, o número de quartos, o número de vagas de garagem, o endereço, o tipo de imóvel, o valor do condomínio e características adicionais, como piscina, academia, spa, entre outras.
 
 ## Web scraping
+
+<br>
 
 - O web scraping é uma técnica utilizada para extrair informações de sites da internet, armazenando-as em arquivos ou sistemas de banco de dados para fins de análise, desenvolvimento de aplicações ou acesso a informações de difícil obtenção.
 
@@ -436,6 +556,8 @@ $$
 
 ## Principais desafios do web scraping
 
+<br>
+
 - Mudanças na estrutura dos sites:
   + Pequenas alterações no código HTML ou na organização das páginas podem quebrar os scripts de extração, exigindo manutenções frequentes.
 
@@ -448,40 +570,74 @@ $$
 - Aspectos éticos e legais:
   + Nem todos os sites autorizam o scraping de seus dados. É fundamental respeitar políticas de uso, robots.txt, e considerar as implicações legais, especialmente em relação a direitos autorais e proteção de dados.
 
-## Ferramentas utilizadas para web scraping em R
+## Exemplo de raspagem com rotacionamento de user-agent
 
-- `rvest`
-  +
+![](scraping_scrapeops.mp4)
 
-- `xml2`
-  +
+## Exemplo de scroll automático com JavaScript para gerar conteúdo da página
 
-- `httr`
-  +
+::: {.incremental}
+![](mobi_scroll.mp4)
 
-## Ferramentas utilizadas para web scraping em Python
+```javascript
+(async () => {
+    const scrollStep = 10;
+    const delay = 16;
+    let currentPosition = 0;
 
-- `Scrapy`
-  +
+    function animateScroll() {
+        const pageHeight = Math.max(
+            document.body.scrollHeight, document.documentElement.scrollHeight,
+            document.body.offsetHeight, document.documentElement.offsetHeight,
+            document.body.clientHeight, document.documentElement.clientHeight
+            );
 
-- `Playwright`
-  +
+        if (currentPosition < pageHeight) {
+            currentPosition += scrollStep;
+            if (currentPosition > pageHeight) {
+                currentPosition = pageHeight;
+            }
+            window.scrollTo(0, currentPosition);
+            requestAnimationFrame(animateScroll);
+            }
+        }
+    animateScroll();
+    })();
+```
+
+:::
+
 
 ## Dados obtidos a partir do web scraping
 
+<br>
+
 - Entre os dados obtidos, destacam-se:
-  + Preço de venda: valor anunciado para o imóvel.
-  + Área privativa: metragem em metros quadrados.
-  + Número de quartos, suítes e banheiros: características estruturais importantes para avaliação.
-  + Número de vagas de garagem: relevante para a valorização do imóvel.
-  + Endereço e bairro: localizações aproximadas, utilizadas posteriormente para inferência geográfica.
-  + Tipo de imóvel: apartamento, casa, cobertura, entre outros.
-  + Valor do condomínio: custo adicional mensal associado ao imóvel, quando disponível.
-  + Características adicionais: presença de piscina, academia, spa, varanda, entre outros itens que podem influenciar o preço.
-  + Descrição textual: informações complementares fornecidas nos anúncios.
-  + Data de coleta: para registro do momento da extração, importante para controle temporal dos dados.
+  + Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
+  + Valor médio do aluguel no bairro: valor médio do aluguel dos imóveis no bairro, em $m^3$;
+  + Área: área total do imóvel, medida em $m^2$;
+  + Área média do aluguel no bairro: área média dos imóveis alugados no bairro, em $m^2$;
+  + Condomínio: valor mensal pago pelo condomínio do imóvel;
+  + IPTU: imposto cobrado sobre imóveis urbanos;
+  + Banheiros: quantidade de banheiros disponíveis na propriedade;
+  + Vagas de estacionamento: número total de vagas de estacionamento disponíveis;
+  + Quartos: quantidade de quartos no imóvel;
+  +  Latitude: posição horizontal, medida em frações decimais de graus;
+  + Longitude: posição vertical, também medida em frações decimais de graus, assim como a latitude;
+  + Tipo do imóvel: sete categorias foram consideradas: apartamentos, casas, casas de condomínio, flats e terrenos de lotes comerciais e de condomínio;
+
+## Dados obtidos a partir do web scraping
+
+<br>
+
+- Endereço: nome do endereço onde o imóvel está localizado;
+- Variáveis dicotômicas: indicam a presença (1) ou ausência (0) de determinadas características no imóvel, como área de serviço, academia, elevador, espaço gourmet, piscina, playground, portaria 24 horas, quadra de esportes, salão de festas, sauna, spa e varanda gourmet.
+
+- A base de dados final conta com **31.781** observações.
 
 ## Dados utilizados para criação de aplicação web
+
+<br>
 
 ::: columns
 ::: {.column width="60%"}
@@ -493,13 +649,13 @@ $$
 :::
 
 ::: {.column width="40%"}
-![](filipeiaLogo.png)
+![Filipeia - Mapas da Cidade.](filipeiaLogo.png){#fig-filipeia fig-align="center"}
 :::
 :::
 
 ::: columns
 ::: {.column width="40%"}
-![](inep.jpg)
+![Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (INEP).](inep.jpg){#fig-inep fig-align="center"}
 :::
 
 ::: {.column width="60%"}
@@ -527,7 +683,7 @@ $$
 
 - Além das variáveis coletadas por meio de web scraping, foram criadas novas variáveis derivadas de combinações entre variáveis que apresentavam correlação relevante:
   + Quantidade total de cômodos do imóvel;
-  + Produto entre as coordenadas geográficas (latitude e longitude) e o preço médio do aluguel no bairro;
+  + Produto entre as coordenadas geográficas e o preço médio do aluguel no bairro;
   + Razão entre o número de quartos e a área do imóvel;
   + Produto entre o número de quartos e a área média do aluguel no bairro.
 - A análise de correlação entre as variáveis foi realizada utilizando o coeficiente de Spearman [@spearman1961proof]:
@@ -560,9 +716,11 @@ $$
 
 ## Etapas de pré-processamento
 
+<br>
+
 - **Transformação das variáveis numéricas:**
   + Para estabilizar a variância e tornar a distribuição das variáveis independentes mais próximas de uma normal, foram aplicadas duas transformações:
-    + Foi aplicada a transformação de $\log\left(1+x\right)$ nas variáveis na maioria das variáveis numéricas, com exceção da variável do produto entre as coordenadas geográficas e o valor do aluguel
+    + Foi aplicada a transformação de $\log\left(1+x\right)$ nas variáveis na maioria das variáveis numéricas, com exceção da variável do produto entre as coordenadas geográficas, valor e área média do aluguel no bairro.
     + A variável do produto entre as coordenadas geográficas e o valor do aluguel foi transformada com a transformação de Yeo-Johnson [@yeo], definida da seguinte forma:
     $$
     \psi(\lambda, x) = \begin{cases}
@@ -576,6 +734,8 @@ $$
   + As variáveis de preço e área média de aluguel não foram transformadas, pois apresentavam piora na performance dos modelos quando eram transformadas.
 
 ## Etapas de pré-processamento
+
+<br>
 
 - **Transformação de variáveis categóricas:**
   + Para a variável tipo de imóvel, foi aplicada a técnica de codificação one-hot: cada categoria foi transformada em uma nova coluna binária.
@@ -668,13 +828,15 @@ $$
 
 ## Validação cruzada e otimização de hiperparâmetros
 
+<br>
+
 - No algoritmo TPE, a função de aquisição utilizada é o Expected Improvement (EI), que representa a expectativa de melhoria em relação a um limiar $y^{*}$, dado um modelo $M$ que mapeia $f: \Lambda \rightarrow \mathbb{R}^N$. Formalmente, o EI é definido por:
 
 $$
 EI_{y^*}\left(\lambda\right) = \int_{-\infty}^{\infty} \max\left(y^* - y, 0\right)p_{M}\left(y|\lambda\right)dy\text{.}
 $$
 
--  Após a otimização específica para o algoritmo TPE, o Expected Improvement pode ser expresso como:
+-  Para o algoritmo de TPE, o Expected Improvement pode é expresso como:
 
 $$
 EI_{y^*}\left(\lambda\right) = \frac{\gamma y^* l\left(\lambda\right) - l\left(\lambda\right) \int_{-\infty}^{y^*} yp\left(y\right)dy}{\gamma l\left(\lambda\right) + \left(1 - \gamma\right)g\left(\lambda\right)} \propto \left[\gamma + \frac{g\left(\lambda\right)}{l\left(\lambda\right)} \left(1 - \gamma\right)\right]^{-1}\text{.}
@@ -684,13 +846,77 @@ $$
 
 ## Importância dos hiperparâmetros
 
+- fANOVA (Functional Analysis of Variance)
+  + Realiza a decomposição da variância explicada pela função objetivo, atribuindo a contribuição individual de cada hiperparâmetro (ou conjunto de hiperparâmetros) para o desempenho do modelo.
+
+- Matematicamente, o fANOVA decompõe uma função
+  $$
+  \hat y: \Theta_{1} \times \dots \times \Theta_{n} \rightarrow \mathbb{R}
+  $$
+  em componentes aditivos definidos sobre subconjuntos dos hiperparâmetros:
+  $$
+  \hat{y} = \sum_{U \subseteq N} \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)\text{,}
+  $$
+  em que onde $N \{1, \cdots, n\}$ representa o conjunto de todos os hiperparâmetros de um algoritmo $A$, e
+  $$
+  \boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}
+  $$
+  é o vetor correspondente a uma configuração parcial de hiperparâmetros do subconjunto $U = \{u_{1}, \cdots, u_{m}\} \subseteq N$, ou seja, um subconjunto dos índices dos hiperparâmetros.
+  + As componentes da função $\hat{f}_{U}\left(\boldsymbol{\theta_U}\right)$ são definidas da seguinte forma:
+  $$
+  \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=
+  \begin{cases}
+    \frac{1}{\|\Theta\|} \int \hat{y} \left(\boldsymbol{\theta}\right) d\boldsymbol{\theta}, & \text{se } U= \emptyset \\
+    \hat{a}_{U}\left(\boldsymbol{\theta}_U\right) - \sum_{W \subseteq U} \hat{f}_{W}\left(\boldsymbol{\theta_{W}}\right), & \text{caso contrário}
+  \end{cases}\text{,}
+  $$
+
+## Importância dos hiperparâmetros
+
+<br>
+
+- A função $\hat{a}_{U}\left(\boldsymbol{\theta}_U\right)$ representa uma estimativa da performance marginal do algoritmo $A$ em relação ao subconjunto $U$ dos hiperparâmetros, sendo definida por:
+  $$
+  \hat{a}_{U}\left(\boldsymbol{\theta}_U\right) = \frac{1}{\|\boldsymbol{\Theta}_{T}\|} \int \hat{y}\left(\boldsymbol{\theta}_{N|U}\right)d \boldsymbol{\theta}_{T}
+  $$
+
+- Quando $U = \emptyset$:
+  + $\hat{f}_{\emptyset}$ corresponde à média de $\hat y$​ sobre todo o espaço de hiperparâmetros. Representa o valor médio da função objetivo considerando todas as configurações possíveis.
+- Efeitos principais $\left(|U| = 1\right)$:
+  + As funções unárias $\hat{f}_{\{j\}}\left(\boldsymbol{\theta}_{\{j\}}\right)$ quantificam o impacto isolado de cada hiperparâmetro em $\hat{y}$​, considerando a média do desempenho em todas as possíveis combinações dos demais hiperparâmetros.
+- Efeitos de interação $\left(∣U∣>1\right)$:
+  + As funções $\hat{f}_{U}\left(\boldsymbol{\theta_U}\right)$, com $|U|>1$, representam efeitos de interações entre os hiperparâmetros.
+
+## Importância dos hiperparâmetros
+
+<br>
+
+- A variância da função objetivo $\hat{y}$ sobre o domínio dos hiperparâmetros $\Theta$ é definido por:
+$$
+\mathbb{V} = \frac{1}{\|\boldsymbol{\Theta}\|} \int\left(\hat{y}\left(\boldsymbol{\theta}\right) - \hat{f}_{\emptyset}\right)^2 d \boldsymbol{\theta}\text{,}
+$$
+e a fANOVA decompõe essa variância em contribuições associadas a todos os subconjuntos de hiperparâmetros:
+
+$$
+\mathbb{V} = \sum_{U \subset N}\mathbb{V}_{U} \text{, em que } \mathbb{V}_U = \frac{1}{\|\boldsymbol{\Theta}_{U}\|} \int \hat{f}_U\left(\boldsymbol{\theta}_U\right)^2 d\boldsymbol{\theta}_U\text{.}
+$$
+
+- A importância relativa de cada efeito principal ou de interação, representado por $\hat{f}_U$​, pode então ser quantificada pela fração da variância total que ele explica:
+$$
+\mathbb{F}_{U} = \mathbb{V}_{U} / \mathbb{V}\text{.}
+$$
+
+- Para viabilizar computacionalmente a decomposição da variância, implementações práticas - como a utilizada na biblioteca Optuna - recorrem a modelos de Random Forest para estimar a função $\hat{y}$.
+
 # Interpretação dos algoritmos de aprendizagem de máquina
 
 ## Individual Conditional Expectation (ICE)
 
+<br>
+
 - O ICE (Individual Conditional Expectation) é um método que permite analisar o efeito isolado de uma covariável sobre a predição, mantendo as demais variáveis constantes.
 
-- No ICE, é considerado um grid ${x_{S_i}, x_{C_i}}_{i=1}^{N}$ de valores no domínio da variável de interesse $x_S$, enquanto as demais covariáveis $x_C$ permanecem fixas.
+- No ICE, é considerado um grid $\{x_{S_i}, x_{C_i}\}_{i=1}^{N}$ de valores no domínio da variável de interesse $x_S$, enquanto as demais covariáveis $x_C$ permanecem fixas.
 
 - A partir das predições $\hat{f}$ geradas ao longo dessa variação, constrói-se um gráfico que apresenta:
   + No eixo das ordenadas: os valores estimados ($\hat{f}$),
@@ -705,13 +931,35 @@ em que $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​
 
 - Também foi utilizada a linha do Partial Dependence Plot (PDP), que corresponde à média de todas as curvas individuais geradas pelo ICE.
 
-<!-- ## Local interpretable model-agnostic explanations (LIME) -->
+## Local interpretable model-agnostic explanations (LIME)
+
+<br>
+
+- Objetivo: Explicar previsões de qualquer modelo complexo, utilizando um modelo localmente interpretável.
+
+- Ideia central:
+  + Aproximar o comportamento do modelo complexo $f$ por meio de um modelo explicativo $g$ (por exemplo, regressão linear ou árvore de decisão), somente na vizinhança local de uma instância específica $x$.
+
+- Passos básicos:
+  + Amostras sintéticas próximas de $x$.
+  + Obter as predições do modelo complexo $f$ sobre essas amostras.
+  + Ajustar o modelo interpretável $g$ sobre esse conjunto sintético, ponderando as amostras de acordo com a distância a x (medida de localidade $\pi_x$).
+  + Minimizar a função de perda $L\left(f, g, \pi_x\right)$, mantendo a complexidade de g $\left(\Omega\left(g\right)\right)$ baixa.
+    + Quando $g$ é uma árvore de decisão, a penalidade $\Omega\left(g\right)$ pode, por exemplo, ser definida pela profundidade da árvore.
+
+- Formulação matemática da explicação gerada pelo LIME:
+$$
+\xi\left(x\right) = \arg \min_{g \in G} L\left(f, g, \pi_x\right) + \Omega\left(g\right)\text{.}
+$$
+
 
 ## Shapley Additive Explanations (SHAP)
 
+<br>
+
 -  O SHAP (Shapley Additive Explanations) é um método que busca explicar as predições individuais de um modelo, atribuindo a cada variável uma contribuição para o valor predito​
 
-- Baseia-se nos valores de Shapley da teoria dos jogos de coalizão, introduzidos por @shapley1953value, que representam a contribuição média de cada variável considerando as possíveis combinações (coalizões) de variáveis​.
+- Baseia-se nos valores de Shapley da teoria dos jogos de coalizão, introduzidos por @shapley1953value, que representam a contribuição média de cada variável considerando as possíveis combinações (coalizões) de covariáveis.
 
 - Fórmula dos Valores de Shapley:
   + Os valores de Shapley são dados por:
@@ -719,19 +967,247 @@ $$
 \phi_i\left(x\right) = \sum_{Q \subseteq S | \{i\}} \frac{|Q|!\left(|S| - |Q| - 1\right)!}{|S|!} \left(\Delta_{Q\cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)\right)\text{,}
 $$
   + em $Q$ é um subconjunto de variáveis, $S$ o conjunto completo, e o $\Delta_{Q \cup \{i\}}\left(x\right) - \Delta_{Q}\left(x\right)$ corresponde à contribuição marginal da variável $i$ ao ser adicionada ao subconjunto $Q$.
+
+## Shapley Additive Explanations (SHAP)
+
+<br>
+
 - Modelo Aditivo:
   + O SHAP representa a explicação como um modelo linear aditivo:
 $$
 g\left(\mathbf{z^{'}}\right) = \phi_0 + \sum_{j = 1}^{M} \phi_{j} z_{j}^{'}\text{,}
 $$
-em que $z'_j$ representa o vetor de coalizão, indicando a presença ou ausência da variável $j$.
+em que $\mathbf{z^{'}} = \left(z_{1}^{'}, \cdots, z^{'}_{M}\right)^T \in \{0, 1\}^{M}$, representando a presença $\left(z^{'}_j = 1\right)$ ou ausência $\left(z^{'}_j = 0\right)$ de cada covariável, $M$ é o tamanho máximo da coalizão e $\phi_j$ denota os valores Shapley.
 
+## Gráficos de agregação com SHAP
+
+<br>
+
+- **Importância das covariáveis com SHAP:**
+  + A ideia central do SHAP para medir a importância das variáveis independentes é que variáveis com maiores valores absolutos de Shapley contribuem mais significativamente para as predições.
+  + Assim, a importância de uma variável $j$ é definida como a média dos valores absolutos de Shapley ao longo de todas as observações:
+  $$
+  I_j = \frac{1}{n}\sum^{n}_{i = 1} |\phi_j^{\left(i\right)}|
+  $$
+
+- **Gráfico de resumo:**
+  + O gráfico de resumo combina a ideia da importância das variáveis com SHAP e os valores Shapley.
+    - No eixo das abscissas são incluídos os valores Shapley
+    - No eixo das ordenadas são incluídos as variáveis, que são ordenadas por ordem de importância
+    - A cor representa os valores das variáveis de baixo para alto
+
+## Gráficos de agregação com SHAP
+
+<br>
+
+- **Gráfico de dependência:**
+  + Os valores de Shapley de uma determinada covariável são representados em função dos valores observados dessa variável.
+  + A relação é dada pelo conjunto de pares:
+  $$
+  \{\left(x^{\left(i\right)}_j, \phi^{\left(i\right)}_j\right)\}^{n}_{i=1}
+  $$
+  + Esse gráfico permite visualizar como os diferentes valores da variável influenciam a predição, mantendo todas as demais variáveis constantes.
 
 # Resultados
 
 ## Análise exploratória
 
-![](valores_ausentes.png)
+::: {columns}
+::: {.column width="50%"}
+- As variáveis com dados ausentes foram: banheiro, condomínio, IPTU, quarto, vaga, valor e área de aluguel.
+
+- Condomínio e IPTU apresentaram mais de 60% de valores ausentes e, por isso, foram excluídas da modelagem.
+
+- As demais variáveis com valores faltantes foram imputadas por meio do método KNN, com 17 vizinhos.
+:::
+
+::: {.column width="50%"}
+![Proporção de valores ausentes por variáveis.](valores_ausentes.png){#fig-aus fig-align="center"}
+:::
+:::
+
+::: {columns}
+
+::: {.column width="50%"}
+![Variação da média do valor do $m^2$ dos imóveis de João Pessoa.](map_valor_m2.svg){#fig-mapa fig-align="center"}
+:::
+
+::: {.column width="50%"}
+- Alguns bairros apresentaram poucos ou nenhum imóvel registrado, como indicado pelas áreas em cinza no mapa.
+
+- O bairro Barra de Gramame, por exemplo, possui apenas um imóvel registrado.
+
+- Os maiores valores médios por metro quadrado foram observados em Cabo Branco (R$ 10.000+), seguido por Tambaú (R$ 8.951,45), Jardim Oceania (R$ 7.879,60) e Altiplano Cabo Branco (R$ 7.218,70).
+
+:::
+:::
+
+## Análise exploratória
+
+<br>
+
+::: {columns}
+
+::: {.column width="50%"}
+- A maioria dos imóveis possuem 2 ou nenhuma vaga de garagem
+
+- No caso da variável de banheiro, a maioria dos tipos de imóveis possuem 1 a 3 banheiros
+
+- A maioria dos imóveis possuem uma concentração entre 1 ou 2 quartos
+
+- A maioria das variáveis numéricas apresenta distribuição assimétrica à direita, ou seja, com cauda longa em direção a valores mais altos.
+:::
+
+::: {.column width="50%"}
+![Distribuição das variáveis numéricas.](violin_plot.png){#fig-violin_plot fig-align="center"}
+:::
+
+:::
+
+::: {columns}
+
+::: {.column width="50%"}
+![Comparação entre distribuição dos valores dos imóveis antes e depois da
+transformação logarítmica.](densidade.png){#fig-dens_plot fig-align="center"}
+:::
+
+::: {.column width="50%"}
+- A distribuição original dos valores dos imóveis apresenta assimetria positiva, com uma concentração de imóveis de valor mais baixo e uma cauda longa à direita representando poucos imóveis com valores extremamente altos.
+
+-  O gráfico à direita demonstra a estabilização da variância da distribuição dos valores de imóveis após uma transformação $\log\left(1 + x\right)$.
+:::
+
+:::
+
+## Análise exploratória
+
+<br>
+
+::: {columns}
+
+::: {.column width="50%"}
+![Gráfico de correlação de Spearman das variáveis independentes.](corr.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+- O valor de imóvel apresenta maior correlação com as variáveis de área do imóvel e número de vagas de estacionamento.
+
+- O valor de imóvel também tem alta correlação com valor médio do aluguel por bairro, número de quartos e banheiros, latitude e longitude.
+:::
+
+:::
+
+- Com base no gráfico de correlação, foram criadas novas variáveis derivadas da interação entre variáveis com maior correlação:
+  + produto entre o número de quartos do imóvel e a área média do aluguel no bairro;
+  + a razão entre o número de quartos e a área do imóvel;
+  + o produto entre as coordenadas geográficas e o preço médio do aluguel no bairro;
+  + a quantidade total de cômodos do imóvel, obtida pela soma do número de quartos e banheiros, acrescida de dois, considerando a presença de sala e cozinha.
+
+
+## Tunagem dos modelos
+
+- Random Forest
+  + Foram ajustados os hiperparâmetros referentes à quantidade de árvores e à profundidade máxima das árvores. Além disso, foram consideradas $m = \sqrt{p}$​ covariáveis como candidatas para as divisões.
+
+- Gradient Boosting
+  +  A tunagem incluiu a quantidade de árvores, a profundidade máxima e a taxa de aprendizado. Foram consideradas $m= \sqrt{p}$ covariáveis como candidatas para as divisões.
+
+- Light Gradient Boosting Machine (LightGBM)
+  + Foram ajustados os hiperparâmetros de quantidade de árvores, profundidade máxima, taxa de aprendizado e número máximo de folhas por árvore.
+
+- Extreme Gradient Boosting (XGBoost)
+  + Os hiperparâmetros tunados foram: quantidade de árvores, profundidade máxima das árvores e taxa de aprendizado.
+
+::: {#tbl-tuning .smaller}
+
+| Tentativa |   RMSE  | n\_estimators | max\_depth | learning\_rate | num\_leaves |           Modelo          |
+| :-------: | :-----: | :-----------: | :--------: | :------------: | :---------: | :-----------------------: |
+|     62    | 0,29084 |      653      |     21     |        –       |      –      |       Random Forest       |
+|     57    | 0,28512 |      1404     |      7     |     0,09806    |      –      |     Gradient Boosting     |
+|     31    | 0,28546 |      1988     |     379    |     0,00985    |     202     |            LGBM           |
+|     81    | 0,28528 |      788      |      8     |     0,07119    |      –      | XGBoost |
+
+: Combinação de hiperparâmetros encontrado pelo TPE.
+
+:::
+
+## Tunagem dos modelos
+
+<br>
+
+::: {layout-ncol="2"}
+![Resultados da tunagem da Random Forest.](tunagem_rf.png){#fig-tuning_rf}
+
+![Resultados da tunagem do Gradient Boosting.](tunagem_gbdt.png){#fig-tuning_gbdt}
+:::
+
+## Tunagem dos modelos
+
+<br>
+
+::: {layout-ncol="2"}
+![Resultados da tunagem do LGBM.](tunagem_lgbm.png){#fig-tuning_lgbm}
+
+![Resultados da tunagem do XGBoost.](tunagem_xgb.png){#fig-tuning_xgb}
+:::
+
+
+## Resultado dos modelos
+
+<br>
+
+::: {#tbl-metrics_models}
+
+|           Algoritmo          |   RMSE  |   $R^2$   |   MAPE  |
+|:-------------------------:|:-------:|:---------:|:-------:|
+|     Gradient Boosting     | 0,28297 | $87,32712\%$ | 0,01333 |
+|          Stacking         | 0,28382 | $87,26007\%$ | 0,01340 |
+|  Light Gradient Boosting  | 0,28385 | $87,25794\%$ | 0,01340 |
+| Extreme Gradient Boosting | 0,28400 | $87,24599\%$ | 0,01325 |
+|       Random Forest       | 0,28578 | $87,10419\%$ | 0,01346 |
+
+: Métricas obtidas de cada algoritmo, após o ajuste dos hiperparâmetros.
+
+:::
+
+- Melhor desempenho geral — Gradient Boosting:
+  + Obteve o menor RMSE (0,28297), indicando menor erro quadrático médio nas previsões.
+
+  + Também apresentou o maior R2R2 (87,33%), o que sugere maior capacidade explicativa em relação à variabilidade dos dados.
+
+  + Teve o menor MAPE (0,01333), o que reforça sua superioridade na acurácia percentual das previsões.
+
+  +  Todos os modelos obtiveram desempenho semelhante, mas o Gradient Boosting se destacou como o mais eficaz, ainda que por margens pequenas.
+
+## Resultado dos modelos
+
+![Valores previstos em função dos observados do algoritmo **Random Forest** e
+**Gradient Boosting**, respectivamente.](gbdt_rf.png){#fig-gbdt_rf fig-align="center"}
+
+## Resultado dos modelos
+
+![Valores previstos em função dos observados do algoritmo **Light Gradient
+Boosting** e **Extreme Gradient Boosting**, respectivamente.](lgbm_xgb.png){#fig-lgbm_xgb fig-align="center"}
+
+## Resultado dos modelos
+
+![Valores previstos em função dos observados do algoritmo Stacking.](preds_stacking.png){#fig-preds_stacking}
+
+## Impacto e importância das variáveis na predição
+
+![Gráfico de ICE e PDP.](pdp_ice.png){#fig-pdp_ice fig-align="center"}
+
+## Impacto e importância das variáveis na predição
+
+<br>
+
+![Impacto e importância das variáveis na predição a partir do método SHAP.](summary_vars.png){#fig-import fig-align="center"}
+
+## Impacto e importância das variáveis na predição
+
+![Gráfico de dependência de valores SHAP para variáveis binárias.](depe_plots.png){#fig-dep_plot fig-align="center"}
+
+# Aplicação Web
 
 # Referências
 

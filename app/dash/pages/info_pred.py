@@ -55,7 +55,7 @@ df_realestate = pd.DataFrame(fetch_data()).assign(
 )
 
 # df_realestate = (
-#     pd.read_csv("data/cleaned/jp_limpo_bairro_correto2.csv")
+#     pd.read_csv("data/cleaned/jp_limpo_bairro_correto3.csv")
 #     .assign(
 #         tipo=lambda x: x.tipo.str.capitalize()
 #         .str.split("_")
@@ -911,9 +911,10 @@ def download_csv(_):
         Input("filtered-data", "data"),
         Input("predict-button", "n_clicks"),
         Input({"type": "marker-map", "index": ALL}, "selectedData"),
+        Input({"type": "bairro-map", "index": ALL}, "selectedData"),
     ],
 )
-def update_map(map_type, filtered_data, n_clicks, _i):
+def update_map(map_type, filtered_data, n_clicks, select_marker_, select_bairro_):
     changed_inputs = [x["prop_id"] for x in callback_context.triggered]
     df_filtered = pd.DataFrame(filtered_data)
 
@@ -956,6 +957,7 @@ def update_map(map_type, filtered_data, n_clicks, _i):
                 "longitude": False,
                 "bairro": True,
                 "valor": ":.2f",
+                "predicoes_modelo": ":.2f",
                 "area": ":.2f",
                 "vaga": ":.2f",
                 "banheiro": ":.2f",
@@ -996,20 +998,81 @@ def update_map(map_type, filtered_data, n_clicks, _i):
         )
 
     elif map_type == "bairros":
+        df_filtered_mean = df_filtered.groupby("bairro").valor.mean().reset_index()
+
         geo_data = gpd.read_file(city_folder)
-        for _, row in geo_data.iterrows():
-            popup_content = f"""
-            <b>Bairro:</b> {row['nome']}<br>
-            <b>Perímetro:</b> {row['perimetro']:.2f} m<br>
-            <b>Área:</b> {row['area']:.2f} m²<br>
-            <b>Hectares:</b> {row['hectares']:.2f} ha<br>
-            """
-            folium.GeoJson(
-                row.geometry,
-                name=row["nome"],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(m)
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
+
+        geo_data_merged = geo_data.merge(
+            df_filtered_mean, how="left", left_on="nome", right_on="bairro"
+        )
+
+        geojson = geo_data_merged.__geo_interface__
+
+        if '{"type": "bairro-map", "index": 1}.selectedData' in changed_inputs:
+            return no_update
+
+        fig_map_bairros = px.choropleth_mapbox(
+            geo_data_merged,
+            geojson=geojson,
+            locations="bairro",
+            featureidkey="properties.nome",
+            color="valor",
+            hover_data={
+                "bairro": True,
+                "valor": ":.2f",
+                "area": ":.2f",
+                "hectares": ":.2f",
+                "perimetro": ":.2f",
+            },
+            color_continuous_scale="Viridis",
+            mapbox_style="open-street-map",
+            zoom=12,
+            center={"lat": center_lat, "lon": center_lon},
+            opacity=0.6,
+        )
+
+        fig_map_bairros.update_layout(
+            margin={"r": 0, "t": 0, "l": 0, "b": 0},
+            clickmode="event+select",
+            dragmode="select",
+            coloraxis_colorbar=dict(
+                title="Valor (R$)",
+                orientation="h",
+                tickformat=".2s",
+                x=0,
+                xanchor="left",
+                y=0.85,
+                yanchor="bottom",
+                len=0.6,
+                thickness=15,
+                title_font=dict(size=12),
+            ),
+        )
+
+        return dcc.Graph(
+            figure=fig_map_bairros,
+            id={"type": "bairro-map", "index": 1},
+            style={"width": "100%", "height": "400px"},
+            config={"displaylogo": False},
+        )
+
+    # elif map_type == "bairros":
+    #     df_filtered_mean = df_filtered.groupby("bairro").valor.mean().reset_index()
+    #     geo_data = gpd.read_file(city_folder)
+    #     print(geo_data.merge(df_filtered_mean, left_on="nome", right_on="bairro"))
+    #     for _, row in geo_data.iterrows():
+    #         popup_content = f"""
+    #         <b>Bairro:</b> {row['nome']}<br>
+    #         <b>Perímetro:</b> {row['perimetro']:.2f} m<br>
+    #         <b>Área:</b> {row['area']:.2f} m²<br>
+    #         <b>Hectares:</b> {row['hectares']:.2f} ha<br>
+    #         """
+    #         folium.GeoJson(
+    #             row.geometry,
+    #             name=row["nome"],
+    #             popup=folium.Popup(popup_content, max_width=300),
+    #         ).add_to(m)
+    #     return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
 
     elif map_type == "faixas_exclusivas":
         geo_data = gpd.read_file(city_folder)
@@ -1266,6 +1329,7 @@ def toggle_prediction_form(n_clicks, is_visible):
     Input("bar-plot-most-expensive", "selectedData"),
     Input("density-plot", "selectedData"),
     Input({"type": "marker-map", "index": ALL}, "selectedData"),
+    Input({"type": "bairro-map", "index": ALL}, "selectedData"),
     prevent_initial_call=True,
 )
 def filter_data(
@@ -1273,6 +1337,7 @@ def filter_data(
     selectedData_bar_bottom_right,
     selectedData_density,
     selectedData_marker_map,
+    selectedData_bairro_map,
 ):
     ctx = callback_context
     if not ctx.triggered:
@@ -1301,7 +1366,6 @@ def filter_data(
             filtered_df = filtered_df[filtered_df["valor"].isin(selected_types)]
 
     elif '{"index":1,"type":"marker-map"}.selectedData' in changed_inputs:
-        print(selectedData_marker_map)
         if selectedData_marker_map[0] and "points" in selectedData_marker_map[0]:
             selected_types = {"latitude": [], "longitude": []}
             for point in selectedData_marker_map[0]["points"]:
@@ -1313,6 +1377,13 @@ def filter_data(
                 df_realestate["latitude"].isin(selected_types["latitude"])
                 & df_realestate["longitude"].isin(selected_types["longitude"])
             ]
+
+    elif '{"index":1,"type":"bairro-map"}.selectedData' in changed_inputs:
+        if selectedData_bairro_map[0] and "points" in selectedData_bairro_map[0]:
+            selected_bairros = {
+                point["location"] for point in selectedData_bairro_map[0]["points"]
+            }
+            filtered_df = filtered_df[filtered_df["bairro"].isin(selected_bairros)]
 
     return filtered_df.to_dict("records")
 
