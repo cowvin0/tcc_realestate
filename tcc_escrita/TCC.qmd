@@ -173,11 +173,11 @@ test_df = test_df.rename(columns=rename)
 
 \vspace{12pt}
 
-Agradeço ao meu irmão, Bruno de Jesus Pereira — meu melhor amigo — pela amizade incondicional. Sou grato por sempre me convidar para passar o tempo juntos, pelas risadas, pelos momentos de diversão e pela tranquilidade que isso trouxe ao meu dia a dia. Agradeço também pelo incentivo durante a graduação, pelas horas em que nos divertimos jogando — mesmo que por pouco tempo —, pelas conversas sobre teorias de jogos e pelas conversas sobre filmes, que tornaram essa jornada muito mais leve e especial.
+Agradeço ao meu irmão, Bruno de Jesus Pereira - meu melhor amigo - pela amizade incondicional. Sou grato por sempre me convidar para passar o tempo juntos, pelas risadas, pelos momentos de diversão e pela tranquilidade que isso trouxe ao meu dia a dia. Agradeço também pelo incentivo durante a graduação, pelas horas em que nos divertimos jogando - mesmo que por pouco tempo -, pelas conversas sobre teorias de jogos e pelas conversas sobre filmes, que tornaram essa jornada muito mais leve e especial.
 
 \vspace{12pt}
 
-À Ataline Soares Batista, agradeço por ser a melhor pessoa que poderia estar ao meu lado — desde o ensino médio e, hoje, como minha noiva. Obrigado por tornar meus dias mais leves, pelos momentos de diversão e descontração. Ter você ao meu lado me fez uma pessoa melhor em todos os aspectos da vida: mais feliz, mais criativo e com ainda mais vontade de seguir em frente. Você é meu maior incentivo em muitas das escolhas que faço ou desejo fazer. Sou grato pelas longas conversas, pelas brincadeiras, pelos assuntos sobre cultura, livros e filmes de guerra. Obrigado por todos esses sete anos incríveis ao seu lado. Eu te amo.
+À Ataline Soares Batista, agradeço por ser a melhor pessoa que poderia estar ao meu lado - desde o ensino médio e, hoje, como minha noiva. Obrigado por tornar meus dias mais leves, pelos momentos de diversão e descontração. Ter você ao meu lado me fez uma pessoa melhor em todos os aspectos da vida: mais feliz, mais criativo e com ainda mais vontade de seguir em frente. Você é meu maior incentivo em muitas das escolhas que faço ou desejo fazer. Sou grato pelas longas conversas, pelas brincadeiras, pelos assuntos sobre cultura, livros e filmes de guerra. Obrigado por todos esses sete anos incríveis ao seu lado. Eu te amo.
 
 \vspace{12pt}
 
@@ -193,7 +193,7 @@ Agradeço imensamente a todos os professores do departamento pelas aulas ao long
 
 \vspace{12pt}
 
-Agradeço também ao amigo Jeferson, membro do grupo de estudos GEAFS, pela oportunidade de desenvolver meu primeiro artigo e por me ajudar a compreender melhor o funcionamento do processo de pesquisa — desde a formulação das perguntas até a etapa de análise.
+Agradeço também ao amigo Jeferson, membro do grupo de estudos GEAFS, pela oportunidade de desenvolver meu primeiro artigo e por me ajudar a compreender melhor o funcionamento do processo de pesquisa - desde a formulação das perguntas até a etapa de análise.
 
 \vspace{12pt}
 
@@ -402,7 +402,7 @@ A linguagem de programação **Python** possui um ecossistema diversificado de b
 
 \vspace{12pt}
 
-O [**Scrapy**](https://docs.scrapy.org/en/latest) é uma ferramenta robusta e completa, com suporte nativo para diversos métodos HTTP. Ele foi projetado para ser rápido e eficiente, facilitando a criação de spiders — programas que navegam automaticamente por páginas web e extraem dados de forma estruturada. Além disso, o framework permite a exportação dos dados coletados para diversos formatos, como CSV, JSON ou bancos de dados, tornando-o uma solução ideal para projetos de coleta de informações em grande escala.
+O [**Scrapy**](https://docs.scrapy.org/en/latest) é uma ferramenta robusta e completa, com suporte nativo para diversos métodos HTTP. Ele foi projetado para ser rápido e eficiente, facilitando a criação de spiders - programas que navegam automaticamente por páginas web e extraem dados de forma estruturada. Além disso, o framework permite a exportação dos dados coletados para diversos formatos, como CSV, JSON ou bancos de dados, tornando-o uma solução ideal para projetos de coleta de informações em grande escala.
 
 \vspace{12pt}
 
@@ -1033,7 +1033,7 @@ Nesse caso, à medida que o número de árvores $B$ tende ao infinito, o segundo
 
 \vspace{12pt}
 
-Essa correlação ocorre porque as árvores geradas pelo Bagging tendem a ser bastante semelhantes. As variáveis selecionadas para as divisões são escolhidas com base na maior redução do erro nas regiões, e, frequentemente, as mesmas variáveis são as que mais contribuem para essa redução, sendo repetidamente escolhidas. Uma forma de reduzir essa correlação — e, com isso, melhorar o desempenho do Bagging — é por meio do algoritmo Random Forest, que será apresentado a seguir.
+Essa correlação ocorre porque as árvores geradas pelo Bagging tendem a ser bastante semelhantes. As variáveis selecionadas para as divisões são escolhidas com base na maior redução do erro nas regiões, e, frequentemente, as mesmas variáveis são as que mais contribuem para essa redução, sendo repetidamente escolhidas. Uma forma de reduzir essa correlação - e, com isso, melhorar o desempenho do Bagging - é por meio do algoritmo Random Forest, que será apresentado a seguir.
 
 ### Random Forest
 
@@ -1260,7 +1260,7 @@ em que $\{R_{jm}\}^{J_m}_{1}$ representa as regiões disjuntas que, em conjunto,
 
 \vspace{12pt}
 
-Como as regiões são disjuntas, a partir da @eq-treebost, a estimativa de $b_{jm}$ — a predição associada à região $R_{jm}$​ — será simplesmente a média dos pseudo-resíduos $r_{im}$:
+Como as regiões são disjuntas, a partir da @eq-treebost, a estimativa de $b_{jm}$ - a predição associada à região $R_{jm}$​ - será simplesmente a média dos pseudo-resíduos $r_{im}$:
 
 $$
 \hat{b}_{jm} = \frac{1}{N_{jm}} \sum_{x_i \in R_{jm}} r_{im}\text{,}
@@ -1300,7 +1300,7 @@ em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do q
 
 \vspace{12pt}
 
-Assim como o XGBoost, as implementações existentes do LightGBM também permitem o uso de regularização L1 ou L2, embora nenhuma das implementações a utilize por padrão. O LightGBM tem como foco a alta velocidade de treinamento e a eficiência no uso da memória, graças ao algoritmo baseado em histogramas (Histogram-Based Algorithm). Nesse método, os valores contínuos das variáveis são agrupados em intervalos discretos — como em um histograma — o que evita a avaliação de cada ponto individualmente durante as divisões das árvores, reduzindo significativamente o custo computacional.
+Assim como o XGBoost, as implementações existentes do LightGBM também permitem o uso de regularização L1 ou L2, embora nenhuma das implementações a utilize por padrão. O LightGBM tem como foco a alta velocidade de treinamento e a eficiência no uso da memória, graças ao algoritmo baseado em histogramas (Histogram-Based Algorithm). Nesse método, os valores contínuos das variáveis são agrupados em intervalos discretos - como em um histograma - o que evita a avaliação de cada ponto individualmente durante as divisões das árvores, reduzindo significativamente o custo computacional.
 
 <!-- Assim como o XGBoost, as implementações existentes de Light Gradient Boosting também permite utilizar a regularização L1 ou L2, mas não utiliza nenhuma das duas por padrão. A principal diferença do Light Gradient Boosting está na forma de crescimento das árvores, primeiro é dividido a folha com a maior redução na função de erro. Além disso, tem um grande foco na velocidade e uma melhor eficiência no uso da memória atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que, em vez de avaliar cada ponto quando realiza a divisão, ele divide valores contínuos em intervalos, como em um histograma, o que reduz grandemente o custo computacional. -->
 
@@ -1336,7 +1336,7 @@ Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as
 
 - Longitude: posição vertical, também medida em frações decimais de graus, assim como a latitude;
 
-- Tipo do imóvel: sete categorias foram consideradas: apartamentos, casas, casas de condomínio, flats e terrenos de lotes comerciais e de condomínio;
+- Tipo do imóvel: seis categorias foram consideradas: apartamentos, casas, casas de condomínio, flats e terrenos de lotes comerciais e de condomínio;
 
 - Endereço: nome do endereço onde o imóvel está localizado;
 
@@ -1370,7 +1370,7 @@ em que $\rho$ representa o coeficiente de Pearson aplicado aos postos das variá
 
 \vspace{12pt}
 
-Portanto, essa etapa resultou na criação de três variáveis: a quantidade total de cômodos do imóvel, o produto entre as coordenadas geográficas e o preço médio do aluguel no bairro, a razão entre o número de quartos e a área do imóvel, e o produto entre o número de quartos do imóvel e a área média do aluguel no bairro. No entanto, a inclusão dessas variáveis não levou à remoção das variáveis originais utilizadas em sua construção, pois sua exclusão resultou em uma piora no desempenho do modelo.
+Portanto, essa etapa resultou na criação de quatro variáveis: a quantidade total de cômodos do imóvel, o produto entre as coordenadas geográficas e o preço médio do aluguel no bairro, a razão entre o número de quartos e a área do imóvel, e o produto entre o número de quartos do imóvel e a área média do aluguel no bairro. No entanto, a inclusão dessas variáveis não levou à remoção das variáveis originais utilizadas em sua construção, pois sua exclusão resultou em uma piora no desempenho do modelo.
 
 \vspace{12pt}
 
@@ -1649,7 +1649,7 @@ $$
 Essa última expressão mostra que, para maximizar o Expected Improvement, é necessário encontrar valores de $\lambda$ que apresentem alta probabilidade em $l\left(\lambda\right)$ e baixa probabilidade em $g\left(\lambda\right)$. Portanto, no TPE, maximizar o EI equivale a maximizar a razão $l\left(\lambda\right) / g\left(\lambda\right)$.
 
 
-### Otimização de hiperparâmetros com optuna
+### Otimização de hiperparâmetros com Optuna
 
 \ \ \ Para otimizar os hiperparâmetros dos modelos foi utilizado a bilbioteca [**Optuna**](https://optuna.org/) da linguagem de programação **Python**. Essa biblioteca implementa diversos métodos para otimização automatizada de hiperparâmetros. Para a sua utilização, é preciso definir inicialmente uma função objetivo. Por exemplo, para otimizar os hiperparâmetros de uma random forest, é necessário definir uma função objetivo da seguinte forma:
 
@@ -1841,7 +1841,7 @@ No exemplo acima, o método `.from_estimator` é usado para criar o gráfico dir
 
 \vspace{12pt}
 
-Formalmente, para a construção da explicação gerada pelo LIME, define-se a explicação como um modelo $g \in G$, onde $G$ representa uma classe de modelos potencialmente interpretáveis, como regressão linear ou árvores de decisão. O processo começa com a geração de um novo conjunto de dados composto por amostras perturbadas da instância original — pequenas variações nos dados de entrada — e as respectivas predições do modelo complexo. Sobre esse novo conjunto, ajusta-se o modelo explicativo $g$, cuja finalidade é aproximar localmente o comportamento do modelo original. Como nem todos os modelos $g \in G$ são simples o suficiente para serem interpretáveis, define-se uma medida de complexidade $\Omega\left(g\right)$. Por exemplo, para uma árvore de decisão, $\Omega\left(g\right)$ pode ser representada pela profundidade da árvore.
+Formalmente, para a construção da explicação gerada pelo LIME, define-se a explicação como um modelo $g \in G$, onde $G$ representa uma classe de modelos potencialmente interpretáveis, como regressão linear ou árvores de decisão. O processo começa com a geração de um novo conjunto de dados composto por amostras perturbadas da instância original - pequenas variações nos dados de entrada - e as respectivas predições do modelo complexo. Sobre esse novo conjunto, ajusta-se o modelo explicativo $g$, cuja finalidade é aproximar localmente o comportamento do modelo original. Como nem todos os modelos $g \in G$ são simples o suficiente para serem interpretáveis, define-se uma medida de complexidade $\Omega\left(g\right)$. Por exemplo, para uma árvore de decisão, $\Omega\left(g\right)$ pode ser representada pela profundidade da árvore.
 
 <!-- Formalmente, para a construção da explicação gerada pelo LIME, a explicação é definida como um modelo $g \in G$, onde $G$ representa uma classe de potenciais modelos interpretáveis, como regressão linear ou árvores de decisão. Como nem todos os modelos $g \in G$ podem ser simples o suficiente para serem interpretados, define-se uma medida de complexidade $\Omega\left(g\right)$ para a explicação gerada por $g \in G$. Por exemplo, para uma árvore de regressão, $\Omega\left(g\right)$ pode ser a profundidade da árvore. -->
 
@@ -2092,11 +2092,11 @@ plt.subplots_adjust(hspace=0.45)
 
 l = plt.legend(loc="upper center", bbox_to_anchor=(-.66, -.4), ncol=7, fontsize=5.5)
 l.get_texts()[0].set_text('Apartamentos')
-l.get_texts()[1].set_text('Casas de condomínio')
-l.get_texts()[2].set_text('Casas')
-l.get_texts()[3].set_text('Flats')
+l.get_texts()[1].set_text('Casas')
+l.get_texts()[2].set_text('Flats')
+l.get_texts()[3].set_text('Casas de condomínio')
 l.get_texts()[4].set_text('Terrenos, lotes e condomínios')
-l.get_texts()[5].set_text('Terrenos e lotes comerciais')
+l.get_texts()[5].set_text('Terrenos, lotes comerciais')
 # l.get_texts()[6].set_text('Casas comerciais')
 # plt.savefig("includes/violin_plots.svg", format="svg", dpi=600)
 plt.show()
@@ -2192,7 +2192,7 @@ A @fig-corplot apresenta a matriz de correlação entre as variáveis numéricas
 
 \vspace{12pt}
 
-A partir do gráfico de correlação, foram criadas novas variáveis com base nas interações entre as mais correlacionadas. Dessa forma, foram adicionadas três novas variáveis. A primeira é o produto entre o número de quartos do imóvel e a área média do aluguel no bairro; a segunda representa a razão entre o número de quartos e a área do imóvel; e a terceira resulta do produto entre as coordenadas geográficas e o preço médio do aluguel no bairro. Além disso, foi considerada uma variável que representa a quantidade total de cômodos do imóvel. Para isso, somaram-se o número de quartos e banheiros, adicionando-se dois cômodos a mais para imóveis do tipo apartamento, casa, casa de condomínio e flat, assumindo a existência de sala e cozinha.
+A partir do gráfico de correlação, foram criadas novas variáveis com base nas interações entre as mais correlacionadas. Dessa forma, foram adicionadas trẽs novas variáveis. A primeira é o produto entre o número de quartos do imóvel e a área média do aluguel no bairro; a segunda representa a razão entre o número de quartos e a área do imóvel; e a terceira resulta do produto entre as coordenadas geográficas e o preço médio do aluguel no bairro. Além disso, foi considerada uma variável que representa a quantidade total de cômodos do imóvel. Para isso, somaram-se o número de quartos e banheiros, adicionando-se dois cômodos a mais para imóveis do tipo apartamento, casa, casa de condomínio e flat, assumindo a existência de sala e cozinha.
 
 
 ```{python eval=FALSE}
@@ -2691,7 +2691,7 @@ Resultados da tunagem do Gradient Boosting.
 
 \vspace{12pt}
 
-A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import, indica que o hiperparâmetro com maior influência na variação da função objetivo — e, consequentemente, na performance do modelo — é a taxa de aprendizado. Em seguida, a profundidade das árvores é a segunda mais relevante, enquanto o número de árvores tem a menor influência.
+A análise da importância dos hiperparâmetros, apresentada na @fig-gdt_import, indica que o hiperparâmetro com maior influência na variação da função objetivo - e, consequentemente, na performance do modelo - é a taxa de aprendizado. Em seguida, a profundidade das árvores é a segunda mais relevante, enquanto o número de árvores tem a menor influência.
 
 \vspace{12pt}
 
@@ -3074,8 +3074,6 @@ Embora o Extreme Gradient Boosting tenha alcançado o melhor MAPE em comparaçã
 
 ![Gráfico de ICE e PDP.](includes/pdp_ice2.svg){#fig-ice_pdp}
 
-\vspace{12pt}
-
 Para analisar a influência das variáveis na predição dos valores de imóveis, foi utilizado o gráfico de ICE em conjunto com a linha de PDP. Esses gráficos estão representados na @fig-ice_pdp.
 
 
@@ -3207,7 +3205,7 @@ Embora o usuário tenha a opção de selecionar as coordenadas e as informaçõe
 
 # Conclusão
 
-Neste trabalho, foi possível aplicar uma abordagem pouco usual para a solução de problemas relacionados à avaliação do preço de imóveis, principalmente pela dificuldade para se obter dados sobre imóveis, na cidade de João Pessoa. A partir da utilização de técnicas de web scraping, foi possível coletar uma base de dados abrangente diretamente de sites de anúncios imobiliários. Esse processo automatizado de extração de dados demonstrou-se fundamental, especialmente em contextos onde não há acesso a bases públicas organizadas, permitindo a construção de um conjunto rico de variáveis relevantes para a modelagem dos preços dos imóveis.
+\ \ \ Neste trabalho, foi possível aplicar uma abordagem pouco usual para a solução de problemas relacionados à avaliação do preço de imóveis, principalmente pela dificuldade para se obter dados sobre imóveis, na cidade de João Pessoa. A partir da utilização de técnicas de web scraping, foi possível coletar uma base de dados abrangente diretamente de sites de anúncios imobiliários. Esse processo automatizado de extração de dados demonstrou-se fundamental, especialmente em contextos onde não há acesso a bases públicas organizadas, permitindo a construção de um conjunto rico de variáveis relevantes para a modelagem dos preços dos imóveis.
 
 \vspace{12pt}
 

@@ -39,3 +39,4 @@ class Realestate(Base):
     area_aluguel = Column(DECIMAL)
     valor_aluguel = Column(DECIMAL)
     qnt_beneficio = Column(DECIMAL)
+    predicoes_modelo = Column(DECIMAL)
