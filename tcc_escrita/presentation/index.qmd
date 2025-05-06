@@ -133,7 +133,7 @@ lang: pt
   + Realizar a análise e modelagem dos valores dos imóveis em João Pessoa, utilizando técnicas de aprendizado de máquina para compreender os fatores que mais influenciam essas estimativas
 
 - **Objetivos Específicos**
-  + Desenvolver modelos preditivos de valor de imóveis com base em dados coletados via web scraping
+  <!-- + Desenvolver modelos preditivos de valor de imóveis com base em dados coletados via web scraping -->
   + Construir uma aplicação interativa para estimar preços com base nas características informadas pelo usuário
   + Criar visualizações que facilitem a interpretação dos resultados e auxiliem na tomada de decisões
   + Avaliar o impacto e a importância das variáveis por meio de técnicas interpretáveis (SHAP, ICE, PDP)
@@ -503,7 +503,6 @@ $$
 
 ![](Playwright_Logo.svg){.fragment width="700" height="700"}
 
-![](scrapeops-logo.svg){.fragment width="500" height="500"}
 
 ![](plotly_logo.png){.fragment width="700" height="300"}
 
@@ -511,6 +510,8 @@ $$
 
 ![](docker-logo-blue.svg){.fragment width="700" height="700"}
 :::
+
+<!-- ![](scrapeops-logo.svg){.fragment width="500" height="500"} -->
 
 ## Obtenção dos dados
 
@@ -720,7 +721,7 @@ $$
 
 - **Transformação das variáveis numéricas:**
   + Para estabilizar a variância e tornar a distribuição das variáveis independentes mais próximas de uma normal, foram aplicadas duas transformações:
-    + Foi aplicada a transformação de $\log\left(1+x\right)$ nas variáveis na maioria das variáveis numéricas, com exceção da variável do produto entre as coordenadas geográficas, valor e área média do aluguel no bairro.
+    + Foi aplicada a transformação de $\log\left(1+x\right)$ nas variáveis na maioria das variáveis numéricas, com exceção da variável do produto entre as coordenadas geográficas e o preço médio do aluguel no bairro, valor e área média do aluguel no bairro.
     + A variável do produto entre as coordenadas geográficas e o valor do aluguel foi transformada com a transformação de Yeo-Johnson [@yeo], definida da seguinte forma:
     $$
     \psi(\lambda, x) = \begin{cases}
@@ -772,7 +773,7 @@ $$
 <br>
 
 - RMSE (Root Mean Squared Error):
-  + Mede a raiz quadrada do erro quadrático médio. Penaliza mais fortemente grandes desvios e é útil para identificar a magnitude típica dos erros do modelo.
+  + Mede a raiz quadrada do erro quadrático médio.
 
 - $R^2$ (Coeficiente de Determinação):
   + Representa a proporção da variabilidade da variável dependente que é explicada pelo modelo. Um valor próximo de 1 indica boa capacidade de explicação.
@@ -785,7 +786,7 @@ $$
 ::: {columns}
 ::: {.column width="50%"}
 
-![](cv_test_imagem.png){fig-align="center"}
+![Validação cruzada K-Fold.](cv_test_imagem.png){#fig-kfold fig-align="center"}
 :::
 
 ::: {.column width="50%"}
@@ -862,23 +863,26 @@ $$
   \boldsymbol{\theta}_U = \left<\theta_{u_{1}}, \dots, \theta_{u_{m}}\right> \text{, com } \theta_{u_i} \in \Theta_{u_i}
   $$
   é o vetor correspondente a uma configuração parcial de hiperparâmetros do subconjunto $U = \{u_{1}, \cdots, u_{m}\} \subseteq N$, ou seja, um subconjunto dos índices dos hiperparâmetros.
-  + As componentes da função $\hat{f}_{U}\left(\boldsymbol{\theta_U}\right)$ são definidas da seguinte forma:
+
+## Importância dos hiperparâmetros
+
+- As componentes da função $\hat{f}_{U}\left(\boldsymbol{\theta_U}\right)$ são definidas da seguinte forma:
   $$
   \hat{f}_{U} \left(\boldsymbol{\theta}_{U}\right)=
   \begin{cases}
     \frac{1}{\|\Theta\|} \int \hat{y} \left(\boldsymbol{\theta}\right) d\boldsymbol{\theta}, & \text{se } U= \emptyset \\
     \hat{a}_{U}\left(\boldsymbol{\theta}_U\right) - \sum_{W \subseteq U} \hat{f}_{W}\left(\boldsymbol{\theta_{W}}\right), & \text{caso contrário}
-  \end{cases}\text{,}
+  \end{cases}\text{.}
+  $$
+
+- A função $\hat{a}_{U}\left(\boldsymbol{\theta}_U\right)$ representa uma estimativa da performance marginal do algoritmo $A$ em relação ao subconjunto $U$ dos hiperparâmetros, sendo definida por:
+  $$
+  \hat{a}_{U}\left(\boldsymbol{\theta}_U\right) = \frac{1}{\|\boldsymbol{\Theta}_{T}\|} \int \hat{y}\left(\boldsymbol{\theta}_{N|U}\right)d \boldsymbol{\theta}_{T}\text{.}
   $$
 
 ## Importância dos hiperparâmetros
 
 <br>
-
-- A função $\hat{a}_{U}\left(\boldsymbol{\theta}_U\right)$ representa uma estimativa da performance marginal do algoritmo $A$ em relação ao subconjunto $U$ dos hiperparâmetros, sendo definida por:
-  $$
-  \hat{a}_{U}\left(\boldsymbol{\theta}_U\right) = \frac{1}{\|\boldsymbol{\Theta}_{T}\|} \int \hat{y}\left(\boldsymbol{\theta}_{N|U}\right)d \boldsymbol{\theta}_{T}
-  $$
 
 - Quando $U = \emptyset$:
   + $\hat{f}_{\emptyset}$ corresponde à média de $\hat y$​ sobre todo o espaço de hiperparâmetros. Representa o valor médio da função objetivo considerando todas as configurações possíveis.
@@ -931,7 +935,7 @@ em que $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​
 
 - Também foi utilizada a linha do Partial Dependence Plot (PDP), que corresponde à média de todas as curvas individuais geradas pelo ICE.
 
-## Local interpretable model-agnostic explanations (LIME)
+<!-- ## Local interpretable model-agnostic explanations (LIME)
 
 <br>
 
@@ -950,7 +954,7 @@ em que $x^*$ é selecionado como o mínimo ou o máximo de $x_S$​, $\hat f$​
 - Formulação matemática da explicação gerada pelo LIME:
 $$
 \xi\left(x\right) = \arg \min_{g \in G} L\left(f, g, \pi_x\right) + \Omega\left(g\right)\text{.}
-$$
+$$ -->
 
 
 ## Shapley Additive Explanations (SHAP)
@@ -960,6 +964,8 @@ $$
 -  O SHAP (Shapley Additive Explanations) é um método que busca explicar as predições individuais de um modelo, atribuindo a cada variável uma contribuição para o valor predito​
 
 - Baseia-se nos valores de Shapley da teoria dos jogos de coalizão, introduzidos por @shapley1953value, que representam a contribuição média de cada variável considerando as possíveis combinações (coalizões) de covariáveis.
+
+- A interpretação dos valores de Shapley é que a j-ésima covariável contribui $\phi$ para a predição de uma determinada instância.
 
 - Fórmula dos Valores de Shapley:
   + Os valores de Shapley são dados por:
@@ -1173,7 +1179,7 @@ transformação logarítmica.](densidade.png){#fig-dens_plot fig-align="center"}
 - Melhor desempenho geral — Gradient Boosting:
   + Obteve o menor RMSE (0,28297), indicando menor erro quadrático médio nas previsões.
 
-  + Também apresentou o maior R2R2 (87,33%), o que sugere maior capacidade explicativa em relação à variabilidade dos dados.
+  + Também apresentou o maior $R^2$ (87,33%), o que sugere maior capacidade explicativa em relação à variabilidade dos dados.
 
   + Teve o menor MAPE (0,01333), o que reforça sua superioridade na acurácia percentual das previsões.
 
@@ -1208,6 +1214,33 @@ Boosting** e **Extreme Gradient Boosting**, respectivamente.](lgbm_xgb.png){#fig
 ![Gráfico de dependência de valores SHAP para variáveis binárias.](depe_plots.png){#fig-dep_plot fig-align="center"}
 
 # Aplicação Web
+
+![](git_app.gif)
+
+## Conclusão
+
+<br>
+
+- Uso de técnicas automatizadas para extrair dados de sites de anúncios.
+
+- Construção de uma base de dados abrangente e rica em variáveis.
+
+- Modelagem com Aprendizado de Máquina
+  - Gradient Boosting como o modelo com melhor desempenho:
+    + RMSE: 0,28297
+    + MAPE: 1,333%
+    + R2R2: 87,33%
+
+- Interpretação do Modelo
+  + Técnicas utilizadas: SHAP, ICE e PDP.
+  + Resultados importantes:
+    + Variáveis como área, número de quartos, banheiros e aluguel → impacto direto nas predições.
+
+    + Variáveis com impacto limitado (ex.: área de aluguel), mas ainda relevantes em casos específicos (ex.: sauna, spa em imóveis de alto padrão).
+
+- Variáveis de Maior e Menor Impacto (SHAP)
+  + Maior impacto: área do imóvel, razão quartos/área, coordenadas geográficas.
+  + Menor impacto: sauna, spa, portaria, quadra de esportes.
 
 # Referências
 
