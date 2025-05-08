@@ -226,7 +226,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, frame hidden, breakable, boxrule=0pt, enhanced, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, colback={codebgcolor}, frame hidden, breakable, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -795,24 +795,28 @@ imóveis e outros usos relacionados ao mercado imobiliário.
 
 \subsection{Objetivo Geral}\label{objetivo-geral}
 
-~~~Realizar uma análise e modelagem do valor de imóveis na cidade de
-João Pessoa, utilizando ferramentas computacionais e técnicas de
-aprendizagem de máquina, com o intuito de compreender os fatores que
-influenciam e os quais mais impactam na predição desses valores.
+Realizar a predição dos valores dos imóveis na cidade de João Pessoa
+utilizando métodos de aprendizado de máquina.
 
 \subsection{Objetivos Específicos}\label{objetivos-especuxedficos}
 
 \begin{itemize}
 \item
-  Definir um modelo para a predição de imóveis da cidade de João Pessoa
-  para ajudar na tomada de decisão de avaliação de imóveis.
+  Realizar análise exploratória e visualização dos dados para
+  identificar os bairros com imóveis mais valorizados, detectar
+  variáveis com informações ausentes e avaliar as variáveis
+  independentes mais correlacionadas com o valor do imóvel.
 \item
-  Desenvolver uma aplicação prática e interativa que permita a entrada
-  de características dos imóveis e forneça estimativas de seus valores
-  com base nos modelos construídos.
+  Modelar os valores dos imóveis utilizando técnicas de aprendizado de
+  máquina, como Random Forest, Gradient Boosting, Light Gradient
+  Boosting e Stacking.
 \item
-  Criar visualizações que facilitem a interpretação dos resultados e
-  apoiem a tomada de decisões no mercado imobiliário.
+  Identificar, por meio de métodos de interpretação de modelos como
+  SHAP, ICE e LIME, as variáveis que mais influenciam as predições.
+\item
+  Desenvolver uma aplicação web que permita a inserção das
+  características dos imóveis e forneça estimativas de seus valores com
+  base no melhor modelo construído.
 \end{itemize}
 
 \section{Organização do Trabalho}\label{organizauxe7uxe3o-do-trabalho}
@@ -4779,7 +4783,7 @@ imóveis. Além disso, foram utilizadas métricas de erro, como MAPE,
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/rf_plot_predict2.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/rf_plot_predict_no_transform.pdf}}
 
 }
 
@@ -4791,7 +4795,7 @@ imóveis. Além disso, foram utilizadas métricas de erro, como MAPE,
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/gdt_plot_predict2.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/gdt_plot_predict_no_transform.pdf}}
 
 }
 
@@ -4804,23 +4808,13 @@ algoritmo Random Forest e Gradient Boosting, respectivamente.}
 
 \end{figure}%
 
-O ajuste do algoritmo Random Forest é apresentado na
-Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
-previstos e observados. Em termos da transformação logarítmica
-realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28578,
-enquanto o coeficiente de determinação \(R^2\) alcançou \(87,10419\%\).
-Em relação ao MAPE, o valor foi de 0,01346, assim, em média, as
-predições realizadas pelo modelo Random Forest, considerando a
-transformação logarítmica, estiveram em média 1,346\% distantes dos
-valores reais.
-
 \begin{figure}
 
 \begin{minipage}{0.50\linewidth}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/lgbm_plot_predict2.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/lgbm_plot_predict_no_transform.pdf}}
 
 }
 
@@ -4832,7 +4826,7 @@ valores reais.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/xgb_plot_predict2.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{TCC_files/mediabag/includes/xgb_plot_predict_no_transform.pdf}}
 
 }
 
@@ -4845,6 +4839,16 @@ algoritmo Light Gradient Boosting e Extreme Gradient Boosting,
 respectivamente.}
 
 \end{figure}%
+
+O ajuste do algoritmo Random Forest é apresentado na
+Figura~\ref{fig-preds_rf}, que exibe a comparação entre os valores
+previstos e observados. Em termos da transformação logarítmica
+realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28578,
+enquanto o coeficiente de determinação \(R^2\) alcançou \(87,10419\%\).
+Em relação ao MAPE, o valor foi de 0,01346, assim, em média, as
+predições realizadas pelo modelo Random Forest, considerando a
+transformação logarítmica, estiveram em média 1,346\% distantes dos
+valores reais.
 
 \vspace{12pt}
 
@@ -4872,7 +4876,7 @@ ser observado na Figura~\ref{fig-preds_lgbm}.
 
 \centering{
 
-\includegraphics[width=4.16667in,height=\textheight,keepaspectratio]{TCC_files/mediabag/includes/stacking_plot_predict2.pdf}
+\includegraphics[width=\linewidth,height=3.125in,keepaspectratio]{TCC_files/mediabag/includes/stacking_plot_predict_no_transform.pdf}
 
 }
 
