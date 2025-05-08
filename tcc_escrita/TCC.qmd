@@ -106,6 +106,7 @@ test_df.columns = test_df.columns\
 
 train_df = train_df.rename(columns=rename)
 test_df = test_df.rename(columns=rename)
+df_inteiro = pd.concat([train_df, test_df]).reset_index(drop=True)
 ```
 
 \newpage
@@ -209,12 +210,12 @@ Agradeço aos professores Eufrásio de Andrade Lima Neto, Luiz Medeiros de Araú
 \chapter*{\centering Resumo}
 \thispagestyle{empty}
 
-\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, a cidade apresentou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem estatística para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 87,32712%, MAPE de 1,333% e RMSE de 0,28297. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguida pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
+\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, a cidade apresentou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem com base em algoritmos de aprendizagem de máquina para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 87,32712%, MAPE de 1,333% e RMSE de 0,28297. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguida pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
 
 
 ```{=Latex}
 \begin{flushleft}
-\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa.
+\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, aplicação web, João Pessoa.
 \end{flushleft}
 ```
 
@@ -378,7 +379,11 @@ Toda raspagem de dados inicia com o envio de uma requisição HTTP para adquirir
 
 \vspace{12pt}
 
-Para realizar a raspagem de dados, foram utilizadas as linguagens de programação **R** [@r_language] e **Python** [@van1995python]. **R** é uma linguagem voltada para computação científica e visualização de dados, desenvolvida pelos professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do **R** foi lançada em 1993, e, em 1997, a linguagem tornou-se oficialmente parte do Projeto GNU. Em **R**, há diversos pacotes disponíveis para a realização de raspagem de dados. Neste trabalho, foi utilizado o pacote [**xml2**](https://xml2.r-lib.org/) [@xml2] e o [**rvest**](https://rvest.tidyverse.org/) [@rvest].
+Para realizar a raspagem de dados, foram utilizadas as linguagens de programação **R** [@r_language] e **Python** [@van1995python]. **R** é uma linguagem voltada para computação científica e visualização de dados, desenvolvida pelos professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente para ensinar introdução à estatística na Universidade de Auckland. A primeira versão do **R** foi lançada em 1993, e, em 1997, a linguagem tornou-se oficialmente parte do Projeto GNU.
+
+\vspace{12pt}
+
+Embora o R seja amplamente utilizado para computação científica e visualização de dados, a sua comunidade de desenvolvedores expandiu significativamente seu escopo ao longo do tempo. Atualmente, há inúmeros pacotes disponíveis que tornam o R útil em diversas áreas, como web scraping, desenvolvimento web, ciência de dados, bioinformática, entre outras aplicações. Em **R**, há diversos pacotes disponíveis para a realização de web scraping. Neste trabalho, foi utilizado o pacote [**xml2**](https://xml2.r-lib.org/) [@xml2] e o [**rvest**](https://rvest.tidyverse.org/) [@rvest].
 
 \vspace{12pt}
 
@@ -855,6 +860,36 @@ No contexto deste trabalho, o [**Quarto**](https://quarto.org/) foi utilizado pa
 
 Os métodos baseados em árvore envolvem a estratificação ou segmentação do espaço dos preditores em várias regiões simples. Dessa forma, todos os algoritmos utilizados neste trabalho partem dessa ideia. Portanto, o primeiro a ser explicado será o de árvores de decisão, pois fundamenta todos os outros algoritmos. Depois das árvores de decisão, serão explicados os métodos ensemble e, por fim, diferentes variações do método de gradient boosting.
 
+::: {#tbl-testing_models}
+
+| Algoritmo                           | RMSE  | R² (%)   | MAPE (%) |
+|:----------------------------------:|:-------:|:----------:|:-----------:|
+| Random Forest Regressor         | 0,26  | 85,75    | 1,39      |
+| Extra Trees Regressor           | 0,27  | 85,47    | 1,40      |
+| Extreme Gradient Boosting       | 0,27  | 85,27    | 1,47      |
+| Light Gradient Boosting Machine | 0,27  | 84,63    | 1,53      |
+| Gradient Boosting Regressor     | 0,30  | 81,97    | 1,70      |
+| K Neighbors Regressor           | 0,31  | 80,05    | 1,69      |
+| Linear Regression               | 0,34  | 76,95    | 1,95      |
+| Ridge Regression                | 0,34  | 76,95    | 1,95      |
+| Bayesian Ridge                  | 0,34  | 76,95    | 1,95      |
+| Decision Tree Regressor         | 0,36  | 73,74    | 1,78      |
+| AdaBoost Regressor              | 0,37  | 72,29    | 2,21      |
+| Orthogonal Matching Pursuit     | 0,43  | 62,62    | 2,47      |
+| Huber Regressor                 | 0,58  | 29,90    | 3,14      |
+| Lasso Regression                | 0,62  | 21,97    | 3,64      |
+| Elastic Net                     | 0,62  | 21,97    | 3,64      |
+| Lasso Least Angle Regression    | 0,62  | 21,97    | 3,64      |
+| Dummy Regressor                 | 0,70  | -0,05    | 4,21      |
+| Passive Aggressive Regressor    | 2,42  | -1130,87 | 13,84     |
+| Least Angle Regression          | 5,08  | -97949,99| 26,54     |
+
+: Métricas de ajuste na base de teste a partir doteste de vários modelos.
+
+:::
+
+A @tbl-testing_models apresenta os resultados obtidos para diferentes algoritmos. Observa-se que os melhores desempenhos, segundo as métricas RMSE, $R^2$ e MAPE, foram alcançados majoritariamente por modelos baseados em árvores. O Random Forest Regressor, por exemplo, foi o algoritmo que obteve o melhor resultado. Modelos como o Extra Trees Regressor, Extreme Gradient Boosting, LightGBM e Gradient Boosting Regressor também figuram entre os mais eficazes, superando consistentemente os métodos lineares e outros algoritmos. Esses resultados justificam a ênfase nos métodos baseados em árvores ao longo do trabalho, visto que eles apresentam desempenho superior na tarefa de predição considerada, tanto em termos de precisão quanto de robustez frente a diferentes abordagens.
+
 ## Árvores de decisão
 
 \ \ \ Árvores de decisão podem ser utilizadas tanto para regressão quanto para classificação. Elas servem de base para os modelos baseados em árvores empregados neste trabalho, com foco especial nas árvores de regressão^[Uma árvore de regressão é um caso específico da árvore de decisão, mas para regressão.]. O processo de construção de uma árvore se baseia no particionamento recursivo do espaço dos preditores, onde cada particionamento é chamado de nó e o resultado final é chamado de folha ou nó terminal. Em cada nó, é definida uma condição e, caso essa condição seja satisfeita, o resultado será uma das folhas desse nó. Caso contrário, o processo segue para o próximo nó e verifica a próxima condição, podendo gerar uma folha ou outro nó. Veja um exemplo na @fig-arvore.
@@ -1092,8 +1127,6 @@ Fonte: @hastie2009elements [p. 588].
 
 \ \ \ O algoritmo Random Forest é uma técnica derivada do método Bagging, mas com modificações específicas na construção das árvores. O objetivo é reduzir a variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de um subconjunto de variáveis independentes antes de cada divisão.
 
-<!-- \ \ \ O algoritmo Random Forest é uma técnica derivada do método de Bagging, mas com modificações específicas na construção das árvores. O objetivo é melhorar a redução da variância ao diminuir a correlação entre as árvores, sem aumentar significativamente a variabilidade. Isso é alcançado durante o processo de crescimento das árvores por meio da seleção aleatória de variáveis independentes. -->
-
 \vspace{12pt}
 
 No algoritmo Random Forest, ao construir uma árvore a partir de amostras bootstrap, selecionam-se aleatoriamente $m \leq p$ das $p$ variáveis independentes como candidatas para a divisão (sendo $m = p$ no caso do Bagging). Assim, diferentemente do Bagging, o Random Forest não considera todas as $p$ variáveis ao escolher a divisão que minimiza o erro das regiões, mas apenas uma amostra aleatória de $m$ variáveis.
@@ -1175,10 +1208,8 @@ No caso da regressão, o Boosting combina um grande número de árvores de decis
 
 O processo de aprendizado do Boosting é mais lento, o que geralmente resulta em modelos mais precisos, embora mais custosos computacionalmente. Esse processo de aprendizado pode ser controlado por um hiperparâmetro $\lambda$ chamado de shrinkage, ou taxa de aprendizado, permitindo que mais árvores, com formas diferentes, corrijam os erros das árvores passadas. No entanto, um valor muito pequeno para $\lambda$ requer uma quantidade muito maior $B$ de árvores e, diferente do Bagging e Random Forest, o Boosting pode sofrer de sobreajuste se a quantidade de árvores é muito grande. Além disso, a quantidade de divisões $d$ em cada árvore, que controla a complexidade do boosting, pode ser considerada também um hiperparâmetro. Para $d = 1$, ajusta-se um modelo aditivo, pois cada árvore contém apenas um nó.
 
-<!-- @james2013introduction define $d$ como a profundidade de interação que controla a ondem de interação do modelo boosting, já que $d$ divisões podem envolver no máximo $d$ variáveis. -->
 
-
-### Stacked generalization
+### Stacked generalization {#sec-stacking_cite}
 
 \ \ \ O Stacked Generalization, ou Stacking, é um método de ensemble que consiste em treinar um modelo gerado a partir da combinação da predição de vários outros modelos, visando melhorar a precisão das predições. Esse método pode ser aplicado a qualquer modelo estatístico ou algoritmo de aprendizado de máquina. A ideia principal é atribuir pesos às predições, de modo a dar maior importância aos modelos que produzem melhores resultados, ao mesmo tempo em que se evita atribuir altos pesos a modelos com alta complexidade.
 
@@ -1191,8 +1222,6 @@ $$
 $$
 
 A estimação final é $\sum_{m} \hat{w}_m^{st} \hat{f}_m\left(x\right)$. Assim, em vez de escolher um único modelo, o método de Stacking combina os modelos utilizando pesos estimados, o que melhora a performance preditiva, mas pode comprometer a interpretabilidade. Além disso, ao utilizar validação cruzada baseada no método leave-one-out para as predições $\hat{f}^{-i}_{m}\left(x\right)$, o Stacking evita atribuir pesos excessivos a modelos de alta complexidade, reduzindo o risco de sobreajuste.
-
-<!-- Além disso, com as validações cruzadas, baseado no método leave-one-out,  das predições $\hat{f}^{-i}_{m}\left(x\right)$, o Stacking evita dar um peso muito alto a modelos com alta complexidade. -->
 
 ### Gradient Boosting
 
@@ -1271,8 +1300,6 @@ onde $N_{jm}$ denota o número de observações na região $R_{jm}$. Os pseudo-r
 
 Assim, cada árvore de regressão é ajustada aos novos pseudo-resíduos, com o objetivo de minimizar o erro das árvores anteriores. O estimador é, então, atualizado separadamente em cada região $R_{jm}$​, conforme descrito a seguir:
 
-<!-- Assim, cada árvore de regressão é ajustada nos novos pseudos-resíduos​, buscando minimizar o erro das árvores anteriores. O estimador é, então, atualizado separadamente em cada região, conforme descrito a seguir: -->
-
 $$
 f_m\left(x\right) = f_{m - 1}\left(x\right) + \lambda \sum^{J_m}_{j = 1} \gamma_{jm} I\left(x \in R_{jm}\right)\text{,}
 $$
@@ -1287,8 +1314,6 @@ As outras implementações de Gradient Boosting aplicadas a árvores de decisão
 
 O Extreme Gradient Boosting é uma implementação altamente eficiente e flexível do algoritmo de Gradient Boosting aplicado a árvores de decisão. Um de seus principais diferenciais é a incorporação de técnicas de regularização, que ajudam a reduzir o sobreajuste e a melhorar a generalização do modelo.
 
-<!-- O Extreme Gradient Boosting é uma implementação altamente eficiente do algoritmo e flexível de Gradient Boosting aplicado à árvores de decisão. Além disso, é adicionado um novo recurso, técnicas de regularização para diminuir o sobreajuste do modelo. A função objetivo agora passa a ser definida da seguinte forma: -->
-
 \vspace{12pt}
 
 A regularização é feita por meio de um termo adicional que penaliza a complexidade das árvores, definido como:
@@ -1302,8 +1327,6 @@ em que $T$ é a quantidade de folhas na árvore, $\|\omega\|^{2}$ é a soma do q
 
 Assim como o XGBoost, as implementações existentes do LightGBM também permitem o uso de regularização L1 ou L2, embora nenhuma das implementações a utilize por padrão. O LightGBM tem como foco a alta velocidade de treinamento e a eficiência no uso da memória, graças ao algoritmo baseado em histogramas (Histogram-Based Algorithm). Nesse método, os valores contínuos das variáveis são agrupados em intervalos discretos - como em um histograma - o que evita a avaliação de cada ponto individualmente durante as divisões das árvores, reduzindo significativamente o custo computacional.
 
-<!-- Assim como o XGBoost, as implementações existentes de Light Gradient Boosting também permite utilizar a regularização L1 ou L2, mas não utiliza nenhuma das duas por padrão. A principal diferença do Light Gradient Boosting está na forma de crescimento das árvores, primeiro é dividido a folha com a maior redução na função de erro. Além disso, tem um grande foco na velocidade e uma melhor eficiência no uso da memória atráves do algoritmo de Histogram-Based. Esse algoritmo faz com que, em vez de avaliar cada ponto quando realiza a divisão, ele divide valores contínuos em intervalos, como em um histograma, o que reduz grandemente o custo computacional. -->
-
 # Metodologia
 
 ## Obtenção dos dados
@@ -1312,11 +1335,11 @@ Assim como o XGBoost, as implementações existentes do LightGBM também permite
 
 \vspace{12pt}
 
-Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 11 são quantitativas e 14 qualitativas nominais, sendo 12 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem **R**. Dessa forma, tem-se as seguintes variáveis:
+Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as variáveis que poderiam fazer sentido para a modelagem, priorizando aquelas com menor chance de gerar problemas durante o tratamento dos dados, como, por exemplo, ter muitos valores ausentes. Ao todo, foram extraídas 25 variáveis, das quais 11 são quantitativas e 14 qualitativas nominais, sendo 12 de caráter dicotômico. No entanto, nem todas as variáveis foram obtidas diretamente por web scraping. As coordenadas geográficas, latitude e longitude, por exemplo, foram geradas por meio da geocodificação dos endereços de cada imóvel, utilizando o pacote [**tidygeocoder**](https://jessecambon.github.io/tidygeocoder/) da linguagem **R**. Dessa forma, foram consideradas as seguintes variáveis, todas obtidas por meio de web scraping, com exceção das coordenadas geográficas, que foram obtidas por geocodificação dos endereços:
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
-- Valor médio do aluguel no bairro: valor médio do aluguel dos imóveis no bairro, em $m^3$;
+- Valor médio do aluguel no bairro: valor médio do aluguel dos imóveis no bairro, em $m^2$;
 
 - Área: área total do imóvel, medida em $m^2$;
 
@@ -1344,11 +1367,11 @@ Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as
 
 \vspace{12pt}
 
-No entanto, com base nas observações realizadas durante o estudo, nem todas as variáveis coletadas foram utilizadas na modelagem do valor dos imóveis. Algumas foram excluídas devido a uma quantidade excessiva de valores ausentes, enquanto outras se mostraram pouco significativas para explicar o valor do imóvel. Após o processo de coleta e limpeza dos dados, o banco de dados final conta com 31.781 observações.
+No entanto, com base nas observações realizadas durante o estudo, nem todas as variáveis coletadas foram utilizadas na modelagem do valor dos imóveis. Algumas foram excluídas devido a uma quantidade excessiva de valores ausentes, enquanto outras se mostraram pouco significativas para explicar o valor do imóvel. No caso da variável de endereço, utilizada para a obtenção das coordenadas por meio da geocodificação, muitos registros apresentaram baixa precisão, frequentemente por não incluírem o número do imóvel ou conterem apenas o nome da rua e do bairro. Isso resultou em uma localização geográfica genérica, fazendo com que diversos imóveis fossem posicionados de forma centralizada, como, por exemplo, no meio da rua. Após o processo de coleta e limpeza dos dados, o banco de dados final conta com 31.781 observações.
 
 \vspace{12pt}
 
-Além dos dados mencionados, foram também utilizados dados geográficos sobre a cidade de João Pessoa, incluindo informações sobre ciclovias, faixas exclusivas de ônibus, corredores de ônibus, área rural, bairros, escolas públicas, parques, praças e rios. No entanto, esses dados foram empregados exclusivamente na construção dos mapas na aplicação final. As informações foram obtidas no site <https://filipeia.joaopessoa.pb.gov.br/>.
+Além dos dados mencionados, foram também utilizados dados geográficos sobre a cidade de João Pessoa, incluindo informações sobre ciclovias, faixas exclusivas de ônibus, corredores de ônibus, área rural, bairros, escolas públicas, parques, praças e rios. No entanto, esses dados foram empregados exclusivamente na construção dos mapas na aplicação final. As informações foram obtidas no site <https://filipeia.joaopessoa.pb.gov.br/>. A localização das escolas públicas foi obtida a partir do INEP (Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira).
 
 
 ## Análise exploratória de dados
@@ -1370,7 +1393,7 @@ em que $\rho$ representa o coeficiente de Pearson aplicado aos postos das variá
 
 \vspace{12pt}
 
-Portanto, essa etapa resultou na criação de quatro variáveis: a quantidade total de cômodos do imóvel, o produto entre as coordenadas geográficas e o preço médio do aluguel no bairro, a razão entre o número de quartos e a área do imóvel, e o produto entre o número de quartos do imóvel e a área média do aluguel no bairro. No entanto, a inclusão dessas variáveis não levou à remoção das variáveis originais utilizadas em sua construção, pois sua exclusão resultou em uma piora no desempenho do modelo.
+Portanto, essa etapa resultou na criação de quatro variáveis: a quantidade total de cômodos do imóvel, o produto entre as coordenadas geográficas e o preço médio do aluguel no bairro, a razão entre o número de quartos e a área do imóvel, e o produto entre o número de quartos do imóvel e a área média do aluguel no bairro. No entanto, a inclusão dessas variáveis não levou à remoção das variáveis originais utilizadas em sua construção, pois sua exclusão resultou em uma piora no desempenho do modelo, tendo sido observado uma diminuição na métrica de erro quadrático médio.
 
 \vspace{12pt}
 
@@ -1390,7 +1413,13 @@ A estratificação foi baseada em intervalos criados a partir da variável que r
 
 \vspace{12pt}
 
-Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na predição do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking, combinando os modelos previamente construídos para melhorar a performance preditiva. No Stacking, foi utilizado como preditor final o algoritmo de Random Forest.
+Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas [**scikit-learn**](https://scikit-learn.org/stable/), [**LightGBM**](https://lightgbm.readthedocs.io/en/stable/) e [**XGBoost**](https://xgboost.readthedocs.io/en/stable/). As duas últimas foram empregadas especificamente na modelagem, enquanto a primeira também foi utilizada para criar pipelines de pré-processamento de dados, que organizam etapas sequenciais de preparação necessárias para o tratamento adequado dos dados. Assim, os quatro modelos aplicados na predição do valor do imóvel foram: Random Forest, Gradient Boosting, LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking.
+
+<!-- , combinando os modelos previamente construídos para melhorar a performance preditiva. -->
+
+\vspace{12pt}
+
+A implementação do Stacking na biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) permite o uso de um modelo para estimar os pesos atribuídos às predições dos modelos base, por meio do argumento ```final_estimator```. Por padrão, esse argumento corresponde a um modelo linear do tipo Ridge, que realiza a combinação de forma regularizada. Quando o modelo final é linear, obtém-se a formulação clássica do Stacking, conforme discutido na @sec-stacking_cite. No entanto, é possível utilizar outros algoritmos nessa etapa. Neste trabalho, optou-se pelo algoritmo Random Forest como ```final_estimator```, em substituição ao Ridge, devido ao melhor desempenho preditivo do algoritmo Stacking com o Random Forest nessa função. Embora o Random Forest tenha sido utilizado para essa etapa, ele também foi empregado como estimador base, juntamente com outros três algoritmos.
 
 ### Etapas de pré-processamento
 
@@ -1436,7 +1465,7 @@ z = \frac{x - \mu}{\sigma}\text{,}
 $$
 em que $\mu$ representa a média e $\sigma$ o desvio padrão. Essa padronização é essencial para garantir que os modelos estatísticos e de aprendizado de máquina tratem as variáveis em escalas consistentes.
 
-### Validação cruzada
+### Validação cruzada {#sec-val_cruz}
 
 \ \ \ A técnica utilizada para otimizar e determinar os hiperparâmetros dos modelos, além de servir para otimizar o hiperparâmetro de vizinhos mais próximos para a imputação de valores ausentes, foi a validação cruzada. A validação cruzada serve para estimar um erro de generalização médio da seguinte forma $Err = E\left[L\left(Y, \hat{f}\left(X\right)\right)\right]$, em que $L$ é uma função perda e $\hat f$ é um estimador. Existem diversar técnicas de validação cruzada, a que foi utilizada nesse trabalho é a validação cruzada K-Fold.
 
@@ -1504,7 +1533,11 @@ A @fig-kfold ilustra exatamente o caso da validação cruzada por K-Fold. As div
 
 \vspace{12pt}
 
-Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/), ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em **Python**:
+Para realizar a validação cruzada com K-Fold nos modelos empregados neste trabalho, utilizou-se uma função e uma classe da biblioteca [**scikit-learn**](https://scikit-learn.org/stable/), ambas disponíveis no módulo `model_selection`. A função utilizada foi a `cross_val_score`, que recebe o modelo por meio do argumento `estimator`. A função perda para avaliação é especificado pelo argumento `scoring`, enquanto a técnica de validação cruzada é definida pelo argumento `cv`. Especificamente, foi empregada a classe `KFold(n_splits=20)` para configurar a validação cruzada do tipo K-Fold, em que o parâmetro `n_splits` define o número de divisões (folds) a serem realizadas, neste caso, 20. Optou-se por 20 folds porque os resultados obtidos para os modelos mostraram-se superiores em comparação com o uso de 10 ou 5 folds.
+
+\vspace{12pt}
+
+Após a execução da validação, a média das métricas retornadas pela função `cross_val_score` para cada fold foi calculada, como forma de se obter uma estimativa do desempenho do modelo. O código abaixo é um exemplo de como se utilizar a validação cruzada em **Python**:
 
 ```{python}
 #| echo: true
@@ -1541,10 +1574,6 @@ A métrica utilizada para avaliar o desempenho dos modelos durante a validação
 
 Embora não tenha sido utilizada na validação cruzada, outra métrica considerada para a análise do desempenho dos modelos foi o MAPE (Erro Percentual Absoluto Médio). Essa métrica mede, em termos percentuais, o desvio médio entre os valores estimados e os valores observados, oferecendo uma interpretação relativa ao erro. Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelo modelo, com base nas variáveis independentes utilizadas em sua construção. As métricas utilizadas são definidas da seguinte forma:
 
-<!-- Por fim, foi analisado o coeficiente de determinação ($R^2$), que indica a proporção da variância da variável dependente explicada pelo modelo, com base nas variáveis independentes utilizadas para sua construção. As métricas utilizadas são definidas da seguinte forma: -->
-
-<!-- Neste caso, o $R^2$ avalia o quão bem as variáveis utilizadas para a construção do modelo conseguem representar a variação no valor do imóvel. As métricas utilizadas são definidas da seguinte forma: -->
-
 ::: {layout-ncol=3}
 $$
 \text{RMSE} = \sqrt{\dfrac{1}{n} \sum_{i = 0}^n (y_i - \hat y_i)^2}
@@ -1561,7 +1590,25 @@ $$
 
 \noindent em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais.
 
-<!-- em que $SS_{\text{resíduos}}$ e $SS_{\text{total}}$ representam, respectivamente, a soma dos quadrados dos resíduos e a soma dos quadrados totais. -->
+\vspace{12pt}
+
+O RMSE foi utilizado como para a seleção do algoritmo com melhor desempenho. Isso é justificado pelo seu papel como estimador do risco quadrático condicional, definido por:
+
+$$
+R\left(g\right):=\E\left[\left(Y - g\left(X\right)\right)^2\right]
+$$
+
+O risco $R$ mede a esperança da perda quadrática associada à função preditiva $g$, e tem grande apelo frequentista no contexto de predição. Suponha que se observe um novo conjunto de dados $\left(X_{n+1}, Y_{n+1}\right), \cdots, \left(X_{n+m}, Y_{n+m}\right)$, i.i.d. à amostra original [@izbicki2020aprendizado]. A Lei dos Grandes Números garante que, para $m$ suficientemente grande:
+
+
+$$
+\frac{1}{m}\sum_{i =1}^{m}\left(Y_{n+i} - g\left(X_{n+i}\right)\right)^2 \xrightarrow{\text{q.c.}} R\left(g\right)\text{, }
+$$
+ou seja, a média do erro quadrático em novas amostras converge quase certamente ao risco.
+
+\vspace{12pt}
+
+Portanto, quando calculado sobre dados que não participaram da estimação de $g$ - como em validação cruzada ou em conjuntos de validação independentes - o erro quadrático médio atua como um estimador consistente do risco. Essa consistência, garantida pela Lei dos Grandes Números, assegura que, à medida que o tamanho da amostra aumenta, o erro estimado converge quase certamente para o risco verdadeiro. Assim, ao comparar diferentes modelos com base em seus respectivos erros quadráticos médios, estamos, assintoticamente, comparando suas reais capacidades de generalização.
 
 ## Otimização de hiperparâmetros
 
@@ -1958,14 +2005,14 @@ Por padrão, a classe `shap.Explainer` utiliza o algoritmo de explicação consi
 
 ## Análise exploratória de dados
 
-\ \ \ A análise exploratória dos dados foi realizada após a divisão entre os conjuntos de treinamento e teste. Essa abordagem foi adotada para evitar o sobreajuste do modelo e garantir que o algoritmo não aprenda com informações indisponíveis no conjunto de teste. Assim, a descritiva dos dados foi realizada utilizando o conjunto de treinamento.
+\ \ \ A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas. No caso do IPTU, além da alta proporção de observações ausentes, sua exclusão também se justifica por estar diretamente relacionado com o valor do imóvel, variável já presente na base. As demais variáveis com valores ausentes foram tratadas por meio de imputação.
 
 ```{python}
 #| label: fig-miss
 #| fig-cap: "Proporção de valores ausentes por variáveis."
 
 g_missing = sns.displot(
-    data=train_df.isnull() \
+    data=df_inteiro.isnull() \
         .melt(value_name="Valores ausentes") \
         .replace([False, True], ["Não é ausente", "Ausente"]) \
         .groupby(["variable", "Valores ausentes"]).size() \
@@ -1990,7 +2037,6 @@ g_missing.tick_params(labelsize=6)
 plt.show()
 ```
 
-A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas, enquanto as demais com valores ausentes foram tratadas por meio de imputação.
 
 \vspace{12pt}
 
@@ -2018,7 +2064,7 @@ A análise de alguns bairros se torna limitada devido à baixa quantidade de im�
 
 fig, axes = plt.subplots(2, 3, figsize=(5.7, 2.7))
 
-dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
+dists_var = df_inteiro[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
                       'Banheiro', 'Tipo']]\
                       .set_index('Tipo')\
@@ -2032,7 +2078,7 @@ dists_var = train_df[['Valor', 'Área', 'Área de aluguel',
                       )
 
 sns.violinplot(
-  data=train_df,
+  data=df_inteiro,
   x='Vaga',
   hue='Tipo',
   ax=axes[0][0],
@@ -2040,7 +2086,7 @@ sns.violinplot(
 ).legend_.remove()
 
 sns.violinplot(
-  data=train_df,
+  data=df_inteiro,
   x='Banheiro',
   hue='Tipo',
   ax=axes[0][1],
@@ -2048,7 +2094,7 @@ sns.violinplot(
 ).legend_.remove()
 
 sns.violinplot(
-  data=train_df,
+  data=df_inteiro,
   x='Quarto',
   hue='Tipo',
   ax=axes[0][2],
@@ -2056,7 +2102,7 @@ sns.violinplot(
 ).legend_.remove()
 
 sns.violinplot(
-  data=train_df,
+  data=df_inteiro,
   x='Área',
   hue='Tipo',
   ax=axes[1][0],
@@ -2064,7 +2110,7 @@ sns.violinplot(
 ).legend_.remove()
 
 sns.violinplot(
-  data=train_df,
+  data=df_inteiro,
   x='Valor de aluguel',
   hue='Tipo',
   ax=axes[1][1],
@@ -2072,7 +2118,7 @@ sns.violinplot(
 ).legend_.remove()
 
 sns.violinplot(
-  data=train_df,
+  data=df_inteiro,
   x='Área de aluguel',
   hue='Tipo',
   ax=axes[1][2],
@@ -2106,7 +2152,7 @@ A distribuição das variáveis foi analisada em termos do tipo do imóvel a par
 
 \vspace{12pt}
 
-Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica $\log\left(1 + x\right)$. O gráfico de densidade à esquerda na @fig-densitarg mostra a distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada da distribuição é reduzida. Isso tende a aproximar a distribuição de uma distribuição normal, facilitando a modelagem e análise estatística.
+Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplicada uma transformação logarítmica $\log\left(1 + x\right)$. O gráfico de densidade à esquerda na @fig-densitarg mostra a distribuição do valor dos imóveis. Há uma tendência dos valores ficarem mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam valores excepcionalmente altos, o que acaba gerando uma distribuição assimétrica positiva. Com a aplicação da transformação logarítmica, a assimetria é suavizada da distribuição é reduzida.
 
 ```{python}
 #| label: fig-densitarg
@@ -2115,7 +2161,7 @@ Para reduzir a assimetria da distribuição dos valores dos imóveis, foi aplica
 fig, axes = plt.subplots(1, 2, figsize=(5.7, 2.7))
 
 sns.kdeplot(
-  data=train_df,
+  data=df_inteiro,
   x='Valor',
   ax=axes[0],
   fill=True,
@@ -2124,7 +2170,7 @@ sns.kdeplot(
 )
 
 sns.kdeplot(
-  data=train_df.assign(Valor=lambda x: np.log1p(x.Valor)),
+  data=df_inteiro.assign(Valor=lambda x: np.log1p(x.Valor)),
   x='Valor',
   ax=axes[1],
   fill=True,
@@ -2168,7 +2214,7 @@ plt.show()
 
 fig = plt.figure(figsize=(5.7, 2.7))
 
-mat_plot = train_df[['Valor', 'Área', 'Área de aluguel',
+mat_plot = df_inteiro[['Valor', 'Área', 'Área de aluguel',
                       'Valor de aluguel', 'Vaga', 'Quarto',
                       'Banheiro', 'Latitude', 'Longitude']]\
             .assign(Valor=lambda x: np.log1p(x.Valor))\
@@ -2207,7 +2253,6 @@ from branca.colormap import linear
 
 state_geo = gpd.read_file('includes/bairros.geojson')\
   .assign(nome=lambda x: x.nome.str.strip())
-df_inteiro = pd.concat([train_df, test_df])
 df_inteiro = df_inteiro\
       .assign(Bairro=lambda x: x\
         .Bairro\
@@ -2399,18 +2444,18 @@ img = Image.open(io.BytesIO(img_data))
 
 \vspace{12pt}
 
-Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas finais obtidas para cada algoritmo na base de treinamento, após o ajuste com os hiperparâmetros, pode ser visualizado na @tbl-metrics_models.
+Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas finais obtidas para cada algoritmo na base de teste, após o ajuste com os hiperparâmetros, pode ser visualizado na @tbl-metrics_models.
 
 
 ::: {#tbl-metrics_models}
 
-|           Algoritmo          |   RMSE  |   $R^2$   |   MAPE  |
+|           Algoritmo          |   RMSE  |   $R^2 \ \left(\%\right)$   |   MAPE $\left(\%\right)$  |
 |:-------------------------:|:-------:|:---------:|:-------:|
-|       Random Forest       | 0,28578 | $87,10419\%$ | 0,01346 |
-|     Gradient Boosting     | 0,28297 | $87,32712\%$ | 0,01333 |
-|  Light Gradient Boosting  | 0,28385 | $87,25794\%$ | 0,01340 |
-| Extreme Gradient Boosting | 0,28400 | $87,24599\%$ | 0,01325 |
-|          Stacking         | 0,28382 | $87,26007\%$ | 0,01340 |
+|       Random Forest       | 234471,51 | 84,54 | 18,32 |
+|     Gradient Boosting     | 227677,44 | 85,42 | 18,21 |
+|  Light Gradient Boosting  | 228784,37 | 85,28 | 18,34 |
+| Extreme Gradient Boosting | 228300,83 | 85,34 | 18,13 |
+|          Stacking         | 228377,11 | 85,33 | 18,32 |
 
 : Métricas obtidas de cada algoritmo.
 
@@ -2534,6 +2579,24 @@ fig_rf_contour.set_ylabel(fig_rf_contour.get_ylabel(), fontsize=6)
 fig_rf_contour.get_children()[-4].set_text('')
 
 plt.show()
+
+# fig_rf_contour = optuna.visualization.matplotlib.plot_contour(study1)
+
+# fig, ax = plt.gcf(), plt.gca()
+# fig.set_size_inches(4.3, 2.3)
+
+# for coll in fig_rf_contour.collections:
+#     coll.set_cmap('crest')
+
+# fig.axes[-1].set_ylabel("RMSE", fontsize=6)
+# fig.axes[-1].tick_params(labelsize=6)
+# fig_rf_contour.tick_params(axis="both", labelsize=6)
+# fig_rf_contour.set_xlabel(fig_rf_contour.get_xlabel(), fontsize=6)
+# fig_rf_contour.set_ylabel(fig_rf_contour.get_ylabel(), fontsize=6)
+
+# fig_rf_contour.get_children()[-4].set_text('')
+
+# plt.show()
 ```
 
 Resultados da tunagem da Random Forest.
@@ -3065,7 +3128,10 @@ Utilizando os modelos finais com seus hiperparâmetros otimizados e adotando o R
 
 \vspace{12pt}
 
-Embora o Extreme Gradient Boosting tenha alcançado o melhor MAPE em comparação aos demais algoritmos, a métrica utilizada para a escolha do modelo com melhor desempenho foi o RMSE, no qual o Gradient Boosting se destacou. Dessa forma, as análises a seguir serão baseadas nesse algoritmo, que também será utilizado para realizar as previsões na aplicação final.
+
+Embora o Extreme Gradient Boosting tenha apresentado o menor MAPE entre os algoritmos avaliados, a métrica adotada para a seleção do modelo com melhor desempenho foi o RMSE, conforme justificado ao final da @sec-val_cruz, no qual o Gradient Boosting se destacou. Assim, as análises a seguir serão baseadas nesse algoritmo, que também será utilizado para as previsões na aplicação final.
+
+<!-- Embora o Extreme Gradient Boosting tenha alcançado o melhor MAPE em comparação aos demais algoritmos, a métrica utilizada para a escolha do modelo com melhor desempenho foi o RMSE, como justificado ao fim da @sec-val_cruz, no qual o Gradient Boosting se destacou. Dessa forma, as análises a seguir serão baseadas nesse algoritmo, que também será utilizado para realizar as previsões na aplicação final. -->
 
 ## Impacto e importância das variáveis na predição
 

@@ -133,6 +133,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{amsmath,amssymb}
 \usepackage{dirtree}
 \usepackage{amsmath}
 \usepackage[explicit]{titlesec}
@@ -146,6 +147,7 @@
 \usepackage{pdflscape}
 \usepackage{fancyhdr}
 
+\DeclareMathOperator{\E}{\mathbb{E}}
 \newcommand{\blandscape}{\begin{landscape}}
 \newcommand{\elandscape}{\end{landscape}}
 \renewcommand{\footnotesize}{\scriptsize}
@@ -224,7 +226,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, colback={codebgcolor}, enhanced, frame hidden, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[colback={codebgcolor}, frame hidden, breakable, boxrule=0pt, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -264,7 +266,7 @@
 \title{Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores
 de Imóveis na Cidade de João Pessoa}
 \author{Gabriel de Jesus Pereira}
-\date{abril, 2025}
+\date{maio, 2025}
 
 \begin{document}
 \cleardoublepage
@@ -413,19 +415,19 @@ brincadeira e conselho que marcaram a minha infância.
 
 \vspace{12pt}
 
-Agradeço ao meu irmão, Bruno de Jesus Pereira --- meu melhor amigo ---
-pela amizade incondicional. Sou grato por sempre me convidar para passar
-o tempo juntos, pelas risadas, pelos momentos de diversão e pela
+Agradeço ao meu irmão, Bruno de Jesus Pereira - meu melhor amigo - pela
+amizade incondicional. Sou grato por sempre me convidar para passar o
+tempo juntos, pelas risadas, pelos momentos de diversão e pela
 tranquilidade que isso trouxe ao meu dia a dia. Agradeço também pelo
 incentivo durante a graduação, pelas horas em que nos divertimos jogando
---- mesmo que por pouco tempo ---, pelas conversas sobre teorias de
-jogos e pelas conversas sobre filmes, que tornaram essa jornada muito
-mais leve e especial.
+- mesmo que por pouco tempo -, pelas conversas sobre teorias de jogos e
+pelas conversas sobre filmes, que tornaram essa jornada muito mais leve
+e especial.
 
 \vspace{12pt}
 
 À Ataline Soares Batista, agradeço por ser a melhor pessoa que poderia
-estar ao meu lado --- desde o ensino médio e, hoje, como minha noiva.
+estar ao meu lado - desde o ensino médio e, hoje, como minha noiva.
 Obrigado por tornar meus dias mais leves, pelos momentos de diversão e
 descontração. Ter você ao meu lado me fez uma pessoa melhor em todos os
 aspectos da vida: mais feliz, mais criativo e com ainda mais vontade de
@@ -481,7 +483,7 @@ o conteúdo de forma profunda e não tivesse mais dúvidas.
 
 Agradeço também ao amigo Jeferson, membro do grupo de estudos GEAFS,
 pela oportunidade de desenvolver meu primeiro artigo e por me ajudar a
-compreender melhor o funcionamento do processo de pesquisa --- desde a
+compreender melhor o funcionamento do processo de pesquisa - desde a
 formulação das perguntas até a etapa de análise.
 
 \vspace{12pt}
@@ -523,28 +525,29 @@ se destacando nacionalmente. Até novembro de 2024, a cidade apresentou
 uma valorização acumulada de 16,13\% nos imóveis residenciais,
 posicionando-se entre as capitais com maior crescimento no setor. Diante
 desse cenário de expansão e valorização, este trabalho teve como
-objetivo desenvolver uma modelagem estatística para a predição de
-valores de imóveis em João Pessoa, com base em dados coletados por meio
-de web scraping em sites do mercado imobiliário. Foram utilizadas
-técnicas de aprendizagem de máquina para construir e avaliar diferentes
-modelos preditivos, com destaque para o modelo final baseado no
-algoritmo de Gradient Boosting, que apresentou desempenho satisfatório,
-com \(R^2\) de 87,32712\%, MAPE de 1,333\% e RMSE de 0,28297. Além da
-modelagem, foram aplicadas técnicas interpretativas como SHAP, ICE e PDP
-para avaliar a importância das variáveis e padrão de comportamento na
-estimativa dos preços. Os resultados indicaram que a área do imóvel foi
-o fator que mais impactou a predição, seguida pela razão entre o número
-de quartos e a área, quantidade de vagas de garagem, coordenadas
-geográficas, número de quartos e valor médio do aluguel no bairro. Por
-fim, os dados e o modelo preditivo foram integrados a uma aplicação web,
-desenvolvida com o objetivo de auxiliar no processo de avaliação de
-imóveis em João Pessoa. A aplicação permite ao usuário realizar
-previsões com base nas características informadas, além de visualizar
-mapas e gráficos descritivos, oferecendo uma abordagem orientada por
-dados para o mercado imobiliário local.
+objetivo desenvolver uma modelagem com base em algoritmos de
+aprendizagem de máquina para a predição de valores de imóveis em João
+Pessoa, com base em dados coletados por meio de web scraping em sites do
+mercado imobiliário. Foram utilizadas técnicas de aprendizagem de
+máquina para construir e avaliar diferentes modelos preditivos, com
+destaque para o modelo final baseado no algoritmo de Gradient Boosting,
+que apresentou desempenho satisfatório, com \(R^2\) de 87,32712\%, MAPE
+de 1,333\% e RMSE de 0,28297. Além da modelagem, foram aplicadas
+técnicas interpretativas como SHAP, ICE e PDP para avaliar a importância
+das variáveis e padrão de comportamento na estimativa dos preços. Os
+resultados indicaram que a área do imóvel foi o fator que mais impactou
+a predição, seguida pela razão entre o número de quartos e a área,
+quantidade de vagas de garagem, coordenadas geográficas, número de
+quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo
+preditivo foram integrados a uma aplicação web, desenvolvida com o
+objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa.
+A aplicação permite ao usuário realizar previsões com base nas
+características informadas, além de visualizar mapas e gráficos
+descritivos, oferecendo uma abordagem orientada por dados para o mercado
+imobiliário local.
 
 \begin{flushleft}
-\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, modelagem estatística, João Pessoa.
+\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, aplicação web, João Pessoa.
 \end{flushleft}
 
 \thispagestyle{empty}
@@ -681,7 +684,7 @@ No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor
 I, de 1990, que bloqueou todos os ativos financeiros e 60\% do saldo das
 cadernetas de poupança, a principal fonte de arrecadação para o setor. O
 saldo da poupança na época correspondia a US\$ 30 bilhões. Dos 40\%
-restantes, cerca de foi retirado pelos depositantes, uma vez que a
+restantes, cerca de 50\% foi retirado pelos depositantes, uma vez que a
 população ficou sem dinheiro disponível para arcar com despesas
 correntes (ABECIP, 2015). Como consequência, o saldo das cadernetas de
 poupança foi drasticamente reduzido, atingindo aproximadamente US\$ 7 a
@@ -944,9 +947,17 @@ computação científica e visualização de dados, desenvolvida pelos
 professores Ross Ihaka e Robert Gentleman. Ela foi criada inicialmente
 para ensinar introdução à estatística na Universidade de Auckland. A
 primeira versão do \textbf{R} foi lançada em 1993, e, em 1997, a
-linguagem tornou-se oficialmente parte do Projeto GNU. Em \textbf{R}, há
-diversos pacotes disponíveis para a realização de raspagem de dados.
-Neste trabalho, foi utilizado o pacote
+linguagem tornou-se oficialmente parte do Projeto GNU.
+
+\vspace{12pt}
+
+Embora o R seja amplamente utilizado para computação científica e
+visualização de dados, a sua comunidade de desenvolvedores expandiu
+significativamente seu escopo ao longo do tempo. Atualmente, há inúmeros
+pacotes disponíveis que tornam o R útil em diversas áreas, como web
+scraping, desenvolvimento web, ciência de dados, bioinformática, entre
+outras aplicações. Em \textbf{R}, há diversos pacotes disponíveis para a
+realização de web scraping. Neste trabalho, foi utilizado o pacote
 \href{https://xml2.r-lib.org/}{\textbf{xml2}} (WICKHAM; HESTER; OOMS,
 2023) e o \href{https://rvest.tidyverse.org/}{\textbf{rvest}} (WICKHAM,
 2024).
@@ -1032,7 +1043,7 @@ que permite extrair dados de páginas da web de forma automatizada.
 O \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} é uma
 ferramenta robusta e completa, com suporte nativo para diversos métodos
 HTTP. Ele foi projetado para ser rápido e eficiente, facilitando a
-criação de spiders --- programas que navegam automaticamente por páginas
+criação de spiders - programas que navegam automaticamente por páginas
 web e extraem dados de forma estruturada. Além disso, o framework
 permite a exportação dos dados coletados para diversos formatos, como
 CSV, JSON ou bancos de dados, tornando-o uma solução ideal para projetos
@@ -2046,6 +2057,73 @@ todos os outros algoritmos. Depois das árvores de decisão, serão
 explicados os métodos ensemble e, por fim, diferentes variações do
 método de gradient boosting.
 
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.5143}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1286}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1714}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1857}}@{}}
+\caption{Métricas de ajuste na base de teste a partir doteste de vários
+modelos.}\label{tbl-testing_models}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+Algoritmo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+RMSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+R² (\%)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+MAPE (\%)
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+Algoritmo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+RMSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+R² (\%)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+MAPE (\%)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Random Forest Regressor & 0,26 & 85,75 & 1,39 \\
+Extra Trees Regressor & 0,27 & 85,47 & 1,40 \\
+Extreme Gradient Boosting & 0,27 & 85,27 & 1,47 \\
+Light Gradient Boosting Machine & 0,27 & 84,63 & 1,53 \\
+Gradient Boosting Regressor & 0,30 & 81,97 & 1,70 \\
+K Neighbors Regressor & 0,31 & 80,05 & 1,69 \\
+Linear Regression & 0,34 & 76,95 & 1,95 \\
+Ridge Regression & 0,34 & 76,95 & 1,95 \\
+Bayesian Ridge & 0,34 & 76,95 & 1,95 \\
+Decision Tree Regressor & 0,36 & 73,74 & 1,78 \\
+AdaBoost Regressor & 0,37 & 72,29 & 2,21 \\
+Orthogonal Matching Pursuit & 0,43 & 62,62 & 2,47 \\
+Huber Regressor & 0,58 & 29,90 & 3,14 \\
+Lasso Regression & 0,62 & 21,97 & 3,64 \\
+Elastic Net & 0,62 & 21,97 & 3,64 \\
+Lasso Least Angle Regression & 0,62 & 21,97 & 3,64 \\
+Dummy Regressor & 0,70 & -0,05 & 4,21 \\
+Passive Aggressive Regressor & 2,42 & -1130,87 & 13,84 \\
+Least Angle Regression & 5,08 & -97949,99 & 26,54 \\
+\end{longtable}
+
+A Tabela~\ref{tbl-testing_models} apresenta os resultados obtidos para
+diferentes algoritmos. Observa-se que os melhores desempenhos, segundo
+as métricas RMSE, \(R^2\) e MAPE, foram alcançados majoritariamente por
+modelos baseados em árvores. O Random Forest Regressor, por exemplo, foi
+o algoritmo que obteve o melhor resultado. Modelos como o Extra Trees
+Regressor, Extreme Gradient Boosting, LightGBM e Gradient Boosting
+Regressor também figuram entre os mais eficazes, superando
+consistentemente os métodos lineares e outros algoritmos. Esses
+resultados justificam a ênfase nos métodos baseados em árvores ao longo
+do trabalho, visto que eles apresentam desempenho superior na tarefa de
+predição considerada, tanto em termos de precisão quanto de robustez
+frente a diferentes abordagens.
+
 \section{Árvores de decisão}\label{uxe1rvores-de-decisuxe3o}
 
 ~~~Árvores de decisão podem ser utilizadas tanto para regressão quanto
@@ -2375,8 +2453,8 @@ ser bastante semelhantes. As variáveis selecionadas para as divisões são
 escolhidas com base na maior redução do erro nas regiões, e,
 frequentemente, as mesmas variáveis são as que mais contribuem para essa
 redução, sendo repetidamente escolhidas. Uma forma de reduzir essa
-correlação --- e, com isso, melhorar o desempenho do Bagging --- é por
-meio do algoritmo Random Forest, que será apresentado a seguir.
+correlação - e, com isso, melhorar o desempenho do Bagging - é por meio
+do algoritmo Random Forest, que será apresentado a seguir.
 
 \subsection{Random Forest}\label{random-forest}
 
@@ -2579,7 +2657,7 @@ do boosting, pode ser considerada também um hiperparâmetro. Para
 \(d = 1\), ajusta-se um modelo aditivo, pois cada árvore contém apenas
 um nó.
 
-\subsection{Stacked generalization}\label{stacked-generalization}
+\subsection{Stacked generalization}\label{sec-stacking_cite}
 
 ~~~O Stacked Generalization, ou Stacking, é um método de ensemble que
 consiste em treinar um modelo gerado a partir da combinação da predição
@@ -2696,8 +2774,8 @@ Essas regiões correspondem às folhas da respectiva árvore de regressão.
 \vspace{12pt}
 
 Como as regiões são disjuntas, a partir da Equação~\ref{eq-treebost}, a
-estimativa de \(b_{jm}\) --- a predição associada à região
-\(R_{jm}\)\hspace{0pt} --- será simplesmente a média dos pseudo-resíduos
+estimativa de \(b_{jm}\) - a predição associada à região
+\(R_{jm}\)\hspace{0pt} - será simplesmente a média dos pseudo-resíduos
 \(r_{im}\):
 
 \[
@@ -2764,7 +2842,7 @@ implementações a utilize por padrão. O LightGBM tem como foco a alta
 velocidade de treinamento e a eficiência no uso da memória, graças ao
 algoritmo baseado em histogramas (Histogram-Based Algorithm). Nesse
 método, os valores contínuos das variáveis são agrupados em intervalos
-discretos --- como em um histograma --- o que evita a avaliação de cada
+discretos - como em um histograma - o que evita a avaliação de cada
 ponto individualmente durante as divisões das árvores, reduzindo
 significativamente o custo computacional.
 
@@ -2805,7 +2883,10 @@ coordenadas geográficas, latitude e longitude, por exemplo, foram
 geradas por meio da geocodificação dos endereços de cada imóvel,
 utilizando o pacote
 \href{https://jessecambon.github.io/tidygeocoder/}{\textbf{tidygeocoder}}
-da linguagem \textbf{R}. Dessa forma, tem-se as seguintes variáveis:
+da linguagem \textbf{R}. Dessa forma, foram consideradas as seguintes
+variáveis, todas obtidas por meio de web scraping, com exceção das
+coordenadas geográficas, que foram obtidas por geocodificação dos
+endereços:
 
 \begin{itemize}
 \item
@@ -2813,7 +2894,7 @@ da linguagem \textbf{R}. Dessa forma, tem-se as seguintes variáveis:
   principal foco de análise deste trabalho;
 \item
   Valor médio do aluguel no bairro: valor médio do aluguel dos imóveis
-  no bairro, em \(m^3\);
+  no bairro, em \(m^2\);
 \item
   Área: área total do imóvel, medida em \(m^2\);
 \item
@@ -2836,7 +2917,7 @@ da linguagem \textbf{R}. Dessa forma, tem-se as seguintes variáveis:
   Longitude: posição vertical, também medida em frações decimais de
   graus, assim como a latitude;
 \item
-  Tipo do imóvel: sete categorias foram consideradas: apartamentos,
+  Tipo do imóvel: seis categorias foram consideradas: apartamentos,
   casas, casas de condomínio, flats e terrenos de lotes comerciais e de
   condomínio;
 \item
@@ -2855,8 +2936,14 @@ No entanto, com base nas observações realizadas durante o estudo, nem
 todas as variáveis coletadas foram utilizadas na modelagem do valor dos
 imóveis. Algumas foram excluídas devido a uma quantidade excessiva de
 valores ausentes, enquanto outras se mostraram pouco significativas para
-explicar o valor do imóvel. Após o processo de coleta e limpeza dos
-dados, o banco de dados final conta com 31.781 observações.
+explicar o valor do imóvel. No caso da variável de endereço, utilizada
+para a obtenção das coordenadas por meio da geocodificação, muitos
+registros apresentaram baixa precisão, frequentemente por não incluírem
+o número do imóvel ou conterem apenas o nome da rua e do bairro. Isso
+resultou em uma localização geográfica genérica, fazendo com que
+diversos imóveis fossem posicionados de forma centralizada, como, por
+exemplo, no meio da rua. Após o processo de coleta e limpeza dos dados,
+o banco de dados final conta com 31.781 observações.
 
 \vspace{12pt}
 
@@ -2866,7 +2953,9 @@ faixas exclusivas de ônibus, corredores de ônibus, área rural, bairros,
 escolas públicas, parques, praças e rios. No entanto, esses dados foram
 empregados exclusivamente na construção dos mapas na aplicação final. As
 informações foram obtidas no site
-\url{https://filipeia.joaopessoa.pb.gov.br/}.
+\url{https://filipeia.joaopessoa.pb.gov.br/}. A localização das escolas
+públicas foi obtida a partir do INEP (Instituto Nacional de Estudos e
+Pesquisas Educacionais Anísio Teixeira).
 
 \section{Análise exploratória de
 dados}\label{anuxe1lise-exploratuxf3ria-de-dados}
@@ -2907,14 +2996,15 @@ padrão das variáveis em postos.
 
 \vspace{12pt}
 
-Portanto, essa etapa resultou na criação de três variáveis: a quantidade
-total de cômodos do imóvel, o produto entre as coordenadas geográficas e
-o preço médio do aluguel no bairro, a razão entre o número de quartos e
-a área do imóvel, e o produto entre o número de quartos do imóvel e a
-área média do aluguel no bairro. No entanto, a inclusão dessas variáveis
-não levou à remoção das variáveis originais utilizadas em sua
-construção, pois sua exclusão resultou em uma piora no desempenho do
-modelo.
+Portanto, essa etapa resultou na criação de quatro variáveis: a
+quantidade total de cômodos do imóvel, o produto entre as coordenadas
+geográficas e o preço médio do aluguel no bairro, a razão entre o número
+de quartos e a área do imóvel, e o produto entre o número de quartos do
+imóvel e a área média do aluguel no bairro. No entanto, a inclusão
+dessas variáveis não levou à remoção das variáveis originais utilizadas
+em sua construção, pois sua exclusão resultou em uma piora no desempenho
+do modelo, tendo sido observado uma diminuição na métrica de erro
+quadrático médio.
 
 \vspace{12pt}
 
@@ -2969,10 +3059,24 @@ primeira também foi utilizada para criar pipelines de pré-processamento
 de dados, que organizam etapas sequenciais de preparação necessárias
 para o tratamento adequado dos dados. Assim, os quatro modelos aplicados
 na predição do valor do imóvel foram: Random Forest, Gradient Boosting,
-LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking,
-combinando os modelos previamente construídos para melhorar a
-performance preditiva. No Stacking, foi utilizado como preditor final o
-algoritmo de Random Forest.
+LightGBM e XGBoost. Por fim, foi implementado o algoritmo de Stacking.
+
+\vspace{12pt}
+
+A implementação do Stacking na biblioteca
+\href{https://scikit-learn.org/stable/}{\textbf{scikit-learn}} permite o
+uso de um modelo para estimar os pesos atribuídos às predições dos
+modelos base, por meio do argumento \texttt{final\_estimator}. Por
+padrão, esse argumento corresponde a um modelo linear do tipo Ridge, que
+realiza a combinação de forma regularizada. Quando o modelo final é
+linear, obtém-se a formulação clássica do Stacking, conforme discutido
+na Seção~\ref{sec-stacking_cite}. No entanto, é possível utilizar outros
+algoritmos nessa etapa. Neste trabalho, optou-se pelo algoritmo Random
+Forest como \texttt{final\_estimator}, em substituição ao Ridge, devido
+ao melhor desempenho preditivo do algoritmo Stacking com o Random Forest
+nessa função. Embora o Random Forest tenha sido utilizado para essa
+etapa, ele também foi empregado como estimador base, juntamente com
+outros três algoritmos.
 
 \subsection{Etapas de
 pré-processamento}\label{etapas-de-pruxe9-processamento}
@@ -3066,7 +3170,7 @@ z = \frac{x - \mu}{\sigma}\text{,}
 padronização é essencial para garantir que os modelos estatísticos e de
 aprendizado de máquina tratem as variáveis em escalas consistentes.
 
-\subsection{Validação cruzada}\label{validauxe7uxe3o-cruzada}
+\subsection{Validação cruzada}\label{sec-val_cruz}
 
 ~~~A técnica utilizada para otimizar e determinar os hiperparâmetros dos
 modelos, além de servir para otimizar o hiperparâmetro de vizinhos mais
@@ -3131,11 +3235,17 @@ argumento \texttt{scoring}, enquanto a técnica de validação cruzada é
 definida pelo argumento \texttt{cv}. Especificamente, foi empregada a
 classe \texttt{KFold(n\_splits=20)} para configurar a validação cruzada
 do tipo K-Fold, em que o parâmetro \texttt{n\_splits} define o número de
-divisões (folds) a serem realizadas, neste caso, 20. Após a execução da
-validação, a média das métricas retornadas pela função
-\texttt{cross\_val\_score} para cada fold foi calculada, como forma de
-se obter uma estimativa do desempenho do modelo. O código abaixo é um
-exemplo de como se utilizar a validação cruzada em \textbf{Python}:
+divisões (folds) a serem realizadas, neste caso, 20. Optou-se por 20
+folds porque os resultados obtidos para os modelos mostraram-se
+superiores em comparação com o uso de 10 ou 5 folds.
+
+\vspace{12pt}
+
+Após a execução da validação, a média das métricas retornadas pela
+função \texttt{cross\_val\_score} para cada fold foi calculada, como
+forma de se obter uma estimativa do desempenho do modelo. O código
+abaixo é um exemplo de como se utilizar a validação cruzada em
+\textbf{Python}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3205,6 +3315,40 @@ R^2 = 1 - \dfrac{SS_{\text{resíduos}}}{SS_{\text{total}}}
 \noindent em que \(SS_{\text{resíduos}}\) e \(SS_{\text{total}}\)
 representam, respectivamente, a soma dos quadrados dos resíduos e a soma
 dos quadrados totais.
+
+\vspace{12pt}
+
+O RMSE foi utilizado como para a seleção do algoritmo com melhor
+desempenho. Isso é justificado pelo seu papel como estimador do risco
+quadrático condicional, definido por:
+
+\[
+R\left(g\right):=\E\left[\left(Y - g\left(X\right)\right)^2\right]
+\]
+
+O risco \(R\) mede a esperança da perda quadrática associada à função
+preditiva \(g\), e tem grande apelo frequentista no contexto de
+predição. Suponha que se observe um novo conjunto de dados
+\(\left(X_{n+1}, Y_{n+1}\right), \cdots, \left(X_{n+m}, Y_{n+m}\right)\),
+i.i.d. à amostra original (IZBICKI; SANTOS, 2020). A Lei dos Grandes
+Números garante que, para \(m\) suficientemente grande:
+
+\[
+\frac{1}{m}\sum_{i =1}^{m}\left(Y_{n+i} - g\left(X_{n+i}\right)\right)^2 \xrightarrow{\text{q.c.}} R\left(g\right)\text{, }
+\] ou seja, a média do erro quadrático em novas amostras converge quase
+certamente ao risco.
+
+\vspace{12pt}
+
+Portanto, quando calculado sobre dados que não participaram da estimação
+de \(g\) - como em validação cruzada ou em conjuntos de validação
+independentes - o erro quadrático médio atua como um estimador
+consistente do risco. Essa consistência, garantida pela Lei dos Grandes
+Números, assegura que, à medida que o tamanho da amostra aumenta, o erro
+estimado converge quase certamente para o risco verdadeiro. Assim, ao
+comparar diferentes modelos com base em seus respectivos erros
+quadráticos médios, estamos, assintoticamente, comparando suas reais
+capacidades de generalização.
 
 \section{Otimização de
 hiperparâmetros}\label{otimizauxe7uxe3o-de-hiperparuxe2metros}
@@ -3367,7 +3511,7 @@ probabilidade em \(l\left(\lambda\right)\) e baixa probabilidade em
 maximizar a razão \(l\left(\lambda\right) / g\left(\lambda\right)\).
 
 \subsection{Otimização de hiperparâmetros com
-optuna}\label{otimizauxe7uxe3o-de-hiperparuxe2metros-com-optuna}
+Optuna}\label{otimizauxe7uxe3o-de-hiperparuxe2metros-com-optuna}
 
 ~~~Para otimizar os hiperparâmetros dos modelos foi utilizado a
 bilbioteca \href{https://optuna.org/}{\textbf{Optuna}} da linguagem de
@@ -3699,14 +3843,14 @@ a explicação como um modelo \(g \in G\), onde \(G\) representa uma
 classe de modelos potencialmente interpretáveis, como regressão linear
 ou árvores de decisão. O processo começa com a geração de um novo
 conjunto de dados composto por amostras perturbadas da instância
-original --- pequenas variações nos dados de entrada --- e as
-respectivas predições do modelo complexo. Sobre esse novo conjunto,
-ajusta-se o modelo explicativo \(g\), cuja finalidade é aproximar
-localmente o comportamento do modelo original. Como nem todos os modelos
-\(g \in G\) são simples o suficiente para serem interpretáveis,
-define-se uma medida de complexidade \(\Omega\left(g\right)\). Por
-exemplo, para uma árvore de decisão, \(\Omega\left(g\right)\) pode ser
-representada pela profundidade da árvore.
+original - pequenas variações nos dados de entrada - e as respectivas
+predições do modelo complexo. Sobre esse novo conjunto, ajusta-se o
+modelo explicativo \(g\), cuja finalidade é aproximar localmente o
+comportamento do modelo original. Como nem todos os modelos \(g \in G\)
+são simples o suficiente para serem interpretáveis, define-se uma medida
+de complexidade \(\Omega\left(g\right)\). Por exemplo, para uma árvore
+de decisão, \(\Omega\left(g\right)\) pode ser representada pela
+profundidade da árvore.
 
 \vspace{12pt}
 
@@ -3909,11 +4053,22 @@ amostra, a fim de estimar os valores de Shapley.
 \section{Análise exploratória de
 dados}\label{anuxe1lise-exploratuxf3ria-de-dados-1}
 
-~~~A análise exploratória dos dados foi realizada após a divisão entre
-os conjuntos de treinamento e teste. Essa abordagem foi adotada para
-evitar o sobreajuste do modelo e garantir que o algoritmo não aprenda
-com informações indisponíveis no conjunto de teste. Assim, a descritiva
-dos dados foi realizada utilizando o conjunto de treinamento.
+~~~A primeira etapa da análise exploratória de dados foi identificar os
+dados faltantes e determinar a melhor forma de tratá-los. A
+Figura~\ref{fig-miss} mostra a porcentagem de observações ausentes em
+cada variável. As variáveis com a maior quantidade de dados ausentes são
+o valor do condomínio e o IPTU, pois essas informações são as menos
+preenchidas no site de onde os dados foram coletados. A terceira
+variável, com quase 20\% de observações ausentes, é a quantidade de
+vagas de estacionamento. As variáveis com mais de 20\% de observações
+ausentes foram removidas da base de dados, pois, com essa quantidade de
+valores faltantes, nem mesmo métodos de imputação proporcionariam um
+tratamento adequado. Dessa forma, apenas as variáveis de valor do
+condomínio e IPTU foram removidas. No caso do IPTU, além da alta
+proporção de observações ausentes, sua exclusão também se justifica por
+estar diretamente relacionado com o valor do imóvel, variável já
+presente na base. As demais variáveis com valores ausentes foram
+tratadas por meio de imputação.
 
 \begin{figure}
 
@@ -3926,20 +4081,6 @@ dos dados foi realizada utilizando o conjunto de treinamento.
 \caption{\label{fig-miss}Proporção de valores ausentes por variáveis.}
 
 \end{figure}%
-
-A primeira etapa da análise exploratória de dados foi identificar os
-dados faltantes e determinar a melhor forma de tratá-los. A
-Figura~\ref{fig-miss} mostra a porcentagem de observações ausentes em
-cada variável. As variáveis com a maior quantidade de dados ausentes são
-o valor do condomínio e o IPTU, pois essas informações são as menos
-preenchidas no site de onde os dados foram coletados. A terceira
-variável, com quase 20\% de observações ausentes, é a quantidade de
-vagas de estacionamento. As variáveis com mais de 20\% de observações
-ausentes foram removidas da base de dados, pois, com essa quantidade de
-valores faltantes, nem mesmo métodos de imputação proporcionariam um
-tratamento adequado. Dessa forma, apenas as variáveis de valor do
-condomínio e IPTU foram removidas, enquanto as demais com valores
-ausentes foram tratadas por meio de imputação.
 
 \vspace{12pt}
 
@@ -4031,9 +4172,7 @@ distribuição do valor dos imóveis. Há uma tendência dos valores ficarem
 mais concentrados em uma faixa mais baixa, mas alguns imóveis apresentam
 valores excepcionalmente altos, o que acaba gerando uma distribuição
 assimétrica positiva. Com a aplicação da transformação logarítmica, a
-assimetria é suavizada da distribuição é reduzida. Isso tende a
-aproximar a distribuição de uma distribuição normal, facilitando a
-modelagem e análise estatística.
+assimetria é suavizada da distribuição é reduzida.
 
 \begin{figure}
 
@@ -4076,7 +4215,7 @@ influenciado pela localização dos imóveis.
 
 A partir do gráfico de correlação, foram criadas novas variáveis com
 base nas interações entre as mais correlacionadas. Dessa forma, foram
-adicionadas três novas variáveis. A primeira é o produto entre o número
+adicionadas trẽs novas variáveis. A primeira é o produto entre o número
 de quartos do imóvel e a área média do aluguel no bairro; a segunda
 representa a razão entre o número de quartos e a área do imóvel; e a
 terceira resulta do produto entre as coordenadas geográficas e o preço
@@ -4107,28 +4246,48 @@ API, o hiperparâmetro que define a quantidade de árvores é denominado
 \texttt{learning\_rate}. Com a configuração da função objetivo na
 biblioteca \href{https://optuna.org/}{\textbf{Optuna}}, foi possível
 encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As
-métricas finais obtidas para cada algoritmo na base de treinamento, após
-o ajuste com os hiperparâmetros, pode ser visualizado na
+métricas finais obtidas para cada algoritmo na base de teste, após o
+ajuste com os hiperparâmetros, pode ser visualizado na
 Tabela~\ref{tbl-metrics_models}.
 
-\begin{longtable}[]{@{}cccc@{}}
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.4821}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1607}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1964}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1607}}@{}}
 \caption{Métricas obtidas de cada
 algoritmo.}\label{tbl-metrics_models}\tabularnewline
 \toprule\noalign{}
-Algoritmo & RMSE & \(R^2\) & MAPE \\
+\begin{minipage}[b]{\linewidth}\centering
+Algoritmo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+RMSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(R^2 \ \left(\%\right)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+MAPE \(\left(\%\right)\)
+\end{minipage} \\
 \midrule\noalign{}
 \endfirsthead
 \toprule\noalign{}
-Algoritmo & RMSE & \(R^2\) & MAPE \\
+\begin{minipage}[b]{\linewidth}\centering
+Algoritmo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+RMSE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\(R^2 \ \left(\%\right)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+MAPE \(\left(\%\right)\)
+\end{minipage} \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Random Forest & 0,28578 & \(87,10419\%\) & 0,01346 \\
-Gradient Boosting & 0,28297 & \(87,32712\%\) & 0,01333 \\
-Light Gradient Boosting & 0,28385 & \(87,25794\%\) & 0,01340 \\
-Extreme Gradient Boosting & 0,28400 & \(87,24599\%\) & 0,01325 \\
-Stacking & 0,28382 & \(87,26007\%\) & 0,01340 \\
+Random Forest & 234471,51 & 84,54 & 18,32 \\
+Gradient Boosting & 227677,44 & 85,42 & 18,21 \\
+Light Gradient Boosting & 228784,37 & 85,28 & 18,34 \\
+Extreme Gradient Boosting & 228300,83 & 85,34 & 18,13 \\
+Stacking & 228377,11 & 85,33 & 18,32 \\
 \end{longtable}
 
 \subsection{Tunagem da Random Forest}\label{tunagem-da-random-forest}
@@ -4312,8 +4471,8 @@ como no Random Forest, foi utilizada \(m = \sqrt{p}\)\hspace{0pt} das
 
 A análise da importância dos hiperparâmetros, apresentada na
 Figura~\ref{fig-gdt_import}, indica que o hiperparâmetro com maior
-influência na variação da função objetivo --- e, consequentemente, na
-performance do modelo --- é a taxa de aprendizado. Em seguida, a
+influência na variação da função objetivo - e, consequentemente, na
+performance do modelo - é a taxa de aprendizado. Em seguida, a
 profundidade das árvores é a segunda mais relevante, enquanto o número
 de árvores tem a menor influência.
 
@@ -4743,12 +4902,12 @@ variância da variável dependente.
 
 \vspace{12pt}
 
-Embora o Extreme Gradient Boosting tenha alcançado o melhor MAPE em
-comparação aos demais algoritmos, a métrica utilizada para a escolha do
-modelo com melhor desempenho foi o RMSE, no qual o Gradient Boosting se
-destacou. Dessa forma, as análises a seguir serão baseadas nesse
-algoritmo, que também será utilizado para realizar as previsões na
-aplicação final.
+Embora o Extreme Gradient Boosting tenha apresentado o menor MAPE entre
+os algoritmos avaliados, a métrica adotada para a seleção do modelo com
+melhor desempenho foi o RMSE, conforme justificado ao final da
+Seção~\ref{sec-val_cruz}, no qual o Gradient Boosting se destacou.
+Assim, as análises a seguir serão baseadas nesse algoritmo, que também
+será utilizado para as previsões na aplicação final.
 
 \section{Impacto e importância das variáveis na
 predição}\label{impacto-e-importuxe2ncia-das-variuxe1veis-na-prediuxe7uxe3o}
@@ -4772,8 +4931,6 @@ algoritmo de Gradient Boosting.
 \caption{\label{fig-ice_pdp}Gráfico de ICE e PDP.}
 
 \end{figure}%
-
-\vspace{12pt}
 
 Para analisar a influência das variáveis na predição dos valores de
 imóveis, foi utilizado o gráfico de ICE em conjunto com a linha de PDP.
@@ -5122,7 +5279,7 @@ informações ausentes com base nas demais informações fornecidas.
 
 \chapter{Conclusão}\label{conclusuxe3o}
 
-Neste trabalho, foi possível aplicar uma abordagem pouco usual para a
+~~~Neste trabalho, foi possível aplicar uma abordagem pouco usual para a
 solução de problemas relacionados à avaliação do preço de imóveis,
 principalmente pela dificuldade para se obter dados sobre imóveis, na
 cidade de João Pessoa. A partir da utilização de técnicas de web
@@ -5316,6 +5473,10 @@ Bejing, China: PMLR, 2014. V. 32, p. 754--762. Disponível em:
 \bibitem[\citeproctext]{ref-plotly}
 INC., P. T. Collaborative data science. 2015. Disponível em:
 \textless{}\url{https://plot.ly}\textgreater.
+
+\bibitem[\citeproctext]{ref-izbicki2020aprendizado}
+IZBICKI, R.; SANTOS, T. M. Dos. \textbf{Aprendizado de m{á}quina: uma
+abordagem estat{ı́}stica}. {[}S.l.{]}: Rafael Izbicki, 2020.
 
 \bibitem[\citeproctext]{ref-james2013introduction}
 JAMES, G. et al. \textbf{An introduction to statistical learning}.
