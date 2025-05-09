@@ -226,7 +226,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, enhanced, colback={codebgcolor}, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, colback={codebgcolor}, frame hidden, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -525,7 +525,7 @@ se destacando nacionalmente. Até novembro de 2024, nos 12 meses
 anteriores, a cidade registrou uma valorização acumulada de 16,13\% nos
 imóveis residenciais, posicionando-se entre as capitais com maior
 crescimento no setor. Diante desse cenário de expansão e valorização,
-este trabalho teve como objetivo desenvolver uma modelagem baseado em
+este trabalho teve como objetivo desenvolver uma modelagem baseada em
 algoritmos de aprendizagem de máquina para a predição de valores de
 imóveis em João Pessoa, com base em dados coletados por meio de web
 scraping em sites do mercado imobiliário. Foram utilizadas técnicas de
@@ -1931,7 +1931,7 @@ para interação e conexão com bancos de dados.
 No projeto, o \href{https://www.sqlalchemy.org/}{\textbf{SQLAlchemy}}
 foi utilizado para gerenciar a conexão com o banco de dados,
 implementado com
-\href{https://www.postgresql.org/}{\textbf{PostgresSQL}}, um sistema de
+\href{https://www.postgresql.org/}{\textbf{PostgreSQL}}, um sistema de
 gerenciamento de banco de dados relacional amplamente reconhecido por
 sua robustez e alto desempenho. Isso permitiu que os dados fossem
 expostos na API e consumidos no front-end. Além disso, a API foi
@@ -1955,7 +1955,7 @@ fosse executada. Com o uso do
 \href{https://www.docker.com/}{\textbf{Docker}}, a configuração do
 ambiente tornou-se reprodutível, escalável e de fácil manutenção. Além
 disso, o banco de dados
-\href{https://www.postgresql.org/}{\textbf{PostgresSQL}} foi criado a
+\href{https://www.postgresql.org/}{\textbf{PostgreSQL}} foi criado a
 partir do \href{https://www.docker.com/}{\textbf{Docker}}.
 
 \vspace{12pt}
@@ -2052,7 +2052,7 @@ que facilita a inclusão de fórmulas matemáticas, gráficos, tabelas e
 outros elementos visuais. Além disso, os documentos gerados podem ser
 exportados para diversos formatos, como HTML, PDF, MS Word, entre
 outros. O \href{https://quarto.org/}{\textbf{Quarto}} também foi
-utilizado através do
+utilizado por meio do
 \href{https://code.visualstudio.com/}{\textbf{VSCode}}, com a sua
 extensão disponível em \url{https://quarto.org/docs/tools/vscode.html}.
 
@@ -4282,7 +4282,7 @@ encontrar o ponto ótimo desses hiperparâmetros para cada modelo.
 
 \subsection{Tunagem da Random Forest}\label{tunagem-da-random-forest}
 
-~~~Para o modelo Random Forest, a função objetivo foi definido apenas
+~~~Para o modelo Random Forest, a função objetivo foi definida apenas
 para otimizar os hiperparâmetros de quantidade de árvores e de
 profundidade da árvore. O espaço de procura para a quantidade de árvores
 foi definido entre 1 a 1000 árvores. Já o hiperparâmetro de profundidade
