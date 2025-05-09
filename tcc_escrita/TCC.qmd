@@ -1354,7 +1354,7 @@ Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as
 
 - Valor médio do aluguel no bairro: média dos valores de aluguel anunciados para imóveis localizados no respectivo bairro. Os dados foram obtidos por meio de web scraping, e a média final foi calculada com base nos valores coletados nos anúncios da região;
 
-- Área média dos imóveis anunciados para aluguel no bairro: média das áreas, em $m^2$, dos imóveis disponíveis para aluguel no respectivo bairro. Assim como os valores de aluguel, os dados de área de aluguel foram obtidos por meio de web scraping, sendo a média calculada a partir das áreas informadas nos anúncios coletados;
+- Área média do aluguel no bairro: média das áreas, em $m^2$, dos imóveis disponíveis para aluguel no respectivo bairro. Assim como os valores de aluguel, os dados de área de aluguel foram obtidos por meio de web scraping, sendo a média calculada a partir das áreas informadas nos anúncios coletados;
 
 - Área: área total do imóvel, medida em $m^2$;
 

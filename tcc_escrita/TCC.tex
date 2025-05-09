@@ -227,7 +227,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, boxrule=0pt, frame hidden, colback={codebgcolor}, enhanced, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, sharp corners, enhanced, breakable, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -2887,11 +2887,11 @@ endereços:
   foram obtidos por meio de web scraping, e a média final foi calculada
   com base nos valores coletados nos anúncios da região;
 \item
-  Área média dos imóveis anunciados para aluguel no bairro: média das
-  áreas, em \(m^2\), dos imóveis disponíveis para aluguel no respectivo
-  bairro. Assim como os valores de aluguel, os dados de área de aluguel
-  foram obtidos por meio de web scraping, sendo a média calculada a
-  partir das áreas informadas nos anúncios coletados;
+  Área média do aluguel no bairro: média das áreas, em \(m^2\), dos
+  imóveis disponíveis para aluguel no respectivo bairro. Assim como os
+  valores de aluguel, os dados de área de aluguel foram obtidos por meio
+  de web scraping, sendo a média calculada a partir das áreas informadas
+  nos anúncios coletados;
 \item
   Área: área total do imóvel, medida em \(m^2\);
 \item
