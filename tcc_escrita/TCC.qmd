@@ -77,6 +77,8 @@ include-in-header:
   \renewcommand{\headrulewidth}{0pt}
 }
 
+\includepdf[pages={1}]{includes/flattened.pdf}
+
 ```{python}
 import pandas as pd
 import seaborn as sns
@@ -109,7 +111,7 @@ test_df = test_df.rename(columns=rename)
 df_inteiro = pd.concat([train_df, test_df]).reset_index(drop=True)
 ```
 
-\newpage
+<!-- \newpage
 \thispagestyle{empty}
 
 \begin{center}
@@ -147,14 +149,14 @@ df_inteiro = pd.concat([train_df, test_df]).reset_index(drop=True)
 
   \vfill
 
-  João Pessoa, 2 de maio de 2025
+  João Pessoa, 5 de maio de 2025
 
   \vfill
 
   \small Departamento de Estatística, Universidade Federal da Paraíba \\
   \small Cidade Universitária, s/n, CEP 58051-900, João Pessoa - PB, Brasil \\
   \small Fone: +55 (83) 3216-7785
-\end{center}
+\end{center} -->
 
 <!-- \chapter*{\centering Dedicatória} -->
 \chapter*{}
@@ -162,9 +164,8 @@ df_inteiro = pd.concat([train_df, test_df]).reset_index(drop=True)
 
 \vfill
 
-\hfill \parbox{8cm}{\hspace{0.4cm} Dedico este trabalho à minha família, aos meus pais, à minha avó, ao meu irmão e à minha noiva. Agradeço por cada conselho, pelo incentivo constante e por sempre serem as pessoas mais especiais da minha vida. Aos meus pais, agradeço por serem tão presentes, por nunca medirem esforços para oferecer o melhor a mim e ao meu irmão. Vocês são o meu maior orgulho. Sem o apoio e amor de vocês, nada disso teria sido possível.}
+\hfill \parbox{8cm}{\hspace{0.4cm} \textit{Dedico este trabalho à minha família, aos meus pais, à minha avó, ao meu irmão e à minha noiva. Agradeço por cada conselho, pelo incentivo constante e por sempre serem as pessoas mais especiais da minha vida. Aos meus pais, agradeço por serem tão presentes, por nunca medirem esforços para oferecer o melhor a mim e ao meu irmão. Vocês são o meu maior orgulho. Sem o apoio e amor de vocês, nada disso teria sido possível.}}
 
-\vfill
 
 \begingroup
 \pagestyle{empty}
@@ -211,7 +212,7 @@ Agradeço aos professores Eufrásio de Andrade Lima Neto, Luiz Medeiros de Araú
 \chapter*{\centering Resumo}
 \thispagestyle{empty}
 
-\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, nos 12 meses anteriores, a cidade registrou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem baseada em algoritmos de aprendizagem de máquina para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 85,42%, MAPE de 18,21% e RMSE de 227677,44. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, LIME, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguida pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
+\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, nos 12 meses anteriores, a cidade registrou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem baseada em algoritmos de aprendizagem de máquina para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 85,42%, MAPE de 18,21% e RMSE de 227677,44. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, LIME, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguido pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
 
 
 ```{=Latex}
@@ -361,7 +362,7 @@ O Capítulo 5 apresenta os resultados da análise exploratória, o ajuste dos mo
 
 \vspace{12pt}
 
-O Web scraping é uma técnica utilizada para extrair informações de sites na internet, salvando-as em arquivos ou sistemas de banco de dados para realizar análise, construção de aplicações ou ter acesso a informações de difícil disponibilização. Geralmente a raspagem de dados é realizada utilizando o Hypertext Transfer Protocol (HTTP). O HTTP é o protocolo responsável por fazer toda a comunicação cliente-servidor contida na internet com base na definição de oito métodos de requisição: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS e CONNECT. Cada método indica a ação a ser realizada no recurso especificado.
+O web scraping é uma técnica utilizada para extrair informações de sites na internet, salvando-as em arquivos ou sistemas de banco de dados para realizar análise, construção de aplicações ou ter acesso a informações de difícil disponibilização. Geralmente a raspagem de dados é realizada utilizando o Hypertext Transfer Protocol (HTTP). O HTTP é o protocolo responsável por fazer toda a comunicação cliente-servidor contida na internet com base na definição de oito métodos de requisição: GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS e CONNECT. Cada método indica a ação a ser realizada no recurso especificado.
 
 - GET: O método GET serve para requisitar uma representação do recurso especificado. Ou seja, ele serve para visualizar dados de um site.
 
@@ -421,7 +422,7 @@ O framework também possui seletores `XPath` e `CSS`, que facilitam a localizaç
 
 \vspace{12pt}
 
-Os middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest) são componentes intermediárias que permitem modificar e processar requisições e respostas em tempo de execução. Elas são fundamentais para personalizar o comportamento do framework durante o fluxo de raspagem. Existem dois tipos principais de middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest): middlewares de requisição e middlewares de download.
+Os middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest) são componentes intermediários que permitem modificar e processar requisições e respostas em tempo de execução. Elas são fundamentais para personalizar o comportamento do framework durante o fluxo de raspagem. Existem dois tipos principais de middlewares no [**Scrapy**](https://docs.scrapy.org/en/latest): middlewares de requisição e middlewares de download.
 
 \vspace{12pt}
 
@@ -896,7 +897,7 @@ Os métodos baseados em árvore envolvem a estratificação ou segmentação do 
 
 :::
 
-A @tbl-testing_models apresenta os resultados obtidos para diferentes algoritmos, treinados inicialmente com o objetivo de identificar quais métodos seriam utilizados para a predição do valor de imóvel. Observa-se que os melhores desempenhos, segundo as métricas RMSE, $R^2$ e MAPE, foram alcançados majoritariamente por modelos baseados em árvores. O Random Forest Regressor, por exemplo, foi o algoritmo que obteve o melhor resultado. Modelos como o Extra Trees Regressor, Extreme Gradient Boosting, LightGBM e Gradient Boosting Regressor também figuram entre os mais eficazes, superando consistentemente os métodos lineares e outros algoritmos. Esses resultados justificam a ênfase nos métodos baseados em árvores ao longo do trabalho, visto que eles apresentam desempenho superior na tarefa de predição considerada, tanto em termos de precisão quanto de robustez frente a diferentes abordagens. Vale destacar que os modelos foram ajustados após todas as etapa de processamento.
+A @tbl-testing_models apresenta os resultados obtidos para diferentes algoritmos, treinados inicialmente com o objetivo de identificar quais métodos seriam utilizados para a predição dos valores de imóvel. Observa-se que os melhores desempenhos, segundo as métricas RMSE, $R^2$ e MAPE, foram alcançados majoritariamente por modelos baseados em árvores. O Random Forest Regressor, por exemplo, foi o algoritmo que obteve o melhor resultado. Modelos como o Extra Trees Regressor, Extreme Gradient Boosting, LightGBM e Gradient Boosting Regressor também figuram entre os mais eficazes, superando consistentemente os métodos lineares e outros algoritmos. Esses resultados justificam a ênfase nos métodos baseados em árvores ao longo do trabalho, visto que eles apresentam desempenho superior na tarefa de predição considerada, tanto em termos de precisão quanto de robustez frente a diferentes abordagens. Vale destacar que os modelos foram ajustados após todas as etapa de processamento.
 
 ## Árvores de decisão
 
@@ -1339,7 +1340,7 @@ Assim como o XGBoost, as implementações existentes do LightGBM também permite
 
 ## Obtenção dos dados
 
-\ \ \ Os dados foram obtidos em 2023 por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação **R** e **Python**. No **R**, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No **Python**, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps.
+\ \ \ Os dados foram obtidos em 2023 por meio de web scraping, que é uma técnica para coletar dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação **R** e **Python**. No **R**, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No **Python**, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps.
 
 \vspace{12pt}
 
@@ -3149,7 +3150,7 @@ Valores previstos em função dos observados do algoritmo Stacking.
 :::
 
 
-Nos gráficos das predições geradas pelo modelo, observa-se também que os maiores desvios ocorrem nos imóveis do tipo terreno, o que pode indica a necessidade de um tratamento específico para esse tipo de imóvel. Além disso, há uma maior variabilidade nos erros de predição para imóveis de alto valor, sugerindo que o modelo apresenta menor precisão nessas faixas de preço.
+Nos gráficos das predições geradas pelo modelo, observa-se também que os maiores desvios ocorrem nos imóveis do tipo terreno, o que pode indicar a necessidade de um tratamento específico para esse tipo de imóvel. Além disso, há uma maior variabilidade nos erros de predição para imóveis de alto valor, sugerindo que o modelo apresenta menor precisão nessas faixas de preço.
 
 \vspace{12pt}
 
@@ -3312,7 +3313,7 @@ Com os dados devidamente tratados e organizados, foi aplicada uma abordagem de a
 
 \vspace{12pt}
 
-Além da modelagem, foi dada ênfase à interpretação do modelo por meio de técnicas como SHAP, ICE e PDP. A partir dos gráficos ICE combinados com a linha média do PDP, foi possível confirmar que imóveis localizados mais próximos às regiões litorâneas tendem a ter valores de predição mais elevados. O mesmo padrão de aumento nas predições foi observado para variáveis como área do imóvel, quartos, banheiros, vagas de garagem, quantidade de cômodos e valor do aluguel. Ou seja, à medida que essas variáveis aumentam, maior o valor estimado pelo modelo. Por outro lado, a variável área de aluguel apresentou um comportamento com variações pouco expressivas nas predições, indicando um impacto mais limitado na resposta do modelo.
+Além da modelagem, foi dada ênfase à interpretação do modelo por meio de técnicas como SHAP, LIME, ICE e PDP. A partir dos gráficos ICE combinados com a linha média do PDP, foi possível confirmar que imóveis localizados mais próximos às regiões litorâneas tendem a ter valores de predição mais elevados. O mesmo padrão de aumento nas predições foi observado para variáveis como área do imóvel, quartos, banheiros, vagas de garagem, quantidade de cômodos e valor do aluguel. Ou seja, à medida que essas variáveis aumentam, maior o valor estimado pelo modelo. Por outro lado, a variável área de aluguel apresentou um comportamento com variações pouco expressivas nas predições, indicando um impacto mais limitado na resposta do modelo.
 
 \vspace{12pt}
 

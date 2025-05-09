@@ -133,6 +133,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{pdfpages}
 \usepackage{amsmath,amssymb}
 \usepackage{dirtree}
 \usepackage{amsmath}
@@ -226,7 +227,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, colback={codebgcolor}, frame hidden, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, boxrule=0pt, colback={codebgcolor}, breakable, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -342,62 +343,14 @@ dos Valores de Imóveis na Cidade de João Pessoa \par}
   \renewcommand{\headrulewidth}{0pt}
 }
 
-\newpage
-\thispagestyle{empty}
-
-\begin{center}
-  \includegraphics[width=0.2\textwidth]{includes/logode.png} \\
-  UNIVERSIDADE FEDERAL DA PARAÍBA \\
-  DEPARTAMENTO DE ESTATÍSTICA \\
-\end{center}
-
-\vspace{1cm}
-
-\noindent \hspace{0.8cm}
-
-\begin{minipage}{0.9\textwidth}
-  \setlength{\parindent}{0.4cm}
-  Trabalho de Conclusão de Curso de Estatística intitulado \textbf{Uso de Aprendizado de Máquina na Modelagem Preditiva dos Valores de Imóveis na Cidade de João Pessoa} de autoria de Gabriel de Jesus Pereira, aprovado pela banca examinadora constituída pelos seguintes professores:
-\end{minipage}
-
-\vfill
-
-\begin{center}
-  \noindent\rule{14cm}{0.4pt} \\
-  Prof. Dr. Pedro Rafael Diniz Marinho \\
-  Universidade Federal da Paraíba
-
-  \vfill
-
-  \noindent\rule{14cm}{0.4pt} \\
-  Prof. Dr. Eufrásio de Andrade Lima Neto \\
-  Universidade Federal da Paraíba
-
-  \vfill
-
-  \noindent\rule{14cm}{0.4pt} \\
-  Prof. Dr. Luiz Medeiros de Araujo Lima Filho \\
-  Universidade Federal da Paraíba
-
-  \vfill
-
-  João Pessoa, 2 de maio de 2025
-
-  \vfill
-
-  \small Departamento de Estatística, Universidade Federal da Paraíba \\
-  \small Cidade Universitária, s/n, CEP 58051-900, João Pessoa - PB, Brasil \\
-  \small Fone: +55 (83) 3216-7785
-\end{center}
+\includepdf[pages={1}]{includes/flattened.pdf}
 
 \chapter*{}
 \thispagestyle{empty}
 
 \vfill
 
-\hfill \parbox{8cm}{\hspace{0.4cm} Dedico este trabalho à minha família, aos meus pais, à minha avó, ao meu irmão e à minha noiva. Agradeço por cada conselho, pelo incentivo constante e por sempre serem as pessoas mais especiais da minha vida. Aos meus pais, agradeço por serem tão presentes, por nunca medirem esforços para oferecer o melhor a mim e ao meu irmão. Vocês são o meu maior orgulho. Sem o apoio e amor de vocês, nada disso teria sido possível.}
-
-\vfill
+\hfill \parbox{8cm}{\hspace{0.4cm} \textit{Dedico este trabalho à minha família, aos meus pais, à minha avó, ao meu irmão e à minha noiva. Agradeço por cada conselho, pelo incentivo constante e por sempre serem as pessoas mais especiais da minha vida. Aos meus pais, agradeço por serem tão presentes, por nunca medirem esforços para oferecer o melhor a mim e ao meu irmão. Vocês são o meu maior orgulho. Sem o apoio e amor de vocês, nada disso teria sido possível.}}
 
 \begingroup
 \pagestyle{empty}
@@ -536,7 +489,7 @@ de 85,42\%, MAPE de 18,21\% e RMSE de 227677,44. Além da modelagem,
 foram aplicadas técnicas interpretativas como SHAP, LIME, ICE e PDP para
 avaliar a importância das variáveis e padrão de comportamento na
 estimativa dos preços. Os resultados indicaram que a área do imóvel foi
-o fator que mais impactou a predição, seguida pela razão entre o número
+o fator que mais impactou a predição, seguido pela razão entre o número
 de quartos e a área, quantidade de vagas de garagem, coordenadas
 geográficas, número de quartos e valor médio do aluguel no bairro. Por
 fim, os dados e o modelo preditivo foram integrados a uma aplicação web,
@@ -882,7 +835,7 @@ outras áreas, como a obtenção de dados sobre automóveis, entre outros.
 
 \vspace{12pt}
 
-O Web scraping é uma técnica utilizada para extrair informações de sites
+O web scraping é uma técnica utilizada para extrair informações de sites
 na internet, salvando-as em arquivos ou sistemas de banco de dados para
 realizar análise, construção de aplicações ou ter acesso a informações
 de difícil disponibilização. Geralmente a raspagem de dados é realizada
@@ -1073,7 +1026,7 @@ pronto para análise ou armazenamento.
 
 Os middlewares no
 \href{https://docs.scrapy.org/en/latest}{\textbf{Scrapy}} são
-componentes intermediárias que permitem modificar e processar
+componentes intermediários que permitem modificar e processar
 requisições e respostas em tempo de execução. Elas são fundamentais para
 personalizar o comportamento do framework durante o fluxo de raspagem.
 Existem dois tipos principais de middlewares no
@@ -2141,8 +2094,8 @@ Least Angle Regression & 5,08 & -97949,99 & 26,54 \\
 
 A Tabela~\ref{tbl-testing_models} apresenta os resultados obtidos para
 diferentes algoritmos, treinados inicialmente com o objetivo de
-identificar quais métodos seriam utilizados para a predição do valor de
-imóvel. Observa-se que os melhores desempenhos, segundo as métricas
+identificar quais métodos seriam utilizados para a predição dos valores
+de imóvel. Observa-se que os melhores desempenhos, segundo as métricas
 RMSE, \(R^2\) e MAPE, foram alcançados majoritariamente por modelos
 baseados em árvores. O Random Forest Regressor, por exemplo, foi o
 algoritmo que obteve o melhor resultado. Modelos como o Extra Trees
@@ -2882,10 +2835,9 @@ significativamente o custo computacional.
 \section{Obtenção dos dados}\label{obtenuxe7uxe3o-dos-dados}
 
 ~~~Os dados foram obtidos em 2023 por meio de web scraping, que é uma
-técnica para coleta automatizada de dados de páginas da internet. Para
-isso, foram utilizadas as linguagens de programação \textbf{R} e
-\textbf{Python}. No \textbf{R}, os pacotes
-\href{https://xml2.r-lib.org/}{\textbf{xml2}} e
+técnica para coletar dados de páginas da internet. Para isso, foram
+utilizadas as linguagens de programação \textbf{R} e \textbf{Python}. No
+\textbf{R}, os pacotes \href{https://xml2.r-lib.org/}{\textbf{xml2}} e
 \href{https://rvest.tidyverse.org/}{\textbf{rvest}} foram utilizados
 para extrair dados de páginas estáticas de forma estruturada. No
 \textbf{Python}, as bibliotecas
@@ -4980,8 +4932,8 @@ observados do algoritmo Stacking.}
 \end{figure}%
 
 Nos gráficos das predições geradas pelo modelo, observa-se também que os
-maiores desvios ocorrem nos imóveis do tipo terreno, o que pode indica a
-necessidade de um tratamento específico para esse tipo de imóvel. Além
+maiores desvios ocorrem nos imóveis do tipo terreno, o que pode indicar
+a necessidade de um tratamento específico para esse tipo de imóvel. Além
 disso, há uma maior variabilidade nos erros de predição para imóveis de
 alto valor, sugerindo que o modelo apresenta menor precisão nessas
 faixas de preço.
@@ -5423,14 +5375,14 @@ de seus valores observados.
 \vspace{12pt}
 
 Além da modelagem, foi dada ênfase à interpretação do modelo por meio de
-técnicas como SHAP, ICE e PDP. A partir dos gráficos ICE combinados com
-a linha média do PDP, foi possível confirmar que imóveis localizados
-mais próximos às regiões litorâneas tendem a ter valores de predição
-mais elevados. O mesmo padrão de aumento nas predições foi observado
-para variáveis como área do imóvel, quartos, banheiros, vagas de
-garagem, quantidade de cômodos e valor do aluguel. Ou seja, à medida que
-essas variáveis aumentam, maior o valor estimado pelo modelo. Por outro
-lado, a variável área de aluguel apresentou um comportamento com
+técnicas como SHAP, LIME, ICE e PDP. A partir dos gráficos ICE
+combinados com a linha média do PDP, foi possível confirmar que imóveis
+localizados mais próximos às regiões litorâneas tendem a ter valores de
+predição mais elevados. O mesmo padrão de aumento nas predições foi
+observado para variáveis como área do imóvel, quartos, banheiros, vagas
+de garagem, quantidade de cômodos e valor do aluguel. Ou seja, à medida
+que essas variáveis aumentam, maior o valor estimado pelo modelo. Por
+outro lado, a variável área de aluguel apresentou um comportamento com
 variações pouco expressivas nas predições, indicando um impacto mais
 limitado na resposta do modelo.
 
