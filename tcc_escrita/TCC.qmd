@@ -192,6 +192,10 @@ Ao professor Jonas Otaviano Praça de Souza, meu sincero agradecimento por ter m
 
 \vspace{12pt}
 
+Agradeço ao professor Ulisses Umbelino dos Anjos pelos conselhos e pela constante disposição em ajudar. Embora tenha sido por pouco tempo, o senhor sempre demonstrou ser uma pessoa extraordinária e generosa.
+
+\vspace{12pt}
+
 Agradeço imensamente a todos os professores do departamento pelas aulas ao longo da graduação. Um agradecimento especial aos professores Cláudio Javier Tablada, Rodrigo Bernardo da Silva e Tarciana Liberal Pereira de Araújo, por todas as aulas de Probabilidade e por contribuírem de forma significativa para a minha formação. Meu muito obrigado ao professor Pedro Rafael Diniz Marinho, pelas valiosas recomendações de materiais de programação, pelas conversas sempre enriquecedoras sobre programação e estatística, e por constantemente alimentar minha curiosidade e meu desejo de aprender mais. Agradeço também às professoras Juliana e Tatiene. À professora Juliana, por ter me ensinado Regressão com tanta clareza e por nunca deixar dúvidas quando precisei aplicar os conteúdos. À professora Tatiene, por oferecer uma base sólida em todas as disciplinas que cursei com ela, fazendo com que eu realmente aprendesse o conteúdo de forma profunda e não tivesse mais dúvidas.
 
 \vspace{12pt}
