@@ -2053,8 +2053,6 @@ plt.show()
 ```
 
 
-\vspace{12pt}
-
 Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados de treinamento são os apartamentos, que representam 81,14% do total. Em seguida, vêm as casas, com 8,96%, e os flats, com 5,78%. As casas de condomínio são uma das menos representadas, com apenas 2,04%. Os terrenos de condomínio e comerciais, somados, representam 2,08% do total. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na predição de categorias menos frequentes, como as casas de condomínios e terrenos, onde o modelo pode ter dificuldade em obter bons resultados.
 
 ![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m3_final_new.png){#fig-mapa_valor width=450 height=250}
@@ -3333,7 +3331,7 @@ Por fim, com todos os dados coletados e o modelo final obtido, os resultados for
 
 \vspace{12pt}
 
-Também é recomendada uma investigação mais detalhada sobre o ajuste do modelo, a fim de avaliar sua capacidade de generalização. Além disso, sugere-se analisar o impacto da tunagem de hiperparâmetros no desempenho preditivo dos modelos e na comparação entre eles. Outra possibilidade interessante seria explorar metodologias alternativas para a predição dos valores dos imóveis, como, por exemplo, o uso de Redes Neurais.
+Também é sugerido uma investigação mais detalhada sobre o ajuste do modelo, a fim de avaliar sua capacidade de generalização. Além disso, sugere-se analisar o impacto da tunagem de hiperparâmetros no desempenho preditivo dos modelos e na comparação entre eles. Outra possibilidade interessante seria explorar metodologias alternativas para a predição dos valores dos imóveis, como, por exemplo, o uso de Redes Neurais.
 
 
 # \centering Referências {.unlisted .unnumbered}

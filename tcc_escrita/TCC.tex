@@ -227,7 +227,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, boxrule=0pt, colback={codebgcolor}, breakable, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, boxrule=0pt, enhanced, breakable, frame hidden]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -4067,8 +4067,6 @@ com valores ausentes foram tratadas por meio de imputação.
 
 \end{figure}%
 
-\vspace{12pt}
-
 Uma das dificuldades que podem surgir durante a modelagem é o
 desbalanceamento das classes, ou seja, a diferença na quantidade de cada
 tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados
@@ -5437,7 +5435,7 @@ apresenta maior erro.
 
 \vspace{12pt}
 
-Também é recomendada uma investigação mais detalhada sobre o ajuste do
+Também é sugerido uma investigação mais detalhada sobre o ajuste do
 modelo, a fim de avaliar sua capacidade de generalização. Além disso,
 sugere-se analisar o impacto da tunagem de hiperparâmetros no desempenho
 preditivo dos modelos e na comparação entre eles. Outra possibilidade
