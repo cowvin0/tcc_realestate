@@ -55,6 +55,7 @@ dash-ag-grid = "^31.3.0"
 shap = "^0.47.0"
 orjson = "^3.10.16"
 kaleido = "0.2.1"
+lime = "^0.2.0.1"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.4"

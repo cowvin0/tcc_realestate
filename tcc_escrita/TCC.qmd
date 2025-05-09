@@ -156,7 +156,8 @@ df_inteiro = pd.concat([train_df, test_df]).reset_index(drop=True)
   \small Fone: +55 (83) 3216-7785
 \end{center}
 
-\chapter*{\centering Dedicatória}
+<!-- \chapter*{\centering Dedicatória} -->
+\chapter*{}
 \thispagestyle{empty}
 
 \vfill
@@ -210,12 +211,12 @@ Agradeço aos professores Eufrásio de Andrade Lima Neto, Luiz Medeiros de Araú
 \chapter*{\centering Resumo}
 \thispagestyle{empty}
 
-\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, a cidade apresentou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem com base em algoritmos de aprendizagem de máquina para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 87,32712%, MAPE de 1,333% e RMSE de 0,28297. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguida pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
+\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, nos 12 meses anteriores, a cidade registrou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem baseado em algoritmos de aprendizagem de máquina para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 85,42%, MAPE de 18,21% e RMSE de 227677,44. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, LIME, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguida pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
 
 
 ```{=Latex}
 \begin{flushleft}
-\textbf{Palavras-chave}: Aprendizagem de máquina, mercado imobiliário, aplicação web, João Pessoa.
+\textbf{Palavras-chave}: Aprendizagem de máquina; modelagem; mercado imobiliário; aplicação web; João Pessoa.
 \end{flushleft}
 ```
 
@@ -260,7 +261,9 @@ No Brasil, o processo de urbanização ocorreu de forma tardia e desordenada, qu
 
 \vspace{12pt}
 
-O êxodo rural no Brasil foi um processo gradual, mas ocorreu de forma acelerada quando comparado a outros países, atingindo seu auge entre 1960 e 1980. No entanto, foi durante o governo de Getúlio Vargas, na década de 1930, com o início do processo de industrialização, que surgiram as condições específicas para o aumento do êxodo rural, mas ainda era bastante limitado. Na década de 1950, o processo de urbanização se intensificou com a industrialização impulsionada pelo governo de Juscelino Kubitschek. Kubitschek implementou o Plano de Metas, que tinha como principal objetivo modernizar e desenvolver a infraestrutura do país. O Plano de Metas incluia investimentos estatais em setores estratégicos como agricultura, saúde, educação, energia, transporte, mineração e construção civil. Além dessas estratégias, o plano também previa a transferência da capital federal do Rio de Janeiro para Brasília, visando promover a ocupação e o desenvolvimento do interior do país.
+O êxodo rural no Brasil foi um processo gradual, mas ocorreu de forma acelerada quando comparado a outros países, atingindo seu auge entre 1960 e 1980. No entanto, foi durante o governo de Getúlio Vargas, na década de 1930, com o início do processo de industrialização, que surgiram as condições específicas para o aumento do êxodo rural, mas ainda era bastante limitado. Na década de 1950, o processo de urbanização se intensificou com a industrialização impulsionada pelo governo de Juscelino Kubitschek. Kubitschek implementou o Plano de Metas, que tinha como principal objetivo modernizar e desenvolver a infraestrutura do país. O Plano de Metas incluia investimentos estatais em setores estratégicos como agricultura, saúde, educação, energia, transporte, mineração e construção civil.  Além dessas estratégias, o plano também previa a transferência da capital federal do Rio de Janeiro para Brasília, com o objetivo de promover a ocupação e o desenvolvimento do interior do país. Kubitschek acreditava que a construção da nova capital e o consequente desenvolvimento regional estimulariam a pesquisa e o progresso em diversas outras áreas [@holston1989modernist].
+
+<!-- Além dessas estratégias, o plano também previa a transferência da capital federal do Rio de Janeiro para Brasília, visando promover a ocupação e o desenvolvimento do interior do país, pois Kubitschek acreditava que a construção de uma capital e o subsequente desenvolvimento regional estimularia pesquisa e o desenvolvimento em diversas outras áreas. -->
 
 \vspace{12pt}
 
@@ -280,7 +283,7 @@ O Plano Cruzado, implementado em 1986, converteu o valor das prestações pela m
 
 \vspace{12pt}
 
-No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de 50% foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia]. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
+No Governo Collor, a medida mais prejudicial ao SFH foi o Plano Collor I, de 1990, que bloqueou todos os ativos financeiros e 60% do saldo das cadernetas de poupança, a principal fonte de arrecadação para o setor. O saldo da poupança na época correspondia a US$ 30 bilhões. Dos 40% restantes, cerca de metade foi retirado pelos depositantes, uma vez que a população ficou sem dinheiro disponível para arcar com despesas correntes [@abecip_monografia]. Como consequência, o saldo das cadernetas de poupança foi drasticamente reduzido, atingindo aproximadamente US$ 7 a US$ 8 bilhões. Essa medida agravou intensamente a situação das instituições financeiras, que, de repente, ficaram sem passivo e ficaram com o ativo integral.
 
 \vspace{12pt}
 
@@ -318,7 +321,7 @@ Diante do cenário e dos desafios apresentados, este trabalho tem como objetivo 
 
 ### Objetivo Geral
 
-Realizar a predição dos valores dos imóveis na cidade de João Pessoa utilizando métodos de aprendizado de máquina.
+\ \ \ Realizar a predição dos valores dos imóveis na cidade de João Pessoa utilizando métodos de aprendizado de máquina.
 
 ### Objetivos Específicos
 
@@ -328,7 +331,7 @@ Realizar a predição dos valores dos imóveis na cidade de João Pessoa utiliza
 
 - Identificar, por meio de métodos de interpretação de modelos como SHAP, ICE e LIME, as variáveis que mais influenciam as predições.
 
-- Desenvolver uma aplicação web que permita a inserção das características dos imóveis e forneça estimativas de seus valores com base no melhor modelo construído.
+- Desenvolver uma aplicação web que permita a inserção das características dos imóveis e forneça estimativas de seus valores com base no modelo que obteve o melhor ajuste.
 
 
 ## Organização do Trabalho
@@ -512,9 +515,9 @@ Para extrair dados do conteúdo HTML da página, é necessário utilizar os sele
 Para executar o [**Scrapy Shell**](https://docs.scrapy.org/en/latest/topics/shell.html), basta utilizar o comando `scrapy shell` no terminal. Após a sua execução, aparecerão algumas informações de logs e de configurações iniciais que estão sendo utilizadas no projeto. Agora, com o shell ativado, é possível carregar o conteúdo HTML da página de interesse utilizando o comando: `fetch("https://cran.r-project.org/web/packages/index.html")`.
 
 ::: {#fig-pages_scrape layout-ncol=2}
-![](includes/page_content_new.png){#fig-page_contents}
+![](includes/page_r_scrape_new.png){#fig-page_contents}
 
-![](includes/dev_tools_white.png){#fig-page_contents_devtools}
+![](includes/new_webtools_r_scrape.png){#fig-page_contents_devtools}
 
 A @fig-page_contents exibe a página que está sendo raspada, enquanto a @fig-page_contents_devtools mostra a mesma página com um exemplo do uso das ferramentas de desenvolvedor do Firefox.
 :::
@@ -676,7 +679,9 @@ Depois de carregar o conteúdo da página, o código busca as informações cont
 
 \vspace{12pt}
 
-Por fim, os dados são organizados em um `tibble`, onde cada linha contém a data de publicação, o nome do pacote e sua descrição. O uso da função `map_chr` do pacote [**purrr**](https://purrr.tidyverse.org/) garante que os valores sejam extraídos retornando vetores de caracteres com cada uma das informações.
+Por fim, os dados são organizados em um `tibble`, onde cada linha contém a data de publicação, o nome do pacote e sua descrição. O uso da função `map_chr` do pacote [**purrr**](https://purrr.tidyverse.org/) garante que os valores sejam extraídos retornando vetores de caracteres com cada uma das informações. Ao final, ao salvar os dados do `tibble`, obtém-se a base de dados final construída, contendo a data de publicação, o nome do pacote e sua descrição, conforme ilustrado na @fig-tabela_scrape.
+
+![Dados obtidos a partir do web scraping.](includes/scraped_table.png){#fig-tabela_scrape width=450 height=250}
 
 \vspace{12pt}
 
@@ -736,7 +741,7 @@ pipeline = Pipeline([
 pipeline.fit(X_train, y_train)
 ```
 
-Outra etapa fundamental no processo de aprendizado de máquina, além do pré-processamento dos dados e do ajuste do algoritmo, é a otimização dos hiperparâmetros. O [**scikit-learn**](https://scikit-learn.org/stable/) oferece algumas ferramentas para essa tarefa, mas elas possuem funcionalidades mais básicas e podem ser limitadas para cenários mais complexos. Dessa forma, de forma complementar, esse trabalho utilizou a biblioteca [**Optuna**](https://optuna.org/) [@optuna_2019], que é uma biblioteca que contém uma grande quantidade de algoritmos para otimização, como, por exemplo, métodos de otimização bayesiana.
+Outra etapa fundamental no processo de aprendizado de máquina, além do pré-processamento dos dados e do ajuste do algoritmo, é a otimização dos hiperparâmetros. O [**scikit-learn**](https://scikit-learn.org/stable/) oferece algumas ferramentas para essa tarefa, mas elas possuem funcionalidades mais básicas e podem ser limitadas para cenários mais complexos. Dessa forma, de forma complementar, esse trabalho utilizou a biblioteca [**Optuna**](https://optuna.org/) [@optuna_2019], que é uma biblioteca que contém uma grande quantidade de algoritmos para otimização, como, por exemplo, métodos de otimização bayesiana. No entanto, inicialmente foram ajustados alguns modelos utilizando a biblioteca [**pycaret**](https://pycaret.org/), com o objetivo de explorar quais métodos apresentariam melhor desempenho.
 
 \vspace{12pt}
 
@@ -744,7 +749,7 @@ Além das funcionalidades de otimização, o [**Optuna**](https://optuna.org/) t
 
 \vspace{12pt}
 
-Vale destacar que bibliotecas como o [**Matplotlib**](https://matplotlib.org/) e o [**seaborn**](https://seaborn.pydata.org/) [@Waskom2021] desempenharam um papel fundamental na geração dos gráficos e na visualização dos dados apresentados neste trabalho. Essas ferramentas foram indispensáveis para a análise exploratória e a apresentação dos resultados de forma clara e compreensível. Além dessas bibliotecas, também foram utilizados recursos voltados para a análise do impacto e das relações entre as variáveis e as previsões geradas pelos modelos. Nesse contexto, destacam-se o [**SHAP**](https://shap.readthedocs.io/en/latest) [@NIPS2017_7062], que fornece explicações interpretáveis para os modelos de aprendizado de máquina, e o próprio [**scikit-learn**](https://scikit-learn.org/stable/), que foi essencial para a criação dos gráficos de ICE (Individual Conditional Expectation). Esses métodos serão detalhados na seção de metodologia deste trabalho.
+Vale destacar que bibliotecas como o [**Matplotlib**](https://matplotlib.org/) e o [**seaborn**](https://seaborn.pydata.org/) [@Waskom2021] desempenharam um papel fundamental na geração dos gráficos e na visualização dos dados apresentados neste trabalho. Essas ferramentas foram indispensáveis para a análise exploratória e a apresentação dos resultados de forma clara e compreensível. Além dessas bibliotecas, também foram utilizados recursos voltados para a análise do impacto e das relações entre as variáveis e as previsões geradas pelos modelos. Nesse contexto, destacam-se o [**SHAP**](https://shap.readthedocs.io/en/latest) [@NIPS2017_7062] e o [**LIME**](https://lime-ml.readthedocs.io/en/latest/), que fornecem explicações interpretáveis para os modelos de aprendizado de máquina, e o próprio [**scikit-learn**](https://scikit-learn.org/stable/), que foi essencial para a criação dos gráficos de ICE (Individual Conditional Expectation). Esses métodos serão detalhados na seção de metodologia deste trabalho.
 
 \vspace{12pt}
 
@@ -887,11 +892,11 @@ Os métodos baseados em árvore envolvem a estratificação ou segmentação do 
 | Passive Aggressive Regressor    | 2,42  | -1130,87 | 13,84     |
 | Least Angle Regression          | 5,08  | -97949,99| 26,54     |
 
-: Métricas de ajuste na base de teste a partir doteste de vários modelos.
+: Métricas de ajuste na base de teste obtidas a partir da avaliação de diversos modelos, utilizando validação cruzada K-Fold com K = 20.
 
 :::
 
-A @tbl-testing_models apresenta os resultados obtidos para diferentes algoritmos. Observa-se que os melhores desempenhos, segundo as métricas RMSE, $R^2$ e MAPE, foram alcançados majoritariamente por modelos baseados em árvores. O Random Forest Regressor, por exemplo, foi o algoritmo que obteve o melhor resultado. Modelos como o Extra Trees Regressor, Extreme Gradient Boosting, LightGBM e Gradient Boosting Regressor também figuram entre os mais eficazes, superando consistentemente os métodos lineares e outros algoritmos. Esses resultados justificam a ênfase nos métodos baseados em árvores ao longo do trabalho, visto que eles apresentam desempenho superior na tarefa de predição considerada, tanto em termos de precisão quanto de robustez frente a diferentes abordagens.
+A @tbl-testing_models apresenta os resultados obtidos para diferentes algoritmos, treinados inicialmente com o objetivo de identificar quais métodos seriam utilizados para a predição do valor de imóvel. Observa-se que os melhores desempenhos, segundo as métricas RMSE, $R^2$ e MAPE, foram alcançados majoritariamente por modelos baseados em árvores. O Random Forest Regressor, por exemplo, foi o algoritmo que obteve o melhor resultado. Modelos como o Extra Trees Regressor, Extreme Gradient Boosting, LightGBM e Gradient Boosting Regressor também figuram entre os mais eficazes, superando consistentemente os métodos lineares e outros algoritmos. Esses resultados justificam a ênfase nos métodos baseados em árvores ao longo do trabalho, visto que eles apresentam desempenho superior na tarefa de predição considerada, tanto em termos de precisão quanto de robustez frente a diferentes abordagens. Vale destacar que os modelos foram ajustados após todas as etapa de processamento.
 
 ## Árvores de decisão
 
@@ -1334,7 +1339,7 @@ Assim como o XGBoost, as implementações existentes do LightGBM também permite
 
 ## Obtenção dos dados
 
-\ \ \ Os dados foram obtidos por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação **R** e **Python**. No **R**, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No **Python**, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps.
+\ \ \ Os dados foram obtidos em 2023 por meio de web scraping, que é uma técnica para coleta automatizada de dados de páginas da internet. Para isso, foram utilizadas as linguagens de programação **R** e **Python**. No **R**, os pacotes [**xml2**](https://xml2.r-lib.org/) e [**rvest**](https://rvest.tidyverse.org/) foram utilizados para extrair dados de páginas estáticas de forma estruturada. No **Python**, as bibliotecas [**Scrapy**](https://scrapy.org/) e [**Playwright**](https://playwright.dev/python/), desenvolvida pela Microsoft, foram empregadas, sendo esta última essencial para a interação com componentes dinâmicos da página, possibilitando a extração de informações que exigem interações como cliques ou rolagem de página para ser gerada. Além dessas ferramentas, foram implementadas técnicas de rotacionamento de IPs e de modificação das informações do usuário que acessa o site, a fim de evitar bloqueios durante o processo de coleta de dados, garantindo assim a continuidade e eficácia da extração. A API utilizada para gerenciar a rotação de informações dos usuários que acessam o site foi desenvolvida pela empresa ScrapeOps.
 
 \vspace{12pt}
 
@@ -1342,11 +1347,11 @@ Assim, utilizando as ferramentas e técnicas de web scraping, foram coletadas as
 
 - Valor do imóvel: variável dependente que será modelada e constitui o principal foco de análise deste trabalho;
 
-- Valor médio do aluguel no bairro: valor médio do aluguel dos imóveis no bairro, em $m^2$;
+- Valor médio do aluguel no bairro: média dos valores de aluguel anunciados para imóveis localizados no respectivo bairro. Os dados foram obtidos por meio de web scraping, e a média final foi calculada com base nos valores coletados nos anúncios da região;
+
+- Área média dos imóveis anunciados para aluguel no bairro: média das áreas, em $m^2$, dos imóveis disponíveis para aluguel no respectivo bairro. Assim como os valores de aluguel, os dados de área de aluguel foram obtidos por meio de web scraping, sendo a média calculada a partir das áreas informadas nos anúncios coletados;
 
 - Área: área total do imóvel, medida em $m^2$;
-
-- Área média do aluguel no bairro: área média dos imóveis alugados no bairro, em $m^2$;
 
 - Condomínio: valor mensal pago pelo condomínio do imóvel;
 
@@ -1422,7 +1427,7 @@ Para a aplicação das ferramentas de modelagem, foram utilizadas as bibliotecas
 
 \vspace{12pt}
 
-A implementação do Stacking na biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) permite o uso de um modelo para estimar os pesos atribuídos às predições dos modelos base, por meio do argumento ```final_estimator```. Por padrão, esse argumento corresponde a um modelo linear do tipo Ridge, que realiza a combinação de forma regularizada. Quando o modelo final é linear, obtém-se a formulação clássica do Stacking, conforme discutido na @sec-stacking_cite. No entanto, é possível utilizar outros algoritmos nessa etapa. Neste trabalho, optou-se pelo algoritmo Random Forest como ```final_estimator```, em substituição ao Ridge, devido ao melhor desempenho preditivo do algoritmo Stacking com o Random Forest nessa função. Embora o Random Forest tenha sido utilizado para essa etapa, ele também foi empregado como estimador base, juntamente com outros três algoritmos.
+A implementação do Stacking na biblioteca [**scikit-learn**](https://scikit-learn.org/stable/) permite o uso de um modelo para estimar os pesos atribuídos às predições dos modelos base, por meio do argumento ```final_estimator``` da classe ```StackingRegressor```. Por padrão, esse argumento corresponde a um modelo linear do tipo Ridge, que realiza a combinação de forma regularizada. Quando o modelo final é linear, obtém-se a formulação clássica do Stacking, conforme discutido na @sec-stacking_cite. No entanto, é possível utilizar outros algoritmos nessa etapa. Neste trabalho, optou-se pelo algoritmo Random Forest como ```final_estimator```, em substituição ao Ridge, devido ao melhor desempenho preditivo do algoritmo Stacking com o Random Forest nessa função. Embora o Random Forest tenha sido utilizado para essa etapa, ele também foi empregado como estimador base, juntamente com os outros três algoritmos.
 
 ### Etapas de pré-processamento
 
@@ -1595,7 +1600,7 @@ $$
 
 \vspace{12pt}
 
-O RMSE foi utilizado como para a seleção do algoritmo com melhor desempenho. Isso é justificado pelo seu papel como estimador do risco quadrático condicional, definido por:
+O RMSE foi utilizado para a seleção do algoritmo com melhor desempenho. Isso é justificado pelo seu papel como estimador do risco quadrático condicional, definido por:
 
 $$
 R\left(g\right):=\E\left[\left(Y - g\left(X\right)\right)^2\right]
@@ -1887,7 +1892,7 @@ No exemplo acima, o método `.from_estimator` é usado para criar o gráfico dir
 
 ### Local interpretable model-agnostic explanations (LIME)
 
-\ \ \ @ribeiro2016should definem o Local Interpretable Model-Agnostic Explanations (LIME) como um algoritmo capaz de explicar as previsões realizadas por qualquer modelo de classificação ou regressão, aproximando-o localmente de um modelo mais interpretável. O objetivo principal do LIME é identificar um modelo interpretável e gerar uma representação compreensível que permita traduzir o comportamento de modelos complexos.
+\ \ \ @ribeiro2016should definem o Local Interpretable Model-Agnostic Explanations (LIME) como um algoritmo capaz de explicar as predições realizadas por qualquer modelo de classificação ou regressão, aproximando-o localmente de um modelo mais interpretável. O objetivo principal do LIME é identificar um modelo interpretável e gerar uma representação compreensível que permita traduzir o comportamento de modelos complexos.
 
 \vspace{12pt}
 
@@ -1909,7 +1914,13 @@ Podem exister diversas variações para $L$ e $\Omega$ com diferentes famílias 
 
 \vspace{12pt}
 
-Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em **Python**, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>.
+Além de ter sido empregado neste estudo, o LIME constitui uma das bases conceituais da abordagem que será discutida a seguir: o Shapley Additive Explanations (SHAP).
+
+<!-- Além de ter sido utilizado neste trabalho, o LIME é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). -->
+
+<!-- \vspace{12pt}
+
+Embora o LIME não tenha sido utilizado neste trabalho, ele é um dos métodos fundamentais para a abordagem que será apresentada a seguir, o Shapley Additive Explanations (SHAP). Em **Python**, o LIME está disponível por meio da biblioteca `lime`, cuja documentação pode ser acessada em <https://lime-ml.readthedocs.io/en/latest/lime.html>. -->
 
 
 ### Shapley Additive Explanations (SHAP)
@@ -2008,7 +2019,7 @@ Por padrão, a classe `shap.Explainer` utiliza o algoritmo de explicação consi
 
 ## Análise exploratória de dados
 
-\ \ \ A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas. No caso do IPTU, além da alta proporção de observações ausentes, sua exclusão também se justifica por estar diretamente relacionado com o valor do imóvel, variável já presente na base. As demais variáveis com valores ausentes foram tratadas por meio de imputação.
+\ \ \ A primeira etapa da análise exploratória de dados foi identificar os dados faltantes e determinar a melhor forma de tratá-los. A @fig-miss mostra a porcentagem de observações ausentes em cada variável. As variáveis com a maior quantidade de dados ausentes são o valor do condomínio e o IPTU, pois essas informações são as menos preenchidas no site de onde os dados foram coletados. A terceira variável, com quase 20% de observações ausentes, é a quantidade de vagas de estacionamento. As variáveis com mais de 20% de observações ausentes foram removidas da base de dados, pois, com essa quantidade de valores faltantes, nem mesmo métodos de imputação proporcionariam um tratamento adequado. Dessa forma, apenas as variáveis de valor do condomínio e IPTU foram removidas. No caso do IPTU, além da alta proporção de observações ausentes, sua exclusão também se justifica por estar diretamente relacionado com o valor do imóvel. As demais variáveis com valores ausentes foram tratadas por meio de imputação.
 
 ```{python}
 #| label: fig-miss
@@ -2043,10 +2054,9 @@ plt.show()
 
 \vspace{12pt}
 
-Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados de treinamento são os apartamentos, que representam 81,12% do total. Em seguida, vêm as casas, com 8,96%, e os flats, com 5,79%. As casas de condomínio são uma das menos representadas, com apenas 2,06%. Os terrenos de condomínio e comerciais, somados, representam 2,06% do total. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na predição de categorias menos frequentes, como as casas de condomínios e terrenos, onde o modelo pode ter dificuldade em obter bons resultados.
+Uma das dificuldades que podem surgir durante a modelagem é o desbalanceamento das classes, ou seja, a diferença na quantidade de cada tipo de imóvel. O tipo de imóvel mais predominante no conjunto de dados de treinamento são os apartamentos, que representam 81,14% do total. Em seguida, vêm as casas, com 8,96%, e os flats, com 5,78%. As casas de condomínio são uma das menos representadas, com apenas 2,04%. Os terrenos de condomínio e comerciais, somados, representam 2,08% do total. Esse desbalanceamento claro entre as classes pode dificultar o desempenho do modelo, especialmente na predição de categorias menos frequentes, como as casas de condomínios e terrenos, onde o modelo pode ter dificuldade em obter bons resultados.
 
-
-![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m2.svg){#fig-mapa_valor width=450 height=250}
+![Variação da média do valor do $m^2$ dos imóveis de João Pessoa, área de estudo.](includes/map_valor_m3_final_new.png){#fig-mapa_valor width=450 height=250}
 
 A partir da @fig-mapa_valor, tem-se o mapa da região de estudo, correspondente à cidade de João Pessoa. O mapa apresenta a variação da média do valor do $m^2$ dos imóveis, calculada com base nos bairros da cidade. Vale destacar que alguns bairros não possuíam dados disponíveis no momento da coleta de informações por raspagem dos sites de imóveis. Esses bairros estão representados pela cor cinza. Por outro lado, os bairros com dados disponíveis apresentam variações de cores que indicam diferentes faixas de valores do $m^2$. Tonalidades mais escuras representam bairros com valores médios mais altos para o $m^2$, enquanto tonalidades mais claras indicam valores médios menores.
 
@@ -2420,11 +2430,22 @@ folium.Choropleth(
     data=average_values,
     columns=["Bairro", "Valor $m^2$"],
     key_on="feature.properties.nome",
-    fill_color='YlGnBu',
+    fill_color='YlOrRd',
     fill_opacity=0.7,
     line_opacity=0.2,
+    # legend_name=None
     legend_name="Variação do valor médio do m² dos imóveis",
 ).add_to(m)
+
+legend_style = """
+<style>
+  .legend text {
+    font-size: 14px
+  }
+</style>
+"""
+
+m.get_root().html.add_child(folium.Element(legend_style))
 
 # legend_css = """
 # <style>
@@ -2437,9 +2458,8 @@ folium.Choropleth(
 
 img_data = m._to_png(20)
 img = Image.open(io.BytesIO(img_data))
-# img.save('includes/map_valor_m2.png')
+img.save('includes/map_valor_m3_final_new.png')
 ```
-
 
 ## Tunagem dos modelos
 
@@ -2447,22 +2467,7 @@ img = Image.open(io.BytesIO(img_data))
 
 \vspace{12pt}
 
-Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo. As métricas finais obtidas para cada algoritmo na base de teste, após o ajuste com os hiperparâmetros, pode ser visualizado na @tbl-metrics_models.
-
-
-::: {#tbl-metrics_models}
-
-|           Algoritmo          |   RMSE  |   $R^2 \ \left(\%\right)$   |   MAPE $\left(\%\right)$  |
-|:-------------------------:|:-------:|:---------:|:-------:|
-|       Random Forest       | 234471,51 | 84,54 | 18,32 |
-|     Gradient Boosting     | 227677,44 | 85,42 | 18,21 |
-|  Light Gradient Boosting  | 228784,37 | 85,28 | 18,34 |
-| Extreme Gradient Boosting | 228300,83 | 85,34 | 18,13 |
-|          Stacking         | 228377,11 | 85,33 | 18,32 |
-
-: Métricas obtidas de cada algoritmo.
-
-:::
+Todos os modelos e bibliotecas usados neste trabalho seguem a API do [**scikit-learn**](https://scikit-learn.org/stable/). Nessa API, o hiperparâmetro que define a quantidade de árvores é denominado `n_estimators`, o de profundidade das árvores é `max_depth`, e o de taxa de aprendizado é `learning_rate`. Com a configuração da função objetivo na biblioteca [**Optuna**](https://optuna.org/), foi possível encontrar o ponto ótimo desses hiperparâmetros para cada modelo.
 
 ### Tunagem da Random Forest
 
@@ -2620,7 +2625,7 @@ Além disso, o gráfico de importância dos hiperparâmetros na @fig-rf_import r
 
 | Tentativa |  RMSE  | n_estimators | max_depth |
 |:---------:|:------:|:------------:|:---------:|
-|     62    | 0,29084 |      653     |     21    |
+|     62    | 0,29 |      653     |     21    |
 
 : Melhores hiperparâmetros para Random Forest.
 
@@ -2769,7 +2774,7 @@ Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting apre
 
 | Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:---------:|:-------------:|
-|     57    | 0,28512 |     1404     |     7     |     0,09806    |
+|     57    | 0,28 |     1404     |     7     |     $9,81\times10^{-2}$    |
 
 : Melhores hiperparâmetros para Gradient Boosting.
 
@@ -2921,7 +2926,7 @@ Analisando a relação entre o hiperparâmetro de profundidade da árvore e o n�
 
 | Tentativa |  RMSE  | n_estimators | num_leaves | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:----------:|:---------:|:-------------:|
-|     31    | 0,28546 |     1988     |     202    |    379    |     0,00985     |
+|     31    | 0,28 |     1988     |     202    |    379    |     $9,85\times10^{-3}$     |
 
 : Melhores hiperparâmetros para Light Gradient Boosting.
 
@@ -3068,25 +3073,45 @@ Resultados da tunagem do XGBoost.
 
 | Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:---------:|:-------------:|
-|     81    | 0,28528 |      788     |     8     |     0,07119    |
+|     81    | 0,28 |      788     |     8     |     $7,12\times10^{-2}$    |
 
 : Melhores hiperparâmetros para Extreme Gradient Boosting.
 
 :::
 
-A @tbl-params_xgb apresenta a tentativa em que a combinação de hiperparâmetros resultou no menor erro para o algoritmo de Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81, com uma configuração de 788 árvores, profundidade máxima igual a 8 e taxa de aprendizado de 0,07119.
+A @tbl-params_xgb apresenta a tentativa em que a combinação de hiperparâmetros resultou no menor erro para o algoritmo de Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81, com uma configuração de 788 árvores, profundidade máxima igual a 8 e taxa de aprendizado de $7,12\times10^{-2}$.
 
 \vspace{12pt}
 
-Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com 1.988 árvores, quantidade máxima de 202 folhas, profundidade máxima de 379 e taxa de aprendizado de 0,00985, como apresentado na @tbl-params_lgbm.
+Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com 1.988 árvores, quantidade máxima de 202 folhas, profundidade máxima de 379 e taxa de aprendizado de $9,85\times10^{-3}$, como apresentado na @tbl-params_lgbm.
 
 \vspace{12pt}
 
-Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tentativas foram as de números 57 e 62, respectivamente. No caso do Gradient Boosting, a configuração ideal foi composta por 1.404 árvores, profundidade máxima de 7 e taxa de aprendizado de 0,09806. Já para o Random Forest, a melhor combinação consistiu em 653 árvores e profundidade máxima de 21. Os resultados estão na @tbl-params_gdt e @tbl-params_rf, respectivamente.
+Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tentativas foram as de números 57 e 62, respectivamente. No caso do Gradient Boosting, a configuração ideal foi composta por 1.404 árvores, profundidade máxima de 7 e taxa de aprendizado de $9,81\times10^{-2}$. Já para o Random Forest, a melhor combinação consistiu em 653 árvores e profundidade máxima de 21. Os resultados estão na @tbl-params_gdt e @tbl-params_rf, respectivamente.
 
 ## Resultados dos modelos
 
-\ \ \ Nesta seção, serão apresentados os resultados do ajuste de cada algoritmo utilizado: Random Forest, Gradient Boosting, LightGBM e Extreme Gradient Boosting. A análise do ajuste foi realizada com base no gráfico que compara os valores estimados aos valores observados dos imóveis. Além disso, foram utilizadas métricas de erro, como MAPE, $R^2$ e RMSE, para avaliar o desempenho dos modelos.
+\ \ \ Nesta seção, serão apresentados os resultados do ajuste de cada algoritmo utilizado: Random Forest, Gradient Boosting, LightGBM e Extreme Gradient Boosting. A análise do ajuste foi realizada com base no gráfico que compara os valores estimados aos valores observados dos imóveis. Além disso, foram utilizadas métricas de erro, como MAPE, $R^2$ e RMSE, para avaliar o desempenho dos modelos. Os resultados dos modelos, avaliados no conjunto de teste, podem ser observados na @tbl-metrics_models.
+
+\vspace{12pt}
+
+O ajuste do algoritmo Random Forest é apresentado na @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. A raiz do erro quadrático médio (RMSE) foi de 234471,51, enquanto o coeficiente de determinação $R^2$ alcançou $84,54\%$. Em relação ao MAPE, o valor foi de 18,32%, assim, em média, as predições realizadas pelo modelo Random Forest, estiveram em média 18,32% distantes dos valores reais.
+
+::: {#tbl-metrics_models}
+
+|           Algoritmo          |   RMSE  |   $R^2 \ \left(\%\right)$   |   MAPE $\left(\%\right)$  |
+|:-------------------------:|:-------:|:---------:|:-------:|
+|     Gradient Boosting     | 227677,44 | 85,42 | 18,21 |
+| Extreme Gradient Boosting | 228300,83 | 85,34 | 18,13 |
+|          Stacking         | 228377,11 | 85,33 | 18,32 |
+|  Light Gradient Boosting  | 228784,37 | 85,28 | 18,34 |
+|       Random Forest       | 234471,51 | 84,54 | 18,32 |
+
+: Métricas obtidas de cada algoritmo no conjunto de teste.
+
+:::
+
+Em relação ao algoritmo de Gradient Boosting, o modelo consegue explicar $85,42\%$ da variação da variável dependente, um valor superior ao obtido com o ajuste do algoritmo de Random Forest, embora a diferença não seja significante. Para o MAPE, o valor encontrado foi de $18,21\%$, indicando que os valores estimados dos imóveis estão, em média, $18,21\%$ distantes dos seus valores observados. O seu RMSE foi de $227677,44$. A relação entre os valores estimados e os observados pode ser visualizada na @fig-preds_gdt.
 
 ::: {#fig-preds1 layout-ncol=2}
 
@@ -3106,16 +3131,15 @@ Valores previstos em função dos observados do algoritmo Random Forest e Gradie
 Valores previstos em função dos observados do algoritmo Light Gradient Boosting e Extreme Gradient Boosting, respectivamente.
 :::
 
-O ajuste do algoritmo Random Forest é apresentado na @fig-preds_rf, que exibe a comparação entre os valores previstos e observados. Em termos da transformação logarítmica realizada, a raiz do erro quadrático médio (RMSE) foi de 0,28578, enquanto o coeficiente de determinação $R^2$ alcançou $87,10419\%$. Em relação ao MAPE, o valor foi de 0,01346, assim, em média, as predições realizadas pelo modelo Random Forest, considerando a transformação logarítmica, estiveram em média 1,346% distantes dos valores reais.
-
-
-\vspace{12pt}
-
-Em relação ao algoritmo de Gradient Boosting, o modelo consegue explicar $87,32712\%$ da variação da variável dependente, um valor superior ao obtido com o ajuste do algoritmo de Random Forest, embora a diferença não seja significante. Para o MAPE, o valor encontrado foi de $0,01333$, indicando que os valores estimados dos imóveis estão, em média, $1,333\%$ distantes dos seus valores observados. O seu RMSE foi de 0,28297. A relação entre os valores estimados e os observados pode ser visualizada na @fig-preds_gdt.
+O Light Gradient Boosting conseguiu melhorias em relação aos resultados obtidos da Random Forest, mas não em relação ao Gradient Boosting. Em relação ao seu $R^2$, o modelo consegue explicar $85,28\%$ da variância da variável dependente. O seu RMSE ficou em $228784,37$ e o MAPE em $18,34\%$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão, em média, $18,34\%$ distantes de seus valores reais. O gráfico de seus valores estimados em função dos observados pode ser observado na @fig-preds_lgbm.
 
 \vspace{12pt}
 
-O Light Gradient Boosting conseguiu melhorias em relação aos resultados obtidos da Random Forest, mas não em relação ao Gradient Boosting. Em relação ao seu $R^2$, o modelo consegue explicar $87,25794\%$ da variância da variável dependente. O seu RMSE ficou em $0,28385$ e o MAPE em $0,01340$. Dessa forma, as predições geradas pelo Light Gradient Boosting estão, em média, $1,340\%$ distantes de seus valores reais. O gráfico de seus valores estimados em função dos observados pode ser observado na @fig-preds_lgbm.
+Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que o algoritmo de Random Forest. Além disso, foi o modelo que obteve o melhor MAPE. O RMSE obtido pelo XGBoost foi de $228300,83$ e o seu $R^2$ foi de $85,34\%$, indicando que o modelo consegue explicar $85,34\%$ da variação da variável dependente. As predições geradas pelo Extreme Gradient Boosting estão, em média, $18,13\%$ distantes de seus valores reais.
+
+\vspace{12pt}
+
+Utilizando os modelos finais com hiperparâmetros otimizados, eles foram combinados como estimadores base para o ajuste do modelo de Stacking. As estimativas geradas por esse método apresentaram um dos melhores desempenhos em termos das métricas de erro RMSE e $R^2$. O RMSE obtido foi de $228377,11$, e o modelo foi capaz de explicar $85,33\%$ da variância da variável dependente. No geral, os algoritmos apresentaram métricas bastante semelhantes.
 
 ::: {#fig-preds_stacking}
 
@@ -3124,21 +3148,14 @@ O Light Gradient Boosting conseguiu melhorias em relação aos resultados obtido
 Valores previstos em função dos observados do algoritmo Stacking.
 :::
 
-Assim como o LGBM, o Extreme Gradient Boosting também obteve resultados melhores que os algoritmos de Random Forest. Além disso, foi o modelo que obteve o melhor MAPE. O RMSE obtido pelo XGBoost foi de $0,2840$ e o seu $R^2$ foi de $87,24599\%$, indicando que o modelo consegue explicar $87,24599\%$ da variação da variável dependente. As predições geradas pelo Extreme Gradient Boosting estão, em média, $1,325\%$ distantes de seus valores reais.
+
+Nos gráficos das predições geradas pelo modelo, observa-se também que os maiores desvios ocorrem nos imóveis do tipo terreno, o que pode indica a necessidade de um tratamento específico para esse tipo de imóvel. Além disso, há uma maior variabilidade nos erros de predição para imóveis de alto valor, sugerindo que o modelo apresenta menor precisão nessas faixas de preço.
 
 \vspace{12pt}
-
-Utilizando os modelos finais com seus hiperparâmetros otimizados e adotando o Random Forest como estimador final, as predições foram realizadas por meio do Stacking. As estimativas geradas por esse método apresentaram um dos melhores desempenhos em termos das métricas de erro RMSE e $R^2$, ficando atrás apenas do Gradient Boosting, que foi o modelo com melhor desempenho nessas duas métricas. O RMSE obtido foi de $0,28382$, e o modelo foi capaz de explicar $87,26007\%$ da variância da variável dependente.
-
-\vspace{12pt}
-
 
 Embora o Extreme Gradient Boosting tenha apresentado o menor MAPE entre os algoritmos avaliados, a métrica adotada para a seleção do modelo com melhor desempenho foi o RMSE, conforme justificado ao final da @sec-val_cruz, no qual o Gradient Boosting se destacou. Assim, as análises a seguir serão baseadas nesse algoritmo, que também será utilizado para as previsões na aplicação final.
 
-<!-- Embora o Extreme Gradient Boosting tenha alcançado o melhor MAPE em comparação aos demais algoritmos, a métrica utilizada para a escolha do modelo com melhor desempenho foi o RMSE, como justificado ao fim da @sec-val_cruz, no qual o Gradient Boosting se destacou. Dessa forma, as análises a seguir serão baseadas nesse algoritmo, que também será utilizado para realizar as previsões na aplicação final. -->
-
 ## Impacto e importância das variáveis na predição
-
 
 \ \ \ O impacto e a importância das variáveis na predição de modelos são fundamentais para entender quais fatores exercem maior influência sobre as previsões, neste caso, para as predições de valores de imóveis. Esta seção será dedicada à discussão do impacto das predições individuais e da importância das variáveis utilizadas na construção do modelo. A análise será feita com o modelo que apresentou os melhores resultados, o algoritmo de Gradient Boosting.
 
@@ -3218,6 +3235,18 @@ Para a análise das variáveis binárias, foram utilizados gráficos de dependê
 
 Conforme já discutido na análise da importância das variáveis, sauna e spa apresentam baixa relevância no impacto da predição do modelo. Ainda assim, seus gráficos de dependência revelam que essas variáveis podem contribuir para aumentar as predições em casos específicos, especialmente em imóveis de maior valor que apresentam essas características. O mesmo comportamento é observado para as variáveis varanda gourmet, playground e espaço gourmet, indicando que, embora menos relevantes no modelo de forma geral, essas características podem ser úteis na valorização de determinados imóveis.
 
+![Contribuições a partir do método LIME.](includes/lime_plot.svg)
+
+Na figura acima, são apresentados os valores das contribuições calculadas pelo método LIME para cada variável. Observa-se no gráfico um padrão bastante semelhante ao identificado anteriormente pelos métodos ICE e PDP, com a diferença de que, agora, cada cor representa um tipo distinto de imóvel.
+
+\vspace{12pt}
+
+No caso da variável área, é possível observar que ela influencia principalmente os imóveis do tipo terreno, apresentando um padrão consistente de aumentar a predição do modelo. Isso se deve ao fato de que terrenos, em geral, possuem áreas maiores, o que é interpretado como um fator de valorização pelo modelo.
+
+\vspace{12pt}
+
+Em relação aos atributos dos imóveis, observa-se que eles têm maior influência nas predições de apartamentos e casas. Por outro lado, a localização se mostra um fator mais determinante para o aumento da predição do modelo no caso de flats e terrenos, possivelmente devido à sua maior concentração em áreas próximas à região litorânea de João Pessoa.
+
 \vspace{12pt}
 
 Na seção a seguir, serão apresentados os resultados da aplicação final desenvolvida a partir dos dados coletados por meio da abordagem de web scraping, bem como o funcionamento prático do modelo final, o Gradient Boosting, utilizado para a avaliação de imóveis com base em determinadas características.
@@ -3279,7 +3308,7 @@ Embora o usuário tenha a opção de selecionar as coordenadas e as informaçõe
 
 \vspace{12pt}
 
-Com os dados devidamente tratados e organizados, foi aplicada uma abordagem de aprendizado de máquina, utilizando-se diferentes algoritmos, sendo o Gradient Boosting aquele que apresentou o melhor desempenho preditivo. O modelo final apresentou um RMSE de 0,28297, MAPE de $0,01333$ e $R^2$ de $87,32712\%$. Ou seja, obteve-se um modelo que consegue explicar $87,32712\%$ da variância da variável dependente e os valores estimados estão, em média, $1,333\%$ distantes de seus valores observados.
+Com os dados devidamente tratados e organizados, foi aplicada uma abordagem de aprendizado de máquina, utilizando-se diferentes algoritmos, sendo o Gradient Boosting aquele que apresentou o melhor desempenho preditivo. O modelo final apresentou um RMSE de 227677,44, MAPE de $18,21\%$ e $R^2$ de $85,42\%$. Ou seja, obteve-se um modelo que consegue explicar $85,42\%$ da variância da variável dependente e os valores estimados estão, em média, $18,21\%$ distantes de seus valores observados.
 
 \vspace{12pt}
 
@@ -3289,11 +3318,22 @@ Além da modelagem, foi dada ênfase à interpretação do modelo por meio de t�
 
 Pelo método SHAP, observou-se que a área do imóvel foi a variável com maior impacto na predição do modelo, sendo responsável por alterar, em média, mais de 12% na predição absoluta das previsões. Outras variáveis de maior impacto nas predições foram a razão entre o número de quartos e a área, as coordenadas geográficas e o produto entre essas coordenadas e o valor do aluguel. Por outro lado, variáveis como sauna, spa, portaria 24 horas e quadra de esportes apresentaram menor impacto nas predições. No entanto, os gráficos de dependência dos valores SHAP revelaram que, embora tenham menor influência, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, evidenciando sua importância em casos específicos envolvendo imóveis de categorias mais elevadas.
 
-<!-- No entanto, gráficos de dependência dos valores SHAP revelaram que, embora com menor influência, variáveis como sauna e spa ainda são relevantes na predição de imóveis de alto padrão, destacando sua importância em caso específicos na predição de imóveis de padrões mais elevados. -->
+\vspace{12pt}
+
+A aplicação do método LIME revelou que os atributos dos imóveis exercem maior influência nas predições de apartamentos e casas. Em contrapartida, a localização mostrou-se um fator mais determinante para o aumento das predições no caso de flats e terrenos, possivelmente devido à maior concentração desses imóveis em áreas próximas à região litorânea. Observou-se ainda que a variável área tem impacto especialmente relevante para os imóveis do tipo terreno, apresentando um padrão consistente de elevação nas predições do modelo.
 
 \vspace{12pt}
 
 Por fim, com todos os dados coletados e o modelo final obtido, os resultados foram integrados em uma aplicação interativa desenvolvida com foco na análise do comportamento do mercado imobiliário de João Pessoa e na avaliação de imóveis. A aplicação permite a visualização de mapas, gráficos descritivos e a realização de previsões com base nas características informadas pelo usuário. Essa ferramenta apresenta uma abordagem ainda pouco comum na avaliação de imóveis, ao adotar métodos mais computacionais, automatizados e orientados por dados, contribuindo para enfrentar um dos principais desafios do setor imobiliário, que é a escassez de informações disponíveis.
+
+## Sugestões para trabalhos futuros
+
+\ \ \ Para trabalhos futuros, recomenda-se uma exploração mais aprofundada de métodos interpretativos de modelos, como LIME, SHAP, ICE e PDP, com o objetivo de identificar os fatores mais relevantes para a predição dos diferentes tipos de imóveis. Essa abordagem poderia, inclusive, contribuir para melhorar as predições em observações nas quais o modelo apresenta maior erro.
+
+\vspace{12pt}
+
+Também é recomendada uma investigação mais detalhada sobre o ajuste do modelo, a fim de avaliar sua capacidade de generalização. Além disso, sugere-se analisar o impacto da tunagem de hiperparâmetros no desempenho preditivo dos modelos e na comparação entre eles. Outra possibilidade interessante seria explorar metodologias alternativas para a predição dos valores dos imóveis, como, por exemplo, o uso de Redes Neurais.
+
 
 # \centering Referências {.unlisted .unnumbered}
 
