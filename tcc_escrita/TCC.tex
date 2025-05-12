@@ -227,7 +227,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, sharp corners, enhanced, breakable, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, breakable, frame hidden, colback={codebgcolor}, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -471,7 +471,7 @@ início da graduação.
 \chapter*{\centering Resumo}
 \thispagestyle{empty}
 
-~~~A trajetória urbana do Brasil passou por mudanças significativas ao
+A trajetória urbana do Brasil passou por mudanças significativas ao
 longo do século XX. Em 1940, apenas 31\% da população vivia em áreas
 urbanas, mas esse número superou os 50\% já em 1970 (WAGNER; WARD,
 1980). O crescimento acelerado das cidades intensificou a demanda por
@@ -3318,7 +3318,7 @@ Isso é justificado pelo seu papel como estimador do risco quadrático
 condicional, definido por:
 
 \[
-R\left(g\right):=\E\left[\left(Y - g\left(X\right)\right)^2\right]
+R\left(g\right):=\E\left[\left(Y - g\left(X\right)\right)^2\right]\text{.}
 \]
 
 O risco \(R\) mede a esperança da perda quadrática associada à função
@@ -4472,7 +4472,7 @@ learning\_rate
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-57 & 0,28 & 1404 & 7 & \(9,81\times10^{-2}\) \\
+57 & 0,28 & 1404 & 7 & \(9,81\cdot10^{-2}\) \\
 \end{longtable}
 
 \subsection{Tunagem do LGBM}\label{tunagem-do-lgbm}
@@ -4602,7 +4602,7 @@ learning\_rate
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-31 & 0,28 & 1988 & 202 & 379 & \(9,85\times10^{-3}\) \\
+31 & 0,28 & 1988 & 202 & 379 & \(9,85\cdot10^{-3}\) \\
 \end{longtable}
 
 \subsection{Tunagem do XGBoost}\label{tunagem-do-xgboost}
@@ -4733,20 +4733,20 @@ learning\_rate
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-81 & 0,28 & 788 & 8 & \(7,12\times10^{-2}\) \\
+81 & 0,28 & 788 & 8 & \(7,12\cdot10^{-2}\) \\
 \end{longtable}
 
 A Tabela~\ref{tbl-params_xgb} apresenta a tentativa em que a combinação
 de hiperparâmetros resultou no menor erro para o algoritmo de Extreme
 Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81,
 com uma configuração de 788 árvores, profundidade máxima igual a 8 e
-taxa de aprendizado de \(7,12\times10^{-2}\).
+taxa de aprendizado de \(7,12\cdot10^{-2}\).
 
 \vspace{12pt}
 
 Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com
 1.988 árvores, quantidade máxima de 202 folhas, profundidade máxima de
-379 e taxa de aprendizado de \(9,85\times10^{-3}\), como apresentado na
+379 e taxa de aprendizado de \(9,85\cdot10^{-3}\), como apresentado na
 Tabela~\ref{tbl-params_lgbm}.
 
 \vspace{12pt}
@@ -4755,7 +4755,7 @@ Por fim, para os algoritmos Gradient Boosting e Random Forest, as
 melhores tentativas foram as de números 57 e 62, respectivamente. No
 caso do Gradient Boosting, a configuração ideal foi composta por 1.404
 árvores, profundidade máxima de 7 e taxa de aprendizado de
-\(9,81\times10^{-2}\). Já para o Random Forest, a melhor combinação
+\(9,81\cdot10^{-2}\). Já para o Random Forest, a melhor combinação
 consistiu em 653 árvores e profundidade máxima de 21. Os resultados
 estão na Tabela~\ref{tbl-params_gdt} e Tabela~\ref{tbl-params_rf},
 respectivamente.

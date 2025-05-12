@@ -216,7 +216,7 @@ Agradeço aos professores Eufrásio de Andrade Lima Neto, Luiz Medeiros de Araú
 \chapter*{\centering Resumo}
 \thispagestyle{empty}
 
-\ \ \ A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, nos 12 meses anteriores, a cidade registrou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem baseada em algoritmos de aprendizagem de máquina para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 85,42%, MAPE de 18,21% e RMSE de 227677,44. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, LIME, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguido pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
+A trajetória urbana do Brasil passou por mudanças significativas ao longo do século XX. Em 1940, apenas 31% da população vivia em áreas urbanas, mas esse número superou os 50% já em 1970 [@wagner1980urbanization]. O crescimento acelerado das cidades intensificou a demanda por habitação, impulsionando o surgimento de políticas públicas e mecanismos de financiamento, como o Sistema Financeiro de Habitação (SFH) e, posteriormente, o Sistema de Financiamento Imobiliário (SFI). Esse processo impactou diretamente o desenvolvimento do mercado imobiliário em diversas cidades, incluindo João Pessoa, capital da Paraíba, que vem se destacando nacionalmente. Até novembro de 2024, nos 12 meses anteriores, a cidade registrou uma valorização acumulada de 16,13% nos imóveis residenciais, posicionando-se entre as capitais com maior crescimento no setor. Diante desse cenário de expansão e valorização, este trabalho teve como objetivo desenvolver uma modelagem baseada em algoritmos de aprendizagem de máquina para a predição de valores de imóveis em João Pessoa, com base em dados coletados por meio de web scraping em sites do mercado imobiliário. Foram utilizadas técnicas de aprendizagem de máquina para construir e avaliar diferentes modelos preditivos, com destaque para o modelo final baseado no algoritmo de Gradient Boosting, que apresentou desempenho satisfatório, com $R^2$ de 85,42%, MAPE de 18,21% e RMSE de 227677,44. Além da modelagem, foram aplicadas técnicas interpretativas como SHAP, LIME, ICE e PDP para avaliar a importância das variáveis e padrão de comportamento na estimativa dos preços. Os resultados indicaram que a área do imóvel foi o fator que mais impactou a predição, seguido pela razão entre o número de quartos e a área, quantidade de vagas de garagem, coordenadas geográficas, número de quartos e valor médio do aluguel no bairro. Por fim, os dados e o modelo preditivo foram integrados a uma aplicação web, desenvolvida com o objetivo de auxiliar no processo de avaliação de imóveis em João Pessoa. A aplicação permite ao usuário realizar previsões com base nas características informadas, além de visualizar mapas e gráficos descritivos, oferecendo uma abordagem orientada por dados para o mercado imobiliário local.
 
 
 ```{=Latex}
@@ -1608,7 +1608,7 @@ $$
 O RMSE foi utilizado para a seleção do algoritmo com melhor desempenho. Isso é justificado pelo seu papel como estimador do risco quadrático condicional, definido por:
 
 $$
-R\left(g\right):=\E\left[\left(Y - g\left(X\right)\right)^2\right]
+R\left(g\right):=\E\left[\left(Y - g\left(X\right)\right)^2\right]\text{.}
 $$
 
 O risco $R$ mede a esperança da perda quadrática associada à função preditiva $g$, e tem grande apelo frequentista no contexto de predição. Suponha que se observe um novo conjunto de dados $\left(X_{n+1}, Y_{n+1}\right), \cdots, \left(X_{n+m}, Y_{n+m}\right)$, i.i.d. à amostra original [@izbicki2020aprendizado]. A Lei dos Grandes Números garante que, para $m$ suficientemente grande:
@@ -2777,7 +2777,7 @@ Diferentemente do modelo de Random Forest, o algoritmo de Gradient Boosting apre
 
 | Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:---------:|:-------------:|
-|     57    | 0,28 |     1404     |     7     |     $9,81\times10^{-2}$    |
+|     57    | 0,28 |     1404     |     7     |     $9,81\cdot10^{-2}$    |
 
 : Melhores hiperparâmetros para Gradient Boosting.
 
@@ -2929,7 +2929,7 @@ Analisando a relação entre o hiperparâmetro de profundidade da árvore e o n�
 
 | Tentativa |  RMSE  | n_estimators | num_leaves | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:----------:|:---------:|:-------------:|
-|     31    | 0,28 |     1988     |     202    |    379    |     $9,85\times10^{-3}$     |
+|     31    | 0,28 |     1988     |     202    |    379    |     $9,85\cdot10^{-3}$     |
 
 : Melhores hiperparâmetros para Light Gradient Boosting.
 
@@ -3076,21 +3076,21 @@ Resultados da tunagem do XGBoost.
 
 | Tentativa |  RMSE  | n_estimators | max_depth | learning_rate |
 |:---------:|:------:|:------------:|:---------:|:-------------:|
-|     81    | 0,28 |      788     |     8     |     $7,12\times10^{-2}$    |
+|     81    | 0,28 |      788     |     8     |     $7,12\cdot10^{-2}$    |
 
 : Melhores hiperparâmetros para Extreme Gradient Boosting.
 
 :::
 
-A @tbl-params_xgb apresenta a tentativa em que a combinação de hiperparâmetros resultou no menor erro para o algoritmo de Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81, com uma configuração de 788 árvores, profundidade máxima igual a 8 e taxa de aprendizado de $7,12\times10^{-2}$.
+A @tbl-params_xgb apresenta a tentativa em que a combinação de hiperparâmetros resultou no menor erro para o algoritmo de Extreme Gradient Boosting. Nesse caso, a melhor tentativa foi a de número 81, com uma configuração de 788 árvores, profundidade máxima igual a 8 e taxa de aprendizado de $7,12\cdot10^{-2}$.
 
 \vspace{12pt}
 
-Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com 1.988 árvores, quantidade máxima de 202 folhas, profundidade máxima de 379 e taxa de aprendizado de $9,85\times10^{-3}$, como apresentado na @tbl-params_lgbm.
+Para o LGBM, a melhor combinação foi encontrada na tentativa 31, com 1.988 árvores, quantidade máxima de 202 folhas, profundidade máxima de 379 e taxa de aprendizado de $9,85\cdot10^{-3}$, como apresentado na @tbl-params_lgbm.
 
 \vspace{12pt}
 
-Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tentativas foram as de números 57 e 62, respectivamente. No caso do Gradient Boosting, a configuração ideal foi composta por 1.404 árvores, profundidade máxima de 7 e taxa de aprendizado de $9,81\times10^{-2}$. Já para o Random Forest, a melhor combinação consistiu em 653 árvores e profundidade máxima de 21. Os resultados estão na @tbl-params_gdt e @tbl-params_rf, respectivamente.
+Por fim, para os algoritmos Gradient Boosting e Random Forest, as melhores tentativas foram as de números 57 e 62, respectivamente. No caso do Gradient Boosting, a configuração ideal foi composta por 1.404 árvores, profundidade máxima de 7 e taxa de aprendizado de $9,81\cdot10^{-2}$. Já para o Random Forest, a melhor combinação consistiu em 653 árvores e profundidade máxima de 21. Os resultados estão na @tbl-params_gdt e @tbl-params_rf, respectivamente.
 
 ## Resultados dos modelos
 
