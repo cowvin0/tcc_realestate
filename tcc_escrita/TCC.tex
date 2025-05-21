@@ -227,7 +227,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{F0F2F4}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, breakable, frame hidden, colback={codebgcolor}, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, boxrule=0pt, breakable, enhanced, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 \makeatletter
 \@ifpackageloaded{algorithm}{}{\usepackage{algorithm}}
@@ -342,6 +342,8 @@ dos Valores de Imóveis na Cidade de João Pessoa \par}
   \fancyhead[RE]{\thepage}
   \renewcommand{\headrulewidth}{0pt}
 }
+
+\includepdf[pages={1}]{includes/ficha_catalografica_63467.pdf}
 
 \includepdf[pages={1}]{includes/flattened.pdf}
 
@@ -507,6 +509,45 @@ dados para o mercado imobiliário local.
 
 \begin{flushleft}
 \textbf{Palavras-chave}: Aprendizagem de máquina; modelagem; mercado imobiliário; aplicação web; João Pessoa.
+\end{flushleft}
+
+\chapter*{\centering Abstract}
+\thispagestyle{empty}
+
+Brazil's urban trajectory underwent significant changes throughout the
+20th century. In 1940, only 31\% of the population lived in urban areas,
+but this figure had already surpassed 50\% by 1970 (WAGNER; WARD, 1980).
+The accelerated growth of cities increased the demand for housing,
+leading to the emergence of public policies and financing mechanisms
+such as the Sistema Financeiro de Habitação (SFH) and, later, the
+Sistema de Financiamento Imobiliário (SFI). This process directly
+influenced the development of the real estate market in various cities,
+including João Pessoa, capital of the state of Paraíba, which has been
+gaining national prominence. By November 2024, the city recorded an
+accumulated appreciation of 16.13\% in residential properties over the
+previous 12 months, ranking among the capitals with the highest growth
+in the sector. In light of this scenario of expansion and appreciation,
+this study aimed to develop a machine learning-based model to predict
+property values in João Pessoa, using data collected through web
+scraping from real estate websites. Various machine learning techniques
+were applied to build and evaluate predictive models, with the final
+model based on the Gradient Boosting algorithm showing satisfactory
+performance, with an \(R^2\) of 85.42\%, a MAPE of 18.21\%, and an RMSE
+of 227,677.44. In addition to modeling, interpretability techniques such
+as SHAP, LIME, ICE, and PDP were used to assess variable importance and
+behavioral patterns in price estimation. The results indicated that the
+property area was the most influential factor in predictions, followed
+by the ratio between the number of bedrooms and area, number of parking
+spaces, geographic coordinates, number of bedrooms, and the average
+rental value in the neighborhood. Finally, the data and predictive model
+were integrated into a web application developed to assist in the
+property valuation process in João Pessoa. The application allows users
+to make predictions based on provided characteristics and visualize
+descriptive maps and charts, offering a data-driven approach to the
+local real estate market.
+
+\begin{flushleft}
+\textbf{Keywords}: Machine learning; modeling; real estate market; web application; João Pessoa.
 \end{flushleft}
 
 \thispagestyle{empty}
