@@ -25,7 +25,6 @@ from dash import (
     State,
     callback_context,
     no_update,
-    ctx,
 )
 from folium.plugins import HeatMap
 
@@ -42,28 +41,28 @@ def predict_house_price(payload):
         return {"error": str(e)}
 
 
-def fetch_data():
-    response = requests.get("http://api:8050/real_data/return_data_db")
-    return response.json()
+# def fetch_data():
+#     response = requests.get("http://api:8050/real_data/return_data_db")
+#     return response.json()
 
 
-df_realestate = pd.DataFrame(fetch_data()).assign(
-    tipo=lambda x: x.tipo.str.capitalize()
-    .str.split("_")
-    .str.join(" ")
-    .str.replace("condominio", "condomínio")
-)
-
-# df_realestate = (
-#     pd.read_csv("data/cleaned/jp_limpo_bairro_correto3.csv")
-#     .assign(
-#         tipo=lambda x: x.tipo.str.capitalize()
-#         .str.split("_")
-#         .str.join(" ")
-#         .str.replace("condominio", "condomínio")
-#     )
-#     .drop(columns="qnt_beneficio")
+# df_realestate = pd.DataFrame(fetch_data()).assign(
+#     tipo=lambda x: x.tipo.str.capitalize()
+#     .str.split("_")
+#     .str.join(" ")
+#     .str.replace("condominio", "condomínio")
 # )
+
+df_realestate = (
+    pd.read_csv("data/cleaned/jp_limpo_bairro_correto3.csv")
+    .assign(
+        tipo=lambda x: x.tipo.str.capitalize()
+        .str.split("_")
+        .str.join(" ")
+        .str.replace("condominio", "condomínio")
+    )
+    .drop(columns="qnt_beneficio")
+)
 
 bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
 
