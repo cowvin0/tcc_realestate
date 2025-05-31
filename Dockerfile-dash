@@ -1,4 +1,5 @@
-FROM myapp-base
+FROM gabrielbatata/dependencies-app:latest
+# FROM myapp-base
 
 WORKDIR /app/dash
 COPY . .

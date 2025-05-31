@@ -1,13 +1,15 @@
 services:
-  db:
-    image: postgres:latest
-    environment:
-      - POSTGRES_HOST=${HOSTDB}
-      - POSTGRES_USER=${USERNAMEDB}
-      - POSTGRES_PASSWORD=${DBPASSWD}
-      - POSTGRES_DB=${DBNAME}
-    ports:
-      - "5434:5432"
+  koyeb:
+    image: koyeb/docker-compose
+  # db:
+  #   image: postgres:latest
+  #   environment:
+  #     - POSTGRES_HOST=${HOSTDB}
+  #     - POSTGRES_USER=${USERNAMEDB}
+  #     - POSTGRES_PASSWORD=${DBPASSWD}
+  #     - POSTGRES_DB=${DBNAME}
+  #   ports:
+  #     - "5434:5432"
   api:
     build:
       context: .
@@ -15,8 +17,8 @@ services:
     restart: always
     ports:
       - "8050:8050"
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
   dash:
     build:
       context: .

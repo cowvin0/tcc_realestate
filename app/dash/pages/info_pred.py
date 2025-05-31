@@ -24,11 +24,8 @@ from dash import (
     State,
     callback_context,
     no_update,
-<<<<<<< HEAD
-=======
     clientside_callback,
     ClientsideFunction,
->>>>>>> refs/remotes/origin/dev
 )
 from folium.plugins import HeatMap
 
