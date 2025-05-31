@@ -1,5 +1,0 @@
-FROM koyeb/docker-compose
-
-WORKDIR /app
-
-COPY . .
