@@ -1,6 +1,4 @@
 services:
-  koyeb:
-    image: koyeb/docker-compose
   # db:
   #   image: postgres:latest
   #   environment:
