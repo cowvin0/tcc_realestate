@@ -4,8 +4,8 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
             selectedData_bar_up_left,
             selectedData_bar_bottom_right,
             selectedData_density,
-            selectedData_marker_map,
-            selectedData_bairro_map,
+            map_type,
+            selectedData_map,
             filtered_data_all
         ) {
             const ctx = dash_clientside.callback_context;
@@ -38,18 +38,20 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                         return selectedValues.has(rowValor);
                     });
                 }
-            } else if (changed.some(c => c.includes("marker-map"))) {
-                const mapData = selectedData_marker_map[0];
+            }
+            else if (changed.some(c => c.includes("plotly-map-container")) && map_type === "markers") {
+                const mapData = selectedData_map;
                 if (mapData && mapData.points) {
                     const selectedCoords = new Set(
-                        mapData.points.map(p => `${p.customdata[0]},${p.customdata[1]}`)
+                        mapData.points.map(p => `${p.lat},${p.lon}`)
                     );
                     filtered = filtered.filter(
                         row => selectedCoords.has(`${row.latitude},${row.longitude}`)
                     );
                 }
-            } else if (changed.some(c => c.includes("bairro-map"))) {
-                const bairroData = selectedData_bairro_map[0];
+            }
+            else if (changed.some(c => c.includes("plotly-map-container")) && map_type === "bairros") {
+                const bairroData = selectedData_map;
                 if (bairroData && bairroData.points) {
                     const selectedBairros = new Set(
                         bairroData.points.map(p => p.location)
@@ -57,7 +59,6 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     filtered = filtered.filter(row => selectedBairros.has(row.bairro));
                 }
             }
-
             return filtered;
         }
     }
