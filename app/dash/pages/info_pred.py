@@ -1,34 +1,23 @@
-import json
-import folium.plugins
 import geopandas as gpd
 import pandas as pd
 import dash
-import math
-import dash_leaflet as dl
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
-import plotly.express as px
 import dash_ag_grid as dag
-import folium
 
 import requests
 
-from shapely.geometry import Point
 from dash_iconify import DashIconify
 from dash import (
-    ALL,
     html,
     Output,
     Input,
     dcc,
     callback,
     State,
-    callback_context,
-    no_update,
     clientside_callback,
     ClientsideFunction,
 )
-from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/")
 
@@ -36,7 +25,7 @@ dash.register_page(__name__, name="Análise de imóveis", path="/")
 def predict_house_price(payload):
     url = "http://api:8050/real_data/predict"
     try:
-        response = requests.post(url, json=payload)
+        response = requests.post(url, json=payload, timeout=10)
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
