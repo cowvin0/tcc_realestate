@@ -19,7 +19,7 @@ from dash import (
     ClientsideFunction,
 )
 
-dash.register_page(__name__, name="Análise de imóveis", path="/")
+dash.register_page(__name__, name="Análise de imóveis", path="/imoveis")
 
 
 def predict_house_price(payload):
@@ -118,6 +118,24 @@ layout = dbc.Container(
                                             ],
                                         },
                                     ),
+                                    # dcc.Graph(
+                                    #     id="leaflet-map-container",
+                                    #     style={"height": "400px", "width": "100%"},
+                                    #     config={
+                                    #         "displaylogo": False,
+                                    #         "displayModeBar": False,
+                                    #         "scrollZoom": True,
+                                    #         "doubleClick": "reset",
+                                    #         "modeBarButtonsToRemove": [
+                                    #             "zoom",
+                                    #             "zoomIn",
+                                    #             "zoomOut",
+                                    #             "pan",
+                                    #             "lasso2d",
+                                    #             "autoScale",
+                                    #         ],
+                                    #     },
+                                    # ),
                                     html.Div(
                                         id="leaflet-map-container",
                                         style={
@@ -820,6 +838,38 @@ def download_csv(_):
     return dcc.send_data_frame(df_realestate.to_csv, "dados_imoveis.csv", index=False)
 
 
+# @callback(
+#     Output("plotly-map-container", "children", allow_duplicate=True),
+#     Input("map-select", "value"),
+#     prevent_initial_call=True,
+# )
+# def update_no_type_map(map_type):
+#     if map_type == "sem_tipo":
+#         return dl.Map(
+#             id="map-id",
+#             style={"width": "100%", "height": "400px"},
+#             center=[CENTER_LAT, CENTER_LON],
+#             zoom=12,
+#             children=[
+#                 dl.TileLayer(),
+#                 dl.FullScreenControl(),
+#                 dl.LayerGroup(id="points-layer"),
+#             ],
+#         )
+
+
+# clientside_callback(
+#     ClientsideFunction(
+#         namespace="clientside_update_coordinates", function_name="update_coordinates"
+#     ),
+#     # Output("input-price-alug", "value"),
+#     # Output("input-area-alug", "value"),
+#     # Output("input-lat", "value"),
+#     # Output("input-lon", "value"),
+#     Input("predict-button", "n_clicks"),
+#     Input("map-select", "value"),
+# )
+
 clientside_callback(
     ClientsideFunction(namespace="clientside_update_map", function_name="update_map"),
     Output("plotly-map-container", "figure"),
@@ -833,6 +883,7 @@ clientside_callback(
     Input("filtered-data-all", "data"),
     Input("predict-button", "n_clicks"),
     Input("plotly-map-container", "selectedData"),
+    # Input("trigger_map", "n_clicks"),
     State("bairro-geojson", "data"),
     State("faixas_exclusivas-geojson", "data"),
     State("ciclo-geojson", "data"),

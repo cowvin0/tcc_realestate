@@ -14,7 +14,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
             parquesGeojson,
             riosGeojson,
             pracasGeojson,
-            escolasPublicasGeojson
+            escolasPublicasGeojson,
         ) {
             const triggered = dash_clientside.callback_context.triggered.map(t => t.prop_id);
             if (!filteredData || filteredData.length === 0) {
@@ -70,7 +70,6 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                 };
 
                 return [{ data: data, layout: layout }, "", "", "", "", ""];
-
             } else if (map_type === 'markers') {
 
                 if (triggered.includes('plotly-map-container.selectedData')) {
@@ -567,7 +566,8 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                 };
 
                 return [{ data: traces, layout: layout }, "", "", "", "", ""];
-            } else {
+            }
+            else {
                 if (window.myLeafletMap) {
                     window.myLeafletMap.remove();
                 }
@@ -640,10 +640,22 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                         `<b>Preço Aluguel:</b> ${aluguel_price !== null ? `R$ ${aluguel_price.toFixed(2)}` : "N/A"}<br>` +
                         `<b>Área Aluguel:</b> ${aluguel_area !== null ? `${aluguel_area.toFixed(2)} m²` : "N/A"}`;
 
+
+                    window.areaAluguel = aluguel_price
+                    window.valorAluguel = aluguel_area
+                    window.coords = e.latlng
+
                     clickMarker.bindPopup(popupContent).openPopup();
 
-                    clickResolve([{}, aluguel_price, aluguel_area, lat, lon]);
+                    clickResolve([
+                        {},
+                        aluguel_price !== null ? aluguel_price : "",
+                        aluguel_area !== null ? aluguel_area : "",
+                        lat !== null ? lat : "",
+                        lon !== null ? lon : ""
+                    ]);
                 }
+
 
                 map.on('click', onMapClick);
 
