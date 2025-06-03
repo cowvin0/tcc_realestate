@@ -23,7 +23,7 @@ dash.register_page(__name__, name="Análise de imóveis", path="/")
 
 
 def predict_house_price(payload):
-    url = "http://api:8050/real_data/predict"
+    url = "http://api:8050/api/real_data/predict"
     try:
         response = requests.post(url, json=payload, timeout=10)
         response.raise_for_status()
