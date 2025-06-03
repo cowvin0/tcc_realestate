@@ -101,7 +101,7 @@ def close_offcanvas(n, is_open):
 
 @callback(Output("floating-button-container", "children"), Input("url", "pathname"))
 def display_floating_button(pathname):
-    if pathname == "/imoveis":
+    if pathname == "/":
 
         def button(icon, id):
             return dmc.ActionIcon(

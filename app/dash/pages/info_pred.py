@@ -19,7 +19,7 @@ from dash import (
     ClientsideFunction,
 )
 
-dash.register_page(__name__, name="Análise de imóveis", path="/imoveis")
+dash.register_page(__name__, name="Análise de imóveis", path="/")
 
 
 def predict_house_price(payload):

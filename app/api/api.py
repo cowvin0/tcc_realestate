@@ -18,5 +18,5 @@ from app.api.models import *
 # api.include_router(db_data.router)
 
 
-api = FastAPI()
+api = FastAPI(root_path="/api")
 api.include_router(db_data.router)
