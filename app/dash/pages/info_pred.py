@@ -65,6 +65,7 @@ layout = dbc.Container(
     children=[
         dbc.Row(
             [
+                html.Div(id="dummy"),
                 dbc.Col(
                     dmc.Card(
                         children=[
@@ -212,7 +213,7 @@ layout = dbc.Container(
                                 id="filtered-data",
                                 data=df_realestate.to_dict("records"),
                             ),
-                            dcc.Store(id="stored-coordinates"),
+                            dcc.Store(id="stored-coordinates", data={}),
                             dcc.Store(id="show-prediction-form", data=False),
                             dbc.Offcanvas(
                                 id="offcanvas-table",
@@ -837,53 +838,15 @@ def download_csv(_):
     return dcc.send_data_frame(df_realestate.to_csv, "dados_imoveis.csv", index=False)
 
 
-# @callback(
-#     Output("plotly-map-container", "children", allow_duplicate=True),
-#     Input("map-select", "value"),
-#     prevent_initial_call=True,
-# )
-# def update_no_type_map(map_type):
-#     if map_type == "sem_tipo":
-#         return dl.Map(
-#             id="map-id",
-#             style={"width": "100%", "height": "400px"},
-#             center=[CENTER_LAT, CENTER_LON],
-#             zoom=12,
-#             children=[
-#                 dl.TileLayer(),
-#                 dl.FullScreenControl(),
-#                 dl.LayerGroup(id="points-layer"),
-#             ],
-#         )
-
-
-# clientside_callback(
-#     ClientsideFunction(
-#         namespace="clientside_update_coordinates", function_name="update_coordinates"
-#     ),
-#     # Output("input-price-alug", "value"),
-#     # Output("input-area-alug", "value"),
-#     # Output("input-lat", "value"),
-#     # Output("input-lon", "value"),
-#     Input("predict-button", "n_clicks"),
-#     Input("map-select", "value"),
-# )
-
 clientside_callback(
     ClientsideFunction(namespace="clientside_update_map", function_name="update_map"),
     Output("plotly-map-container", "figure"),
-    Output("input-price-alug", "value"),
-    Output("input-area-alug", "value"),
-    Output("input-lat", "value"),
-    Output("input-lon", "value"),
-    Output("stored-coordinates", "data"),
     Output("leaflet-map-container", "children"),
     Input("map-select", "value"),
     Input("filtered-data", "data"),
     Input("filtered-data-all", "data"),
     Input("predict-button", "n_clicks"),
     Input("plotly-map-container", "selectedData"),
-    # Input("trigger_map", "n_clicks"),
     State("bairro-geojson", "data"),
     State("faixas_exclusivas-geojson", "data"),
     State("ciclo-geojson", "data"),
