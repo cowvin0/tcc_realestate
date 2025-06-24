@@ -69,7 +69,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     'margin': { 'r': 0, 't': 0, 'l': 0, 'b': 0 },
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === 'markers') {
 
                 if (triggered.includes('plotly-map-container.selectedData')) {
@@ -125,7 +125,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     dragmode: 'select'
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === 'bairros') {
 
                 if (triggered.includes('plotly-map-container.selectedData')) {
@@ -187,7 +187,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     dragmode: 'select'
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === "faixas_exclusivas") {
                 const geojson = JSON.parse(faixasExclusivasGeojson);
 
@@ -239,7 +239,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     showlegend: false
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === "ciclo") {
                 const geojson = JSON.parse(cicloGeojson);
 
@@ -283,7 +283,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     showlegend: false
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             }
             else if (map_type === "comunidades") {
                 const geojson = JSON.parse(comunidadesGeojson);
@@ -328,7 +328,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     showlegend: false
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === "corredores") {
                 const geojson = JSON.parse(corredoresGeojson);
 
@@ -370,7 +370,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     showlegend: false
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === "parques") {
                 const geojson = JSON.parse(parquesGeojson);
 
@@ -420,7 +420,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     showlegend: false
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === "escolas_publicas") {
                 const geojson = JSON.parse(escolasPublicasGeojson);
 
@@ -469,7 +469,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     showlegend: false
                 };
 
-                return [{ data: data, layout: layout }, "", "", "", "", ""];
+                return [{ data: data, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === "rios") {
                 const geojson = JSON.parse(riosGeojson);
                 const riverTraces = [];
@@ -515,7 +515,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     showlegend: false
                 };
 
-                return [{ data: riverTraces, layout: layout }, "", "", "", "", ""];
+                return [{ data: riverTraces, layout: layout }, "", "", "", "", "", {}];
             } else if (map_type === "pracas") {
                 const geojson = JSON.parse(pracasGeojson);
                 const traces = [];
@@ -565,7 +565,7 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                     showlegend: false
                 };
 
-                return [{ data: traces, layout: layout }, "", "", "", "", ""];
+                return [{ data: traces, layout: layout }, "", "", "", "", "", {}];
             }
             else {
                 if (window.myLeafletMap) {
@@ -640,10 +640,10 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                         `<b>Preço Aluguel:</b> ${aluguel_price !== null ? `R$ ${aluguel_price.toFixed(2)}` : "N/A"}<br>` +
                         `<b>Área Aluguel:</b> ${aluguel_area !== null ? `${aluguel_area.toFixed(2)} m²` : "N/A"}`;
 
-
                     window.areaAluguel = aluguel_price
                     window.valorAluguel = aluguel_area
                     window.coords = e.latlng
+
 
                     clickMarker.bindPopup(popupContent).openPopup();
 
@@ -652,7 +652,8 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                         aluguel_price !== null ? aluguel_price : "",
                         aluguel_area !== null ? aluguel_area : "",
                         lat !== null ? lat : "",
-                        lon !== null ? lon : ""
+                        lon !== null ? lon : "",
+                        e.latlng
                     ]);
                 }
 

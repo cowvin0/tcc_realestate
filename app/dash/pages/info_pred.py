@@ -55,7 +55,6 @@ df_realestate = (
     .drop(columns="qnt_beneficio")
 )
 
-# bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
 
 CENTER_LAT = df_realestate["latitude"].mean()
 CENTER_LON = df_realestate["longitude"].mean()
@@ -877,6 +876,7 @@ clientside_callback(
     Output("input-area-alug", "value"),
     Output("input-lat", "value"),
     Output("input-lon", "value"),
+    Output("stored-coordinates", "data"),
     Output("leaflet-map-container", "children"),
     Input("map-select", "value"),
     Input("filtered-data", "data"),
