@@ -1,74 +1,63 @@
-import folium.plugins
 import geopandas as gpd
 import pandas as pd
 import dash
-import math
-import dash_leaflet as dl
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
-import plotly.express as px
 import dash_ag_grid as dag
-import folium
-import plotly.figure_factory as ff
 
 import requests
 
-from shapely.geometry import Point
 from dash_iconify import DashIconify
 from dash import (
-    ALL,
     html,
     Output,
     Input,
     dcc,
     callback,
     State,
-    callback_context,
-    no_update,
-    ctx,
+    clientside_callback,
+    ClientsideFunction,
 )
-from folium.plugins import HeatMap
 
 dash.register_page(__name__, name="Análise de imóveis", path="/")
 
 
 def predict_house_price(payload):
-    url = "http://api:8050/real_data/predict"
+    url = "http://api:8050/api/real_data/predict"
     try:
-        response = requests.post(url, json=payload)
+        response = requests.post(url, json=payload, timeout=10)
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
         return {"error": str(e)}
 
 
-def fetch_data():
-    response = requests.get("http://api:8050/real_data/return_data_db")
-    return response.json()
+# def fetch_data():
+#     response = requests.get("http://api:8050/real_data/return_data_db")
+#     return response.json()
 
 
-df_realestate = pd.DataFrame(fetch_data()).assign(
-    tipo=lambda x: x.tipo.str.capitalize()
-    .str.split("_")
-    .str.join(" ")
-    .str.replace("condominio", "condomínio")
-)
-
-# df_realestate = (
-#     pd.read_csv("data/cleaned/jp_limpo_bairro_correto3.csv")
-#     .assign(
-#         tipo=lambda x: x.tipo.str.capitalize()
-#         .str.split("_")
-#         .str.join(" ")
-#         .str.replace("condominio", "condomínio")
-#     )
-#     .drop(columns="qnt_beneficio")
+# df_realestate = pd.DataFrame(fetch_data()).assign(
+#     tipo=lambda x: x.tipo.str.capitalize()
+#     .str.split("_")
+#     .str.join(" ")
+#     .str.replace("condominio", "condomínio")
 # )
 
-bairro_geojson = gpd.read_file("app/dash/assets/geo_joao_pessoa/bairros.geojson")
+df_realestate = (
+    pd.read_csv("data/cleaned/jp_limpo_bairro_correto3.csv")
+    .assign(
+        tipo=lambda x: x.tipo.str.capitalize()
+        .str.split("_")
+        .str.join(" ")
+        .str.replace("condominio", "condomínio")
+    )
+    .drop(columns="qnt_beneficio")
+)
 
-center_lat = df_realestate["latitude"].mean()
-center_lon = df_realestate["longitude"].mean()
+
+CENTER_LAT = df_realestate["latitude"].mean()
+CENTER_LON = df_realestate["longitude"].mean()
 
 
 layout = dbc.Container(
@@ -76,6 +65,7 @@ layout = dbc.Container(
     children=[
         dbc.Row(
             [
+                html.Div(id="dummy"),
                 dbc.Col(
                     dmc.Card(
                         children=[
@@ -108,12 +98,122 @@ layout = dbc.Container(
                 dbc.Col(
                     dmc.Card(
                         children=[
-                            html.Div(id="map-container"),
+                            html.Div(
+                                [
+                                    dcc.Graph(
+                                        id="plotly-map-container",
+                                        style={"height": "400px", "width": "100%"},
+                                        config={
+                                            "displaylogo": False,
+                                            "displayModeBar": False,
+                                            "scrollZoom": True,
+                                            "doubleClick": "reset",
+                                            "modeBarButtonsToRemove": [
+                                                "zoom",
+                                                "zoomIn",
+                                                "zoomOut",
+                                                "pan",
+                                                "lasso2d",
+                                                "autoScale",
+                                            ],
+                                        },
+                                    ),
+                                    # dcc.Graph(
+                                    #     id="leaflet-map-container",
+                                    #     style={"height": "400px", "width": "100%"},
+                                    #     config={
+                                    #         "displaylogo": False,
+                                    #         "displayModeBar": False,
+                                    #         "scrollZoom": True,
+                                    #         "doubleClick": "reset",
+                                    #         "modeBarButtonsToRemove": [
+                                    #             "zoom",
+                                    #             "zoomIn",
+                                    #             "zoomOut",
+                                    #             "pan",
+                                    #             "lasso2d",
+                                    #             "autoScale",
+                                    #         ],
+                                    #     },
+                                    # ),
+                                    html.Div(
+                                        id="leaflet-map-container",
+                                        style={
+                                            "height": "400px",
+                                            "width": "100%",
+                                        },
+                                    ),
+                                ]
+                            ),
+                            dcc.Store(
+                                id="rios-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/rios.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="pracas-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/pracas.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="parques-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/parques.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="faixas_exclusivas-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/faixas_exclusivas.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="escolas_publicas-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/escolas_publicas.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="corredores-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/corredores.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="comunidades-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/comunidades.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="ciclo-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/ciclo.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="area_rural-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/area_rural.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="bairro-geojson",
+                                data=gpd.read_file(
+                                    "app/dash/assets/geo_joao_pessoa/bairros.geojson"
+                                ).to_json(),
+                            ),
+                            dcc.Store(
+                                id="filtered-data-all",
+                                data=df_realestate.to_dict("records"),
+                            ),
                             dcc.Store(
                                 id="filtered-data",
                                 data=df_realestate.to_dict("records"),
                             ),
-                            dcc.Store(id="stored-coordinates"),
+                            dcc.Store(id="stored-coordinates", data={}),
                             dcc.Store(id="show-prediction-form", data=False),
                             dbc.Offcanvas(
                                 id="offcanvas-table",
@@ -171,7 +271,8 @@ layout = dbc.Container(
                                 placement="end",
                                 children=[
                                     html.P(
-                                        "Utilize os controles abaixo para ajustar os filtros do mapa e realizar previsões dos valores de imóveis.",
+                                        "Utilize os controles abaixo para ajustar os filtros do mapa e"
+                                        " realizar previsões dos valores de imóveis.",
                                         style={
                                             "marginBottom": "1rem",
                                             "fontSize": "1.2rem",
@@ -190,7 +291,7 @@ layout = dbc.Container(
                                         id="map-select",
                                         value="heatmap",
                                         data=[
-                                            {"value": "leaflet", "label": "Sem tipo"},
+                                            {"value": "sem_tipo", "label": "Sem tipo"},
                                             {
                                                 "value": "heatmap",
                                                 "label": "Mapa de Calor",
@@ -268,7 +369,7 @@ layout = dbc.Container(
                                                     },
                                                     {
                                                         "value": "terrenos_e_lotes_comerciais",
-                                                        "label": "Terreno/ Lote comercial",
+                                                        "label": "Terreno/Lote comercial",
                                                     },
                                                     {
                                                         "value": "terrenos_lotes_e_condominios",
@@ -607,7 +708,6 @@ layout = dbc.Container(
                                             dmc.Button(
                                                 "Calcular Previsão",
                                                 id="calculate-prediction",
-                                                # className="btn btn-success",
                                             ),
                                             html.Div(
                                                 id="prediction-result",
@@ -698,201 +798,35 @@ layout = dbc.Container(
 )
 
 
-# @callback(
-#     Output("bar-graph", "figure"),
-#     Input("filtered-data", "data"),
-#     Input("bar-graph", "selectedData"),
-# )
-# def make_barplot_up_left(filtered_data, _):
-#     changed_inputs = [x["prop_id"] for x in callback_context.triggered]
-
-#     if "bar-graph.selectedData" in changed_inputs:
-#         return no_update
-#     else:
-#         df_filtered = pd.DataFrame(filtered_data)
-
-#     fig_bar = px.bar(
-#         df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
-#         x="valor",
-#         y="tipo",
-#         labels={"tipo": "", "valor": "Valor Médio (R$)"},
-#         text_auto=".2s",
-#         template="plotly_white",
-#     )
-
-#     fig_bar.update_layout(
-#         clickmode="event+select",
-#         dragmode="select",
-#         template="plotly_white",
-#         margin=dict(l=0, r=0, t=0, b=0),
-#     )
-
-#     return fig_bar
-
-
-@callback(
+clientside_callback(
+    ClientsideFunction(
+        namespace="clientside_barplot_up_left", function_name="make_barplot_up_left"
+    ),
     Output("bar-graph", "figure"),
     Input("filtered-data", "data"),
     Input("bar-graph", "selectedData"),
 )
-def make_barplot_up_left(filtered_data, _):
-    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
-
-    if "bar-graph.selectedData" in changed_inputs:
-        return no_update
-
-    df_filtered = pd.DataFrame(filtered_data)
-
-    if df_filtered.empty or "tipo" not in df_filtered.columns:
-        return no_update
-
-    fig_bar = px.bar(
-        df_filtered.groupby("tipo")["valor"].mean().sort_values().reset_index(),
-        x="valor",
-        y="tipo",
-        labels={"tipo": "", "valor": "Valor Médio (R$)"},
-        text_auto=".2s",
-        template="plotly_white",
-    )
-
-    fig_bar.update_layout(
-        clickmode="event+select",
-        dragmode="select",
-        template="plotly_white",
-        margin=dict(l=0, r=0, t=0, b=0),
-    )
-
-    return fig_bar
 
 
-@callback(
+clientside_callback(
+    ClientsideFunction(
+        namespace="clientside_barplot_bottom_right",
+        function_name="make_barplot_bottom_right",
+    ),
     Output("bar-plot-most-expensive", "figure"),
     Input("filtered-data", "data"),
     Input("bar-plot-most-expensive", "selectedData"),
 )
-def make_barplot_bottom_right(filtered_data, _):
-    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
-
-    if "bar-plot-most-expensive.selectedData" in changed_inputs:
-        return no_update
-
-    df_filtered = pd.DataFrame(filtered_data)
-
-    if df_filtered.empty or "bairro" not in df_filtered.columns:
-        return no_update
-
-    fig_bar = px.bar(
-        df_filtered.groupby("bairro")["valor"]
-        .mean()
-        .sort_values(ascending=False)
-        .head(10)
-        .sort_values()
-        .reset_index(),
-        x="valor",
-        y="bairro",
-        labels={"tipo": "", "valor": "Valor Médio (R$)", "bairro": ""},
-        text_auto=".2s",
-        template="plotly_white",
-    )
-
-    fig_bar.update_layout(
-        clickmode="event+select",
-        dragmode="select",
-        template="plotly_white",
-        margin=dict(l=0, r=0, t=0, b=0),
-        yaxis=dict(tickformat=".2f"),
-    )
-
-    return fig_bar
 
 
-@callback(
+clientside_callback(
+    ClientsideFunction(
+        namespace="clientside_density", function_name="make_density_plot"
+    ),
     Output("density-plot", "figure"),
     Input("filtered-data", "data"),
     Input("density-plot", "selectedData"),
 )
-def make_density_plot(filtered_data, _):
-    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
-
-    if "density-plot.selectedData" in changed_inputs:
-        return no_update
-
-    df_filtered = pd.DataFrame(filtered_data)
-
-    if df_filtered.empty or "tipo" not in df_filtered.columns:
-        return no_update
-
-    types_imo = df_filtered.tipo.unique()
-
-    get_groups = []
-    valid_labels = []
-    for tipo in types_imo:
-        values = df_filtered.query("tipo == @tipo").valor
-        if len(values) >= 2 and values.std() > 0:
-            get_groups.append(values)
-            valid_labels.append(tipo)
-
-    if not get_groups:
-        return no_update
-
-    fig = ff.create_distplot(get_groups, valid_labels, bin_size=10000, show_rug=False)
-
-    fig.update_layout(
-        legend=dict(
-            orientation="h",
-            yanchor="top",
-            y=-0.2,
-            xanchor="center",
-            x=0.5,
-        ),
-        margin=dict(l=0, r=0, t=0, b=0),
-        clickmode="event+select",
-        dragmode="select",
-        template="plotly_white",
-        yaxis=dict(tickformat=".1e"),
-    )
-
-    return fig
-
-
-# @callback(
-#     Output("density-plot", "figure"),
-#     Input("filtered-data", "data"),
-#     Input("density-plot", "selectedData"),
-# )
-# def make_density_plot(filtered_data, _):
-#     changed_inputs = [x["prop_id"] for x in callback_context.triggered]
-
-#     if "density-plot.selectedData" in changed_inputs:
-#         return no_update
-
-#     df_filtered = pd.DataFrame(filtered_data)
-
-#     if df_filtered.empty or "tipo" not in df_filtered.columns:
-#         return no_update
-
-#     types_imo = df_filtered.tipo.unique()
-
-#     get_groups = [df_filtered.query("tipo == @i").valor for i in types_imo]
-
-#     fig = ff.create_distplot(get_groups, types_imo, bin_size=10000, show_rug=False)
-
-#     fig.update_layout(
-#         legend=dict(
-#             orientation="h",
-#             yanchor="top",
-#             y=-0.2,
-#             xanchor="center",
-#             x=0.5,
-#         ),
-#         margin=dict(l=0, r=0, t=0, b=0),
-#         clickmode="event+select",
-#         dragmode="select",
-#         template="plotly_white",
-#         yaxis=dict(tickformat=".1e"),
-#     )
-
-#     return fig
 
 
 @callback(
@@ -904,391 +838,25 @@ def download_csv(_):
     return dcc.send_data_frame(df_realestate.to_csv, "dados_imoveis.csv", index=False)
 
 
-@callback(
-    Output("map-container", "children"),
-    [
-        Input("map-select", "value"),
-        Input("filtered-data", "data"),
-        Input("predict-button", "n_clicks"),
-        Input({"type": "marker-map", "index": ALL}, "selectedData"),
-        Input({"type": "bairro-map", "index": ALL}, "selectedData"),
-    ],
+clientside_callback(
+    ClientsideFunction(namespace="clientside_update_map", function_name="update_map"),
+    Output("plotly-map-container", "figure"),
+    Output("leaflet-map-container", "children"),
+    Input("map-select", "value"),
+    Input("filtered-data", "data"),
+    Input("filtered-data-all", "data"),
+    Input("predict-button", "n_clicks"),
+    Input("plotly-map-container", "selectedData"),
+    State("bairro-geojson", "data"),
+    State("faixas_exclusivas-geojson", "data"),
+    State("ciclo-geojson", "data"),
+    State("comunidades-geojson", "data"),
+    State("corredores-geojson", "data"),
+    State("parques-geojson", "data"),
+    State("rios-geojson", "data"),
+    State("pracas-geojson", "data"),
+    State("escolas_publicas-geojson", "data"),
 )
-def update_map(map_type, filtered_data, n_clicks, select_marker_, select_bairro_):
-    changed_inputs = [x["prop_id"] for x in callback_context.triggered]
-    df_filtered = pd.DataFrame(filtered_data)
-
-    if df_filtered.empty:
-        return no_update
-
-    city_folder = f"app/dash/assets/geo_joao_pessoa/{map_type}.geojson"
-    m = folium.Map(
-        location=[center_lat, center_lon],
-        zoom_control=True,
-        attribution_control=True,
-        zoom_start=12,
-    )
-
-    if n_clicks % 2 == 1:
-        map_type = None
-
-    if map_type == "heatmap":
-        data = df_filtered[["latitude", "longitude", "valor"]].values.tolist()
-        heatmap_map = folium.Map([center_lat, center_lon], zoom_start=12)
-        HeatMap(data, radius=13).add_to(heatmap_map)
-        return html.Iframe(
-            srcDoc=heatmap_map._repr_html_(), width="100%", height="400px"
-        )
-
-    elif map_type == "markers":
-
-        if '{"index":1,"type":"marker-map"}.selectedData' in changed_inputs:
-            return no_update
-
-        fig_map_marker = px.scatter_mapbox(
-            df_filtered,
-            lat="latitude",
-            lon="longitude",
-            color="valor",
-            size="valor",
-            hover_name="tipo",
-            hover_data={
-                "latitude": False,
-                "longitude": False,
-                "bairro": True,
-                "valor": ":.2f",
-                "predicoes_modelo": ":.2f",
-                "area": ":.2f",
-                "vaga": ":.2f",
-                "banheiro": ":.2f",
-                "quarto": ":.2f",
-            },
-            size_max=15,
-            zoom=12,
-            mapbox_style="open-street-map",
-            center={
-                "lat": center_lat,
-                "lon": center_lon,
-            },
-        )
-
-        fig_map_marker.update_layout(
-            margin={"r": 0, "t": 0, "l": 0, "b": 0},
-            clickmode="event+select",
-            dragmode="select",
-            coloraxis_colorbar=dict(
-                title="Valor (R$)",
-                orientation="h",
-                tickformat=".2s",
-                x=0,
-                xanchor="left",
-                y=0.85,
-                yanchor="bottom",
-                len=0.6,
-                thickness=15,
-                title_font=dict(size=12),
-            ),
-        )
-
-        return dcc.Graph(
-            figure=fig_map_marker,
-            id={"type": "marker-map", "index": 1},
-            style={"width": "100%", "height": "400px"},
-            config={"displaylogo": False},
-        )
-
-    elif map_type == "bairros":
-        df_filtered_mean = df_filtered.groupby("bairro").valor.mean().reset_index()
-
-        geo_data = gpd.read_file(city_folder)
-
-        geo_data_merged = geo_data.merge(
-            df_filtered_mean, how="left", left_on="nome", right_on="bairro"
-        )
-
-        geojson = geo_data_merged.__geo_interface__
-
-        if '{"type": "bairro-map", "index": 1}.selectedData' in changed_inputs:
-            return no_update
-
-        fig_map_bairros = px.choropleth_mapbox(
-            geo_data_merged,
-            geojson=geojson,
-            locations="bairro",
-            featureidkey="properties.nome",
-            color="valor",
-            hover_data={
-                "bairro": True,
-                "valor": ":.2f",
-                "area": ":.2f",
-                "hectares": ":.2f",
-                "perimetro": ":.2f",
-            },
-            color_continuous_scale="Viridis",
-            mapbox_style="open-street-map",
-            zoom=12,
-            center={"lat": center_lat, "lon": center_lon},
-            opacity=0.6,
-        )
-
-        fig_map_bairros.update_layout(
-            margin={"r": 0, "t": 0, "l": 0, "b": 0},
-            clickmode="event+select",
-            dragmode="select",
-            coloraxis_colorbar=dict(
-                title="Valor (R$)",
-                orientation="h",
-                tickformat=".2s",
-                x=0,
-                xanchor="left",
-                y=0.85,
-                yanchor="bottom",
-                len=0.6,
-                thickness=15,
-                title_font=dict(size=12),
-            ),
-        )
-
-        return dcc.Graph(
-            figure=fig_map_bairros,
-            id={"type": "bairro-map", "index": 1},
-            style={"width": "100%", "height": "400px"},
-            config={"displaylogo": False},
-        )
-
-    # elif map_type == "bairros":
-    #     df_filtered_mean = df_filtered.groupby("bairro").valor.mean().reset_index()
-    #     geo_data = gpd.read_file(city_folder)
-    #     print(geo_data.merge(df_filtered_mean, left_on="nome", right_on="bairro"))
-    #     for _, row in geo_data.iterrows():
-    #         popup_content = f"""
-    #         <b>Bairro:</b> {row['nome']}<br>
-    #         <b>Perímetro:</b> {row['perimetro']:.2f} m<br>
-    #         <b>Área:</b> {row['area']:.2f} m²<br>
-    #         <b>Hectares:</b> {row['hectares']:.2f} ha<br>
-    #         """
-    #         folium.GeoJson(
-    #             row.geometry,
-    #             name=row["nome"],
-    #             popup=folium.Popup(popup_content, max_width=300),
-    #         ).add_to(m)
-    #     return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    elif map_type == "faixas_exclusivas":
-        geo_data = gpd.read_file(city_folder)
-        for _, row in geo_data.iterrows():
-            popup_content = f"""
-            <b>Ano de implantação :</b> {row['ano_implantacao']} <br>
-            <b>Percurso :</b> {row['percurso']} <br>
-            """
-            folium.GeoJson(
-                row.geometry,
-                name=row["percurso"],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(m)
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    elif map_type == "ciclo":
-        geo_data = gpd.read_file(city_folder)
-        for _, row in geo_data.astype({"ano_implantacao": int}).iterrows():
-            popup_content = f"""
-            <b>Tipo :</b> {row['tipo']} <br>
-            <b>Sentido :</b> {row['sentido']} <br>
-            <b>Ano de implantação :</b> {row['ano_implantacao']} <br>
-            """
-            folium.GeoJson(
-                row.geometry,
-                name=row["ano_implantacao"],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(m)
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    elif map_type == "comunidades":
-        geo_data = gpd.read_file(city_folder)
-        for _, row in geo_data.iterrows():
-            popup_content = f"""
-            <b>Comunidade :</b> {row['comunidade']} <br>
-            <b>Área :</b> {row['area']:.2f} m²<br>
-            """
-            folium.GeoJson(
-                row.geometry,
-                name=row["comunidade"],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(m)
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    elif map_type == "corredores":
-        geo_data = gpd.read_file(city_folder)
-        for _, row in geo_data.iterrows():
-            popup_content = f"""
-            <b>Corredor :</b> {row['corredor']} <br>
-            <b>Descrição :</b> {row['descricao']} <br>
-            """
-            folium.GeoJson(
-                row.geometry,
-                name=row["descricao"],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(m)
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    elif map_type == "parques":
-        geo_data = gpd.read_file(city_folder)
-        for _, row in geo_data.iterrows():
-            popup_content = f"""
-            <b>Nome :</b> {row['nome']} <br>
-            <b>Perímetro :</b> {row['perimetro']:.2f} m<br>
-            <b>Área :</b> {row['area']:.2f} m²<br>
-            <b>Hectares :</b> {row['hectares']:.2f} ha<br>
-            """
-            folium.GeoJson(
-                row.geometry,
-                name=row["nome"],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(m)
-
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    elif map_type == "escolas_publicas":
-        geo_data = gpd.read_file(city_folder)
-        marker_cluster = folium.plugins.MarkerCluster().add_to(m)
-        for _, row in geo_data.iterrows():
-            popup_content = f"""
-            <b>Nome:</b> {row['nome']}<br>
-            <b>Categoria:</b> {row['categoria']}<br>
-            <b>Dependência:</b> {row['dependencia']}
-            """
-            folium.Marker(
-                location=[row.geometry.y, row.geometry.x],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(marker_cluster)
-
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    elif map_type == "rios":
-
-        geo_data = gpd.read_file(city_folder)
-        for _, row in geo_data.iterrows():
-            popup_content = f"""
-            <b>Nome :</b> {row['nome']} <br>
-            <b>Tipo :</b> {row['tipo']} <br>
-            <b>Afluente :</b> {row['afluente']} <br>
-            """
-            folium.GeoJson(
-                row.geometry,
-                name=row["nome"],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(m)
-
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    elif map_type == "pracas":
-        geo_data = gpd.read_file(city_folder)
-        geo_data["area"] = geo_data["area"].str.replace(",", ".").astype(float)
-        for _, row in geo_data.iterrows():
-            area_value = f"{row['area']:.2f}" if not math.isnan(row["area"]) else "N/A"
-            popup_content = f"""
-            <b>Bairro :</b> {row['bairro']} <br>
-            <b>Nome :</b> {row['nome']} <br>
-            <b>Área :</b> {area_value} <br>
-            """
-            folium.GeoJson(
-                row.geometry,
-                name=row["nome"],
-                popup=folium.Popup(popup_content, max_width=300),
-            ).add_to(m)
-
-        return html.Iframe(srcDoc=m._repr_html_(), width="100%", height="400px")
-
-    else:
-        return dl.Map(
-            id="map-id",
-            style={"width": "100%", "height": "400px"},
-            center=[center_lat, center_lon],
-            zoom=12,
-            children=[
-                dl.TileLayer(),
-                dl.FullScreenControl(),
-                dl.LayerGroup(id="points-layer"),
-            ],
-        )
-
-
-@callback(
-    [
-        Output("points-layer", "children"),
-        Output("input-lat", "value"),
-        Output("input-lon", "value"),
-        Output("stored-coordinates", "data"),
-        Output("input-price-alug", "value"),
-        Output("input-area-alug", "value"),
-    ],
-    [Input("map-id", "clickData")],
-)
-def update_coordinates(clickData):
-    if clickData and "latlng" in clickData:
-        lat, lon = clickData["latlng"]["lat"], clickData["latlng"]["lng"]
-        check_point = Point(lon, lat)
-
-        matching_bairros = bairro_geojson[bairro_geojson.contains(check_point)]
-
-        if not matching_bairros.empty:
-            get_bairro = matching_bairros.nome.iloc[0]
-            filter_aluguel_data = df_realestate[df_realestate["bairro"] == get_bairro]
-
-            aluguel_price = (
-                filter_aluguel_data["valor_aluguel"].fillna(method="ffill").iloc[-1]
-                if not filter_aluguel_data.empty
-                else None
-            )
-            aluguel_area = (
-                filter_aluguel_data["area_aluguel"].fillna(method="ffill").iloc[-1]
-                if not filter_aluguel_data.empty
-                else None
-            )
-        else:
-            get_bairro = "N/A"
-            aluguel_price = None
-            aluguel_area = None
-
-        aluguel_price_display = (
-            f"R$ {aluguel_price:,.2f}" if aluguel_price is not None else "N/A"
-        )
-        aluguel_area_display = (
-            f"{aluguel_area:,.2f} m²" if aluguel_area is not None else "N/A"
-        )
-
-        marker = dl.CircleMarker(
-            center=[lat, lon],
-            radius=6,
-            color="red",
-            fill=True,
-            fillColor="red",
-            fillOpacity=0.8,
-            children=dl.Tooltip(
-                html.Div(
-                    [
-                        f"Latitude: {lat:.6f}, Longitude: {lon:.6f}",
-                        html.Br(),
-                        f"Bairro: {get_bairro}",
-                        html.Br(),
-                        f"Preço aluguel: {aluguel_price_display}",
-                        html.Br(),
-                        f"Área aluguel: {aluguel_area_display}",
-                    ]
-                )
-            ),
-        )
-
-        return (
-            [marker],
-            lat,
-            lon,
-            clickData,
-            aluguel_price if aluguel_price is not None else "",
-            aluguel_area if aluguel_area is not None else "",
-        )
-
-    return [], "", "", None, "", ""
 
 
 @callback(
@@ -1323,69 +891,17 @@ def toggle_prediction_form(n_clicks, is_visible):
         return {"display": "none"}, False
 
 
-@callback(
+clientside_callback(
+    ClientsideFunction(namespace="clientside", function_name="filter_data"),
     Output("filtered-data", "data"),
     Input("bar-graph", "selectedData"),
     Input("bar-plot-most-expensive", "selectedData"),
     Input("density-plot", "selectedData"),
-    Input({"type": "marker-map", "index": ALL}, "selectedData"),
-    Input({"type": "bairro-map", "index": ALL}, "selectedData"),
+    Input("map-select", "value"),
+    Input("plotly-map-container", "selectedData"),
+    State("filtered-data-all", "data"),
     prevent_initial_call=True,
 )
-def filter_data(
-    selectedData_bar_up_left,
-    selectedData_bar_bottom_right,
-    selectedData_density,
-    selectedData_marker_map,
-    selectedData_bairro_map,
-):
-    ctx = callback_context
-    if not ctx.triggered:
-        return df_realestate.to_dict("records")
-
-    changed_inputs = [x["prop_id"] for x in ctx.triggered]
-    filtered_df = df_realestate.copy()
-
-    if "bar-graph.selectedData" in changed_inputs:
-        if selectedData_bar_up_left and "points" in selectedData_bar_up_left:
-            selected_types = {
-                point["y"] for point in selectedData_bar_up_left["points"]
-            }
-            filtered_df = filtered_df[filtered_df["tipo"].isin(selected_types)]
-
-    elif "bar-plot-most-expensive.selectedData" in changed_inputs:
-        if selectedData_bar_bottom_right and "points" in selectedData_bar_bottom_right:
-            selected_types = {
-                point["y"] for point in selectedData_bar_bottom_right["points"]
-            }
-            filtered_df = filtered_df[filtered_df["bairro"].isin(selected_types)]
-
-    elif "density-plot.selectedData" in changed_inputs:
-        if selectedData_density and "points" in selectedData_density:
-            selected_types = {point["x"] for point in selectedData_density["points"]}
-            filtered_df = filtered_df[filtered_df["valor"].isin(selected_types)]
-
-    elif '{"index":1,"type":"marker-map"}.selectedData' in changed_inputs:
-        if selectedData_marker_map[0] and "points" in selectedData_marker_map[0]:
-            selected_types = {"latitude": [], "longitude": []}
-            for point in selectedData_marker_map[0]["points"]:
-                lat, lon = point["customdata"][:2]
-                selected_types["latitude"].append(lat)
-                selected_types["longitude"].append(lon)
-
-            filtered_df = df_realestate[
-                df_realestate["latitude"].isin(selected_types["latitude"])
-                & df_realestate["longitude"].isin(selected_types["longitude"])
-            ]
-
-    elif '{"index":1,"type":"bairro-map"}.selectedData' in changed_inputs:
-        if selectedData_bairro_map[0] and "points" in selectedData_bairro_map[0]:
-            selected_bairros = {
-                point["location"] for point in selectedData_bairro_map[0]["points"]
-            }
-            filtered_df = filtered_df[filtered_df["bairro"].isin(selected_bairros)]
-
-    return filtered_df.to_dict("records")
 
 
 @callback(
