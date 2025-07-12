@@ -28,12 +28,16 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                 map_type = "sem_tipo";
             }
 
-            if (window.myLeafletMap && map_type !== 'sem_tipo') {
+            if (
+                window.myLeafletMap &&
+                map_type !== 'sem_tipo' &&
+                map_type !== 'escolas_publicas'
+            ) {
                 window.myLeafletMap.remove();
                 window.myLeafletMap = null;
             }
 
-            if (map_type === 'sem_tipo') {
+            if (map_type === 'sem_tipo' || map_type === "escolas_publicas") {
                 if (plotlyContainer) plotlyContainer.style.display = 'none';
                 if (leafletContainer) leafletContainer.style.display = 'block';
             } else {
@@ -422,18 +426,31 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
 
                 return [{ data: data, layout: layout }];
             } else if (map_type === "escolas_publicas") {
+                if (window.myLeafletMap) {
+                    window.myLeafletMap.remove();
+                }
+
                 const geojson = JSON.parse(escolasPublicasGeojson);
 
-                const latitudes = [];
-                const longitudes = [];
-                const texts = [];
+                const map = L.map('leaflet-map-container', {
+                    center: [CENTER_LAT, CENTER_LON],
+                    zoom: 12,
+                    zoomControl: true
+                });
 
-                geojson.features.forEach((feature, idx) => {
-                    const props = feature.properties;
+                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+
+
+                const markers = L.markerClusterGroup();
+
+                geojson.features.forEach((feature) => {
                     const coords = feature.geometry.coordinates;
+                    const props = feature.properties;
 
-                    latitudes.push(coords[1]);
-                    longitudes.push(coords[0]);
+                    const lat = coords[1];
+                    const lon = coords[0];
 
                     const popupContent = `
                         <b>Nome:</b> ${props.nome || "N/A"}<br>
@@ -441,35 +458,13 @@ window.dash_clientside = Object.assign({}, window.dash_clientside, {
                         <b>Dependência:</b> ${props.dependencia || "N/A"}
                     `;
 
-                    texts.push(popupContent);
+                    const marker = L.marker([lat, lon]).bindPopup(popupContent);
+                    markers.addLayer(marker);
                 });
 
-                const data = [{
-                    type: 'scattermapbox',
-                    mode: 'markers',
-                    lat: latitudes,
-                    lon: longitudes,
-                    text: texts,
-                    hoverinfo: 'text',
-                    marker: {
-                        size: 8,
-                        opacity: 0.7
-                    },
-                    name: 'Escolas Públicas'
-                }];
+                map.addLayer(markers);
 
-                const layout = {
-                    mapbox: {
-                        style: 'open-street-map',
-                        center: { lat: CENTER_LAT, lon: CENTER_LON },
-                        zoom: 12
-                    },
-                    margin: { t: 0, b: 0, l: 0, r: 0 },
-                    hovermode: 'closest',
-                    showlegend: false
-                };
-
-                return [{ data: data, layout: layout }];
+                return [{}];
             } else if (map_type === "rios") {
                 const geojson = JSON.parse(riosGeojson);
                 const riverTraces = [];
